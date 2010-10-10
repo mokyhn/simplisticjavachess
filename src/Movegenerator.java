@@ -342,7 +342,7 @@ class Movegenerator {
 
         for (int i = 0; i < m.size(); i++) {
             myMove = m.get(i);
-            System.out.println(myMove.getMoveStr());
+            System.out.println(myMove.toString());
         }
 
 

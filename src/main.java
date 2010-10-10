@@ -68,7 +68,7 @@ class main {
                 System.exit(0); }
               else if (str.startsWith("sd")) { plyDepth = Integer.parseInt(str.substring(4)); }
               else if (str.matches("help")) { io.printHelpText(); }
-              else if (str.matches("print") || str.matches("p")) { io.printBoard(interfaceBoard); }
+              else if (str.matches("print") || str.matches("p")) { interfaceBoard.print(); }
               else if (str.startsWith("usermove")) {
                 String moveStr = str.substring(9);
                 try {
@@ -87,20 +87,20 @@ class main {
             } else {
                 try {
                     m = io.parse_move(interfaceBoard, str);
-                    System.out.println(m.getMoveStr());
+                    //System.out.println(m.getMoveStr());
                     if (!(interfaceBoard.isMoveLegal(m))) {  throw new NoMoveException(); }
                     interfaceBoard.performMove(m);
                     
                     analyzeBoard = (Board) interfaceBoard.clone();
-                    io.printBoard(analyzeBoard);
+                    //analyzeBoard.print();
                      
                     searchResult = searcher.dosearch(analyzeBoard, plyDepth);
-                    io.printBoard(interfaceBoard);
+                    //interfaceBoard.print();
 
                     interfaceBoard.performMove(searcher.getStrongestMove());
                                         System.out.println(searcher.moveAndStatistics());
 
-                    io.printBoard(interfaceBoard);
+                   // interfaceBoard.print();
                    
 
 

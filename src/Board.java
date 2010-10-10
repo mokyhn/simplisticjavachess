@@ -51,7 +51,7 @@ public class Board implements Cloneable {
     // and otherwise false
     public boolean attacks(int x, int y) { return position.attacks( x,  y,  inMove); }
     private void movePiece(int xFrom, int yFrom, int xTo, int yTo) { position.movePiece(xFrom, yFrom, xTo, yTo); }
-
+    public void print() {Chessio.printBoard(this);}
     // Given a position in the FEN - notation.
     // Set the board up correctly
     private void setupFENboard(String fen) {
@@ -126,7 +126,10 @@ public class Board implements Cloneable {
 
     // Find a piece at a certain location
     public Piece getPiece(int x, int y) throws NoPieceException {
-        return position.getPiece(x, y);
+        Piece p =  position.getPiece(x, y);
+
+        if (p != null) assert p.xPos == x && p.yPos == y;
+        return p;
     }
 
  

@@ -5,7 +5,7 @@ public class Chessio {
 	}
 
 	// Print a given board in ASCII to standard output
-	public void printBoard(Board theBoard) {
+	public static void printBoard(Board theBoard) {
             int x;
             int y;
             Piece p;

@@ -34,7 +34,7 @@ class Search {
         public long getTimeUsage() { return Math.abs(end_time-start_time)/1000000;}
 
         public String moveAndStatistics() { 
-            return("move " + strongestMove.getMoveStr()+
+            return("move " + strongestMove.toString() +
 			       " Evaluation " + searchResult + " at " +
 		               plyDepth + " ply in " + noPositions + " positions in " + getTimeUsage() + " mSecs = " + 1000 * ((float) noPositions/(float) getTimeUsage()) + " nodes pr. sec");
         }
@@ -55,16 +55,19 @@ class Search {
 
 		// Otherwise generate legal moves
 		Moves = movegen.generateAllMoves(analyzeBoard).listIterator();
-
+                
 		// Traverse the legal moves
 		while (Moves.hasNext()) {
-			m = Moves.next();
+                    m = Moves.next();
 
-			analyzeBoard.performMove(m);
-
+                        System.out.println("Trying: " + m.toString());
+                        analyzeBoard.print();
+                        analyzeBoard.performMove(m);
 			score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -localAlpha);
 
-			analyzeBoard.retractMove();
+                        System.out.println("Retracting: " + m.toString());
+                        //analyzeBoard.print();
+                        analyzeBoard.retractMove();
 
 			if (score > localAlpha) {
 				if (plyDepth == depthToGo) strongestMove = m;
