@@ -51,10 +51,10 @@ public class PieceList {
 
         assert (xFrom != xTo || yFrom != yTo) : "Cannot move from c to c";
         assert (p != null) : "Move " + Move.posToString(xFrom, yFrom) + " to " + Move.posToString(xTo, yTo);
-        
+
         p.xPos = xTo;
         p.yPos = yTo;
-        
+
         xyPosition[xTo][yTo]     = p;
         xyPosition[xFrom][yFrom] = null;
     }
@@ -104,8 +104,7 @@ public class PieceList {
         int i, x, y;
         Piece p;
 
-        try {
-            super.clone();
+        try { super.clone();
         } catch (CloneNotSupportedException e) {}
 
         PieceList theClone   = new PieceList();
@@ -119,7 +118,10 @@ public class PieceList {
             for (y = 0; y < 8; y++) {
                 p = xyPosition[x][y];
                 if (p == null) theClone.xyPosition[x][y] = null;
-                else           theClone.xyPosition[x][y] = (Piece) p.clone();
+                else           {
+                    theClone.xyPosition[x][y] = (Piece) p.clone();
+                    assert p.xPos == x && p.yPos == y;
+                }
             }
 
 
