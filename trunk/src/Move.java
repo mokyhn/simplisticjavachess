@@ -101,7 +101,7 @@ public class Move {
           return letter;
         }
 
-	public String getMoveStr() {
+	public String toString() {
 		if (type == NORMALMOVE) { return posToString(fromX, fromY) + "-" + posToString(toX, toY); }
 
 		// Normal capture moves

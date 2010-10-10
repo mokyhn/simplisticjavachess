@@ -25,6 +25,8 @@ public class PieceList {
     public Piece getPiece(int x, int y) throws NoPieceException {
         Piece p = xyPosition[x][y];
         if (p == null) throw new NoPieceException();
+
+        assert p.xPos == x && p.yPos == y;
         return p;
     }
 
