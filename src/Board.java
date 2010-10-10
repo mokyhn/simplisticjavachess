@@ -1,6 +1,5 @@
 import java.util.Stack;
 import java.util.Iterator;
-import java.util.List;
 
 public class Board implements Cloneable {
         private              PieceList position = new PieceList(); 
@@ -9,10 +8,8 @@ public class Board implements Cloneable {
                                 NORMAL_SETUP    = 1;
 	
 
-	private Stack<Move> moveStack; // A stack of previous performed moves on
-				       // the board
-
-	private Errorhandler error          = new Errorhandler();
+	// A stack of previous performed moves on the board
+        private Stack<Move> moveStack;
 
 	private boolean blackCastling       = false; // has black made a castling?
 	private boolean whiteCastling       = false; // has white made a castling?
@@ -23,35 +20,37 @@ public class Board implements Cloneable {
 	private int     inMove              = Piece.WHITE;
 
 	// Constructor, setting up initial position
-	public Board(int setup) {
-		// 2 numberOfPieces = 0;
-		inMove         = Piece.WHITE;
-                position = new PieceList();
-		switch (setup) {
-		case NO_SETUP: 	moveStack = new Stack<Move>(); break;
-		case NORMAL_SETUP: moveStack = new Stack<Move>();
-			           setupFENboard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-			           break;
-		}
-	}
-
-	public Board(String fen) {
-		moveStack      = new Stack<Move>();
-		// 2numberOfPieces = 0;
-                position = new PieceList();
-                inMove = Piece.WHITE;
-		setupFENboard(fen);
+    public Board(int setup) {
+        inMove = Piece.WHITE;
+        position = new PieceList();
+        moveStack = new Stack<Move>();
+        switch (setup) {
+            case NO_SETUP:      break;
+            case NORMAL_SETUP: setupFENboard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); 
         }
+    }
+
+    public Board(String fen) {
+        inMove    = Piece.WHITE;
+        position  = new PieceList();
+        moveStack = new Stack<Move>();
+        setupFENboard(fen);
+    }
 
 	
-	public int getNumberOfPieces()    { return position.numberOfPieces(); }
-	public int whoIsInMove()          { return inMove;  }
-        public void setBlackToMove()      { inMove = Piece.BLACK;}
-        public void setWhiteToMove()      { inMove = Piece.BLACK;}
-	public Move getLastMove()         { return moveStack.peek(); }
-	// Encode the color and type into one number
-	int piece(int color, int type)    { return color + type; }
-
+    public int getNumberOfPieces()    { return position.numberOfPieces(); }
+    public int  whoIsInMove()          { return inMove;  }
+    public void setBlackToMove()      { inMove = Piece.BLACK;}
+    public void setWhiteToMove()      { inMove = Piece.BLACK;}
+    public Move getLastMove()         { return moveStack.peek(); }
+    public Piece getPiece(int i)      { return position.getPiece(i); }
+    public void  insertPiece(Piece p) { position.insertPiece(p); }
+    public Piece removePiece(int x, int y) { return position.removePiece(x, y); }
+    public boolean freeSquare(int x, int y)  { return position.freeSquare(x, y); }
+    // Returns true if the side not in move, in board b attacks square (x, y)
+    // and otherwise false
+    public boolean attacks(int x, int y) { return position.attacks( x,  y,  inMove); }
+    private void movePiece(int xFrom, int yFrom, int xTo, int yTo) { position.movePiece(xFrom, yFrom, xTo, yTo); }
 
     // Given a position in the FEN - notation.
     // Set the board up correctly
@@ -124,32 +123,13 @@ public class Board implements Cloneable {
         return theClone;
     }
 
-    public Piece getPiece(int i) {
-        return position.getPiece(i);
-    }
 
-	// Find a piece at a certain location
+    // Find a piece at a certain location
     public Piece getPiece(int x, int y) throws NoPieceException {
         return position.getPiece(x, y);
     }
 
-      // Insert a piece p
-    public void insertPiece(Piece p) {
-        position.insertPiece(p);
-    }
-
-    // Remove a piece from location x, y and return the piece
-    public Piece removePiece(int x, int y) {
-        return position.removePiece(x, y);
-    }
-
-        // TODO: Refactor this into piece class
-        // Should be vector based, such that the call for a given piece p is
-        // p.Move(int dx, int dy)
-    private void movePiece(int xFrom, int yFrom, int xTo, int yTo) {
-       position.movePiece(xFrom, yFrom, xTo, yTo);
-    }
-
+ 
     public void performMove(Move m) {
         // Put the move m on the stack
         moveStack.push(m);
@@ -292,9 +272,6 @@ public class Board implements Cloneable {
         }
     }
 
-    public boolean freeSquare(int x, int y)  {
-       return position.freeSquare(x, y);
-    }
 
     public boolean isMoveLegal(Move m) {
         Movegenerator movegen = new Movegenerator();
@@ -313,11 +290,7 @@ public class Board implements Cloneable {
         return false;
     }
 
-    // Returns true if the side not in move, in board b attacks square (x, y)
-    // and otherwise false
-    public boolean attacks(int x, int y) {
-      return position.attacks( x,  y,  inMove);
-    }
+   
 }
 
 

@@ -39,8 +39,7 @@ public class PieceList {
     public Piece removePiece(int x, int y) {
         Piece   p     = xyPosition[x][y];
 
-        if (p == null) Errorhandler.fatalError(Errorhandler.NOSUCHPIECE, "PieceList:removePiece at "
-                + Move.posToString(x, y) + " failed ");
+        assert (p != null) : "removePiece at " + Move.posToString(x, y);
 
         position.remove(p);
         xyPosition[x][y] = null;
