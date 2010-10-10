@@ -5,7 +5,7 @@ class main {
 
 
 	private static void printWelcomeText() {
-		System.out.println("----------------------------------------------------"); 
+                System.out.println("----------------------------------------------------");
 		System.out.println("A Simplistic Chessprogram, under serious development"); 
 		System.out.println("Morten Kuhnrich (for now) 2007"); 
 		System.out.println("Type help if you need help"); 
@@ -144,11 +144,9 @@ class main {
 						analyzeBoard = (Board) interfaceBoard.clone();
 						searchResult = searcher
 								.dosearch(analyzeBoard, plyDepth);
-						System.out.print("move " +  searcher.getStrongestMove().getMoveStr());
-						// TODO: Conform with xboard standard
-						 System.out.println(" Evaluation " + searchResult +
-                                                         " at " + plyDepth + " ply in " +
-						 searcher.getNoPositions() + " positions");
+
+                                                System.out.println(searcher.moveAndStatistics());
+
 						interfaceBoard.performMove(searcher.getStrongestMove());
 					} catch (NoMoveException e) {
 						System.out.println("Not a valid move");
