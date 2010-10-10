@@ -21,9 +21,9 @@ class Search {
           analyzeBoard  = b;
 	  noPositions   = 0;
           this.plyDepth = plyDepth;
-          start_time    = System.currentTimeMillis();
+          start_time    = System.nanoTime();
           searchResult  = alphaBetaSearch(plyDepth, plyDepth, -30000, 30000);
-          end_time      = System.currentTimeMillis();
+          end_time      = System.nanoTime();
           return searchResult;
 	}
 
@@ -31,13 +31,12 @@ class Search {
 
 	public int getNoPositions()    { return noPositions;    }
 
-        public long getTimeUsage() { return Math.abs(end_time-start_time);}
+        public long getTimeUsage() { return Math.abs(end_time-start_time)/1000000;}
 
         public String moveAndStatistics() { 
             return("move " + strongestMove.getMoveStr()+
 			       " Evaluation " + searchResult + " at " +
-		               plyDepth + " ply in " + noPositions + " positions"
-                               + " in " + getTimeUsage() + " mSecs = " + 1000 * ((float) noPositions/(float) getTimeUsage()) + " nodes pr. sec");
+		               plyDepth + " ply in " + noPositions + " positions in " + getTimeUsage() + " mSecs = " + 1000 * ((float) noPositions/(float) getTimeUsage()) + " nodes pr. sec");
         }
 
 	public int alphaBetaSearch(int plyDepth, int depthToGo, int alpha, int beta) {
