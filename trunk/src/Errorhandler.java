@@ -6,11 +6,11 @@ class Errorhandler {
 	static final int NOSUCHPIECE=1, TOOMANYPIECES=2;
 	
 
-	private void msg(String callplace) {
+	private static void msg(String callplace) {
 		System.out.println("ERROR at " + callplace);
 	}
 
-	public void fatalError(int err, String callplace) {
+	public static void fatalError(int err, String callplace) {
 		msg(callplace);
 		switch (err) {
 		case NOSUCHPIECE:
