@@ -314,7 +314,7 @@ class Movegenerator {
             case Piece.PAWN:
                 return pawnMoves(b, p);
             case Piece.KING:
-                //return kingMoves(b, p);
+                return kingMoves(b, p);
         }
         throw new NoMoveException();
     }
