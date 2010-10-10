@@ -87,35 +87,8 @@ public class Move {
 		}
 	}
 
-	private static String numToChar(int pos) {
-		switch (pos) {
-		case 0: return "a";
-		case 1:	return "b";
-		case 2:	return "c";
-		case 3:	return "d";
-		case 4:	return "e";
-		case 5:	return "f";
-		case 6:	return "g";
-		case 7:	return "h";
-		}
-		return "ERR: numToChar: input was " + pos;
-	}
 
-	private static String numToNumChar(int pos) {
-		switch (pos) {
-		case 0: return "1";
-		case 1:	return "2";
-		case 2:	return "3";
-		case 3:	return "4";
-		case 4:	return "5";
-		case 5:	return "6";
-		case 6:	return "7";
-		case 7:	return "8";
-		}
-		return "ERR: numToNumChar: input was " + pos;
-	}
-
-	public static String posToString(int x, int y) { return numToChar(x) + numToNumChar(y); }
+	public static String posToString(int x, int y) { return Chessio.numToChar(x) + Chessio.numToNumChar(y); }
 
         public static String pieceNumberToChar(int num) {
           String letter = "";

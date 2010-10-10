@@ -7,14 +7,13 @@ public class Evaluator {
 		int sum = 0;
 
 		Piece p;
-		Piece pieces[] = b.getPosition();
 		boolean thereIsAWhiteKing = false;
 		boolean thereIsABlackKing = false;
 
 		int side = b.whoIsInMove();
 
 		for (int i = 0; i < b.getNumberOfPieces(); i++) {
-			p = pieces[i];
+			p = b.getPiece(i);
 			switch (p.type) {
 			case Piece.PAWN:   sum = 1*p.color + sum; break;
 			case Piece.ROOK:   sum = 5*p.color + sum; break;

@@ -6,51 +6,23 @@ public class Chessio {
 
 	// Print a given board in ASCII to standard output
 	public void printBoard(Board theBoard) {
-		int x;
-		int y;
-		Piece p;
+            int x;
+            int y;
+            Piece p;
 
-		System.out.println("");
+            System.out.println("");
 
-		for (y = 7; y >= 0; y--) {
-			for (x = 0; x < 8; x++) {
-			     System.out.print(" ");
-                              try {
-					p = theBoard.getPiece(x, y);
+            for (y = 7; y >= 0; y--) {
+                for (x = 0; x < 8; x++) {
+                     System.out.print(" ");
+                      try { System.out.print( theBoard.getPiece(x, y).getLetter()); }
+                      catch (NoPieceException e) { System.out.print('.'); }
+                }
+              System.out.println();
+            } // end last for-loop
 
-					if (p.color == Piece.BLACK) {
-						switch (p.type) {
-						case Piece.PAWN:   System.out.print('P'); break;
-						case Piece.ROOK:   System.out.print('R'); break;
-						case Piece.BISHOP: System.out.print('B'); break;
-						case Piece.KNIGHT: System.out.print('N'); break;
-						case Piece.KING:   System.out.print('K'); break;
-						case Piece.QUEEN:  System.out.print('Q'); break;
-						}
-					}
-
-					if (p.color == Piece.WHITE) {
-						switch (p.type) {
-						case Piece.PAWN:   System.out.print('p'); break;
-						case Piece.ROOK:   System.out.print('r'); break;
-						case Piece.BISHOP: System.out.print('b'); break;
-						case Piece.KNIGHT: System.out.print('n'); break;
-						case Piece.KING:   System.out.print('k'); break;
-						case Piece.QUEEN:  System.out.print('q'); break;
-						}
-					}
-				} catch (NoPieceException e) {
-					System.out.print('.');
-				}
-			}
-			System.out.println("");
-		} // end last for-loop
-
-		if (theBoard.whoIsInMove() == Piece.WHITE) {
-			System.out.println("White to move"); }
-		else
-			{ System.out.println("Black to move"); }
-
+            if (theBoard.whoIsInMove() == Piece.WHITE) System.out.println("White to move");
+            else System.out.println("Black to move"); 
 	}
 
 	// Input: the current position, a move string, and the knowledge of
@@ -62,6 +34,7 @@ public class Chessio {
 		int fromY;
 		int toX;
 		int toY;
+                Piece p;
 		char[] s = str.toCharArray();
 
 		int whoToMove = b.whoIsInMove();
@@ -124,11 +97,15 @@ public class Chessio {
 		m.aPiece = 0;
 		m.whoMoves = whoToMove;
 
-		try {
-			if (b.getColor(fromX, fromY) != whoToMove) { throw new NoMoveException(); }
-		} catch (NoPieceException e) {
+                try {
+                    p = b.getPiece(fromX, fromY);
+                } catch (NoPieceException e) {
 			throw new NoMoveException();
 		}
+
+
+		if (p.color != whoToMove) { throw new NoMoveException(); }
+		
 
 		// Pawn promotions
 		try {
@@ -144,19 +121,15 @@ public class Chessio {
 		}
 
 		// ENPASSENT Move
-		try {
-			Piece p = b.getPiece(fromX, fromY);
-			// Are we dealing with a pawn move?
-			if (p.type == Piece.PAWN)
-				if ((fromX != toX) && (b.freeSquare(toX, toY))) {
-					m.type = Move.CAPTURE_ENPASSANT;
-					m.aPiece = Piece.PAWN;
-					return m;
-				}
-		} catch (NoPieceException e) {
-			throw new NoMoveException();
-		}
-
+                // Are we dealing with a pawn move?
+                if (p.type == Piece.PAWN) {
+                    if ((fromX != toX) && (b.freeSquare(toX, toY))) {
+                        m.type = Move.CAPTURE_ENPASSANT;
+                        m.aPiece = Piece.PAWN;
+                        return m;
+                    }
+                }
+		
 		// Normal move
 		if (b.freeSquare(toX, toY)) {
 			m.type = Move.NORMALMOVE;
@@ -165,9 +138,10 @@ public class Chessio {
 
 		// A capturing move
 		try {
-			if (b.getColor(toX, toY) == -whoToMove) {
+                    Piece pto = b.getPiece(toY, toY);
+			if (pto.color == -whoToMove) {
 				m.type = Move.CAPTURE;
-				m.aPiece = b.getPiece(toX, toY).type;
+				m.aPiece = pto.type;
 				return m;
 			}
 
@@ -187,4 +161,53 @@ public class Chessio {
 
 		throw new NoMoveException();
 	}
+
+     	public final static String numToChar(int pos) {
+		switch (pos) {
+		case 0: return "a";
+		case 1:	return "b";
+		case 2:	return "c";
+		case 3:	return "d";
+		case 4:	return "e";
+		case 5:	return "f";
+		case 6:	return "g";
+		case 7:	return "h";
+		}
+		return "ERR: numToChar: input was " + pos;
+	}
+
+	public final static String numToNumChar(int pos) {
+		switch (pos) {
+		case 0: return "1";
+		case 1:	return "2";
+		case 2:	return "3";
+		case 3:	return "4";
+		case 4:	return "5";
+		case 5:	return "6";
+		case 6:	return "7";
+		case 7:	return "8";
+		}
+		return "ERR: numToNumChar: input was " + pos;
+	}
+
+
+
+    public static void printWelcomeText() {
+        System.out.println("----------------------------------------------------");
+        System.out.println("A Simplistic Chessprogram, under serious development");
+        System.out.println("Morten Kuhnrich (for now) 2007");
+        System.out.println("Type help if you need help");
+        System.out.println("----------------------------------------------------");
+
+
+    }
+
+    public static void printHelpText() {
+        System.out.println("\n----------------------------------------------------");
+        System.out.println("Action                           Key stroke");
+        System.out.println("Quit                             quit, bye, exit, q ");
+        System.out.println("Entering a move: d2d4 or promotion d7d8Q   ");
+        System.out.println("----------------------------------------------------");
+    }
+
 }

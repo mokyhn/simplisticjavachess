@@ -41,6 +41,34 @@ class Piece implements Cloneable {
         type  = t;
     }
 
+    public  String getLetter() {
+      String r = "";
+
+        if (color == BLACK) {
+
+        switch (type) {
+            case PAWN:   r = "P"; break;
+            case ROOK:   r = "R"; break;
+            case BISHOP: r = "B"; break;
+            case KNIGHT: r = "N"; break;
+            case KING:   r = "K"; break;
+            case QUEEN:  r = "Q"; break;
+        }
+     }
+
+        if (color == WHITE) {
+            switch (type) {
+            case PAWN:   r = "p"; break;
+            case ROOK:   r = "r"; break;
+            case BISHOP: r = "b"; break;
+            case KNIGHT: r = "n"; break;
+            case KING:   r = "k"; break;
+            case QUEEN:  r = "q"; break;
+            }
+        }
+      return r;
+    }
+
     public Piece(int x, int y, char pieceLetter) throws NoPieceException {
         assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error in x or y ";
 
@@ -88,4 +116,9 @@ class Piece implements Cloneable {
             default: throw new NoPieceException();
             }
      }
+
+
+    public void print() {
+        System.out.print(getLetter());
+    }
 }
