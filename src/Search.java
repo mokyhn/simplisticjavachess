@@ -11,14 +11,14 @@ class Search {
         int          plyDepth;
 
 	public Search() {
-              noPositions = 0;
+              noPositions   = 0;
               searchResult  = 0;
-              eval        = new Evaluator();
+              eval          = new Evaluator();
 	}
 
 	public int dosearch(Board b, int plyDepth) {
           searchResult  = 0;
-          analyzeBoard  = b;
+          analyzeBoard  = (Board) b.clone();
 	  noPositions   = 0;
           this.plyDepth = plyDepth;
           start_time    = System.nanoTime();
@@ -35,13 +35,16 @@ class Search {
 
         public String moveAndStatistics() { 
             return("move " + strongestMove.toString() +
-			       " Evaluation " + searchResult + " at " +
-		               plyDepth + " ply in " + noPositions + " positions in " + getTimeUsage() + " mSecs = " + 1000 * ((float) noPositions/(float) getTimeUsage()) + " nodes pr. sec");
+                   " Evaluation " + searchResult + " at " +
+                   plyDepth + " ply in " + noPositions + 
+                   " positions in " + getTimeUsage() + " mSecs = "
+                   + 1000 * ((float) noPositions/(float) getTimeUsage())
+                   + " nodes pr. sec");
         }
 
 	public int alphaBetaSearch(int plyDepth, int depthToGo, int alpha, int beta) {
 		Movegenerator movegen = new Movegenerator();
-		Iterator<Move>          Moves;
+		Iterator<Move>          moves;
 		Move m                = new Move();
 		int score             = 0;
 		int localAlpha        = alpha;
@@ -54,11 +57,13 @@ class Search {
                 }
 
 		// Otherwise generate legal moves
-		Moves = movegen.generateAllMoves(analyzeBoard).listIterator();
-                
+		moves = movegen.generateAllMoves(analyzeBoard).listIterator();
+
+                Movegenerator.printMoves(movegen.generateAllMoves(analyzeBoard));
+
 		// Traverse the legal moves
-		while (Moves.hasNext()) {
-                    m = Moves.next();
+		while (moves.hasNext()) {
+                    m = moves.next();
 
                         System.out.println("Trying: " + m.toString());
                         analyzeBoard.print();

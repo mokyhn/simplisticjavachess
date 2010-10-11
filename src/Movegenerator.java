@@ -22,6 +22,7 @@ class Movegenerator {
 
         ArrayList<Move> Moves = new ArrayList<Move>();
 
+
         // Normal one step forward pawn move
         if (((y < 6) && (c == Piece.WHITE)) || (y > 1) && (c == Piece.BLACK)) {
             if (b.freeSquare(x, y + c * 1)) {
