@@ -15,26 +15,19 @@ class main {
         Move    m;
 
 
-
         // board interfaceBoard = new board(board.NORMAL_SETUP);
-        // board analyzeBoard = new board(board.NORMAL_SETUP);
 
         Board interfaceBoard = new Board("4k3/p7/8/8/8/8/P7/4K3 w - 0 1");
-        Board analyzeBoard   = (Board) interfaceBoard.clone();
 
 
         // Do a simple setup with pawns.
         //Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w - 0 1");
-        //Board analyzeBoard   = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w - 0 1");
 
         //Board interfaceBoard = new Board("4k3/8/3pp3/4p3/3P1P2/4K3/8/8 w - - 0 1");
-        //Board analyzeBoard   = new Board("4k3/8/3pp3/4p3/3P1P2/4K3/8/8 w - - 0 1");
 
         //Board interfaceBoard = new Board("k7/8/7P/8/8/1p6/P7/7K w - - 0 1");
-        //Board analyzeBoard = new Board("k7/8/7P/8/8/1p6/P7/7K w - - 0 1");
 
         //Board interfaceBoard = new Board("8/p7/1p3k1P/8/1PP5/8/8/K7 w - - 0 1");
-        //Board analyzeBoard = new Board("8/p7/1p3k1P/8/1PP5/8/8/K7 w - - 0 1");
 
         
         io.printWelcomeText();
@@ -44,8 +37,7 @@ class main {
             str = reader.readLine();
 
             if (str.matches("go")) {
-                analyzeBoard = (Board) interfaceBoard.clone();
-                searchResult = searcher.dosearch(analyzeBoard, plyDepth);
+                searchResult = searcher.dosearch(interfaceBoard, plyDepth);
                 System.out.println(searcher.moveAndStatistics());
                 interfaceBoard.performMove(searcher.getStrongestMove());
             } else if (str.matches("undo")) { interfaceBoard.retractMove(); }
@@ -56,11 +48,9 @@ class main {
               else if (str.matches("white")) { interfaceBoard.setWhiteToMove(); }
               else if (str.matches("new"))   {
                 interfaceBoard = new Board(Board.NORMAL_SETUP);
-                analyzeBoard = new Board(Board.NORMAL_SETUP);
                 searcher = new Search();
             } else if (str.startsWith("setboard")) {
                 interfaceBoard = new Board(str.substring(9, str.length()));
-                analyzeBoard   = new Board(str.substring(9, str.length()));
                 searcher       = new Search();
             }
             if (str.matches("quit") || str.matches("q") || str.matches("bye") || str.matches("exit")) {
@@ -78,8 +68,7 @@ class main {
                         throw new NoMoveException();
                     }
                     interfaceBoard.performMove(m);
-                    analyzeBoard = (Board) interfaceBoard.clone();
-                    searchResult = searcher.dosearch(analyzeBoard, plyDepth);
+                    searchResult = searcher.dosearch(interfaceBoard, plyDepth);
                     System.out.println(searcher.moveAndStatistics());
                     interfaceBoard.performMove(searcher.getStrongestMove());
                 } catch (NoMoveException e) { System.out.println("Not a valid move"); }
@@ -91,10 +80,8 @@ class main {
                     if (!(interfaceBoard.isMoveLegal(m))) {  throw new NoMoveException(); }
                     interfaceBoard.performMove(m);
                     
-                    analyzeBoard = (Board) interfaceBoard.clone();
-                    //analyzeBoard.print();
                      
-                    searchResult = searcher.dosearch(analyzeBoard, plyDepth);
+                    searchResult = searcher.dosearch(interfaceBoard, plyDepth);
                     //interfaceBoard.print();
 
                     interfaceBoard.performMove(searcher.getStrongestMove());
