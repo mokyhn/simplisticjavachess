@@ -19,6 +19,12 @@ public class PieceList {
     }
 
     public Piece getPiece(int i) {
+        Piece p = position.get(i);
+        assert p != null;
+
+        Piece ptmp = xyPosition[p.xPos][p.yPos];
+        assert ptmp != null;
+        assert ptmp.xPos == p.xPos && ptmp.yPos == p.yPos;
         return position.get(i);
     }
 
