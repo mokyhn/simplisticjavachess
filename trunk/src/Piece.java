@@ -41,7 +41,7 @@ class Piece implements Cloneable {
         type  = t;
     }
 
-    public  String getLetter() {
+    public  String toString() {
       String r = "";
 
         if (color == BLACK) {
@@ -119,6 +119,6 @@ class Piece implements Cloneable {
 
 
     public void print() {
-        System.out.print(getLetter());
+        System.out.print(toString());
     }
 }

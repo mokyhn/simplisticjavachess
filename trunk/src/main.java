@@ -5,7 +5,7 @@ class main {
 
 
     public static void main(String param[]) throws java.io.IOException {
-        int     plyDepth      = 3;
+        int     plyDepth      = 5;
         int     searchResult  = 0;
         Chessio io            = new Chessio();
         Search  searcher      = new Search();
@@ -17,11 +17,11 @@ class main {
 
         // board interfaceBoard = new board(board.NORMAL_SETUP);
 
-        Board interfaceBoard = new Board("4k3/p7/8/8/8/8/P7/4K3 w - 0 1");
+        //Board interfaceBoard = new Board("4k3/p7/8/8/8/8/P7/4K3 w - 0 1");
 
 
         // Do a simple setup with pawns.
-        //Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w - 0 1");
+        Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w - 0 1");
 
         //Board interfaceBoard = new Board("4k3/8/3pp3/4p3/3P1P2/4K3/8/8 w - - 0 1");
 
@@ -87,7 +87,7 @@ class main {
                     interfaceBoard.performMove(searcher.getStrongestMove());
                                         System.out.println(searcher.moveAndStatistics());
 
-                   // interfaceBoard.print();
+                    interfaceBoard.print();
                    
 
 

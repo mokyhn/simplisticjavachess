@@ -15,7 +15,7 @@ public class Chessio {
             for (y = 7; y >= 0; y--) {
                 for (x = 0; x < 8; x++) {
                      System.out.print(" ");
-                      try { System.out.print( theBoard.getPiece(x, y).getLetter()); }
+                      try { System.out.print( theBoard.getPiece(x, y).toString()); }
                       catch (NoPieceException e) { System.out.print('.'); }
                 }
               System.out.println();
