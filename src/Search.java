@@ -59,19 +59,20 @@ class Search {
 		// Otherwise generate legal moves
 		moves = movegen.generateAllMoves(analyzeBoard).listIterator();
 
-                Movegenerator.printMoves(movegen.generateAllMoves(analyzeBoard));
+                //Movegenerator.printMoves(movegen.generateAllMoves(analyzeBoard));
 
 		// Traverse the legal moves
 		while (moves.hasNext()) {
                     m = moves.next();
 
-                        System.out.println("Trying: " + m.toString());
-                        analyzeBoard.print();
+                        //System.out.println("Trying: " + m.toString());
+                        //analyzeBoard.print();
+
                         analyzeBoard.performMove(m);
 			score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -localAlpha);
 
-                        System.out.println("Retracting: " + m.toString());
-                        //analyzeBoard.print();
+                        //System.out.println("Retracting: " + m.toString());
+                        
                         analyzeBoard.retractMove();
 
 			if (score > localAlpha) {
