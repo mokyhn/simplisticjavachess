@@ -4,7 +4,7 @@ public class Move {
                    toX,
                    toY,
                    type, // The move type
-		   aPiece, // Used for storing pieces that are taken
+		   aCapturedPiece, // Used for storing pieces that are taken
 			// by the piece which moves
 		   whoMoves;
 
@@ -49,7 +49,7 @@ public class Move {
 		toX = tX;
 		toY = tY;
 		type = t;
-		aPiece = p;
+		aCapturedPiece = p;
 		whoMoves = who;
 	}
 
@@ -108,7 +108,7 @@ public class Move {
 		if (type == CAPTURE_ENPASSANT || type == CAPTURE) { return posToString(fromX, fromY) + "x" + posToString(toX, toY); }
 
 		// mate
-		if (type == CAPTURE && aPiece == Piece.KING) { return "mate"; }
+		if (type == CAPTURE && aCapturedPiece == Piece.KING) { return "mate"; }
 
 		// Promotions
 		if (aSimplePromotion()) {

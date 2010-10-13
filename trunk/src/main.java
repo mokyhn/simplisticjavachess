@@ -1,4 +1,4 @@
-
+//-enableassertions
 import java.io.*;
 
 class main {
@@ -18,6 +18,8 @@ class main {
         // board interfaceBoard = new board(board.NORMAL_SETUP);
 
         //Board interfaceBoard = new Board("4k3/p7/8/8/8/8/P7/4K3 w - 0 1");
+
+        //Board interfaceBoard = new Board("4k3/7p/7K/8/8/8/8/8 w - 0 1");
 
 
         // Do a simple setup with pawns.
