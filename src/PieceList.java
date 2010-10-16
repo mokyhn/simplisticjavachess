@@ -91,14 +91,13 @@ public class PieceList {
             p = position[i];
 
             // Chose one of opposite color
-            if (p.color == -inMove) {
+            if (p.color == -inMove && !(p.xPos == x && p.yPos == y)) {
                 switch (p.type) {
                     case Piece.PAWN:
-                        if ((p.xPos == x - 1 && p.yPos == p.color + y)
-                                || (p.xPos == x + 1 && p.yPos == p.color + y)) {
+                        if ((x == p.xPos + 1 && y == p.yPos + p.color)
+                         || (x == p.xPos - 1 && y == p.yPos + p.color)) {
                             return true;
                         }
-                        break;
                     case Piece.ROOK:
                         break;
                     case Piece.BISHOP:
@@ -108,7 +107,9 @@ public class PieceList {
                     case Piece.QUEEN:
                         break;
                     case Piece.KING:
-                        break;
+                        if ((x == p.xPos || x == p.xPos - 1 || x == p.xPos + 1) &&
+                            (y == p.yPos || y == p.yPos - 1 || y == p.yPos + 1)) return true;
+                        
                     default: // Lala
                 }
             }
