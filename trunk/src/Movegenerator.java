@@ -169,9 +169,9 @@ class Movegenerator {
         int y = p.yPos;
 
         // King moves left
-        if (x > 0) {
+        if (x > 0 && !b.attacks(x - 1, y)) {
             // To side
-            if (b.freeSquare(x - 1, y) && !b.attacks(x - 1, y)) {
+            if (b.freeSquare(x - 1, y) ) {
                 Moves.add(new Move(x, y, x - 1, y, Move.NORMALMOVE, 0, c));
             } else {
                 try {
@@ -184,8 +184,8 @@ class Movegenerator {
             ;
 
             // Up
-            if (y < 7) {
-                if (b.freeSquare(x - 1, y + 1) && !b.attacks(x - 1, y + 1)) {
+            if (y < 7 && !b.attacks(x - 1, y + 1)) {
+                if (b.freeSquare(x - 1, y + 1)) {
                     Moves.add(new Move(x, y, x - 1, y + 1, Move.NORMALMOVE, 0,
                             c));
                 } else {
@@ -201,12 +201,12 @@ class Movegenerator {
             }
 
             // Down
-            if (y > 0) {
-                if (b.freeSquare(x - 1, y - 1) && !b.attacks(x - 1, y - 1)) {
+            if (y > 0 && !b.attacks(x - 1, y - 1)) {
+                if (b.freeSquare(x - 1, y - 1) ) {
                     Moves.add(new Move(x, y, x - 1, y - 1, Move.NORMALMOVE, 0, c));
                 } else {
                     try {
-                        if (b.getPiece(x - 1, y - 1).color != c && !b.attacks(x - 1, y - 1)) { // TODO: Apply this change here all over...
+                        if (b.getPiece(x - 1, y - 1).color != c) { 
                             Moves.add(new Move(x, y, x - 1, y - 1,
                                     Move.CAPTURE,
                                     b.getPiece(x - 1, y - 1).type, c));
@@ -219,9 +219,9 @@ class Movegenerator {
 
 
         // King moves right
-        if (x < 7) {
+        if (x < 7 && !b.attacks(x + 1, y)) {
             // To side
-            if (b.freeSquare(x + 1, y) && !b.attacks(x + 1, y)) {
+            if (b.freeSquare(x + 1, y)) {
                 Moves.add(new Move(x, y, x + 1, y, Move.NORMALMOVE, 0, c));
             } else {
                 try {
@@ -234,8 +234,8 @@ class Movegenerator {
 
 
             // Up and to the right
-            if (y < 7) {
-                if (b.freeSquare(x + 1, y + 1) && !b.attacks(x + 1, y + 1)) {
+            if (y < 7 && !b.attacks(x + 1, y + 1)) {
+                if (b.freeSquare(x + 1, y + 1)) {
                     Moves.add(new Move(x, y, x + 1, y + 1, Move.NORMALMOVE, 0, c));
                 } else {
                     try {
@@ -248,8 +248,8 @@ class Movegenerator {
             }
 
             // Down and to the right
-            if (y > 0) {
-                if (b.freeSquare(x + 1, y - 1) && !b.attacks(x + 1, y - 1)) {
+            if (y > 0 && !b.attacks(x + 1, y - 1)) {
+                if (b.freeSquare(x + 1, y - 1)) {
                     Moves.add(new Move(x, y, x + 1, y - 1, Move.NORMALMOVE, 0, c));
                 } else {
                     try {
@@ -264,8 +264,8 @@ class Movegenerator {
         }
 
         // King moves straight up
-        if (y < 7) {
-            if (b.freeSquare(x, y + 1) && !b.attacks(x, y + 1)) {
+        if (y < 7 && !b.attacks(x, y + 1)) {
+            if (b.freeSquare(x, y + 1)) {
                 Moves.add(new Move(x, y, x, y + 1, Move.NORMALMOVE, 0, c));
             } else {
                 try {
@@ -279,8 +279,8 @@ class Movegenerator {
         ;
 
         // King moves straight down
-        if (y > 0) {
-            if (b.freeSquare(x, y - 1) && !b.attacks(x, y - 1)) {
+        if (y > 0 && !b.attacks(x, y - 1)) {
+            if (b.freeSquare(x, y - 1)) {
                 Moves.add(new Move(x, y, x, y - 1, Move.NORMALMOVE, 0, c));
             } else {
                 try {

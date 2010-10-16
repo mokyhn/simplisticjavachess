@@ -87,13 +87,38 @@ public class Chessio {
              } catch (NoPieceException e) { throw new NoMoveException(); }
 
 
+             // ENPASSENT Move
+            // Are we dealing with a pawn move?
+            if (p.type == Piece.PAWN) {
+                if ((fromX != toX) && (b.freeSquare(toX, toY))) {
+                    m.type = Move.CAPTURE_ENPASSANT;
+                    m.aCapturedPiece = Piece.PAWN;
+                    return m;
+                }
+            }
+
+            // White or black does a short or a long castling
+            if (fromY == toY && (fromY == 0 || fromY == 7)) {
+                    if (fromX == 4 && toX == 6) {
+                            m.type = Move.CASTLE_SHORT;
+                            return m;
+                    } else if (fromX == 4 && toX == 2) {
+                            m.type = Move.CASTLE_LONG;
+                            return m;
+                    }
+            }
+
+
+
+
+
         }
 
 
 
 
-/*
-        if (str.length() == 4) {
+        // Promotion moves
+        if (str.length() == 5) {
             if (fromX == toX) {
                 switch (s[4]) {
                 case 'K': m.type = Move.PROMOTE_TO_KNIGHT;
@@ -120,7 +145,7 @@ public class Chessio {
                 }
          }
         }
-*/
+
 
             // Pawn promotions
             try {
@@ -135,26 +160,6 @@ public class Chessio {
                     throw new NoMoveException();
             }
 
-            // ENPASSENT Move
-            // Are we dealing with a pawn move?
-            if (p.type == Piece.PAWN) {
-                if ((fromX != toX) && (b.freeSquare(toX, toY))) {
-                    m.type = Move.CAPTURE_ENPASSANT;
-                    m.aCapturedPiece = Piece.PAWN;
-                    return m;
-                }
-            }
-
-            // White or black does a short or a long castling
-            if (fromY == toY && (fromY == 0 || fromY == 7)) {
-                    if (fromX == 4 && toX == 6) {
-                            m.type = Move.CASTLE_SHORT;
-                            return m;
-                    } else if (fromX == 4 && toX == 2) {
-                            m.type = Move.CASTLE_LONG;
-                            return m;
-                    }
-            }
 
             throw new NoMoveException();
     }
