@@ -175,7 +175,7 @@ class Movegenerator {
                 Moves.add(new Move(x, y, x - 1, y, Move.NORMALMOVE, 0, c));
             } else {
                 try {
-                    if (b.getPiece(x - 1, y).color != c) {
+                    if (b.getPiece(x - 1, y).color != c && !b.attacks(x - 1, y)) {
                         Moves.add(new Move(x, y, x - 1, y, Move.CAPTURE, b.getPiece(x - 1, y).type, c));
                     }
                 } catch (NoPieceException e) {
@@ -203,11 +203,10 @@ class Movegenerator {
             // Down
             if (y > 0) {
                 if (b.freeSquare(x - 1, y - 1) && !b.attacks(x - 1, y - 1)) {
-                    Moves.add(new Move(x, y, x - 1, y - 1, Move.NORMALMOVE, 0,
-                            c));
+                    Moves.add(new Move(x, y, x - 1, y - 1, Move.NORMALMOVE, 0, c));
                 } else {
                     try {
-                        if (b.getPiece(x - 1, y - 1).color != c) {
+                        if (b.getPiece(x - 1, y - 1).color != c && !b.attacks(x - 1, y - 1)) { // TODO: Apply this change here all over...
                             Moves.add(new Move(x, y, x - 1, y - 1,
                                     Move.CAPTURE,
                                     b.getPiece(x - 1, y - 1).type, c));
