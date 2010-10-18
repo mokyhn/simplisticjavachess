@@ -70,13 +70,11 @@ public class Board implements Cloneable {
             if (parsingPartNo == 1) {
                 if (c >= '1' && c <= '8') { x = x + (int) (c - '0'); }
                 else if (c >= 'b' && c <= 'r') {
-                    try { insertPiece(new Piece(x, y, c)); }
-                    catch (NoPieceException e) { }
+                    insertPiece(new Piece(x, y, c));                     
                     x++;
                 }
                 else if (c >= 'B' && c <= 'R') {
-                    try { insertPiece(new Piece(x, y, c)); }
-                    catch (NoPieceException e) { }
+                    insertPiece(new Piece(x, y, c)); 
                     x++;
                 } else if (c == '/') {
                     y--;
@@ -125,7 +123,7 @@ public class Board implements Cloneable {
 
 
     // Find a piece at a certain location
-    public Piece getPiece(int x, int y) throws NoPieceException {
+    public Piece getPiece(int x, int y) {
         Piece p =  position.getPiece(x, y);
 
         if (p != null) assert p.xPos == x && p.yPos == y;

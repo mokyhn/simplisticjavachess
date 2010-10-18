@@ -55,97 +55,87 @@ class Movegenerator {
 
         // Normal diagonal capturing to the left
         if ((x > 0) && (y != (5 * c + 7) / 2)) {
-            try {
-                leftPiece = b.getPiece(x - 1, y + c);
-                if (leftPiece.color != c) {
-                    Moves.add(new Move(x, y, x - 1, y + c, Move.CAPTURE,
-                            leftPiece.type, c));
-                }
-            } catch (NoPieceException e) {
+            leftPiece = b.getPiece(x - 1, y + c);
+            if (leftPiece != null && leftPiece.color != c) {
+                Moves.add(new Move(x, y, x - 1, y + c, Move.CAPTURE,
+                        leftPiece.type, c));
             }
         }
 
         // Normal diagonal capturing to the right
         if ((x < 7) && (y != (5 * c + 7) / 2)) {
-            try {
-                rightPiece = b.getPiece(x + 1, y + c);
-                if (rightPiece.color != c) {
-                    Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE,
-                            rightPiece.type, c));
-                }
-            } catch (NoPieceException e) {
+            rightPiece = b.getPiece(x + 1, y + c);
+            if (rightPiece != null && rightPiece.color != c) {
+                Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE,
+                        rightPiece.type, c));
             }
         }
 
         // Promotion via diagonal capturing to the left
         if ((x > 0) && (y == (5 * c + 7) / 2)) {
-            try {
-                leftPiece = b.getPiece(x - 1, y + c);
-                if (leftPiece.color != c) {
-                    Moves.add(new Move(x, y, x - 1, y + c,
-                            Move.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece.type,
-                            c));
-                }
+            leftPiece = b.getPiece(x - 1, y + c);
+            if (leftPiece != null && leftPiece.color != c) {
                 Moves.add(new Move(x, y, x - 1, y + c,
-                        Move.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece.type, c));
-                Moves.add(new Move(x, y, x - 1, y + c,
-                        Move.CAPTURE_AND_PROMOTE_TO_QUEEN, leftPiece.type, c));
-                Moves.add(new Move(x, y, x - 1, y + c,
-                        Move.CAPTURE_AND_PROMOTE_TO_ROOK, leftPiece.type, c));
-            } catch (NoPieceException e) {
+                        Move.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece.type,
+                        c));
+            
+            Moves.add(new Move(x, y, x - 1, y + c,
+                    Move.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece.type, c));
+            Moves.add(new Move(x, y, x - 1, y + c,
+                    Move.CAPTURE_AND_PROMOTE_TO_QUEEN, leftPiece.type, c));
+            Moves.add(new Move(x, y, x - 1, y + c,
+                    Move.CAPTURE_AND_PROMOTE_TO_ROOK, leftPiece.type, c));
             }
-        }
+            }
 
         // Promotion via diagonal capturing to the right
         if ((x < 7) && (y == (5 * c + 7) / 2)) {
-            try {
-                rightPiece = b.getPiece(x + 1, y + c);
-                if (rightPiece.color != c) {
-                    Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE_AND_PROMOTE_TO_BISHOP,
-                            rightPiece.type, c));
-                }
-                Moves.add(new Move(x, y, x + 1, y + c,
-                        Move.CAPTURE_AND_PROMOTE_TO_KNIGHT,
-                        rightPiece.type, c));
-                Moves.add(new Move(x, y, x + 1, y + c,
-                        Move.CAPTURE_AND_PROMOTE_TO_QUEEN, rightPiece.type, c));
-                Moves.add(new Move(x, y, x + 1, y + c,
-                        Move.CAPTURE_AND_PROMOTE_TO_ROOK, rightPiece.type, c));
 
-            } catch (NoPieceException e) {
+            rightPiece = b.getPiece(x + 1, y + c);
+            if (rightPiece != null && rightPiece.color != c) {
+                Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE_AND_PROMOTE_TO_BISHOP,
+                        rightPiece.type, c));
+            
+            Moves.add(new Move(x, y, x + 1, y + c,
+                    Move.CAPTURE_AND_PROMOTE_TO_KNIGHT,
+                    rightPiece.type, c));
+            Moves.add(new Move(x, y, x + 1, y + c,
+                    Move.CAPTURE_AND_PROMOTE_TO_QUEEN, rightPiece.type, c));
+            Moves.add(new Move(x, y, x + 1, y + c,
+                    Move.CAPTURE_AND_PROMOTE_TO_ROOK, rightPiece.type, c));
             }
+
         }
 
         // En passant capture
         try {
             Move lastMove = b.getLastMove();
             if (x > 0) {
-                try {
-                    lastMovePiece = b.getPiece(lastMove.toX, lastMove.toY);
-                    // The piece stands to the left
-                    if ((lastMove.toX == x - 1) && (lastMove.toY == y)
-                            && (lastMovePiece.type == Piece.PAWN)
-                            && (Math.abs(lastMove.fromY - lastMove.toY) == 2)) {
-                        Moves.add(new Move(x, y, x - 1, y + c,
-                                Move.CAPTURE_ENPASSANT, Piece.EMPTY, c));
-                    }
-                } catch (NoPieceException e) {
+
+                lastMovePiece = b.getPiece(lastMove.toX, lastMove.toY);
+                // The piece stands to the left
+                if (lastMovePiece != null && (lastMove.toX == x - 1) && (lastMove.toY == y)
+                        && (lastMovePiece.type == Piece.PAWN)
+                        && (Math.abs(lastMove.fromY - lastMove.toY) == 2)) {
+                    Moves.add(new Move(x, y, x - 1, y + c,
+                            Move.CAPTURE_ENPASSANT, Piece.EMPTY, c));
                 }
+
+
             }
 
             if (x < 7) {
-                try {
-                    lastMovePiece = b.getPiece(lastMove.toX, lastMove.toY);
-                    // The piece stands to the right
-                    if ((lastMove.toX == x + 1) && (lastMove.toY == y)
-                            && (lastMovePiece.type == Piece.PAWN)
-                            && (Math.abs(lastMove.fromY - lastMove.toY) == 2)) {
-                        Moves.add(new Move(x, y, x + 1, y + c,
-                                Move.CAPTURE_ENPASSANT, Piece.EMPTY, c));
 
-                    }
-                } catch (NoPieceException e) {
+                lastMovePiece = b.getPiece(lastMove.toX, lastMove.toY);
+                // The piece stands to the right
+                if (lastMovePiece != null && (lastMove.toX == x + 1) && (lastMove.toY == y)
+                        && (lastMovePiece.type == Piece.PAWN)
+                        && (Math.abs(lastMove.fromY - lastMove.toY) == 2)) {
+                    Moves.add(new Move(x, y, x + 1, y + c,
+                            Move.CAPTURE_ENPASSANT, Piece.EMPTY, c));
+
                 }
+
             }
 
         } catch (java.util.EmptyStackException e) {
@@ -164,21 +154,20 @@ class Movegenerator {
     public ArrayList<Move> kingMoves(Board b, Piece p) throws NoMoveException {
         ArrayList<Move> Moves = new ArrayList<Move>();
         int c = b.whoIsInMove();
-
         int x = p.xPos;
         int y = p.yPos;
+
+        Piece pTo = null;
 
         // King moves left
         if (x > 0 && !b.attacks(x - 1, y)) {
             // To side
-            if (b.freeSquare(x - 1, y) ) {
+            if (b.freeSquare(x - 1, y)) {
                 Moves.add(new Move(x, y, x - 1, y, Move.NORMALMOVE, 0, c));
             } else {
-                try {
-                    if (b.getPiece(x - 1, y).color != c && !b.attacks(x - 1, y)) {
-                        Moves.add(new Move(x, y, x - 1, y, Move.CAPTURE, b.getPiece(x - 1, y).type, c));
-                    }
-                } catch (NoPieceException e) {
+                pTo = b.getPiece(x - 1, y);
+                if (pTo != null && pTo.color != c && !b.attacks(x - 1, y)) {
+                    Moves.add(new Move(x, y, x - 1, y, Move.CAPTURE, pTo.type, c));
                 }
             }
             ;
@@ -189,30 +178,31 @@ class Movegenerator {
                     Moves.add(new Move(x, y, x - 1, y + 1, Move.NORMALMOVE, 0,
                             c));
                 } else {
-                    try {
-                        if (b.getPiece(x - 1, y + 1).color != c) {
+                    
+                        pTo = b.getPiece(x - 1, y + 1);
+                        if (pTo != null && pTo.color != c) {
                             Moves.add(new Move(x, y, x - 1, y + 1,
                                     Move.CAPTURE,
-                                    b.getPiece(x - 1, y + 1).type, c));
+                                    pTo.type, c));
                         }
-                    } catch (NoPieceException e) {
-                    }
+                    
                 }
             }
 
             // Down
             if (y > 0 && !b.attacks(x - 1, y - 1)) {
-                if (b.freeSquare(x - 1, y - 1) ) {
+                if (b.freeSquare(x - 1, y - 1)) {
                     Moves.add(new Move(x, y, x - 1, y - 1, Move.NORMALMOVE, 0, c));
                 } else {
-                    try {
-                        if (b.getPiece(x - 1, y - 1).color != c) { 
+                    
+                        pTo = b.getPiece(x - 1, y - 1);
+                        if (pTo != null && pTo.color != c) {
                             Moves.add(new Move(x, y, x - 1, y - 1,
                                     Move.CAPTURE,
-                                    b.getPiece(x - 1, y - 1).type, c));
+                                    pTo.type, c));
                         }
-                    } catch (NoPieceException e) {
-                    }
+                    
+                    
                 }
             }
         }
@@ -224,12 +214,10 @@ class Movegenerator {
             if (b.freeSquare(x + 1, y)) {
                 Moves.add(new Move(x, y, x + 1, y, Move.NORMALMOVE, 0, c));
             } else {
-                try {
-                    if (b.getPiece(x + 1, y).color != c) {
-                        Moves.add(new Move(x, y, x + 1, y, Move.CAPTURE, b.getPiece(x + 1, y).type, c));
+                pTo = b.getPiece(x + 1, y);
+                    if (pTo != null && pTo.color != c) {
+                        Moves.add(new Move(x, y, x + 1, y, Move.CAPTURE, pTo.type, c));
                     }
-                } catch (NoPieceException e) {
-                }
             }
 
 
@@ -238,12 +226,13 @@ class Movegenerator {
                 if (b.freeSquare(x + 1, y + 1)) {
                     Moves.add(new Move(x, y, x + 1, y + 1, Move.NORMALMOVE, 0, c));
                 } else {
-                    try {
-                        if (b.getPiece(x + 1, y + 1).color != c) {
-                            Moves.add(new Move(x, y, x + 1, y + 1, Move.CAPTURE, b.getPiece(x + 1, y + 1).type, c));
+
+                        pTo = b.getPiece(x + 1, y + 1);
+                        if (pTo != null && pTo.color != c) {
+                            Moves.add(new Move(x, y, x + 1, y + 1, Move.CAPTURE, pTo.type, c));
                         }
-                    } catch (NoPieceException e) {
-                    }
+                    
+                    
                 }
             }
 
@@ -252,12 +241,10 @@ class Movegenerator {
                 if (b.freeSquare(x + 1, y - 1)) {
                     Moves.add(new Move(x, y, x + 1, y - 1, Move.NORMALMOVE, 0, c));
                 } else {
-                    try {
-                        if (b.getPiece(x + 1, y - 1).color != c) {
-                            Moves.add(new Move(x, y, x + 1, y - 1, Move.CAPTURE, b.getPiece(x + 1, y - 1).type, c));
+                        pTo = b.getPiece(x + 1, y - 1);
+                        if (pTo != null && pTo.color != c) {
+                            Moves.add(new Move(x, y, x + 1, y - 1, Move.CAPTURE, pTo.type, c));
                         }
-                    } catch (NoPieceException e) {
-                    }
                 }
             }
             ;
@@ -268,12 +255,10 @@ class Movegenerator {
             if (b.freeSquare(x, y + 1)) {
                 Moves.add(new Move(x, y, x, y + 1, Move.NORMALMOVE, 0, c));
             } else {
-                try {
-                    if (b.getPiece(x, y + 1).color != c) {
-                        Moves.add(new Move(x, y, x, y + 1, Move.CAPTURE, b.getPiece(x, y + 1).type, c));
+                    pTo = b.getPiece(x, y + 1);
+                    if (pTo != null && pTo.color != c) {
+                        Moves.add(new Move(x, y, x, y + 1, Move.CAPTURE, pTo.type, c));
                     }
-                } catch (NoPieceException e) {
-                }
             }
         }
         ;
@@ -283,12 +268,10 @@ class Movegenerator {
             if (b.freeSquare(x, y - 1)) {
                 Moves.add(new Move(x, y, x, y - 1, Move.NORMALMOVE, 0, c));
             } else {
-                try {
-                    if (b.getPiece(x, y - 1).color != c) {
-                        Moves.add(new Move(x, y, x, y - 1, Move.CAPTURE, b.getPiece(x, y - 1).type, c));
+                    pTo = b.getPiece(x, y - 1);
+                    if (pTo != null && p.color != c) {
+                        Moves.add(new Move(x, y, x, y - 1, Move.CAPTURE, pTo.type, c));
                     }
-                } catch (NoPieceException e) {
-                }
             }
         }
         ;
