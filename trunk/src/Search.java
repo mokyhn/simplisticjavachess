@@ -38,8 +38,8 @@ class Search {
                    " Evaluation " + searchResult + " at " +
                    plyDepth + " ply in " + noPositions + 
                    " positions in " + getTimeUsage() + " mSecs = "
-                   + 1000 * ((float) noPositions/(float) getTimeUsage())
-                   + " nodes pr. sec");
+                   + ((float) noPositions/(float) getTimeUsage())
+                   + " kN/s");
         }
 
 	public int alphaBetaSearch(int plyDepth, int depthToGo, int alpha, int beta) {
