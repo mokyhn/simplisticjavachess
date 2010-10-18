@@ -69,7 +69,7 @@ class Piece implements Cloneable {
       return r;
     }
 
-    public Piece(int x, int y, char pieceLetter) throws NoPieceException {
+    public Piece(int x, int y, char pieceLetter)  {
         assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error in x or y ";
 
         xPos = x;
@@ -113,7 +113,9 @@ class Piece implements Cloneable {
                       color = WHITE;
                       break;
 
-            default: throw new NoPieceException();
+            default: System.out.println("Unexpected error in Piece constructor");
+                     System.exit(1);
+
             }
      }
 

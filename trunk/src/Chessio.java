@@ -16,8 +16,9 @@ public class Chessio {
         for (y = 7; y >= 0; y--) {
             for (x = 0; x < 8; x++) {
                  System.out.print(" ");
-                  try { System.out.print( theBoard.getPiece(x, y).toString()); }
-                  catch (NoPieceException e) { System.out.print('.'); }
+                  p =  theBoard.getPiece(x, y);
+                  if (p != null) { System.out.print(p.toString()); }
+                  else System.out.print('.');
             }
           System.out.println();
         } // end last for-loop
@@ -55,8 +56,8 @@ public class Chessio {
             throw new NoMoveException();
         }
 
-        try { p = b.getPiece(fromX, fromY); }
-        catch (NoPieceException e) {throw new NoMoveException();}
+        p = b.getPiece(fromX, fromY);
+        if (p == null) throw new NoMoveException();
 
         if (p.color != whoToMove) { throw new NoMoveException(); }
 
@@ -77,14 +78,15 @@ public class Chessio {
             }
 
             // A capturing move
-            try {
-                pto = b.getPiece(toX, toY);
-                if (pto.color == -whoToMove) {
-                   m.type           = Move.CAPTURE;
-                   m.aCapturedPiece = pto.type;
-                   return m;
-                 }
-             } catch (NoPieceException e) { throw new NoMoveException(); }
+            
+            pto = b.getPiece(toX, toY);
+            if (pto == null) throw new NoMoveException();
+            if (pto.color == -whoToMove) {
+               m.type           = Move.CAPTURE;
+               m.aCapturedPiece = pto.type;
+               return m;
+             }
+             
 
 
              // ENPASSENT Move
@@ -147,18 +149,18 @@ public class Chessio {
         }
 
 
-            // Pawn promotions
-            try {
-                    if ((b.getPiece(fromX, fromY).type == Piece.PAWN
-                                    && b.getPiece(fromX, fromY).color == Piece.WHITE && fromY == 6)
-                                    || (b.getPiece(fromX, fromY).type == Piece.PAWN
-                                                    && b.getPiece(fromX, fromY).color == Piece.BLACK && fromY == 1))
-                            if (b.freeSquare(toX, toY)) {
-                                    return m;
-                            }
-            } catch (NoPieceException e) {
-                    throw new NoMoveException();
-            }
+        // Pawn promotions
+        p = b.getPiece(fromX, fromY);
+        if (p == null) throw new NoMoveException();
+        if ((b.getPiece(fromX, fromY).type == Piece.PAWN
+           && b.getPiece(fromX, fromY).color == Piece.WHITE && fromY == 6)
+           || (b.getPiece(fromX, fromY).type == Piece.PAWN
+            && b.getPiece(fromX, fromY).color == Piece.BLACK && fromY == 1))
+                if (b.freeSquare(toX, toY)) {
+                        return m;
+                }
+
+            
 
 
             throw new NoMoveException();

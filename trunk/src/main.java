@@ -1,4 +1,7 @@
 //-enableassertions
+// TODO:
+// NoPieceException and
+// NoMoveException gives alot of memory waste.
 import java.io.*;
 
 class main {
@@ -25,10 +28,10 @@ class main {
 	//Board interfaceBoard = new Board("2k5/3pK3/8/4p3/4P3/8/8/8 w - - 0 1");
 
         // Do a simple setup with pawns.
-        //Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w - 0 1");
+        Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w - 0 1");
 
 
-         Board interfaceBoard = new Board("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w - 0 1");
+        // Board interfaceBoard = new Board("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w - 0 1");
 
         //Board interfaceBoard = new Board("4k3/8/3pp3/4p3/3P1P2/4K3/8/8 w - - 0 1");
 
@@ -68,7 +71,7 @@ class main {
             if (str.matches("quit") || str.matches("q") || str.matches("bye") || str.matches("exit")) {
                 System.out.print("\nGoodbye\n\n");
                 System.exit(0); }
-              else if (str.startsWith("sd")) { plyDepth = Integer.parseInt(str.substring(4)); }
+              else if (str.startsWith("sd")) { plyDepth = Integer.parseInt(str.substring(3)); }
               else if (str.matches("help")) { io.printHelpText(); }
               else if (str.matches("print") || str.matches("p")) { interfaceBoard.print(); }
               else if (str.startsWith("usermove")) {

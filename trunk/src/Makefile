@@ -20,9 +20,9 @@ default: classes
 
 classes: $(CLASSES:.java=.class)
 
-#exec:
-#	gcj -c -g -O $(MYCLASSDIR) *.java
-#	gcj -B $(MYCLASSDIR) --main=main -o main *.o
+exec:
+	gcj -c -g -O $(MYCLASSDIR) *.java
+	gcj -B $(MYCLASSDIR) --main=main -o main *.o
 
 clean:
 	$(RM) ../class/*.class
