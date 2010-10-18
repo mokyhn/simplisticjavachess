@@ -10,7 +10,7 @@ class Movegenerator {
 
     // Input: Given a board b, and that there is a pawn p
     // Output: The set of moves this pawn can perform.
-    public ArrayList<Move> pawnMoves(Board b, Piece p) throws NoMoveException {
+    public ArrayList<Move> pawnMoves(Board b, Piece p)  {
 
         int c = b.whoIsInMove();
         int x = p.xPos;
@@ -143,15 +143,11 @@ class Movegenerator {
             // Hence no en passant moves are possible
         }
 
-        if (Moves.isEmpty()) {
-            throw new NoMoveException();
-        } else {
-            return Moves;
-        }
+      return Moves;
 
     }
 
-    public ArrayList<Move> kingMoves(Board b, Piece p) throws NoMoveException {
+    public ArrayList<Move> kingMoves(Board b, Piece p)  {
         ArrayList<Move> Moves = new ArrayList<Move>();
         int c = b.whoIsInMove();
         int x = p.xPos;
@@ -276,21 +272,15 @@ class Movegenerator {
         }
         ;
 
-        if (Moves.isEmpty()) {
-            throw new NoMoveException();
-        } else {
-            return Moves;
-        }
+      return Moves;
     }
 
     // Genereate the possible moves for one single piece
-    public ArrayList<Move> generateMoves(Board b, Piece p)
-            throws NoMoveException {
+    public ArrayList<Move> generateMoves(Board b, Piece p)  {
+        ArrayList<Move> Moves = new ArrayList<Move>();
         int sideToMove = b.whoIsInMove();
 
-        if (p.color != sideToMove) {
-            throw new NoMoveException();
-        }
+        if (p.color != sideToMove) return Moves;
 
         switch (p.type) {
             // WHITE pawn moves
@@ -299,20 +289,20 @@ class Movegenerator {
             case Piece.KING:
                 return kingMoves(b, p);
         }
-        throw new NoMoveException();
+
+        return Moves;
     }
 
     public ArrayList<Move> generateAllMoves(Board b) {
         ArrayList<Move> Moves = new ArrayList<Move>();
+        ArrayList<Move> r = null;
         Piece p;
 
 
         for (int i = 0; i < b.getNumberOfPieces(); i++) {
             p = b.getPiece(i);
-            try {
-                Moves.addAll(generateMoves(b, p));
-            } catch (NoMoveException e) {
-            }
+            r = generateMoves(b, p);
+            if (r != null && !r.isEmpty()) Moves.addAll(r);
         }
 
         return Moves;
