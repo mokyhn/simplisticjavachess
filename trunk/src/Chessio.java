@@ -16,7 +16,7 @@ public class Chessio {
         for (y = 7; y >= 0; y--) {
             for (x = 0; x < 8; x++) {
                  System.out.print(" ");
-                  p =  theBoard.getPiece(x, y);
+                  p =  theBoard.getPieceXY(x, y);
                   if (p != null) { System.out.print(p.toString()); }
                   else System.out.print('.');
             }
@@ -56,7 +56,7 @@ public class Chessio {
             throw new NoMoveException();
         }
 
-        p = b.getPiece(fromX, fromY);
+        p = b.getPieceXY(fromX, fromY);
         if (p == null) throw new NoMoveException();
 
         if (p.color != whoToMove) { throw new NoMoveException(); }
@@ -78,10 +78,8 @@ public class Chessio {
             }
 
             // A capturing move
-            
-            pto = b.getPiece(toX, toY);
-            if (pto == null) throw new NoMoveException();
-            if (pto.color == -whoToMove) {
+            pto = b.getPieceXY(toX, toY);
+            if (pto != null && pto.color == -whoToMove) {
                m.type           = Move.CAPTURE;
                m.aCapturedPiece = pto.type;
                return m;
@@ -150,12 +148,12 @@ public class Chessio {
 
 
         // Pawn promotions
-        p = b.getPiece(fromX, fromY);
+        p = b.getPieceXY(fromX, fromY);
         if (p == null) throw new NoMoveException();
-        if ((b.getPiece(fromX, fromY).type == Piece.PAWN
-           && b.getPiece(fromX, fromY).color == Piece.WHITE && fromY == 6)
-           || (b.getPiece(fromX, fromY).type == Piece.PAWN
-            && b.getPiece(fromX, fromY).color == Piece.BLACK && fromY == 1))
+        if ((b.getPieceXY(fromX, fromY).type == Piece.PAWN
+           && b.getPieceXY(fromX, fromY).color == Piece.WHITE && fromY == 6)
+           || (b.getPieceXY(fromX, fromY).type == Piece.PAWN
+            && b.getPieceXY(fromX, fromY).color == Piece.BLACK && fromY == 1))
                 if (b.freeSquare(toX, toY)) {
                         return m;
                 }
