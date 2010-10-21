@@ -24,7 +24,7 @@ public class PieceList {
         return p;
     }
 
-    public Piece getPiece(int x, int y) {
+    public Piece getPieceXY(int x, int y) {
         Piece p = xyPosition[x][y];
 
         return p;

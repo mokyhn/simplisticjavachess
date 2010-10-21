@@ -55,7 +55,7 @@ class Movegenerator {
 
         // Normal diagonal capturing to the left
         if ((x > 0) && (y != (5 * c + 7) / 2)) {
-            leftPiece = b.getPiece(x - 1, y + c);
+            leftPiece = b.getPieceXY(x - 1, y + c);
             if (leftPiece != null && leftPiece.color != c) {
                 Moves.add(new Move(x, y, x - 1, y + c, Move.CAPTURE,
                         leftPiece.type, c));
@@ -64,7 +64,7 @@ class Movegenerator {
 
         // Normal diagonal capturing to the right
         if ((x < 7) && (y != (5 * c + 7) / 2)) {
-            rightPiece = b.getPiece(x + 1, y + c);
+            rightPiece = b.getPieceXY(x + 1, y + c);
             if (rightPiece != null && rightPiece.color != c) {
                 Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE,
                         rightPiece.type, c));
@@ -73,7 +73,7 @@ class Movegenerator {
 
         // Promotion via diagonal capturing to the left
         if ((x > 0) && (y == (5 * c + 7) / 2)) {
-            leftPiece = b.getPiece(x - 1, y + c);
+            leftPiece = b.getPieceXY(x - 1, y + c);
             if (leftPiece != null && leftPiece.color != c) {
                 Moves.add(new Move(x, y, x - 1, y + c,
                         Move.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece.type,
@@ -91,7 +91,7 @@ class Movegenerator {
         // Promotion via diagonal capturing to the right
         if ((x < 7) && (y == (5 * c + 7) / 2)) {
 
-            rightPiece = b.getPiece(x + 1, y + c);
+            rightPiece = b.getPieceXY(x + 1, y + c);
             if (rightPiece != null && rightPiece.color != c) {
                 Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE_AND_PROMOTE_TO_BISHOP,
                         rightPiece.type, c));
@@ -112,7 +112,7 @@ class Movegenerator {
             Move lastMove = b.getLastMove();
             if (x > 0) {
 
-                lastMovePiece = b.getPiece(lastMove.toX, lastMove.toY);
+                lastMovePiece = b.getPieceXY(lastMove.toX, lastMove.toY);
                 // The piece stands to the left
                 if (lastMovePiece != null && (lastMove.toX == x - 1) && (lastMove.toY == y)
                         && (lastMovePiece.type == Piece.PAWN)
@@ -126,7 +126,7 @@ class Movegenerator {
 
             if (x < 7) {
 
-                lastMovePiece = b.getPiece(lastMove.toX, lastMove.toY);
+                lastMovePiece = b.getPieceXY(lastMove.toX, lastMove.toY);
                 // The piece stands to the right
                 if (lastMovePiece != null && (lastMove.toX == x + 1) && (lastMove.toY == y)
                         && (lastMovePiece.type == Piece.PAWN)
@@ -161,7 +161,7 @@ class Movegenerator {
             if (b.freeSquare(x - 1, y)) {
                 Moves.add(new Move(x, y, x - 1, y, Move.NORMALMOVE, 0, c));
             } else {
-                pTo = b.getPiece(x - 1, y);
+                pTo = b.getPieceXY(x - 1, y);
                 if (pTo != null && pTo.color != c && !b.attacks(x - 1, y)) {
                     Moves.add(new Move(x, y, x - 1, y, Move.CAPTURE, pTo.type, c));
                 }
@@ -175,7 +175,7 @@ class Movegenerator {
                             c));
                 } else {
                     
-                        pTo = b.getPiece(x - 1, y + 1);
+                        pTo = b.getPieceXY(x - 1, y + 1);
                         if (pTo != null && pTo.color != c) {
                             Moves.add(new Move(x, y, x - 1, y + 1,
                                     Move.CAPTURE,
@@ -191,7 +191,7 @@ class Movegenerator {
                     Moves.add(new Move(x, y, x - 1, y - 1, Move.NORMALMOVE, 0, c));
                 } else {
                     
-                        pTo = b.getPiece(x - 1, y - 1);
+                        pTo = b.getPieceXY(x - 1, y - 1);
                         if (pTo != null && pTo.color != c) {
                             Moves.add(new Move(x, y, x - 1, y - 1,
                                     Move.CAPTURE,
@@ -210,7 +210,7 @@ class Movegenerator {
             if (b.freeSquare(x + 1, y)) {
                 Moves.add(new Move(x, y, x + 1, y, Move.NORMALMOVE, 0, c));
             } else {
-                pTo = b.getPiece(x + 1, y);
+                pTo = b.getPieceXY(x + 1, y);
                     if (pTo != null && pTo.color != c) {
                         Moves.add(new Move(x, y, x + 1, y, Move.CAPTURE, pTo.type, c));
                     }
@@ -223,7 +223,7 @@ class Movegenerator {
                     Moves.add(new Move(x, y, x + 1, y + 1, Move.NORMALMOVE, 0, c));
                 } else {
 
-                        pTo = b.getPiece(x + 1, y + 1);
+                        pTo = b.getPieceXY(x + 1, y + 1);
                         if (pTo != null && pTo.color != c) {
                             Moves.add(new Move(x, y, x + 1, y + 1, Move.CAPTURE, pTo.type, c));
                         }
@@ -237,7 +237,7 @@ class Movegenerator {
                 if (b.freeSquare(x + 1, y - 1)) {
                     Moves.add(new Move(x, y, x + 1, y - 1, Move.NORMALMOVE, 0, c));
                 } else {
-                        pTo = b.getPiece(x + 1, y - 1);
+                        pTo = b.getPieceXY(x + 1, y - 1);
                         if (pTo != null && pTo.color != c) {
                             Moves.add(new Move(x, y, x + 1, y - 1, Move.CAPTURE, pTo.type, c));
                         }
@@ -251,7 +251,7 @@ class Movegenerator {
             if (b.freeSquare(x, y + 1)) {
                 Moves.add(new Move(x, y, x, y + 1, Move.NORMALMOVE, 0, c));
             } else {
-                    pTo = b.getPiece(x, y + 1);
+                    pTo = b.getPieceXY(x, y + 1);
                     if (pTo != null && pTo.color != c) {
                         Moves.add(new Move(x, y, x, y + 1, Move.CAPTURE, pTo.type, c));
                     }
@@ -264,7 +264,7 @@ class Movegenerator {
             if (b.freeSquare(x, y - 1)) {
                 Moves.add(new Move(x, y, x, y - 1, Move.NORMALMOVE, 0, c));
             } else {
-                    pTo = b.getPiece(x, y - 1);
+                    pTo = b.getPieceXY(x, y - 1);
                     if (pTo != null && p.color != c) {
                         Moves.add(new Move(x, y, x, y - 1, Move.CAPTURE, pTo.type, c));
                     }

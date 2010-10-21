@@ -123,8 +123,8 @@ public class Board implements Cloneable {
 
 
     // Find a piece at a certain location
-    public Piece getPiece(int x, int y) {
-        Piece p =  position.getPiece(x, y);
+    public Piece getPieceXY(int x, int y) {
+        Piece p =  position.getPieceXY(x, y);
 
         if (p != null) assert p.xPos == x && p.yPos == y;
         return p;
