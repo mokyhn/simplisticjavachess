@@ -57,8 +57,7 @@ class Movegenerator {
         if ((x > 0) && (y != (5 * c + 7) / 2)) {
             leftPiece = b.getPieceXY(x - 1, y + c);
             if (leftPiece != null && leftPiece.color != c) {
-                Moves.add(new Move(x, y, x - 1, y + c, Move.CAPTURE,
-                        leftPiece.type, c));
+                Moves.add(new Move(x, y, x - 1, y + c, Move.CAPTURE, leftPiece.type, c));
             }
         }
 
