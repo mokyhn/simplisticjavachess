@@ -8,7 +8,7 @@ class main {
 
 
     public static void main(String param[]) throws java.io.IOException {
-        int     plyDepth      = 5;
+        int     plyDepth      = 6;
         int     searchResult  = 0;
         Chessio io            = new Chessio();
         Search  searcher      = new Search();
