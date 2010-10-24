@@ -155,121 +155,89 @@ class Movegenerator {
         Piece pTo = null;
 
         // King moves left
-        if (x > 0 && !b.attacks(x - 1, y)) {
-            // To side
-            if (b.freeSquare(x - 1, y)) {
-                Moves.add(new Move(x, y, x - 1, y, Move.NORMALMOVE, 0, c));
-            } else {
-                pTo = b.getPieceXY(x - 1, y);
-                if (pTo != null && pTo.color != c && !b.attacks(x - 1, y)) {
-                    Moves.add(new Move(x, y, x - 1, y, Move.CAPTURE, pTo.type, c));
+        if (x > 0) {
+            if (!b.attacks(x - 1, y)) {
+                // Left, and not up/down
+                if (b.freeSquare(x - 1, y)) Moves.add(new Move(x, y, x - 1, y, Move.NORMALMOVE, 0, c));
+                else {
+                    pTo = b.getPieceXY(x - 1, y);
+                    if (pTo != null && pTo.color != c) Moves.add(new Move(x, y, x - 1, y, Move.CAPTURE, pTo.type, c));
                 }
             }
-            ;
-
+            
             // Up
-            if (y < 7 && !b.attacks(x - 1, y + 1)) {
-                if (b.freeSquare(x - 1, y + 1)) {
-                    Moves.add(new Move(x, y, x - 1, y + 1, Move.NORMALMOVE, 0,
-                            c));
-                } else {
-                    
-                        pTo = b.getPieceXY(x - 1, y + 1);
-                        if (pTo != null && pTo.color != c) {
-                            Moves.add(new Move(x, y, x - 1, y + 1,
-                                    Move.CAPTURE,
-                                    pTo.type, c));
-                        }
-                    
+            if (y < 7 && !b.attacks(x - 1, y + 1)) 
+                if (b.freeSquare(x - 1, y + 1)) Moves.add(new Move(x, y, x - 1, y + 1, Move.NORMALMOVE, 0, c));
+                else {
+                  pTo = b.getPieceXY(x - 1, y + 1);
+                  if (pTo != null && pTo.color != c) Moves.add(new Move(x, y, x - 1, y + 1, Move.CAPTURE, pTo.type, c));
                 }
-            }
+            
 
             // Down
             if (y > 0 && !b.attacks(x - 1, y - 1)) {
-                if (b.freeSquare(x - 1, y - 1)) {
-                    Moves.add(new Move(x, y, x - 1, y - 1, Move.NORMALMOVE, 0, c));
-                } else {
-                    
-                        pTo = b.getPieceXY(x - 1, y - 1);
-                        if (pTo != null && pTo.color != c) {
-                            Moves.add(new Move(x, y, x - 1, y - 1,
-                                    Move.CAPTURE,
-                                    pTo.type, c));
-                        }
-                    
-                    
+                if (b.freeSquare(x - 1, y - 1)) Moves.add(new Move(x, y, x - 1, y - 1, Move.NORMALMOVE, 0, c));
+                else {
+                    pTo = b.getPieceXY(x - 1, y - 1);
+                    if (pTo != null && pTo.color != c) Moves.add(new Move(x, y, x - 1, y - 1, Move.CAPTURE, pTo.type, c));
                 }
             }
-        }
+        } // End of "Left" section
 
 
         // King moves right
-        if (x < 7 && !b.attacks(x + 1, y)) {
-            // To side
-            if (b.freeSquare(x + 1, y)) {
-                Moves.add(new Move(x, y, x + 1, y, Move.NORMALMOVE, 0, c));
-            } else {
-                pTo = b.getPieceXY(x + 1, y);
-                    if (pTo != null && pTo.color != c) {
-                        Moves.add(new Move(x, y, x + 1, y, Move.CAPTURE, pTo.type, c));
-                    }
+        if (x < 7) {
+                if (!b.attacks(x + 1, y)) {
+                // To side
+                if (b.freeSquare(x + 1, y)) Moves.add(new Move(x, y, x + 1, y, Move.NORMALMOVE, 0, c));
+                else {
+                    pTo = b.getPieceXY(x + 1, y);
+                    if (pTo != null && pTo.color != c) Moves.add(new Move(x, y, x + 1, y, Move.CAPTURE, pTo.type, c));
+                }
             }
 
-
             // Up and to the right
-            if (y < 7 && !b.attacks(x + 1, y + 1)) {
-                if (b.freeSquare(x + 1, y + 1)) {
-                    Moves.add(new Move(x, y, x + 1, y + 1, Move.NORMALMOVE, 0, c));
-                } else {
-
-                        pTo = b.getPieceXY(x + 1, y + 1);
-                        if (pTo != null && pTo.color != c) {
-                            Moves.add(new Move(x, y, x + 1, y + 1, Move.CAPTURE, pTo.type, c));
-                        }
-                    
-                    
-                }
+            if (y < 7) {
+                if (!b.attacks(x + 1, y + 1)) {
+                if (b.freeSquare(x + 1, y + 1)) Moves.add(new Move(x, y, x + 1, y + 1, Move.NORMALMOVE, 0, c));
+                else {
+                    pTo = b.getPieceXY(x + 1, y + 1);
+                    if (pTo != null && pTo.color != c) Moves.add(new Move(x, y, x + 1, y + 1, Move.CAPTURE, pTo.type, c));
+                  }
+               }
             }
 
             // Down and to the right
-            if (y > 0 && !b.attacks(x + 1, y - 1)) {
-                if (b.freeSquare(x + 1, y - 1)) {
-                    Moves.add(new Move(x, y, x + 1, y - 1, Move.NORMALMOVE, 0, c));
-                } else {
-                        pTo = b.getPieceXY(x + 1, y - 1);
-                        if (pTo != null && pTo.color != c) {
-                            Moves.add(new Move(x, y, x + 1, y - 1, Move.CAPTURE, pTo.type, c));
-                        }
+            if (y > 0) {
+               if (!b.attacks(x + 1, y - 1)) {
+                if (b.freeSquare(x + 1, y - 1)) Moves.add(new Move(x, y, x + 1, y - 1, Move.NORMALMOVE, 0, c));
+                else {
+                    pTo = b.getPieceXY(x + 1, y - 1);
+                    if (pTo != null && pTo.color != c) Moves.add(new Move(x, y, x + 1, y - 1, Move.CAPTURE, pTo.type, c));
                 }
+              }
             }
-            ;
-        }
+        } // End of "right" section
 
         // King moves straight up
         if (y < 7 && !b.attacks(x, y + 1)) {
-            if (b.freeSquare(x, y + 1)) {
-                Moves.add(new Move(x, y, x, y + 1, Move.NORMALMOVE, 0, c));
-            } else {
-                    pTo = b.getPieceXY(x, y + 1);
-                    if (pTo != null && pTo.color != c) {
-                        Moves.add(new Move(x, y, x, y + 1, Move.CAPTURE, pTo.type, c));
-                    }
+            if (b.freeSquare(x, y + 1)) Moves.add(new Move(x, y, x, y + 1, Move.NORMALMOVE, 0, c));
+            else {
+                pTo = b.getPieceXY(x, y + 1);
+                if (pTo != null && pTo.color != c) Moves.add(new Move(x, y, x, y + 1, Move.CAPTURE, pTo.type, c));
             }
         }
-        ;
+        
 
         // King moves straight down
         if (y > 0 && !b.attacks(x, y - 1)) {
-            if (b.freeSquare(x, y - 1)) {
-                Moves.add(new Move(x, y, x, y - 1, Move.NORMALMOVE, 0, c));
-            } else {
-                    pTo = b.getPieceXY(x, y - 1);
-                    if (pTo != null && p.color != c) {
-                        Moves.add(new Move(x, y, x, y - 1, Move.CAPTURE, pTo.type, c));
-                    }
+            if (b.freeSquare(x, y - 1)) Moves.add(new Move(x, y, x, y - 1, Move.NORMALMOVE, 0, c));
+            else {
+                pTo = b.getPieceXY(x, y - 1);
+                if (pTo != null && p.color != c) Moves.add(new Move(x, y, x, y - 1, Move.CAPTURE, pTo.type, c));
             }
         }
-        ;
+        
 
       return Moves;
     }

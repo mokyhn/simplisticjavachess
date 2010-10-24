@@ -47,23 +47,23 @@ class Piece implements Cloneable {
         if (color == BLACK) {
 
         switch (type) {
-            case PAWN:   r = "P"; break;
-            case ROOK:   r = "R"; break;
-            case BISHOP: r = "B"; break;
-            case KNIGHT: r = "N"; break;
-            case KING:   r = "K"; break;
-            case QUEEN:  r = "Q"; break;
-        }
-     }
-
-        if (color == WHITE) {
-            switch (type) {
             case PAWN:   r = "p"; break;
             case ROOK:   r = "r"; break;
             case BISHOP: r = "b"; break;
             case KNIGHT: r = "n"; break;
             case KING:   r = "k"; break;
             case QUEEN:  r = "q"; break;
+        }
+     }
+
+        if (color == WHITE) {
+            switch (type) {
+            case PAWN:   r = "P"; break;
+            case ROOK:   r = "R"; break;
+            case BISHOP: r = "B"; break;
+            case KNIGHT: r = "N"; break;
+            case KING:   r = "K"; break;
+            case QUEEN:  r = "Q"; break;
             }
         }
       return r;

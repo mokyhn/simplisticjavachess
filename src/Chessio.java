@@ -12,7 +12,7 @@ public class Chessio {
         Piece p;
 
         System.out.println("");
-
+        System.out.println(" _______________");
         for (y = 7; y >= 0; y--) {
             for (x = 0; x < 8; x++) {
                  System.out.print(" ");
@@ -20,8 +20,10 @@ public class Chessio {
                   if (p != null) { System.out.print(p.toString()); }
                   else System.out.print('.');
             }
-          System.out.println();
+          System.out.println("     " + (y+1));
         } // end last for-loop
+        System.out.println(" _______________");
+        System.out.println(" a b c d e f g h");
         if (theBoard.whoIsInMove() == Piece.WHITE) System.out.println("White to move");
         else System.out.println("Black to move");
     }
