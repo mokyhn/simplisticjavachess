@@ -74,34 +74,21 @@ class Movegenerator {
         if ((x > 0) && (y == (5 * c + 7) / 2)) {
             leftPiece = b.getPieceXY(x - 1, y + c);
             if (leftPiece != null && leftPiece.color != c) {
-                Moves.add(new Move(x, y, x - 1, y + c,
-                        Move.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece.type,
-                        c));
-            
-            Moves.add(new Move(x, y, x - 1, y + c,
-                    Move.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece.type, c));
-            Moves.add(new Move(x, y, x - 1, y + c,
-                    Move.CAPTURE_AND_PROMOTE_TO_QUEEN, leftPiece.type, c));
-            Moves.add(new Move(x, y, x - 1, y + c,
-                    Move.CAPTURE_AND_PROMOTE_TO_ROOK, leftPiece.type, c));
+                Moves.add(new Move(x, y, x - 1, y + c, Move.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece.type, c));
+                Moves.add(new Move(x, y, x - 1, y + c, Move.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece.type, c));
+                Moves.add(new Move(x, y, x - 1, y + c, Move.CAPTURE_AND_PROMOTE_TO_QUEEN,  leftPiece.type, c));
+                Moves.add(new Move(x, y, x - 1, y + c, Move.CAPTURE_AND_PROMOTE_TO_ROOK,   leftPiece.type, c));
             }
             }
 
         // Promotion via diagonal capturing to the right
         if ((x < 7) && (y == (5 * c + 7) / 2)) {
-
             rightPiece = b.getPieceXY(x + 1, y + c);
             if (rightPiece != null && rightPiece.color != c) {
-                Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE_AND_PROMOTE_TO_BISHOP,
-                        rightPiece.type, c));
-            
-            Moves.add(new Move(x, y, x + 1, y + c,
-                    Move.CAPTURE_AND_PROMOTE_TO_KNIGHT,
-                    rightPiece.type, c));
-            Moves.add(new Move(x, y, x + 1, y + c,
-                    Move.CAPTURE_AND_PROMOTE_TO_QUEEN, rightPiece.type, c));
-            Moves.add(new Move(x, y, x + 1, y + c,
-                    Move.CAPTURE_AND_PROMOTE_TO_ROOK, rightPiece.type, c));
+                Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece.type, c));
+                Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE_AND_PROMOTE_TO_KNIGHT, rightPiece.type, c));
+                Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE_AND_PROMOTE_TO_QUEEN,  rightPiece.type, c));
+                Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE_AND_PROMOTE_TO_ROOK,   rightPiece.type, c));
             }
 
         }
