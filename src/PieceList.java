@@ -122,7 +122,18 @@ public class PieceList {
       public boolean freeSquare(int x, int y)  {
           return xyPosition[x][y] == null;
     }
-      
+
+ // private int hashValue = 0;
+ // Input: a piece p
+// Output: a number which is a perfect hash of position, color and type.
+// private static int hash(piece p) {
+// return (2*p.xPos+11*p.yPos) * (p.color+p.type);
+// }
+
+// public int getHash() { return hashValue; }
+
+
+
     public Object clone() {
         int i, x, y;
         Piece p;
