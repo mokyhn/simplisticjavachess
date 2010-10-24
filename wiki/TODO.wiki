@@ -11,5 +11,4 @@ A list of ideas/thoughts:
   * Hashing of position evaluations
   * a toFEN function that outputs the current board position in FEN
   * When the king is moved for the first time (a not due to a castling) then the castling-ability is lost. How do we record this event so that the current undo function will work?
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  
