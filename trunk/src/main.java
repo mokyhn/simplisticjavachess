@@ -1,7 +1,4 @@
 //-enableassertions
-// TODO:
-// NoPieceException and
-// NoMoveException gives alot of memory waste.
 import java.io.*;
 
 class main {
