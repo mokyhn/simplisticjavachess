@@ -138,8 +138,19 @@ public class Board implements Cloneable {
         // Swap the move color
         inMove = -inMove;
 
-        // TODO: Test for rook type and disable flags accordingly...
+        // Moving a rook can disallow castling in the future
+        if (m.type == Piece.ROOK) {
+            if (m.whoMoves == Piece.BLACK) {
+              if (m.fromX == 0 && blackCanCastleLong)  blackCanCastleLong  = false;
+              if (m.fromX == 7 && blackCanCastleShort) blackCanCastleShort = false;
+            }        
+            else {
+              if (m.fromX == 0 && whiteCanCastleLong)  whiteCanCastleLong  = false;
+              if (m.fromX == 7 && whiteCanCastleShort) whiteCanCastleShort = false;
+            }
+        }
 
+        // Moving the king will disallow castling in the future
         if (m.type == Piece.KING) {
             if (m.whoMoves == Piece.BLACK) {
                   blackCanCastleShort = false;
@@ -197,6 +208,7 @@ public class Board implements Cloneable {
         int color = 0;
 
         // Test if the castle flags should be set.
+        // and reverse the state of these flags...
 
         try {
             Move m = moveStack.pop();
