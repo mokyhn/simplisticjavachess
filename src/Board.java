@@ -5,16 +5,13 @@ public class Board implements Cloneable {
         private              PieceList position = new PieceList(); 
 
 	public static final int NO_SETUP        = 0,
-                                NORMAL_SETUP    = 1;
+                            NORMAL_SETUP    = 1;
 	
 
 	// A stack of previous performed moves on the board
-        private Stack<Move> moveStack;
+    private Stack<Move> moveStack;
 
-	/*private boolean blackCastling       = false; // Can Black castle?
-	private boolean whiteCastling       = false; // Can White castle?*/
-
-        private boolean blackCanCastleShort = true;
+    private boolean blackCanCastleShort = true;
 	private boolean blackCanCastleLong  = true;
 	private boolean whiteCanCastleShort = true;
 	private boolean whiteCanCastleLong  = true;
@@ -132,12 +129,6 @@ public class Board implements Cloneable {
 
  
     public void performMove(Move m) {
-        // Put the move m on the stack
-        moveStack.push(m);
-
-        // Swap the move color
-        inMove = -inMove;
-
         // Moving a rook can disallow castling in the future
         if (m.type == Piece.ROOK) {
             if (m.whoMoves == Piece.BLACK) {
@@ -202,6 +193,13 @@ public class Board implements Cloneable {
                 movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 break;
         }
+
+        // Put the move m on the stack
+        moveStack.push(m);
+
+        // Swap the move color
+        inMove = -inMove;
+
     }
 
     public boolean retractMove() {
