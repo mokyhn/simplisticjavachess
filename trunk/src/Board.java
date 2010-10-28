@@ -11,18 +11,20 @@ public class Board implements Cloneable {
 	// A stack of previous performed moves on the board
         private Stack<Move> moveStack;
 
-	private boolean blackCastling       = false; // has black made a castling?
-	private boolean whiteCastling       = false; // has white made a castling?
-	private boolean blackCanCastleShort = true;
+	/*private boolean blackCastling       = false; // Can Black castle?
+	private boolean whiteCastling       = false; // Can White castle?*/
+
+        private boolean blackCanCastleShort = true;
 	private boolean blackCanCastleLong  = true;
 	private boolean whiteCanCastleShort = true;
 	private boolean whiteCanCastleLong  = true;
+         
 	private int     inMove              = Piece.WHITE;
 
 	// Constructor, setting up initial position
     public Board(int setup) {
-        inMove = Piece.WHITE;
-        position = new PieceList();
+        inMove    = Piece.WHITE;
+        position  = new PieceList();
         moveStack = new Stack<Move>();
         switch (setup) {
             case NO_SETUP:      break;
@@ -38,20 +40,20 @@ public class Board implements Cloneable {
     }
 
 	
-    public int getNumberOfPieces()    { return position.numberOfPieces(); }
-    public int  whoIsInMove()          { return inMove;  }
-    public void setBlackToMove()      { inMove = Piece.BLACK;}
-    public void setWhiteToMove()      { inMove = Piece.BLACK;}
-    public Move getLastMove()         { return moveStack.peek(); }
-    public Piece getPiece(int i)      { return position.getPiece(i); }
-    public void  insertPiece(Piece p) { position.insertPiece(p); }
-    public Piece removePiece(int x, int y) { return position.removePiece(x, y); }
+    public int     getNumberOfPieces()    { return position.numberOfPieces(); }
+    public int     whoIsInMove()          { return inMove;  }
+    public void    setBlackToMove()       { inMove = Piece.BLACK;}
+    public void    setWhiteToMove()       { inMove = Piece.BLACK;}
+    public Move    getLastMove()          { return moveStack.peek(); }
+    public Piece   getPiece(int i)        { return position.getPiece(i); }
+    public void    insertPiece(Piece p)   { position.insertPiece(p); }
+    public Piece   removePiece(int x, int y) { return position.removePiece(x, y); }
     public boolean freeSquare(int x, int y)  { return position.freeSquare(x, y); }
     // Returns true if the side not in move, in board b attacks square (x, y)
     // and otherwise false
-    public boolean attacks(int x, int y) { return position.attacks( x,  y,  inMove); }
-    private void movePiece(int xFrom, int yFrom, int xTo, int yTo) { position.movePiece(xFrom, yFrom, xTo, yTo); }
-    public void print() {Chessio.printBoard(this);}
+    public boolean attacks(int x, int y)  { return position.attacks( x,  y,  inMove); }
+    private void   movePiece(int xFrom, int yFrom, int xTo, int yTo) { position.movePiece(xFrom, yFrom, xTo, yTo); }
+    public void    print() {Chessio.printBoard(this);}
     // Given a position in the FEN - notation.
     // Set the board up correctly
     private void setupFENboard(String fen) {
@@ -105,9 +107,7 @@ public class Board implements Cloneable {
         try { super.clone(); } catch (CloneNotSupportedException e) { }
 
         Board theClone = new Board(NO_SETUP);
-
-        theClone.whiteCastling       = whiteCastling;
-        theClone.blackCastling       = blackCastling;
+       
         theClone.whiteCanCastleLong  = whiteCanCastleLong;
         theClone.whiteCanCastleShort = whiteCanCastleShort;
         theClone.blackCanCastleLong  = whiteCanCastleLong;
@@ -138,6 +138,19 @@ public class Board implements Cloneable {
         // Swap the move color
         inMove = -inMove;
 
+        // TODO: Test for rook type and disable flags accordingly...
+
+        if (m.type == Piece.KING) {
+            if (m.whoMoves == Piece.BLACK) {
+                  blackCanCastleShort = false;
+                  blackCanCastleLong  = false;
+            }
+            else { whiteCanCastleShort = false;
+                   whiteCanCastleLong  = false;
+            }
+
+        }
+
         if (m.aSimplePromotion()) {
             insertPiece(new Piece(m.toX, m.toY, m.whoMoves, m.promotionTo()));
             removePiece(m.fromX, m.fromY);
@@ -160,14 +173,6 @@ public class Board implements Cloneable {
                 break;
 
             case Move.CASTLE_SHORT:
-                if (m.whoMoves == Piece.WHITE) {
-                    whiteCastling = true;
-                    whiteCanCastleShort = false;
-                }
-                if (m.whoMoves == Piece.BLACK) {
-                    blackCastling = true;
-                    blackCanCastleShort = false;
-                }
                 // Move the king first
                 movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 // Then the rook
@@ -175,14 +180,6 @@ public class Board implements Cloneable {
                 break;
 
             case Move.CASTLE_LONG:
-                if (m.whoMoves == Piece.WHITE) {
-                    whiteCastling = true;
-                    whiteCanCastleLong = false;
-                }
-                if (m.whoMoves == Piece.BLACK) {
-                    blackCastling = true;
-                    blackCanCastleLong = false;
-                }
                 // Move the king first
                 movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 // Then the rook
@@ -198,6 +195,8 @@ public class Board implements Cloneable {
 
     public boolean retractMove() {
         int color = 0;
+
+        // Test if the castle flags should be set.
 
         try {
             Move m = moveStack.pop();
@@ -234,30 +233,14 @@ public class Board implements Cloneable {
                     break;
 
                 case Move.CASTLE_SHORT:
-                    if (m.whoMoves == Piece.WHITE) {
-                        whiteCastling = false;
-                        whiteCanCastleShort = true;
-                    }
-                    if (m.whoMoves == Piece.BLACK) {
-                        blackCastling = false;
-                        blackCanCastleShort = true;
-                    }
-                    // Move the king back
+                  // Move the king back
                     movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     // Then the rook
                     movePiece(5, m.fromY, 7, m.fromY);
                     break;
 
                 case Move.CASTLE_LONG:
-                    if (m.whoMoves == Piece.WHITE) {
-                        whiteCastling = false;
-                        whiteCanCastleLong = true;
-                    }
-                    if (m.whoMoves == Piece.BLACK) {
-                        blackCastling = false;
-                        blackCanCastleLong = true;
-                    }
-                    // Move the king back
+                   // Move the king back
                     movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     // Then the rook
                     movePiece(3, m.fromY, 0, m.fromY);
