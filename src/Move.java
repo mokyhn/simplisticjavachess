@@ -3,9 +3,9 @@ public class Move {
                    fromY,
                    toX,
                    toY,
-                   type, // The move type
+                   type,           // The move type
 		   aCapturedPiece, // Used for storing pieces that are taken
-			// by the piece which moves
+			           // by the piece which moves
 		   whoMoves;
 
 	// The different move types
