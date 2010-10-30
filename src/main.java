@@ -50,7 +50,7 @@ class main {
             str = reader.readLine();
 
             if (str.matches("go")) {
-                searchResult = searcher.dosearch(interfaceBoard, plyDepth);
+                searchResult = searcher.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
                 System.out.println(searcher.moveAndStatistics());
                 interfaceBoard.performMove(searcher.getStrongestMove());
             } else if (str.matches("undo")) { interfaceBoard.retractMove(); }
@@ -93,7 +93,7 @@ class main {
                         throw new NoMoveException();
                     }
                     interfaceBoard.performMove(m);
-                    searchResult = searcher.dosearch(interfaceBoard, plyDepth);
+                    searchResult = searcher.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
                     System.out.println(searcher.moveAndStatistics());
                     interfaceBoard.performMove(searcher.getStrongestMove());
                 } catch (NoMoveException e) { System.out.println("Not a valid move"); }
@@ -106,7 +106,7 @@ class main {
                     interfaceBoard.performMove(m);
                     
                     
-                    searchResult = searcher.dosearch(interfaceBoard, plyDepth);
+                    searchResult = searcher.dosearch(interfaceBoard, plyDepth, Search.RANDOM);
                     
                     interfaceBoard.performMove(searcher.getStrongestMove());
                                         System.out.println(searcher.moveAndStatistics());

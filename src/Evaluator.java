@@ -3,7 +3,7 @@ public class Evaluator {
 	public Evaluator() {
 	}
 
-	public int evaluate(Board b) {
+	public static int evaluate(Board b) {
 		int sum = 0;
 
 		Piece p;

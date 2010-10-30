@@ -1,6 +1,8 @@
 //TODO: Implement inCheck predicate here or BETTER
 //an inCapture predicate??
 
+// Eliminatate generation of a number of moves when king is in check...
+
 import java.util.ArrayList;
 
 class Movegenerator {
