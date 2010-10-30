@@ -10,5 +10,9 @@ A list of ideas/thoughts:
   * Min/max search as a reference to compare with when developing other search techniques.
   * Hashing of position evaluations
   * a toFEN function that outputs the current board position in FEN
-  * When the king is moved for the first time (a not due to a castling) then the castling-ability is lost. How do we record this event so that the current undo function will work?
-  
+  * add functionality such that the engine can play against itself. (E.g. random engine against min/max engine or alpha/beta engine). A command could be added *machine n* where n specifies an upper bound on the length of move steps the machine is allowed to play against itself. 
+
+
+= Fixed =
+* When the king is moved for the first time (and not due to a castling) then the castling-ability is lost. This is now recorded in a way where the undo function works.
+* A random move generator was added.
