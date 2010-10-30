@@ -12,11 +12,11 @@ public class Board implements Cloneable {
     private Stack<Move> moveStack;
 
     private boolean blackCanCastleShort = true;
-	private boolean blackCanCastleLong  = true;
-	private boolean whiteCanCastleShort = true;
-	private boolean whiteCanCastleLong  = true;
-         
-	private int     inMove              = Piece.WHITE;
+    private boolean blackCanCastleLong  = true;
+    private boolean whiteCanCastleShort = true;
+    private boolean whiteCanCastleLong  = true;
+
+    private int     inMove              = Piece.WHITE;
 
 	// Constructor, setting up initial position
     public Board(int setup) {
@@ -129,29 +129,58 @@ public class Board implements Cloneable {
 
  
     public void performMove(Move m) {
-        // Moving a rook can disallow castling in the future
+     
+       // Moving a rook can disallow castling in the future
         if (m.type == Piece.ROOK) {
             if (m.whoMoves == Piece.BLACK) {
-              if (m.fromX == 0 && blackCanCastleLong)  blackCanCastleLong  = false;
-              if (m.fromX == 7 && blackCanCastleShort) blackCanCastleShort = false;
-            }        
+              if (m.fromX == 0 && blackCanCastleLong)  {
+                  blackCanCastleLong  = false;
+                  m.event = m.BREAK_LONG_CASTLING;
+              }
+              if (m.fromX == 7 && blackCanCastleShort) {
+                  blackCanCastleShort = false;
+                  m.event = m.BREAK_SHORT_CASTLING;
+              }
+            }
             else {
-              if (m.fromX == 0 && whiteCanCastleLong)  whiteCanCastleLong  = false;
-              if (m.fromX == 7 && whiteCanCastleShort) whiteCanCastleShort = false;
+              if (m.fromX == 0 && whiteCanCastleLong)  {
+                  whiteCanCastleLong  = false;
+                  m.event = m.BREAK_LONG_CASTLING;
+              }
+              if (m.fromX == 7 && whiteCanCastleShort) {
+                  whiteCanCastleShort = false;
+                  m.event = m.BREAK_SHORT_CASTLING;
+              }
             }
         }
 
         // Moving the king will disallow castling in the future
+        /* Too long rewrite using smarter data structures
         if (m.type == Piece.KING) {
-            if (m.whoMoves == Piece.BLACK) {
+            if (m.whoMoves == Piece.BLACK && blackCanCastleLong && blackCanCastleShort) {
                   blackCanCastleShort = false;
                   blackCanCastleLong  = false;
-            }
-            else { whiteCanCastleShort = false;
-                   whiteCanCastleLong  = false;
+                  m.event = m.BREAK_LONG_AND_SHORT_CASTLING;
+            } else
+            if (m.whoMoves == Piece.WHITE && whiteCanCastleLong && whiteCanCastleShort) {
+                 whiteCanCastleShort = false;
+                 whiteCanCastleLong  = false;
+                 m.event = m.BREAK_LONG_AND_SHORT_CASTLING;
+            } else
+            if (m.whoMoves == Piece.BLACK && blackCanCastleLong && blackCanCastleShort) {
+                  blackCanCastleShort = false;
+                  blackCanCastleLong  = false;
+                  m.event = m.BREAK_LONG_AND_SHORT_CASTLING;
+            } else
+            if (m.whoMoves == Piece.WHITE && whiteCanCastleLong && !whiteCanCastleShort) {
+                 whiteCanCastleShort = false;
+                 whiteCanCastleLong  = false;
+                 m.event = m.BREAK_LONG_AND_SHORT_CASTLING;
             }
 
         }
+        */
+      
 
         if (m.aSimplePromotion()) {
             insertPiece(new Piece(m.toX, m.toY, m.whoMoves, m.promotionTo()));
@@ -213,6 +242,30 @@ public class Board implements Cloneable {
 
             // Swap the move color
             inMove = -inMove;
+
+            if (m.event == m.BREAK_LONG_AND_SHORT_CASTLING) {
+              if (m.whoMoves == Piece.BLACK) {
+                  blackCanCastleLong  = true;
+                  blackCanCastleShort = true;
+                }
+              else {
+                  whiteCanCastleLong  = true;
+                  whiteCanCastleShort = true;
+                }
+            }
+
+            if (m.event == m.BREAK_LONG_CASTLING) {
+              if (m.whoMoves == Piece.BLACK) blackCanCastleLong  = true;
+              else whiteCanCastleLong  = true;
+            }
+
+
+            if (m.event == m.BREAK_SHORT_CASTLING) {
+              if (m.whoMoves == Piece.BLACK) blackCanCastleShort = true;
+              else whiteCanCastleShort = true;
+            }
+
+
 
             if (m.aSimplePromotion()) {
                 insertPiece(new Piece(m.fromX, m.fromY, m.whoMoves, Piece.PAWN));

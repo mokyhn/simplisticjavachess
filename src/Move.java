@@ -6,7 +6,8 @@ public class Move {
                    type,           // The move type
 		   aCapturedPiece, // Used for storing pieces that are taken
 			           // by the piece which moves
-		   whoMoves;
+                   event,          // An event associated to the move
+                   whoMoves;
 
 	// The different move types
 	final static int NORMALMOVE = 0,
@@ -32,6 +33,13 @@ public class Move {
 			// Casteling
 			CASTLE_SHORT                  = 11,
                         CASTLE_LONG                   = 12;
+
+        // Event types
+        final static int NOEVENT = 0,
+                         BREAK_SHORT_CASTLING = 1,
+                         BREAK_LONG_CASTLING = 2,
+                         BREAK_LONG_AND_SHORT_CASTLING = 3;
+
         /*
         public Move(Piece p, int dX, int dY, int aPiece) {
             
@@ -50,8 +58,28 @@ public class Move {
 		toY = tY;
 		type = t;
 		aCapturedPiece = p;
+                event = NOEVENT;
 		whoMoves = who;
 	}
+
+        // Move constructor with event e added
+	public Move(int fX, int fY, int tX, int tY, int t, int p, int who, int e) {
+            assert fX >= 0 && fX <= 7 &&
+                   fY >= 0 && fY <= 7 &&
+                   tX >= 0 && tX <= 7 &&
+                   tY >= 0 && tY <= 7 &&
+                   (!(fX == tX && fY == tY)) : "(fX, fY, tX, tY) = " + "(" + fX + ", " +  fY + ", " + tX + "," + tY + ")" ;
+
+                fromX = fX;
+		fromY = fY;
+		toX = tX;
+		toY = tY;
+		type = t;
+		aCapturedPiece = p;
+                event = e;
+		whoMoves = who;
+	}
+
 
 	public Move() {
 	}
