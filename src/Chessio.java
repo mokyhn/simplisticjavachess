@@ -73,6 +73,27 @@ public class Chessio {
         m.whoMoves       = whoToMove;
 
         if (str.length() == 4) {
+            // White or black does a short or a long castling
+            if (p.type == Piece.KING && fromY == toY && (fromY == 0 || fromY == 7)) {
+                    if (fromX == 4 && toX == 6) {
+                            m.type = Move.CASTLE_SHORT;
+                            return m;
+                    } else if (fromX == 4 && toX == 2) {
+                            m.type = Move.CASTLE_LONG;
+                            return m;
+                    }
+            }
+
+            // ENPASSENT Move
+            if (p.type == Piece.PAWN) {
+                if ((fromX != toX) && (b.freeSquare(toX, toY))) {
+                    m.type = Move.CAPTURE_ENPASSANT;
+                    m.aCapturedPiece = Piece.PAWN;
+                    return m;
+                }
+            }
+
+
             // Normal move
             if (b.freeSquare(toX, toY)) {
                     m.type = Move.NORMALMOVE;
@@ -86,38 +107,10 @@ public class Chessio {
                m.aCapturedPiece = pto.type;
                return m;
              }
-             
-
-
-             // ENPASSENT Move
-            // Are we dealing with a pawn move?
-            if (p.type == Piece.PAWN) {
-                if ((fromX != toX) && (b.freeSquare(toX, toY))) {
-                    m.type = Move.CAPTURE_ENPASSANT;
-                    m.aCapturedPiece = Piece.PAWN;
-                    return m;
-                }
-            }
-
-            // White or black does a short or a long castling
-            if (fromY == toY && (fromY == 0 || fromY == 7)) {
-                    if (fromX == 4 && toX == 6) {
-                            m.type = Move.CASTLE_SHORT;
-                            return m;
-                    } else if (fromX == 4 && toX == 2) {
-                            m.type = Move.CASTLE_LONG;
-                            return m;
-                    }
-            }
-
-
-
+ 
 
 
         }
-
-
-
 
         // Promotion moves
         if (str.length() == 5) {

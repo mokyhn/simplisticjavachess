@@ -5,7 +5,7 @@ class main {
 
 
     public static void main(String param[]) throws java.io.IOException {
-        int     plyDepth      = 6;
+        int     plyDepth      = 5;
         int     searchResult  = 0;
         Chessio io            = new Chessio();
         Search  searcher      = new Search();
@@ -26,6 +26,11 @@ class main {
 
         // Do a simple setup with pawns.
         Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w - 0 1");
+
+
+        // A simple rook setup
+        //Board interfaceBoard = new Board("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w - 0 1");
+
 
        // Board interfaceBoard = new Board("4k3/6p1/ppp1pp2/3p3K/4PP1P/8/PPP5/8 w - - 0 1");
 
@@ -65,12 +70,14 @@ class main {
             }
                 else if (str.matches("state")) {
                     // TODO: Print all variable states from board...
-                    // board.printState
+                    interfaceBoard.printState();
+                    str = "";
+
                 }
              else if (str.startsWith("setboard")) {
                 interfaceBoard = new Board(str.substring(9, str.length()));
                 searcher       = new Search();
-            }
+            } else
             if (str.matches("quit") || str.matches("q") || str.matches("bye") || str.matches("exit")) {
                 System.out.print("\nGoodbye\n\n");
                 System.exit(0); }
@@ -98,10 +105,9 @@ class main {
                     if (!(interfaceBoard.isMoveLegal(m))) {  throw new NoMoveException(); }
                     interfaceBoard.performMove(m);
                     
-                     
+                    
                     searchResult = searcher.dosearch(interfaceBoard, plyDepth);
-                    //interfaceBoard.print();
-
+                    
                     interfaceBoard.performMove(searcher.getStrongestMove());
                                         System.out.println(searcher.moveAndStatistics());
 
@@ -109,7 +115,7 @@ class main {
                    
 
 
-                } catch (NoMoveException e) {  }
+                } catch (NoMoveException e) { System.out.println("Not a valid move"); }
             }
         }
     }
