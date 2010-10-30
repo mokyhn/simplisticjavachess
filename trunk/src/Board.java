@@ -129,9 +129,10 @@ public class Board implements Cloneable {
 
  
     public void performMove(Move m) {
-     
+        Piece p = getPieceXY(m.fromX, m.fromY);
+
        // Moving a rook can disallow castling in the future
-        if (m.type == Piece.ROOK) {
+        if (p.type == Piece.ROOK) {
             if (m.whoMoves == Piece.BLACK) {
               if (m.fromX == 0 && blackCanCastleLong)  {
                   blackCanCastleLong  = false;
@@ -155,7 +156,7 @@ public class Board implements Cloneable {
         }
 
         // Moving the king will disallow castling in the future
-        if (m.type == Piece.KING) {
+        if (p.type == Piece.KING) {
             if (m.whoMoves == Piece.BLACK) {
                 if  (blackCanCastleLong && blackCanCastleShort) {
                   blackCanCastleShort = false;
@@ -170,10 +171,26 @@ public class Board implements Cloneable {
                   blackCanCastleLong = false;
                   m.event = Move.BREAK_LONG_CASTLING;
                 }
-        }
-      
-        // Add code for white...
+            }
 
+             if (m.whoMoves == Piece.WHITE) {
+                if  (whiteCanCastleLong && whiteCanCastleShort) {
+                  whiteCanCastleShort = false;
+                  whiteCanCastleLong  = false;
+                  m.event = Move.BREAK_LONG_AND_SHORT_CASTLING;
+                } else
+                if (!whiteCanCastleLong && whiteCanCastleShort) {
+                    whiteCanCastleShort = false;
+                    m.event = Move.BREAK_SHORT_CASTLING;
+                } else
+                if (whiteCanCastleLong && !whiteCanCastleShort) {
+                  whiteCanCastleLong = false;
+                  m.event = Move.BREAK_LONG_CASTLING;
+                }
+              }
+           
+        }
+        
         if (m.aSimplePromotion()) {
             insertPiece(new Piece(m.toX, m.toY, m.whoMoves, m.promotionTo()));
             removePiece(m.fromX, m.fromY);
@@ -235,7 +252,7 @@ public class Board implements Cloneable {
             // Swap the move color
             inMove = -inMove;
 
-            if (m.event == m.BREAK_LONG_AND_SHORT_CASTLING) {
+            if (m.event == Move.BREAK_LONG_AND_SHORT_CASTLING) {
               if (m.whoMoves == Piece.BLACK) {
                   blackCanCastleLong  = true;
                   blackCanCastleShort = true;
@@ -246,13 +263,13 @@ public class Board implements Cloneable {
                 }
             }
 
-            if (m.event == m.BREAK_LONG_CASTLING) {
+            if (m.event == Move.BREAK_LONG_CASTLING) {
               if (m.whoMoves == Piece.BLACK) blackCanCastleLong  = true;
               else whiteCanCastleLong  = true;
             }
 
 
-            if (m.event == m.BREAK_SHORT_CASTLING) {
+            if (m.event == Move.BREAK_SHORT_CASTLING) {
               if (m.whoMoves == Piece.BLACK) blackCanCastleShort = true;
               else whiteCanCastleShort = true;
             }
@@ -330,5 +347,13 @@ public class Board implements Cloneable {
         return false;
     }
 
-   
+   public void printState() {
+       System.out.println("--------State---------------");
+       if (blackCanCastleShort) System.out.println("Black may castle short");
+       if (blackCanCastleLong)  System.out.println("Black may castle long");
+       if (whiteCanCastleShort) System.out.println("White may castle short");
+       if (whiteCanCastleLong)  System.out.println("White may castle long");
+
+   }
+
 }
