@@ -2,21 +2,17 @@ import java.util.Stack;
 import java.util.Iterator;
 
 public class Board implements Cloneable {
-        private              PieceList position = new PieceList(); 
+    private              PieceList position = new PieceList();
 
-	public static final int NO_SETUP        = 0,
+    public static final int NO_SETUP        = 0,
                             NORMAL_SETUP    = 1;
-	
-
-    // A stack of previous performed moves on the board
-    private Stack<Move> moveStack;
-
-    private boolean blackCanCastleShort = true;
-    private boolean blackCanCastleLong  = true;
-    private boolean whiteCanCastleShort = true;
-    private boolean whiteCanCastleLong  = true;
-
-    private int     inMove              = Piece.WHITE;
+	    
+    private Stack<Move> moveStack; // A stack of previous performed moves on the board
+    private boolean     blackCanCastleShort = true;
+    private boolean     blackCanCastleLong  = true;
+    private boolean     whiteCanCastleShort = true;
+    private boolean     whiteCanCastleLong  = true;
+    private int         inMove              = Piece.WHITE;
 
 	// Constructor, setting up initial position
     public Board(int setup) {
@@ -37,6 +33,31 @@ public class Board implements Cloneable {
     }
 
 	
+    public Object clone() {
+        try { super.clone(); } catch (CloneNotSupportedException e) { }
+
+        Board theClone = new Board(NO_SETUP);
+
+        theClone.whiteCanCastleLong  = whiteCanCastleLong;
+        theClone.whiteCanCastleShort = whiteCanCastleShort;
+        theClone.blackCanCastleLong  = whiteCanCastleLong;
+        theClone.blackCanCastleShort = whiteCanCastleShort;
+        theClone.inMove              = inMove;
+
+        // TODO: make this cloning correct
+        /*
+        theClone.moveStack = new Stack<Move>();
+        theClone.moveStack.addAll(moveStack); //TODO Should be cloned right?
+        */
+        theClone.moveStack = new Stack<Move>();
+
+
+        //theClone.moveStack = (Stack<Move>) this.moveStack.clone();
+
+        theClone.position = (PieceList) position.clone();
+        return theClone;
+    }
+
     public int     getNumberOfPieces()    { return position.numberOfPieces(); }
     public int     whoIsInMove()          { return inMove;  }
     public void    setBlackToMove()       { inMove = Piece.BLACK;}
@@ -51,72 +72,7 @@ public class Board implements Cloneable {
     public boolean attacks(int x, int y)  { return position.attacks( x,  y,  inMove); }
     private void   movePiece(int xFrom, int yFrom, int xTo, int yTo) { position.movePiece(xFrom, yFrom, xTo, yTo); }
     public void    print() {Chessio.printBoard(this);}
-    // Given a position in the FEN - notation.
-    // Set the board up correctly
-    private void setupFENboard(String fen) {
-        int x = 0;
-        int y = 7;
-        int i;
-        int parsingPartNo = 1;
-        char c;
-        // Traverse input string
-        for (i = 0; i < fen.length(); i++) {
-            c = fen.charAt(i);
-            assert x <= 8 && y >= 0 : "Error (Not a correct FEN board)";
 
-            if (y == 0 && x == 8) { parsingPartNo = 2; }
-
-            if (parsingPartNo == 1) {
-                if (c >= '1' && c <= '8') { x = x + (int) (c - '0'); }
-                else if (c >= 'b' && c <= 'r') {
-                    insertPiece(new Piece(x, y, c));                     
-                    x++;
-                }
-                else if (c >= 'B' && c <= 'R') {
-                    insertPiece(new Piece(x, y, c)); 
-                    x++;
-                } else if (c == '/') {
-                    y--;
-                    x = 0;
-                } else if (c == ' ') {
-                    break; } // No more pieces to setup...
-                else {} // Error;
-            }
-
-            // Parsing part no 2
-            if (parsingPartNo == 2) {
-                c = fen.charAt(i);
-                switch (c) {
-                    case 'w': inMove = Piece.WHITE; break;
-                    case 'b': inMove = Piece.BLACK; break;
-                    case ' ': break;
-                    case 'K': whiteCanCastleShort = true; break;
-                    case 'Q': whiteCanCastleLong  = true; break;
-                    case 'k': blackCanCastleShort = true; break;
-                    case 'q': blackCanCastleLong  = true; break;
-                    default: {} // Ignore rest.
-                }
-            }
-        }
-    }
-
-    public Object clone() {
-        try { super.clone(); } catch (CloneNotSupportedException e) { }
-
-        Board theClone = new Board(NO_SETUP);
-       
-        theClone.whiteCanCastleLong  = whiteCanCastleLong;
-        theClone.whiteCanCastleShort = whiteCanCastleShort;
-        theClone.blackCanCastleLong  = whiteCanCastleLong;
-        theClone.blackCanCastleShort = whiteCanCastleShort;
-        theClone.inMove              = inMove;
-        
-        theClone.moveStack = new Stack<Move>();
-        theClone.moveStack.addAll(moveStack);
-
-        theClone.position = (PieceList) position.clone();
-        return theClone;
-    }
 
 
     // Find a piece at a certain location
@@ -346,6 +302,56 @@ public class Board implements Cloneable {
         }
         return false;
     }
+
+      // Given a position in the FEN - notation.
+    // Set the board up correctly
+    private void setupFENboard(String fen) {
+        int x = 0;
+        int y = 7;
+        int i;
+        int parsingPartNo = 1;
+        char c;
+        // Traverse input string
+        for (i = 0; i < fen.length(); i++) {
+            c = fen.charAt(i);
+            assert x <= 8 && y >= 0 : "Error (Not a correct FEN board)";
+
+            if (y == 0 && x == 8) { parsingPartNo = 2; }
+
+            if (parsingPartNo == 1) {
+                if (c >= '1' && c <= '8') { x = x + (int) (c - '0'); }
+                else if (c >= 'b' && c <= 'r') {
+                    insertPiece(new Piece(x, y, c));
+                    x++;
+                }
+                else if (c >= 'B' && c <= 'R') {
+                    insertPiece(new Piece(x, y, c));
+                    x++;
+                } else if (c == '/') {
+                    y--;
+                    x = 0;
+                } else if (c == ' ') {
+                    break; } // No more pieces to setup...
+                else {} // Error;
+            }
+
+            // Parsing part no 2
+            if (parsingPartNo == 2) {
+                c = fen.charAt(i);
+                switch (c) {
+                    case 'w': inMove = Piece.WHITE; break;
+                    case 'b': inMove = Piece.BLACK; break;
+                    case ' ': break;
+                    case 'K': whiteCanCastleShort = true; break;
+                    case 'Q': whiteCanCastleLong  = true; break;
+                    case 'k': blackCanCastleShort = true; break;
+                    case 'q': blackCanCastleLong  = true; break;
+                    default: {} // Ignore rest.
+                }
+            }
+        }
+    }
+
 
    public void printState() {
        System.out.println("--------State---------------");

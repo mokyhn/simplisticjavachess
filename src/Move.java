@@ -45,6 +45,12 @@ public class Move {
             
         }*/
 
+        public Object clone() {
+            try { super.clone(); } catch (CloneNotSupportedException e) { }
+            System.out.println("Hej");
+            return null;
+        }
+
 	public Move(int fX, int fY, int tX, int tY, int t, int p, int who) {
             assert fX >= 0 && fX <= 7 &&
                    fY >= 0 && fY <= 7 &&
