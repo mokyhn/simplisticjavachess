@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 
 class Search {
@@ -10,19 +11,35 @@ class Search {
     int          noPositions   = 0;
     int          plyDepth;
 
+    final static int ALPHABETA = 1,
+                     MINMAX    = 2,
+                     RANDOM    = 3;
+
     public Search() {
           noPositions   = 0;
           searchResult  = 0;
           eval          = new Evaluator();
     }
 
-    public int dosearch(Board b, int plyDepth) {
+    public int dosearch(Board b, int plyDepth, int method) {
       searchResult  = 0;
       analyzeBoard  = (Board) b.clone();
       noPositions   = 0;
       this.plyDepth = plyDepth;
       start_time    = System.nanoTime();
-      searchResult  = alphaBetaSearch(plyDepth, plyDepth, -30000, 30000);
+      
+      if (method == ALPHABETA) {
+          System.out.println("Alpha-Beta search...");
+          searchResult  = alphaBetaSearch(plyDepth, plyDepth, -30000, 30000);
+      }
+      if (method == MINMAX)    {
+          System.out.println("MIN-MAX search...");
+          searchResult  = minMaxSearch(plyDepth, plyDepth);
+      }
+      if (method == RANDOM)    {
+          System.out.println("Random search...");
+          searchResult  = randomSearch();
+      }
       end_time      = System.nanoTime();
       return searchResult;
     }
@@ -83,6 +100,55 @@ class Search {
     // TODO: Implement for test/reference purposes
     public int minMaxSearch(int plyDepth, int depthToGo) {
      //A stub
-      return 0;
+           Movegenerator movegen = new Movegenerator();
+           Iterator<Move>          moves;
+           Move m                = new Move();
+           int score      = 0,
+               bestscore  = -1000; // Minus infinity
+           
+            // Return board evaluation immediately
+            if (depthToGo == 0) {
+                noPositions++;
+                return eval.evaluate(analyzeBoard);
+            }
+
+            // Otherwise generate legal moves
+            moves = movegen.generateAllMoves(analyzeBoard).listIterator();
+
+            //Movegenerator.printMoves(movegen.generateAllMoves(analyzeBoard));
+
+            // Traverse the legal moves
+            while (moves.hasNext()) {
+                m = moves.next();
+                    //System.out.print("Inspecting " + m.toString());
+                    //analyzeBoard.print();
+                    analyzeBoard.performMove(m);
+
+                    score = -minMaxSearch(plyDepth, depthToGo - 1);
+
+                    //System.out.println("Retracting: " + m.toString());
+                    analyzeBoard.retractMove();
+
+                    if (score >= bestscore) {
+                            if (plyDepth == depthToGo) strongestMove = m;
+                            bestscore = score;
+                    }
+            }
+            
+            return bestscore;
+
+    }
+
+   
+    public int randomSearch() {
+            Movegenerator movegen = new Movegenerator();
+            ArrayList<Move>           moves;
+            int n;
+            double r = Math.random();
+            moves = movegen.generateAllMoves(analyzeBoard);
+
+            n = Math.abs(moves.size()-1);
+           strongestMove = moves.get((int) Math.ceil(n*r));
+        return Evaluator.evaluate(analyzeBoard);
     }
 }

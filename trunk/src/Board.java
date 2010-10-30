@@ -359,7 +359,7 @@ public class Board implements Cloneable {
        if (blackCanCastleLong)  System.out.println("Black may castle long");
        if (whiteCanCastleShort) System.out.println("White may castle short");
        if (whiteCanCastleLong)  System.out.println("White may castle long");
-
+       System.out.println("Ply 0 evaluation: " + Evaluator.evaluate(this));
    }
 
 }
