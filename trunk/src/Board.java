@@ -8,7 +8,7 @@ public class Board implements Cloneable {
                             NORMAL_SETUP    = 1;
 	
 
-	// A stack of previous performed moves on the board
+    // A stack of previous performed moves on the board
     private Stack<Move> moveStack;
 
     private boolean blackCanCastleShort = true;
@@ -135,52 +135,44 @@ public class Board implements Cloneable {
             if (m.whoMoves == Piece.BLACK) {
               if (m.fromX == 0 && blackCanCastleLong)  {
                   blackCanCastleLong  = false;
-                  m.event = m.BREAK_LONG_CASTLING;
+                  m.event = Move.BREAK_LONG_CASTLING;
               }
               if (m.fromX == 7 && blackCanCastleShort) {
                   blackCanCastleShort = false;
-                  m.event = m.BREAK_SHORT_CASTLING;
+                  m.event = Move.BREAK_SHORT_CASTLING;
               }
             }
             else {
               if (m.fromX == 0 && whiteCanCastleLong)  {
                   whiteCanCastleLong  = false;
-                  m.event = m.BREAK_LONG_CASTLING;
+                  m.event = Move.BREAK_LONG_CASTLING;
               }
               if (m.fromX == 7 && whiteCanCastleShort) {
                   whiteCanCastleShort = false;
-                  m.event = m.BREAK_SHORT_CASTLING;
+                  m.event = Move.BREAK_SHORT_CASTLING;
               }
             }
         }
 
         // Moving the king will disallow castling in the future
-        /* Too long rewrite using smarter data structures
         if (m.type == Piece.KING) {
-            if (m.whoMoves == Piece.BLACK && blackCanCastleLong && blackCanCastleShort) {
+            if (m.whoMoves == Piece.BLACK) {
+                if  (blackCanCastleLong && blackCanCastleShort) {
                   blackCanCastleShort = false;
                   blackCanCastleLong  = false;
-                  m.event = m.BREAK_LONG_AND_SHORT_CASTLING;
-            } else
-            if (m.whoMoves == Piece.WHITE && whiteCanCastleLong && whiteCanCastleShort) {
-                 whiteCanCastleShort = false;
-                 whiteCanCastleLong  = false;
-                 m.event = m.BREAK_LONG_AND_SHORT_CASTLING;
-            } else
-            if (m.whoMoves == Piece.BLACK && blackCanCastleLong && blackCanCastleShort) {
-                  blackCanCastleShort = false;
-                  blackCanCastleLong  = false;
-                  m.event = m.BREAK_LONG_AND_SHORT_CASTLING;
-            } else
-            if (m.whoMoves == Piece.WHITE && whiteCanCastleLong && !whiteCanCastleShort) {
-                 whiteCanCastleShort = false;
-                 whiteCanCastleLong  = false;
-                 m.event = m.BREAK_LONG_AND_SHORT_CASTLING;
-            }
-
+                  m.event = Move.BREAK_LONG_AND_SHORT_CASTLING;
+                } else
+                if (!blackCanCastleLong && blackCanCastleShort) {
+                    blackCanCastleShort = false;
+                    m.event = Move.BREAK_SHORT_CASTLING;
+                } else
+                if (blackCanCastleLong && !blackCanCastleShort) {
+                  blackCanCastleLong = false;
+                  m.event = Move.BREAK_LONG_CASTLING;
+                }
         }
-        */
       
+        // Add code for white...
 
         if (m.aSimplePromotion()) {
             insertPiece(new Piece(m.toX, m.toY, m.whoMoves, m.promotionTo()));

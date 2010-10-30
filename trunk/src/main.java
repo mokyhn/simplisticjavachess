@@ -62,7 +62,12 @@ class main {
               else if (str.matches("new"))   {
                 interfaceBoard = new Board(Board.NORMAL_SETUP);
                 searcher = new Search();
-            } else if (str.startsWith("setboard")) {
+            }
+                else if (str.matches("state")) {
+                    // TODO: Print all variable states from board...
+                    // board.printState
+                }
+             else if (str.startsWith("setboard")) {
                 interfaceBoard = new Board(str.substring(9, str.length()));
                 searcher       = new Search();
             }
