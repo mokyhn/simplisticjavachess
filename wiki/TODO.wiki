@@ -14,5 +14,5 @@ A list of ideas/thoughts:
 
 
 = Fixed =
-* When the king is moved for the first time (and not due to a castling) then the castling-ability is lost. This is now recorded in a way where the undo function works.
-* A random move generator was added.
+  * When the king is moved for the first time (and not due to a castling) then the castling-ability is lost. This is now recorded in a way where the undo function works.
+  * A random move generator was added.
