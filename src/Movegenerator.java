@@ -12,7 +12,7 @@ class Movegenerator {
 
     // Input: Given a board b, and that there is a pawn p
     // Output: The set of moves this pawn can perform.
-    public ArrayList<Move> pawnMoves(Board b, Piece p)  {
+    public static ArrayList<Move> pawnMoves(Board b, Piece p)  {
 
         int c = b.whoIsInMove();
         int x = p.xPos;
@@ -135,7 +135,7 @@ class Movegenerator {
 
     }
 
-    public ArrayList<Move> kingMoves(Board b, Piece p)  {
+    public static ArrayList<Move> kingMoves(Board b, Piece p)  {
         ArrayList<Move> Moves = new ArrayList<Move>();
         int c = b.whoIsInMove();
         int x = p.xPos;
@@ -232,7 +232,7 @@ class Movegenerator {
     }
 
     // Genereate the possible moves for one single piece
-    public ArrayList<Move> generateMoves(Board b, Piece p)  {
+    public static ArrayList<Move> generateMoves(Board b, Piece p)  {
         ArrayList<Move> Moves = new ArrayList<Move>();
         int sideToMove = b.whoIsInMove();
 
@@ -249,7 +249,7 @@ class Movegenerator {
         return Moves;
     }
 
-    public ArrayList<Move> generateAllMoves(Board b) {
+    public static ArrayList<Move> generateAllMoves(Board b) {
         ArrayList<Move> Moves = new ArrayList<Move>();
         ArrayList<Move> r = null;
         Piece p;
@@ -266,7 +266,7 @@ class Movegenerator {
 
     // Used to testing purposes
     // ArrayList<Move>?
-    public static void printMoves(ArrayList<Move> m) {
+    public static void  printMoves(ArrayList<Move> m) {
         Move myMove;
 
         for (int i = 0; i < m.size(); i++) {
