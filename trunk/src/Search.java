@@ -2,11 +2,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 class Search {
-    Evaluator    eval;
     Board        analyzeBoard;
     private long start_time;
     private long end_time;
-    private Move strongestMove = new Move();
+    private Move strongestMove = null;
     private int  searchResult  = 0;
     int          noPositions   = 0;
     int          plyDepth;
@@ -18,7 +17,6 @@ class Search {
     public Search() {
           noPositions   = 0;
           searchResult  = 0;
-          eval          = new Evaluator();
     }
 
     public int dosearch(Board b, int plyDepth, int method) {
@@ -60,20 +58,19 @@ class Search {
     }
 
     public int alphaBetaSearch(int plyDepth, int depthToGo, int alpha, int beta) {
-            Movegenerator movegen = new Movegenerator();
             Iterator<Move>          moves;
-            Move m                = new Move();
+            Move m                = null;
             int score             = 0;
             int localAlpha        = alpha;
 
             // Return board evaluation immediately
             if (depthToGo == 0) {
                 noPositions++;
-                return eval.evaluate(analyzeBoard);
+                return Evaluator.evaluate(analyzeBoard);
             }
 
             // Otherwise generate legal moves
-            moves = movegen.generateAllMoves(analyzeBoard).listIterator();
+            moves = Movegenerator.generateAllMoves(analyzeBoard).listIterator();
 
             //Movegenerator.printMoves(movegen.generateAllMoves(analyzeBoard));
 
@@ -99,21 +96,19 @@ class Search {
 
     // TODO: Implement for test/reference purposes
     public int minMaxSearch(int plyDepth, int depthToGo) {
-     //A stub
-           Movegenerator movegen = new Movegenerator();
            Iterator<Move>          moves;
-           Move m                = new Move();
+           Move m                = null;
            int score      = 0,
                bestscore  = -1000; // Minus infinity
            
             // Return board evaluation immediately
             if (depthToGo == 0) {
                 noPositions++;
-                return eval.evaluate(analyzeBoard);
+                return Evaluator.evaluate(analyzeBoard);
             }
 
             // Otherwise generate legal moves
-            moves = movegen.generateAllMoves(analyzeBoard).listIterator();
+            moves = Movegenerator.generateAllMoves(analyzeBoard).listIterator(); // Could we avoid this listIterator conversion?
 
             //Movegenerator.printMoves(movegen.generateAllMoves(analyzeBoard));
 
@@ -129,7 +124,7 @@ class Search {
                     //System.out.println("Retracting: " + m.toString());
                     analyzeBoard.retractMove();
 
-                    if (score >= bestscore) {
+                    if (score > bestscore) {
                             if (plyDepth == depthToGo) strongestMove = m;
                             bestscore = score;
                     }
