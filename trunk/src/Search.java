@@ -9,6 +9,7 @@ class Search {
     private int  searchResult  = 0;
     int          noPositions   = 0;
     int          plyDepth;
+    String[]     principalVariant;
 
     final static int ALPHABETA = 1,
                      MINMAX    = 2,
@@ -25,7 +26,11 @@ class Search {
       noPositions   = 0;
       this.plyDepth = plyDepth;
       start_time    = System.nanoTime();
-      
+      int i;
+
+      principalVariant = new String[plyDepth];
+      for (i = 0; i < plyDepth; i++) principalVariant[i] = "";
+
       if (method == ALPHABETA) {
           System.out.println("Alpha-Beta search...");
           searchResult  = alphaBetaSearch(plyDepth, plyDepth, -30000, 30000);
@@ -39,6 +44,9 @@ class Search {
           searchResult  = randomSearch();
       }
       end_time      = System.nanoTime();
+
+      for (i = plyDepth-1; i > 0; i--) System.out.println(principalVariant[i]);
+
       return searchResult;
     }
 
@@ -124,8 +132,12 @@ class Search {
                     //System.out.println("Retracting: " + m.toString());
                     analyzeBoard.retractMove();
 
-                    if (score > bestscore) {
-                            if (plyDepth == depthToGo) strongestMove = m;
+                    if (score >= bestscore) {
+                        principalVariant[depthToGo-1] = "( " + m.toString() + " " + score + " )";
+                        if (plyDepth == depthToGo) {
+                                strongestMove = m;
+                                
+                            }
                             bestscore = score;
                     }
             }
