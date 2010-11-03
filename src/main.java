@@ -133,10 +133,10 @@ class main {
                     interfaceBoard.performMove(m);
                     
                     
-                    searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
+                    //searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
                     
-                    interfaceBoard.performMove(engine1.getStrongestMove());
-                                        System.out.println(engine1.moveAndStatistics());
+                    //interfaceBoard.performMove(engine1.getStrongestMove());
+                    //                    System.out.println(engine1.moveAndStatistics());
 
                     interfaceBoard.print();
                    
