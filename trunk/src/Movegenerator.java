@@ -244,7 +244,7 @@ class Movegenerator {
         switch (p.type) {
             // WHITE pawn moves
             case Piece.PAWN:
-                if (!b.attacks(king.xPos, king.yPos)) return pawnMoves(b, p);
+                if (!b.attacks(king.xPos, king.yPos)) return pawnMoves(b, p); // TODO: Not correct in general...
                 break;
             case Piece.KING:
                 return kingMoves(b, p);
