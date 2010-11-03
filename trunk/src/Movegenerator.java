@@ -54,8 +54,8 @@ class Movegenerator {
         // Non capturing PAWN promotion
         if (((y == 6) && (c == Piece.WHITE) && b.freeSquare(x, 7))
          || ((y == 1) && (c == Piece.BLACK) && b.freeSquare(x, 0))) {
-            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_QUEEN, Move.NORMALMOVE, c));
-            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_ROOK,  Move.NORMALMOVE, c));
+            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_QUEEN,  Move.NORMALMOVE, c));
+            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_ROOK,   Move.NORMALMOVE, c));
             Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_KNIGHT, Move.NORMALMOVE, c));
             Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_BISHOP, Move.NORMALMOVE, c));
         }
@@ -228,14 +228,24 @@ class Movegenerator {
     // Genereate the possible moves for one single piece
     public static ArrayList<Move> generateMoves(Board b, Piece p)  {
         ArrayList<Move> Moves = new ArrayList<Move>();
-        int sideToMove = b.whoIsInMove();
+        int sideToMove        = b.whoIsInMove();
+        Piece king            = null;
 
         if (p.color != sideToMove) return Moves;
+
+        // Find the king
+        for (int i = 0; i < b.getNumberOfPieces(); i++) {
+            king = b.getPiece(i);
+            if (king.type == Piece.KING && king.color == sideToMove) break;
+        }
+
+        
 
         switch (p.type) {
             // WHITE pawn moves
             case Piece.PAWN:
-                return pawnMoves(b, p);
+                if (!b.attacks(king.xPos, king.yPos)) return pawnMoves(b, p);
+                break;
             case Piece.KING:
                 return kingMoves(b, p);
         }
