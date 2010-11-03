@@ -106,7 +106,7 @@ class main {
                     interfaceBoard.performMove(m);
                     
                     
-                    searchResult = searcher.dosearch(interfaceBoard, plyDepth, Search.MINMAX);
+                    searchResult = searcher.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
                     
                     interfaceBoard.performMove(searcher.getStrongestMove());
                                         System.out.println(searcher.moveAndStatistics());
