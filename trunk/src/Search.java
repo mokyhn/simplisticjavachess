@@ -69,7 +69,7 @@ class Search {
             Iterator<Move>          moves;
             Move m                = null;
             int score             = 0;
-            int localAlpha        = alpha;
+            int best = 0;
 
             // Return board evaluation immediately
             if (depthToGo == 0) {
@@ -82,24 +82,26 @@ class Search {
 
             //Movegenerator.printMoves(movegen.generateAllMoves(analyzeBoard));
 
+            best = -30000;
+
             // Traverse the legal moves
             while (moves.hasNext()) {
                 m = moves.next();
                     //System.out.print("Inspecting " + m.toString());
                     //analyzeBoard.print();
                     analyzeBoard.performMove(m);
-                    score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -localAlpha);
+                    score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -Math.max(alpha, best));
 
                     //System.out.println("Retracting: " + m.toString());
                     analyzeBoard.retractMove();
 
-                    if (score > localAlpha) {
+                    if (score > best) {
+                            best = score;
                             if (plyDepth == depthToGo) strongestMove = m;
-                            if (score > beta) return beta;
-                            localAlpha = score;
+                            if (best >= beta) return beta;
                     }
             }
-            return localAlpha;
+            return best;
     }
 
     // TODO: Implement for test/reference purposes
@@ -134,11 +136,8 @@ class Search {
 
                     if (score >= bestscore) {
                         principalVariant[depthToGo-1] = "( " + m.toString() + " " + score + " )";
-                        if (plyDepth == depthToGo) {
-                                strongestMove = m;
-                                
-                            }
-                            bestscore = score;
+                        bestscore = score;
+                        if (plyDepth == depthToGo) strongestMove = m; // Used to extract strongest move
                     }
             }
             
