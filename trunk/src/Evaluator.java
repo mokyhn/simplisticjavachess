@@ -1,3 +1,8 @@
+// Detailed attack array for each square would be nice. Black material attacking a square
+// and white material attacking a square...
+// We could use this for evaluating the position and mobility of white/black
+// and to (easily) compute the outcome of an exchange serie.
+
 public class Evaluator {
 
 	public Evaluator() {

@@ -1,7 +1,21 @@
 //TODO: Implement inCheck predicate here or BETTER
 //an inCapture predicate??
 
+// A numbering of all moves generated. A function on the form
+//genmoves(board, moveid) such that only moves with a certain id
+//are generated.
+// This can be used to optimize our search engine such that not all
+// moves have to be generated beforehand. We can simply generated one move
+// at a time. (when cutoffs occur in the alpha beta search we will not have
+// wasted time for generating moves which where never searched anyway.
+
 // Eliminatate generation of a number of moves when king is in check...
+
+// Add knight moves as the next thing.
+// Only allow promotion to a knight...
+
+
+// The king is not allowed to be in check while another piece is moved...
 
 import java.util.ArrayList;
 
@@ -26,50 +40,36 @@ class Movegenerator {
 
 
         // Normal one step forward pawn move
-        if (((y < 6) && (c == Piece.WHITE)) || (y > 1) && (c == Piece.BLACK)) {
-            if (b.freeSquare(x, y + c * 1)) {
-                Moves.add(new Move(x, y, x, y + c * 1, Move.NORMALMOVE,
-                        Piece.EMPTY, c));
-            }
+        if (((y < 6) && (c == Piece.WHITE))
+          || (y > 1) && (c == Piece.BLACK)) {
+            if (b.freeSquare(x, y + c * 1)) Moves.add(new Move(x, y, x, y + c * 1, Move.NORMALMOVE, Piece.EMPTY, c));
         }
 
         // Normal two step forward pawn move
         if (((y == 1) && (c == Piece.WHITE))
-                || ((y == 6) && (c == Piece.BLACK))) {
-            if (b.freeSquare(x, y + c * 1) && b.freeSquare(x, y + c * 2)) {
-                Moves.add(new Move(x, y, x, (y + c * 2), Move.NORMALMOVE,
-                        Piece.EMPTY, c));
-            }
+         || ((y == 6) && (c == Piece.BLACK))) {
+          if (b.freeSquare(x, y + c * 1) && b.freeSquare(x, y + c * 2)) Moves.add(new Move(x, y, x, (y + c * 2), Move.NORMALMOVE, Piece.EMPTY, c));
         }
 
         // Non capturing PAWN promotion
         if (((y == 6) && (c == Piece.WHITE) && b.freeSquare(x, 7))
-                || ((y == 1) && (c == Piece.BLACK) && b.freeSquare(x, 0))) {
-            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_QUEEN,
-                    Move.NORMALMOVE, c));
-            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_ROOK,
-                    Move.NORMALMOVE, c));
-            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_KNIGHT,
-                    Move.NORMALMOVE, c));
-            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_BISHOP,
-                    Move.NORMALMOVE, c));
+         || ((y == 1) && (c == Piece.BLACK) && b.freeSquare(x, 0))) {
+            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_QUEEN, Move.NORMALMOVE, c));
+            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_ROOK,  Move.NORMALMOVE, c));
+            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_KNIGHT, Move.NORMALMOVE, c));
+            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_BISHOP, Move.NORMALMOVE, c));
         }
 
         // Normal diagonal capturing to the left
         if ((x > 0) && (y != (5 * c + 7) / 2)) {
-            leftPiece = b.getPieceXY(x - 1, y + c);
-            if (leftPiece != null && leftPiece.color != c) {
-                Moves.add(new Move(x, y, x - 1, y + c, Move.CAPTURE, leftPiece.type, c));
-            }
+         leftPiece = b.getPieceXY(x - 1, y + c);
+         if (leftPiece != null && leftPiece.color != c) Moves.add(new Move(x, y, x - 1, y + c, Move.CAPTURE, leftPiece.type, c));   
         }
 
         // Normal diagonal capturing to the right
         if ((x < 7) && (y != (5 * c + 7) / 2)) {
             rightPiece = b.getPieceXY(x + 1, y + c);
-            if (rightPiece != null && rightPiece.color != c) {
-                Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE,
-                        rightPiece.type, c));
-            }
+            if (rightPiece != null && rightPiece.color != c) Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE, rightPiece.type, c));
         }
 
         // Promotion via diagonal capturing to the left
@@ -105,25 +105,19 @@ class Movegenerator {
                 if (lastMovePiece != null && (lastMove.toX == x - 1) && (lastMove.toY == y)
                         && (lastMovePiece.type == Piece.PAWN)
                         && (Math.abs(lastMove.fromY - lastMove.toY) == 2)) {
-                    Moves.add(new Move(x, y, x - 1, y + c,
-                            Move.CAPTURE_ENPASSANT, Piece.EMPTY, c));
+                    Moves.add(new Move(x, y, x - 1, y + c, Move.CAPTURE_ENPASSANT, Piece.EMPTY, c));
                 }
-
-
             }
 
             if (x < 7) {
-
                 lastMovePiece = b.getPieceXY(lastMove.toX, lastMove.toY);
                 // The piece stands to the right
                 if (lastMovePiece != null && (lastMove.toX == x + 1) && (lastMove.toY == y)
                         && (lastMovePiece.type == Piece.PAWN)
                         && (Math.abs(lastMove.fromY - lastMove.toY) == 2)) {
-                    Moves.add(new Move(x, y, x + 1, y + c,
-                            Move.CAPTURE_ENPASSANT, Piece.EMPTY, c));
+                    Moves.add(new Move(x, y, x + 1, y + c, Move.CAPTURE_ENPASSANT, Piece.EMPTY, c));
 
                 }
-
             }
 
         } catch (java.util.EmptyStackException e) {

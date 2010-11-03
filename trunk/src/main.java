@@ -1,4 +1,6 @@
 //-enableassertions
+
+// Add support st the can play matches against itself...
 import java.io.*;
 
 class main {
@@ -8,9 +10,11 @@ class main {
         int     plyDepth      = 5;
         int     searchResult  = 0;
         Chessio io            = new Chessio();
-        Search  searcher      = new Search();
+        Search  engine1       = new Search();
+        Search  engine2       = new Search();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String str            = null;
+        int simSteps             = 0;
 
         Move    m;
 
@@ -50,15 +54,37 @@ class main {
             str = reader.readLine();
 
             if (str.matches("go")) {
-                searchResult = searcher.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
-                System.out.println(searcher.moveAndStatistics());
-                interfaceBoard.performMove(searcher.getStrongestMove());
+                searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
+                System.out.println(engine1.moveAndStatistics());
+                interfaceBoard.performMove(engine1.getStrongestMove());
             } else if (str.matches("undo")) { interfaceBoard.retractMove(); }
               else if (str.matches("allmoves")) {
                 Movegenerator mg = new Movegenerator();
                 mg.printMoves(mg.generateAllMoves(interfaceBoard));
             } else if (str.matches("black")) { interfaceBoard.setBlackToMove(); }
               else if (str.matches("white")) { interfaceBoard.setWhiteToMove(); }
+              else if (str.matches("branching")) {System.out.println(engine1.findBranchingFactor(interfaceBoard, 4));}
+              else if (str.startsWith("sim ")) {
+                  simSteps = Integer.parseInt(str.substring(4));
+                  engine1 = new Search();
+                  engine2 = new Search();
+                  
+                  interfaceBoard.print();
+
+                  for (int i = 0; i < simSteps; i++) {
+                      engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
+                      System.out.println(engine1.moveAndStatistics());
+                      interfaceBoard.performMove(engine1.getStrongestMove());
+                      interfaceBoard.print();
+
+                      engine2.dosearch(interfaceBoard, plyDepth, Search.RANDOM);
+                      System.out.println(engine2.moveAndStatistics());
+                      interfaceBoard.performMove(engine2.getStrongestMove());
+                      interfaceBoard.print();
+                      
+                  }
+              
+              }
               else if (str.matches("attacks")) {
                for (x = 0; x < 8; x++)
                    for (y = 0; y < 8; y++)
@@ -66,7 +92,8 @@ class main {
               }
               else if (str.matches("new"))   {
                 interfaceBoard = new Board(Board.NORMAL_SETUP);
-                searcher = new Search();
+                engine1 = new Search();
+                engine2 = new Search();
             }
                 else if (str.matches("state")) {
                     // TODO: Print all variable states from board...
@@ -76,7 +103,7 @@ class main {
                 }
              else if (str.startsWith("setboard")) {
                 interfaceBoard = new Board(str.substring(9, str.length()));
-                searcher       = new Search();
+                engine1       = new Search();
             } else
             if (str.matches("quit") || str.matches("q") || str.matches("bye") || str.matches("exit")) {
                 System.out.print("\nGoodbye\n\n");
@@ -93,9 +120,9 @@ class main {
                         throw new NoMoveException();
                     }
                     interfaceBoard.performMove(m);
-                    searchResult = searcher.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
-                    System.out.println(searcher.moveAndStatistics());
-                    interfaceBoard.performMove(searcher.getStrongestMove());
+                    searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
+                    System.out.println(engine1.moveAndStatistics());
+                    interfaceBoard.performMove(engine1.getStrongestMove());
                 } catch (NoMoveException e) { System.out.println("Not a valid move"); }
 
             } else {
@@ -106,10 +133,10 @@ class main {
                     interfaceBoard.performMove(m);
                     
                     
-                    searchResult = searcher.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
+                    searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
                     
-                    interfaceBoard.performMove(searcher.getStrongestMove());
-                                        System.out.println(searcher.moveAndStatistics());
+                    interfaceBoard.performMove(engine1.getStrongestMove());
+                                        System.out.println(engine1.moveAndStatistics());
 
                     interfaceBoard.print();
                    
