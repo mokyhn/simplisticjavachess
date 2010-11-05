@@ -29,8 +29,11 @@ class main {
 	//Board interfaceBoard = new Board("2k5/3pK3/8/4p3/4P3/8/8/8 w - - 0 1");
 
         // Do a simple setup with pawns.
-        Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w - 0 1");
-
+        //Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w - 0 1");
+    
+        
+        Board interfaceBoard = new Board("8/3K4/Pk6/4P3/1PP2P2/P7/4P3/8 b - - 0 1");
+        //Board interfaceBoard = new Board("k7/4K3/4p3/8/8/8/PP6/8 w - 0 1");
 
         // A simple rook setup
         //Board interfaceBoard = new Board("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w - 0 1");

@@ -217,7 +217,7 @@ class Movegenerator {
             if (b.freeSquare(x, y - 1)) Moves.add(new Move(x, y, x, y - 1, Move.NORMALMOVE, 0, c));
             else {
                 pTo = b.getPieceXY(x, y - 1);
-                if (pTo != null && p.color != c) Moves.add(new Move(x, y, x, y - 1, Move.CAPTURE, pTo.type, c));
+                if (pTo != null && pTo.color != c) Moves.add(new Move(x, y, x, y - 1, Move.CAPTURE, pTo.type, c)); 
             }
         }
         
@@ -244,8 +244,9 @@ class Movegenerator {
         switch (p.type) {
             // WHITE pawn moves
             case Piece.PAWN:
-                if (!b.attacks(king.xPos, king.yPos)) return pawnMoves(b, p); // TODO: Not correct in general...
-                break;
+                //if (!b.attacks(king.xPos, king.yPos))
+                    return pawnMoves(b, p); // TODO: Not correct in general...
+                //break;
             case Piece.KING:
                 return kingMoves(b, p);
         }
