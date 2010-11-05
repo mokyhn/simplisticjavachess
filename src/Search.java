@@ -92,23 +92,21 @@ class Search {
                 noPositions++;
                 return Evaluator.evaluate(analyzeBoard);
             }
-
-            // Otherwise generate legal moves
             moves = Movegenerator.generateAllMoves(analyzeBoard);
-
-            //Movegenerator.printMoves(movegen.generateAllMoves(analyzeBoard));
-
             best = -30000;
 
-            // Traverse the legal moves
+            if (moves.isEmpty()) {
+                if (Math.abs(Evaluator.evaluate(analyzeBoard)) == 1000)  {
+                  return Evaluator.evaluate(analyzeBoard);
+                }
+                else
+                return 0; // A draw
+            }
+
             for (i = 0; i < moves.size(); i++) {
                 m = moves.get(i);
-                    //System.out.print("Inspecting " + m.toString());
-                    //analyzeBoard.print();
                     analyzeBoard.performMove(m);
                     score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -Math.max(alpha, best));
-
-                    //System.out.println("Retracting: " + m.toString());
                     analyzeBoard.retractMove();
 
                     if (score > best) {
@@ -131,22 +129,25 @@ class Search {
            int score      = 0,
                bestscore  = -1000; // Minus infinity
            
-            // Return board evaluation immediately
             if (depthToGo == 0) {
                 noPositions++;
                 return Evaluator.evaluate(analyzeBoard);
             }
 
-            // Otherwise generate legal moves
             moves = Movegenerator.generateAllMoves(analyzeBoard);
 
-            // Traverse the legal moves
+            if (moves.isEmpty()) {
+                if (Math.abs(Evaluator.evaluate(analyzeBoard)) == 1000)  {
+                  return Evaluator.evaluate(analyzeBoard);
+                }
+                else
+                return 0; // A draw
+            }
+            
             for (i = 0; i < moves.size(); i++) {
                     m = moves.get(i);
                     analyzeBoard.performMove(m);
-
                     score = -minMaxSearch(plyDepth, depthToGo - 1);
-
                     analyzeBoard.retractMove();
 
                     if (score >= bestscore) {
@@ -162,11 +163,10 @@ class Search {
 
    
     public int randomSearch() {
-            Movegenerator movegen = new Movegenerator();
             ArrayList<Move>           moves;
             int n;
             double r = Math.random();
-            moves = movegen.generateAllMoves(analyzeBoard);
+            moves = Movegenerator.generateAllMoves(analyzeBoard);
 
             n = Math.abs(moves.size()-1);
            strongestMove = moves.get((int) Math.ceil(n*r));

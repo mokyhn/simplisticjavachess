@@ -61,7 +61,7 @@ public class Board implements Cloneable {
     public int     getNumberOfPieces()    { return position.numberOfPieces(); }
     public int     whoIsInMove()          { return inMove;  }
     public void    setBlackToMove()       { inMove = Piece.BLACK;}
-    public void    setWhiteToMove()       { inMove = Piece.BLACK;}
+    public void    setWhiteToMove()       { inMove = Piece.WHITE;}
     public Move    getLastMove()          { return moveStack.peek(); }
     public Piece   getPiece(int i)        { return position.getPiece(i); }
     public void    insertPiece(Piece p)   { position.insertPiece(p); }
