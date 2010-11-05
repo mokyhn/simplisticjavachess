@@ -44,15 +44,9 @@ public class Board implements Cloneable {
         theClone.blackCanCastleShort = whiteCanCastleShort;
         theClone.inMove              = inMove;
 
-        // TODO: make this cloning correct
-        /*
         theClone.moveStack = new Stack<Move>();
-        theClone.moveStack.addAll(moveStack); //TODO Should be cloned right?
-        */
-        theClone.moveStack = new Stack<Move>();
-
-
-        //theClone.moveStack = (Stack<Move>) this.moveStack.clone();
+        for (int i = 0; i < moveStack.size(); i ++)
+            (theClone.moveStack).push((Move) (moveStack.get(i)).clone());
 
         theClone.position = (PieceList) position.clone();
         return theClone;
@@ -354,11 +348,21 @@ public class Board implements Cloneable {
 
 
    public void printState() {
-       System.out.println("--------State---------------");
-       if (blackCanCastleShort) System.out.println("Black may castle short");
-       if (blackCanCastleLong)  System.out.println("Black may castle long");
-       if (whiteCanCastleShort) System.out.println("White may castle short");
-       if (whiteCanCastleLong)  System.out.println("White may castle long");
+       String blackCastleShort = " ",
+              blackCastleLong  = " ",
+              whiteCastleShort = " ",
+              whiteCastleLong  = " ";
+
+       if (blackCanCastleShort) blackCastleShort = "X";
+       if (blackCanCastleLong)  blackCastleLong  = "X";
+       if (whiteCanCastleShort) whiteCastleShort = "X";
+       if (whiteCanCastleLong)  blackCastleLong  = "X";
+
+       System.out.println("\n----------------------------State----------------------------");
+       
+       System.out.printf("Black can castle long: [%s],       Black can castle short: [%s]\n", blackCastleLong, blackCastleShort);
+       System.out.printf("White can castle long: [%s],       White can castle short: [%s]\n", whiteCastleLong, whiteCastleShort);
+
        System.out.println("Ply 0 evaluation: " + Evaluator.evaluate(this));
    }
 
