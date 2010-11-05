@@ -47,8 +47,18 @@ public class Move {
 
         public Object clone() {
             try { super.clone(); } catch (CloneNotSupportedException e) { }
-            System.out.println("Hej");
-            return null;
+
+            Move theClone = (Move) new Move();
+
+            theClone.fromX          = fromX;
+            theClone.fromY          = fromY;
+            theClone.toX            = toX;
+            theClone.toY            = toY;
+            theClone.type           = type;
+            theClone.whoMoves       = whoMoves;
+            theClone.event          = event;
+            theClone.aCapturedPiece = aCapturedPiece;
+            return theClone;
         }
 
 	public Move(int fX, int fY, int tX, int tY, int t, int p, int who) {
@@ -58,14 +68,14 @@ public class Move {
                    tY >= 0 && tY <= 7 &&
                    (!(fX == tX && fY == tY)) : "(fX, fY, tX, tY) = " + "(" + fX + ", " +  fY + ", " + tX + "," + tY + ")" ;
 
-                fromX = fX;
-		fromY = fY;
-		toX = tX;
-		toY = tY;
-		type = t;
+                fromX          = fX;
+		fromY          = fY;
+		toX            = tX;
+		toY            = tY;
+		type           = t;
 		aCapturedPiece = p;
-                event = NOEVENT;
-		whoMoves = who;
+                event          = NOEVENT;
+		whoMoves       = who;
 	}
 
         // Move constructor with event e added
