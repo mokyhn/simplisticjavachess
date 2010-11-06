@@ -12,6 +12,9 @@ A list of ideas/thoughts:
   * An optimized movegenerator that generates one move at a time.
   * Draw on threefold repetition
   * inCheck and correct movegeneration
+  * 50 move rule draw
+  * Principal Variations in search engine
+  * Algebraic Long notation export of a game
 
 = Fixed =
   * Movenumbers printed on screen
