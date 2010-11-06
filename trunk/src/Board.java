@@ -14,6 +14,9 @@ public class Board implements Cloneable {
     private boolean     whiteCanCastleLong  = true;
     private int         inMove              = Piece.WHITE;
 
+    Piece   inCheckByPiece                  = null; // Currently not used, but could be used to deal
+                                                    // with movegeneration when the king is in check
+
 	// Constructor, setting up initial position
     public Board(int setup) {
         inMove    = Piece.WHITE;
@@ -299,12 +302,23 @@ public class Board implements Cloneable {
 
       // Given a position in the FEN - notation.
     // Set the board up correctly
+    // TODO, implement this:
+//    En passant target square in algebraic notation. If there's no en passant target square, this is "–". If a pawn has just made a 2-square move, this is the position "behind" the pawn. This is recorded regardless of whether there is a pawn in position to make an en passant capture.[2]
+//Halfmove clock: This is the number of halfmoves since the last pawn advance or capture. This is used to determine if a draw can be claimed under the fifty-move rule.
+//Fullmove number: The number of the full move. It starts at 1, and is incremented after Black's move.
     private void setupFENboard(String fen) {
         int x = 0;
         int y = 7;
         int i;
         int parsingPartNo = 1;
         char c;
+
+       whiteCanCastleShort = false;
+       whiteCanCastleLong  = false;
+       blackCanCastleShort = false;
+       blackCanCastleLong  = false;
+
+
         // Traverse input string
         for (i = 0; i < fen.length(); i++) {
             c = fen.charAt(i);
@@ -356,13 +370,16 @@ public class Board implements Cloneable {
        if (blackCanCastleShort) blackCastleShort = "X";
        if (blackCanCastleLong)  blackCastleLong  = "X";
        if (whiteCanCastleShort) whiteCastleShort = "X";
-       if (whiteCanCastleLong)  blackCastleLong  = "X";
+       if (whiteCanCastleLong)  whiteCastleLong  = "X";
 
        System.out.println("\n----------------------------State----------------------------");
        
        System.out.printf("Black can castle long: [%s],       Black can castle short: [%s]\n", blackCastleLong, blackCastleShort);
        System.out.printf("White can castle long: [%s],       White can castle short: [%s]\n", whiteCastleLong, whiteCastleShort);
-
+       if (!moveStack.isEmpty()) {
+         if (-inMove == Piece.WHITE) System.out.printf("Last move %d. %s\n",    (moveStack.size()+1)/2, moveStack.peek().toString());
+         else                       System.out.printf("Last move %d.... %s\n", (moveStack.size()+1)/2, moveStack.peek().toString());
+       }
        System.out.println("Ply 0 evaluation: " + Evaluator.evaluate(this));
    }
 

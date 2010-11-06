@@ -1,10 +1,8 @@
-		// TODO: CAPTURE AND PROMOTION DOES NOT WORK!!
-
 public class Chessio {
 
     // Constuctor
-    public Chessio() {
-    }
+//    public Chessio() {
+ //   }
 
     // Print a given board in ASCII to standard output
     public static void printBoard(Board theBoard) {
@@ -32,11 +30,11 @@ public class Chessio {
     // who is the next to move: Parse the movestring to a move
     // Output: a move
     public Move parse_move(Board b, String str) throws NoMoveException {
-        char[] s = str.toCharArray();
-        int fromX, fromY, toX, toY;
-        int whoToMove = b.whoIsInMove();
-        Piece p, pto;
-        Move m = new Move();
+        int    fromX, fromY, toX, toY;
+        int    whoToMove = b.whoIsInMove();
+        char[] s         = str.toCharArray();
+        Move m           = new Move();
+        Piece  p, pto;
 
         if (s.length < 4) {
             System.out.println("Movestring to short, not a valid move.");
@@ -60,10 +58,7 @@ public class Chessio {
 
         p = b.getPieceXY(fromX, fromY);
         if (p == null) throw new NoMoveException();
-
         if (p.color != whoToMove) { throw new NoMoveException(); }
-
-
 
         m.fromX          = fromX;
         m.fromY          = fromY;
@@ -75,13 +70,13 @@ public class Chessio {
         if (str.length() == 4) {
             // White or black does a short or a long castling
             if (p.type == Piece.KING && fromY == toY && (fromY == 0 || fromY == 7)) {
-                    if (fromX == 4 && toX == 6) {
-                            m.type = Move.CASTLE_SHORT;
-                            return m;
-                    } else if (fromX == 4 && toX == 2) {
-                            m.type = Move.CASTLE_LONG;
-                            return m;
-                    }
+                if (fromX == 4 && toX == 6) {
+                        m.type = Move.CASTLE_SHORT;
+                        return m;
+                } else if (fromX == 4 && toX == 2) {
+                        m.type = Move.CASTLE_LONG;
+                        return m;
+                }
             }
 
             // ENPASSENT Move
@@ -93,11 +88,10 @@ public class Chessio {
                 }
             }
 
-
             // Normal move
             if (b.freeSquare(toX, toY)) {
-                    m.type = Move.NORMALMOVE;
-                    return m;
+                m.type = Move.NORMALMOVE;
+                return m;
             }
 
             // A capturing move
@@ -107,37 +101,26 @@ public class Chessio {
                m.aCapturedPiece = pto.type;
                return m;
              }
- 
-
-
         }
 
         // Promotion moves
         if (str.length() == 5) {
             if (fromX == toX) {
                 switch (s[4]) {
-                case 'K': m.type = Move.PROMOTE_TO_KNIGHT;
-                          break;
-                case 'B': m.type = Move.PROMOTE_TO_BISHOP;
-                          break;
-                case 'Q': m.type = Move.PROMOTE_TO_QUEEN;
-                          break;
-                case 'R': m.type = Move.PROMOTE_TO_ROOK;
-                          break;
+                case 'K': m.type = Move.PROMOTE_TO_KNIGHT; break;
+                case 'B': m.type = Move.PROMOTE_TO_BISHOP; break;
+                case 'Q': m.type = Move.PROMOTE_TO_QUEEN;  break;
+                case 'R': m.type = Move.PROMOTE_TO_ROOK;   break;
              }
          }
          else
          {
-                switch (s[4]) {
-                case 'K': m.type = Move.CAPTURE_AND_PROMOTE_TO_KNIGHT;
-                          break;
-                case 'B': m.type = Move.CAPTURE_AND_PROMOTE_TO_BISHOP;
-                          break;
-                case 'Q': m.type = Move.CAPTURE_AND_PROMOTE_TO_QUEEN;
-                          break;
-                case 'R': m.type = Move.CAPTURE_AND_PROMOTE_TO_ROOK;
-                          break;
-                }
+            switch (s[4]) {
+                case 'K': m.type = Move.CAPTURE_AND_PROMOTE_TO_KNIGHT; break;
+                case 'B': m.type = Move.CAPTURE_AND_PROMOTE_TO_BISHOP; break;
+                case 'Q': m.type = Move.CAPTURE_AND_PROMOTE_TO_QUEEN;  break;
+                case 'R': m.type = Move.CAPTURE_AND_PROMOTE_TO_ROOK;   break;
+            }
          }
         }
 
@@ -149,14 +132,9 @@ public class Chessio {
            && b.getPieceXY(fromX, fromY).color == Piece.WHITE && fromY == 6)
            || (b.getPieceXY(fromX, fromY).type == Piece.PAWN
             && b.getPieceXY(fromX, fromY).color == Piece.BLACK && fromY == 1))
-                if (b.freeSquare(toX, toY)) {
-                        return m;
-                }
+                if (b.freeSquare(toX, toY)) return m;
 
-            
-
-
-            throw new NoMoveException();
+        throw new NoMoveException();
     }
 
     public final static String numToChar(int pos) {
@@ -170,7 +148,6 @@ public class Chessio {
             case 6:	return "g";
             case 7:	return "h";
             }
-
             System.out.println( "ERR: numToChar: input was " + pos);
             System.exit(1);
             return "";
