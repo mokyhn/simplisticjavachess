@@ -14,14 +14,17 @@ public class Board implements Cloneable {
     private boolean     whiteCanCastleLong  = true;
     private int         inMove              = Piece.WHITE;
 
+    private int         moveNumber          = 0;
+
     Piece   inCheckByPiece                  = null; // Currently not used, but could be used to deal
                                                     // with movegeneration when the king is in check
 
 	// Constructor, setting up initial position
     public Board(int setup) {
-        inMove    = Piece.WHITE;
-        position  = new PieceList();
-        moveStack = new Stack<Move>();
+        moveNumber = 0;
+        inMove     = Piece.WHITE;
+        position   = new PieceList();
+        moveStack  = new Stack<Move>();
         switch (setup) {
             case NO_SETUP:      break;
             case NORMAL_SETUP: setupFENboard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); 
@@ -29,9 +32,10 @@ public class Board implements Cloneable {
     }
 
     public Board(String fen) {
-        inMove    = Piece.WHITE;
-        position  = new PieceList();
-        moveStack = new Stack<Move>();
+        moveNumber = 0;
+        inMove     = Piece.WHITE;
+        position   = new PieceList();
+        moveStack  = new Stack<Move>();
         setupFENboard(fen);
     }
 
@@ -46,7 +50,8 @@ public class Board implements Cloneable {
         theClone.blackCanCastleLong  = whiteCanCastleLong;
         theClone.blackCanCastleShort = whiteCanCastleShort;
         theClone.inMove              = inMove;
-
+        theClone.moveNumber          = moveNumber;
+        
         theClone.moveStack = new Stack<Move>();
         for (int i = 0; i < moveStack.size(); i ++)
             (theClone.moveStack).push((Move) (moveStack.get(i)).clone());
@@ -84,6 +89,7 @@ public class Board implements Cloneable {
     public void performMove(Move m) {
         Piece p = getPieceXY(m.fromX, m.fromY);
 
+       moveNumber++;
        // Moving a rook can disallow castling in the future
         if (p.type == Piece.ROOK) {
             if (m.whoMoves == Piece.BLACK) {
@@ -198,7 +204,7 @@ public class Board implements Cloneable {
 
         // Test if the castle flags should be set.
         // and reverse the state of these flags...
-
+        moveNumber--;
         try {
             Move m = moveStack.pop();
 
@@ -377,10 +383,12 @@ public class Board implements Cloneable {
        System.out.printf("Black can castle long: [%s],       Black can castle short: [%s]\n", blackCastleLong, blackCastleShort);
        System.out.printf("White can castle long: [%s],       White can castle short: [%s]\n", whiteCastleLong, whiteCastleShort);
        if (!moveStack.isEmpty()) {
-         if (-inMove == Piece.WHITE) System.out.printf("Last move %d. %s\n",    (moveStack.size()+1)/2, moveStack.peek().toString());
-         else                       System.out.printf("Last move %d.... %s\n", (moveStack.size()+1)/2, moveStack.peek().toString());
+         if (-inMove == Piece.WHITE) System.out.printf("Last move %d. %s\n",   (moveNumber+1)/2, moveStack.peek().toString());
+         else                       System.out.printf("Last move %d.... %s\n", (moveNumber+1)/2, moveStack.peek().toString());
        }
-       System.out.println("Ply 0 evaluation: " + Evaluator.evaluate(this));
+       System.out.println("Immediate evaluation: " + Evaluator.evaluate(this));
    }
+
+  
 
 }

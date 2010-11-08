@@ -229,28 +229,16 @@ class Movegenerator {
     public static ArrayList<Move> generateMoves(Board b, Piece p)  {
         ArrayList<Move> Moves = new ArrayList<Move>();
         int sideToMove        = b.whoIsInMove();
-        Piece king            = null;
 
         if (p.color != sideToMove) return Moves;
-
-        // Find the king
-        for (int i = 0; i < b.getNumberOfPieces(); i++) {
-            king = b.getPiece(i);
-            if (king.type == Piece.KING && king.color == sideToMove) break;
-        }
-
         
-
         switch (p.type) {
             // WHITE pawn moves
             case Piece.PAWN:
-                //if (!b.attacks(king.xPos, king.yPos))
-                    return pawnMoves(b, p); // TODO: Not correct in general...
-                //break;
+                    return pawnMoves(b, p);
             case Piece.KING:
                 return kingMoves(b, p);
         }
-
         return Moves;
     }
 
