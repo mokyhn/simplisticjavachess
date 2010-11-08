@@ -92,7 +92,8 @@ class Search {
                 noPositions++;
                 return Evaluator.evaluate(analyzeBoard);
             }
-            moves = Movegenerator.generateAllMoves(analyzeBoard);
+
+            moves = Movegenerator.generateAllMoves(analyzeBoard); // generateMoves(Board b, Piece p)  call this instead
             best = -30000;
 
             if (moves.isEmpty()) {

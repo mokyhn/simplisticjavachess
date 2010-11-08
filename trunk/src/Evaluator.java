@@ -3,6 +3,8 @@
 // We could use this for evaluating the position and mobility of white/black
 // and to (easily) compute the outcome of an exchange serie.
 
+
+// TODO:The fifty-move rule in chess states that a player can claim a draw if no capture has been made and no pawn has been moved in the last fifty consecutive moves (fifty moves by each side).
 public class Evaluator {
 
 	public Evaluator() {
