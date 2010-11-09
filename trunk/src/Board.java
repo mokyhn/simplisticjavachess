@@ -307,23 +307,27 @@ public class Board implements Cloneable {
     }
 
       // Given a position in the FEN - notation.
+	  //TODO: Remove double whitespaces first....
     // Set the board up correctly
     // TODO, implement this:
 //    En passant target square in algebraic notation. If there's no en passant target square, this is "–". If a pawn has just made a 2-square move, this is the position "behind" the pawn. This is recorded regardless of whether there is a pawn in position to make an en passant capture.[2]
 //Halfmove clock: This is the number of halfmoves since the last pawn advance or capture. This is used to determine if a draw can be claimed under the fifty-move rule.
 //Fullmove number: The number of the full move. It starts at 1, and is incremented after Black's move.
-    private void setupFENboard(String fen) {
+    private void setupFENboard(String sfen) {
         int x = 0;
         int y = 7;
         int i;
-        int parsingPartNo = 1;
+        int parsingPartNo;
         char c;
+        String fen = trimWhiteSpace(sfen);
 
        whiteCanCastleShort = false;
        whiteCanCastleLong  = false;
        blackCanCastleShort = false;
        blackCanCastleLong  = false;
 
+       // Parsing part no. 1
+       parsingPartNo = 1;
 
         // Traverse input string
         for (i = 0; i < fen.length(); i++) {
@@ -355,16 +359,61 @@ public class Board implements Cloneable {
                 switch (c) {
                     case 'w': inMove = Piece.WHITE; break;
                     case 'b': inMove = Piece.BLACK; break;
-                    case ' ': break;
+                    case ' ': parsingPartNo = 3; i++;    break;
+                }
+            }
+
+            if (parsingPartNo == 3) {
+                c = fen.charAt(i);
+                switch (c) {
                     case 'K': whiteCanCastleShort = true; break;
                     case 'Q': whiteCanCastleLong  = true; break;
                     case 'k': blackCanCastleShort = true; break;
                     case 'q': blackCanCastleLong  = true; break;
-                    default: {} // Ignore rest.
+                    case ' ': parsingPartNo = 4; i++;   break;
                 }
+            }
+
+            if (parsingPartNo == 4) {
+              c = fen.charAt(i);
+              if (c == '-') {}
+              else {
+               int xPawn = (int) (c - 'a');
+               int yPawn = (int) (c-'1');
+               assert xPawn >= 0 && xPawn <= 7 : xPawn;
+               assert yPawn >= 0 && yPawn <= 7;
+               Piece p = getPieceXY(xPawn, yPawn+inMove);
+               if (p != null && p.type == Piece.PAWN) {
+                   moveStack.push(new Move(xPawn, yPawn-inMove, xPawn, yPawn+inMove, Move.NORMALMOVE, Piece.EMPTY, inMove));
+               }
+              }
+              
+            
             }
         }
     }
+
+  public String trimWhiteSpace(String s) {
+      String t     = "";
+      char c;
+      boolean flag = false;
+  
+      for (int i = 0; i < s.length(); i++) {
+       c = s.charAt(i);
+
+       if (c == ' ' && !flag) {
+           flag = true;
+           t = t + ' ';
+       }
+
+       if (c != ' ') {
+           flag = false;
+           t = t + c;
+       }
+      }
+
+      return t;
+  }
 
 
    public void printState() {
