@@ -3,20 +3,20 @@
 
 
 A list of ideas/thoughts:
+  * Hashing of position evaluations
+  * Draw on threefold repetition
+  * Principal Variations in search engine
+  * Algebraic Long notation export of a game
   * The board evaluation function _E_ could return a *vector* _E(p)=v_ of values when called on a position _p_.
   * A metric _d(.,.)_ could be defined on such vectors. To compare two positions _p1_ and _p2_ we could use _d(p1, p2)_ where _p2_ is a reachable position either as an immediate successor of _p1_ or with a number of moves between _p1_ and _p2_.  
   * Threaded searching
-  * Hashing of position evaluations
   * a toFEN function that outputs the current board position in FEN 
   * PGN export
   * An optimized movegenerator that generates one move at a time.
-  * Draw on threefold repetition
   * inCheck and correct movegeneration
-  * 50 move rule draw
-  * Principal Variations in search engine
-  * Algebraic Long notation export of a game
 
 = Fixed =
+  * 50 move rule draw
   * Movenumbers printed on screen
   * add functionality such that the engine can play against itself. (E.g. random engine against min/max engine or alpha/beta engine). A command could be added *machine n* where n specifies an upper bound on the length of move steps the machine is allowed to play against itself. 
   * When the king is moved for the first time (and not due to a castling) then the castling-ability is lost. This is now recorded in a way where the undo function works.
