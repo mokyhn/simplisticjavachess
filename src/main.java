@@ -1,6 +1,11 @@
 //-enableassertions
 
-// Add support st the can play matches against itself...
+// TODO: 1. Add hash to History
+//    - that can let us detect threefold repitition.
+//  2. Add better search heuristic and Principal Variation
+//  3. Test
+//  4. Implement rest of moves
+//  5. Port to C++
 import java.io.*;
 
 class main {
@@ -29,9 +34,9 @@ class main {
 	//Board interfaceBoard = new Board("2k5/3pK3/8/4p3/4P3/8/8/8 w - - 0 1");
 
         // Do a simple setup with pawns.
-        //Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
+        Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
 
-        Board interfaceBoard = new Board("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+        //Board interfaceBoard = new Board("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 17 42");
 
         
         //Board interfaceBoard = new Board("8/3K4/Pk6/4P3/1PP2P2/P7/4P3/8 b - - 0 1");

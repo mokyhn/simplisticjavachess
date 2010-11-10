@@ -87,6 +87,9 @@ class Search {
             int best = 0;
             int i;
 
+            if (analyzeBoard.getHalfMoveClock() == 50) return 0; // It is a draw by the 50-move rule
+
+
             // Return board evaluation immediately
             if (depthToGo == 0) {
                 noPositions++;
@@ -107,6 +110,10 @@ class Search {
             for (i = 0; i < moves.size(); i++) {
                 m = moves.get(i);
                     analyzeBoard.performMove(m);
+
+                    if (analyzeBoard.getHalfMoveClock() == 50) return 0; // It is a draw by the 50-move rule
+
+
                     score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -Math.max(alpha, best));
                     analyzeBoard.retractMove();
 
@@ -129,6 +136,9 @@ class Search {
            int  i;
            int score      = 0,
                bestscore  = -1000; // Minus infinity
+
+           if (analyzeBoard.getHalfMoveClock() == 50) return 0; // It is a draw by the 50-move rule
+
            
             if (depthToGo == 0) {
                 noPositions++;
@@ -148,6 +158,9 @@ class Search {
             for (i = 0; i < moves.size(); i++) {
                     m = moves.get(i);
                     analyzeBoard.performMove(m);
+
+                    if (analyzeBoard.getHalfMoveClock() == 50) return 0; // It is a draw by the 50-move rule
+
                     score = -minMaxSearch(plyDepth, depthToGo - 1);
                     analyzeBoard.retractMove();
 
