@@ -1,7 +1,9 @@
 
 public class History {
     public Move move;
-    
+   
+    public Bitboard bb; // For future use wrt. draw by threefold repetition and a hash table for search evaluations.
+	
     public boolean blackCanCastleShort;
     public boolean blackCanCastleLong;
     public boolean whiteCanCastleShort;
