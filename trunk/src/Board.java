@@ -21,6 +21,9 @@ public class Board implements Cloneable {
     Piece   inCheckByPiece                  = null; // Currently not used, but could be used to deal
                                                     // with movegeneration when the king is in check
 
+    private int   halfMovesIndex3PosRepition; // the number of halfmoves since last pawnmove (including promotions) or capture move
+                                              // When searching for threefold repitions search from this index...
+
 	// Constructor, setting up initial position
     public Board(int setup) {
         moveNumber = 0;

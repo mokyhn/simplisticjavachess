@@ -31,14 +31,14 @@ class main {
 
         //Board interfaceBoard = new Board("4k3/7p/7K/8/8/8/8/8 w - 0 1");
 
-	//Board interfaceBoard = new Board("2k5/3pK3/8/4p3/4P3/8/8/8 w - - 0 1");
+	Board interfaceBoard = new Board("2k5/3pK3/8/4p3/4P3/8/8/8 w - - 0 1");
 
         // Do a simple setup with pawns.
-        Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
+        //Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
 
         // Testing bitboard...
-        //Bitboard tbb = new Bitboard(interfaceBoard);
-        //System.out.println(tbb.toString(tbb.bb[0][Piece.PAWN])); //
+       // Bitboard tbb = new Bitboard(interfaceBoard);
+        //System.out.println(tbb.toString(tbb.bb[1][Piece.KING])); //
 
         //Board interfaceBoard = new Board("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 17 42");
 

@@ -58,9 +58,13 @@ public class Bitboard {
         return r;
     }
 
-    // Todo implement:
-    public boolean equals(Object obj) {
-        return super.equals(obj);
+    public boolean equals(Bitboard b2) {
+        for (int t = 0; t < 6; t++) {
+            if (this.bb[0][t] != b2.bb[0][t] ||
+                this.bb[1][t] != b2.bb[1][t]) return false;
+        }
+        
+        return true;
     }
 
 }
