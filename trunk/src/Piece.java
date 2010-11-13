@@ -8,13 +8,13 @@ class Piece implements Cloneable {
                               WHITE    =  1,
                               NO_COLOR =  0;
 
-    public static final int   EMPTY  = 0,
-                              PAWN   = 1,
-                              BISHOP = 2,
-                              KNIGHT = 3,
-                              ROOK   = 4,
-                              QUEEN  = 5,
-                              KING   = 6;
+    public static final int   PAWN   = 0,
+                              BISHOP = 1,
+                              KNIGHT = 2,
+                              ROOK   = 3,
+                              QUEEN  = 4,
+                              KING   = 5,
+                              EMPTY  = 6;
 
     public Piece clone() {
         try { super.clone(); }

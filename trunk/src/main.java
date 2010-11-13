@@ -36,6 +36,10 @@ class main {
         // Do a simple setup with pawns.
         Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
 
+        // Testing bitboard...
+        //Bitboard tbb = new Bitboard(interfaceBoard);
+        //System.out.println(tbb.toString(tbb.bb[0][Piece.PAWN])); //
+
         //Board interfaceBoard = new Board("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 17 42");
 
         
