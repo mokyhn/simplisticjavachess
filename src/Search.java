@@ -112,7 +112,7 @@ class Search {
                     analyzeBoard.performMove(m);
 
                     if (analyzeBoard.getHalfMoveClock() == 50) return 0; // It is a draw by the 50-move rule
-
+                    // TODO: Check for threefold repetition here...
 
                     score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -Math.max(alpha, best));
                     analyzeBoard.retractMove();
