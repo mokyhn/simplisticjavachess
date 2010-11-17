@@ -4,6 +4,8 @@ import java.util.Iterator;
 public class Board implements Cloneable {
     private              PieceList position = new PieceList();
 
+    private Bitboard    bbposition;
+
     public static final int NO_SETUP        = 0,
                             NORMAL_SETUP    = 1;
 	    
@@ -28,12 +30,16 @@ public class Board implements Cloneable {
     public Board(int setup) {
         moveNumber = 0;
         inMove     = Piece.WHITE;
+        halfMoveClock = 0;
+        halfMovesIndex3PosRepition = 0;
         position   = new PieceList();
         history  = new Stack<History>();
         switch (setup) {
             case NO_SETUP:      break;
             case NORMAL_SETUP: setupFENboard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); 
         }
+        
+        bbposition = new Bitboard(this);
     }
 
     public Board(String fen) {
@@ -41,7 +47,12 @@ public class Board implements Cloneable {
         inMove     = Piece.WHITE;
         position   = new PieceList();
         history    = new Stack<History>();
+        halfMoveClock = 0;
+        halfMovesIndex3PosRepition = 0;
+
         setupFENboard(fen);
+        bbposition = new Bitboard(this);
+  
     }
 
 	
@@ -58,10 +69,21 @@ public class Board implements Cloneable {
         theClone.moveNumber          = moveNumber;
         
         theClone.history = new Stack<History>();
-        for (int i = 0; i < history.size(); i ++)
+
+        for (int i = 0; i < history.size(); i ++) {
             (theClone.history).push((History) (history.get(i)).clone());
+        }
 
         theClone.position = (PieceList) position.clone();
+
+        if (this.inCheckByPiece == null) {
+                 theClone.inCheckByPiece = null;    
+        } else { theClone.inCheckByPiece             = (Piece) this.inCheckByPiece.clone();
+        }
+
+        theClone.halfMoveClock              = this.halfMoveClock;
+        theClone.halfMovesIndex3PosRepition = this.halfMovesIndex3PosRepition;
+        theClone.bbposition                 = (Bitboard) this.bbposition.clone();
         return theClone;
     }
 
@@ -72,7 +94,6 @@ public class Board implements Cloneable {
     public Move    getLastMove()          { return history.peek().move; }
     public Piece   getPiece(int i)        { return position.getPiece(i); }
     public void    insertPiece(Piece p)   { position.insertPiece(p); }
-    public int     getHalfMoveClock()     { return halfMoveClock; }
     public Piece   removePiece(int x, int y) { return position.removePiece(x, y); }
     public boolean freeSquare(int x, int y)  { return position.freeSquare(x, y); }
     // Returns true if the side not in move, in board b attacks square (x, y)
@@ -80,8 +101,19 @@ public class Board implements Cloneable {
     public boolean attacks(int x, int y)  { return position.attacks( x,  y,  inMove); }
     private void   movePiece(int xFrom, int yFrom, int xTo, int yTo) { position.movePiece(xFrom, yFrom, xTo, yTo); }
     public void    print() {Chessio.printBoard(this);}
+    public Boolean drawBy50MoveRule() {return halfMoveClock >= 50;}
 
+    public Boolean drawBy3RepetionsRule() {
+        History h;
+        int k = 0;
 
+        for (int i = halfMovesIndex3PosRepition; i < history.size(); i ++) {
+            h = history.get(i);
+            if (bbposition.equals(h.bbposition)) k++;
+        }
+        
+        return k >= 3;
+    }
 
     // Find a piece at a certain location
     public Piece getPieceXY(int x, int y) {
@@ -98,10 +130,15 @@ public class Board implements Cloneable {
        moveNumber++;
 
        // Put the move m on the stack
-       history.push(new History(m, blackCanCastleShort, blackCanCastleLong, whiteCanCastleShort, whiteCanCastleLong, halfMoveClock));
+       history.push(new History(m, blackCanCastleShort, blackCanCastleLong, whiteCanCastleShort, whiteCanCastleLong, 
+               halfMoveClock, halfMovesIndex3PosRepition, bbposition, inCheckByPiece));
 
-       // Used to determine the 50-move rule
-       if (p.type == Piece.PAWN) halfMoveClock = 0;
+
+       // Used to determine the 50-move rule, three times repition
+       if (p.type == Piece.PAWN) {
+           halfMoveClock              = 0;
+           halfMovesIndex3PosRepition = moveNumber;
+       }
        else halfMoveClock++;
 
        // Moving a rook can disallow castling in the future
@@ -183,6 +220,8 @@ public class Board implements Cloneable {
         // Swap the move color
         inMove = -inMove;
 
+        bbposition = new Bitboard(this);
+
     }
 
     public boolean retractMove() {
@@ -202,6 +241,11 @@ public class Board implements Cloneable {
             whiteCanCastleShort = h.whiteCanCastleShort;
 
             halfMoveClock       = h.halfMoveClock;
+            halfMovesIndex3PosRepition = h.halfMovesIndex3PosRepition;
+
+            bbposition = h.bbposition;
+
+            inCheckByPiece = h.inCheckByPiece;
 
             // Swap the move color
             inMove = -inMove;
@@ -364,7 +408,11 @@ public class Board implements Cloneable {
                Piece p = getPieceXY(xPawn, yPawn-inMove);
                if (p != null && p.type == Piece.PAWN) {
                    Move m = new Move(xPawn, yPawn+inMove, xPawn, yPawn-inMove, Move.NORMALMOVE, Piece.EMPTY, inMove);
-                   history.push(new History(m, blackCanCastleShort, blackCanCastleLong, whiteCanCastleShort, whiteCanCastleLong, halfMoveClock) );
+                   bbposition = new Bitboard(this);
+                   history.push(new History(m, blackCanCastleShort, blackCanCastleLong, whiteCanCastleShort, whiteCanCastleLong,
+                           halfMoveClock,
+                           halfMovesIndex3PosRepition, bbposition, null
+                           ) );
                }
 
                parsingPartNo = 5;

@@ -31,10 +31,10 @@ class main {
 
         //Board interfaceBoard = new Board("4k3/7p/7K/8/8/8/8/8 w - 0 1");
 
-	Board interfaceBoard = new Board("2k5/3pK3/8/4p3/4P3/8/8/8 w - - 0 1");
+	//Board interfaceBoard = new Board("2k5/3pK3/8/4p3/4P3/8/8/8 w - - 0 1");
 
         // Do a simple setup with pawns.
-        //Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
+        Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
 
         // Testing bitboard...
        // Bitboard tbb = new Bitboard(interfaceBoard);
