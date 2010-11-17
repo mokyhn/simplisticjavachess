@@ -87,7 +87,7 @@ class Search {
             int best = 0;
             int i;
 
-            if (analyzeBoard.getHalfMoveClock() == 50) return 0; // It is a draw by the 50-move rule
+            if (analyzeBoard.drawBy50MoveRule()) return 0; // It is a draw by the 50-move rule
 
 
             // Return board evaluation immediately
@@ -111,11 +111,14 @@ class Search {
                 m = moves.get(i);
                     analyzeBoard.performMove(m);
 
-                    if (analyzeBoard.getHalfMoveClock() == 50) return 0; // It is a draw by the 50-move rule
-                    // TODO: Check for threefold repetition here...
-
-                    score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -Math.max(alpha, best));
-                    analyzeBoard.retractMove();
+                    if (analyzeBoard.drawBy50MoveRule() || analyzeBoard.drawBy3RepetionsRule()) {
+					  score = 0;
+					}
+					else {
+					 score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -Math.max(alpha, best));
+					}
+                    
+					analyzeBoard.retractMove();
 
                     if (score > best) {
                             best = score;
@@ -137,7 +140,7 @@ class Search {
            int score      = 0,
                bestscore  = -1000; // Minus infinity
 
-           if (analyzeBoard.getHalfMoveClock() == 50) return 0; // It is a draw by the 50-move rule
+           if (analyzeBoard.drawBy50MoveRule()) return 0; // It is a draw by the 50-move rule
 
            
             if (depthToGo == 0) {
@@ -159,9 +162,12 @@ class Search {
                     m = moves.get(i);
                     analyzeBoard.performMove(m);
 
-                    if (analyzeBoard.getHalfMoveClock() == 50) return 0; // It is a draw by the 50-move rule
+                    if (analyzeBoard.drawBy3RepetionsRule() || analyzeBoard.drawBy50MoveRule()) {
+                        score = 0;
+                    } else {
+                     score = -minMaxSearch(plyDepth, depthToGo - 1);
+                    }
 
-                    score = -minMaxSearch(plyDepth, depthToGo - 1);
                     analyzeBoard.retractMove();
 
                     if (score >= bestscore) {

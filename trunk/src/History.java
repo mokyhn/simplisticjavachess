@@ -2,7 +2,7 @@
 public class History {
     public Move move;
    
-    public Bitboard bb; // For future use wrt. draw by threefold repetition and a hash table for search evaluations.
+    public Bitboard bbposition; // For future use wrt. draw by threefold repetition and a hash table for search evaluations.
 	
     public boolean blackCanCastleShort;
     public boolean blackCanCastleLong;
@@ -13,8 +13,14 @@ public class History {
                               // Used to determine if a draw can be claimed under the fifty-move rule.
 
 
-    public History (Move m, boolean bs, boolean bl, boolean ws, boolean wl, int hc) {
-        move = (Move) m.clone();
+    public int halfMovesIndex3PosRepition;
+
+    public Piece inCheckByPiece;
+
+    public History() {};
+
+    public History (Move m, boolean bs, boolean bl, boolean ws, boolean wl, int hc, int h3, Bitboard b, Piece ic) {
+        move = m;
 
         blackCanCastleShort = bs;
         blackCanCastleLong  = bl;
@@ -23,19 +29,32 @@ public class History {
 
         halfMoveClock       = hc;
 
+        halfMovesIndex3PosRepition = h3;
+
+        bbposition          = b;
+
+        inCheckByPiece      =  ic;
+
     }
 
 
     public Object clone() {
         try { super.clone(); } catch (CloneNotSupportedException e) { }
 
-        History theClone = (History) new History(
-                this.move,
-                this.blackCanCastleShort,
-                this.blackCanCastleLong,
-                this.whiteCanCastleShort,
-                this.whiteCanCastleLong,
-                this.halfMoveClock);
+        History theClone = new History();
+
+        theClone.move                = (Move) this.move.clone();
+        theClone.blackCanCastleLong  = this.blackCanCastleShort;
+        theClone.blackCanCastleShort = this.blackCanCastleShort;
+        theClone.whiteCanCastleLong  = this.whiteCanCastleLong;
+        theClone.whiteCanCastleShort = this.whiteCanCastleShort;
+        theClone.halfMoveClock       = this.halfMoveClock;
+        theClone.halfMovesIndex3PosRepition = this.halfMovesIndex3PosRepition;
+        theClone.bbposition =  (Bitboard) this.bbposition.clone();
+        
+        if (inCheckByPiece == null) theClone.inCheckByPiece = null;
+        else                        theClone.inCheckByPiece = (Piece) inCheckByPiece.clone();
+               
         return theClone;
     }
 

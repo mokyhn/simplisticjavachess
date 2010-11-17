@@ -2,9 +2,12 @@
  * Bitboard structures
  */
 public class Bitboard {
-    public int bKing, wKing;
-
     public  long bb[][];
+
+    public Bitboard() {
+       bb = new long[2][6];
+
+    };
 
     public Bitboard(Board b) {
         Piece p;
@@ -66,5 +69,19 @@ public class Bitboard {
         
         return true;
     }
+
+      public Object clone() {
+        int t;
+          try { super.clone(); } catch (CloneNotSupportedException e) { }
+
+        Bitboard theClone = new Bitboard();
+
+        for (t = 0; t < 6; t++) {
+            theClone.bb[0][t] = this.bb[0][t];
+            theClone.bb[1][t] = this.bb[1][t];
+        }
+
+        return theClone;
+      }
 
 }
