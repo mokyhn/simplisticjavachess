@@ -109,7 +109,7 @@ public class Board implements Cloneable {
             h = history.get(i);
             if (bbposition.equals(h.bbposition)) k++;
         }
-        
+
         return k >= 3;
     }
 
@@ -128,8 +128,17 @@ public class Board implements Cloneable {
        moveNumber++;
 
        // Put the move m on the stack
-       history.push(new History(m, blackCanCastleShort, blackCanCastleLong, whiteCanCastleShort, whiteCanCastleLong, 
-               halfMoveClock, halfMovesIndex3PosRepition, bbposition, inCheckByPiece));
+       history.push(
+               new History(m,
+                           blackCanCastleShort,
+                           blackCanCastleLong,
+                           whiteCanCastleShort,
+                           whiteCanCastleLong,
+                           halfMoveClock,
+                           halfMovesIndex3PosRepition,
+                           bbposition,
+                           inCheckByPiece)
+                           );
 
 
        // Used to determine the 50-move rule, three times repition
@@ -502,7 +511,7 @@ public class Board implements Cloneable {
        System.out.println("Ply Move number " + moveNumber);
        System.out.println("Immediate evaluation: " + Evaluator.evaluate(this));
        System.out.println("Number of half moves since last pawn move: " + halfMoveClock);
-       
+       System.out.println("Index searched from when checking 3 fold repetition: " + halfMovesIndex3PosRepition);
    }
 
   
