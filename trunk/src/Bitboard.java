@@ -6,7 +6,6 @@ public class Bitboard {
 
     public Bitboard() {
        bb = new long[2][6];
-
     };
 
     public Bitboard(Board b) {
@@ -52,12 +51,6 @@ public class Bitboard {
          }
          r = r + "\n";
         }
-/*
-        for (int i = 0; i <= 63; i++) {
-            if ((i+1) % 8 == 0) r = r + "\n";
-            if (((1L << i) & b) != 0) r = r + '+';
-                    else r = '.' + r;
-        }*/
         return r;
     }
 
@@ -70,9 +63,8 @@ public class Bitboard {
         return true;
     }
 
-      public Object clone() {
+      public Bitboard clone() {
         int t;
-          try { super.clone(); } catch (CloneNotSupportedException e) { }
 
         Bitboard theClone = new Bitboard();
 

@@ -28,7 +28,7 @@ class Search {
 
     public int dosearch(Board b, int plyDepth, int method) {
       searchResult  = 0;
-      analyzeBoard  = (Board) b.clone();
+      analyzeBoard  = b.clone();
       noPositions   = 0;
       noBetaCutOffs = 0;
       wastedGeneratedMoves = 0;
@@ -60,7 +60,7 @@ class Search {
 
     public String findBranchingFactor(Board b, int ply) {
         int nodes = 0;
-        analyzeBoard  = (Board) b.clone();
+        analyzeBoard  = b.clone();
         noPositions = 0;
 
         CountNodesTmp(ply);

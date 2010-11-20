@@ -17,16 +17,13 @@ class Piece implements Cloneable {
                               EMPTY  = 6;
 
     public Piece clone() {
-        try { super.clone(); }
-        catch (CloneNotSupportedException e) {}
-
-        Piece theClone = (Piece) new Piece();
+        Piece theClone = new Piece();
 
         // Initialize theClone.
-        theClone.xPos  = xPos;
-        theClone.yPos  = yPos;
-        theClone.color = color;
-        theClone.type  = type;
+        theClone.xPos  = this.xPos;
+        theClone.yPos  = this.yPos;
+        theClone.color = this.color;
+        theClone.type  = this.type;
 
         return theClone;
     }

@@ -38,19 +38,17 @@ public class History {
     }
 
 
-    public Object clone() {
-        try { super.clone(); } catch (CloneNotSupportedException e) { }
-
+    public History clone() {
         History theClone = new History();
 
-        theClone.move                = (Move) this.move.clone();
-        theClone.blackCanCastleLong  = this.blackCanCastleShort;
-        theClone.blackCanCastleShort = this.blackCanCastleShort;
-        theClone.whiteCanCastleLong  = this.whiteCanCastleLong;
-        theClone.whiteCanCastleShort = this.whiteCanCastleShort;
-        theClone.halfMoveClock       = this.halfMoveClock;
+        theClone.move                       = this.move.clone();
+        theClone.blackCanCastleLong         = this.blackCanCastleShort;
+        theClone.blackCanCastleShort        = this.blackCanCastleShort;
+        theClone.whiteCanCastleLong         = this.whiteCanCastleLong;
+        theClone.whiteCanCastleShort        = this.whiteCanCastleShort;
+        theClone.halfMoveClock              = this.halfMoveClock;
         theClone.halfMovesIndex3PosRepition = this.halfMovesIndex3PosRepition;
-        theClone.bbposition =  (Bitboard) this.bbposition.clone();
+        theClone.bbposition                 = this.bbposition.clone();
         
         if (inCheckByPiece == null) theClone.inCheckByPiece = null;
         else                        theClone.inCheckByPiece = (Piece) inCheckByPiece.clone();
