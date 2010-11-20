@@ -1,21 +1,32 @@
-= TODO List =
+= General guidelines of the project =
+  * Add possibilities for testing, e.g. unit testing (Getting safe grounds under the feet)
+  * Refactoring of the code that increases readability and simplicity
+  * Avoiding premature optimizations/smart tricks which makes the code less understandable
+  * Adding new features, one at a time 
 
+The above list may provide at road which leads to a complete implementation of chess.
 
+From this point on, one could start to go for optimizations of different sorts or even port the project to C++.
 
-A list of ideas/thoughts:
-  * Hashing of position evaluations
-  * Draw on threefold repetition
+= Concrete problems to solve now = 
+  * Test the "Draw on threefold repetition" part of the implementation
+  * Test the "50 move rule draw" part of the implementation
   * Principal Variations in search engine
+  * A transposition table
+  * UCI protocol support
+  * Threaded searching (needed for UCI support and is practical when controlling when the engine should start and stop)
+
+= Less important subjects =
+  * An optimized movegenerator that generates one move at a time.
   * Algebraic Long notation export of a game
   * The board evaluation function _E_ could return a *vector* _E(p)=v_ of values when called on a position _p_.
   * A metric _d(.,.)_ could be defined on such vectors. To compare two positions _p1_ and _p2_ we could use _d(p1, p2)_ where _p2_ is a reachable position either as an immediate successor of _p1_ or with a number of moves between _p1_ and _p2_.  
-  * Threaded searching
   * a toFEN function that outputs the current board position in FEN 
   * PGN export
-  * An optimized movegenerator that generates one move at a time.
   * inCheck and correct movegeneration
 
 = Fixed =
+  * Draw on threefold repetition
   * 50 move rule draw
   * Movenumbers printed on screen
   * add functionality such that the engine can play against itself. (E.g. random engine against min/max engine or alpha/beta engine). A command could be added *machine n* where n specifies an upper bound on the length of move steps the machine is allowed to play against itself. 
