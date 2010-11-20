@@ -4,9 +4,23 @@
 import java.io.*;
 
 class main {
+    static Board interfaceBoard;
 
+    public static void checkForDraw() {
+        if (interfaceBoard.drawBy3RepetionsRule()) {
+            System.out.println("Draw by threefold repetition...");
+            System.exit(0);
+        }
+
+        if (interfaceBoard.drawBy50MoveRule()) {
+            System.out.println("Draw by 50 moves rule...");
+            System.exit(0);
+        }
+
+    }
 
     public static void main(String param[]) throws java.io.IOException {
+
         int     plyDepth      = 5;
         int     searchResult  = 0;
         Chessio io            = new Chessio();
@@ -20,6 +34,7 @@ class main {
 
         int x, y;
 
+
         // board interfaceBoard = new board(board.NORMAL_SETUP);
 
         //Board interfaceBoard = new Board("4k3/p7/8/8/8/8/P7/4K3 w - 0 1");
@@ -29,7 +44,7 @@ class main {
 	//Board interfaceBoard = new Board("2k5/3pK3/8/4p3/4P3/8/8/8 w - - 0 1");
 
         // Do a simple setup with pawns.
-        Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
+         Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
 
         // Testing bitboard...
        // Bitboard tbb = new Bitboard(interfaceBoard);
@@ -55,7 +70,9 @@ class main {
 
         //Board interfaceBoard = new Board("8/p7/1p3k1P/8/1PP5/8/8/K7 w - - 0 1");
 
-        
+        // Testing fiftymove rule
+        //interfaceBoard = new Board("4k3/8/8/p/P/8/8/4K3 w KQkq - 0 1");
+
         io.printWelcomeText();
 
         while (true) {
@@ -66,6 +83,7 @@ class main {
                 searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
                 System.out.println(engine1.moveAndStatistics());
                 interfaceBoard.performMove(engine1.getStrongestMove());
+                checkForDraw();
             } else if (str.matches("undo")) { interfaceBoard.retractMove(); }
               else if (str.matches("allmoves")) {
                 Movegenerator mg = new Movegenerator();
@@ -85,12 +103,12 @@ class main {
                       System.out.println(engine1.moveAndStatistics());
                       interfaceBoard.performMove(engine1.getStrongestMove());
                       interfaceBoard.print();
-
+                      checkForDraw();
                       engine2.dosearch(interfaceBoard, plyDepth, Search.RANDOM);
                       System.out.println(engine2.moveAndStatistics());
                       interfaceBoard.performMove(engine2.getStrongestMove());
                       interfaceBoard.print();
-                      
+                      checkForDraw();
                   }
               
               }
@@ -127,15 +145,7 @@ class main {
                     if (!(interfaceBoard.isMoveLegal(m))) {  throw new NoMoveException(); }
                     interfaceBoard.performMove(m);
 
-                    if (interfaceBoard.drawBy3RepetionsRule()) {
-                        System.out.println("Draw by threefold repetition...");
-                        System.exit(0);
-                    }
-
-                    if (interfaceBoard.drawBy50MoveRule()) {
-                        System.out.println("Draw by 50 moves rule...");
-                        System.exit(0);
-                    }
+                    checkForDraw();
                   
                     //searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
                     
