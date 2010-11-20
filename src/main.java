@@ -120,28 +120,23 @@ class main {
               else if (str.startsWith("sd")) { plyDepth = Integer.parseInt(str.substring(3)); }
               else if (str.matches("help")) { io.printHelpText(); }
               else if (str.matches("print") || str.matches("p")) { interfaceBoard.print(); }
-              else if (str.startsWith("usermove")) {
-                String moveStr = str.substring(9);
-                try {
-                    m = io.parse_move(interfaceBoard, moveStr);
-                    // Check if the move is legal
-                    if (!(interfaceBoard.isMoveLegal(m))) {
-                        throw new NoMoveException();
-                    }
-                    interfaceBoard.performMove(m);
-                    searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
-                    System.out.println(engine1.moveAndStatistics());
-                    interfaceBoard.performMove(engine1.getStrongestMove());
-                } catch (NoMoveException e) { System.out.println("Not a valid move"); }
-
-            } else {
+             else {
                 try {
                     m = io.parse_move(interfaceBoard, str);
                     //System.out.println(m.getMoveStr());
                     if (!(interfaceBoard.isMoveLegal(m))) {  throw new NoMoveException(); }
                     interfaceBoard.performMove(m);
-                    
-                    
+
+                    if (interfaceBoard.drawBy3RepetionsRule()) {
+                        System.out.println("Draw by threefold repetition...");
+                        System.exit(0);
+                    }
+
+                    if (interfaceBoard.drawBy50MoveRule()) {
+                        System.out.println("Draw by 50 moves rule...");
+                        System.exit(0);
+                    }
+                  
                     //searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
                     
                     //interfaceBoard.performMove(engine1.getStrongestMove());
