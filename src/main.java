@@ -1,11 +1,6 @@
 //-enableassertions
 
-// TODO: 1. Add hash to History
-//    - that can let us detect threefold repitition.
-//  2. Add better search heuristic and Principal Variation
-//  3. Test
-//  4. Implement rest of moves
-//  5. Port to C++
+
 import java.io.*;
 
 class main {

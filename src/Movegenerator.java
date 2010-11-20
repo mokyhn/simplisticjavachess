@@ -1,6 +1,3 @@
-//TODO: Implement inCheck predicate here or BETTER
-//an inCapture predicate??
-
 // A numbering of all moves generated. A function on the form
 //genmoves(board, moveid) such that only moves with a certain id
 //are generated.
@@ -10,12 +7,11 @@
 // wasted time for generating moves which where never searched anyway.
 
 // Eliminatate generation of a number of moves when king is in check...
+// The king is not allowed to be in check while another piece is moved...
 
 // Add knight moves as the next thing.
 // Only allow promotion to a knight...
 
-
-// The king is not allowed to be in check while another piece is moved...
 
 import java.util.ArrayList;
 
@@ -258,7 +254,6 @@ class Movegenerator {
     }
 
     // Used to testing purposes
-    // ArrayList<Move>?
     public static void  printMoves(ArrayList<Move> m) {
         Move myMove;
 

@@ -56,9 +56,7 @@ public class Board implements Cloneable {
     }
 
 	
-    public Object clone() {
-        try { super.clone(); } catch (CloneNotSupportedException e) { }
-
+    public Board clone() {
         Board theClone = new Board(NO_SETUP);
 
         theClone.whiteCanCastleLong  = whiteCanCastleLong;
@@ -71,19 +69,19 @@ public class Board implements Cloneable {
         theClone.history = new Stack<History>();
 
         for (int i = 0; i < history.size(); i ++) {
-            (theClone.history).push((History) (history.get(i)).clone());
+            (theClone.history).push((history.get(i)).clone());
         }
 
-        theClone.position = (PieceList) position.clone();
+        theClone.position = position.clone();
 
         if (this.inCheckByPiece == null) {
                  theClone.inCheckByPiece = null;    
-        } else { theClone.inCheckByPiece             = (Piece) this.inCheckByPiece.clone();
+        } else { theClone.inCheckByPiece             = this.inCheckByPiece.clone();
         }
 
         theClone.halfMoveClock              = this.halfMoveClock;
         theClone.halfMovesIndex3PosRepition = this.halfMovesIndex3PosRepition;
-        theClone.bbposition                 = (Bitboard) this.bbposition.clone();
+        theClone.bbposition                 = this.bbposition.clone();
         return theClone;
     }
 
