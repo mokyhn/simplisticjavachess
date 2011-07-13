@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.ArrayList; // TODO: MinMax never works and alpha beta search is dependent on the ordering of generated moves?!
 import java.util.Iterator;
 
 class Search {
