@@ -1,5 +1,5 @@
 
-public class State {
+public class State implements Cloneable{
     public Move move;
    
     public Bitboard bbposition; // For future use wrt. draw by threefold repetition and a hash table for search evaluations.

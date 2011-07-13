@@ -15,7 +15,7 @@ public class Board implements Cloneable {
     private Bitboard       bbposition;
 
 	    
-    private Stack<State> history; // A stack of previous performed moves on the board
+    private Stack<State>   history; // A stack of previous performed moves on the board
     private boolean        blackCanCastleShort = true;
     private boolean        blackCanCastleLong  = true;
     private boolean        whiteCanCastleShort = true;
