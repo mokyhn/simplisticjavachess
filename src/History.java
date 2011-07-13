@@ -16,6 +16,26 @@ public class History implements Cloneable {
      history.add(s);
     }
     
+    public State pop() {
+     return history.pop();
+    }
+    
+    public State peek() {
+     return history.peek();
+    }
+    
+    public int size() {
+     return history.size();
+    }
+    
+    public State get(int index) {
+     return history.get(index);
+    }
+    
+    public boolean isEmpty() {
+     return history.isEmpty();
+    }
+    
     @Override
     public History clone() {
         History theClone = new History();
