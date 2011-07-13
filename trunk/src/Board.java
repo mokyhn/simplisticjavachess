@@ -2,33 +2,37 @@ import java.util.Stack;
 import java.util.Iterator;
 
 public class Board implements Cloneable {
-    private              PieceList position = new PieceList();
-
-    private Bitboard    bbposition;
-
     public static final int NO_SETUP        = 0,
                             NORMAL_SETUP    = 1;
+
+    private                PieceList position = new PieceList();
+    private Bitboard       bbposition;
+
 	    
     private Stack<History> history; // A stack of previous performed moves on the board
-    private boolean     blackCanCastleShort = true;
-    private boolean     blackCanCastleLong  = true;
-    private boolean     whiteCanCastleShort = true;
-    private boolean     whiteCanCastleLong  = true;
-    private int         inMove              = Piece.WHITE;
+    private boolean        blackCanCastleShort = true;
+    private boolean        blackCanCastleLong  = true;
+    private boolean        whiteCanCastleShort = true;
+    private boolean        whiteCanCastleLong  = true;
+    private int            inMove              = Piece.WHITE;
 
-    private int         moveNumber          = 0;
-    private int         halfMoveClock; // Number of halfmoves since the last pawn advance or capture.
-                                       // Used to determine if a draw can be claimed under the fifty-move rule.
+    private int            moveNumber          = 0;
+    private int            halfMoveClock; // Number of halfmoves since the last pawn advance or capture.
+                                          // Used to determine if a draw can be claimed under the fifty-move rule.
 
-    Piece   inCheckByPiece                  = null; // Currently not used, but could be used to deal
-                                                    // with movegeneration when the king is in check
+    Piece                  inCheckByPiece      = null; // Currently not used, but could be used to deal
+                                                       // with movegeneration when the king is in check
 
-    private int   halfMovesIndex3PosRepition; // the number of halfmoves since last pawnmove (including promotions) or capture move
-                                              // When searching for threefold repitions search from this index...
+    private int            halfMovesIndex3PosRepition; // the number of halfmoves since last pawnmove (including promotions) or capture move
+                                                       // When searching for threefold repitions search from this index...
 
-	// Constructor, setting up initial position
+    public Board() {
+    }
+    
+    // Constructor, setting up initial position
     public Board(int setup) {
-        moveNumber = 0;
+        this();
+        moveNumber = 0;        
         inMove     = Piece.WHITE;
         halfMoveClock = 0;
         halfMovesIndex3PosRepition = 0;
@@ -55,9 +59,10 @@ public class Board implements Cloneable {
   
     }
 
-	
+    //TODO: Check whether this code is correct. 	
+    @Override
     public Board clone() {
-        Board theClone = new Board(NO_SETUP);
+        Board theClone = new Board();
 
         theClone.whiteCanCastleLong  = whiteCanCastleLong;
         theClone.whiteCanCastleShort = whiteCanCastleShort;
@@ -98,7 +103,7 @@ public class Board implements Cloneable {
     // and otherwise false
     public boolean attacks(int x, int y)  { return position.attacks( x,  y,  inMove); }
     private void   movePiece(int xFrom, int yFrom, int xTo, int yTo) { position.movePiece(xFrom, yFrom, xTo, yTo); }
-    public void    print() {Chessio.printBoard(this);}
+    public void    print() {System.out.print(toString());}
     public Boolean drawBy50MoveRule() {return halfMoveClock >= 50;}
 
     public Boolean drawBy3RepetionsRule() {
@@ -488,6 +493,31 @@ public class Board implements Cloneable {
       return t;
   }
 
+  /**
+   * Returns the board as ASCII art
+   */
+  @Override
+  public String toString() {
+        int x, y;
+        Piece p;
+        String s = "\n _______________\n";
+
+        for (y = 7; y >= 0; y--) {
+            for (x = 0; x < 8; x++) {
+                 s = s + " "; 
+                  p =  getPieceXY(x, y);
+                  if (p != null) { s = s + p.toString(); }
+                  else s = s + ".";
+            }
+          s = s + ("     " + (y+1)) + "\n";
+        } // end last for-loop
+        s = s + " _______________\n";
+        s = s + " a b c d e f g h\n";
+        if (whoIsInMove() == Piece.WHITE) s = s + "  White to move\n";
+        else s = s + "  Black to move";
+      return s;
+  }
+  
 
    public void printState() {
        String blackCastleShort = " ",

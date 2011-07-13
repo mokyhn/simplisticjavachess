@@ -20,14 +20,14 @@ class main {
     public static void main(String param[]) throws java.io.IOException {
 
         int     plyDepth      = 5;
-        int     searchResult  = 0;
         Chessio io            = new Chessio();
         Search  engine1       = new Search();
         Search  engine2       = new Search();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String str            = null;
-        int simSteps             = 0;
-
+        int simSteps          = 0;
+        int searchMethod      = Search.ALPHABETA;
+        int searchResult;
         Move    m;
 
         int x, y;
@@ -82,7 +82,7 @@ class main {
             str = reader.readLine();
 
             if (str.matches("go")) {
-                searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.MINMAX);
+                searchResult = engine1.dosearch(interfaceBoard, plyDepth, searchMethod);
                 System.out.println(engine1.moveAndStatistics());
                 interfaceBoard.performMove(engine1.getStrongestMove());
                 checkForDraw(interfaceBoard);
@@ -133,7 +133,17 @@ class main {
              else if (str.startsWith("setboard")) {
                 interfaceBoard = new Board(str.substring(9, str.length()));
                 engine1       = new Search();
-            } else
+            } 
+             else if (str.startsWith("alpha")) {
+              searchMethod = Search.ALPHABETA;
+             }
+             else if (str.startsWith("minmax")) {
+              searchMethod = Search.MINMAX;
+             }
+             else if (str.startsWith("random")) {
+              searchMethod = Search.RANDOM;
+             }
+             else
             if (str.matches("quit") || str.matches("q") || str.matches("bye") || str.matches("exit")) {
                 System.out.print("\nGoodbye\n\n");
                 System.exit(0); }

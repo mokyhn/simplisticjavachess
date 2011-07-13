@@ -35,30 +35,6 @@ public class BitboardTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of SquareNoFromPos method, of class Bitboard.
-     */
-    @Test
-    public void testSquareNoFromPos() {
-        System.out.println("SquareNoFromPos");
-        assertEquals(0,  Bitboard.SquareNoFromPos(0, 0));        
-        assertEquals(9,  Bitboard.SquareNoFromPos(1, 1));
-        assertEquals(63, Bitboard.SquareNoFromPos(7, 7));
-    }
-
-    /**
-     * Test of setBitHigh method, of class Bitboard.
-     */
-    @Test
-    public void testSetBitHigh() {
-        System.out.println("setBitHigh");
-        long result = Bitboard.setBitHigh(0);
-        assertEquals(1, result);
-        result = Bitboard.setBitHigh(1);
-        assertEquals(2, result);
-        result = Bitboard.setBitHigh(8);
-        assertEquals(256, result);
-    }
 
     /**
      * Test of toString method, of class Bitboard.

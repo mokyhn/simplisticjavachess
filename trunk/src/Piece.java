@@ -16,6 +16,7 @@ class Piece implements Cloneable {
                               KING   = 5,
                               EMPTY  = 6;
 
+    @Override
     public Piece clone() {
         Piece theClone = new Piece();
 
@@ -38,6 +39,7 @@ class Piece implements Cloneable {
         type  = t;
     }
 
+    @Override
     public  String toString() {
       String r = "";
 
