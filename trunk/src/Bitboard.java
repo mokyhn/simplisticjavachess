@@ -1,7 +1,7 @@
 /*
  * Bitboard structures
  */
-public class Bitboard {
+public class Bitboard implements Cloneable {
     public  long bb[][];
 
     /**
