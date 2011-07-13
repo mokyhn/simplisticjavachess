@@ -43,7 +43,7 @@ public class State implements Cloneable{
         State theClone = new State();
 
         theClone.move                       = this.move.clone();
-        theClone.blackCanCastleLong         = this.blackCanCastleShort;
+        theClone.blackCanCastleLong         = this.blackCanCastleLong;
         theClone.blackCanCastleShort        = this.blackCanCastleShort;
         theClone.whiteCanCastleLong         = this.whiteCanCastleLong;
         theClone.whiteCanCastleShort        = this.whiteCanCastleShort;

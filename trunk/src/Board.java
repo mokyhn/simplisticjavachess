@@ -1,4 +1,3 @@
-import java.util.Stack;
 import java.util.Iterator;
 
 // TODO: Take the many variables below a collect them in a record class State
@@ -11,11 +10,13 @@ public class Board implements Cloneable {
     public static final int NO_SETUP        = 0,
                             NORMAL_SETUP    = 1;
 
+    private History        history;  
+    private State          state;
+    
     private                PieceList position = new PieceList();
     private Bitboard       bbposition;
 
 	    
-    private Stack<State>   history; // A stack of previous performed moves on the board
     private boolean        blackCanCastleShort = true;
     private boolean        blackCanCastleLong  = true;
     private boolean        whiteCanCastleShort = true;
@@ -38,12 +39,13 @@ public class Board implements Cloneable {
     // Constructor, setting up initial position
     public Board(int setup) {
         this();
+        history    = new History();
+
         moveNumber = 0;        
         inMove     = Piece.WHITE;
         halfMoveClock = 0;
         halfMovesIndex3PosRepition = 0;
         position   = new PieceList();
-        history  = new Stack<State>();
         switch (setup) {
             case NO_SETUP:      break;
             case NORMAL_SETUP: setupFENboard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); 
@@ -53,10 +55,10 @@ public class Board implements Cloneable {
     }
 
     public Board(String fen) {
+        history    = new History();
         moveNumber = 0;
         inMove     = Piece.WHITE;
         position   = new PieceList();
-        history    = new Stack<State>();
         halfMoveClock = 0;
         halfMovesIndex3PosRepition = 0;
 
@@ -69,6 +71,7 @@ public class Board implements Cloneable {
     @Override
     public Board clone() {
         Board theClone = new Board();
+        theClone.history = this.history.clone();
 
         theClone.whiteCanCastleLong  = whiteCanCastleLong;
         theClone.whiteCanCastleShort = whiteCanCastleShort;
@@ -77,11 +80,7 @@ public class Board implements Cloneable {
         theClone.inMove              = inMove;
         theClone.moveNumber          = moveNumber;
         
-        theClone.history = new Stack<State>();
 
-        for (int i = 0; i < history.size(); i ++) {
-            (theClone.history).push((history.get(i)).clone());
-        }
 
         theClone.position = position.clone();
 
@@ -139,7 +138,7 @@ public class Board implements Cloneable {
        moveNumber++;
 
        // Put the move m on the stack
-       history.push(
+       history.add(
                new State(m,
                            blackCanCastleShort,
                            blackCanCastleLong,
@@ -427,7 +426,7 @@ public class Board implements Cloneable {
                if (p != null && p.type == Piece.PAWN) {
                    Move m = new Move(xPawn, yPawn+inMove, xPawn, yPawn-inMove, Move.NORMALMOVE, Piece.EMPTY, inMove);
                    bbposition = new Bitboard(this);
-                   history.push(new State(m, blackCanCastleShort, blackCanCastleLong, whiteCanCastleShort, whiteCanCastleLong,
+                   history.add(new State(m, blackCanCastleShort, blackCanCastleLong, whiteCanCastleShort, whiteCanCastleLong,
                            halfMoveClock,
                            halfMovesIndex3PosRepition, bbposition, null
                            ) );
