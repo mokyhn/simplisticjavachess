@@ -51,14 +51,17 @@ public class Chessio {
         toX   = (int)  (s[2] - 'a');
         toY   = (int) ((s[3] - '0') - 1);
 
-        if (fromX < 0 || fromX > 7 || toX < 0 || toX > 7) {
-            System.out.println("Not a correct move string.");
+        if (fromX < 0 || fromX > 7 || 
+              toX < 0 || toX > 7 ||
+            fromY < 0 || fromY > 7 ||
+              toY < 0 || toY > 7) {
+            System.out.println("Wrong coordinates in move string.");
             throw new NoMoveException();
         }
 
         p = b.getPieceXY(fromX, fromY);
-        if (p == null) throw new NoMoveException();
-        if (p.color != whoToMove) { throw new NoMoveException(); }
+        if (p == null) throw new NoMoveException("No piece at (" + fromX + ", " + fromY +")");
+        if (p.color != whoToMove) { throw new NoMoveException("Trying to move piece of opposite color"); }
 
         m.fromX          = fromX;
         m.fromY          = fromY;
@@ -104,35 +107,38 @@ public class Chessio {
         }
 
         // Promotion moves
-        if (str.length() == 5) {
-            if (fromX == toX) {
+        if (str.length() == 5 && 
+            p.type == Piece.PAWN &&
+           ((p.color == Piece.WHITE && fromY == 6) ||
+            (p.color == Piece.BLACK && fromY == 1))) {
+            
+            // Simple promotions
+            if (fromX == toX && b.freeSquare(toX, toY)) {
                 switch (s[4]) {
                 case 'K': m.type = Move.PROMOTE_TO_KNIGHT; break;
                 case 'B': m.type = Move.PROMOTE_TO_BISHOP; break;
                 case 'Q': m.type = Move.PROMOTE_TO_QUEEN;  break;
                 case 'R': m.type = Move.PROMOTE_TO_ROOK;   break;
              }
-         }
-         else
-         {
-            switch (s[4]) {
-                case 'K': m.type = Move.CAPTURE_AND_PROMOTE_TO_KNIGHT; break;
-                case 'B': m.type = Move.CAPTURE_AND_PROMOTE_TO_BISHOP; break;
-                case 'Q': m.type = Move.CAPTURE_AND_PROMOTE_TO_QUEEN;  break;
-                case 'R': m.type = Move.CAPTURE_AND_PROMOTE_TO_ROOK;   break;
+             return m;   
             }
-         }
+            
+            // Capture and promote
+            if (fromX != toX && 
+                !b.freeSquare(toX, toY) &&
+                 b.getPieceXY(toX, toY).color == -p.color) {
+                switch (s[4]) {
+                    case 'K': m.type = Move.CAPTURE_AND_PROMOTE_TO_KNIGHT; break;
+                    case 'B': m.type = Move.CAPTURE_AND_PROMOTE_TO_BISHOP; break;
+                    case 'Q': m.type = Move.CAPTURE_AND_PROMOTE_TO_QUEEN;  break;
+                    case 'R': m.type = Move.CAPTURE_AND_PROMOTE_TO_ROOK;   break;
+                }
+                
+                m.aCapturedPiece = b.getPieceXY(toX, toY).type;
+                
+               return m; 
+             }       
         }
-
-
-        // Pawn promotions
-        p = b.getPieceXY(fromX, fromY);
-        if (p == null) throw new NoMoveException();
-        if ((b.getPieceXY(fromX, fromY).type == Piece.PAWN
-           && b.getPieceXY(fromX, fromY).color == Piece.WHITE && fromY == 6)
-           || (b.getPieceXY(fromX, fromY).type == Piece.PAWN
-            && b.getPieceXY(fromX, fromY).color == Piece.BLACK && fromY == 1))
-                if (b.freeSquare(toX, toY)) return m;
 
         throw new NoMoveException();
     }

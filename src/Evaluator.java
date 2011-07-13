@@ -3,6 +3,10 @@
 // We could use this for evaluating the position and mobility of white/black
 // and to (easily) compute the outcome of an exchange serie.
 
+/*
+ * Add description here. From which side is a position evaluated and
+ * what does the evaluation mean?
+ */
 
 public class Evaluator {
 
@@ -33,10 +37,10 @@ public class Evaluator {
 			}
 		}
 
-		if (thereIsABlackKing == false) { sum = 1000;  }
+		if (thereIsABlackKing == false) { sum =  1000;  }
 		if (thereIsAWhiteKing == false) { sum = -1000; }
 
-		return side * sum;
+		return  side * sum;
 	}
 
 }

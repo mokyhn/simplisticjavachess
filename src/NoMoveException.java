@@ -1,5 +1,12 @@
 public class NoMoveException extends Exception {
-	public NoMoveException() {
+    String err;	
+
+    public NoMoveException() {         
+    }
+
+    
+    public NoMoveException(String e) {
+            err = e;
 	}
 
 }

@@ -4,15 +4,13 @@
 import java.io.*;
 
 class main {
-    static Board interfaceBoard;
-
-    public static void checkForDraw() {
-        if (interfaceBoard.drawBy3RepetionsRule()) {
+    public static void checkForDraw(Board b) {      
+        if (b.drawBy3RepetionsRule()) {
             System.out.println("Draw by threefold repetition...");
             System.exit(0);
         }
 
-        if (interfaceBoard.drawBy50MoveRule()) {
+        if (b.drawBy50MoveRule()) {
             System.out.println("Draw by 50 moves rule...");
             System.exit(0);
         }
@@ -43,8 +41,12 @@ class main {
 
 	//Board interfaceBoard = new Board("2k5/3pK3/8/4p3/4P3/8/8/8 w - - 0 1");
 
+        
+        // Test promotion
+        Board interfaceBoard = new Board("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1");
+        
         // Do a simple setup with pawns.
-         Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
+        // Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
 
         // Testing bitboard...
        // Bitboard tbb = new Bitboard(interfaceBoard);
@@ -80,10 +82,10 @@ class main {
             str = reader.readLine();
 
             if (str.matches("go")) {
-                searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
+                searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.MINMAX);
                 System.out.println(engine1.moveAndStatistics());
                 interfaceBoard.performMove(engine1.getStrongestMove());
-                checkForDraw();
+                checkForDraw(interfaceBoard);
             } else if (str.matches("undo")) { interfaceBoard.retractMove(); }
               else if (str.matches("allmoves")) {
                 Movegenerator mg = new Movegenerator();
@@ -103,12 +105,12 @@ class main {
                       System.out.println(engine1.moveAndStatistics());
                       interfaceBoard.performMove(engine1.getStrongestMove());
                       interfaceBoard.print();
-                      checkForDraw();
+                      checkForDraw(interfaceBoard);
                       engine2.dosearch(interfaceBoard, plyDepth, Search.RANDOM);
                       System.out.println(engine2.moveAndStatistics());
                       interfaceBoard.performMove(engine2.getStrongestMove());
                       interfaceBoard.print();
-                      checkForDraw();
+                      checkForDraw(interfaceBoard);
                   }
               
               }
@@ -140,12 +142,12 @@ class main {
               else if (str.matches("print") || str.matches("p")) { interfaceBoard.print(); }
              else {
                 try {
-                    m = io.parse_move(interfaceBoard, str);
+                    m = io.parse_move(interfaceBoard, str);                    
                     //System.out.println(m.getMoveStr());
                     if (!(interfaceBoard.isMoveLegal(m))) {  throw new NoMoveException(); }
                     interfaceBoard.performMove(m);
-
-                    checkForDraw();
+                                       
+                    checkForDraw(interfaceBoard);
                   
                     //searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
                     
@@ -156,7 +158,7 @@ class main {
                    
 
 
-                } catch (NoMoveException e) { System.out.println("Not a valid move"); }
+                } catch (NoMoveException e) { System.out.println("Not a valid move " + e.err); }
             }
         }
     }

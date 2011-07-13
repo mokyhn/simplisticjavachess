@@ -8,6 +8,10 @@ class Search {
                      RANDOM    = 3;
 
 
+    private final static int MINSCORE = -10000,
+                             MAXSCORE =  10000;
+    
+    
     // Main variables used in the search
     Board        analyzeBoard;
     private int  plyDepth;
@@ -43,7 +47,7 @@ class Search {
         switch (method) {
             case ALPHABETA:
                 System.out.println("Alpha-Beta search...");
-                searchResult = alphaBetaSearch(plyDepth, plyDepth, -30000000, 30000000);
+                searchResult = alphaBetaSearch(plyDepth, plyDepth, MINSCORE, MAXSCORE);
                 break;
             case MINMAX:
                 System.out.println("MIN-MAX search...");
@@ -90,7 +94,7 @@ class Search {
         ArrayList<Move> moves;
         Move m        = null;
         int score     = 0;
-        int best      = -30000000;
+        int best      = MINSCORE;
         int i;
 
         // Return board evaluation immediately
@@ -101,12 +105,13 @@ class Search {
 
         moves = Movegenerator.generateAllMoves(analyzeBoard); 
 
-        if (moves.isEmpty()) { 
+        if (moves.isEmpty()) {  // TODO: Seems wrong these conditions
             if (Math.abs(Evaluator.evaluate(analyzeBoard)) == 1000)  { 
               return Evaluator.evaluate(analyzeBoard);
             }
-            else
-            return 0; // A draw
+            else {
+             return 0; // A draw
+            }
         }
 
         for (i = 0; i < moves.size(); i++) {
@@ -115,7 +120,7 @@ class Search {
 
             if (analyzeBoard.drawBy50MoveRule() ||
                 analyzeBoard.drawBy3RepetionsRule()) {
-              score = 0;
+               score = 0;              
             }
             else {
              score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -Math.max(alpha, best));
