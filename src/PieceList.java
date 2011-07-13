@@ -38,12 +38,6 @@ public class PieceList {
         xyPosition[p.xPos][p.yPos] = p;
     }
 
-    public String toString() {
-        String res = "";
-        for (int i = 0; i < numberOfPieces; i++)
-            res = res + " " + "(" + Chessio.numToChar(position[i].xPos) + ", " + (position[i].yPos + 1) + ", " + position[i].toString() + ")";
-        return res;
-    }
 
 
     // Remove a piece from location x, y and return the piece
@@ -123,8 +117,16 @@ public class PieceList {
           return xyPosition[x][y] == null;
     }
 
+    @Override
+    public String toString() {
+        String res = "";
+        for (int i = 0; i < numberOfPieces; i++)
+            res = res + " " + "(" + Chessio.numToChar(position[i].xPos) + ", " + (position[i].yPos + 1) + ", " + position[i].toString() + ")";
+        return res;
+    }
 
 
+    @Override
     public PieceList clone() {
         int i, x, y;
         Piece p;

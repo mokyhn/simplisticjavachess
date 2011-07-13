@@ -38,6 +38,7 @@ public class History {
     }
 
 
+    @Override
     public History clone() {
         History theClone = new History();
 

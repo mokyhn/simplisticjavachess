@@ -34,36 +34,31 @@ public class Bitboard {
      * @param b the input board
      */
     public Bitboard(Board b) {
+        this();    // Call constructor
+        
         Piece p;
         int   c, t;
-
-        bb = new long[NUM_COLORS][NUM_PIECE_TYPES];
-
-        for (t = 0; t < NUM_PIECE_TYPES; t++) {
-            bb[0][t] = 0;
-            bb[1][t] = 0;
-        }
-
+ 
         for (int i = 0; i < b.getNumberOfPieces(); i++) {
             p = b.getPiece(i);
-
-            if (p.color == Piece.BLACK) c = 0;
-            else c = 1;
-
+            if (p.color == Piece.BLACK) c = 0; else c = 1;
             t = p.type;
-
             if (t != Piece.EMPTY) bb[c][t] =  bb[c][t] | setBitHigh(SquareNoFromPos(p.xPos, p.yPos));
         }
     }
 
-    static int SquareNoFromPos(int x, int y) {
+    // Returns number in the interval 0..63 from x and y in the interval 0..7
+    private static int SquareNoFromPos(int x, int y) {
         return y * 8 + x;
     }
 
-    static long setBitHigh(int bitNo) {
+    // Set bit with index bitNo to high - i.e. 1
+    private static long setBitHigh(int bitNo) {
         return 1L << bitNo;
     }
 
+    /* TODO: Implement a function that returns all 6 bitboard for the 6
+       individual piece types... */
     public String toString(long b) {
         String r = "";
         int x, y;
@@ -80,7 +75,7 @@ public class Bitboard {
     }
 
     public boolean equals(Bitboard b2) {
-        for (int t = 0; t < 6; t++) {
+        for (int t = 0; t < NUM_PIECE_TYPES; t++) {
             if (this.bb[0][t] != b2.bb[0][t] ||
                 this.bb[1][t] != b2.bb[1][t]) return false;
         }
@@ -94,7 +89,7 @@ public class Bitboard {
 
         Bitboard theClone = new Bitboard();
 
-        for (t = 0; t < 6; t++) {
+        for (t = 0; t < NUM_PIECE_TYPES; t++) {
             theClone.bb[0][t] = this.bb[0][t];
             theClone.bb[1][t] = this.bb[1][t];
         }

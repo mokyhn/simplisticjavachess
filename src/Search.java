@@ -8,9 +8,8 @@ class Search {
                      RANDOM    = 3;
 
 
-    private final static int MINSCORE = -10000,
-                             MAXSCORE =  10000;
-    
+    private final static int MINSCORE = Integer.MIN_VALUE,
+                             MAXSCORE = Integer.MAX_VALUE;
     
     // Main variables used in the search
     Board        analyzeBoard;
@@ -35,7 +34,7 @@ class Search {
     }
 
     public int dosearch(Board b, int plyDepth, int method) {
-        analyzeBoard = b.clone();
+        analyzeBoard         = b.clone();
 
         searchResult         = 0;
         noPositions          = 0;
@@ -92,10 +91,10 @@ class Search {
 
     public int alphaBetaSearch(int plyDepth, int depthToGo, int alpha, int beta) {
         ArrayList<Move> moves;
-        Move m        = null;
-        int score     = 0;
-        int best      = MINSCORE;
-        int i;
+        Move            m        = null;
+        int             score    = 0;
+        int             best     = MINSCORE + 1;
+        int             i;
 
         // Return board evaluation immediately
         if (depthToGo == 0) {
@@ -105,9 +104,10 @@ class Search {
 
         moves = Movegenerator.generateAllMoves(analyzeBoard); 
 
-        if (moves.isEmpty()) {  // TODO: Seems wrong these conditions
-            if (Math.abs(Evaluator.evaluate(analyzeBoard)) == 1000)  { 
-              return Evaluator.evaluate(analyzeBoard);
+        if (moves.isEmpty()) {  
+            if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
+                Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  { 
+                  return Evaluator.evaluate(analyzeBoard);
             }
             else {
              return 0; // A draw
@@ -157,7 +157,8 @@ class Search {
         moves = Movegenerator.generateAllMoves(analyzeBoard);
 
         if (moves.isEmpty()) {
-            if (Math.abs(Evaluator.evaluate(analyzeBoard)) == 1000)  {
+            if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED ||
+                Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  {
               return Evaluator.evaluate(analyzeBoard);
             }
             else
@@ -189,13 +190,16 @@ class Search {
 
    
     public int randomSearch() {
-      ArrayList<Move>           moves;
-      int n;
-      double r = Math.random();
-      moves    = Movegenerator.generateAllMoves(analyzeBoard);
-
-      n = Math.abs(moves.size()-1);
-      strongestMove = moves.get((int) Math.ceil(n*r));
+      ArrayList<Move> moves;
+      int             n;
+      double          r = Math.random();
+      
+      moves = Movegenerator.generateAllMoves(analyzeBoard);
+      n     = moves.size();
+      
+      if (n == 0) return 0;
+      
+      strongestMove = moves.get((int) Math.ceil((n-1)*r));
       return Evaluator.evaluate(analyzeBoard);
     }
 
