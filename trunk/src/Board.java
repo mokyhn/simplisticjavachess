@@ -1,6 +1,12 @@
 import java.util.Stack;
 import java.util.Iterator;
 
+// TODO: Take the many variables below a collect them in a record class State
+// with nice clone and toString functions
+// Then define a History class containing a stack of States.
+// The board class would then contain one variable: an instance of the History
+// where the top element (an instance of State) is the current state of the
+// chess board/game
 public class Board implements Cloneable {
     public static final int NO_SETUP        = 0,
                             NORMAL_SETUP    = 1;
@@ -9,7 +15,7 @@ public class Board implements Cloneable {
     private Bitboard       bbposition;
 
 	    
-    private Stack<History> history; // A stack of previous performed moves on the board
+    private Stack<State> history; // A stack of previous performed moves on the board
     private boolean        blackCanCastleShort = true;
     private boolean        blackCanCastleLong  = true;
     private boolean        whiteCanCastleShort = true;
@@ -37,7 +43,7 @@ public class Board implements Cloneable {
         halfMoveClock = 0;
         halfMovesIndex3PosRepition = 0;
         position   = new PieceList();
-        history  = new Stack<History>();
+        history  = new Stack<State>();
         switch (setup) {
             case NO_SETUP:      break;
             case NORMAL_SETUP: setupFENboard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); 
@@ -50,7 +56,7 @@ public class Board implements Cloneable {
         moveNumber = 0;
         inMove     = Piece.WHITE;
         position   = new PieceList();
-        history    = new Stack<History>();
+        history    = new Stack<State>();
         halfMoveClock = 0;
         halfMovesIndex3PosRepition = 0;
 
@@ -71,7 +77,7 @@ public class Board implements Cloneable {
         theClone.inMove              = inMove;
         theClone.moveNumber          = moveNumber;
         
-        theClone.history = new Stack<History>();
+        theClone.history = new Stack<State>();
 
         for (int i = 0; i < history.size(); i ++) {
             (theClone.history).push((history.get(i)).clone());
@@ -107,7 +113,7 @@ public class Board implements Cloneable {
     public Boolean drawBy50MoveRule() {return halfMoveClock >= 50;}
 
     public Boolean drawBy3RepetionsRule() {
-        History h;
+        State h;
         int k = 0;
 
         for (int i = halfMovesIndex3PosRepition; i < history.size(); i ++) {
@@ -134,7 +140,7 @@ public class Board implements Cloneable {
 
        // Put the move m on the stack
        history.push(
-               new History(m,
+               new State(m,
                            blackCanCastleShort,
                            blackCanCastleLong,
                            whiteCanCastleShort,
@@ -238,7 +244,7 @@ public class Board implements Cloneable {
 
     public boolean retractMove() {
         int color = 0;
-        History h;
+        State h;
         Move    m;
 
         moveNumber--;
@@ -421,7 +427,7 @@ public class Board implements Cloneable {
                if (p != null && p.type == Piece.PAWN) {
                    Move m = new Move(xPawn, yPawn+inMove, xPawn, yPawn-inMove, Move.NORMALMOVE, Piece.EMPTY, inMove);
                    bbposition = new Bitboard(this);
-                   history.push(new History(m, blackCanCastleShort, blackCanCastleLong, whiteCanCastleShort, whiteCanCastleLong,
+                   history.push(new State(m, blackCanCastleShort, blackCanCastleLong, whiteCanCastleShort, whiteCanCastleLong,
                            halfMoveClock,
                            halfMovesIndex3PosRepition, bbposition, null
                            ) );

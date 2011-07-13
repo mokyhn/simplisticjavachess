@@ -1,5 +1,5 @@
 
-public class History {
+public class State {
     public Move move;
    
     public Bitboard bbposition; // For future use wrt. draw by threefold repetition and a hash table for search evaluations.
@@ -17,9 +17,9 @@ public class History {
 
     public Piece inCheckByPiece;
 
-    public History() {};
+    public State() {};
 
-    public History (Move m, boolean bs, boolean bl, boolean ws, boolean wl, int hc, int h3, Bitboard b, Piece ic) {
+    public State (Move m, boolean bs, boolean bl, boolean ws, boolean wl, int hc, int h3, Bitboard b, Piece ic) {
         move = m;
 
         blackCanCastleShort = bs;
@@ -39,8 +39,8 @@ public class History {
 
 
     @Override
-    public History clone() {
-        History theClone = new History();
+    public State clone() {
+        State theClone = new State();
 
         theClone.move                       = this.move.clone();
         theClone.blackCanCastleLong         = this.blackCanCastleShort;
