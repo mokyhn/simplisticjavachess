@@ -4,17 +4,42 @@
 public class Bitboard {
     public  long bb[][];
 
+    /**
+     * Total number of colors: black and white, that is 2
+     */
+    private static final int NUM_COLORS      = 2; 
+    
+    /**
+     * Number of different piece types: pawn, knight, bishop, rook, queen, king,
+     * that is 6
+     */
+    private static final int NUM_PIECE_TYPES = 6; // 
+    
+    
+    /**
+     * Creates an empty bitboard 
+     */
     public Bitboard() {
-       bb = new long[2][6];
+       bb = new long[NUM_COLORS][NUM_PIECE_TYPES];
+    
+       for (int t = 0; t < NUM_PIECE_TYPES; t++) {
+            bb[0][t] = 0;
+            bb[1][t] = 0;
+        }
     };
 
+   
+    /**
+     * Construct a bitboard from a board
+     * @param b the input board
+     */
     public Bitboard(Board b) {
         Piece p;
         int   c, t;
 
-        bb = new long[2][6];
+        bb = new long[NUM_COLORS][NUM_PIECE_TYPES];
 
-        for (t = 0; t < 6; t++) {
+        for (t = 0; t < NUM_PIECE_TYPES; t++) {
             bb[0][t] = 0;
             bb[1][t] = 0;
         }
@@ -63,6 +88,7 @@ public class Bitboard {
         return true;
     }
 
+    @Override
       public Bitboard clone() {
         int t;
 
