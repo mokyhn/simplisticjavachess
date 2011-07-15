@@ -28,7 +28,20 @@ public class Bitboard implements Cloneable {
         }
     };
 
-   
+    
+    private int colorIndex(int color) {
+     if (color == Piece.BLACK) return 0;
+     return 1;
+    }
+
+    private int indexToColor(int index) {
+     if (index == 0) return Piece.BLACK;
+     if (index == 1) return Piece.WHITE;
+
+     return 42; // Unreachable
+    }
+    
+    
     /**
      * Construct a bitboard from a board
      * @param b the input board
@@ -41,7 +54,7 @@ public class Bitboard implements Cloneable {
  
         for (int i = 0; i < b.getNumberOfPieces(); i++) {
             p = b.getPiece(i);
-            if (p.color == Piece.BLACK) c = 0; else c = 1;
+            c = colorIndex(p.color);
             t = p.type;
             if (t != Piece.EMPTY) bb[c][t] =  bb[c][t] | setBitHigh(SquareNoFromPos(p.xPos, p.yPos));
         }
@@ -57,6 +70,25 @@ public class Bitboard implements Cloneable {
         return 1L << bitNo;
     }
 
+    public void insertPiece(Piece p) {
+       long b;
+        
+       b = bb[colorIndex(p.color)][p.type];       
+       b = b | setBitHigh(SquareNoFromPos(p.xPos, p.yPos));       
+    }
+    
+    public Piece removePiece(int x, int y) {
+        Piece p = null;
+        
+        for (int t = 0; t < NUM_PIECE_TYPES; t++) {
+            if ((bb[0][t] & setBitHigh(SquareNoFromPos(x, y))) == 0) p = new Piece(x, y, Piece.BLACK, t);
+            if ((bb[1][t] & setBitHigh(SquareNoFromPos(x, y))) == 0) p = new Piece(x, y, Piece.WHITE, t);            
+        }           
+        return p;
+    }
+    
+    //movePiece(int xFrom, int yFrom, int xTo, int yTo)
+    
     /* TODO: Implement a function that returns all 6 bitboard for the 6
        individual piece types... */
     public String toString(long b) {
@@ -75,6 +107,8 @@ public class Bitboard implements Cloneable {
     }
 
     public boolean equals(Bitboard b2) {
+        if (b2 == null) return false;
+        
         for (int t = 0; t < NUM_PIECE_TYPES; t++) {
             if (this.bb[0][t] != b2.bb[0][t] ||
                 this.bb[1][t] != b2.bb[1][t]) return false;

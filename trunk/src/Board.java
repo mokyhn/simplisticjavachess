@@ -1,11 +1,5 @@
 import java.util.Iterator;
 
-// TODO: Take the many variables below a collect them in a record class State
-// with nice clone and toString functions
-// Then define a History class containing a stack of States.
-// The board class would then contain one variable: an instance of the History
-// where the top element (an instance of State) is the current state of the
-// chess board/game
 public class Board implements Cloneable {
     public static final int NO_SETUP        = 0,
                             NORMAL_SETUP    = 1;
@@ -13,111 +7,63 @@ public class Board implements Cloneable {
     private History        history;  
     private State          state;
     
-    private                PieceList position = new PieceList();
-    private Bitboard       bbposition;
-
-	    
-    private boolean        blackCanCastleShort = true;
-    private boolean        blackCanCastleLong  = true;
-    private boolean        whiteCanCastleShort = true;
-    private boolean        whiteCanCastleLong  = true;
-    private int            inMove              = Piece.WHITE;
-
-    private int            moveNumber          = 0;
-    private int            halfMoveClock; // Number of halfmoves since the last pawn advance or capture.
-                                          // Used to determine if a draw can be claimed under the fifty-move rule.
-
-    Piece                  inCheckByPiece      = null; // Currently not used, but could be used to deal
-                                                       // with movegeneration when the king is in check
-
-    private int            halfMovesIndex3PosRepition; // the number of halfmoves since last pawnmove (including promotions) or capture move
-                                                       // When searching for threefold repitions search from this index...
+    private                Position position;
 
     public Board() {
+        history           = new History();
+        state             = new State();
+        position          = new Position();        
     }
     
     // Constructor, setting up initial position
     public Board(int setup) {
         this();
-        history    = new History();
-
-        moveNumber = 0;        
-        inMove     = Piece.WHITE;
-        halfMoveClock = 0;
-        halfMovesIndex3PosRepition = 0;
-        position   = new PieceList();
+        
         switch (setup) {
             case NO_SETUP:      break;
             case NORMAL_SETUP: setupFENboard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); 
-        }
-        
-        bbposition = new Bitboard(this);
+        }        
     }
 
     public Board(String fen) {
-        history    = new History();
-        moveNumber = 0;
-        inMove     = Piece.WHITE;
-        position   = new PieceList();
-        halfMoveClock = 0;
-        halfMovesIndex3PosRepition = 0;
-
-        setupFENboard(fen);
-        bbposition = new Bitboard(this);
-  
+        this();                        
+        setupFENboard(fen);  
     }
 
     //TODO: Check whether this code is correct. 	
     @Override
     public Board clone() {
-        Board theClone = new Board();
-        theClone.history = this.history.clone();
-
-        theClone.whiteCanCastleLong  = whiteCanCastleLong;
-        theClone.whiteCanCastleShort = whiteCanCastleShort;
-        theClone.blackCanCastleLong  = whiteCanCastleLong;
-        theClone.blackCanCastleShort = whiteCanCastleShort;
-        theClone.inMove              = inMove;
-        theClone.moveNumber          = moveNumber;
-        
-
-
-        theClone.position = position.clone();
-
-        if (this.inCheckByPiece == null) {
-                 theClone.inCheckByPiece = null;    
-        } else { theClone.inCheckByPiece             = this.inCheckByPiece.clone();
-        }
-
-        theClone.halfMoveClock              = this.halfMoveClock;
-        theClone.halfMovesIndex3PosRepition = this.halfMovesIndex3PosRepition;
-        theClone.bbposition                 = this.bbposition.clone();
+        Board theClone      = new Board();
+        theClone.history    = this.history.clone();
+        theClone.state      = this.state.clone();        
+        theClone.position   = position.clone();
+                
         return theClone;
     }
 
-    public int     getNumberOfPieces()    { return position.numberOfPieces(); }
-    public int     whoIsInMove()          { return inMove;  }
-    public void    setBlackToMove()       { inMove = Piece.BLACK;}
-    public void    setWhiteToMove()       { inMove = Piece.WHITE;}
-    public Move    getLastMove()          { return history.peek().move; }
-    public Piece   getPiece(int i)        { return position.getPiece(i); }
-    public void    insertPiece(Piece p)   { position.insertPiece(p); }
+    public int     getNumberOfPieces()       { return position.numberOfPieces(); }
+    public int     whoIsInMove()             { return state.inMove;  }
+    public void    setBlackToMove()          { state.inMove = Piece.BLACK;}
+    public void    setWhiteToMove()          { state.inMove = Piece.WHITE;}
+    public Move    getLastMove()             { return history.peek().move; }
+    public Piece   getPiece(int i)           { return position.getPiece(i); }
+    public void    insertPiece(Piece p)      { position.insertPiece(p); }
     public Piece   removePiece(int x, int y) { return position.removePiece(x, y); }
     public boolean freeSquare(int x, int y)  { return position.freeSquare(x, y); }
     // Returns true if the side not in move, in board b attacks square (x, y)
     // and otherwise false
-    public boolean attacks(int x, int y)  { return position.attacks( x,  y,  inMove); }
-    private void   movePiece(int xFrom, int yFrom, int xTo, int yTo) { position.movePiece(xFrom, yFrom, xTo, yTo); }
+    public boolean attacks(int x, int y)     { return position.attacks( x,  y,  state.inMove); }
+
     public void    print() {System.out.print(toString());}
-    public Boolean drawBy50MoveRule() {return halfMoveClock >= 50;}
+    public Boolean drawBy50MoveRule() {return state.halfMoveClock >= 50;}
 
     public Boolean drawBy3RepetionsRule() {
         State h;
         int k = 0;
 
-        for (int i = halfMovesIndex3PosRepition; i < history.size(); i ++) {
+        for (int i = state.halfMovesIndex3PosRepition; i < history.size(); i ++) {
             h = history.get(i);
-            if (bbposition.equals(h.bbposition)) k++;
+            if (position.bitboard.equals(h.bbposition)) k++;
         }
 
         return k >= 3;
@@ -135,45 +81,36 @@ public class Board implements Cloneable {
     public void performMove(Move m) {
        Piece p = getPieceXY(m.fromX, m.fromY);
 
-       moveNumber++;
+       state.moveNumber++;
 
        // Put the move m on the stack
-       history.add(
-               new State(m,
-                           blackCanCastleShort,
-                           blackCanCastleLong,
-                           whiteCanCastleShort,
-                           whiteCanCastleLong,
-                           halfMoveClock,
-                           halfMovesIndex3PosRepition,
-                           bbposition,
-                           inCheckByPiece)
-                           );
+       state.move = m;       
+       history.add(state.clone());
 
 
        // Used to determine the 50-move rule, three times repition
        if (p.type == Piece.PAWN) {
-           halfMoveClock              = 0;
-           halfMovesIndex3PosRepition = moveNumber;
+           state.halfMoveClock              = 0;
+           state.halfMovesIndex3PosRepition = state.moveNumber;
        }
-       else halfMoveClock++;
+       else state.halfMoveClock++;
 
        // Moving a rook can disallow castling in the future
         if (p.type == Piece.ROOK) {
             if (m.whoMoves == Piece.BLACK) {
-              if (m.fromX == 0 && blackCanCastleLong)  {
-                  blackCanCastleLong  = false;
+              if (m.fromX == 0 && state.blackCanCastleLong)  {
+                  state.blackCanCastleLong  = false;
               }
-              if (m.fromX == 7 && blackCanCastleShort) {
-                  blackCanCastleShort = false;
+              if (m.fromX == 7 && state.blackCanCastleShort) {
+                  state.blackCanCastleShort = false;
               }
             }
             else {
-              if (m.fromX == 0 && whiteCanCastleLong)  {
-                  whiteCanCastleLong  = false;
+              if (m.fromX == 0 && state.whiteCanCastleLong)  {
+                  state.whiteCanCastleLong  = false;
               }
-              if (m.fromX == 7 && whiteCanCastleShort) {
-                  whiteCanCastleShort = false;
+              if (m.fromX == 7 && state.whiteCanCastleShort) {
+                  state.whiteCanCastleShort = false;
               }
             }
         }
@@ -181,15 +118,14 @@ public class Board implements Cloneable {
         // Moving the king will disallow castling in the future
         if (p.type == Piece.KING) {
             if (m.whoMoves == Piece.BLACK) {
-                  blackCanCastleShort = false;
-                  blackCanCastleLong  = false;
+                  state.blackCanCastleShort = false;
+                  state.blackCanCastleLong  = false;
             }
 
              if (m.whoMoves == Piece.WHITE) {
-                  whiteCanCastleShort = false;
-                  whiteCanCastleLong  = false;
-              }
-           
+                  state.whiteCanCastleShort = false;
+                  state.whiteCanCastleLong  = false;
+              }           
         }
         
         if (m.aSimplePromotion()) {
@@ -205,67 +141,50 @@ public class Board implements Cloneable {
 
         switch (m.type) {
             case Move.NORMALMOVE:
-                movePiece(m.fromX, m.fromY, m.toX, m.toY);
+                position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 break;
 
             case Move.CAPTURE_ENPASSANT:
-                movePiece(m.fromX, m.fromY, m.toX, m.toY);
+                position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 removePiece(m.toX, m.fromY);
                 break;
 
             case Move.CASTLE_SHORT:
                 // Move the king first
-                movePiece(m.fromX, m.fromY, m.toX, m.toY);
+                position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 // Then the rook
-                movePiece(7, m.fromY, 5, m.fromY);
+                position.movePiece(7, m.fromY, 5, m.fromY);
                 break;
 
             case Move.CASTLE_LONG:
                 // Move the king first
-                movePiece(m.fromX, m.fromY, m.toX, m.toY);
+                position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 // Then the rook
-                movePiece(0, m.fromY, 3, m.fromY);
+                position.movePiece(0, m.fromY, 3, m.fromY);
                 break;
 
             case Move.CAPTURE:
                 removePiece(m.toX, m.toY);
-                movePiece(m.fromX, m.fromY, m.toX, m.toY);
+                position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 break;
         }
 
        
         // Swap the move color
-        inMove = -inMove;
+        state.inMove = -state.inMove;
 
-        bbposition = new Bitboard(this);
 
     }
 
     public boolean retractMove() {
         int color = 0;
-        State h;
-        Move    m;
+        Move        m;
 
-        moveNumber--;
+        state.moveNumber--;
 
         try {
-            h = history.pop();
-            m = h.move;
-
-            blackCanCastleLong  = h.blackCanCastleLong;
-            blackCanCastleShort = h.blackCanCastleShort;
-            whiteCanCastleLong  = h.whiteCanCastleLong;
-            whiteCanCastleShort = h.whiteCanCastleShort;
-
-            halfMoveClock       = h.halfMoveClock;
-            halfMovesIndex3PosRepition = h.halfMovesIndex3PosRepition;
-
-            bbposition = h.bbposition;
-
-            inCheckByPiece = h.inCheckByPiece;
-
-            // Swap the move color
-            inMove = -inMove;
+            state = history.pop();
+            m     = state.move;
 
             if (m.aSimplePromotion()) {
                 insertPiece(new Piece(m.fromX, m.fromY, m.whoMoves, Piece.PAWN));
@@ -281,7 +200,7 @@ public class Board implements Cloneable {
 
             switch (m.type) {
                 case Move.NORMALMOVE:
-                    movePiece(m.toX, m.toY, m.fromX, m.fromY);
+                    position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     break;
 
                 case Move.CAPTURE_ENPASSANT:
@@ -292,25 +211,25 @@ public class Board implements Cloneable {
                         color = Piece.WHITE;
                     }
                     insertPiece(new Piece(m.toX, m.fromY, color, Piece.PAWN));
-                    movePiece(m.toX, m.toY, m.fromX, m.fromY);
+                    position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     break;
 
                 case Move.CASTLE_SHORT:
                   // Move the king back
-                    movePiece(m.toX, m.toY, m.fromX, m.fromY);
+                    position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     // Then the rook
-                    movePiece(5, m.fromY, 7, m.fromY);
+                    position.movePiece(5, m.fromY, 7, m.fromY);
                     break;
 
                 case Move.CASTLE_LONG:
                    // Move the king back
-                    movePiece(m.toX, m.toY, m.fromX, m.fromY);
+                    position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     // Then the rook
-                    movePiece(3, m.fromY, 0, m.fromY);
+                    position.movePiece(3, m.fromY, 0, m.fromY);
                     break;
 
                 case Move.CAPTURE:
-                    movePiece(m.toX, m.toY, m.fromX, m.fromY);
+                    position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     insertPiece(new Piece(m.toX, m.toY, -m.whoMoves, m.aCapturedPiece));
                     break;
             }
@@ -352,10 +271,10 @@ public class Board implements Cloneable {
         String num1 = "";
         String num2 = "";
 
-       whiteCanCastleShort = false;
-       whiteCanCastleLong  = false;
-       blackCanCastleShort = false;
-       blackCanCastleLong  = false;
+       state.whiteCanCastleShort = false;
+       state.whiteCanCastleLong  = false;
+       state.blackCanCastleShort = false;
+       state.blackCanCastleLong  = false;
 
        // Parsing part no. 1
        parsingPartNo = 1;
@@ -390,18 +309,18 @@ public class Board implements Cloneable {
              
             if (parsingPartNo == 2) {                
                 switch (c) {
-                    case 'w': inMove = Piece.WHITE; break;
-                    case 'b': inMove = Piece.BLACK; break;
+                    case 'w': state.inMove = Piece.WHITE; break;
+                    case 'b': state.inMove = Piece.BLACK; break;
                     case ' ': parsingPartNo = 3; continue;   
                 }
             }
 
             if (parsingPartNo == 3) {
                 switch (c) {
-                    case 'K': whiteCanCastleShort = true; break;
-                    case 'Q': whiteCanCastleLong  = true; break;
-                    case 'k': blackCanCastleShort = true; break;
-                    case 'q': blackCanCastleLong  = true; break;
+                    case 'K': state.whiteCanCastleShort = true; break;
+                    case 'Q': state.whiteCanCastleLong  = true; break;
+                    case 'k': state.blackCanCastleShort = true; break;
+                    case 'q': state.blackCanCastleLong  = true; break;
                     case ' ': parsingPartNo = 4; continue;
                 }
             }
@@ -422,14 +341,10 @@ public class Board implements Cloneable {
                assert xPawn >= 0 && xPawn <= 7;
                assert yPawn >= 0 && yPawn <= 7;
                //i++;
-               Piece p = getPieceXY(xPawn, yPawn-inMove);
+               Piece p = getPieceXY(xPawn, yPawn-state.inMove);
                if (p != null && p.type == Piece.PAWN) {
-                   Move m = new Move(xPawn, yPawn+inMove, xPawn, yPawn-inMove, Move.NORMALMOVE, Piece.EMPTY, inMove);
-                   bbposition = new Bitboard(this);
-                   history.add(new State(m, blackCanCastleShort, blackCanCastleLong, whiteCanCastleShort, whiteCanCastleLong,
-                           halfMoveClock,
-                           halfMovesIndex3PosRepition, bbposition, null
-                           ) );
+                   Move m = new Move(xPawn, yPawn+state.inMove, xPawn, yPawn-state.inMove, Move.NORMALMOVE, Piece.EMPTY, state.inMove);
+                   history.add(state);
                }
 
                parsingPartNo = 5;
@@ -468,11 +383,11 @@ public class Board implements Cloneable {
     }
 
 
-       halfMoveClock = Integer.parseInt(num1);
+       state.halfMoveClock = Integer.parseInt(num1);
 
-       moveNumber    = 2 * Integer.parseInt(num2) - 2;
+       state.moveNumber    = 2 * Integer.parseInt(num2) - 2;
 
-       if (moveNumber != 0 && inMove == Piece.BLACK) moveNumber--;
+       if (state.moveNumber != 0 && state.inMove == Piece.BLACK) state.moveNumber--;
 
     }
     
@@ -525,28 +440,13 @@ public class Board implements Cloneable {
   
 
    public void printState() {
-       String blackCastleShort = " ",
-              blackCastleLong  = " ",
-              whiteCastleShort = " ",
-              whiteCastleLong  = " ";
-
-       if (blackCanCastleShort) blackCastleShort = "X";
-       if (blackCanCastleLong)  blackCastleLong  = "X";
-       if (whiteCanCastleShort) whiteCastleShort = "X";
-       if (whiteCanCastleLong)  whiteCastleLong  = "X";
-
-       System.out.println("\n----------------------------State----------------------------");
+       System.out.print(state.toString());
        
-       System.out.printf("Black can castle long: [%s],       Black can castle short: [%s]\n", blackCastleLong, blackCastleShort);
-       System.out.printf("White can castle long: [%s],       White can castle short: [%s]\n", whiteCastleLong, whiteCastleShort);
-       if (!history.isEmpty()) {
-         if (-inMove == Piece.WHITE) System.out.printf("Last move %d. %s\n",   (moveNumber+1)/2, history.peek().move.toString());
-         else                       System.out.printf("Last move %d.... %s\n", (moveNumber+1)/2, history.peek().move.toString());
+       if (!history.isEmpty()) {         
+         if (-state.inMove == Piece.WHITE) System.out.printf("Last move %d. %s\n",   (state.moveNumber+1)/2, history.peek().move.toString());
+         else                       System.out.printf("Last move %d.... %s\n", (state.moveNumber+1)/2, history.peek().move.toString());
        }
-       System.out.println("Ply Move number " + moveNumber);
        System.out.println("Immediate evaluation: " + Evaluator.evaluate(this));
-       System.out.println("Number of half moves since last pawn move: " + halfMoveClock);
-       System.out.println("Index searched from when checking 3 fold repetition: " + halfMovesIndex3PosRepition);
    }
 
   

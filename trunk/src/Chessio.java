@@ -122,7 +122,7 @@ public class Chessio {
         throw new NoMoveException();
     }
 
-    public final static String numToChar(int pos) {
+    public static String numToChar(int pos) {
             switch (pos) {
             case 0: return "a";
             case 1:	return "b";
@@ -138,7 +138,7 @@ public class Chessio {
             return "";
     }
 
-    public final static String numToNumChar(int pos) {
+    public static String numToNumChar(int pos) {
             switch (pos) {
             case 0: return "1";
             case 1:	return "2";

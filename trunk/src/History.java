@@ -13,7 +13,7 @@ public class History implements Cloneable {
     }
     
     public void add(State s) {
-     history.add(s);
+     history.push(s);
     }
     
     public State pop() {

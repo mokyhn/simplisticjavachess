@@ -1,5 +1,8 @@
 public class Move {
-	public int fromX,
+	// TODO: Why not a Piece, dX, dY, type, aCapturedPiece, whoMoves?
+        // Captured piece of type Piece?
+        // That is a piece/vector based way to descripe a move?
+        public int fromX,
                    fromY,
                    toX,
                    toY,
