@@ -1,14 +1,21 @@
-public class PieceList {
+/* TODO: 
+ * Add bitboard to this class
+ * Add getBitboard() function.
+ */
+public class Position {
 
-    private Piece[] position;
+    private Piece[]     position;
     private Piece[][]   xyPosition;
+    public  Bitboard    bitboard;
     private int numberOfPieces;
 
-    public PieceList() {
+    public Position() {
         int x, y;
         numberOfPieces = 0;
         position       = new Piece[32];
         xyPosition     = new Piece[8][8];
+        bitboard       = new Bitboard();
+        
         for (x = 0; x < 8; x++)
             for (y = 0; y < 8; y++) xyPosition[x][y] = null;
 
@@ -36,6 +43,8 @@ public class PieceList {
         numberOfPieces++;
 
         xyPosition[p.xPos][p.yPos] = p;
+        
+        bitboard.insertPiece(p);
     }
 
 
@@ -58,9 +67,14 @@ public class PieceList {
         }
 
         xyPosition[x][y] = null;
+        
+        bitboard.removePiece(x, y);
+        
         return p;
     } 
 
+    // TODO: Add bitboard
+    // Should be a part of piece class, only containing xTo and yTo
     public void movePiece(int xFrom, int yFrom, int xTo, int yTo) {
         Piece p = xyPosition[xFrom][yFrom];
 
@@ -127,11 +141,11 @@ public class PieceList {
 
 
     @Override
-    public PieceList clone() {
+    public Position clone() {
         int i, x, y;
         Piece p;
 
-        PieceList theClone   = new PieceList();
+        Position theClone   = new Position();
 
         theClone.numberOfPieces = numberOfPieces;
 
@@ -144,6 +158,8 @@ public class PieceList {
             theClone.xyPosition[p.xPos][p.yPos] = p;
         }
 
+        theClone.bitboard = bitboard.clone();
+        
         assert theClone.numberOfPieces() == this.numberOfPieces();
         return theClone;
     }
