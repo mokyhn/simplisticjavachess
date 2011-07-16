@@ -21,7 +21,35 @@ class main {
 
     }
 
-    public static void main(String param[]) throws java.io.IOException {
+    public static boolean testSearch(String fen, int method, int plyDepth, int expectedEvaluation, String expectedMoveStr) throws NoMoveException {
+       Search  engine       = new Search();
+       Board b = new Board(fen);
+       Chessio cio = new Chessio();
+       Move expectedMove;
+       
+       expectedMove = cio.parse_move(b, expectedMoveStr);
+       
+       int searchResult     = engine.dosearch(b, plyDepth, method);
+      
+       System.out.println("Expected move:       " + expectedMove.toString() + ", actual " + engine.moveAndStatistics());
+       System.out.println("Expected evaluation: " + expectedEvaluation      + ", actual evaluation: "  + searchResult);
+       System.out.println();
+       
+       return expectedEvaluation == searchResult && 
+              engine.getStrongestMove().equal(expectedMove);
+    }
+    
+    public static void test() throws NoMoveException {
+       
+       System.out.println("Test 1 - Pawn promotion");
+       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.MINMAX, 1, 9-3, "a7b8Q")) : "Test 1a failed";        
+       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.ALPHABETA, 1, 9-3, "a7b8Q")) : "Test 1b failed";       
+
+       
+    }
+    
+    
+    public static void main(String param[]) throws java.io.IOException, NoMoveException {
 
         int     plyDepth      = 5;
         Chessio io            = new Chessio();
@@ -154,7 +182,10 @@ class main {
               else if (str.startsWith("sd")) { plyDepth = Integer.parseInt(str.substring(3)); }
               else if (str.matches("help")) { io.printHelpText(); }
               else if (str.matches("print") || str.matches("p")) { interfaceBoard.print(); }
-             else {
+              else if (str.matches("test")) {
+               test();
+              }
+              else {
                 try {
                     m = io.parse_move(interfaceBoard, str);                    
                     //System.out.println(m.getMoveStr());
