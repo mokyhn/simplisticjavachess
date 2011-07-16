@@ -26,7 +26,7 @@ class main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String str            = null;
         int simSteps          = 0;
-        int searchMethod      = Search.ALPHABETA;
+        int searchMethod      = Search.MINMAX;
         int searchResult;
         Move    m;
 
@@ -43,10 +43,10 @@ class main {
 
         
         // Test promotion
-        Board interfaceBoard = new Board("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1");
+        //Board interfaceBoard = new Board("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1");
         
         // Do a simple setup with pawns.
-        // Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
+         Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
 
         // Testing bitboard...
        // Bitboard tbb = new Bitboard(interfaceBoard);
