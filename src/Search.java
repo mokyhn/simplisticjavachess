@@ -91,10 +91,10 @@ class Search {
 
     public int alphaBetaSearch(int plyDepth, int depthToGo, int alpha, int beta) {
         ArrayList<Move> moves;
-        Move            m        = null;
-        int             score    = 0;
-        int             best     = MINSCORE + 1;
-        int             i;
+        Move            m                = null;
+        int             score            = 0;
+        int             bestScore        = 0;
+        boolean         firstCalculation = true;
 
         // Return board evaluation immediately
         if (depthToGo == 0) {
@@ -114,7 +114,7 @@ class Search {
             }
         }
 
-        for (i = 0; i < moves.size(); i++) {
+        for (int i = 0; i < moves.size(); i++) {
             m = moves.get(i);
             analyzeBoard.performMove(m);
 
@@ -123,31 +123,46 @@ class Search {
                score = 0;              
             }
             else {
-             score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -Math.max(alpha, best));
+             score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -Math.max(alpha, bestScore));
             }
 
             analyzeBoard.retractMove();
 
-            if (score > best) {
-                best = score;
-                if (plyDepth == depthToGo) strongestMove = m;
-                if (best >= beta) {
-                    wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
-                    noBetaCutOffs++;
-                    return beta;
+            if (firstCalculation) {
+             bestScore        = score;
+             firstCalculation = false;
+             if (plyDepth == depthToGo) strongestMove = m;
+            } else {            
+                if (score > bestScore) {
+                    bestScore = score;
+                    if (plyDepth == depthToGo) strongestMove = m;
+                    if (bestScore >= beta) {
+                        wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
+                        noBetaCutOffs++;
+                        return beta;
+                    }
                 }
             }
         }
-        return best;
+        return bestScore;
     }
 
+    /**
+     * Reference implementation of Min-Max search witout fancy optimizations and
+     * tricks. This method can be used to compare the soundess of other 
+     * search methods
+     * @param plyDepth The overall search depth in ply's
+     * @param depthToGo The currently searched depth
+     * @return The score. A positive value means white advantage, a negative
+     * denotes black advantage and the score 0 denotes equal play.
+     */
     public int minMaxSearch(int plyDepth, int depthToGo) {
-       ArrayList<Move>        moves;
-       Move m                = null;
-       int  i;
-       int score      = 0,
-           bestscore  = Integer.MIN_VALUE;
-
+       ArrayList<Move> moves;
+       Move            m                = null;
+       int             score            = 0,
+                       bestScore        = 0;
+       int             inMove;
+       boolean         firstCalculation = true;
 
         if (depthToGo == 0) {
             noPositions++;
@@ -156,6 +171,8 @@ class Search {
 
         moves = Movegenerator.generateAllMoves(analyzeBoard);
 
+        inMove = analyzeBoard.whoIsInMove();
+        
         if (moves.isEmpty()) {
             if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED ||
                 Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  {
@@ -165,7 +182,7 @@ class Search {
             return 0; // A draw
         }
 
-        for (i = 0; i < moves.size(); i++) {
+        for (int i = 0; i < moves.size(); i++) {
                 m = moves.get(i);
                 analyzeBoard.performMove(m);
 
@@ -173,18 +190,35 @@ class Search {
                     analyzeBoard.drawBy50MoveRule()) {
                     score = 0;
                 } else {
-                 score = -minMaxSearch(plyDepth, depthToGo - 1);
+                 score = minMaxSearch(plyDepth, depthToGo - 1);
                 }
-
+                        
                 analyzeBoard.retractMove();
-
-                if (score >= bestscore) {
-                    bestscore = score;
-                    if (plyDepth == depthToGo) strongestMove = m; // Used to extract strongest move
+                
+                if (firstCalculation) {
+                 bestScore        = score;
+                 if (plyDepth == depthToGo) strongestMove = m;
+                 firstCalculation = false;
+                } else {
+                    if (inMove == Piece.WHITE) {
+                     if (score > bestScore) {
+                      bestScore = score;
+                      if (plyDepth == depthToGo) strongestMove = m; // Used to extract strongest move
+                     }
+                    }
+                    
+                    if (inMove == Piece.BLACK) {
+                     if (score < bestScore) {
+                      bestScore = score;
+                      if (plyDepth == depthToGo) strongestMove = m; // Used to extract strongest move
+                     }
+                    }   
                 }
+
+                
         }
 
-        return bestscore;
+        return bestScore;
 
     }
 
