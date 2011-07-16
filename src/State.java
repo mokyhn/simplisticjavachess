@@ -33,6 +33,7 @@ public class State implements Cloneable{
     };
 
     // Todo: IS all relevant information with?
+    @Override
     public String toString() {
        String s = "";
         
@@ -79,7 +80,7 @@ public class State implements Cloneable{
         } 
         
         if (inCheckByPiece == null) theClone.inCheckByPiece = null;
-        else                        theClone.inCheckByPiece = (Piece) inCheckByPiece.clone();
+        else                        theClone.inCheckByPiece = inCheckByPiece.clone();
                
         return theClone;
     }

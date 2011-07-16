@@ -1,7 +1,3 @@
-/* TODO: 
- * Add bitboard to this class
- * Add getBitboard() function.
- */
 public class Position {
 
     private Piece[]     position;
