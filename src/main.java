@@ -1,5 +1,9 @@
 //-enableassertions
 
+/*
+ * TODO: Testing via a given position, search depth, search method and comparision
+ * against an expected evaluation and expected move.
+ */
 
 import java.io.*;
 
