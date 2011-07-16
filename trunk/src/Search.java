@@ -46,7 +46,7 @@ class Search {
         switch (method) {
             case ALPHABETA:
                 System.out.println("Alpha-Beta search...");
-                searchResult = alphaBetaSearch(plyDepth, plyDepth, MINSCORE, MAXSCORE);
+                searchResult = alphaBetaSearch(plyDepth, plyDepth, MINSCORE, MAXSCORE); //TODO: Find and correct the bug here...
                 break;
             case MINMAX:
                 System.out.println("MIN-MAX search...");
@@ -89,6 +89,7 @@ class Search {
                " wasted moves " + wastedGeneratedMoves );
     }
 
+    //TODO: Find and correct the bug here...
     public int alphaBetaSearch(int plyDepth, int depthToGo, int alpha, int beta) {
         ArrayList<Move> moves;
         Move            m                = null;

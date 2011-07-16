@@ -16,6 +16,24 @@ class Piece implements Cloneable {
                               KING   = 5,
                               EMPTY  = 6;
 
+    public Piece() { }
+
+    public Piece(int x, int y, int c, int t) {
+        assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error in x or y ";
+        xPos  = x;
+        yPos  = y;
+        color = c;
+        type  = t;
+    }
+
+    public boolean equals(Piece p) {
+        return p.color == this.color &&
+               p.type  == this.type  &&
+               p.xPos  == this.xPos  &&
+               p.yPos  == this.yPos;
+    }
+    
+    
     @Override
     public Piece clone() {
         Piece theClone = new Piece();
@@ -29,15 +47,6 @@ class Piece implements Cloneable {
         return theClone;
     }
 
-    public Piece() { }
-
-    public Piece(int x, int y, int c, int t) {
-        assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error in x or y ";
-        xPos  = x;
-        yPos  = y;
-        color = c;
-        type  = t;
-    }
 
     @Override
     public  String toString() {
