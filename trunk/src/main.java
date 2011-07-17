@@ -118,6 +118,7 @@ class main {
                 System.out.println(engine1.moveAndStatistics());
                 interfaceBoard.performMove(engine1.getStrongestMove());
                 checkForDraw(interfaceBoard);
+                interfaceBoard.print();
             } else if (str.matches("undo")) { interfaceBoard.retractMove(); }
               else if (str.matches("allmoves")) {
                 Movegenerator mg = new Movegenerator();

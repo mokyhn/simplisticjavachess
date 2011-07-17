@@ -127,14 +127,26 @@ public class Position {
           return xyPosition[x][y] == null;
     }
 
+      
     @Override
-    public String toString() {
-        String res = "";
-        for (int i = 0; i < numberOfPieces; i++)
-            res = res + " " + "(" + Chessio.numToChar(position[i].xPos) + ", " + (position[i].yPos + 1) + ", " + position[i].toString() + ")";
-        return res;
-    }
+      public String toString() {
+        int x, y;
+        Piece p;
+        String s = "\n _______________\n";
 
+        for (y = 7; y >= 0; y--) {
+            for (x = 0; x < 8; x++) {
+                 s = s + " "; 
+                  p =  getPieceXY(x, y);
+                  if (p != null) { s = s + p.toString(); }
+                  else s = s + ".";
+            }
+          s = s + ("     " + (y+1)) + "\n";
+        } // end last for-loop
+        s = s + " _______________\n";
+        s = s + " a b c d e f g h\n";
+      return s;
+    }
 
     @Override
     public Position clone() {

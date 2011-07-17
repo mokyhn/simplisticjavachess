@@ -241,18 +241,12 @@ public class Board implements Cloneable {
 
 
     public boolean isMoveLegal(Move m) {
-        Movegenerator movegen = new Movegenerator();
-        Move tmp;
-        Iterator theMoves;
-
-        theMoves = movegen.generateAllMoves(this).listIterator();
+        Movegenerator movegen   = new Movegenerator();
+        Iterator<Move> theMoves = movegen.generateAllMoves(this).listIterator();
 
         // Check if move m is among the possible moves
         while (theMoves.hasNext()) {
-            tmp = (Move) theMoves.next();
-            if (m.equal(tmp)) {
-                return true;
-            }
+            if (m.equal(theMoves.next())) return true;
         }
         return false;
     }
@@ -414,39 +408,32 @@ public class Board implements Cloneable {
   }
 
   /**
-   * Returns the board as ASCII art
+   * Returns the board as ASCII art and game other information
    */
   @Override
   public String toString() {
-        int x, y;
-        Piece p;
-        String s = "\n _______________\n";
+    String s = position.toString();
+    
+    if (whoIsInMove() == Piece.WHITE) s = s + "  White to move\n";
+    else s = s + "  Black to move\n";
 
-        for (y = 7; y >= 0; y--) {
-            for (x = 0; x < 8; x++) {
-                 s = s + " "; 
-                  p =  getPieceXY(x, y);
-                  if (p != null) { s = s + p.toString(); }
-                  else s = s + ".";
-            }
-          s = s + ("     " + (y+1)) + "\n";
-        } // end last for-loop
-        s = s + " _______________\n";
-        s = s + " a b c d e f g h\n";
-        if (whoIsInMove() == Piece.WHITE) s = s + "  White to move\n";
-        else s = s + "  Black to move";
-      return s;
+    s = s + state.toString();
+
+    if (!history.isEmpty()) {         
+         if (-state.inMove == Piece.WHITE) s = s + "Last move " + (state.moveNumber+1)/2 + "."    +  history.peek().move.toString() + "\n";
+         else                              s = s + "Last move " + (state.moveNumber+1)/2 + "...." +  history.peek().move.toString() + "\n";
+       }
+    
+    s = s + "Immediate evaluation: " + Evaluator.evaluate(this) + "\n";
+    
+    return s;
   }
   
 
    public void printState() {
        System.out.print(state.toString());
        
-       if (!history.isEmpty()) {         
-         if (-state.inMove == Piece.WHITE) System.out.printf("Last move %d. %s\n",   (state.moveNumber+1)/2, history.peek().move.toString());
-         else                       System.out.printf("Last move %d.... %s\n", (state.moveNumber+1)/2, history.peek().move.toString());
-       }
-       System.out.println("Immediate evaluation: " + Evaluator.evaluate(this));
+
    }
 
   
