@@ -1,8 +1,4 @@
 public class Chessio {
-
-    // Constuctor
-//    public Chessio() {
- //   }
     
     
     // Input: the current position, a move string, and the knowledge of

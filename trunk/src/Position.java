@@ -69,8 +69,7 @@ public class Position {
         return p;
     } 
 
-    // TODO: Add bitboard
-    // Should be a part of piece class, only containing xTo and yTo
+    // TODO: Should be a part of piece class, only containing xTo and yTo
     public void movePiece(int xFrom, int yFrom, int xTo, int yTo) {
         Piece p = xyPosition[xFrom][yFrom];
 
@@ -83,6 +82,9 @@ public class Position {
         xyPosition[xTo][yTo]     = p;
         assert p.xPos == xyPosition[p.xPos][p.yPos].xPos && p.yPos == xyPosition[p.xPos][p.yPos].yPos;
         xyPosition[xFrom][yFrom] = null;
+        
+        bitboard.removePiece(xFrom, yFrom);
+        bitboard.insertPiece(p);
     }
 
     public int numberOfPieces() {

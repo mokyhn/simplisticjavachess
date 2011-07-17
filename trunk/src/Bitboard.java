@@ -70,27 +70,42 @@ public class Bitboard implements Cloneable {
         return 1L << bitNo;
     }
 
-    public void insertPiece(Piece p) {
-       long b;
-        
-       b = bb[colorIndex(p.color)][p.type];       
-       b = b | setBitHigh(SquareNoFromPos(p.xPos, p.yPos));       
+    public void insertPiece(Piece p) {       
+       bb[colorIndex(p.color)][p.type] = bb[colorIndex(p.color)][p.type] | 
+                                         setBitHigh(SquareNoFromPos(p.xPos, p.yPos));    
     }
     
     public Piece removePiece(int x, int y) {
-        Piece p = null;
+        Piece     p     = null;
+        final int UNDF  = -5; 
+        int       color = UNDF;
+        int       type  = UNDF;
         
         for (int t = 0; t < NUM_PIECE_TYPES; t++) {
-            if ((bb[0][t] & setBitHigh(SquareNoFromPos(x, y))) == 0) p = new Piece(x, y, Piece.BLACK, t);
-            if ((bb[1][t] & setBitHigh(SquareNoFromPos(x, y))) == 0) p = new Piece(x, y, Piece.WHITE, t);            
+            if ((bb[0][t] & setBitHigh(SquareNoFromPos(x, y))) != 0) {
+                color = Piece.BLACK;
+                type  = t;
+                break;
+            }
+            if ((bb[1][t] & setBitHigh(SquareNoFromPos(x, y))) != 0) {
+                color = Piece.WHITE;
+                type  = t;
+                break;               
+            }            
         }           
-        return p;
+        
+        assert(color != UNDF && type != UNDF);
+        
+        bb[colorIndex(color)][type] = bb[colorIndex(color)][type] ^  // Bitwise XOR
+                                          setBitHigh(SquareNoFromPos(x, y));    
+        
+        return new Piece(x, y, color, type);
     }
     
     private String bitboard2String(long b) {
         String r = "";
         int x, y;
-
+        
         for (y = 7; y >= 0; y--) {
          for (x = 0; x <= 7; x++) {
              if (((1L << SquareNoFromPos(x, y)) & b) != 0) {
@@ -102,8 +117,6 @@ public class Bitboard implements Cloneable {
         return r;
     }
     
-    /* TODO: Implement a function that returns all 6 bitboard for the 6
-       individual piece types... */
     @Override
     public String toString() {
         String s = "";
