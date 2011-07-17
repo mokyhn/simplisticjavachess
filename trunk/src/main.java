@@ -130,7 +130,7 @@ class main {
                 System.out.println(engine1.moveAndStatistics());
                 interfaceBoard.performMove(engine1.getStrongestMove());
                 checkForDraw(interfaceBoard);
-                interfaceBoard.print();
+                System.out.println(interfaceBoard.toString());
             } else if (str.matches("undo")) { interfaceBoard.retractMove(); }
               else if (str.matches("allmoves")) {
                 Movegenerator mg = new Movegenerator();
@@ -143,18 +143,18 @@ class main {
                   engine1 = new Search();
                   engine2 = new Search();
                   
-                  interfaceBoard.print();
+                  System.out.println(interfaceBoard.toString());
 
                   for (int i = 0; i < simSteps; i++) {
                       engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
                       System.out.println(engine1.moveAndStatistics());
                       interfaceBoard.performMove(engine1.getStrongestMove());
-                      interfaceBoard.print();
+                      System.out.println(interfaceBoard.toString());
                       checkForDraw(interfaceBoard);
                       engine2.dosearch(interfaceBoard, plyDepth, Search.RANDOM);
                       System.out.println(engine2.moveAndStatistics());
                       interfaceBoard.performMove(engine2.getStrongestMove());
-                      interfaceBoard.print();
+                      System.out.println(interfaceBoard.toString());
                       checkForDraw(interfaceBoard);
                   }
               
@@ -165,16 +165,10 @@ class main {
                        if (interfaceBoard.attacks(x, y)) System.out.println("Attacks " + Chessio.numToChar(x) + Chessio.numToNumChar(y));
               }
               else if (str.matches("new"))   {
-                interfaceBoard = new Board(Board.NORMAL_SETUP);
+                interfaceBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
                 engine1 = new Search();
                 engine2 = new Search();
             }
-                else if (str.matches("state")) {
-                    // TODO: Print all variable states from board...
-                    interfaceBoard.printState();
-                    str = "";
-
-                }
              else if (str.startsWith("setboard")) {
                 interfaceBoard = new Board(str.substring(9, str.length()));
                 engine1       = new Search();
@@ -194,7 +188,7 @@ class main {
                 System.exit(0); }
               else if (str.startsWith("sd")) { plyDepth = Integer.parseInt(str.substring(3)); }
               else if (str.matches("help")) { io.printHelpText(); }
-              else if (str.matches("print") || str.matches("p")) { interfaceBoard.print(); }
+              else if (str.matches("print") || str.matches("p")) { System.out.println(interfaceBoard.toString()); }
               else if (str.matches("test")) {
                test();
               }
@@ -215,7 +209,7 @@ class main {
                     //interfaceBoard.performMove(engine1.getStrongestMove());
                     //                    System.out.println(engine1.moveAndStatistics());
 
-                    interfaceBoard.print();
+                    System.out.println(interfaceBoard.toString());
                    
 
 

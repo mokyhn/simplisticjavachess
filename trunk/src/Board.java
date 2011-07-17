@@ -1,47 +1,25 @@
 import java.util.Iterator;
 
 public class Board implements Cloneable {
-    public static final int NO_SETUP        = 0,
-                            NORMAL_SETUP    = 1;
-
-    private History        history;  
-    private State          state;
-    
-    private                Position position;
+    private                Position position; // Current position of pieces
+    private State          state;             // State wrt. casteling, 
+                                              // latest move and movenumber etc.
+    private History        history;           // Previus states.
 
     public Board() {
-        history           = new History();
-        state             = new State();
         position          = new Position();        
+        state             = new State();
+        history           = new History();
     }
     
-    // Constructor, setting up initial position
-    public Board(int setup) {
-        this();
-        
-        switch (setup) {
-            case NO_SETUP:      break;
-            case NORMAL_SETUP: setupFENboard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"); 
-        }        
-    }
-
     public Board(String fen) {
-        this();                        
+        this();
         setupFENboard(fen);  
     }
 
-    @Override
-    public Board clone() {
-        Board theClone      = new Board();
-        theClone.history    = this.history.clone();
-        theClone.state      = this.state.clone();        
-        theClone.position   = position.clone();
-                
-        return theClone;
-    }
 
     public int     getNumberOfPieces()       { return position.numberOfPieces(); }
-    public int     whoIsInMove()             { return state.inMove;  }
+    public int     inMove()                  { return state.inMove;  }
     public void    setBlackToMove()          { state.inMove = Piece.BLACK;}
     public void    setWhiteToMove()          { state.inMove = Piece.WHITE;}
     public Move    getLastMove()             { return history.peek().move; }
@@ -52,11 +30,9 @@ public class Board implements Cloneable {
     // Returns true if the side not in move, in board b attacks square (x, y)
     // and otherwise false
     public boolean attacks(int x, int y)     { return position.attacks( x,  y,  state.inMove); }
-
-    public void    print() {System.out.print(toString());}
    
     public String  getBitboardString()       { return position.bitboard.toString();}
-    public Boolean drawBy50MoveRule() {return state.halfMoveClock >= 50;}
+    public Boolean drawBy50MoveRule()        {return state.halfMoveClock >= 50;}
 
     public Boolean drawBy3RepetionsRule() {
         State h;
@@ -252,6 +228,7 @@ public class Board implements Cloneable {
         return false;
     }
 
+    
     // Given a position in the FEN - notation.
     // Set up the board
     // TODO: 1) Error handling in case of parse errors.
@@ -262,7 +239,7 @@ public class Board implements Cloneable {
         int i;
         int parsingPartNo;
         char c;
-        String fen = trimWhiteSpace(sfen);
+        String fen = Utils.trimWhiteSpace(sfen);
         String num1 = "";
         String num2 = "";
 
@@ -377,45 +354,21 @@ public class Board implements Cloneable {
                     
     }
 
-
        state.halfMoveClock = Integer.parseInt(num1);
-
        state.moveNumber    = 2 * Integer.parseInt(num2) - 2;
-
        if (state.moveNumber != 0 && state.inMove == Piece.BLACK) state.moveNumber--;
 
     }
     
-  public String trimWhiteSpace(String s) {
-      String t     = "";
-      char c;
-      boolean flag = false;
-  
-      for (int i = 0; i < s.length(); i++) {
-       c = s.charAt(i);
-
-       if (c == ' ' && !flag) {
-           flag = true;
-           t = t + ' ';
-       }
-
-       if (c != ' ') {
-           flag = false;
-           t = t + c;
-       }
-      }
-
-      return t;
-  }
 
   /**
    * Returns the board as ASCII art and game other information
    */
-  @Override
-  public String toString() {
+    @Override
+    public String toString() {
     String s = position.toString();
-    
-    if (whoIsInMove() == Piece.WHITE) s = s + "  White to move\n";
+
+    if (inMove() == Piece.WHITE) s = s + "  White to move\n";
     else s = s + "  Black to move\n";
 
     s = s + state.toString();
@@ -424,19 +377,21 @@ public class Board implements Cloneable {
          if (-state.inMove == Piece.WHITE) s = s + "Last move " + (state.moveNumber+1)/2 + "."    +  history.peek().move.toString() + "\n";
          else                              s = s + "Last move " + (state.moveNumber+1)/2 + "...." +  history.peek().move.toString() + "\n";
        }
-    
+
     s = s + "Immediate evaluation: " + Evaluator.evaluate(this) + "\n";
-    
+
     return s;
-  }
+    }
   
-
-   public void printState() {
-       System.out.print(state.toString());
-       
-
-   }
-
   
+    @Override
+    public Board clone() {
+        Board theClone      = new Board();
+        theClone.position   = position.clone();
+        theClone.state      = this.state.clone();        
+        theClone.history    = this.history.clone();
+
+        return theClone;
+    }
 
 }
