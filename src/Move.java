@@ -68,10 +68,14 @@ public class Move {
 	}
 
 
-	// TODO: Should maby also include type and apiece?
 	public boolean equal(Move m) {
-		return ((fromX == m.fromX) && (toX == m.toX) && (fromY == m.fromY)
-				&& (toY == m.toY) && (type == m.type));
+		return  fromX == m.fromX && 
+                        toX == m.toX     && 
+                        fromY == m.fromY && 
+                        toY == m.toY     && 
+                        type == m.type   &&
+                        aCapturedPiece == m.aCapturedPiece &&
+                        whoMoves == m.whoMoves;
 	}
 
 	public boolean aSimplePromotion() {

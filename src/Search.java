@@ -47,6 +47,7 @@ class Search {
             case ALPHABETA:
                 System.out.println("Alpha-Beta search...");
                 searchResult = alphaBetaSearch(plyDepth, plyDepth, MINSCORE, MAXSCORE); //TODO: Find and correct the bug here...
+
                 break;
             case MINMAX:
                 System.out.println("MIN-MAX search...");
@@ -124,7 +125,7 @@ class Search {
                score = 0;              
             }
             else {
-             score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -Math.max(alpha, bestScore));
+             score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -Math.max(alpha, bestScore)); 
             }
 
             analyzeBoard.retractMove();
