@@ -46,7 +46,7 @@ class Search {
         switch (method) {
             case ALPHABETA:
                 System.out.println("Alpha-Beta search...");
-                searchResult = alphaBetaSearch(plyDepth, plyDepth, MINSCORE, MAXSCORE); //TODO: Find and correct the bug here...
+                searchResult = alphaBetaSearch(plyDepth, plyDepth, MINSCORE, MAXSCORE); 
 
                 break;
             case MINMAX:
@@ -90,14 +90,15 @@ class Search {
                " wasted moves " + wastedGeneratedMoves );
     }
 
-    //TODO: Find and correct the bug here...
     public int alphaBetaSearch(int plyDepth, int depthToGo, int alpha, int beta) {
         ArrayList<Move> moves;
         Move            m                = null;
-        int             score            = 0;
-        int             bestScore        = 0;
         boolean         firstCalculation = true;
-
+        int e = 0;
+        int newAlpha = alpha;
+        int newBeta  = beta;
+        int inMove   = analyzeBoard.whoIsInMove();
+        
         // Return board evaluation immediately
         if (depthToGo == 0) {
             noPositions++;
@@ -106,47 +107,63 @@ class Search {
 
         moves = Movegenerator.generateAllMoves(analyzeBoard); 
 
-        if (moves.isEmpty()) {  
-            if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
-                Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  { 
-                  return Evaluator.evaluate(analyzeBoard);
-            }
-            else {
-             return 0; // A draw
-            }
-        }
+//        if (moves.isEmpty()) {  
+//            if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
+//                Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  { 
+//                  return Evaluator.evaluate(analyzeBoard);
+//            }
+//            else {
+//             return 0; // A draw
+//            }
+//        }
 
         for (int i = 0; i < moves.size(); i++) {
             m = moves.get(i);
             analyzeBoard.performMove(m);
 
-            if (analyzeBoard.drawBy50MoveRule() ||
-                analyzeBoard.drawBy3RepetionsRule()) {
-               score = 0;              
+            if ((1==0) && (analyzeBoard.drawBy50MoveRule() || // Commented out...
+                analyzeBoard.drawBy3RepetionsRule())) {
+               analyzeBoard.retractMove();
+               return 0;
             }
             else {
-             score = -alphaBetaSearch(plyDepth, depthToGo - 1, -beta, -Math.max(alpha, bestScore)); 
+               e = alphaBetaSearch(plyDepth, depthToGo - 1, newAlpha, newBeta);
+                
+               if (inMove == Piece.WHITE) {
+                 if (e > newAlpha) {
+                  if (plyDepth == depthToGo) {
+                      strongestMove = m;
+                      //System.out.println(m.toString() + "newAlpha = " + newAlpha + " e = " + e); for testing 
+                  }
+                  newAlpha = e; 
+                 }
+                 else if (e < newAlpha) {
+                  analyzeBoard.retractMove(); 
+                  wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
+                  noBetaCutOffs++;
+                  break;
+                 }
+               }
+               
+               if (inMove == Piece.BLACK) {
+                 e = alphaBetaSearch(plyDepth, depthToGo - 1, newAlpha, newBeta);
+                 if (e < newBeta) {
+                  newBeta = e;
+                  if (plyDepth == depthToGo) strongestMove = m; 
+                 } else if (e > newBeta) {
+                  analyzeBoard.retractMove(); 
+                  wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
+                  noBetaCutOffs++;
+                  break;
+                 }  
+               }
             }
 
             analyzeBoard.retractMove();
-
-            if (firstCalculation) {
-             bestScore        = score;
-             firstCalculation = false;
-             if (plyDepth == depthToGo) strongestMove = m;
-            } else {            
-                if (score > bestScore) {
-                    bestScore = score;
-                    if (plyDepth == depthToGo) strongestMove = m;
-                    if (bestScore >= beta) {
-                        wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
-                        noBetaCutOffs++;
-                        return beta;
-                    }
-                }
+                
             }
-        }
-        return bestScore;
+        
+        return inMove == Piece.WHITE ? newAlpha : newBeta;
     }
 
     /**

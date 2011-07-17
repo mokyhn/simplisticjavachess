@@ -42,8 +42,20 @@ class main {
     public static void test() throws NoMoveException {
        
        System.out.println("Test 1 - Pawn promotion");
-       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.MINMAX, 1, 9-3, "a7b8Q")) : "Test 1a failed";        
+       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.MINMAX,    1, 9-3, "a7b8Q")) : "Test 1a failed";        
        assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.ALPHABETA, 1, 9-3, "a7b8Q")) : "Test 1b failed";       
+       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.MINMAX,    2, 9-3, "a7b8Q")) : "Test 1c failed";        
+       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.ALPHABETA, 2, 9-3, "a7b8Q")) : "Test 1d failed";       
+       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.MINMAX,    3, 9-3, "a7b8Q")) : "Test 1e failed";        
+       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.ALPHABETA, 3, 9-3, "a7b8Q")) : "Test 1f failed";       
+
+       System.out.println("Test 2 - Pawn capture");
+       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.MINMAX,    1, 1, "g2h3")) : "Test 2a failed";
+       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.ALPHABETA, 1, 1, "g2h3")) : "Test 2b failed";
+       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.MINMAX,    2, 1, "g2h3")) : "Test 2c failed";
+       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.ALPHABETA, 2, 1, "g2h3")) : "Test 2d failed";
+       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.MINMAX,    3, 1, "g2h3")) : "Test 2e failed";
+       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.ALPHABETA, 3, 1, "g2h3")) : "Test 2f failed";
 
        
     }
