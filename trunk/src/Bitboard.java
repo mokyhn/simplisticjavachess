@@ -87,11 +87,7 @@ public class Bitboard implements Cloneable {
         return p;
     }
     
-    //movePiece(int xFrom, int yFrom, int xTo, int yTo)
-    
-    /* TODO: Implement a function that returns all 6 bitboard for the 6
-       individual piece types... */
-    public String toString(long b) {
+    private String bitboard2String(long b) {
         String r = "";
         int x, y;
 
@@ -104,6 +100,25 @@ public class Bitboard implements Cloneable {
          r = r + "\n";
         }
         return r;
+    }
+    
+    /* TODO: Implement a function that returns all 6 bitboard for the 6
+       individual piece types... */
+    @Override
+    public String toString() {
+        String s = "";
+        
+        for (int t = 0; t < NUM_PIECE_TYPES; t++) {
+             s = s + "Black " + Piece.getPieceLetter(Piece.BLACK, t) 
+                     + "\n"
+                     + bitboard2String(bb[0][t]);
+
+            s = s + "White " + Piece.getPieceLetter(Piece.WHITE, t) 
+                     + "\n"
+                     + bitboard2String(bb[1][t]);
+        }
+        
+        return s;
     }
 
     public boolean equals(Bitboard b2) {

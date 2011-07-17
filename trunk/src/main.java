@@ -198,6 +198,9 @@ class main {
               else if (str.matches("test")) {
                test();
               }
+              else if (str.matches("bitboard")) {
+               System.out.println(interfaceBoard.getBitboardString());
+              }
               else {
                 try {
                     m = io.parse_move(interfaceBoard, str);                    
