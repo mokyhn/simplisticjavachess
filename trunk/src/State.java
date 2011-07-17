@@ -32,7 +32,6 @@ public class State implements Cloneable{
         this.halfMovesIndex3PosRepition = 0;
     };
 
-    // Todo: IS all relevant information with?
     @Override
     public String toString() {
        String s = "";
