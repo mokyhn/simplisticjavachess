@@ -46,7 +46,7 @@ public class Chessio {
         m.fromY          = fromY;
         m.toX            = toX;
         m.toY            = toY;
-        m.aCapturedPiece = 0;
+        m.aCapturedPiece = Piece.EMPTY;
         m.whoMoves       = whoToMove;
 
         if (str.length() == 4) {
