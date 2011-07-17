@@ -6,7 +6,7 @@ public class Chessio {
     // Output: a move
     public Move parse_move(Board b, String str) throws NoMoveException {
         int    fromX, fromY, toX, toY;
-        int    whoToMove = b.whoIsInMove();
+        int    whoToMove = b.inMove();
         char[] s         = str.toCharArray();
         Move m           = new Move();
         Piece  p, pto;

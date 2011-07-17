@@ -13,7 +13,7 @@ public class Bitboard implements Cloneable {
      * Number of different piece types: pawn, knight, bishop, rook, queen, king,
      * that is 6
      */
-    private static final int NUM_PIECE_TYPES = 6; // 
+    private static final int NUM_PIECE_TYPES = 6;  
     
     
     /**
@@ -35,10 +35,7 @@ public class Bitboard implements Cloneable {
     }
 
     private int indexToColor(int index) {
-     if (index == 0) return Piece.BLACK;
-     if (index == 1) return Piece.WHITE;
-
-     return 42; // Unreachable
+     return index == 0 ? Piece.BLACK : Piece.WHITE;
     }
     
     

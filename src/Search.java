@@ -97,7 +97,7 @@ class Search {
         int e = 0;
         int newAlpha = alpha;
         int newBeta  = beta;
-        int inMove   = analyzeBoard.whoIsInMove();
+        int inMove   = analyzeBoard.inMove();
         
         // Return board evaluation immediately
         if (depthToGo == 0) {
@@ -190,7 +190,7 @@ class Search {
 
         moves = Movegenerator.generateAllMoves(analyzeBoard);
 
-        inMove = analyzeBoard.whoIsInMove();
+        inMove = analyzeBoard.inMove();
         
         if (moves.isEmpty()) {
             if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED ||

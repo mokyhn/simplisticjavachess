@@ -24,7 +24,7 @@ class Movegenerator {
     // Output: The set of moves this pawn can perform.
     public static ArrayList<Move> pawnMoves(Board b, Piece p)  {
 
-        int c = b.whoIsInMove();
+        int c = b.inMove();
         int x = p.xPos;
         int y = p.yPos;
 
@@ -127,7 +127,7 @@ class Movegenerator {
 
     public static ArrayList<Move> kingMoves(Board b, Piece p)  {
         ArrayList<Move> Moves = new ArrayList<Move>();
-        int c = b.whoIsInMove();
+        int c = b.inMove();
         int x = p.xPos;
         int y = p.yPos;
 
@@ -224,7 +224,7 @@ class Movegenerator {
     // Genereate the possible moves for one single piece
     public static ArrayList<Move> generateMoves(Board b, Piece p)  {
         ArrayList<Move> Moves = new ArrayList<Move>();
-        int sideToMove        = b.whoIsInMove();
+        int sideToMove        = b.inMove();
 
         if (p.color != sideToMove) return Moves;
         
