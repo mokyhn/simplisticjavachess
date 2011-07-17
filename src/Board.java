@@ -54,6 +54,8 @@ public class Board implements Cloneable {
     public boolean attacks(int x, int y)     { return position.attacks( x,  y,  state.inMove); }
 
     public void    print() {System.out.print(toString());}
+   
+    public String  getBitboardString()       { return position.bitboard.toString();}
     public Boolean drawBy50MoveRule() {return state.halfMoveClock >= 50;}
 
     public Boolean drawBy3RepetionsRule() {
