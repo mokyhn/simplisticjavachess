@@ -30,7 +30,6 @@ public class Board implements Cloneable {
         setupFENboard(fen);  
     }
 
-    //TODO: Check whether this code is correct. 	
     @Override
     public Board clone() {
         Board theClone      = new Board();
