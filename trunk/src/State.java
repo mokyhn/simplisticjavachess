@@ -58,7 +58,6 @@ public class State implements Cloneable{
        return s;
     }
     
-    // Todo: Are all relevant variables with?
     @Override
     public State clone() {
         State theClone = new State();
