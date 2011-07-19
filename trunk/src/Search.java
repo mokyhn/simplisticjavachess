@@ -1,4 +1,4 @@
-import java.util.ArrayList; // TODO: MinMax never works and alpha beta search is dependent on the ordering of generated moves?!
+import java.util.ArrayList; 
 import java.util.Iterator;
 
 class Search {
@@ -14,16 +14,16 @@ class Search {
     // Main variables used in the search
     Board        analyzeBoard;
     private int  plyDepth;
-    private Move strongestMove        = new Move();
-    private int  searchResult         = 0;
+    private Move strongestMove;
+    private int  searchResult;
 
 
     // For statistical pusposes
     private long start_time;
     private long end_time;
-    private int  noPositions          = 0;
-    private int  noBetaCutOffs        = 0;
-    private int  wastedGeneratedMoves = 0;
+    private int  noPositions;
+    private int  noBetaCutOffs;
+    private int  wastedGeneratedMoves;
 
 
     public Search() {
@@ -31,6 +31,7 @@ class Search {
           noBetaCutOffs        = 0;
           searchResult         = 0;
           wastedGeneratedMoves = 0;
+          strongestMove        = null;
     }
 
     public int dosearch(Board b, int plyDepth, int method) {
@@ -63,17 +64,6 @@ class Search {
         return searchResult;
     }
 
-    public String findBranchingFactor(Board b, int ply) {
-        analyzeBoard  = b.clone();
-        noPositions   = 0;
-
-        CountNodesTmp(ply);
-        return "#Nodes "                   + noPositions +
-               " at plydepth "             + ply +
-               " = a branching factor of " + Math.exp(Math.log(noPositions)/ply) +
-               " nodes";
-    }
-
     public Move getStrongestMove() { return strongestMove;  }
     public int  getNoPositions()   { return noPositions;    }
     public long getTimeUsage()     { return Math.abs(end_time-start_time)/1000000;}
@@ -89,7 +79,7 @@ class Search {
                " Beta-cutoffs " +
                " wasted moves " + wastedGeneratedMoves );
     }
-
+    
     public int alphaBetaSearch(int plyDepth, int depthToGo, int alpha, int beta) {
         ArrayList<Move> moves;
         Move            m                = null;
@@ -107,22 +97,22 @@ class Search {
 
         moves = Movegenerator.generateAllMoves(analyzeBoard); 
 
-//        if (moves.isEmpty()) {  
-//            if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
-//                Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  { 
-//                  return Evaluator.evaluate(analyzeBoard);
-//            }
-//            else {
-//             return 0; // A draw
-//            }
-//        }
+        if (moves.isEmpty()) {  
+            if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
+                Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  { 
+                  return Evaluator.evaluate(analyzeBoard);
+            }
+            else {
+             return 0; // A draw
+            }
+        }
 
         for (int i = 0; i < moves.size(); i++) {
             m = moves.get(i);
             analyzeBoard.performMove(m);
 
-            if ((1==0) && (analyzeBoard.drawBy50MoveRule() || // Commented out...
-                analyzeBoard.drawBy3RepetionsRule())) {
+            if (analyzeBoard.drawBy50MoveRule() || 
+                analyzeBoard.drawBy3RepetionsRule()) {
                analyzeBoard.retractMove();
                return 0;
             }
@@ -256,6 +246,20 @@ class Search {
       return Evaluator.evaluate(analyzeBoard);
     }
 
+    
+    
+    public String findBranchingFactor(Board b, int ply) {
+        analyzeBoard  = b.clone();
+        noPositions   = 0;
+
+        CountNodesTmp(ply);
+        return "#Nodes "                   + noPositions +
+               " at plydepth "             + ply +
+               " = a branching factor of " + Math.exp(Math.log(noPositions)/ply) +
+               " nodes";
+    }
+    
+    
     private void CountNodesTmp(int plydepth) {
         Iterator<Move>          moves;
 
@@ -264,7 +268,7 @@ class Search {
           return;
         }
         
-        moves = Movegenerator.generateAllMoves(analyzeBoard).listIterator(); // Could we avoid this listIterator conversion?
+        moves = Movegenerator.generateAllMoves(analyzeBoard).listIterator();
         while (moves.hasNext()) {
             analyzeBoard.performMove(moves.next());
             CountNodesTmp(plydepth - 1);

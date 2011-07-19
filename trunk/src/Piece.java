@@ -33,21 +33,7 @@ class Piece implements Cloneable {
                p.yPos  == this.yPos;
     }
     
-    
-    @Override
-    public Piece clone() {
-        Piece theClone = new Piece();
-
-        // Initialize theClone.
-        theClone.xPos  = this.xPos;
-        theClone.yPos  = this.yPos;
-        theClone.color = this.color;
-        theClone.type  = this.type;
-
-        return theClone;
-    }
-
-
+   
     public static String getPieceLetter(int color, int pieceType) {
       String r = "";
 
@@ -83,10 +69,6 @@ class Piece implements Cloneable {
       return r;    
     }
     
-    @Override
-    public  String toString() {
-        return getPieceLetter(color, type);
-    }
 
     public Piece(int x, int y, char pieceLetter)  {
         assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error in x or y ";
@@ -138,8 +120,24 @@ class Piece implements Cloneable {
             }
      }
 
-
-    public void print() {
-        System.out.print(toString());
+    @Override
+    public  String toString() {
+        return getPieceLetter(color, type);
     }
+
+    
+    @Override
+    public Piece clone() {
+        Piece theClone = new Piece();
+
+        // Initialize theClone.
+        theClone.xPos  = this.xPos;
+        theClone.yPos  = this.yPos;
+        theClone.color = this.color;
+        theClone.type  = this.type;
+
+        return theClone;
+    }
+
 }
+

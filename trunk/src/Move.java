@@ -36,17 +36,6 @@ public class Move {
 			CASTLE_SHORT                  = 11,
                         CASTLE_LONG                   = 12;
 
-        public Move clone() {
-            Move theClone = new Move();
-            theClone.fromX          = this.fromX;
-            theClone.fromY          = this.fromY;
-            theClone.toX            = this.toX;
-            theClone.toY            = this.toY;
-            theClone.type           = this.type;
-            theClone.whoMoves       = this.whoMoves;
-            theClone.aCapturedPiece = this.aCapturedPiece;
-            return theClone;
-        }
 
         public Move() {
 	}
@@ -87,21 +76,30 @@ public class Move {
 				&& (type <= CAPTURE_AND_PROMOTE_TO_QUEEN);
 	}
 
-	// TODO: Provide better error handling
 	public int promotionTo() {
-		switch (type) {
-		case CAPTURE_AND_PROMOTE_TO_BISHOP: 	return Piece.BISHOP;
-		case CAPTURE_AND_PROMOTE_TO_KNIGHT:	return Piece.KNIGHT;
-		case CAPTURE_AND_PROMOTE_TO_ROOK:	return Piece.ROOK;
-                case CAPTURE_AND_PROMOTE_TO_QUEEN:      return Piece.QUEEN;
-		case PROMOTE_TO_BISHOP: 		return Piece.BISHOP;
-		case PROMOTE_TO_KNIGHT:			return Piece.KNIGHT;
-		case PROMOTE_TO_ROOK:			return Piece.ROOK;
-		case PROMOTE_TO_QUEEN:			return Piece.QUEEN;
-		default: System.out.println("Wrong promotion code");
-		return 0;
+            int r = Piece.EMPTY;
+            
+            assert(type == CAPTURE_AND_PROMOTE_TO_BISHOP ||
+                       type == CAPTURE_AND_PROMOTE_TO_KNIGHT ||
+                       type == CAPTURE_AND_PROMOTE_TO_ROOK   ||
+                       type == CAPTURE_AND_PROMOTE_TO_QUEEN  ||
+                       type == PROMOTE_TO_BISHOP             ||
+                       type == PROMOTE_TO_KNIGHT             ||
+                       type == PROMOTE_TO_ROOK               ||
+                       type == PROMOTE_TO_QUEEN) : "Wrong promotion code";
+		
+            switch (type) {
+		case CAPTURE_AND_PROMOTE_TO_BISHOP:  r = Piece.BISHOP; break;
+		case CAPTURE_AND_PROMOTE_TO_KNIGHT:  r = Piece.KNIGHT; break;
+		case CAPTURE_AND_PROMOTE_TO_ROOK:    r = Piece.ROOK;   break;
+                case CAPTURE_AND_PROMOTE_TO_QUEEN:   r = Piece.QUEEN;  break;
+		case PROMOTE_TO_BISHOP:              r = Piece.BISHOP; break;
+		case PROMOTE_TO_KNIGHT:              r = Piece.KNIGHT; break;
+		case PROMOTE_TO_ROOK:                r = Piece.ROOK;   break;
+		case PROMOTE_TO_QUEEN:               r = Piece.QUEEN;  
 		}
-	}
+            return r;
+        }
 
 
 	public static String posToString(int x, int y) { return Chessio.numToChar(x) + Chessio.numToNumChar(y); }
@@ -117,7 +115,21 @@ public class Move {
           return letter;
         }
 
-	public String toString() {
+        @Override
+        public Move clone() {
+            Move theClone = new Move();
+            theClone.fromX          = this.fromX;
+            theClone.fromY          = this.fromY;
+            theClone.toX            = this.toX;
+            theClone.toY            = this.toY;
+            theClone.type           = this.type;
+            theClone.whoMoves       = this.whoMoves;
+            theClone.aCapturedPiece = this.aCapturedPiece;
+            return theClone;
+        }
+
+        @Override
+        public String toString() {
 		if (type == NORMALMOVE) { return posToString(fromX, fromY) + "-" + posToString(toX, toY); }
 
 		// Normal capture moves

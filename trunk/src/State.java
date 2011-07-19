@@ -5,7 +5,7 @@ public class State implements Cloneable{
     
     public int      moveNumber          = 0;
     
-    public Bitboard bbposition; // For future use wrt. draw by threefold repetition and a hash table for search evaluations.
+    public Bitboard bbposition; // Used wrt. check for draw by threefold repetition. Could be used in a hash table for search evaluations.
 	
     public boolean  blackCanCastleShort;
     public boolean  blackCanCastleLong;
@@ -30,6 +30,7 @@ public class State implements Cloneable{
         this.inMove                     = Piece.WHITE;
         this.halfMoveClock              = 0;
         this.halfMovesIndex3PosRepition = 0;
+        this.inCheckByPiece             = null;
     };
 
     @Override
