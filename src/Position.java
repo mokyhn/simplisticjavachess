@@ -3,7 +3,7 @@ public class Position {
     private Piece[]     position;
     private Piece[][]   xyPosition;
     public  Bitboard    bitboard;
-    private int numberOfPieces;
+    private int         numberOfPieces;
 
     public Position() {
         int x, y;
@@ -69,7 +69,6 @@ public class Position {
         return p;
     } 
 
-    // TODO: Should be a part of piece class, only containing xTo and yTo
     public void movePiece(int xFrom, int yFrom, int xTo, int yTo) {
         Piece p = xyPosition[xFrom][yFrom];
 

@@ -1,4 +1,5 @@
-// A numbering of all moves generated. A function on the form
+//TODO: Implementation via an iterator. 
+//A numbering of all moves generated. A function on the form
 //genmoves(board, moveid) such that only moves with a certain id
 //are generated.
 // This can be used to optimize our search engine such that not all
@@ -252,17 +253,5 @@ class Movegenerator {
 
         return Moves;
     }
-
-    // Used to testing purposes
-    public static void  printMoves(ArrayList<Move> m) {
-        Move myMove;
-
-        for (int i = 0; i < m.size(); i++) {
-            myMove = m.get(i);
-            System.out.println(myMove.toString());
-        }
-
-
-
-    }
 }
+ 

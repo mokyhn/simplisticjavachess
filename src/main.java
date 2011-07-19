@@ -6,6 +6,7 @@
  */
 
 import java.io.*;
+import java.util.ArrayList;
 
 class main {
     public static void checkForDraw(Board b) {      
@@ -134,7 +135,14 @@ class main {
             } else if (str.matches("undo")) { interfaceBoard.retractMove(); }
               else if (str.matches("allmoves")) {
                 Movegenerator mg = new Movegenerator();
-                mg.printMoves(mg.generateAllMoves(interfaceBoard));
+                ArrayList<Move> mlist = mg.generateAllMoves(interfaceBoard);
+                Move myMove;
+
+                for (int i = 0; i < mlist.size(); i++) {
+                    myMove = mlist.get(i);
+                    System.out.println(myMove.toString());
+                }
+                
             } else if (str.matches("black")) { interfaceBoard.setBlackToMove(); }
               else if (str.matches("white")) { interfaceBoard.setWhiteToMove(); }
               else if (str.matches("branching")) {System.out.println(engine1.findBranchingFactor(interfaceBoard, 4));}
