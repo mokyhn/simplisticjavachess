@@ -3,10 +3,10 @@
 /*
  * TODO: Testing via a given position, search depth, search method and comparision
  * against an expected evaluation and expected move.
+ * TODO: Draw by insufficient material
  */
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 class main {
@@ -81,7 +81,11 @@ public static boolean testSearch(String fen, int method, int plyDepth, int expec
        assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.ALPHABETA, 2, 9-3, "a7b8Q")) : "Test 1d failed";       
        assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.MINMAX,    3, 9-3, "a7b8Q")) : "Test 1e failed";        
        assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.ALPHABETA, 3, 9-3, "a7b8Q")) : "Test 1f failed";       
+       assert(testSearch("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w - - 0 1", Search.MINMAX, 3, 8+9-7, "h7h8Q")) : "Test 1g failed";       
+       assert(testSearch("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w - - 0 1", Search.ALPHABETA, 3, 8+9-7, "h7h8Q")) : "Test 1h failed";       
 
+       
+       
        System.out.println("Test 2 - Pawn capture");
        assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.MINMAX,    1, 1, "g2h3")) : "Test 2a failed";
        assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.ALPHABETA, 1, 1, "g2h3")) : "Test 2b failed";
@@ -89,12 +93,18 @@ public static boolean testSearch(String fen, int method, int plyDepth, int expec
        assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.ALPHABETA, 2, 1, "g2h3")) : "Test 2d failed";
        assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.MINMAX,    3, 1, "g2h3")) : "Test 2e failed";
        assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.ALPHABETA, 3, 1, "g2h3")) : "Test 2f failed";
+       assert(testSearch("k7/8/7P/8/8/1p6/P7/7K w - - 0 1", Search.MINMAX, 5, 9+1, "a2b3")) : "Test 2g failed";
+       
        
        System.out.println("Test 3 - Draw by threefold repetition");
        assert(testSearch("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1", "e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 ", Search.MINMAX, 0, 0, "")) : "Test 3a failed";
        assert(testSearch("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1", "e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 ", Search.ALPHABETA, 0, 0, "")) : "Test 3b failed";
 
+       System.out.println("Test 4 - King takes");
+       assert(testSearch("4k3/7p/7K/8/8/8/8/8 w - - 0 1", Search.MINMAX, 5, 0, "h6h7")) : "Test 4a failed";
+       assert(testSearch("4k3/7p/7K/8/8/8/8/8 w - - 0 1", Search.ALPHABETA, 5, 0, "h6h7")) : "Test 4b failed";
        
+
     }
     
     
@@ -113,44 +123,13 @@ public static boolean testSearch(String fen, int method, int plyDepth, int expec
 
         int x, y;
 
-        // TODO: add to test: King takes...
-        Board interfaceBoard = new Board("4k3/7p/7K/8/8/8/8/8 w - - 0 1");
-
-	//Board interfaceBoard = new Board("2k5/3pK3/8/4p3/4P3/8/8/8 w - - 0 1");
-
-        
-        // Test promotion
-        //Board interfaceBoard = new Board("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1");
         
         // Do a simple setup with pawns.
-       // Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
-
-        // Testing bitboard...
-       // Bitboard tbb = new Bitboard(interfaceBoard);
-        //System.out.println(tbb.toString(tbb.bb[1][Piece.KING])); //
-
-        //Board interfaceBoard = new Board("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 17 42");
-
-        
-        //Board interfaceBoard = new Board("8/3K4/Pk6/4P3/1PP2P2/P7/4P3/8 b - - 0 1");
-        //Board interfaceBoard = new Board("k7/4K3/4p3/8/8/8/PP6/8 w - 0 1");
-
+        Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
+  
         // A simple rook setup
         //Board interfaceBoard = new Board("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w - 0 1");
 
-
-       // Board interfaceBoard = new Board("4k3/6p1/ppp1pp2/3p3K/4PP1P/8/PPP5/8 w - - 0 1");
-
-        // Board interfaceBoard = new Board("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w - 0 1");
-
-        //Board interfaceBoard = new Board("4k3/8/3pp3/4p3/3P1P2/4K3/8/8 w - - 0 1");
-
-        //Board interfaceBoard = new Board("k7/8/7P/8/8/1p6/P7/7K w - - 0 1");
-
-        //Board interfaceBoard = new Board("8/p7/1p3k1P/8/1PP5/8/8/K7 w - - 0 1");
-
-        // Testing fiftymove rule
-        //interfaceBoard = new Board("4k3/8/8/p/P/8/8/4K3 w KQkq - 0 1");
 
         io.printWelcomeText();
 
@@ -238,20 +217,11 @@ public static boolean testSearch(String fen, int method, int plyDepth, int expec
               else {
                 try {
                     m = io.parse_move(interfaceBoard, str);                    
-                    //System.out.println(m.getMoveStr());
                     if (!(interfaceBoard.isMoveLegal(m))) {  throw new NoMoveException(); }
                     interfaceBoard.performMove(m);
                                        
                     checkForDraw(interfaceBoard);
-                  
-                    //searchResult = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
-                    
-                    //interfaceBoard.performMove(engine1.getStrongestMove());
-                    //                    System.out.println(engine1.moveAndStatistics());
-
                     System.out.println(interfaceBoard.toString());
-                   
-
 
                 } catch (NoMoveException e) { System.out.println("Not a valid move " + e.err); }
             }
