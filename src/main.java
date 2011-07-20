@@ -8,6 +8,7 @@
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 class main {
     public static void checkForDraw(Board b) {      
@@ -23,77 +24,85 @@ class main {
 
     }
 
-    
-    private static boolean testSearch(Board b, int method, int plyDepth, int expectedEvaluation, Move expectedMove) throws NoMoveException {
+    private static boolean testSearch(Board b, int method, int plyDepth, int expectedEvaluation, ArrayList<Move> expectedMoves) throws NoMoveException {
        Search  engine       = new Search();
        int searchResult     = engine.dosearch(b, plyDepth, method);
        Move strongestMove;
        
        strongestMove = engine.getStrongestMove();
 
-       if (expectedMove != null)
-       System.out.println("Expected move:       " + expectedMove.toString() + ", actual " + engine.moveAndStatistics());
+       if (!expectedMoves.isEmpty())
+       System.out.println("Expected moves:       " + expectedMoves.toString() + ", actual " + engine.moveAndStatistics());
        else 
-       System.out.println("Expected move:       null" + ", actual " + strongestMove);
+       System.out.println("Expected moves:       none" + ", actual " + strongestMove);
        
        System.out.println("Expected evaluation: " + expectedEvaluation      + ", actual evaluation: "  + searchResult);
        System.out.println();
        
        
        if (expectedEvaluation == searchResult && 
-           strongestMove == null && expectedMove == null) return true;
+           strongestMove == null && expectedMoves.isEmpty()) return true;
        
-       return expectedEvaluation == searchResult && 
-              strongestMove.equal(expectedMove);   
+       Iterator<Move> it = expectedMoves.iterator();
+       
+       while (it.hasNext()) {
+        if (it.next().equal(strongestMove)) return  expectedEvaluation == searchResult;
+       }
+       
+        return false;
+    
      }    
     
     
-    public static boolean testSearch(String fen, String moveSequence, int method, int plyDepth, int expectedEvaluation, String expectedMoveStr) throws NoMoveException {
-        String[] moveStrings = moveSequence.split(" ");
-        Board b = new Board(fen);
-        Chessio cio = new Chessio();
-        Move expectedMove  = cio.parse_move(b, expectedMoveStr);
-
+    public static boolean testSearch(String fen, String moveSequence, int method, int plyDepth, int expectedEvaluation, String expectedMoveStrs) throws NoMoveException {
+        String[] moveStrings          = moveSequence.split(" ");
+        Board b                       = new Board(fen);
+        Chessio cio                   = new Chessio();
+        String[] expectedMoveStrings  = expectedMoveStrs.split(" ");
+        ArrayList<Move> expectedMoves = new ArrayList<Move>();
+        Move m = null;
+        int i;
         
-        for(int i = 0; i < moveStrings.length; i++) {
-         b.performMove(cio.parse_move(b, moveStrings[i]));
+        for (i = 0; i < expectedMoveStrings.length; i++) {
+         if (expectedMoveStrings[i] != null) {
+            m = cio.parse_move(b, expectedMoveStrings[i]);
+            if (m != null) expectedMoves.add(m);
+         }
+        }
+
+        for(i = 0; i < moveStrings.length; i++) {
+         if (moveStrings[i] != null)
+          m = cio.parse_move(b, moveStrings[i]);
+          if (m != null)
+          b.performMove(m);
         }
         
        
-        return testSearch(b, method, plyDepth, expectedEvaluation, expectedMove);
+        return testSearch(b, method, plyDepth, expectedEvaluation, expectedMoves);
     }
     
-   
-    
-public static boolean testSearch(String fen, int method, int plyDepth, int expectedEvaluation, String expectedMoveStr) throws NoMoveException {
-       Board b = new Board(fen);
-       Chessio cio = new Chessio();
-       Move expectedMove = cio.parse_move(b, expectedMoveStr);
-              
-       return testSearch(b, method, plyDepth, expectedEvaluation, expectedMove);
-    }
     
     public static void test() throws NoMoveException {     
        System.out.println("Test 1 - Pawn promotion");
-       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.MINMAX,    1, 9-3, "a7b8Q")) : "Test 1a failed";        
-       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.ALPHABETA, 1, 9-3, "a7b8Q")) : "Test 1b failed";       
-       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.MINMAX,    2, 9-3, "a7b8Q")) : "Test 1c failed";        
-       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.ALPHABETA, 2, 9-3, "a7b8Q")) : "Test 1d failed";       
-       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.MINMAX,    3, 9-3, "a7b8Q")) : "Test 1e failed";        
-       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.ALPHABETA, 3, 9-3, "a7b8Q")) : "Test 1f failed";       
-       assert(testSearch("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w - - 0 1", Search.MINMAX, 3, 8+9-7, "h7h8Q")) : "Test 1g failed";       
-       assert(testSearch("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w - - 0 1", Search.ALPHABETA, 3, 8+9-7, "h7h8Q")) : "Test 1h failed";       
+       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", "", Search.MINMAX,    1, 9-3, "a7b8Q")) : "Test 1a failed";        
+       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", "", Search.ALPHABETA, 1, 9-3, "a7b8Q")) : "Test 1b failed";       
+       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", "", Search.MINMAX,    2, 9-3, "a7b8Q")) : "Test 1c failed";        
+       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", "", Search.ALPHABETA, 2, 9-3, "a7b8Q")) : "Test 1d failed";       
+       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", "", Search.MINMAX,    3, 9-3, "a7b8Q")) : "Test 1e failed";        
+       assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", "", Search.ALPHABETA, 3, 9-3, "a7b8Q")) : "Test 1f failed";       
+       assert(testSearch("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w - - 0 1", "", Search.MINMAX, 3, 8+9-7, "h7h8Q")) : "Test 1g failed";       
+       assert(testSearch("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w - - 0 1", "", Search.ALPHABETA, 3, 8+9-7, "h7h8Q")) : "Test 1h failed";       
 
        
        
        System.out.println("Test 2 - Pawn capture");
-       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.MINMAX,    1, 1, "g2h3")) : "Test 2a failed";
-       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.ALPHABETA, 1, 1, "g2h3")) : "Test 2b failed";
-       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.MINMAX,    2, 1, "g2h3")) : "Test 2c failed";
-       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.ALPHABETA, 2, 1, "g2h3")) : "Test 2d failed";
-       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.MINMAX,    3, 1, "g2h3")) : "Test 2e failed";
-       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.ALPHABETA, 3, 1, "g2h3")) : "Test 2f failed";
-       assert(testSearch("k7/8/7P/8/8/1p6/P7/7K w - - 0 1", Search.MINMAX, 5, 9+1, "a2b3")) : "Test 2g failed";
+       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", "", Search.MINMAX,    1, 1, "g2h3")) : "Test 2a failed";
+       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", "", Search.ALPHABETA, 1, 1, "g2h3")) : "Test 2b failed";
+       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", "", Search.MINMAX,    2, 1, "g2h3")) : "Test 2c failed";
+       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", "", Search.ALPHABETA, 2, 1, "g2h3")) : "Test 2d failed";
+       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", "", Search.MINMAX,    3, 1, "g2h3")) : "Test 2e failed";
+       assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", "", Search.ALPHABETA, 3, 1, "g2h3")) : "Test 2f failed";
+       assert(testSearch("k7/8/7P/8/8/1p6/P7/7K w - - 0 1", "", Search.MINMAX, 5, 9+1, "a2b3")) : "Test 2g failed";
        
        
        System.out.println("Test 3 - Draw by threefold repetition");
@@ -101,9 +110,24 @@ public static boolean testSearch(String fen, int method, int plyDepth, int expec
        assert(testSearch("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1", "e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 ", Search.ALPHABETA, 0, 0, "")) : "Test 3b failed";
 
        System.out.println("Test 4 - King takes");
-       assert(testSearch("4k3/7p/7K/8/8/8/8/8 w - - 0 1", Search.MINMAX, 5, 0, "h6h7")) : "Test 4a failed";
-       assert(testSearch("4k3/7p/7K/8/8/8/8/8 w - - 0 1", Search.ALPHABETA, 5, 0, "h6h7")) : "Test 4b failed";
+       assert(testSearch("4k3/7p/7K/8/8/8/8/8 w - - 0 1", "", Search.MINMAX, 5, 0, "h6h7")) : "Test 4a failed";
+       assert(testSearch("4k3/7p/7K/8/8/8/8/8 w - - 0 1", "", Search.ALPHABETA, 5, 0, "h6h7")) : "Test 4b failed";
+     
+       //System.out.println("End game tactics : pawn breakthrough");
+       //assert(testSearch("7k/ppp5/8/PPP5/8/8/8/7K w - - 0 1", Search.ALPHABETA, 9, 9-3, "b5b6"));
        
+       //Mating with pawn
+       assert(testSearch("k7/P7/KP6/8/7p/8/1P6/8 w - - 0 1", "", Search.MINMAX,    3, Evaluator.BLACK_IS_MATED, "b6b7"));
+       assert(testSearch("k7/P7/KP6/8/7p/8/1P6/8 w - - 0 1", "", Search.ALPHABETA, 3, Evaluator.BLACK_IS_MATED, "b6b7"));
+
+       
+       //Avoiding mate
+       assert(testSearch("k7/P1p5/KP6/8/8/8/1P5p/8 b - - 0 1", "", Search.MINMAX,    4, -(9-2), "c7b6"));
+       assert(testSearch("k7/P1p5/KP6/8/8/8/1P5p/8 b - - 0 1", "", Search.ALPHABETA, 4, -(9-2), "c7b6"));
+       
+       //Stalemate
+       assert(testSearch("8/7p/7P/7P/7P/7P/4k2P/7K b - - 0 1", "", Search.MINMAX,    4, 0, "e2f1 e2f2"));
+       assert(testSearch("8/7p/7P/7P/7P/7P/4k2P/7K b - - 0 1", "", Search.ALPHABETA, 4, 0, "e2f1 e2f2"));
 
     }
     
