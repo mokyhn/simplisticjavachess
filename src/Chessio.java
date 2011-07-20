@@ -11,6 +11,10 @@ public class Chessio {
         Move m           = new Move();
         Piece  p, pto;
 
+        if (s.length == 0) {
+         return null;
+        }
+        
         if (s.length < 4) {
             System.out.println("Movestring to short, not a valid move.");
             throw new NoMoveException();

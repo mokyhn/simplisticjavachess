@@ -6,6 +6,7 @@
  */
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 class main {
@@ -22,26 +23,57 @@ class main {
 
     }
 
-    public static boolean testSearch(String fen, int method, int plyDepth, int expectedEvaluation, String expectedMoveStr) throws NoMoveException {
+    
+    private static boolean testSearch(Board b, int method, int plyDepth, int expectedEvaluation, Move expectedMove) throws NoMoveException {
        Search  engine       = new Search();
-       Board b = new Board(fen);
-       Chessio cio = new Chessio();
-       Move expectedMove;
-       
-       expectedMove = cio.parse_move(b, expectedMoveStr);
-       
        int searchResult     = engine.dosearch(b, plyDepth, method);
-      
+       Move strongestMove;
+       
+       strongestMove = engine.getStrongestMove();
+
+       if (expectedMove != null)
        System.out.println("Expected move:       " + expectedMove.toString() + ", actual " + engine.moveAndStatistics());
+       else 
+       System.out.println("Expected move:       null" + ", actual " + strongestMove);
+       
        System.out.println("Expected evaluation: " + expectedEvaluation      + ", actual evaluation: "  + searchResult);
        System.out.println();
        
+       
+       if (expectedEvaluation == searchResult && 
+           strongestMove == null && expectedMove == null) return true;
+       
        return expectedEvaluation == searchResult && 
-              engine.getStrongestMove().equal(expectedMove);
+              strongestMove.equal(expectedMove);   
+     }    
+    
+    
+    public static boolean testSearch(String fen, String moveSequence, int method, int plyDepth, int expectedEvaluation, String expectedMoveStr) throws NoMoveException {
+        String[] moveStrings = moveSequence.split(" ");
+        Board b = new Board(fen);
+        Chessio cio = new Chessio();
+        Move expectedMove  = cio.parse_move(b, expectedMoveStr);
+
+        
+        for(int i = 0; i < moveStrings.length; i++) {
+         b.performMove(cio.parse_move(b, moveStrings[i]));
+        }
+        
+       
+        return testSearch(b, method, plyDepth, expectedEvaluation, expectedMove);
     }
     
-    public static void test() throws NoMoveException {
-       
+   
+    
+public static boolean testSearch(String fen, int method, int plyDepth, int expectedEvaluation, String expectedMoveStr) throws NoMoveException {
+       Board b = new Board(fen);
+       Chessio cio = new Chessio();
+       Move expectedMove = cio.parse_move(b, expectedMoveStr);
+              
+       return testSearch(b, method, plyDepth, expectedEvaluation, expectedMove);
+    }
+    
+    public static void test() throws NoMoveException {     
        System.out.println("Test 1 - Pawn promotion");
        assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.MINMAX,    1, 9-3, "a7b8Q")) : "Test 1a failed";        
        assert(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1", Search.ALPHABETA, 1, 9-3, "a7b8Q")) : "Test 1b failed";       
@@ -57,6 +89,10 @@ class main {
        assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.ALPHABETA, 2, 1, "g2h3")) : "Test 2d failed";
        assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.MINMAX,    3, 1, "g2h3")) : "Test 2e failed";
        assert(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", Search.ALPHABETA, 3, 1, "g2h3")) : "Test 2f failed";
+       
+       System.out.println("Test 3 - Draw by threefold repetition");
+       assert(testSearch("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1", "e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 ", Search.MINMAX, 0, 0, "")) : "Test 3a failed";
+       assert(testSearch("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1", "e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 ", Search.ALPHABETA, 0, 0, "")) : "Test 3b failed";
 
        
     }
@@ -77,12 +113,8 @@ class main {
 
         int x, y;
 
-
-        // board interfaceBoard = new board(board.NORMAL_SETUP);
-
-        //Board interfaceBoard = new Board("4k3/p7/8/8/8/8/P7/4K3 w - 0 1");
-
-        //Board interfaceBoard = new Board("4k3/7p/7K/8/8/8/8/8 w - 0 1");
+        // TODO: add to test: King takes...
+        Board interfaceBoard = new Board("4k3/7p/7K/8/8/8/8/8 w - - 0 1");
 
 	//Board interfaceBoard = new Board("2k5/3pK3/8/4p3/4P3/8/8/8 w - - 0 1");
 
@@ -91,7 +123,7 @@ class main {
         //Board interfaceBoard = new Board("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1");
         
         // Do a simple setup with pawns.
-         Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
+       // Board interfaceBoard = new Board("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1");
 
         // Testing bitboard...
        // Bitboard tbb = new Bitboard(interfaceBoard);
