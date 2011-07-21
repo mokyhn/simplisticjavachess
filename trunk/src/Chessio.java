@@ -167,11 +167,14 @@ public class Chessio {
     }
 
     public static void printHelpText() {
-        System.out.println("\n----------------------------------------------------");
-        System.out.println("Action                           Key stroke");
-        System.out.println("Quit                             quit, bye, exit, q ");
-        System.out.println("Entering a move: d2d4 or promotion d7d8Q   ");
-        System.out.println("----------------------------------------------------");
+        System.out.println();
+        System.out.println("+-------------------------------------------------- -+");
+        System.out.println("| Action                           Key stroke        |");
+        System.out.println("+----------------------------------------------------+");
+        System.out.println("|setboard <FEN>                   Setup position FEN |");
+        System.out.println("|Quit                             quit, bye, exit, q |");
+        System.out.println("|Entering a move: d2d4 or promotion d7d8Q            |");
+        System.out.println("+----------------------------------------------------+");
     }
 
 }
