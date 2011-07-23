@@ -58,7 +58,9 @@ public class Move {
 
 
 	public boolean equal(Move m) {
-		return  fromX == m.fromX && 
+                if (m == null) return false;
+                
+                return  fromX == m.fromX && 
                         toX == m.toX     && 
                         fromY == m.fromY && 
                         toY == m.toY     && 
