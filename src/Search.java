@@ -1,6 +1,35 @@
 import java.util.ArrayList; 
 import java.util.Iterator;
 
+//TODO: A result record class with value and move as fields. Maby also comparison methods?
+//TODO: Add recording of the principal variations.
+/*
+ * int minimax(int ply, int depth)
+{
+       best = -LARGE_NUMBER;
+       triangularLength[ply] = ply;                                          // current PV will start here
+       if (depth == 0) return eval();
+       movegen();
+       for (i = firstmove; i < lastmove; i++)
+       {
+              makeMove(moveBuffer[i]);
+              val = -minimax(ply+1, depth-1);                               
+              unmakeMove(moveBuffer[i]);
+              if (val > best)                                                
+              {
+                  best = val;
+                  triangularArray[ply][ply] = moveBuffer[i];                 // save this move
+                  for (j = ply + 1; j < triangularLength[ply + 1]; j++)
+                  {
+                      triangularArray[ply][j] = triangularArray[ply+1][j];   // and append the latest best PV from deeper plies
+                  }
+                  triangularLength[ply] = triangularLength[ply + 1];
+              }
+       }
+       return best;
+}
+This code will collect the PV in  triangularArray[0][0..triangularLength[0]].
+ */
 class Search {
     // Various serach methods
     final static int ALPHABETA = 1,
@@ -8,8 +37,8 @@ class Search {
                      RANDOM    = 3;
 
 
-    private final static int MINSCORE = Integer.MIN_VALUE,
-                             MAXSCORE = Integer.MAX_VALUE;
+    private final static int MINSCORE = Integer.MIN_VALUE + 1,
+                             MAXSCORE = Integer.MAX_VALUE - 1;
     
     // Main variables used in the search
     Board        analyzeBoard;
@@ -24,8 +53,7 @@ class Search {
     private int  noPositions;
     private int  noBetaCutOffs;
     private int  wastedGeneratedMoves;
-
-
+    
     public Search() {
           noPositions          = 0;
           noBetaCutOffs        = 0;
@@ -82,61 +110,76 @@ class Search {
     
     public int alphaBetaSearch(int plyDepth, int depthToGo, int alpha, int beta) {
         ArrayList<Move> moves;
-        Move            m                = null;
-        boolean         firstCalculation = true;
+        Move            m                     = null;
+        boolean         firstCalculationWhite = true;
+        boolean         firstCalculationBlack = true;
         int e = 0;
         int newAlpha = alpha;
         int newBeta  = beta;
-        int inMove   = analyzeBoard.inMove();
+        int inMove =    analyzeBoard.inMove();
+
         
         // Return board evaluation immediately
         if (depthToGo == 0) {
             noPositions++;
+            System.out.println("Evaluation " + Evaluator.evaluate(analyzeBoard));
             return Evaluator.evaluate(analyzeBoard);
         }
 
         moves = Movegenerator.generateAllMoves(analyzeBoard); 
 
-        if (moves.isEmpty()) {  
-            if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
-                Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  { 
-                  return Evaluator.evaluate(analyzeBoard);
-            }
-            else {
-             return 0; // A draw
-            }
+        
+        if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
+            Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  { 
+              strongestMove = null;              
+              return Evaluator.evaluate(analyzeBoard);
         }
+            
+        if (moves.isEmpty()) {  // A draw
+            strongestMove = null;
+            return 0;
+        } 
 
         for (int i = 0; i < moves.size(); i++) {
             m = moves.get(i);
             analyzeBoard.performMove(m);
-
+            
             if (analyzeBoard.drawBy50MoveRule() || 
                 analyzeBoard.drawBy3RepetionsRule()) {
-               analyzeBoard.retractMove();
-               return 0;
+                 analyzeBoard.retractMove();
+                 strongestMove = null;
+                 return 0;
             }
-            else {
-               e = alphaBetaSearch(plyDepth, depthToGo - 1, newAlpha, newBeta);
-                
-               if (inMove == Piece.WHITE) {
+           
+           e = alphaBetaSearch(plyDepth, depthToGo - 1, newAlpha, newBeta);
+           
+           if (inMove == Piece.WHITE) {
+                if (firstCalculationWhite) {
+                  if (plyDepth == depthToGo) strongestMove = m;
+                  newAlpha              = e;
+                  firstCalculationWhite = false;
+             } else {
                  if (e > newAlpha) {
-                  if (plyDepth == depthToGo) {
-                      strongestMove = m;
-                      //System.out.println(m.toString() + "newAlpha = " + newAlpha + " e = " + e); for testing 
-                  }
                   newAlpha = e; 
+                  System.out.println(newAlpha);
+                  if (plyDepth == depthToGo) strongestMove = m;                                       
                  }
                  else if (e < newAlpha) {
-                  analyzeBoard.retractMove(); 
+                  System.out.println("Cutof (e, newAlpha) = " + e + ", " + newAlpha);
+                  analyzeBoard.retractMove();
                   wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
                   noBetaCutOffs++;
                   break;
                  }
                }
-               
-               if (inMove == Piece.BLACK) {
-                 e = alphaBetaSearch(plyDepth, depthToGo - 1, newAlpha, newBeta);
+           }
+
+           if (inMove == Piece.BLACK) {
+             if (firstCalculationBlack) {
+                  if (plyDepth == depthToGo) strongestMove    = m;
+                  newBeta         = e;
+                  firstCalculationBlack = false;                     
+             } else {
                  if (e < newBeta) {
                   newBeta = e;
                   if (plyDepth == depthToGo) strongestMove = m; 
@@ -146,8 +189,9 @@ class Search {
                   noBetaCutOffs++;
                   break;
                  }  
-               }
-            }
+              }
+           }
+            
 
             analyzeBoard.retractMove();
                 
@@ -181,15 +225,14 @@ class Search {
         moves = Movegenerator.generateAllMoves(analyzeBoard);
 
         inMove = analyzeBoard.inMove();
-        
-        if (moves.isEmpty()) {
-            if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED ||
-                Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  {
-              return Evaluator.evaluate(analyzeBoard);
-            }
-            else
-            return 0; // A draw
+
+        if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED ||
+            Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  {
+          return Evaluator.evaluate(analyzeBoard);
         }
+        
+        
+        if (moves.isEmpty()) return 0; // A draw        
 
         for (int i = 0; i < moves.size(); i++) {
                 m = moves.get(i);
