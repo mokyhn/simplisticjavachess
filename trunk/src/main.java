@@ -85,8 +85,6 @@ class main {
     public static void test() throws NoMoveException {     
 
     
-       //System.out.println("End game tactics : pawn breakthrough");
-       //assert(testSearch("7k/ppp5/8/PPP5/8/8/8/7K w - - 0 1", Search.ALPHABETA, 9, 9-3, "b5b6"));
        
        
   

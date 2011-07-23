@@ -97,7 +97,11 @@ class Search {
     public long getTimeUsage()     { return Math.abs(end_time-start_time)/1000000;}
 
     public String moveAndStatistics() {
-        return("move "          + strongestMove.toString() +
+        String strongestMoveStr = "null";
+        
+        if (strongestMove != null) strongestMoveStr = strongestMove.toString();
+        
+        return("move "          + strongestMoveStr +
                " Evaluation "   + searchResult +
                " at "           + plyDepth +
                " ply in "       + noPositions +
