@@ -78,8 +78,11 @@ public class mainTest {
     @Test
     public void matingTest() throws Exception {
        //Mating with pawn
-       assertTrue(main.testSearch("k7/P7/KP6/8/7p/8/1P6/8 w - - 0 1", "", Search.MINMAX,    3, Evaluator.BLACK_IS_MATED, "b6b7"));
-       assertTrue(main.testSearch("k7/P7/KP6/8/7p/8/1P6/8 w - - 0 1", "", Search.ALPHABETA, 3, Evaluator.BLACK_IS_MATED, "b6b7"));
+       assertTrue(main.testSearch("k7/P7/KP6/8/7p/8/8/8 w - - 0 1", "", Search.MINMAX,    3, Evaluator.BLACK_IS_MATED, "b6b7"));
+       assertTrue(main.testSearch("k7/P7/KP6/8/7p/8/8/8 w - - 0 1", "", Search.ALPHABETA, 3, Evaluator.BLACK_IS_MATED, "b6b7"));
+
+       //assertTrue(main.testSearch("k7/P7/KP6/8/7p/8/1P6/8 w - - 0 1", "", Search.MINMAX,    3, Evaluator.BLACK_IS_MATED, "b6b7"));
+       //assertTrue(main.testSearch("k7/P7/KP6/8/7p/8/1P6/8 w - - 0 1", "", Search.ALPHABETA, 3, Evaluator.BLACK_IS_MATED, "b6b7"));
     }
     
     @Test
