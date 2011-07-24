@@ -51,12 +51,12 @@ class Search {
     private long start_time;
     private long end_time;
     private int  noPositions;
-    private int  noBetaCutOffs;
+    private int  noCutOffs;
     private int  wastedGeneratedMoves;
     
     public Search() {
           noPositions          = 0;
-          noBetaCutOffs        = 0;
+          noCutOffs        = 0;
           searchResult         = 0;
           wastedGeneratedMoves = 0;
           strongestMove        = null;
@@ -67,7 +67,7 @@ class Search {
 
         searchResult         = 0;
         noPositions          = 0;
-        noBetaCutOffs        = 0;
+        noCutOffs        = 0;
         wastedGeneratedMoves = 0;
         this.plyDepth        = plyDepth;
         start_time           = System.nanoTime();
@@ -107,8 +107,8 @@ class Search {
                " ply in "       + noPositions +
                " positions in " + getTimeUsage() 
                + " mSecs = "    + ((float) noPositions/(float) getTimeUsage())
-               + " kN/s with "  + noBetaCutOffs +
-               " Beta-cutoffs " +
+               + " kN/s with "  + noCutOffs +
+               " cutoffs " +
                " wasted moves " + wastedGeneratedMoves );
     }
     
@@ -126,7 +126,6 @@ class Search {
         // Return board evaluation immediately
         if (depthToGo == 0) {
             noPositions++;
-            System.out.println("Evaluation " + Evaluator.evaluate(analyzeBoard));
             return Evaluator.evaluate(analyzeBoard);
         }
 
@@ -140,7 +139,7 @@ class Search {
         }
             
         if (moves.isEmpty()) {  // A draw
-            strongestMove = null;
+            if (plyDepth == depthToGo) strongestMove = null;
             return 0;
         } 
 
@@ -156,6 +155,8 @@ class Search {
             }
            
            e = alphaBetaSearch(plyDepth, depthToGo - 1, newAlpha, newBeta);
+
+           analyzeBoard.retractMove();
            
            if (inMove == Piece.WHITE) {
                 if (firstCalculationWhite) {
@@ -165,15 +166,13 @@ class Search {
              } else {
                  if (e > newAlpha) {
                   newAlpha = e; 
-                  System.out.println(newAlpha);
                   if (plyDepth == depthToGo) strongestMove = m;                                       
                  }
-                 else if (e < newAlpha) {
-                  System.out.println("Cutof (e, newAlpha) = " + e + ", " + newAlpha);
-                  analyzeBoard.retractMove();
+                 
+                 if (-newBeta > newAlpha) {
                   wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
-                  noBetaCutOffs++;
-                  break;
+                  noCutOffs++;
+                  return newAlpha;
                  }
                }
            }
@@ -187,17 +186,17 @@ class Search {
                  if (e < newBeta) {
                   newBeta = e;
                   if (plyDepth == depthToGo) strongestMove = m; 
-                 } else if (e > newBeta) {
-                  analyzeBoard.retractMove(); 
+                 } 
+                 
+                 if (newAlpha > -newBeta) {
                   wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
-                  noBetaCutOffs++;
-                  break;
+                  noCutOffs++;
+                  return newBeta;
                  }  
               }
            }
             
 
-            analyzeBoard.retractMove();
                 
             }
         
