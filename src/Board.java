@@ -32,7 +32,7 @@ public class Board implements Cloneable {
     public boolean attacks(int x, int y)     { return position.attacks( x,  y,  state.inMove); }
    
     public String  getBitboardString()       { return position.bitboard.toString();}
-    public Boolean drawBy50MoveRule()        {return state.halfMoveClock >= 50;}
+    public Boolean drawBy50MoveRule()        { return state.halfMoveClock >= 50;   }
 
     public Boolean drawBy3RepetionsRule() {
         State h;
@@ -56,8 +56,10 @@ public class Board implements Cloneable {
 
  
     public void performMove(Move m) {
-       Piece p = getPieceXY(m.fromX, m.fromY);
-
+       Piece p;
+            
+       p = getPieceXY(m.fromX, m.fromY);
+       
        state.moveNumber++;
 
        // Put the move m on the stack
@@ -379,6 +381,8 @@ public class Board implements Cloneable {
        }
 
     s = s + "Immediate evaluation: " + Evaluator.evaluate(this) + "\n";
+    
+    s = s + "Move history: " + history.toString();
 
     return s;
     }
