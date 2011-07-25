@@ -36,10 +36,7 @@ class Search {
                      MINMAX    = 2,
                      RANDOM    = 3;
 
-
-    private final static int MINSCORE = Integer.MIN_VALUE + 1,
-                             MAXSCORE = Integer.MAX_VALUE - 1;
-    
+   
     // Main variables used in the search
     Board        analyzeBoard;
     private int  plyDepth;
@@ -75,7 +72,7 @@ class Search {
         switch (method) {
             case ALPHABETA:
                 System.out.println("Alpha-Beta search...");
-                searchResult = alphaBetaSearch(plyDepth, plyDepth, MINSCORE, MAXSCORE); 
+                searchResult = alphaBetaSearch(plyDepth, plyDepth, Evaluator.WHITE_IS_MATED, Evaluator.BLACK_IS_MATED);
 
                 break;
             case MINMAX:
@@ -129,31 +126,31 @@ class Search {
             return Evaluator.evaluate(analyzeBoard);
         }
 
+
+        if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
+            Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  { 
+              //if (plyDepth == depthToGo) strongestMove = null;              
+              return Evaluator.evaluate(analyzeBoard);
+        }
+
+        if (analyzeBoard.drawBy50MoveRule() || 
+                analyzeBoard.drawBy3RepetionsRule()) {
+                //if (plyDepth == depthToGo) strongestMove = null;
+                return 0;
+        }        
+        
         moves = Movegenerator.generateAllMoves(analyzeBoard); 
 
         
-        if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
-            Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  { 
-              strongestMove = null;              
-              return Evaluator.evaluate(analyzeBoard);
-        }
-            
         if (moves.isEmpty()) {  // A draw
-            if (plyDepth == depthToGo) strongestMove = null;
+            //if (plyDepth == depthToGo) strongestMove = null;
             return 0;
         } 
 
         for (int i = 0; i < moves.size(); i++) {
-            m = moves.get(i);
-            analyzeBoard.performMove(m);
-            
-            if (analyzeBoard.drawBy50MoveRule() || 
-                analyzeBoard.drawBy3RepetionsRule()) {
-                 analyzeBoard.retractMove();
-                 strongestMove = null;
-                 return 0;
-            }
-           
+           m = moves.get(i);
+           analyzeBoard.performMove(m);
+         
            e = alphaBetaSearch(plyDepth, depthToGo - 1, newAlpha, newBeta);
 
            analyzeBoard.retractMove();
