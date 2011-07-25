@@ -152,6 +152,9 @@ class main {
                   for (int i = 0; i < simSteps; i++) {
                       engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
                       System.out.println(engine1.moveAndStatistics());
+                      if (engine1.getStrongestMove() == null) {
+                       System.out.println("Game ended....");
+                      } else
                       interfaceBoard.performMove(engine1.getStrongestMove());
                       System.out.println(interfaceBoard.toString());
                       checkForDraw(interfaceBoard);
