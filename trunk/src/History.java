@@ -36,6 +36,24 @@ public class History implements Cloneable {
      return history.isEmpty();
     }
     
+    public String toString() {
+     String r      = "";
+     String prefix = "";
+     Move   m;
+     
+     for(int i = 0; i < history.size(); i++) {
+       m = history.get(i).move;
+         if (m.whoMoves == Piece.WHITE) prefix = (i+2)/2 + ".";         
+         //if (m.whoMoves == Piece.BLACK) prefix = (i+2)/2 + "....";
+         r = r + prefix + m.toString() + " ";
+         prefix = "";
+     }
+        
+     return r;
+     
+     
+    }
+    
     @Override
     public History clone() {
         History theClone = new History();
