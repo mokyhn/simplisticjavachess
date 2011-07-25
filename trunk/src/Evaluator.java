@@ -10,8 +10,8 @@ public class Evaluator {
    and white material attacking a square...
    We could use this for evaluating the position and mobility of white/black
    and to (easily) compute the outcome of an exchange serie. */
-        public static final int WHITE_IS_MATED = Integer.MIN_VALUE;
-        public static final int BLACK_IS_MATED = Integer.MAX_VALUE;
+        public static final int WHITE_IS_MATED = -2147480000;
+        public static final int BLACK_IS_MATED =  2147480000;
 
 	public Evaluator() {
 	}
