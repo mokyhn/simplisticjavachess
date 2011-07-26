@@ -71,7 +71,8 @@ public class mainTest {
     
     @Test
     public void fiftyMoveRuleDraw() throws Exception {
-           assertTrue(main.testSearch("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 50 1", "", Search.MINMAX,    3, 0, ""));
+           assertTrue(main.testSearch("k7/nn6/8/8/8/8/N7/K7 w KQkq - 47 1", "", Search.MINMAX,    3, Evaluator.DRAW, "a1b1"));
+           assertTrue(main.testSearch("k7/nn6/8/8/8/8/N7/K7 w KQkq - 47 1", "", Search.ALPHABETA, 3, Evaluator.DRAW, "a1b1"));           
     }
     
     @Test

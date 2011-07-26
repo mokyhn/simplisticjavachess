@@ -57,6 +57,40 @@ public class Move {
 	}
 
 
+	public static Move genMove(Board b, Piece fp, int dX, int dY) {
+            Piece tp;
+            
+            Move m = null;
+            
+            int tX = fp.xPos + dX, 
+                tY = fp.yPos + dY;
+            
+            int takenPiece = Piece.EMPTY;
+            int moveType   = Move.NORMALMOVE;
+            
+            if   (fp.xPos < 0 || fp.xPos  > 7 ||
+                  fp.yPos < 0 || fp.yPos  > 7 ||
+                  tX      < 0 || tX       > 7 ||
+                  tY      < 0 || tY       > 7) return null;                        
+
+            tp = b.getPieceXY(tX, tY);
+            
+            // TODO: Add pawn promotion capabilities
+            if (tp != null && tp.color == -b.inMove()) {
+                takenPiece = tp.type;
+                moveType   = Move.CAPTURE;    
+                m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, fp.color);
+            } else            
+            if (b.freeSquare(tX, tY)) {
+                takenPiece = Piece.EMPTY;
+                moveType   = Move.NORMALMOVE;
+                m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, fp.color);
+            }
+            
+            return m;
+	}
+        
+        
 	public boolean equal(Move m) {
                 if (m == null) return false;
                 

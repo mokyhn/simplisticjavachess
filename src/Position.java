@@ -22,7 +22,7 @@ public class Position {
         assert p != null;
 
         Piece ptmp = xyPosition[p.xPos][p.yPos];
-        assert ptmp != null : i + ", " + p.toString();
+        assert ptmp != null : i + ", " + "piece letter " + p.toString();
         assert ptmp.xPos == p.xPos && ptmp.yPos == p.yPos;
         return p;
     }
@@ -35,6 +35,7 @@ public class Position {
 
     public void insertPiece(Piece p) {
         assert numberOfPieces < 32 : "PieceList:insertPiece: Inserting to many pieces";
+        assert p != null;
         position[numberOfPieces] = p;
         numberOfPieces++;
 
