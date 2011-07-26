@@ -15,12 +15,13 @@
 
 
 import java.util.ArrayList;
+import java.util.Map;
 
 class Movegenerator {
 
     public Movegenerator() {
     }
-
+    
     // Input: Given a board b, and that there is a pawn p
     // Output: The set of moves this pawn can perform.
     public static ArrayList<Move> pawnMoves(Board b, Piece p)  {
@@ -229,16 +230,34 @@ class Movegenerator {
 
         if (p.color != sideToMove) return Moves;
         
-        switch (p.type) {
-            // WHITE pawn moves
+        switch (p.type) {            
             case Piece.PAWN:
                     return pawnMoves(b, p);
             case Piece.KING:
                 return kingMoves(b, p);
+            case Piece.KNIGHT:
+                return knightMoves(b, p);
         }
         return Moves;
     }
 
+    public static ArrayList<Move> knightMoves(Board b, Piece p)  {
+        ArrayList<Move> Moves = new ArrayList<Move>();
+
+        Move newMove;
+        
+        newMove = Move.genMove(b, p, -2,  1); if (newMove != null) Moves.add(newMove);
+        newMove = Move.genMove(b, p, -2, -1); if (newMove != null) Moves.add(newMove);
+        newMove = Move.genMove(b, p, -1,  2); if (newMove != null) Moves.add(newMove);        
+        newMove = Move.genMove(b, p,  1,  2); if (newMove != null) Moves.add(newMove);                
+        newMove = Move.genMove(b, p, -1, -2); if (newMove != null) Moves.add(newMove);
+        newMove = Move.genMove(b, p,  1, -2); if (newMove != null) Moves.add(newMove);
+        newMove = Move.genMove(b, p,  2,  1); if (newMove != null) Moves.add(newMove);
+        newMove = Move.genMove(b, p,  2, -1); if (newMove != null) Moves.add(newMove);
+        
+        return Moves;
+    }
+    
     public static ArrayList<Move> generateAllMoves(Board b) {
         ArrayList<Move> Moves = new ArrayList<Move>();
         ArrayList<Move> r = null;

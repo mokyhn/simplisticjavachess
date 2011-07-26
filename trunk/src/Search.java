@@ -3,33 +3,7 @@ import java.util.Iterator;
 
 //TODO: A result record class with value and move as fields. Maby also comparison methods?
 //TODO: Add recording of the principal variations.
-/*
- * int minimax(int ply, int depth)
-{
-       best = -LARGE_NUMBER;
-       triangularLength[ply] = ply;                                          // current PV will start here
-       if (depth == 0) return eval();
-       movegen();
-       for (i = firstmove; i < lastmove; i++)
-       {
-              makeMove(moveBuffer[i]);
-              val = -minimax(ply+1, depth-1);                               
-              unmakeMove(moveBuffer[i]);
-              if (val > best)                                                
-              {
-                  best = val;
-                  triangularArray[ply][ply] = moveBuffer[i];                 // save this move
-                  for (j = ply + 1; j < triangularLength[ply + 1]; j++)
-                  {
-                      triangularArray[ply][j] = triangularArray[ply+1][j];   // and append the latest best PV from deeper plies
-                  }
-                  triangularLength[ply] = triangularLength[ply + 1];
-              }
-       }
-       return best;
-}
-This code will collect the PV in  triangularArray[0][0..triangularLength[0]].
- */
+
 class Search {
     // Various serach methods
     final static int ALPHABETA = 1,
@@ -119,11 +93,11 @@ class Search {
         int newBeta  = beta;
         int inMove =    analyzeBoard.inMove();
 
-        
+                     
         // Return board evaluation immediately
         if (depthToGo == 0) {
             noPositions++;
-            return Evaluator.evaluate(analyzeBoard);
+            return (analyzeBoard.drawBy50MoveRule() || analyzeBoard.drawBy3RepetionsRule()) ? 0 : Evaluator.evaluate(analyzeBoard);
         }
 
 
@@ -133,11 +107,7 @@ class Search {
               return Evaluator.evaluate(analyzeBoard);
         }
 
-        if (analyzeBoard.drawBy50MoveRule() || 
-                analyzeBoard.drawBy3RepetionsRule()) {
-                //if (plyDepth == depthToGo) strongestMove = null;
-                return 0;
-        }        
+            
         
         moves = Movegenerator.generateAllMoves(analyzeBoard); 
 
@@ -216,10 +186,10 @@ class Search {
                        bestScore        = 0;
        int             inMove;
        boolean         firstCalculation = true;
-
+             
         if (depthToGo == 0) {
             noPositions++;
-            return Evaluator.evaluate(analyzeBoard);
+            return (analyzeBoard.drawBy3RepetionsRule() || analyzeBoard.drawBy50MoveRule()) ? 0 : Evaluator.evaluate(analyzeBoard);
         }
 
         moves = Movegenerator.generateAllMoves(analyzeBoard);
@@ -238,12 +208,8 @@ class Search {
                 m = moves.get(i);
                 analyzeBoard.performMove(m);
 
-                if (analyzeBoard.drawBy3RepetionsRule() ||
-                    analyzeBoard.drawBy50MoveRule()) {
-                    score = 0;
-                } else {
-                 score = minMaxSearch(plyDepth, depthToGo - 1);
-                }
+                score = minMaxSearch(plyDepth, depthToGo - 1);
+               
                         
                 analyzeBoard.retractMove();
                 

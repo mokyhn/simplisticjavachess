@@ -12,6 +12,7 @@ public class Evaluator {
    and to (easily) compute the outcome of an exchange serie. */
         public static final int WHITE_IS_MATED = -2147480000;
         public static final int BLACK_IS_MATED =  2147480000;
+        public static final int DRAW           =  0;
 
 	public Evaluator() {
 	}
