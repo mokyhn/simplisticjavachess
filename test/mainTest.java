@@ -68,7 +68,12 @@ public class mainTest {
        assertTrue(main.testSearch("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1", "e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 ", Search.MINMAX,    0, 0, ""));
        assertTrue(main.testSearch("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1", "e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 ", Search.ALPHABETA, 0, 0, ""));
     }
- 
+    
+    @Test
+    public void fiftyMoveRuleDraw() throws Exception {
+           assertTrue(main.testSearch("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 50 1", "", Search.MINMAX,    3, 0, ""));
+    }
+    
     @Test
     public void kingTakes() throws Exception {    
        assertTrue(main.testSearch("4k3/7p/7K/8/8/8/8/8 w - - 0 1", "", Search.MINMAX,    5, 0, "h6h7"));
@@ -100,6 +105,7 @@ public class mainTest {
        assertTrue(main.testSearch("k7/P1p5/KP6/8/8/8/1P5p/8 b - - 0 1", "", Search.ALPHABETA, 4, -(9-2), "c7b6"));
     }
     
+   
         //System.out.println("End game tactics : pawn breakthrough");
        //assert(testSearch("7k/ppp5/8/PPP5/8/8/8/7K w - - 0 1", Search.ALPHABETA, 9, 9-3, "b5b6"));
 
