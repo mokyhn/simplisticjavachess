@@ -91,6 +91,9 @@ public class Position {
         return numberOfPieces;
     }
 
+    //TODO: There is an error in here somewhere.
+    //It is unclear why we should implement an attacks function that
+    //mimics the movegenerator.
      public boolean attacks(int x, int y, int inMove) {
         Piece p;
 
@@ -101,21 +104,29 @@ public class Position {
             if (p.color == -inMove && !(p.xPos == x && p.yPos == y)) {
                 switch (p.type) {
                     case Piece.PAWN:
-                        if ((x == p.xPos + 1 && y == p.yPos + p.color)
-                         || (x == p.xPos - 1 && y == p.yPos + p.color)) {
-                            return true;
-                        }
+                        return  (y == p.yPos + p.color) &&
+                               ((x == p.xPos + 1) ||
+                                (x == p.xPos - 1));
                     case Piece.ROOK:
                         break;
                     case Piece.BISHOP:
                         break;
                     case Piece.KNIGHT:
+                      /*  if (((x == p.xPos - 2) && (y == p.yPos + 1)) ||
+                            ((x == p.xPos - 2) && (y == p.yPos - 1)) ||
+                            ((x == p.xPos - 1) && (y == p.yPos - 2)) ||
+                            ((x == p.xPos + 1) && (y == p.yPos + 2)) ||
+                            ((x == p.xPos - 1) && (y == p.yPos - 2)) ||
+                            ((x == p.xPos + 1) && (y == p.yPos - 2)) ||
+                            ((x == p.xPos + 2) && (y == p.yPos + 1)) ||
+                            ((x == p.xPos + 2) && (y == p.yPos - 1))) return true;*/
+
                         break;
                     case Piece.QUEEN:
                         break;
                     case Piece.KING:
-                        if ((x == p.xPos || x == p.xPos - 1 || x == p.xPos + 1) &&
-                            (y == p.yPos || y == p.yPos - 1 || y == p.yPos + 1)) return true;
+//                        if ((x == p.xPos || x == p.xPos - 1 || x == p.xPos + 1) &&
+//                            (y == p.yPos || y == p.yPos - 1 || y == p.yPos + 1)) return true;
                         
                     default: // Lala
                 }

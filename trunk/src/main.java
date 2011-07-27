@@ -170,9 +170,11 @@ class main {
               
               }
               else if (str.matches("attacks")) {
-               for (x = 0; x < 8; x++)
-                   for (y = 0; y < 8; y++)
+               for (x = 0; x < 8; x++) {
+                   for (y = 0; y < 8; y++) {
                        if (interfaceBoard.attacks(x, y)) System.out.println("Attacks " + Chessio.numToChar(x) + Chessio.numToNumChar(y));
+                   }
+               }
               }
               else if (str.matches("new"))   {
                 interfaceBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
