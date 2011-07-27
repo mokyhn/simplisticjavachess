@@ -107,11 +107,30 @@ class main {
         Move    m;
 
         int x, y;
-
+/*
+ *
+ In this position the min max fails for black...
+ _______________
+ . . . . k . n .     8
+ p p p p p p p p     7
+ n . . . . . . .     6
+ . . . . . . . .     5
+ . P . . . . . .     4
+ P . N . . N . .     3
+ . . P P P P P P     2
+ . . . . K . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+ */
         
         // Do a simple setup with pawns and knights.
         Board interfaceBoard = new Board("1n2k1n1/pppppppp/8/8/8/8/PPPPPPPP/1N2K1N1 w KQkq - 0 1");
-  
+
+        // A test setup
+        //Board interfaceBoard = new Board("1nk3n1/5p1p/8/8/8/8/8/4K1N1 w KQkq - 0 1");
+
+
         // A simple knight setup.
         //Board interfaceBoard = new Board("k7/4R3/8/3n4/8/2Q5/8/K7 b KQkq - 0 1");
         
