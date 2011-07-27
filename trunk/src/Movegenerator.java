@@ -52,10 +52,10 @@ class Movegenerator {
         // Non capturing PAWN promotion
         if (((y == 6) && (c == Piece.WHITE) && b.freeSquare(x, 7))
          || ((y == 1) && (c == Piece.BLACK) && b.freeSquare(x, 0))) {
-            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_QUEEN,  Piece.EMPTY, c));
-            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_ROOK,   Piece.EMPTY, c));
+            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_QUEEN,  Piece.EMPTY, c));  // TODO: Incomment when QUEEN is implemented
+            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_ROOK,   Piece.EMPTY, c));  // TODO: Incomment when ROOK  is implemented
             Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_KNIGHT, Piece.EMPTY, c));
-            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_BISHOP, Piece.EMPTY, c));
+            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_BISHOP, Piece.EMPTY, c));  // TODO: Incomment when BISHOP is implemented
         }
 
         // Normal diagonal capturing to the left

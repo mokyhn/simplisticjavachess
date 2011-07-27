@@ -69,10 +69,10 @@ public class mainTest {
        assertTrue(main.testSearch("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq - 0 1", "e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 ", Search.ALPHABETA, 0, 0, ""));
     }
     
-    @Test
+    @Test 
     public void fiftyMoveRuleDraw() throws Exception {
-           assertTrue(main.testSearch("k7/nn6/8/8/8/8/N7/K7 w KQkq - 47 1", "", Search.MINMAX,    3, Evaluator.DRAW, "a1b1"));
-           assertTrue(main.testSearch("k7/nn6/8/8/8/8/N7/K7 w KQkq - 47 1", "", Search.ALPHABETA, 3, Evaluator.DRAW, "a1b1"));           
+           assertTrue(main.testSearch("k7/nn6/8/8/8/8/N7/K7 w KQkq - 47 1", "", Search.MINMAX,    3, Evaluator.DRAW, "a2b4 a2c3 a2c1 a1b1 a1b2"));
+           assertTrue(main.testSearch("k7/nn6/8/8/8/8/N7/K7 w KQkq - 47 1", "", Search.ALPHABETA, 3, Evaluator.DRAW, "a2b4 a2c3 a2c1 a1b1 a1b2"));           
     }
     
     @Test
@@ -106,8 +106,40 @@ public class mainTest {
        assertTrue(main.testSearch("k7/P1p5/KP6/8/8/8/1P5p/8 b - - 0 1", "", Search.ALPHABETA, 4, -(9-2), "c7b6"));
     }
     
+    @Test
+    public void knightTest() throws Exception {
+     assertTrue(main.testSearch("k7/4R3/8/3n4/8/2Q5/8/K7 b KQkq - 0 1", "", Search.MINMAX,    5, -Evaluator.knightValue, "d5e7 d5c3"));
+     assertTrue(main.testSearch("k7/4R3/8/3n4/8/2Q5/8/K7 b KQkq - 0 1", "", Search.ALPHABETA, 5, -Evaluator.knightValue, "d5e7 d5c3"));
+
+    }
    
         //System.out.println("End game tactics : pawn breakthrough");
        //assert(testSearch("7k/ppp5/8/PPP5/8/8/8/7K w - - 0 1", Search.ALPHABETA, 9, 9-3, "b5b6"));
-
+// A wrong trace 1.g1-f3 b8-c6 2.c2-c3 c6-d4 3.c3xd4 e8-d8 4.b1-c3 d8-c8 5.e2-e4 c8-b8 with alphabeta search sd. 6
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
