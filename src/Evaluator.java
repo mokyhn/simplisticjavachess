@@ -14,6 +14,12 @@ public class Evaluator {
         public static final int BLACK_IS_MATED =  2147480000;
         public static final int DRAW           =  0;
 
+        public static final int pawnValue      = 1;
+        public static final int rookValue      = 5;
+        public static final int bishopValue    = 3;
+        public static final int knightValue    = 3;
+        public static final int queenValue     = 9;
+        
 	public Evaluator() {
 	}
 
@@ -27,11 +33,11 @@ public class Evaluator {
 		for (int i = 0; i < b.getNumberOfPieces(); i++) {
 			p = b.getPiece(i);
 			switch (p.type) {
-			case Piece.PAWN:   result = 1*p.color + result; break;
-			case Piece.ROOK:   result = 5*p.color + result; break;
-			case Piece.BISHOP: result = 3*p.color + result; break;
-        		case Piece.KNIGHT: result = 3*p.color + result; break;
-			case Piece.QUEEN:  result = 9*p.color + result; break;
+			case Piece.PAWN:   result = pawnValue   * p.color + result; break;
+			case Piece.ROOK:   result = rookValue   * p.color + result; break;
+			case Piece.BISHOP: result = bishopValue * p.color + result; break;
+        		case Piece.KNIGHT: result = knightValue * p.color + result; break;
+			case Piece.QUEEN:  result = queenValue  * p.color + result; break;
 			case Piece.KING:
                                 if (p.color == Piece.BLACK) {thereIsABlackKing = true;}
 				if (p.color == Piece.WHITE) {thereIsAWhiteKing = true;}
