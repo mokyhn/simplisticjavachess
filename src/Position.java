@@ -29,7 +29,7 @@ public class Position {
 
     public Piece getPieceXY(int x, int y) {
         Piece p = xyPosition[x][y];
-
+        if (p != null) assert p.xPos == x && p.yPos == y;
         return p;
     }
 
@@ -91,49 +91,49 @@ public class Position {
         return numberOfPieces;
     }
 
-    //TODO: There is an error in here somewhere.
-    //It is unclear why we should implement an attacks function that
+    //TODO: It is unclear why we should implement an attacks function that
     //mimics the movegenerator.
      public boolean attacks(int x, int y, int inMove) {
         Piece p;
 
+        
         for (int i = 0; i < numberOfPieces; i++) {
-            p = position[i];
+            p = getPiece(i);
 
             // Chose one of opposite color
             if (p.color == -inMove && !(p.xPos == x && p.yPos == y)) {
                 switch (p.type) {
                     case Piece.PAWN:
-                        return  (y == p.yPos + p.color) &&
+                        if  ((y == p.yPos + p.color) &&
                                ((x == p.xPos + 1) ||
-                                (x == p.xPos - 1));
+                                (x == p.xPos - 1))) return true;
+                        break;
                     case Piece.ROOK:
                         break;
                     case Piece.BISHOP:
                         break;
                     case Piece.KNIGHT:
-                      /*  if (((x == p.xPos - 2) && (y == p.yPos + 1)) ||
+                        if (((x == p.xPos - 2) && (y == p.yPos + 1)) ||
                             ((x == p.xPos - 2) && (y == p.yPos - 1)) ||
                             ((x == p.xPos - 1) && (y == p.yPos - 2)) ||
                             ((x == p.xPos + 1) && (y == p.yPos + 2)) ||
                             ((x == p.xPos - 1) && (y == p.yPos - 2)) ||
                             ((x == p.xPos + 1) && (y == p.yPos - 2)) ||
                             ((x == p.xPos + 2) && (y == p.yPos + 1)) ||
-                            ((x == p.xPos + 2) && (y == p.yPos - 1))) return true;*/
-
+                            ((x == p.xPos + 2) && (y == p.yPos - 1))) return true;
                         break;
                     case Piece.QUEEN:
                         break;
                     case Piece.KING:
-//                        if ((x == p.xPos || x == p.xPos - 1 || x == p.xPos + 1) &&
-//                            (y == p.yPos || y == p.yPos - 1 || y == p.yPos + 1)) return true;
-                        
+                        if ((x == p.xPos || x == p.xPos - 1 || x == p.xPos + 1) &&
+                            (y == p.yPos || y == p.yPos - 1 || y == p.yPos + 1)) return true;
+                        break;
                     default: // Lala
                 }
             }
         }
 
-        return false;
+        return false; 
     }
 
       public boolean freeSquare(int x, int y)  {

@@ -200,9 +200,8 @@ class Search {
             Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  {
           return Evaluator.evaluate(analyzeBoard);
         }
-        
-        
-        if (moves.isEmpty()) return 0; // A draw        
+                
+        if (moves.isEmpty()) return 0; // A draw
 
         for (int i = 0; i < moves.size(); i++) {
                 m = moves.get(i);
