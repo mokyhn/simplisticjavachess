@@ -108,6 +108,8 @@ public class mainTest {
     
     @Test
     public void knightTest() throws Exception {
+     assertTrue(main.testSearch("1n2k1n1/pppppppp/8/8/8/8/PPPPPPPP/1N2K1N1 w KQkq - 0 1", "b1c3 b8a6 a2a3 a6c5 b2b4 c5a6 g1f3", Search.ALPHABETA, 5, 0, "c7c6"));
+     assertTrue(main.testSearch("1n2k1n1/pppppppp/8/8/8/8/PPPPPPPP/1N2K1N1 w KQkq - 0 1", "b1c3 b8a6 a2a3 a6c5 b2b4 c5a6 g1f3", Search.MINMAX, 5, 0, "c7c6"));
      assertTrue(main.testSearch("k7/4R3/8/3n4/8/2Q5/8/K7 b KQkq - 0 1", "", Search.MINMAX,    5, -Evaluator.knightValue, "d5e7 d5c3"));
      assertTrue(main.testSearch("k7/4R3/8/3n4/8/2Q5/8/K7 b KQkq - 0 1", "", Search.ALPHABETA, 5, -Evaluator.knightValue, "d5e7 d5c3"));
 
