@@ -54,6 +54,8 @@ public class Position {
 
         assert (p != null) : "removePiece at " + Move.posToString(x, y) + "\n" + this.toString();
 
+        assert (p.xPos == x) && (p.yPos == y);
+        
         for (i = 0; i < numberOfPieces && flag; i++) {
             if (position[i].xPos == x &&
                 position[i].yPos == y) {

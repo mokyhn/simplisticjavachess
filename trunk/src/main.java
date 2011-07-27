@@ -62,6 +62,14 @@ class main {
         ArrayList<Move> expectedMoves = new ArrayList<Move>();
         Move m = null;
         int i;
+
+        for(i = 0; i < moveStrings.length; i++) {
+         if (moveStrings[i] != null)
+          m = cio.parse_move(b, moveStrings[i]);
+          if (m != null)
+          b.performMove(m);
+        }
+        
         
         for (i = 0; i < expectedMoveStrings.length; i++) {
          if (expectedMoveStrings[i] != null) {
@@ -70,12 +78,6 @@ class main {
          }
         }
 
-        for(i = 0; i < moveStrings.length; i++) {
-         if (moveStrings[i] != null)
-          m = cio.parse_move(b, moveStrings[i]);
-          if (m != null)
-          b.performMove(m);
-        }
         
        
         return testSearch(b, method, plyDepth, expectedEvaluation, expectedMoves);
@@ -107,28 +109,12 @@ class main {
         Move    m;
 
         int x, y;
-/*
- *
- In this position the min max fails for black...
- _______________
- . . . . k . n .     8
- p p p p p p p p     7
- n . . . . . . .     6
- . . . . . . . .     5
- . P . . . . . .     4
- P . N . . N . .     3
- . . P P P P P P     2
- . . . . K . . .     1
- _______________
- a b c d e f g h
-  Black to move
- */
-        
+
         // Do a simple setup with pawns and knights.
         Board interfaceBoard = new Board("1n2k1n1/pppppppp/8/8/8/8/PPPPPPPP/1N2K1N1 w KQkq - 0 1");
 
         // A test setup
-        //Board interfaceBoard = new Board("1nk3n1/5p1p/8/8/8/8/8/4K1N1 w KQkq - 0 1");
+        //Board interfaceBoard = new Board("4k1n1/pppppppp/n7/8/1P6/P1N2N2/2PPPPPP/4K3 b - - 0 1");
 
 
         // A simple knight setup.

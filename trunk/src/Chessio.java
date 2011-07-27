@@ -40,7 +40,7 @@ public class Chessio {
 
         p = b.getPieceXY(fromX, fromY);
         if (p == null) throw new NoMoveException("No piece at (" + fromX + ", " + fromY +")");
-        if (p.color != whoToMove) { throw new NoMoveException("Trying to move piece of opposite color"); }
+        if (p.color != whoToMove) { throw new NoMoveException("Trying to move piece of opposite color. In move is " + (whoToMove == Piece.WHITE ? "white" : "not white")); }
 
         m.fromX          = fromX;
         m.fromY          = fromY;
