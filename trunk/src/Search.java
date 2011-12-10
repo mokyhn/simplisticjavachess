@@ -82,12 +82,43 @@ class Search {
                " cutoffs " +
                " wasted moves " + wastedGeneratedMoves );
     }
-    
-    public int alphaBetaSearch(int plyDepth, int depthToGo, int alpha, int beta) {
+
+    // 1n2k1n1/pppppppp/8/8/8/8/PPPPPPPP/1N2K1N1 w - - 0 1
+    public int alphaBetaSearch(int ply, int depthToGo, int alpha, int beta) {
+        ArrayList<Move> moves;
+        Move m;
+        int best = Integer.MIN_VALUE;
+        int eval;
+
+        if (ply == 0) {
+            return Evaluator.evaluate(analyzeBoard);
+        }
+
+        moves = Movegenerator.generateAllMoves(analyzeBoard);
+        for (int i = 0; i < moves.size(); i++) {
+            m = moves.get(i);
+            analyzeBoard.performMove(m);
+            eval = -alphaBetaSearch(ply - 1, depthToGo, -beta, -alpha);
+            analyzeBoard.retractMove();
+
+            if (eval > best) {
+                best = eval;
+                if (ply == depthToGo)  strongestMove = m;   
+            }
+
+            if (best > alpha) { alpha = best;   }
+
+            if (alpha >= beta) { return alpha; }
+        }
+        
+        return best;
+    }
+
+
+
+    public int alphaBetaSearch2(int plyDepth, int depthToGo, int alpha, int beta) {
         ArrayList<Move> moves;
         Move            m                     = null;
-        boolean         firstCalculationWhite = true;
-        boolean         firstCalculationBlack = true;
         int e = 0;
         int newAlpha = alpha;
         int newBeta  = beta;
@@ -97,7 +128,8 @@ class Search {
         // Return board evaluation immediately
         if (depthToGo == 0) {
             noPositions++;
-            return (analyzeBoard.drawBy50MoveRule() || analyzeBoard.drawBy3RepetionsRule()) ? 0 : Evaluator.evaluate(analyzeBoard);
+            return (analyzeBoard.drawBy50MoveRule() ||
+                    analyzeBoard.drawBy3RepetionsRule()) ? 0 : Evaluator.evaluate(analyzeBoard);
         }
 
 
@@ -107,7 +139,7 @@ class Search {
               return Evaluator.evaluate(analyzeBoard);
         }
 
-            
+
         
         moves = Movegenerator.generateAllMoves(analyzeBoard); 
 
@@ -126,11 +158,6 @@ class Search {
            analyzeBoard.retractMove();
            
            if (inMove == Piece.WHITE) {
-                if (firstCalculationWhite) {
-                  if (plyDepth == depthToGo) strongestMove = m;
-                  newAlpha              = e;
-                  firstCalculationWhite = false;
-             } else {
                  if (e > newAlpha) {
                   newAlpha = e; 
                   if (plyDepth == depthToGo) strongestMove = m;                                       
@@ -142,15 +169,10 @@ class Search {
                   return newAlpha;
                  }
                }
-           }
+           
 
            if (inMove == Piece.BLACK) {
-             if (firstCalculationBlack) {
-                  if (plyDepth == depthToGo) strongestMove    = m;
-                  newBeta         = e;
-                  firstCalculationBlack = false;                     
-             } else {
-                 if (e < newBeta) {
+              if (e < newBeta) {
                   newBeta = e;
                   if (plyDepth == depthToGo) strongestMove = m; 
                  } 
@@ -160,7 +182,7 @@ class Search {
                   noCutOffs++;
                   return newBeta;
                  }  
-              }
+              
            }
             
 
