@@ -27,7 +27,7 @@ class Search {
     
     public Search() {
           noPositions          = 0;
-          noCutOffs        = 0;
+          noCutOffs            = 0;
           searchResult         = 0;
           wastedGeneratedMoves = 0;
           strongestMove        = null;
@@ -38,7 +38,7 @@ class Search {
 
         searchResult         = 0;
         noPositions          = 0;
-        noCutOffs        = 0;
+        noCutOffs            = 0;
         wastedGeneratedMoves = 0;
         this.plyDepth        = plyDepth;
         start_time           = System.nanoTime();
@@ -91,10 +91,26 @@ class Search {
         int eval;
 
         if (ply == 0) {
-            return Evaluator.evaluate(analyzeBoard);
+            noPositions++;
+            return (analyzeBoard.drawBy50MoveRule() ||
+                    analyzeBoard.drawBy3RepetionsRule()) ? 
+                    0 : Evaluator.evaluate(analyzeBoard);
         }
 
+        /*
+        if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
+            Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  { 
+              //if (plyDepth == depthToGo) strongestMove = null;              
+              return Evaluator.evaluate(analyzeBoard);
+        }
+        */
+        
         moves = Movegenerator.generateAllMoves(analyzeBoard);
+        
+        if (moves.isEmpty()) {  // A draw
+            return 0;
+        } 
+        
         for (int i = 0; i < moves.size(); i++) {
             m = moves.get(i);
             analyzeBoard.performMove(m);
@@ -108,88 +124,13 @@ class Search {
 
             if (best > alpha) { alpha = best;   }
 
-            if (alpha >= beta) { return alpha; }
+            if (alpha >= beta) { 
+                wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
+                noCutOffs++;
+                return alpha; }
         }
         
         return best;
-    }
-
-
-
-    public int alphaBetaSearch2(int plyDepth, int depthToGo, int alpha, int beta) {
-        ArrayList<Move> moves;
-        Move            m                     = null;
-        int e = 0;
-        int newAlpha = alpha;
-        int newBeta  = beta;
-        int inMove =    analyzeBoard.inMove();
-
-                     
-        // Return board evaluation immediately
-        if (depthToGo == 0) {
-            noPositions++;
-            return (analyzeBoard.drawBy50MoveRule() ||
-                    analyzeBoard.drawBy3RepetionsRule()) ? 0 : Evaluator.evaluate(analyzeBoard);
-        }
-
-
-        if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
-            Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  { 
-              //if (plyDepth == depthToGo) strongestMove = null;              
-              return Evaluator.evaluate(analyzeBoard);
-        }
-
-
-        
-        moves = Movegenerator.generateAllMoves(analyzeBoard); 
-
-        
-        if (moves.isEmpty()) {  // A draw
-            //if (plyDepth == depthToGo) strongestMove = null;
-            return 0;
-        } 
-
-        for (int i = 0; i < moves.size(); i++) {
-           m = moves.get(i);
-           analyzeBoard.performMove(m);
-         
-           e = alphaBetaSearch(plyDepth, depthToGo - 1, newAlpha, newBeta);
-
-           analyzeBoard.retractMove();
-           
-           if (inMove == Piece.WHITE) {
-                 if (e > newAlpha) {
-                  newAlpha = e; 
-                  if (plyDepth == depthToGo) strongestMove = m;                                       
-                 }
-                 
-                 if (-newBeta > newAlpha) {
-                  wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
-                  noCutOffs++;
-                  return newAlpha;
-                 }
-               }
-           
-
-           if (inMove == Piece.BLACK) {
-              if (e < newBeta) {
-                  newBeta = e;
-                  if (plyDepth == depthToGo) strongestMove = m; 
-                 } 
-                 
-                 if (newAlpha > -newBeta) {
-                  wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
-                  noCutOffs++;
-                  return newBeta;
-                 }  
-              
-           }
-            
-
-                
-            }
-        
-        return inMove == Piece.WHITE ? newAlpha : newBeta;
     }
 
     /**
