@@ -1,1 +1,1 @@
-svn commit -m 'Minor fixes in search function.' --username mokyhn@gmail.com
+svn commit -m '%1' --username mokyhn@gmail.com
