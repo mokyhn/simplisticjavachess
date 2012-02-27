@@ -46,7 +46,7 @@ class Search {
         switch (method) {
             case ALPHABETA:
                 System.out.println("Alpha-Beta search...");
-                searchResult = alphaBetaSearch(plyDepth, plyDepth, Evaluator.WHITE_IS_MATED, Evaluator.BLACK_IS_MATED);
+                searchResult = alphaBetaSearch(plyDepth, plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
                 break;
             case MINMAX:
@@ -87,9 +87,9 @@ class Search {
     public int alphaBetaSearch(int ply, int depthToGo, int alpha, int beta) {
         ArrayList<Move> moves;
         Move m;
-        int best = Integer.MIN_VALUE;
         int eval;
-
+        int toMove = analyzeBoard.inMove();
+        
         if (ply == 0) {
             noPositions++;
             return (analyzeBoard.drawBy50MoveRule() ||
@@ -97,13 +97,13 @@ class Search {
                     0 : Evaluator.evaluate(analyzeBoard);
         }
 
-        /*
+        
         if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
             Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  { 
               //if (plyDepth == depthToGo) strongestMove = null;              
               return Evaluator.evaluate(analyzeBoard);
         }
-        */
+        
         
         moves = Movegenerator.generateAllMoves(analyzeBoard);
         
@@ -111,26 +111,34 @@ class Search {
             return 0;
         } 
         
-        for (int i = 0; i < moves.size(); i++) {
+        for (int i = 0; (i < moves.size() && alpha < beta); i++) {
             m = moves.get(i);
             analyzeBoard.performMove(m);
-            eval = -alphaBetaSearch(ply - 1, depthToGo, -beta, -alpha);
+            eval = alphaBetaSearch(ply-1, depthToGo, alpha, beta);
             analyzeBoard.retractMove();
-
-            if (eval > best) {
-                best = eval;
-                if (ply == depthToGo)  strongestMove = m;   
+            
+            if (toMove == 1) {
+             if (eval > alpha) {alpha = eval;
+             if (ply == depthToGo)  strongestMove = m;}
+            } else
+            {
+             if (eval < beta) {beta = eval;
+             if (ply == depthToGo)  strongestMove = m;}
+            }    
+            
+             
             }
-
-            if (best > alpha) { alpha = best;   }
-
-            if (alpha >= beta) { 
+            /*if (alpha <= beta) { 
                 wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
                 noCutOffs++;
-                return alpha; }
-        }
+                return alpha; }*/
         
-        return best;
+        int result= 0;
+        
+        if (toMove == 1) { result = alpha;
+        } else result = beta;
+        
+        return result;
     }
 
     /**
