@@ -11,6 +11,7 @@ public class Move {
 			           // by the piece which moves
                    whoMoves;
 
+        
 	// The different move types
 	final static int NORMALMOVE                   = 0,
 
@@ -90,6 +91,9 @@ public class Move {
             return m;
 	}
         
+        public boolean aCapture() {
+         return this.type >= 1 && this.type <= 6;
+        }
         
 	public boolean equal(Move m) {
                 if (m == null) return false;
