@@ -236,10 +236,19 @@ class Movegenerator {
                 return kingMoves(b, p);
             case Piece.KNIGHT:
                 return knightMoves(b, p);
+            case Piece.BISHOP:
+                return bishopMoves(b, p);
+            case Piece.ROOK:
+                return rookMoves(b, p);
+            case Piece.QUEEN:
+                Moves = bishopMoves(b, p);
+                Moves.addAll(rookMoves(b, p));
+                return Moves;
         }
         return Moves;
     }
 
+    
     public static ArrayList<Move> knightMoves(Board b, Piece p)  {
         ArrayList<Move> Moves = new ArrayList<Move>();
 
@@ -257,6 +266,98 @@ class Movegenerator {
         return Moves;
     }
     
+    
+    public static ArrayList<Move> bishopMoves(Board b, Piece p) {
+        ArrayList<Move> Moves = new ArrayList<Move>();
+        int d; // Displacement
+        
+        Move newMove = null;
+        
+        //System.out.println("h");
+        //System.exit(0);
+        
+        // Move up and right
+        for (d = 1; ((p.xPos + d <= 7) && (p.yPos + d <= 7)); d++) {
+         newMove = Move.genMove(b, p, d, d);
+         if (newMove == null) break; // The square was occupied by my own piece
+         Moves.add(newMove);
+         if (newMove.aCapture()) break; // The square was occopied by an opponent square
+        }
+
+        // Move up and left
+        for (d = 1; ((p.xPos - d >= 0) && (p.yPos + d <= 7)); d++) {
+         newMove = Move.genMove(b, p, -d, d);
+         if (newMove == null) break; // The square was occupied by my own piece
+         Moves.add(newMove);
+         if (newMove.aCapture()) break; // The square was occopied by an opponent square
+        }
+        
+        // Move down and left
+        for (d = 1; ((p.xPos - d >= 0) && (p.yPos - d >= 0)); d++) {
+         newMove = Move.genMove(b, p, -d, -d);
+         if (newMove == null) break; // The square was occupied by my own piece
+         Moves.add(newMove);
+         if (newMove.aCapture()) break; // The square was occopied by an opponent square
+        }
+
+        // Move down and right
+        for (d = 1; ((p.xPos + d <= 7) && (p.yPos - d >= 0)); d++) {
+         newMove = Move.genMove(b, p, d, -d);
+         if (newMove == null) break; // The square was occupied by my own piece
+         Moves.add(newMove);
+         if (newMove.aCapture()) break; // The square was occopied by an opponent square
+        }
+
+        
+        return Moves;
+    }
+
+    
+    public static ArrayList<Move> rookMoves(Board b, Piece p) {
+        ArrayList<Move> Moves = new ArrayList<Move>();
+        int d; // Displacement
+        
+        Move newMove = null;
+        
+        //System.out.println("h");
+        //System.exit(0);
+        
+        // Move up
+        for (d = 1; (p.yPos + d <= 7); d++) {
+         newMove = Move.genMove(b, p, 0, d);
+         if (newMove == null) break; // The square was occupied by my own piece
+         Moves.add(newMove);
+         if (newMove.aCapture()) break; // The square was occopied by an opponent square
+        }
+
+        // Move down
+        for (d = 1; (p.yPos - d >= 0); d++) {
+         newMove = Move.genMove(b, p, 0, -d);
+         if (newMove == null) break; // The square was occupied by my own piece
+         Moves.add(newMove);
+         if (newMove.aCapture()) break; // The square was occopied by an opponent square
+        }
+        
+        // Move left
+        for (d = 1; (p.xPos - d >= 0); d++) {
+         newMove = Move.genMove(b, p, -d, 0);
+         if (newMove == null) break; // The square was occupied by my own piece
+         Moves.add(newMove);
+         if (newMove.aCapture()) break; // The square was occopied by an opponent square
+        }
+
+        // Move right 
+        for (d = 1; (p.xPos + d <= 7); d++) {
+         newMove = Move.genMove(b, p, d, 0);
+         if (newMove == null) break; // The square was occupied by my own piece
+         Moves.add(newMove);
+         if (newMove.aCapture()) break; // The square was occopied by an opponent square
+        }
+
+        
+        return Moves;
+    }
+     
     public static ArrayList<Move> generateAllMoves(Board b) {
         ArrayList<Move> Moves = new ArrayList<Move>();
         ArrayList<Move> r = null;
