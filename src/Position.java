@@ -76,7 +76,7 @@ public class Position {
         Piece p = xyPosition[xFrom][yFrom];
 
         assert (xFrom != xTo || yFrom != yTo) : "Cannot move from c to c";
-        assert (p != null) : "Move " + Move.posToString(xFrom, yFrom) + " to " + Move.posToString(xTo, yTo);
+        assert (p != null) : this.toString() + "\n" + "Tried move " + Move.posToString(xFrom, yFrom) + " to " + Move.posToString(xTo, yTo);
 
         p.xPos = xTo;
         p.yPos = yTo;

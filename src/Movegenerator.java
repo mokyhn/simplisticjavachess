@@ -10,9 +10,10 @@
 // Eliminatate generation of a number of moves when king is in check...
 // The king is not allowed to be in check while another piece is moved...
 
-// Add knight moves as the next thing.
-// Only allow promotion to a knight...
-
+//TODO: Problems with mate
+// Move history: 1.e2-e4 b8-a6 2.b1-c3 a8-b8 3.g1-f3 b8-a8 4.d2-d4 a8-b8 5.f1-c4 b8-a8 6.o-o a8-b8 7.d4-d5 b8-a8 8.e4-e5 a8-b8 9.c1-e3 b8-a8 10.f3-d4 a6-b8 11.d1-f3 a7-a6 12.c3-e4 g8-h6 13.e3xh6 d7-d6 14.e5-e6 c8xe6 15.d5xe6 f7-f6 16.e4xf6 e7xf6 17.h6xg7 
+// FEN: rn1q3r/1pp1k1bp/p4p2/3Q4/2BN4/8/PPP2PPP/R4RK1 w - - 0 22
+// SD 6 Alphabeta Black to move, go
 
 import java.util.ArrayList;
 
@@ -51,10 +52,10 @@ class Movegenerator {
         // Non capturing PAWN promotion
         if (((y == 6) && (c == Piece.WHITE) && b.freeSquare(x, 7))
          || ((y == 1) && (c == Piece.BLACK) && b.freeSquare(x, 0))) {
-            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_QUEEN,  Piece.EMPTY, c));  // TODO: Incomment when QUEEN is implemented
-            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_ROOK,   Piece.EMPTY, c));  // TODO: Incomment when ROOK  is implemented
+            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_QUEEN,  Piece.EMPTY, c));  
+            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_ROOK,   Piece.EMPTY, c)); 
             Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_KNIGHT, Piece.EMPTY, c));
-            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_BISHOP, Piece.EMPTY, c));  // TODO: Incomment when BISHOP is implemented
+            Moves.add(new Move(x, y, x, y + c, Move.PROMOTE_TO_BISHOP, Piece.EMPTY, c)); 
         }
 
         // Normal diagonal capturing to the left
@@ -134,6 +135,31 @@ class Movegenerator {
 
         Piece pTo = null;
 
+        // Castling short
+        if (x == 4 && 
+            b.canCastleShort()   && 
+            b.freeSquare(5, y) && 
+            b.freeSquare(6, y) &&
+            (1==1)   ) // TODO: No attacks on x=5,6?!
+        {
+            assert (b.getPieceXY(7, y) != null);
+            assert (b.getPieceXY(7, y).type == Piece.ROOK) : "Expected rook, found wirdo piece: " + b.getPieceXY(7, y).toString();
+            assert (b.getPieceXY(7, y).color == c);
+            Moves.add(new Move(x, y, x+2, y, Move.CASTLE_SHORT, Piece.EMPTY, c));
+        }
+
+        // Castling long
+        if (x == 4 && 
+            b.canCastleLong()   && 
+            b.freeSquare(3, y) && 
+            b.freeSquare(2, y) &&
+            b.freeSquare(1, y) &&
+            (1==1)   ) // TODO: No attacks on x=2, 3?!
+        {
+         Moves.add(new Move(x, y, x+2, y, Move.CASTLE_LONG, Piece.EMPTY, c));
+        }
+        
+        
         // King moves left
         if (x > 0) {
             if (!b.attacks(x - 1, y)) {
