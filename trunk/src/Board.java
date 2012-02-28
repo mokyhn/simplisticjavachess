@@ -27,6 +27,17 @@ public class Board implements Cloneable {
     public void    insertPiece(Piece p)      { position.insertPiece(p); }
     public Piece   removePiece(int x, int y) { return position.removePiece(x, y); }
     public boolean freeSquare(int x, int y)  { return position.freeSquare(x, y); }
+    public boolean canCastleShort() {
+     return (state.inMove == Piece.BLACK && state.blackCanCastleShort) ||
+            (state.inMove == Piece.WHITE && state.whiteCanCastleShort);
+            
+    }
+    public boolean canCastleLong() {
+     return (state.inMove == Piece.BLACK && state.blackCanCastleLong) ||
+            (state.inMove == Piece.WHITE && state.whiteCanCastleLong);
+            
+    }
+            
     // Returns true if the side not in move, in board b attacks square (x, y)
     // and otherwise false
     public boolean attacks(int x, int y)     { return position.attacks( x,  y,  state.inMove); }
@@ -128,7 +139,7 @@ public class Board implements Cloneable {
                 removePiece(m.toX, m.fromY);
                 break;
 
-            case Move.CASTLE_SHORT:
+            case Move.CASTLE_SHORT:               
                 // Move the king first
                 position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 // Then the rook
@@ -143,6 +154,18 @@ public class Board implements Cloneable {
                 break;
 
             case Move.CAPTURE:
+                // Capturing a rook may affect casteling opputunities!
+                if (getPieceXY(m.toX, m.toY).type == Piece.ROOK) {
+                    if (m.whoMoves == Piece.WHITE) {
+                      if (m.toX == 0 && state.blackCanCastleLong)  state.blackCanCastleLong  = false;
+                      if (m.toX == 7 && state.blackCanCastleShort) state.blackCanCastleShort = false;
+                    else {
+                      if (m.toX == 0 && state.whiteCanCastleLong)  state.whiteCanCastleLong  = false;
+                      if (m.toX == 7 && state.whiteCanCastleShort) state.whiteCanCastleShort = false;
+                      }
+                    }
+                }
+                // Do the capture
                 removePiece(m.toX, m.toY);
                 position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 break;
