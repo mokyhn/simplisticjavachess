@@ -100,7 +100,7 @@ class Search {
         
         if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
             Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  { 
-              //if (plyDepth == depthToGo) strongestMove = null;              
+              if (plyDepth == depthToGo) strongestMove = null;              
               return Evaluator.evaluate(analyzeBoard);
         }
         
