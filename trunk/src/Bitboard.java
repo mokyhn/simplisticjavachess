@@ -72,8 +72,7 @@ public class Bitboard implements Cloneable {
                                          setBitHigh(SquareNoFromPos(p.xPos, p.yPos));    
     }
     
-    public Piece removePiece(int x, int y) {
-        Piece     p     = null;
+    public Piece removePiece(int x, int y) {        
         final int UNDF  = -5; 
         int       color = UNDF;
         int       type  = UNDF;

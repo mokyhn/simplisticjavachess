@@ -340,7 +340,7 @@ public class Board implements Cloneable {
                //i++;
                Piece p = getPieceXY(xPawn, yPawn-state.inMove);
                if (p != null && p.type == Piece.PAWN) {
-                   Move m = new Move(xPawn, yPawn+state.inMove, xPawn, yPawn-state.inMove, Move.NORMALMOVE, Piece.EMPTY, state.inMove);
+                   state.move = new Move(xPawn, yPawn+state.inMove, xPawn, yPawn-state.inMove, Move.NORMALMOVE, Piece.EMPTY, state.inMove);                   
                    history.add(state);
                }
 
