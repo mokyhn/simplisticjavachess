@@ -42,15 +42,15 @@ public class mainTest {
      */
     @Test
     public void testPawnPromotions() throws Exception {
-       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1",         "", Search.MINMAX,    1, 9-3,   "a7b8Q"));
-       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1",         "", Search.MINMAX,    1, 9-3,   "a7b8Q"));
-       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1",         "", Search.ALPHABETA, 1, 9-3,   "a7b8Q"));
-       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1",         "", Search.MINMAX,    2, 9-3,   "a7b8Q"));
-       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1",         "", Search.ALPHABETA, 2, 9-3,   "a7b8Q"));
-       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1",         "", Search.MINMAX,    3, 9-3,   "a7b8Q"));
-       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w KQkq - 0 1",         "", Search.ALPHABETA, 3, 9-3,   "a7b8Q"));
-       assertTrue(main.testSearch("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w - - 0 1", "", Search.MINMAX, 3, 8+9-7,    "h7h8Q"));
-       assertTrue(main.testSearch("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w - - 0 1", "", Search.ALPHABETA, 3, 8+9-7, "h7h8Q"));        
+       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",            "", Search.MINMAX,    1, 9-3,   "a7b8Q"));
+       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.MINMAX,    1, 9-3,   "a7b8Q"));
+       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.ALPHABETA, 1, 9-3,   "a7b8Q"));
+       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.MINMAX,    2, 9-3,   "a7b8Q"));
+       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.ALPHABETA, 2, 9-3,   "a7b8Q"));
+       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.MINMAX,    3, 9,   "a7b8Q"));
+       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.ALPHABETA, 3, 9,   "a7b8Q"));
+       assertTrue(main.testSearch("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w - - 0 1", "", Search.MINMAX, 3,   Evaluator.BLACK_IS_MATED,  "h7h8Q"));
+       assertTrue(main.testSearch("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w - - 0 1", "", Search.ALPHABETA, 3, Evaluator.BLACK_IS_MATED, "h7h8Q"));        
     }
       
     @Test
