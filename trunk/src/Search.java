@@ -175,13 +175,11 @@ class Search {
 
         for (int i = 0; i < moves.size(); i++) {
                 m = moves.get(i);
-                analyzeBoard.performMove(m);
-
+                analyzeBoard.performMove(m);                
+                //Nice verbose trace: System.out.print("(" + (plyDepth-depthToGo) +": "+ m.toString());
                 score = minMaxSearch(plyDepth, depthToGo - 1);
-               
-                        
                 analyzeBoard.retractMove();
-                
+                //Nice verbose trace: System.out.println(")");
                 if (firstCalculation) {
                  bestScore        = score;
                  if (plyDepth == depthToGo) strongestMove = m;

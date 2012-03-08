@@ -58,6 +58,7 @@ public class Move {
 	}
 
 
+        // Used for generation of knight, bishop, rook and queen moves
 	public static Move genMove(Board b, Piece fp, int dX, int dY) {
             Piece tp;
             
@@ -69,6 +70,8 @@ public class Move {
             int takenPiece = Piece.EMPTY;
             int moveType   = Move.NORMALMOVE;
             
+            assert fp.color == b.inMove();
+            
             if   (fp.xPos < 0 || fp.xPos  > 7 ||
                   fp.yPos < 0 || fp.yPos  > 7 ||
                   tX      < 0 || tX       > 7 ||
@@ -76,16 +79,16 @@ public class Move {
 
             tp = b.getPieceXY(tX, tY);
             
-            // TODO: Add pawn promotion capabilities
             if (tp != null && tp.color == -b.inMove()) {
                 takenPiece = tp.type;
                 moveType   = Move.CAPTURE;    
-                m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, fp.color);
+                m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, b.inMove());
             } else            
-            if (b.freeSquare(tX, tY)) {
+            if (b.freeSquare(tX, tY)) 
+                    {
                 takenPiece = Piece.EMPTY;
                 moveType   = Move.NORMALMOVE;
-                m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, fp.color);
+                m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, b.inMove());
             }
             
             return m;
