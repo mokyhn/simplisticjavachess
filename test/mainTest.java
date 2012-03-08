@@ -55,12 +55,12 @@ public class mainTest {
       
     @Test
     public void testPawnCapture() throws Exception {       
-       assertTrue(main.testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", "", Search.MINMAX,    1, 1,   "g2h3"));
-       assertTrue(main.testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", "", Search.ALPHABETA, 1, 1,   "g2h3"));
-       assertTrue(main.testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", "", Search.MINMAX,    2, 1,   "g2h3"));
-       assertTrue(main.testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", "", Search.ALPHABETA, 2, 1,   "g2h3"));
-       assertTrue(main.testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", "", Search.MINMAX,    3, 1,   "g2h3"));
-       assertTrue(main.testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w KQkq - 0 1", "", Search.ALPHABETA, 3, 1,   "g2h3"));
+       assertTrue(main.testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w - - 0 1", "", Search.MINMAX,    1, 1,   "g2h3"));
+       assertTrue(main.testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w - - 0 1", "", Search.ALPHABETA, 1, 1,   "g2h3"));
+       assertTrue(main.testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w - - 0 1", "", Search.MINMAX,    2, 1,   "g2h3"));
+       assertTrue(main.testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w - - 0 1", "", Search.ALPHABETA, 2, 1,   "g2h3"));
+       assertTrue(main.testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w - - 0 1", "", Search.MINMAX,    3, 1,   "g2h3"));
+       assertTrue(main.testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w - - 0 1", "", Search.ALPHABETA, 3, 1,   "g2h3"));
        assertTrue(main.testSearch("k7/8/7P/8/8/1p6/P7/7K w - - 0 1",                 "", Search.MINMAX,    5, 9+1, "a2b3"));
     }
     
@@ -80,6 +80,14 @@ public class mainTest {
     public void kingTakes() throws Exception {    
        assertTrue(main.testSearch("4k3/7p/7K/8/8/8/8/8 w - - 0 1", "", Search.MINMAX,    5, 0, "h6h7"));
        assertTrue(main.testSearch("4k3/7p/7K/8/8/8/8/8 w - - 0 1", "", Search.ALPHABETA, 5, 0, "h6h7"));  
+    }
+  
+    @Test
+    public void castlingTest() throws Exception {
+       // It is not allowed to castle away from a check...
+       //assertTrue(main.testSearch("4k3/8/8/8/8/PP1PP3/2PPP2q/R3K3 w Q - 0 1", "", Search.MINMAX, 3, (Evaluator.rookValue+6*Evaluator.pawnValue)-Evaluator.queenValue,  "e1c1")); // o-o-o
+       //assertTrue(main.testSearch("4k3/8/8/8/8/PP1PP3/2PPP2q/R3K3 w Q - 0 1", "", Search.ALPHABETA, 3, (Evaluator.rookValue+6*Evaluator.pawnValue)-Evaluator.queenValue,  "e1c1")); // o-o-o
+      assertTrue(main.testSearch("4k3/1r5b/8/8/8/8/PPP4N/R3K3 w Q - 0 1", "", Search.MINMAX, 3, 3, "e1c1"));
     }
     
     @Test
@@ -109,10 +117,10 @@ public class mainTest {
     
     @Test
     public void knightTest() throws Exception {
-     assertTrue(main.testSearch("k7/4R3/8/3n4/8/2Q5/8/K7 b KQkq - 0 1", "", Search.MINMAX,    5, -Evaluator.knightValue, "d5e7 d5c3"));
-     assertTrue(main.testSearch("k7/4R3/8/3n4/8/2Q5/8/K7 b KQkq - 0 1", "", Search.ALPHABETA, 5, -Evaluator.knightValue, "d5e7 d5c3"));
-     assertTrue(main.testSearch("k7/4n3/8/3P4/8/8/8/K7 b KQkq - 0 1", "", Search.ALPHABETA, 5, -Evaluator.knightValue, "e7d5"));
-     assertTrue(main.testSearch("k7/4n3/8/5P2/8/8/8/K7 b KQkq - 0 1", "", Search.ALPHABETA, 5, -Evaluator.knightValue, "e7f5"));
+     assertTrue(main.testSearch("k7/4R3/8/3n4/8/2Q5/8/K7 b - - 0 1", "", Search.MINMAX,    5, Evaluator.rookValue-Evaluator.knightValue, "d5e7 d5c3"));
+     assertTrue(main.testSearch("k7/4R3/8/3n4/8/2Q5/8/K7 b - - 0 1", "", Search.ALPHABETA, 5, Evaluator.rookValue-Evaluator.knightValue, "d5e7 d5c3"));
+     assertTrue(main.testSearch("k7/4n3/8/3P4/8/8/8/K7 b - - 0 1", "", Search.ALPHABETA, 5, -Evaluator.knightValue, "e7d5"));
+     assertTrue(main.testSearch("k7/4n3/8/5P2/8/8/8/K7 b - - 0 1", "", Search.ALPHABETA, 5, -Evaluator.knightValue, "e7f5"));
     }
    
         //System.out.println("End game tactics : pawn breakthrough");

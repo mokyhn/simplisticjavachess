@@ -22,13 +22,15 @@ public class Position {
         assert p != null;
 
         Piece ptmp = xyPosition[p.xPos][p.yPos];
-        assert ptmp != null : i + ", " + "piece letter " + p.toString();
+        assert ptmp != null : "Unexpected null value with piece " + i + " of type "+ p.toString() + " at (" + p.xPos + "," + p.yPos + ")" + "\n"+
+                              this.toString();
         assert ptmp.xPos == p.xPos && ptmp.yPos == p.yPos;
         return p;
     }
 
     public Piece getPieceXY(int x, int y) {
         Piece p = xyPosition[x][y];
+        areRepresentationsIsomorphic();
         if (p != null) assert p.xPos == x && p.yPos == y;
         return p;
     }
@@ -138,9 +140,29 @@ public class Position {
         return false; 
     }
 
+     public void areRepresentationsIsomorphic() {
+      int nr1 = numberOfPieces;
+      int nr2 = 0;
+      int x, y;
+      Piece p1, p2;
+      for (x=0; x < 8; x++)
+          for(y=0; y < 8; y++) {
+           if (xyPosition[x][y] != null) nr2++;
+          }
+      assert nr1 == nr2 : "Listboard = " + nr1 + " and x,y-arrayboard has " + nr2;
+      
+      // Are the pieces the same?
+      for (int i = 0; i < numberOfPieces; i++) {
+          p1 = position[i];
+          p2 = xyPosition[p1.xPos][p1.yPos];
+          assert p1.equals(p2) : "Had " + p1.toString() + " in list board and " + p2.toString() + " in xyBoard...";
+          }
+     }
+     
       public boolean freeSquare(int x, int y)  {
+          areRepresentationsIsomorphic();
           return xyPosition[x][y] == null;
-    }
+      }
 
       
     @Override

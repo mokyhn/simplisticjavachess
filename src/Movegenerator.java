@@ -156,7 +156,7 @@ class Movegenerator {
             b.freeSquare(1, y) &&
             (1==1)   ) // TODO: No attacks on x=2, 3?!
         {
-         Moves.add(new Move(x, y, x+2, y, Move.CASTLE_LONG, Piece.EMPTY, c));
+         Moves.add(new Move(x, y, x-2, y, Move.CASTLE_LONG, Piece.EMPTY, c));
         }
         
         
