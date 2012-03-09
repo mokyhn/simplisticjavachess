@@ -1,12 +1,14 @@
+package sjc;
+
 import java.util.ArrayList; 
 import java.util.Iterator;
 
 //TODO: A result record class with value and move as fields. Maby also comparison methods?
 //TODO: Add recording of the principal variations.
 
-class Search {
+public class Search {
     // Various serach methods
-    final static int ALPHABETA = 1,
+    public final static int ALPHABETA = 1,
                      MINMAX    = 2,
                      RANDOM    = 3;
 

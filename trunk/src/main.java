@@ -9,6 +9,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import sjc.*;
 
 class main {
     public static void checkForDraw(Board b) {      

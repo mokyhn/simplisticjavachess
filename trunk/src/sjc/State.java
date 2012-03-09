@@ -1,3 +1,4 @@
+package sjc;
 
 public class State implements Cloneable{
     public Move     move;

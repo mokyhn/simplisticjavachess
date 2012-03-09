@@ -1,3 +1,5 @@
+package sjc;
+
 import java.util.Iterator;
 
 public class Board implements Cloneable {

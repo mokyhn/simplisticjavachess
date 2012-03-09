@@ -1,3 +1,5 @@
+package sjc;
+
 //TODO: Implementation via an iterator. 
 //A numbering of all moves generated. A function on the form
 //genmoves(board, moveid) such that only moves with a certain id
@@ -17,7 +19,7 @@
 
 import java.util.ArrayList;
 
-class Movegenerator {
+public class Movegenerator {
 
     public Movegenerator() {
     }

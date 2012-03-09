@@ -1,3 +1,5 @@
+package sjc;
+
 public class Chessio {
     
     

@@ -1,3 +1,4 @@
+package sjc;
 /*
  * Bitboard structures
  */

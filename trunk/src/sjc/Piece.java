@@ -1,3 +1,5 @@
+package sjc;
+
 class Piece implements Cloneable {
     public int xPos,
                yPos,
