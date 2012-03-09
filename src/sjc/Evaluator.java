@@ -5,6 +5,8 @@
  * and a negative evaluation signifies that black has an advantage.
  * The evaluation 0 is given for positions where black and white has equal play.
  */
+package sjc;
+
 public class Evaluator {
 /* TODO: Detailed attack array for each square would be nice. Black material attacking a square
    and white material attacking a square...

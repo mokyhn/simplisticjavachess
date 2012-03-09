@@ -1,3 +1,5 @@
+package sjc;
+
 public class Move {
 	// TODO: Why not a Piece, dX, dY, type, aCapturedPiece, whoMoves?
         // Captured piece of type Piece?
