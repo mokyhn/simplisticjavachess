@@ -2,7 +2,7 @@ package sjc;
 
 import java.util.Iterator;
 
-public class Board implements Cloneable {
+public final class Board implements Cloneable {
     private                Position position; // Current position of pieces
     private State          state;             // State wrt. casteling, 
                                               // latest move and movenumber etc.
@@ -61,7 +61,7 @@ public class Board implements Cloneable {
 
     // Find a piece at a certain location
     public Piece getPieceXY(int x, int y) {
-        Piece p =  position.getPieceXY(x, y);
+        final Piece p =  position.getPieceXY(x, y);
 
         if (p != null) assert p.xPos == x && p.yPos == y;
         return p;
@@ -245,8 +245,8 @@ public class Board implements Cloneable {
 
 
     public boolean isMoveLegal(Move m) {
-        Movegenerator movegen   = new Movegenerator();
-        Iterator<Move> theMoves = movegen.generateAllMoves(this).listIterator();
+        final Movegenerator movegen   = new Movegenerator();
+        final Iterator<Move> theMoves = movegen.generateAllMoves(this).listIterator();
 
         // Check if move m is among the possible moves
         while (theMoves.hasNext()) {
@@ -266,7 +266,7 @@ public class Board implements Cloneable {
         int i;
         int parsingPartNo;
         char c;
-        String fen = Utils.trimWhiteSpace(sfen);
+        final String fen = Utils.trimWhiteSpace(sfen);
         String num1 = "";
         String num2 = "";
 
@@ -335,12 +335,12 @@ public class Board implements Cloneable {
               }
 
               if (c != ' ') {
-               int xPawn = (int) (c - 'a');
-               int yPawn = (int) (fen.charAt(i+1) - '1');
+               final int xPawn = (int) (c - 'a');
+               final int yPawn = (int) (fen.charAt(i+1) - '1');
                assert xPawn >= 0 && xPawn <= 7;
                assert yPawn >= 0 && yPawn <= 7;
                //i++;
-               Piece p = getPieceXY(xPawn, yPawn-state.inMove);
+               final Piece p = getPieceXY(xPawn, yPawn-state.inMove);
                if (p != null && p.type == Piece.PAWN) {
                    state.move = new Move(xPawn, yPawn+state.inMove, xPawn, yPawn-state.inMove, Move.NORMALMOVE, Piece.EMPTY, state.inMove);                   
                    history.add(state);
@@ -415,7 +415,7 @@ public class Board implements Cloneable {
   
     @Override
     public Board clone() {
-        Board theClone      = new Board();
+        final Board theClone      = new Board();
         theClone.position   = position.clone();
         theClone.state      = this.state.clone();        
         theClone.history    = this.history.clone();

@@ -1,6 +1,6 @@
 package sjc;
 
-public class NoMoveException extends Exception {
+public final class NoMoveException extends Exception {
     public String err;	
 
     public NoMoveException() {         

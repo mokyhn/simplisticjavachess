@@ -6,44 +6,45 @@ import java.util.Stack;
  *
  * @author mku
  */
-public class History implements Cloneable {
-    private Stack<State> history; // A stack of previous game states
+public final class History implements Cloneable {
+    private Stack<State> stateHistory; // A stack of previous game states
 
     public History() {
-        history =  new Stack<State>();
+        stateHistory =  new Stack<State>();
     }
     
     public void add(State s) {
-     history.push(s);
+     stateHistory.push(s);
     }
     
     public State pop() {
-     return history.pop();
+     return stateHistory.pop();
     }
     
     public State peek() {
-     return history.peek();
+     return stateHistory.peek();
     }
     
     public int size() {
-     return history.size();
+     return stateHistory.size();
     }
     
     public State get(int index) {
-     return history.get(index);
+     return stateHistory.get(index);
     }
     
     public boolean isEmpty() {
-     return history.isEmpty();
+     return stateHistory.isEmpty();
     }
     
+    @Override
     public String toString() {
      String r      = "";
      String prefix = "";
      Move   m;
      
-     for(int i = 0; i < history.size(); i++) {
-       m = history.get(i).move;
+     for(int i = 0; i < stateHistory.size(); i++) {
+       m = stateHistory.get(i).move;
          if (m.whoMoves == Piece.WHITE) prefix = (i+2)/2 + ".";         
          //if (m.whoMoves == Piece.BLACK) prefix = (i+2)/2 + "....";
          r = r + prefix + m.toString() + " ";
@@ -56,13 +57,12 @@ public class History implements Cloneable {
     }
     
     @Override
-    public History clone() {
-        History theClone = new History();
-        
-        for (int i = 0; i < history.size(); i ++) {
-            (theClone.history).push((history.get(i)).clone());
+    public History clone() {        
+        final History theClone = new History();
+        final int size = stateHistory.size();
+        for (int i = 0; i < size; i ++) {
+            (theClone.stateHistory).push((stateHistory.get(i)).clone());
         }
-
         return theClone;
     }
 

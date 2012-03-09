@@ -1,6 +1,6 @@
 package sjc;
 
-public class Move {
+public final class Move implements Cloneable {
 	// TODO: Why not a Piece, dX, dY, type, aCapturedPiece, whoMoves?
         // Captured piece of type Piece?
         // That is a piece/vector based way to descripe a move?
@@ -66,8 +66,8 @@ public class Move {
             
             Move m = null;
             
-            int tX = fp.xPos + dX, 
-                tY = fp.yPos + dY;
+            final int tX = fp.xPos + dX, 
+                      tY = fp.yPos + dY;
             
             int takenPiece = Piece.EMPTY;
             int moveType   = Move.NORMALMOVE;
@@ -162,7 +162,7 @@ public class Move {
 
         @Override
         public Move clone() {
-            Move theClone = new Move();
+            final Move theClone = new Move();
             theClone.fromX          = this.fromX;
             theClone.fromY          = this.fromY;
             theClone.toX            = this.toX;

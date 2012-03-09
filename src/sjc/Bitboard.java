@@ -2,8 +2,8 @@ package sjc;
 /*
  * Bitboard structures
  */
-public class Bitboard implements Cloneable {
-    public  long bb[][];
+public final class Bitboard implements Cloneable {
+    public long bb[][];
 
     /**
      * Total number of colors: black and white, that is 2
@@ -54,12 +54,12 @@ public class Bitboard implements Cloneable {
             p = b.getPiece(i);
             c = colorIndex(p.color);
             t = p.type;
-            if (t != Piece.EMPTY) bb[c][t] =  bb[c][t] | setBitHigh(SquareNoFromPos(p.xPos, p.yPos));
+            if (t != Piece.EMPTY) bb[c][t] =  bb[c][t] | setBitHigh(squareNoFromPos(p.xPos, p.yPos));
         }
     }
 
     // Returns number in the interval 0..63 from x and y in the interval 0..7
-    private static int SquareNoFromPos(int x, int y) {
+    private static int squareNoFromPos(int x, int y) {
         return y * 8 + x;
     }
 
@@ -70,7 +70,7 @@ public class Bitboard implements Cloneable {
 
     public void insertPiece(Piece p) {       
        bb[colorIndex(p.color)][p.type] = bb[colorIndex(p.color)][p.type] | 
-                                         setBitHigh(SquareNoFromPos(p.xPos, p.yPos));    
+                                         setBitHigh(squareNoFromPos(p.xPos, p.yPos));    
     }
     
     public Piece removePiece(int x, int y) {        
@@ -79,12 +79,12 @@ public class Bitboard implements Cloneable {
         int       type  = UNDF;
         
         for (int t = 0; t < NUM_PIECE_TYPES; t++) {
-            if ((bb[0][t] & setBitHigh(SquareNoFromPos(x, y))) != 0) {
+            if ((bb[0][t] & setBitHigh(squareNoFromPos(x, y))) != 0) {
                 color = Piece.BLACK;
                 type  = t;
                 break;
             }
-            if ((bb[1][t] & setBitHigh(SquareNoFromPos(x, y))) != 0) {
+            if ((bb[1][t] & setBitHigh(squareNoFromPos(x, y))) != 0) {
                 color = Piece.WHITE;
                 type  = t;
                 break;               
@@ -94,7 +94,7 @@ public class Bitboard implements Cloneable {
         assert(color != UNDF && type != UNDF);
         
         bb[colorIndex(color)][type] = bb[colorIndex(color)][type] ^  // Bitwise XOR
-                                          setBitHigh(SquareNoFromPos(x, y));    
+                                          setBitHigh(squareNoFromPos(x, y));    
         
         return new Piece(x, y, color, type);
     }
@@ -105,9 +105,9 @@ public class Bitboard implements Cloneable {
         
         for (y = 7; y >= 0; y--) {
          for (x = 0; x <= 7; x++) {
-             if (((1L << SquareNoFromPos(x, y)) & b) != 0) {
-                 r = r + '+';
-             } else r = r + '.';
+             if (((1L << squareNoFromPos(x, y)) & b) == 0) {
+                 r = r + '.';
+             } else r = r + '+';
          }
          r = r + "\n";
         }
@@ -131,7 +131,10 @@ public class Bitboard implements Cloneable {
         return s;
     }
 
-    public boolean equals(Bitboard b2) {
+    @Override
+    public boolean equals(Object obj) {
+        final Bitboard b2 = (Bitboard) obj;
+        
         if (b2 == null) return false;
         
         for (int t = 0; t < NUM_PIECE_TYPES; t++) {
@@ -146,7 +149,7 @@ public class Bitboard implements Cloneable {
       public Bitboard clone() {
         int t;
 
-        Bitboard theClone = new Bitboard();
+        final Bitboard theClone = new Bitboard();
 
         for (t = 0; t < NUM_PIECE_TYPES; t++) {
             theClone.bb[0][t] = this.bb[0][t];
