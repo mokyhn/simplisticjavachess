@@ -6,7 +6,7 @@ import java.util.Iterator;
 //TODO: A result record class with value and move as fields. Maby also comparison methods?
 //TODO: Add recording of the principal variations.
 
-public class Search {
+public final class Search {
     // Various serach methods
     public final static int ALPHABETA = 1,
                      MINMAX    = 2,
@@ -14,15 +14,15 @@ public class Search {
 
    
     // Main variables used in the search
-    Board        analyzeBoard;
-    private int  plyDepth;
-    private Move strongestMove;
-    private int  searchResult;
+    private Board analyzeBoard;
+    private int   plyDepth;
+    private Move  strongestMove;
+    private int   searchResult;
 
 
     // For statistical pusposes
-    private long start_time;
-    private long end_time;
+    private long startTime;
+    private long endTime;
     private int  noPositions;
     private int  noCutOffs;
     private int  wastedGeneratedMoves;
@@ -43,7 +43,7 @@ public class Search {
         noCutOffs            = 0;
         wastedGeneratedMoves = 0;
         this.plyDepth        = plyDepth;
-        start_time           = System.nanoTime();
+        startTime           = System.nanoTime();
 
         switch (method) {
             case ALPHABETA:
@@ -61,13 +61,13 @@ public class Search {
                 break;
         }
 
-        end_time = System.nanoTime();
+        endTime = System.nanoTime();
         return searchResult;
     }
 
     public Move getStrongestMove() { return strongestMove;  }
     public int  getNoPositions()   { return noPositions;    }
-    public long getTimeUsage()     { return Math.abs(end_time-start_time)/1000000;}
+    public long getTimeUsage()     { return Math.abs(endTime-startTime)/1000000;}
 
     public String moveAndStatistics() {
         String strongestMoveStr = "null";
@@ -90,7 +90,7 @@ public class Search {
         ArrayList<Move> moves;
         Move m;
         int eval;
-        int toMove = analyzeBoard.inMove();
+        final int toMove = analyzeBoard.inMove();
         
         if (ply == 0) {
             noPositions++;
@@ -213,7 +213,7 @@ public class Search {
     public int randomSearch() {
       ArrayList<Move> moves;
       int             n;
-      double          r = Math.random();
+      final double          r = Math.random();
       
       moves = Movegenerator.generateAllMoves(analyzeBoard);
       n     = moves.size();
@@ -230,7 +230,7 @@ public class Search {
         analyzeBoard  = b.clone();
         noPositions   = 0;
 
-        CountNodesTmp(ply);
+        countNodesTmp(ply);
         return "#Nodes "                   + noPositions +
                " at plydepth "             + ply +
                " = a branching factor of " + Math.exp(Math.log(noPositions)/ply) +
@@ -238,7 +238,7 @@ public class Search {
     }
     
     
-    private void CountNodesTmp(int plydepth) {
+    private void countNodesTmp(int plydepth) {
         Iterator<Move>          moves;
 
         if (plydepth == 0) {
@@ -249,7 +249,7 @@ public class Search {
         moves = Movegenerator.generateAllMoves(analyzeBoard).listIterator();
         while (moves.hasNext()) {
             analyzeBoard.performMove(moves.next());
-            CountNodesTmp(plydepth - 1);
+            countNodesTmp(plydepth - 1);
             analyzeBoard.retractMove();
         }
     }

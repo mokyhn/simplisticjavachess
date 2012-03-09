@@ -1,12 +1,12 @@
 package sjc;
 
-public class Chessio {
+public final class Chessio {
     
     
     // Input: the current position, a move string, and the knowledge of
     // who is the next to move: Parse the movestring to a move
     // Output: a move
-    public Move parse_move(Board b, String str) throws NoMoveException {
+    public Move parseMove(Board b, String str) throws NoMoveException {
         int    fromX, fromY, toX, toY;
         int    whoToMove = b.inMove();
         char[] s         = str.toCharArray();

@@ -32,10 +32,10 @@ class main {
        
        strongestMove = engine.getStrongestMove();
 
-       if (!expectedMoves.isEmpty())
-       System.out.println("Expected moves:       " + expectedMoves.toString() + ", actual " + engine.moveAndStatistics());
-       else 
+       if (expectedMoves.isEmpty())       
        System.out.println("Expected moves:       none" + ", actual " + strongestMove);
+       else System.out.println("Expected moves:       " + expectedMoves.toString() + ", actual " + engine.moveAndStatistics());           
+       
        
        System.out.println("Expected evaluation: " + expectedEvaluation      + ", actual evaluation: "  + searchResult);
        System.out.println();
@@ -66,7 +66,7 @@ class main {
 
         for(i = 0; i < moveStrings.length; i++) {
          if (moveStrings[i] != null)
-          m = cio.parse_move(b, moveStrings[i]);
+          m = cio.parseMove(b, moveStrings[i]);
           if (m != null)
           b.performMove(m);
         }
@@ -74,7 +74,7 @@ class main {
         
         for (i = 0; i < expectedMoveStrings.length; i++) {
          if (expectedMoveStrings[i] != null) {
-            m = cio.parse_move(b, expectedMoveStrings[i]);
+            m = cio.parseMove(b, expectedMoveStrings[i]);
             if (m != null) expectedMoves.add(m);
          }
         }
@@ -88,7 +88,7 @@ class main {
     public static void test() throws NoMoveException {     
 
     
-       main.testSearch("4k3/8/8/8/8/PP1PP3/2PPP2q/R3K3 w Q - 0 1", "", Search.MINMAX, 3, (Evaluator.rookValue+6*Evaluator.pawnValue)-Evaluator.queenValue,  "e1c1");
+       main.testSearch("4k3/8/8/8/8/PP1PP3/2PPP2q/R3K3 w Q - 0 1", "", Search.MINMAX, 3, (Evaluator.ROOKVALUE+6*Evaluator.PAWNVALUE)-Evaluator.QUEENVALUE,  "e1c1");
        
   
        
@@ -106,7 +106,6 @@ class main {
         String str            = null;
         int simSteps          = 0;
         int searchMethod      = Search.MINMAX;
-        int searchResult;
         Move    m;
 
         int x, y;
@@ -141,7 +140,7 @@ class main {
             str = reader.readLine();
 
             if (str.matches("go")) {
-                searchResult = engine1.dosearch(interfaceBoard, plyDepth, searchMethod);
+                engine1.dosearch(interfaceBoard, plyDepth, searchMethod);
                 System.out.println(engine1.moveAndStatistics());
                 interfaceBoard.performMove(engine1.getStrongestMove());
                 checkForDraw(interfaceBoard);
@@ -224,7 +223,7 @@ class main {
               }
               else {
                 try {
-                    m = io.parse_move(interfaceBoard, str);                    
+                    m = io.parseMove(interfaceBoard, str);                    
                     if (!(interfaceBoard.isMoveLegal(m))) {  throw new NoMoveException(); }
                     interfaceBoard.performMove(m);
                                        

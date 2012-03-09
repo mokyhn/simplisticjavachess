@@ -1,6 +1,6 @@
 package sjc;
 
-public class State implements Cloneable{
+public final class State implements Cloneable{
     public Move     move;
     public int      inMove;
     
@@ -61,7 +61,7 @@ public class State implements Cloneable{
     
     @Override
     public State clone() {
-        State theClone = new State();
+        final State theClone = new State();
 
         theClone.move                       = this.move.clone();
         theClone.inMove                     = this.inMove;

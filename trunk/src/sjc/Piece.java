@@ -1,6 +1,6 @@
 package sjc;
 
-class Piece implements Cloneable {
+public final class Piece implements Cloneable {
     public int xPos,
                yPos,
                color,
@@ -130,7 +130,7 @@ class Piece implements Cloneable {
     
     @Override
     public Piece clone() {
-        Piece theClone = new Piece();
+        final Piece theClone = new Piece();
 
         // Initialize theClone.
         theClone.xPos  = this.xPos;
