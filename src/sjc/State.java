@@ -13,6 +13,9 @@ public final class State implements Cloneable{
     public boolean  whiteCanCastleShort;
     public boolean  whiteCanCastleLong;
 
+    public boolean  drawFlag;
+    public boolean  mateFlag;
+    
     public int      halfMoveClock; // Number of halfmoves since the last pawn advance or capture.
                                  // Used to determine if a draw can be claimed under the fifty-move rule.
 
@@ -32,6 +35,8 @@ public final class State implements Cloneable{
         this.halfMoveClock              = 0;
         this.halfMovesIndex3PosRepition = 0;
         this.inCheckByPiece             = null;
+        this.drawFlag                   = false;
+        this.mateFlag                   = false;
     };
 
     @Override
@@ -49,6 +54,8 @@ public final class State implements Cloneable{
        if (whiteCanCastleLong)  whiteCastleLong  = "X";
 
        s =     "\n----------------------------State----------------------------\n";
+       if (drawFlag) s = s + "It's a draw!\n";
+       if (mateFlag) s = s + "Mate!\n";
        s = s + "Black can castle long: [" + blackCastleLong + "],       Black can castle short: [" + blackCastleShort + "]\n";
        s = s + "White can castle long: [" + whiteCastleLong + "],       White can castle short: [" + whiteCastleShort + "]\n";
        s = s + "Number of half moves since last pawn move: " + halfMoveClock + "\n";
@@ -72,7 +79,9 @@ public final class State implements Cloneable{
         theClone.whiteCanCastleShort        = this.whiteCanCastleShort;
         theClone.halfMoveClock              = this.halfMoveClock;
         theClone.halfMovesIndex3PosRepition = this.halfMovesIndex3PosRepition;
-
+        theClone.drawFlag                   = this.drawFlag;
+        theClone.mateFlag                   = this.mateFlag;
+        
         if (this.bbposition == null) {
          theClone.bbposition = null;
         } else {        
