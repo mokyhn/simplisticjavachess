@@ -100,8 +100,14 @@ public final class Position implements Cloneable {
     //TODO: It is unclear why we should implement an attacks function that
     //mimics the movegenerator.
      public boolean attacks(int x, int y, int inMove) {
-        Piece p;
-
+      Piece p;
+      int fx, // From x pos
+          tx, // To x pos
+          fy, // From y pos 
+          ty, // To y pos
+          ix, // Iterate x
+          iy; // Iterate y
+      boolean allFree;
         
         for (int i = 0; i < numberOfPieces; i++) {
             p = getPiece(i);
@@ -115,6 +121,40 @@ public final class Position implements Cloneable {
                                 (x == p.xPos - 1))) return true;
                         break;
                     case Piece.ROOK:
+                        if      (p.xPos == x) {
+                            allFree = true;
+                            if (y < p.yPos) { 
+                                fy = y; 
+                                ty = p.yPos;
+                            } else {
+                                fy = p.yPos;
+                                ty = y;
+                            }
+                            for (iy = fy + 1; iy < ty; iy++) {
+                                if (!freeSquare(p.xPos, iy)) {
+                                 allFree = false;
+                                 break;
+                                }
+                            }
+                            if (allFree) return true;
+                        } 
+                        else if (p.yPos == y) {
+                            allFree = false;
+                            if (x < p.xPos) { 
+                                fx = x; 
+                                tx = p.xPos;
+                            } else {
+                                fx = p.xPos;
+                                tx = x;
+                            }
+                            for (ix = fx + 1; ix < tx; ix++) {
+                                if (!freeSquare(ix, p.yPos)) {
+                                 allFree = false;
+                                 break;
+                                }
+                            }
+                            if (allFree) return true;
+                        }
                         break;
                     case Piece.BISHOP:
                         break;
