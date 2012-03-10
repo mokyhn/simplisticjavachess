@@ -387,18 +387,19 @@ public final class Movegenerator {
     }
      
     public static ArrayList<Move> generateAllMoves(Board b) {
-        final ArrayList<Move> Moves = new ArrayList<Move>();
+        final ArrayList<Move> moves = new ArrayList<Move>();
         ArrayList<Move> r = null;
         Piece p;
 
+        if (b.isDraw() || b.isMate()) return moves; // I.e. no moves to generate...
 
         for (int i = 0; i < b.getNumberOfPieces(); i++) {
             p = b.getPiece(i);
             r = generateMoves(b, p);
-            if (r != null && !r.isEmpty()) Moves.addAll(r);
+            if (r != null && !r.isEmpty()) moves.addAll(r);
         }
 
-        return Moves;
+        return moves;
     }
 }
  
