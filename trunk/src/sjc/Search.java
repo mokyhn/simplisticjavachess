@@ -95,13 +95,15 @@ public final class Search {
         ArrayList<Move> moves;
         Move m;
         int eval;
-        final int toMove = analyzeBoard.inMove();
         Boolean thereWasALegalMove = false;
-        int inMove = analyzeBoard.inMove();
+        final int inMove = analyzeBoard.inMove();
         
         // If the game has ended return immediately.
         if (analyzeBoard.isDraw()) return 0;
-        if (analyzeBoard.isMate()) return Evaluator.evaluate(analyzeBoard);
+        if (analyzeBoard.isMate()) {
+            if (inMove == Piece.WHITE) return Evaluator.WHITE_IS_MATED;
+            else return Evaluator.BLACK_IS_MATED;
+        }
         
         if (ply == 0) {
             noPositions++;
@@ -121,9 +123,10 @@ public final class Search {
         
         moves = Movegenerator.generateAllMoves(analyzeBoard);
         
+        /* Not needed...
         if (moves.isEmpty()) {  // A draw
             return 0;
-        } 
+        } */
         
         for (int i = 0; (i < moves.size() && alpha < beta); i++) {
             m = moves.get(i);
@@ -136,7 +139,7 @@ public final class Search {
             eval = alphaBetaSearch(ply-1, depthToGo, alpha, beta);
             analyzeBoard.retractMove();
             
-            if (toMove == 1) {
+            if (inMove == 1) {
              if (eval > alpha) {alpha = eval;
              if (ply == depthToGo)  strongestMove = m;}
             } else
@@ -144,15 +147,14 @@ public final class Search {
              if (eval < beta) {beta = eval;
              if (ply == depthToGo)  strongestMove = m;}
             }    
-            
-             
         }
          
         // Mate or draw
         if (!thereWasALegalMove) {
            if (analyzeBoard.isInCheck(inMove)) {
             analyzeBoard.setMate();
-            return Evaluator.evaluate(analyzeBoard);
+            if (inMove == Piece.WHITE) return Evaluator.WHITE_IS_MATED;
+            else return Evaluator.BLACK_IS_MATED;
            } else {
                analyzeBoard.setDraw();
                return 0;
@@ -166,7 +168,7 @@ public final class Search {
         
         int result= 0;
         
-        if (toMove == 1) { result = alpha;
+        if (inMove == 1) { result = alpha;
         } else result = beta;
         
         return result;

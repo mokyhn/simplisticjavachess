@@ -12,7 +12,17 @@ import java.util.Iterator;
 import sjc.*;
 
 class main {
-    public static void checkForDraw(Board b) {      
+    public static void checkForDrawOrMate(Board b) {      
+        if (b.isDraw()) {
+         System.out.println("Draw");
+         System.exit(0);
+        }
+        
+        if (b.isMate()) {
+         System.out.println("Mate");
+         System.exit(0);
+        }
+        
         if (b.drawBy3RepetionsRule()) {
             System.out.println("Draw by threefold repetition...");
             System.exit(0);
@@ -143,7 +153,7 @@ class main {
                 engine1.dosearch(interfaceBoard, plyDepth, searchMethod);
                 System.out.println(engine1.moveAndStatistics());
                 interfaceBoard.performMove(engine1.getStrongestMove());
-                checkForDraw(interfaceBoard);
+                checkForDrawOrMate(interfaceBoard);
                 System.out.println(interfaceBoard.toString());
             } else if (str.matches("undo")) { interfaceBoard.retractMove(); }
               else if (str.matches("allmoves")) {
@@ -177,12 +187,12 @@ class main {
                       } else
                       interfaceBoard.performMove(engine1.getStrongestMove());
                       System.out.println(interfaceBoard.toString());
-                      checkForDraw(interfaceBoard);
+                      checkForDrawOrMate(interfaceBoard);
                       engine2.dosearch(interfaceBoard, plyDepth, Search.RANDOM);
                       System.out.println(engine2.moveAndStatistics());
                       interfaceBoard.performMove(engine2.getStrongestMove());
                       System.out.println(interfaceBoard.toString());
-                      checkForDraw(interfaceBoard);
+                      checkForDrawOrMate(interfaceBoard);
                   }
               
               }
@@ -234,10 +244,18 @@ class main {
               else {
                 try {
                     m = io.parseMove(interfaceBoard, str);                    
-                    if (!(interfaceBoard.isMoveLegal(m))) {  throw new NoMoveException(); }
-                    interfaceBoard.performMove(m);
-                                       
-                    checkForDraw(interfaceBoard);
+                    if (!interfaceBoard.isDraw() || !interfaceBoard.isMate()) {
+                       Iterator<Move> theMoves = Movegenerator.generateAllMoves(interfaceBoard).listIterator();
+                       // Check if move m is among the possible moves
+                      while (theMoves.hasNext()) {
+                        if (m.equal(theMoves.next())) {
+                        interfaceBoard.performMove(m);
+                        if (interfaceBoard.isInCheck(m.whoMoves))  throw new NoMoveException();        
+                      }
+                    }
+                    } else  throw new NoMoveException();
+                                      
+                    checkForDrawOrMate(interfaceBoard);
                     System.out.println(interfaceBoard.toString());
 
                 } catch (NoMoveException e) { System.out.println("Not a valid move " + e.err); }

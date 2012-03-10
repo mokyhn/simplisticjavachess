@@ -285,19 +285,7 @@ public final class Board implements Cloneable {
     }
 
 
-    public boolean isMoveLegal(Move m) {
-        final Movegenerator movegen   = new Movegenerator();
-        final Iterator<Move> theMoves = movegen.generateAllMoves(this).listIterator();
-
-        // Check if move m is among the possible moves
-        // TODO: Check that we do not become check...
-        // the move has to be performed and then check for no check!
-        while (theMoves.hasNext()) {
-            if (m.equal(theMoves.next())) return true;
-        }
-        return false;
-    }
-
+   
     
     // Given a position in the FEN - notation.
     // Set up the board
