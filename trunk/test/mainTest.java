@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  * Have a look at http://www.cs.kent.ac.uk/people/staff/djb/pgn-extract/
+ * -enableassertions
  */
 
 import org.junit.After;
@@ -97,6 +98,9 @@ public class mainTest {
        assertTrue(main.testSearch("k7/P7/KP6/8/7p/8/8/8 w - - 0 1", "", Search.MINMAX,    3, Evaluator.BLACK_IS_MATED, "b6b7"));
        assertTrue(main.testSearch("k7/P7/KP6/8/7p/8/8/8 w - - 0 1", "", Search.ALPHABETA, 3, Evaluator.BLACK_IS_MATED, "b6b7"));
 
+       //Suffucated mate
+       //assertTrue(main.testSearch("r3r2k/6pp/8/6N1/2Q5/1B6/1PPP4/2K5 w - - 0 1", "", Search.MINMAX, 5, Evaluator.BLACK_IS_MATED, "c4g8"));
+       assertTrue(main.testSearch("r3r2k/6pp/8/6N1/2Q5/1B6/1PPP4/2K5 w - - 0 1", "", Search.ALPHABETA, 5, Evaluator.BLACK_IS_MATED, "c4g8"));
        //assertTrue(main.testSearch("k7/P7/KP6/8/7p/8/1P6/8 w - - 0 1", "", Search.MINMAX,    3, Evaluator.BLACK_IS_MATED, "b6b7"));
        //assertTrue(main.testSearch("k7/P7/KP6/8/7p/8/1P6/8 w - - 0 1", "", Search.ALPHABETA, 3, Evaluator.BLACK_IS_MATED, "b6b7"));
     }
@@ -123,7 +127,12 @@ public class mainTest {
      assertTrue(main.testSearch("k7/4n3/8/3P4/8/8/8/K7 b - - 0 1", "", Search.ALPHABETA, 5, -Evaluator.KNIGHTVALUE, "e7d5"));
      assertTrue(main.testSearch("k7/4n3/8/5P2/8/8/8/K7 b - - 0 1", "", Search.ALPHABETA, 5, -Evaluator.KNIGHTVALUE, "e7f5"));
     }
-   
+
+    @Test
+    public void BratkoKopecTest() throws Exception {
+     //assertTrue(main.testSearch("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b - - 1 0", "", Search.ALPHABETA, 7, Evaluator.WHITE_IS_MATED, "d6d1")); //BK.01
+    }
+    
         //System.out.println("End game tactics : pawn breakthrough");
        //assert(testSearch("7k/ppp5/8/PPP5/8/8/8/7K w - - 0 1", Search.ALPHABETA, 9, 9-3, "b5b6"));
 // A wrong trace 1.g1-f3 b8-c6 2.c2-c3 c6-d4 3.c3xd4 e8-d8 4.b1-c3 d8-c8 5.e2-e4 c8-b8 with alphabeta search sd. 6

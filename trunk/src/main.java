@@ -88,7 +88,7 @@ class main {
     public static void test() throws NoMoveException {     
 
     
-       main.testSearch("4k3/8/8/8/8/PP1PP3/2PPP2q/R3K3 w Q - 0 1", "", Search.MINMAX, 3, (Evaluator.ROOKVALUE+6*Evaluator.PAWNVALUE)-Evaluator.QUEENVALUE,  "e1c1");
+       main.testSearch("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b - - 1 0", "", Search.MINMAX, 3, (Evaluator.ROOKVALUE+6*Evaluator.PAWNVALUE)-Evaluator.QUEENVALUE,  "e1c1");
        
   
        

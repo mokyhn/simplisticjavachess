@@ -12,7 +12,7 @@ public final class Utils {
      * @param s Input string
      * @return A trimmed string
      */
-    public static String trimWhiteSpace(String s) {
+    public static String trimWhiteSpace(final String s) {
       String t     = "";
       char c;
       boolean flag = false;
