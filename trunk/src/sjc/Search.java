@@ -251,6 +251,11 @@ public final class Search {
       n     = moves.size();
       
       if (n == 0) return 0;
+
+      if (analyzeBoard.isDraw() || analyzeBoard.isMate()) {
+       System.out.println("Game over...");
+       System.exit(0);
+      }
       
       whoMoves = analyzeBoard.inMove();
       while (retry && n > 0) {

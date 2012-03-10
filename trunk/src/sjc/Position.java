@@ -203,7 +203,7 @@ public final class Position implements Cloneable {
                             ((x == p.xPos - 2) && (y == p.yPos - 1)) ||
                             ((x == p.xPos - 1) && (y == p.yPos - 2)) ||
                             ((x == p.xPos + 1) && (y == p.yPos + 2)) ||
-                            ((x == p.xPos - 1) && (y == p.yPos - 2)) ||
+                            ((x == p.xPos - 1) && (y == p.yPos + 2)) ||
                             ((x == p.xPos + 1) && (y == p.yPos - 2)) ||
                             ((x == p.xPos + 2) && (y == p.yPos + 1)) ||
                             ((x == p.xPos + 2) && (y == p.yPos - 1))) return true;
