@@ -96,17 +96,15 @@ public final class Position implements Cloneable {
     public int numberOfPieces() {
         return numberOfPieces;
     }
-
-    //TODO: It is unclear why we should implement an attacks function that
-    //mimics the movegenerator.
-     public boolean attacks(int x, int y, int inMove) {
+    
+    public boolean attacks(int x, int y, int inMove) {
       Piece p;
-      int fx, // From x pos
-          tx, // To x pos
-          fy, // From y pos 
-          ty, // To y pos
-          ix, // Iterate x
-          iy; // Iterate y
+      int lowX,  // From x pos
+          highX, // To x pos
+          lowY,  // From y pos 
+          highY, // To y pos
+          ix,    // Iterate x
+          iy;    // Iterate y
       boolean allFree;
         
         for (int i = 0; i < numberOfPieces; i++) {
@@ -124,13 +122,13 @@ public final class Position implements Cloneable {
                         if      (p.xPos == x) {
                             allFree = true;
                             if (y < p.yPos) { 
-                                fy = y; 
-                                ty = p.yPos;
+                                lowY = y; 
+                                highY = p.yPos;
                             } else {
-                                fy = p.yPos;
-                                ty = y;
+                                lowY = p.yPos;
+                                highY = y;
                             }
-                            for (iy = fy + 1; iy < ty; iy++) {
+                            for (iy = lowY + 1; iy < highY; iy++) {
                                 if (!freeSquare(p.xPos, iy)) {
                                  allFree = false;
                                  break;
@@ -138,16 +136,16 @@ public final class Position implements Cloneable {
                             }
                             if (allFree) return true;
                         } 
-                        else if (p.yPos == y) {
-                            allFree = false;
+                        if (p.yPos == y) {
+                            allFree = true;
                             if (x < p.xPos) { 
-                                fx = x; 
-                                tx = p.xPos;
+                                lowX  = x; 
+                                highX = p.xPos;
                             } else {
-                                fx = p.xPos;
-                                tx = x;
+                                lowX  = p.xPos;
+                                highX = x;
                             }
-                            for (ix = fx + 1; ix < tx; ix++) {
+                            for (ix = lowX + 1; ix < highX; ix++) {
                                 if (!freeSquare(ix, p.yPos)) {
                                  allFree = false;
                                  break;
