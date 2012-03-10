@@ -19,7 +19,7 @@ public final class Position implements Cloneable {
 
     }
 
-    public Piece getPiece(int i) {
+    public Piece getPiece(final int i) {
         final Piece p = piecePosition[i];
         assert p != null;
 
@@ -32,7 +32,7 @@ public final class Position implements Cloneable {
 
     public Piece getPieceXY(final int x, final int y) {
         final Piece p = xyPosition[x][y];
-        areRepresentationsIsomorphic();
+        // For testing: areRepresentationsIsomorphic();
         if (p != null) assert p.xPos == x && p.yPos == y;
         return p;
     }
@@ -162,7 +162,7 @@ public final class Position implements Cloneable {
      }
      
       public boolean freeSquare(int x, int y)  {
-          areRepresentationsIsomorphic();
+          // FOR TESTING: areRepresentationsIsomorphic();
           return xyPosition[x][y] == null;
       }
 

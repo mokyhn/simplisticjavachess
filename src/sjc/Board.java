@@ -25,7 +25,7 @@ public final class Board implements Cloneable {
     public void    setBlackToMove()          { state.inMove = Piece.BLACK;}
     public void    setWhiteToMove()          { state.inMove = Piece.WHITE;}
     public Move    getLastMove()             { return history.peek().move; }
-    public Piece   getPiece(int i)           { return position.getPiece(i); }
+    public Piece   getPiece(final int i)     { return position.getPiece(i); }
     public void    insertPiece(Piece p)      { position.insertPiece(p); }
     public Piece   removePiece(int x, int y) { return position.removePiece(x, y); }
     public boolean freeSquare(int x, int y)  { return position.freeSquare(x, y); }
@@ -266,7 +266,7 @@ public final class Board implements Cloneable {
         int i;
         int parsingPartNo;
         char c;
-        final String fen = Utils.trimWhiteSpace(sfen);
+        final String fen = Utils.trimWhiteSpace(sfen.trim());
         String num1 = "";
         String num2 = "";
 
