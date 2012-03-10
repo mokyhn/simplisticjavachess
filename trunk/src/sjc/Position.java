@@ -97,6 +97,80 @@ public final class Position implements Cloneable {
         return numberOfPieces;
     }
     
+    private boolean rookAttack(int x1, int y1, int x2, int y2) {
+       Boolean allFree = true;
+        int lowX,  // From x pos
+          highX, // To x pos
+          lowY,  // From y pos 
+          highY, // To y pos
+          ix,    // Iterate x
+          iy;    // Iterate y
+         
+        if      (x1 == x2) {
+            allFree = true;
+            if (y1 < y2) { 
+                lowY = y1; 
+                highY = y2;
+            } else {
+                lowY = y2;
+                highY = y1;
+            }
+            for (iy = lowY + 1; iy < highY; iy++) {
+                if (!freeSquare(x1, iy)) {
+                 allFree = false;
+                 break;
+                }
+            }
+            if (allFree) return true;
+        } 
+        if (y1 == y2) {
+            allFree = true;
+            if (x1 < x2) { 
+                lowX  = x1; 
+                highX = x2;
+            } else {
+                lowX  = x2;
+                highX = x1;
+            }
+            for (ix = lowX + 1; ix < highX; ix++) {
+                if (!freeSquare(ix, y1)) {
+                 allFree = false;
+                 break;
+                }
+            }
+            if (allFree) return true;
+        }
+        return false;
+    }
+    
+    private boolean bishopAttack(int x1, int y1, int x2, int y2) {
+      final int r; // Radius
+      int ir;      // Iterator over radii
+      int dx;
+      int dy;
+      boolean allFree = true;
+      dx = x2-x1;
+      dy = y2-y1;
+      
+      // First condition that allows one to be threatened by a bishop
+      if (Math.abs(dx) == Math.abs(dy)) {
+        r = Math.abs(dx);
+        dx = dx / r;
+        dy = dy / r;
+        //System.out.println("Vector " + dx + "," + dy);
+        for (ir = 1; ir < r; ir++) {
+          if (!freeSquare(ir*dx + x1, ir*dy + y1)) {
+           //System.out.println("Found something at " + (r*dx + x1) + ", " + (r*dy + y1) + "investigating " + x1 + "," + y1 + "," + x2 + "," + y2 + "with r = " + ir);
+           allFree = false;
+           break;
+         }
+        }
+        if (allFree) return true;
+      }
+        
+     return false;
+    }
+    
     public boolean attacks(int x, int y, int inMove) {
       Piece p;
       int lowX,  // From x pos
@@ -119,42 +193,10 @@ public final class Position implements Cloneable {
                                 (x == p.xPos - 1))) return true;
                         break;
                     case Piece.ROOK:
-                        if      (p.xPos == x) {
-                            allFree = true;
-                            if (y < p.yPos) { 
-                                lowY = y; 
-                                highY = p.yPos;
-                            } else {
-                                lowY = p.yPos;
-                                highY = y;
-                            }
-                            for (iy = lowY + 1; iy < highY; iy++) {
-                                if (!freeSquare(p.xPos, iy)) {
-                                 allFree = false;
-                                 break;
-                                }
-                            }
-                            if (allFree) return true;
-                        } 
-                        if (p.yPos == y) {
-                            allFree = true;
-                            if (x < p.xPos) { 
-                                lowX  = x; 
-                                highX = p.xPos;
-                            } else {
-                                lowX  = p.xPos;
-                                highX = x;
-                            }
-                            for (ix = lowX + 1; ix < highX; ix++) {
-                                if (!freeSquare(ix, p.yPos)) {
-                                 allFree = false;
-                                 break;
-                                }
-                            }
-                            if (allFree) return true;
-                        }
+                        if (rookAttack(p.xPos, p.yPos, x, y)) return true;
                         break;
                     case Piece.BISHOP:
+                        if (bishopAttack(p.xPos, p.yPos, x, y)) return true;
                         break;
                     case Piece.KNIGHT:
                         if (((x == p.xPos - 2) && (y == p.yPos + 1)) ||
@@ -167,12 +209,14 @@ public final class Position implements Cloneable {
                             ((x == p.xPos + 2) && (y == p.yPos - 1))) return true;
                         break;
                     case Piece.QUEEN:
+                         if (rookAttack(p.xPos, p.yPos, x, y) || 
+                             bishopAttack(p.xPos, p.yPos, x, y)) return true;
                         break;
                     case Piece.KING:
                         if ((x == p.xPos || x == p.xPos - 1 || x == p.xPos + 1) &&
                             (y == p.yPos || y == p.yPos - 1 || y == p.yPos + 1)) return true;
                         break;
-                    default: // Lala
+                    default: 
                 }
             }
         }
