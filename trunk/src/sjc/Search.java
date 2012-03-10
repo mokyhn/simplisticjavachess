@@ -45,6 +45,11 @@ public final class Search {
         this.plyDepth        = plyDepth;
         startTime           = System.nanoTime();
 
+        if (b.isDraw() || b.isMate()) {
+         System.out.println("Sorry, the game has ended...");
+         return 0;
+        }
+        
         switch (method) {
             case ALPHABETA:
                 System.out.println("Alpha-Beta search...");
@@ -92,19 +97,26 @@ public final class Search {
         int eval;
         final int toMove = analyzeBoard.inMove();
         Boolean thereWasALegalMove = false;
+        int inMove = analyzeBoard.inMove();
+        
+        // If the game has ended return immediately.
+        if (analyzeBoard.isDraw()) return 0;
+        if (analyzeBoard.isMate()) return Evaluator.evaluate(analyzeBoard);
         
         if (ply == 0) {
             noPositions++;
-            return (analyzeBoard.drawBy50MoveRule() ||
-                    analyzeBoard.drawBy3RepetionsRule()) ? 
-                    0 : Evaluator.evaluate(analyzeBoard);
+            if (analyzeBoard.drawBy50MoveRule() ||
+                    analyzeBoard.drawBy3RepetionsRule()) {
+             analyzeBoard.setDraw();
+             return 0;
+            } else return Evaluator.evaluate(analyzeBoard);
         }
 
-        
+        /* Not needed...
         if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED || 
             Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  {               
               return Evaluator.evaluate(analyzeBoard);
-        }
+        }*/
         
         
         moves = Movegenerator.generateAllMoves(analyzeBoard);
@@ -138,7 +150,7 @@ public final class Search {
          
         // Mate or draw
         if (!thereWasALegalMove) {
-           if (analyzeBoard.isInCheck(analyzeBoard.inMove())) {
+           if (analyzeBoard.isInCheck(inMove)) {
             analyzeBoard.setMate();
             return Evaluator.evaluate(analyzeBoard);
            } else {
