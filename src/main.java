@@ -184,10 +184,17 @@ class main {
               
               }
               else if (str.matches("attacks")) {
-               for (x = 0; x < 8; x++) {
+                  System.out.println("White attacks the squares:");
+                  for (x = 0; x < 8; x++) {
                    for (y = 0; y < 8; y++) {
-                       if (interfaceBoard.attacks(x, y)) System.out.println("Attacks " + Chessio.numToChar(x) + Chessio.numToNumChar(y));
+                       if (interfaceBoard.attacks(x, y, Piece.BLACK)) System.out.print(Chessio.numToChar(x) + Chessio.numToNumChar(y)+ ", ");
                    }
+                  }
+                  System.out.println("\nBlack attacks the squares:"); 
+                  for (x = 0; x < 8; x++) {
+                   for (y = 0; y < 8; y++) {
+                       if (interfaceBoard.attacks(x, y, Piece.WHITE)) System.out.print(Chessio.numToChar(x) + Chessio.numToNumChar(y) + ", ");
+                   }                  
                }
               }
               else if (str.matches("new"))   {

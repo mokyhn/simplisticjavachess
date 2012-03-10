@@ -45,10 +45,23 @@ public final class Board implements Cloneable {
             
     }
             
-    // Returns true if the side not in move, in board b attacks square (x, y)
-    // and otherwise false
+    /**
+     * 
+     * @param x
+     * @param y
+     * @return true if the side not in move, in board b attacks square (x, y) and otherwise false
+     */
     public boolean attacks(int x, int y)     { return position.attacks( x,  y,  state.inMove); }
    
+    /**
+     * 
+     * @param x
+     * @param y
+     * @param sideToMove
+     * @return true if the side not in move, in board b attacks square (x, y) and otherwise false
+     */
+    public boolean attacks(int x, int y, int sideToMove) {return position.attacks(x, y, sideToMove);}
+    
     public String  getBitboardString()       { return position.bitboard.toString();}
     public Boolean drawBy50MoveRule()        { return state.halfMoveClock >= 50;   }
 
