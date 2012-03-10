@@ -156,7 +156,10 @@ class main {
                     System.out.println(myMove.toString());
                 }
                 
-            } else if (str.matches("black")) { interfaceBoard.setBlackToMove(); }
+            } else if (str.matches("incheck")) { 
+                if (interfaceBoard.isInCheck(interfaceBoard.inMove())) System.out.println("Yes!");
+                else System.out.println("No...");}
+              else if (str.matches("black")) { interfaceBoard.setBlackToMove(); }
               else if (str.matches("white")) { interfaceBoard.setWhiteToMove(); }
               else if (str.matches("branching")) {System.out.println(engine1.findBranchingFactor(interfaceBoard, 4));}
               else if (str.startsWith("sim ")) {

@@ -83,8 +83,8 @@ public final class Board implements Cloneable {
           kingy = p.yPos;
           break;
          }
-        if (kingx != -1 && position.attacks(kingx, kingy, color)) res = true;
         }
+        if (kingx != -1 && position.attacks(kingx, kingy, color)) res = true;
         return res;
     }
     

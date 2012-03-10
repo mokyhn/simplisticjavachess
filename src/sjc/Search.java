@@ -239,18 +239,35 @@ public final class Search {
 
     }
 
-   
     public int randomSearch() {
       ArrayList<Move> moves;
       int             n;
-      final double          r = Math.random();
+      final int whoMoves;
+      double          r = Math.random();
+      boolean retry = true;
+      Move theMove;
       
       moves = Movegenerator.generateAllMoves(analyzeBoard);
       n     = moves.size();
       
       if (n == 0) return 0;
       
-      strongestMove = moves.get((int) Math.ceil((n-1)*r));
+      whoMoves = analyzeBoard.inMove();
+      while (retry && n > 0) {
+          r = Math.random();
+          theMove = moves.get((int) Math.ceil((n-1)*r));
+          analyzeBoard.performMove(theMove);
+          if (analyzeBoard.isInCheck(whoMoves)) {
+           analyzeBoard.retractMove();
+           moves.remove(theMove);
+           n = moves.size();
+           System.out.println("Neglected: " + theMove.toString());
+          } else {
+              retry = false;
+              strongestMove = theMove;
+              analyzeBoard.retractMove();
+          }
+      }
       return Evaluator.evaluate(analyzeBoard);
     }
 
