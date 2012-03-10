@@ -91,6 +91,7 @@ public final class Search {
         Move m;
         int eval;
         final int toMove = analyzeBoard.inMove();
+        Boolean thereWasALegalMove = false;
         
         if (ply == 0) {
             noPositions++;
@@ -115,6 +116,11 @@ public final class Search {
         for (int i = 0; (i < moves.size() && alpha < beta); i++) {
             m = moves.get(i);
             analyzeBoard.performMove(m);
+            if (analyzeBoard.isInCheck(m.whoMoves)) {
+              analyzeBoard.retractMove(); // The move was not legal
+              continue;                   // Try next pseudolegal move
+            }
+            thereWasALegalMove = true;
             eval = alphaBetaSearch(ply-1, depthToGo, alpha, beta);
             analyzeBoard.retractMove();
             
@@ -128,7 +134,19 @@ public final class Search {
             }    
             
              
-            }
+        }
+         
+        // Mate or draw
+        if (!thereWasALegalMove) {
+           if (analyzeBoard.isInCheck(analyzeBoard.inMove())) {
+            analyzeBoard.setMate();
+            return Evaluator.evaluate(analyzeBoard);
+           } else {
+               analyzeBoard.setDraw();
+               return 0;
+           } // draw
+         }
+        
             /*if (alpha <= beta) { 
                 wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
                 noCutOffs++;

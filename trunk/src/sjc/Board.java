@@ -24,6 +24,11 @@ public final class Board implements Cloneable {
     public int     inMove()                  { return state.inMove;  }
     public void    setBlackToMove()          { state.inMove = Piece.BLACK;}
     public void    setWhiteToMove()          { state.inMove = Piece.WHITE;}
+    public void    setDraw()                 { state.drawFlag = true;}
+    public void    setMate()                 { state.mateFlag = true;}
+    public boolean isDraw()                  { return state.drawFlag;}
+    public boolean isMate()                  { return state.mateFlag;}
+    
     public Move    getLastMove()             { return history.peek().move; }
     public Piece   getPiece(final int i)     { return position.getPiece(i); }
     public void    insertPiece(Piece p)      { position.insertPiece(p); }
@@ -47,6 +52,29 @@ public final class Board implements Cloneable {
     public String  getBitboardString()       { return position.bitboard.toString();}
     public Boolean drawBy50MoveRule()        { return state.halfMoveClock >= 50;   }
 
+    /**
+     * 
+     * @param color
+     * @return Is player with color color in check by opponent?
+     */
+    public Boolean isInCheck(int color) {
+        Boolean res = false;
+        Piece p;
+        int kingx = -1, 
+                kingy = -1;
+        
+        for (int i = 0; i < getNumberOfPieces(); i++) {
+         p = getPiece(i);
+         if (p.type == Piece.KING && p.color == color) {
+          kingx = p.xPos;
+          kingy = p.yPos;
+          break;
+         }
+        if (kingx != -1 && position.attacks(kingx, kingy, color)) res = true;
+        }
+        return res;
+    }
+    
     public Boolean drawBy3RepetionsRule() {
         State h;
         int k = 0;
