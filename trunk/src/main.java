@@ -192,8 +192,8 @@ class main {
                       interfaceBoard.performMove(engine1.getStrongestMove());
                       System.out.println(interfaceBoard.toString());
                       checkForDrawOrMate(interfaceBoard);
-                      //engine2.dosearch(interfaceBoard, plyDepth, Search.RANDOM);
-                      engine2.dosearch(interfaceBoard, 2, Search.ALPHABETA);
+                      engine2.dosearch(interfaceBoard, plyDepth, Search.RANDOM);
+                      //engine2.dosearch(interfaceBoard, 2, Search.ALPHABETA);
                       System.out.println(engine2.moveAndStatistics());
                       if (engine2.getStrongestMove() != null)
                        interfaceBoard.performMove(engine2.getStrongestMove());
