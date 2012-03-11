@@ -12,11 +12,6 @@ package sjc;
 // Eliminatate generation of a number of moves when king is in check...
 // The king is not allowed to be in check while another piece is moved...
 
-//TODO: Problems with mate
-// Move history: 1.e2-e4 b8-a6 2.b1-c3 a8-b8 3.g1-f3 b8-a8 4.d2-d4 a8-b8 5.f1-c4 b8-a8 6.o-o a8-b8 7.d4-d5 b8-a8 8.e4-e5 a8-b8 9.c1-e3 b8-a8 10.f3-d4 a6-b8 11.d1-f3 a7-a6 12.c3-e4 g8-h6 13.e3xh6 d7-d6 14.e5-e6 c8xe6 15.d5xe6 f7-f6 16.e4xf6 e7xf6 17.h6xg7 
-// FEN: rn1q3r/1pp1k1bp/p4p2/3Q4/2BN4/8/PPP2PPP/R4RK1 w - - 0 22
-// SD 6 Alphabeta Black to move, go
-
 import java.util.ArrayList;
 
 public final class Movegenerator {
@@ -142,10 +137,11 @@ public final class Movegenerator {
             b.canCastleShort()   && 
             b.freeSquare(5, fy) && 
             b.freeSquare(6, fy) &&
-            (1==1)   ) // TODO: No attacks on x=5,6?!
+            !b.attacks(5, fy) &&
+            !b.attacks(6, fy)) 
         {
             assert (b.getPieceXY(7, fy) != null);
-            assert (b.getPieceXY(7, fy).type == Piece.ROOK) : "Expected rook, found wirdo piece: " + b.getPieceXY(7, fy).toString();
+            assert (b.getPieceXY(7, fy).type == Piece.ROOK) : "Expected rook, found wirdo piece: " + b.getPieceXY(7, fy).toString() + "fx, fy=" + fx + ", " + fy + "c = " + c;
             assert (b.getPieceXY(7, fy).color == c);
             Moves.add(new Move(fx, fy, fx+2, fy, Move.CASTLE_SHORT, Piece.EMPTY, c));
         }
@@ -156,7 +152,8 @@ public final class Movegenerator {
             b.freeSquare(3, fy) && 
             b.freeSquare(2, fy) &&
             b.freeSquare(1, fy) &&
-            (1==1)   ) // TODO: No attacks on x=2, 3?!
+            !b.attacks(2, fy) &&
+            !b.attacks(3, fy))
         {
          Moves.add(new Move(fx, fy, fx-2, fy, Move.CASTLE_LONG, Piece.EMPTY, c));
         }
