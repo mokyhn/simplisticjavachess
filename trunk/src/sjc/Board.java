@@ -199,14 +199,14 @@ public final class Board implements Cloneable {
             case Move.CAPTURE:
                 // Capturing a rook may affect casteling opputunities!
                 if (getPieceXY(m.toX, m.toY).type == Piece.ROOK) {
-                    if (m.whoMoves == Piece.WHITE) {
+                    if (m.whoMoves == Piece.WHITE && m.toY == 7) {
                       if (m.toX == 0 && state.blackCanCastleLong)  state.blackCanCastleLong  = false;
                       if (m.toX == 7 && state.blackCanCastleShort) state.blackCanCastleShort = false;
                     }
-                    else {
+                    if (m.whoMoves == Piece.BLACK && m.toY == 0) {
                       if (m.toX == 0 && state.whiteCanCastleLong)  state.whiteCanCastleLong  = false;
                       if (m.toX == 7 && state.whiteCanCastleShort) state.whiteCanCastleShort = false;
-                      }
+                    }
                 }
                 // Do the capture
                 removePiece(m.toX, m.toY);

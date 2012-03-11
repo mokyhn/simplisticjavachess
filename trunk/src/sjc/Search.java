@@ -249,6 +249,8 @@ public final class Search {
       boolean retry = true;
       Move theMove;
       
+      strongestMove = null;
+      
       moves = Movegenerator.generateAllMoves(analyzeBoard);
       n     = moves.size();
       
