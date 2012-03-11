@@ -45,6 +45,8 @@ public final class Search {
         this.plyDepth        = plyDepth;
         startTime           = System.nanoTime();
 
+        strongestMove = null;
+        
         if (b.isDraw() || b.isMate()) {
          System.out.println("Sorry, the game has ended...");
          return 0;
@@ -66,6 +68,9 @@ public final class Search {
                 break;
         }
 
+        if (analyzeBoard.isDraw()) b.setDraw(); 
+        if (analyzeBoard.isMate()) b.setMate();
+        
         endTime = System.nanoTime();
         return searchResult;
     }
@@ -105,13 +110,15 @@ public final class Search {
             else return Evaluator.BLACK_IS_MATED;
         }
         
-        if (ply == 0) {
-            noPositions++;
-            if (analyzeBoard.drawBy50MoveRule() ||
-                    analyzeBoard.drawBy3RepetionsRule()) {
+        // Test for other kinds of draw.
+        if (analyzeBoard.drawBy50MoveRule() || analyzeBoard.drawBy3RepetionsRule()) {
              analyzeBoard.setDraw();
              return 0;
-            } else return Evaluator.evaluate(analyzeBoard);
+        }
+        
+        if (ply == 0) {
+            noPositions++;
+            return Evaluator.evaluate(analyzeBoard);
         }
 
         /* Not needed...
@@ -277,6 +284,19 @@ public final class Search {
               analyzeBoard.retractMove();
           }
       }
+      
+      if (retry == true) {
+          if (analyzeBoard.isInCheck(whoMoves)) {
+           analyzeBoard.setMate();
+           if (whoMoves == Piece.WHITE) {
+            return Evaluator.WHITE_IS_MATED;          
+           } else return Evaluator.BLACK_IS_MATED;
+          } else {
+           analyzeBoard.setDraw();
+           return 0;
+          }
+      }
+      
       return Evaluator.evaluate(analyzeBoard);
     }
 
