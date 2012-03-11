@@ -178,9 +178,13 @@ class main {
                   engine2 = new Search();
                   
                   System.out.println(interfaceBoard.toString());
-
-                  for (int i = 0; i < simSteps; i++) {
-                      engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
+                  int res = 0;
+                  for (int i = 0; i < simSteps && (res != Evaluator.WHITE_IS_MATED || res != Evaluator.BLACK_IS_MATED || 
+                          !interfaceBoard.drawBy3RepetionsRule()||
+                          !interfaceBoard.drawBy50MoveRule() ||
+                          !interfaceBoard.isDraw() ||
+                          !interfaceBoard.isMate()); i++) {
+                      res = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
                       System.out.println(engine1.moveAndStatistics());
                       if (engine1.getStrongestMove() == null) {
                        System.out.println("Game ended....");
@@ -190,7 +194,9 @@ class main {
                       checkForDrawOrMate(interfaceBoard);
                       engine2.dosearch(interfaceBoard, plyDepth, Search.RANDOM);
                       System.out.println(engine2.moveAndStatistics());
-                      interfaceBoard.performMove(engine2.getStrongestMove());
+                      if (engine2.getStrongestMove() != null)
+                       interfaceBoard.performMove(engine2.getStrongestMove());
+                      else System.out.println("No move to perform in position!");
                       System.out.println(interfaceBoard.toString());
                       checkForDrawOrMate(interfaceBoard);
                   }
