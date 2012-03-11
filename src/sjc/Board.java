@@ -202,11 +202,11 @@ public final class Board implements Cloneable {
                     if (m.whoMoves == Piece.WHITE) {
                       if (m.toX == 0 && state.blackCanCastleLong)  state.blackCanCastleLong  = false;
                       if (m.toX == 7 && state.blackCanCastleShort) state.blackCanCastleShort = false;
+                    }
                     else {
                       if (m.toX == 0 && state.whiteCanCastleLong)  state.whiteCanCastleLong  = false;
                       if (m.toX == 7 && state.whiteCanCastleShort) state.whiteCanCastleShort = false;
                       }
-                    }
                 }
                 // Do the capture
                 removePiece(m.toX, m.toY);
