@@ -9,14 +9,23 @@ public final class Chessio {
     public Move parseMove(Board b, String str) throws NoMoveException {
         int    fromX, fromY, toX, toY;
         int    whoToMove = b.inMove();
-        char[] s         = str.toCharArray();
+        char[] s;       
         Move m           = new Move();
         Piece  p, pto;
 
+       
+        
+        if (str.equalsIgnoreCase("o-o")    && b.inMove() == Piece.WHITE) str = "e1g1";
+        if (str.equalsIgnoreCase("o-o-o")  && b.inMove() == Piece.WHITE) str = "e1c1";
+        if (str.equalsIgnoreCase("o-o")    && b.inMove() == Piece.BLACK) str = "e8g8";
+        if (str.equalsIgnoreCase("o-o-o")  && b.inMove() == Piece.BLACK) str = "e8c8";
+        
+        
+        s = str.toCharArray();        
+        
         if (s.length == 0) {
          return null;
-        }
-        
+        }        
         if (s.length < 4) {
             System.out.println("Movestring to short, not a valid move.");
             throw new NoMoveException();
@@ -27,6 +36,7 @@ public final class Chessio {
             throw new NoMoveException();
         }
 
+        
         fromX = (int)  (s[0] - 'a');
         fromY = (int) ((s[1] - '0') - 1);
         toX   = (int)  (s[2] - 'a');

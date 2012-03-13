@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import sjc.*;
 
+
 class main {
     public static void checkForDrawOrMate(Board b) {      
         if (b.isDraw()) {
@@ -106,7 +107,7 @@ class main {
     }
     
     
-    public static void main(String param[]) throws java.io.IOException, NoMoveException {
+    public static void main(String param[]) throws java.io.IOException, NoMoveException, Exception {
 
         int     plyDepth      = 5;
         Chessio io            = new Chessio();
@@ -235,6 +236,10 @@ class main {
              else if (str.startsWith("random")) {
               searchMethod = Search.RANDOM;
              }
+             else if (str.startsWith("telnet")) {
+              Telnet telnet = new Telnet();
+              telnet.test();
+             }          
              else
             if (str.matches("quit") || str.matches("q") || str.matches("bye") || str.matches("exit")) {
                 System.out.print("\nGoodbye\n\n");
