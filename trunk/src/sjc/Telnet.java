@@ -21,7 +21,7 @@ public class Telnet {
      return Character.toString(s.charAt(i));
     }
     
-    
+   
     private String parseMove(String s) {
         String result;
         String tmp;
@@ -56,14 +56,21 @@ public class Telnet {
         Boolean playingFlag = false;
         String s,moveStr;
         
-        System.out.println(parseMove("P/e2-e4"));
+        /*System.out.println(parseMove("P/e2-e4"));
         System.out.println(parseMove("P/e2xe4"));
         System.out.println(parseMove("P/e2xe4=Q"));
         System.out.println(parseMove("o-o"));
-        System.out.println(parseMove("o-o-o"));
-        System.out.println(parseMove("<12> rn-qkbnr ppp--ppp ---p---- ----p--- --P-P-b- P----N-- -P-P-PPP RNBQKB-R B -1 1 1 1 1 0 241 GuestRWGM GuestDBDL -1 5 0 39 39 243 287 4 o-o (0:22) a3 0 1 0"));
-
-        //System.exit(0);
+        System.out.println(parseMove("o-o-o"));*/
+        String response = "<12> rn-qkbnr ppp--ppp ---p---- ----p--- --P-P-b- P----N-- -P-P-PPP RNBQKB-R B -1 1 1 1 1 0 241 GuestRWGM GuestDBDL -1 5 0 39 39 243 287 4 o-o (0:22) a3 0 1 0";
+        
+        /*String[] newtest = parseResponse(response);
+        for (int j = 0; j < newtest.length; j++) System.out.println(newtest[j]);
+        System.exit(0);
+        System.out.println(parseMove(response));*/
+        
+        ICCProtocol icc = new ICCProtocol(response);
+        System.exit(0);
+        //if (22==11+11) return;
         
         
         Socket           soc  = new Socket("69.36.243.188", 23);             //Create object of Socket , freechess.org
