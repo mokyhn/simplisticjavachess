@@ -21,37 +21,13 @@ public class Telnet {
      return Character.toString(s.charAt(i));
     }
     
-   
-    private String parseMove(String s) {
-        String result;
-        String tmp;
-        
-        Pattern p = Pattern.compile("(\\p{Upper}/\\w\\d[-|x]\\w\\d[\\w|=]*)"); // ]?[] *[o-o]?[o-o-o]?
-        
-        Matcher m = p.matcher(s);
-        
-        if (s.toLowerCase().contains("o-o-o")) return "o-o-o";
-        if (s.toLowerCase().contains("o-o")) return "o-o";
-        
-        if (m.find()) {
-            result = s.substring(m.start(), m.end());
-               result = result.substring(2);
-                tmp = ca(result,0) + ca(result, 1) + ca(result, 3) + ca(result, 4);
-                if (result.contains("=")) tmp = tmp + result.charAt(6);
-                result = tmp;
-            }
-        else result = "";
-       
-        return result;
-
-    }
     
     public void test() throws Exception
     {
         //String command;
         Search  engine       = new Search();
         Board   theBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-        Chessio io = new Chessio();
+        ICCProtocol  icc = new ICCProtocol();
         Move m;
         Boolean playingFlag = false;
         String s,moveStr;
@@ -68,9 +44,8 @@ public class Telnet {
         System.exit(0);
         System.out.println(parseMove(response));*/
         
-        ICCProtocol icc = new ICCProtocol(response);
-        System.exit(0);
-        //if (22==11+11) return;
+        icc.setBoard(theBoard);
+          //if (22==11+11) return;
         
         
         Socket           soc  = new Socket("69.36.243.188", 23);             //Create object of Socket , freechess.org
@@ -92,23 +67,23 @@ public class Telnet {
                  {playingFlag = true; 
                   continue;}
             System.out.println(s); //gets the response of server        //.readLine()
-           moveStr = parseMove(s);
-         
-           if (moveStr.length() > 3  && playingFlag) {
-           System.out.println("Parsed move " + moveStr);
-           try {
-            m = io.parseMove(theBoard, moveStr);
-               if (m != null) {
+          
+            icc.setBoard(theBoard);
+            icc.setMoveString(s);
+            icc.setColor(Piece.WHITE); // Get White moves
+            m = icc.getMove();
+            if (m != null) System.out.println("Found move " + m.toString());
+               if (m != null && m.whoMoves == Piece.WHITE) {
                theBoard.performMove(m);
-               engine.dosearch(theBoard, 5, Search.ALPHABETA);
+               engine.dosearch(theBoard, 3, Search.ALPHABETA);
                System.out.println("Found " + engine.getStrongestMove().toString());
                dout.writeBytes(engine.getStrongestMove().toString() + "\n");
                theBoard.performMove(engine.getStrongestMove());
                System.out.println(theBoard.toString());
                }
-           } catch (NoMoveException e) {;}
+            
          }
-        }
+        
         //System.out.println(din.readUTF()); //gets the response of server        //.readLine()
 
         

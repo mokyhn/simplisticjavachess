@@ -37,8 +37,12 @@ public final class Move implements Cloneable {
 
 			// Casteling
 			CASTLE_SHORT                  = 11,
-                        CASTLE_LONG                   = 12;
+                        CASTLE_LONG                   = 12,
 
+                        // Speciel moves
+                        RESIGN                        = 13,
+                        CALL_FOR_DRAW                 = 14;
+                        
 
         public Move() {
 	}

@@ -13,7 +13,8 @@ public final class Chessio {
         Move m           = new Move();
         Piece  p, pto;
 
-       
+        if (str == null) throw new NoMoveException();
+        if (b   == null) throw new NoMoveException();
         
         if (str.equalsIgnoreCase("o-o")    && b.inMove() == Piece.WHITE) str = "e1g1";
         if (str.equalsIgnoreCase("o-o-o")  && b.inMove() == Piece.WHITE) str = "e1c1";
