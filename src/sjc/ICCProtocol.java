@@ -1,5 +1,8 @@
 package sjc;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author mku
@@ -49,8 +52,26 @@ public class ICCProtocol {
     
     private String   response;
     private String[] parts;
+    private Board    theboard;
     
-    public boolean isValidResponse(String response) {     
+    
+    private String   filterColor;
+    
+    
+    public ICCProtocol() {}
+    
+    public void setBoard(Board b) {
+        theboard = b;
+    }
+    
+    // Get moves for color c
+    public void setColor(int c) {
+        if (c == Piece.WHITE) 
+            filterColor = "W";
+        else filterColor = "B";
+    }
+    
+    public boolean isAMoveResponse() {     
       return parts.length >= 31 &&
              parts[BL1].length() == 8 && 
              parts[BL2].length() == 8 &&
@@ -61,9 +82,14 @@ public class ICCProtocol {
              parts[BL7].length() == 8 &&   
              parts[BL8].length() == 8 &&   
              parts[LINE_TAG].startsWith("<") &&
-             parts[LINE_TAG].endsWith(">");
+             parts[LINE_TAG].endsWith(">") && parts[WHO_IN_MOVE].equalsIgnoreCase(filterColor);
     }
 
+      
+    public void setMoveString(String res) {
+      this.response = res;
+      parts = response.split("\\s+");    
+    }
     
     
     public ICCProtocol(String res) {
@@ -75,7 +101,7 @@ public class ICCProtocol {
       }*/
       System.out.println("---------------");
       
-         System.out.println(isValidResponse(response)); 
+         System.out.println(isAMoveResponse()); 
          System.out.println(this.toString());
     }
 
@@ -83,49 +109,40 @@ public class ICCProtocol {
      return "";
     }
     
-//    
-//      
-//        if (m.find()) {
-//            result = s.substring(m.start(), m.end());
-//               result = result.substring(2);
-//                tmp = ca(result,0) + ca(result, 1) + ca(result, 3) + ca(result, 4);
-//                if (result.contains("=")) tmp = tmp + result.charAt(6);
-//                result = tmp;
-//            }
-//        else result = "";
-//       
-//        return result;
-//        
     private String getAlgebraicMoveStr() {
         String s = parts[MOVE_STRING];
-        String inMove = parts[WHO_IN_MOVE];
-        String res = "";
+        String inMove = parts[WHO_IN_MOVE];      
         
+        if (s.equalsIgnoreCase("none")) return null;
         
         if (s.toLowerCase().contains("o-o")   && inMove.equalsIgnoreCase("W")) return "e1g1";
         if (s.toLowerCase().contains("o-o-o") && inMove.equalsIgnoreCase("W")) return "e1c1";
-        if (s.toLowerCase().contains("o-o")   && inMove.equalsIgnoreCase("B")) return "e1g1";
-        if (s.toLowerCase().contains("o-o-o") && inMove.equalsIgnoreCase("B")) return "e1c1";
+        if (s.toLowerCase().contains("o-o")   && inMove.equalsIgnoreCase("B")) return "e8g8";
+        if (s.toLowerCase().contains("o-o-o") && inMove.equalsIgnoreCase("B")) return "e8c8";
         
         s = s.substring(2); // Remove Figurine letter and symbol "/"
         
         
-        res = s.substring(0, 2) + s.substring(3, 5); // Coordinates
+        s = s.replace("-", ""); // Remove symbol "-"
+        s = s.replace("=", ""); // Remove symbol "="
         
-        if (s.contains("=")) {
-         res = (res + "=") + s.charAt(6); // Get promote to letter
-        }
  
         // Entered: b7-a8=N
         // Nnbqkbnr p---ppp- -------- -------p -------- -------- PPPP-PPP RNBQKBNR B -1 1 1 1 0 0 318 xyzwxyzwq xyzwxyzw -1 2 60 41 31 311 264 5 P/b7-a8=N (0:24) bxa8=N 0 1 0
 
-        return res; 
-        
+        return s;         
     }
     
     public Move getMove() {
-        
-     return null;
+     Chessio io = new Chessio();
+     
+     if (isAMoveResponse())        
+        try {
+            return io.parseMove(theboard, getAlgebraicMoveStr());
+        } catch (NoMoveException ex) {
+            System.out.println("Move parse error in ICCProtocol.java");
+        }
+       return null; 
     }
     
     public String toString() {
