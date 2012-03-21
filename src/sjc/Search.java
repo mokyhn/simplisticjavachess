@@ -94,20 +94,20 @@ public final class Search {
                " cutoffs " +
                " wasted moves " + wastedGeneratedMoves );
     }
-
-    // 1n2k1n1/pppppppp/8/8/8/8/PPPPPPPP/1N2K1N1 w - - 0 1
-    public int alphaBetaSearch(int ply, int depthToGo, int alpha, int beta) {
+    
+    public int alphaBetaSearch(int currentPlyDepth, int totalPlyDepth, int alpha, int beta) {
         ArrayList<Move> moves;
         Move m;
         int eval;
         Boolean thereWasALegalMove = false;
         final int inMove = analyzeBoard.inMove();
+        int distanceToRoot = totalPlyDepth - currentPlyDepth;
         
         // If the game has ended return immediately.
         if (analyzeBoard.isDraw()) return 0;
         if (analyzeBoard.isMate()) {
-            if (inMove == Piece.WHITE) return Evaluator.WHITE_IS_MATED;
-            else return Evaluator.BLACK_IS_MATED;
+            if (inMove == Piece.WHITE) return Evaluator.WHITE_IS_MATED+distanceToRoot;
+            else return Evaluator.BLACK_IS_MATED-distanceToRoot;
         }
         
         // Test for other kinds of draw.
@@ -116,7 +116,7 @@ public final class Search {
              return 0;
         }
         
-        if (ply == 0) {
+        if (currentPlyDepth == 0) {
             noPositions++;
             return Evaluator.evaluate(analyzeBoard);
         }
@@ -143,25 +143,38 @@ public final class Search {
               continue;                   // Try next pseudolegal move
             }
             thereWasALegalMove = true;
-            eval = alphaBetaSearch(ply-1, depthToGo, alpha, beta);
+            
+            //System.out.print("(" + m.toString());
+            eval = alphaBetaSearch(currentPlyDepth-1, totalPlyDepth, alpha, beta);
+            //System.out.println(")");
             analyzeBoard.retractMove();
             
-            if (inMove == 1) {
-             if (eval > alpha) {alpha = eval;
-             if (ply == depthToGo)  strongestMove = m;}
-            } else
-            {
-             if (eval < beta) {beta = eval;
-             if (ply == depthToGo)  strongestMove = m;}
+            if (inMove == Piece.WHITE) {               
+                if (eval > alpha) {
+                 alpha = eval;
+                 if (currentPlyDepth == totalPlyDepth)  {
+                     //System.out.println("WHITE: Eval, alpha = " + eval + ", " + alpha + " " + m.toString());
+                     strongestMove = m;
+                 }
+                }
+            } else {
+             if (eval < beta) {
+                 beta = eval;
+                 if (currentPlyDepth == totalPlyDepth)  {
+                     //System.out.println("BLACK: Eval, alpha = " + eval + ", " + alpha + " " + m.toString());
+                     strongestMove = m;
+                 }
+             }
             }    
         }
          
         // Mate or draw
         if (!thereWasALegalMove) {
            if (analyzeBoard.isInCheck(inMove)) {
-            analyzeBoard.setMate();
-            if (inMove == Piece.WHITE) return Evaluator.WHITE_IS_MATED;
-            else return Evaluator.BLACK_IS_MATED;
+            analyzeBoard.setMate();            
+            //System.out.println("Matefound:\n" + analyzeBoard.toString());
+            if (inMove == Piece.WHITE) return Evaluator.WHITE_IS_MATED+distanceToRoot;
+            else return Evaluator.BLACK_IS_MATED-distanceToRoot;
            } else {
                analyzeBoard.setDraw();
                return 0;
@@ -173,12 +186,7 @@ public final class Search {
                 noCutOffs++;
                 return alpha; }*/
         
-        int result= 0;
-        
-        if (inMove == 1) { result = alpha;
-        } else result = beta;
-        
-        return result;
+        return inMove == Piece.WHITE ? alpha : beta;
     }
 
     /**

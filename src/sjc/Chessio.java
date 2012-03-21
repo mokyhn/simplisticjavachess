@@ -99,14 +99,14 @@ public final class Chessio {
         }
 
         // Promotion moves
-        if (str.charAt(4) == '='  && 
+        if (str.length() == 5  && 
             p.type == Piece.PAWN &&
            ((p.color == Piece.WHITE && fromY == 6) ||
             (p.color == Piece.BLACK && fromY == 1))) {
             
             // Simple promotions
             if (fromX == toX && b.freeSquare(toX, toY)) {
-                switch (s[5]) {
+                switch (s[4]) {
                 case 'K': m.type = Move.PROMOTE_TO_KNIGHT; break;
                 case 'B': m.type = Move.PROMOTE_TO_BISHOP; break;
                 case 'Q': m.type = Move.PROMOTE_TO_QUEEN;  break;
@@ -119,7 +119,7 @@ public final class Chessio {
             if (fromX != toX && 
                 !b.freeSquare(toX, toY) &&
                  b.getPieceXY(toX, toY).color == -p.color) {
-                switch (s[5]) {
+                switch (s[4]) {
                     case 'K': m.type = Move.CAPTURE_AND_PROMOTE_TO_KNIGHT; break;
                     case 'B': m.type = Move.CAPTURE_AND_PROMOTE_TO_BISHOP; break;
                     case 'Q': m.type = Move.CAPTURE_AND_PROMOTE_TO_QUEEN;  break;
