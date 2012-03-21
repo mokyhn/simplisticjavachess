@@ -98,11 +98,8 @@ class main {
     
     public static void test() throws NoMoveException {     
 
-    
-       main.testSearch("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b - - 1 0", "", Search.MINMAX, 3, (Evaluator.ROOKVALUE+6*Evaluator.PAWNVALUE)-Evaluator.QUEENVALUE,  "e1c1");
-       
-  
-       
+       main.testSearch("4k3/5R1/5Q2/8/8/8/8/4K3 w - - 5 21", "", Search.ALPHABETA, 4, Evaluator.BLACK_IS_MATED, "f6e7");
+       //assert(main.testSearch("4k3/5R1/5Q2/8/8/8/8/4K3 w - - 5 21", "", Search.ALPHABETA, 4, Evaluator.BLACK_IS_MATED, "f6e7"));
 
     }
     
@@ -117,12 +114,19 @@ class main {
         String str            = null;
         int simSteps          = 0;
         int searchMethod      = Search.MINMAX;
+        Boolean xboardMode    = false;
         Move    m;
 
         int x, y;
 
          Board interfaceBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
        
+         
+        if (param.length > 0)  {
+            if (param[0].contains("xboard")) 
+                xboardMode = true;
+        }
+                
         
         // Do a simple setup with pawns and knights.
         //Board interfaceBoard = new Board("1n2k1n1/pppppppp/8/8/8/8/PPPPPPPP/1N2K1N1 w KQkq - 0 1");
@@ -144,13 +148,13 @@ class main {
         //Board interfaceBoard = new Board("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w - 0 1");
 
 
-        io.printWelcomeText();
+        if (!xboardMode) io.printWelcomeText();
 
         while (true) {
-            System.out.print("\n> "); 
+            if (!xboardMode) System.out.print("\n> "); 
             str = reader.readLine();
 
-            if (str.matches("go")) {
+            if (str.trim().equalsIgnoreCase("go")) {
                 engine1.dosearch(interfaceBoard, plyDepth, searchMethod);
                 System.out.println(engine1.moveAndStatistics());
                 interfaceBoard.performMove(engine1.getStrongestMove());
@@ -170,8 +174,8 @@ class main {
             } else if (str.matches("incheck")) { 
                 if (interfaceBoard.isInCheck(interfaceBoard.inMove())) System.out.println("Yes!");
                 else System.out.println("No...");}
-              else if (str.matches("black")) { interfaceBoard.setBlackToMove(); }
-              else if (str.matches("white")) { interfaceBoard.setWhiteToMove(); }
+              else if (str.trim().equalsIgnoreCase("black")) { interfaceBoard.setBlackToMove(); }
+              else if (str.trim().equalsIgnoreCase("white")) { interfaceBoard.setWhiteToMove(); }
               else if (str.matches("branching")) {System.out.println(engine1.findBranchingFactor(interfaceBoard, 4));}
               else if (str.startsWith("sim ")) {
                   simSteps = Integer.parseInt(str.substring(4));
@@ -218,7 +222,7 @@ class main {
                    }                  
                }
               }
-              else if (str.matches("new"))   {
+              else if (str.trim().equalsIgnoreCase("new"))   {
                 interfaceBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
                 engine1 = new Search();
                 engine2 = new Search();
@@ -241,15 +245,22 @@ class main {
               telnet.test();
              }          
              else
-            if (str.matches("quit") || str.matches("q") || str.matches("bye") || str.matches("exit")) {
+            if (str.trim().equalsIgnoreCase("quit") || str.matches("q") || str.matches("bye") || str.trim().equalsIgnoreCase("exit")) {
                 System.out.print("\nGoodbye\n\n");
                 System.exit(0); }
-              else if (str.startsWith("sd")) { plyDepth = Integer.parseInt(str.substring(3)); }
-              else if (str.matches("help")) { io.printHelpText(); }
+              else if (str.trim().startsWith("sd")) { plyDepth = Integer.parseInt(str.replaceAll(" ", "").substring(2)); }
+              else if (str.matches("help")) { io.printWelcomeText(); io.printHelpText(); }
               else if (str.matches("print") || str.matches("p")) { System.out.println(interfaceBoard.toString()); }
               else if (str.matches("test")) {
                test();
               }
+              else if (str.equalsIgnoreCase("xboard")) {
+               xboardMode = true;
+              }
+              else if (str.equalsIgnoreCase("xboard") ||
+                       str.equalsIgnoreCase("variant") ||
+                       str.equalsIgnoreCase("force") ||
+                       str.contains("protover")) {}
               else if (str.matches("bitboard")) {
                System.out.println(interfaceBoard.getBitboardString());
               }

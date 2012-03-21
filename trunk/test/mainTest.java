@@ -44,8 +44,8 @@ public class mainTest {
      */
     @Test
     public void testPawnPromotions() throws Exception {
-       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",            "", Search.MINMAX,    1, 9-3,   "a7b8Q"));
-       assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.MINMAX,    1, 9-3,   "a7b8Q"));
+       //assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",            "", Search.MINMAX,    1, 9-3,   "a7b8Q"));
+       //assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.MINMAX,    1, 9-3,   "a7b8Q"));
        assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.ALPHABETA, 1, 9-3,   "a7b8Q"));
        assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.MINMAX,    2, 9-3,   "a7b8Q"));
        assertTrue(main.testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.ALPHABETA, 2, 9-3,   "a7b8Q"));
@@ -95,7 +95,11 @@ public class mainTest {
     @Test
     public void matingTest() throws Exception {
        // Mating with queen
+       assertTrue(main.testSearch("r1b1k3/1p3R2/p2p1Q2/P1pPp1P1/3P4/1P6/4P1P1/RN2KBN1 w Q - 5 21", "", Search.ALPHABETA, 3, Evaluator.BLACK_IS_MATED, "f6e7"));
+       assertTrue(main.testSearch("4k3/5R1/5Q2/8/8/8/8/4K3 w - - 5 21", "", Search.ALPHABETA, 4, Evaluator.BLACK_IS_MATED, "f6e7"));
+       assertTrue(main.testSearch("4k3/5R1/5Q2/8/8/8/8/4K3 w - - 5 21", "", Search.ALPHABETA, 4, Evaluator.BLACK_IS_MATED, "f6e7"));
        assertTrue(main.testSearch("r1b1k3/1p3R2/p2p1Q2/P1pPp1P1/3P4/1P6/4P1P1/RN2KBN1 w Q - 5 21", "", Search.ALPHABETA, 4, Evaluator.BLACK_IS_MATED, "f6e7"));
+       assertTrue(main.testSearch("r1b1k3/1p3R2/p2p1Q2/P1pPp1P1/3P4/1P6/4P1P1/RN2KBN1 w Q - 5 21", "", Search.ALPHABETA, 5, Evaluator.BLACK_IS_MATED, "f6e7"));
 
         
        //Mating with pawn
