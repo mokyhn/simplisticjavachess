@@ -134,11 +134,12 @@ public final class Movegenerator {
 
         // Castling short
         if (fx == 4 && 
-            b.canCastleShort()   && 
+            b.canCastleShort()  && 
             b.freeSquare(5, fy) && 
             b.freeSquare(6, fy) &&
-            !b.attacks(5, fy) &&
-            !b.attacks(6, fy)) 
+            !b.attacks(5, fy)   &&
+            !b.attacks(6, fy)   && 
+            !b.isInCheck(c)) 
         {
             assert (b.getPieceXY(7, fy) != null);
             assert (b.getPieceXY(7, fy).type == Piece.ROOK) : "Expected rook, found wirdo piece: " + b.getPieceXY(7, fy).toString() + "fx, fy=" + fx + ", " + fy + "c = " + c;
@@ -152,8 +153,9 @@ public final class Movegenerator {
             b.freeSquare(3, fy) && 
             b.freeSquare(2, fy) &&
             b.freeSquare(1, fy) &&
-            !b.attacks(2, fy) &&
-            !b.attacks(3, fy))
+           !b.attacks(2, fy)    &&
+           !b.attacks(3, fy)    &&
+           !b.isInCheck(c))
         {
          Moves.add(new Move(fx, fy, fx-2, fy, Move.CASTLE_LONG, Piece.EMPTY, c));
         }
