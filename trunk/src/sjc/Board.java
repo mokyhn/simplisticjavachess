@@ -167,6 +167,17 @@ public final class Board implements Cloneable {
         }
 
         if (m.aCapturePromotion()) {
+            if (getPieceXY(m.toX, m.toY).type == Piece.ROOK) {
+                if (m.whoMoves == Piece.WHITE && m.toY == 7) {
+                  if (m.toX == 0 && state.blackCanCastleLong)  state.blackCanCastleLong  = false;
+                  if (m.toX == 7 && state.blackCanCastleShort) state.blackCanCastleShort = false;
+                }
+                if (m.whoMoves == Piece.BLACK && m.toY == 0) {
+                  if (m.toX == 0 && state.whiteCanCastleLong)  state.whiteCanCastleLong  = false;
+                  if (m.toX == 7 && state.whiteCanCastleShort) state.whiteCanCastleShort = false;
+                }
+            }
+
             removePiece(m.toX,   m.toY);
             removePiece(m.fromX, m.fromY);
             insertPiece(new Piece(m.toX, m.toY, m.whoMoves, m.promotionTo()));

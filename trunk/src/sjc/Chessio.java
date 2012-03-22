@@ -107,6 +107,7 @@ public final class Chessio {
             // Simple promotions
             if (fromX == toX && b.freeSquare(toX, toY)) {
                 switch (s[4]) {
+                case 'N': m.type = Move.PROMOTE_TO_KNIGHT; break;    
                 case 'K': m.type = Move.PROMOTE_TO_KNIGHT; break;
                 case 'B': m.type = Move.PROMOTE_TO_BISHOP; break;
                 case 'Q': m.type = Move.PROMOTE_TO_QUEEN;  break;

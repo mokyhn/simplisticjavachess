@@ -1,8 +1,6 @@
 //-enableassertions
 
 /*
- * TODO: Testing via a given position, search depth, search method and comparision
- * against an expected evaluation and expected move.
  * TODO: Draw by insufficient material
  */
 
@@ -13,94 +11,39 @@ import sjc.*;
 
 
 class main {
+    static Board interfaceBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+
+    
     public static void checkForDrawOrMate(Board b) {      
         if (b.isDraw()) {
          System.out.println("Draw");
-         System.exit(0);
+         //System.exit(0);
         }
         
         if (b.isMate()) {
          System.out.println("Mate");
-         System.exit(0);
+         //System.exit(0);
         }
         
         if (b.drawBy3RepetionsRule()) {
             System.out.println("Draw by threefold repetition...");
-            System.exit(0);
+            //System.exit(0);
         }
 
         if (b.drawBy50MoveRule()) {
             System.out.println("Draw by 50 moves rule...");
-            System.exit(0);
+            //System.exit(0);
         }
 
     }
 
-    private static boolean testSearch(Board b, int method, int plyDepth, int expectedEvaluation, ArrayList<Move> expectedMoves) throws NoMoveException {
-       Search  engine       = new Search();
-       int searchResult     = engine.dosearch(b, plyDepth, method);
-       Move strongestMove;
-       
-       strongestMove = engine.getStrongestMove();
-
-       if (expectedMoves.isEmpty())       
-       System.out.println("Expected moves:       none" + ", actual " + strongestMove);
-       else System.out.println("Expected moves:       " + expectedMoves.toString() + ", actual " + engine.moveAndStatistics());           
-       
-       
-       System.out.println("Expected evaluation: " + expectedEvaluation      + ", actual evaluation: "  + searchResult);
-       System.out.println();
-       
-       
-       if (expectedEvaluation == searchResult && 
-           strongestMove == null && expectedMoves.isEmpty()) return true;
-       
-       Iterator<Move> it = expectedMoves.iterator();
-       
-       while (it.hasNext()) {
-        if (it.next().equal(strongestMove)) return  expectedEvaluation == searchResult;
-       }
-       
-        return false;
-    
-     }    
     
     
-    public static boolean testSearch(String fen, String moveSequence, int method, int plyDepth, int expectedEvaluation, String expectedMoveStrs) throws NoMoveException {
-        String[] moveStrings          = moveSequence.split(" ");
-        Board b                       = new Board(fen);
-        Chessio cio                   = new Chessio();
-        String[] expectedMoveStrings  = expectedMoveStrs.split(" ");
-        ArrayList<Move> expectedMoves = new ArrayList<Move>();
-        Move m = null;
-        int i;
 
-        for(i = 0; i < moveStrings.length; i++) {
-         if (moveStrings[i] != null)
-          m = cio.parseMove(b, moveStrings[i]);
-          if (m != null)
-          b.performMove(m);
-        }
-        
-        
-        for (i = 0; i < expectedMoveStrings.length; i++) {
-         if (expectedMoveStrings[i] != null) {
-            m = cio.parseMove(b, expectedMoveStrings[i]);
-            if (m != null) expectedMoves.add(m);
-         }
-        }
-
-        
-       
-        return testSearch(b, method, plyDepth, expectedEvaluation, expectedMoves);
-    }
     
     
     public static void test() throws NoMoveException {     
-
-       main.testSearch("4k3/5R1/5Q2/8/8/8/8/4K3 w - - 5 21", "", Search.ALPHABETA, 4, Evaluator.BLACK_IS_MATED, "f6e7");
-       //assert(main.testSearch("4k3/5R1/5Q2/8/8/8/8/4K3 w - - 5 21", "", Search.ALPHABETA, 4, Evaluator.BLACK_IS_MATED, "f6e7"));
-
+         interfaceBoard = new Board("4k3/5R1/5Q2/8/8/8/8/4K3 w - - 5 21");
     }
     
     
@@ -119,7 +62,6 @@ class main {
 
         int x, y;
 
-         Board interfaceBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
        
          
         if (param.length > 0)  {
@@ -157,9 +99,10 @@ class main {
             if (str.trim().equalsIgnoreCase("go")) {
                 engine1.dosearch(interfaceBoard, plyDepth, searchMethod);
                 System.out.println(engine1.moveAndStatistics());
+                if (engine1.getStrongestMove() != null) {
                 interfaceBoard.performMove(engine1.getStrongestMove());
                 checkForDrawOrMate(interfaceBoard);
-                System.out.println(interfaceBoard.toString());
+                System.out.println(interfaceBoard.toString()); }                
             } else if (str.matches("undo")) { interfaceBoard.retractMove(); }
               else if (str.matches("allmoves")) {
                 Movegenerator mg = new Movegenerator();
