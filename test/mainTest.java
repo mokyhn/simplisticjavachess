@@ -65,13 +65,25 @@ public class mainTest {
         return false;    
      }
       
-    private static boolean testSearchDoNotPlayThis(Board b, int method, int plyDepth, ArrayList<Move> unExpectedMoves) throws NoMoveException {
+    private static boolean testSearchDoNotPlayThis(String fen, int method, int plyDepth, String moves) throws NoMoveException {
+       String[] unExpectedMovesStr = moves.split(" ");
+       ArrayList<Move> unExpectedMoves = new ArrayList<Move>();
+       Chessio cio                   = new Chessio();
+       Board b = new Board(fen);
+       Move m;
        Search  engine       = new Search();
-       
+       int i;
        Move strongestMove;
                     
        engine.dosearch(b, plyDepth, method);
        strongestMove = engine.getStrongestMove();
+       
+        for (i = 0; i < unExpectedMovesStr.length; i++) {
+         if (unExpectedMovesStr[i] != null) {
+            m = cio.parseMove(b, unExpectedMovesStr[i]);
+            if (m != null) unExpectedMoves.add(m);
+         }
+        }
 
        if (unExpectedMoves.isEmpty())       
        System.out.println("Unexpected moves:       none" + ", actual " + strongestMove);
@@ -215,6 +227,10 @@ public class mainTest {
      assertTrue(testSearch("k7/4R3/8/3n4/8/2Q5/8/K7 b - - 0 1", "", Search.ALPHABETA, 5,  "d5e7 d5c3"));
      assertTrue(testSearch("k7/4n3/8/3P4/8/8/8/K7 b - - 0 1", "", Search.ALPHABETA, 5, "e7d5"));
      assertTrue(testSearch("k7/4n3/8/5P2/8/8/8/K7 b - - 0 1", "", Search.ALPHABETA, 5, "e7f5"));
+     assertTrue(testSearchDoNotPlayThis("rnbqkb1r/pppppppp/8/1P1PP3/2P3n1/P1NB1N1P/1BQ2PP1/R4RK1 b - - 0 1", Search.ALPHABETA, 3, "g4e5"));
+     assertTrue(testSearchDoNotPlayThis("rnbqkb1r/pppppppp/8/1P1PP3/2P3n1/P1NB1N1P/1BQ2PP1/R4RK1 b - - 0 1", Search.ALPHABETA, 4, "g4e5"));
+     assertTrue(testSearchDoNotPlayThis("rnbqkb1r/pppppppp/8/1P1PP3/2P3n1/P1NB1N1P/1BQ2PP1/R4RK1 b - - 0 1", Search.ALPHABETA, 5, "g4e5"));
+     assertTrue(testSearchDoNotPlayThis("rnbqkb1r/pppppppp/8/1P1PP3/2P3n1/P1NB1N1P/1BQ2PP1/R4RK1 b - - 0 1", Search.ALPHABETA, 6, "g4e5"));
     }
 
     @Test

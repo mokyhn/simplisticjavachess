@@ -182,7 +182,7 @@ public final class Move implements Cloneable {
 		if (type == NORMALMOVE) { return posToString(fromX, fromY) + "-" + posToString(toX, toY); }
 
 		// Normal capture moves
-		if (type == CAPTURE_ENPASSANT || type == CAPTURE) { return posToString(fromX, fromY) + posToString(toX, toY); } // + "x" + 
+		if (type == CAPTURE_ENPASSANT || type == CAPTURE) { return posToString(fromX, fromY)  + "x" + posToString(toX, toY); } 
 
 		// mate
 		if (type == CAPTURE && aCapturedPiece == Piece.KING) { return "mate"; }
@@ -193,7 +193,7 @@ public final class Move implements Cloneable {
 		  }
 
 		if (aCapturePromotion()) {
-                     return posToString(fromX, fromY) +  posToString(toX, toY) +  "="+pieceNumberToChar(promotionTo()); // + "x" +
+                     return posToString(fromX, fromY) +  "x" + posToString(toX, toY) +  "="+pieceNumberToChar(promotionTo()); // 
                 }
 
 		if (type == CASTLE_SHORT) {	return "o-o"; }
