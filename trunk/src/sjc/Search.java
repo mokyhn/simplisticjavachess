@@ -135,7 +135,7 @@ public final class Search {
             return 0;
         } */
         
-        for (int i = 0; (i < moves.size() && alpha < beta); i++) {
+        for (int i = 0; (i < moves.size() && alpha < beta ); i++) {  
             m = moves.get(i);
             analyzeBoard.performMove(m);
             if (analyzeBoard.isInCheck(m.whoMoves)) {
@@ -159,11 +159,16 @@ public final class Search {
                 }
             } else {
              if (eval < beta) {
-                 beta = eval;
                  if (currentPlyDepth == totalPlyDepth)  {
-                     //System.out.println("BLACK: Eval, alpha = " + eval + ", " + alpha + " " + m.toString());
-                     strongestMove = m;
-                 }
+                             //if (m.toString().contains("e5")) { 
+                             //    System.out.printf("\nBLACK: move = %s, Eval=%d, alpha=%d, beta=%d, sd = %d\n", m.toString(), eval , alpha, beta, currentPlyDepth);
+                            // }
+                             //if (m.toString().contains("h6") ) { 
+                             //    System.out.printf("\nBLACK: move = %s, Eval=%d, alpha=%d, beta=%d, sd = %d\n", m.toString(), eval , alpha, beta, currentPlyDepth);
+                             //}
+                             strongestMove = m;
+                         }        
+                 beta = eval;
              }
             }    
         }
