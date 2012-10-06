@@ -1,9 +1,6 @@
 package sjc;
 
 public final class Move implements Cloneable {
-	// TODO: Why not a Piece, dX, dY, type, aCapturedPiece, whoMoves?
-        // Captured piece of type Piece?
-        // That is a piece/vector based way to descripe a move?
         public int fromX,
                    fromY,
                    toX,
