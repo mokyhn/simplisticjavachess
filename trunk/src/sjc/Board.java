@@ -1,6 +1,5 @@
 package sjc;
 
-import java.util.Iterator;
 
 public final class Board implements Cloneable {
     private                Position position; // Current position of pieces
