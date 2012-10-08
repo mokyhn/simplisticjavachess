@@ -31,7 +31,7 @@ public final class Bitboard implements Cloneable {
 
     
     private int colorIndex(int color) {
-     if (color == Piece.BLACK) return 0;
+     if (color == Piece.BLACK) { return 0; }
      return 1;
     }
 
@@ -54,7 +54,9 @@ public final class Bitboard implements Cloneable {
             p = b.getPiece(i);
             c = colorIndex(p.color);
             t = p.type;
-            if (t != Piece.EMPTY) bb[c][t] =  bb[c][t] | setBitHigh(squareNoFromPos(p.xPos, p.yPos));
+            if (t != Piece.EMPTY) {
+                bb[c][t] =  bb[c][t] | setBitHigh(squareNoFromPos(p.xPos, p.yPos));
+            }
         }
     }
 
@@ -74,7 +76,7 @@ public final class Bitboard implements Cloneable {
     }
     
     public Piece removePiece(int x, int y) {        
-        final int UNDF  = -5; 
+        final int UNDF  = 254; 
         int       color = UNDF;
         int       type  = UNDF;
         
