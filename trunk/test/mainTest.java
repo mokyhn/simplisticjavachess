@@ -1,8 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- * Have a look at http://www.cs.kent.ac.uk/people/staff/djb/pgn-extract/
- * -enableassertions
+/**
+ * @author Morten Kühnrich
+ * @year 2012
+ * "Unit test" of the testprogram.
+ * In practice this is a blackbox-test, where we look at different
+ * chess positions and test whether the search algorithm finds the expected
+ * moves and avoids certain other moves.
  */
 
 import java.util.ArrayList;
@@ -15,10 +17,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import sjc.*;
 
-/**
- *
- * @author mku
- */
 public class mainTest {
     
     public mainTest() {
@@ -131,9 +129,37 @@ public class mainTest {
         return testSearchAux(b, method, plyDepth, expectedMoves);
     }    
   
-    /**
-     * Test of testSearch method, of class main.
+    /*
+     * It is tested that evaluation handles regular pawn moves, one and two steps ahead
+     * This is tested for both black and white
+     * in search depths from 2 to 7
+     * using alphabeta search
      */
+    @Test
+    public void testSimplePawnMoves() throws Exception {
+       for (int depth = 2; depth < 8; depth++) {
+        // One ahead - white
+        assertTrue(testSearch("q7/nbr5/p7/ppp5/pkp5/8/P1P5/1N4K1 w - - 0 1", "", Search.ALPHABETA, depth, "a2a3")); 
+        assertTrue(testSearch("q7/nbr5/8/2ppp3/2pkp3/4p3/2P1P3/3N2K1 w - - 0 1", "",  Search.ALPHABETA, depth, "c2c3"));
+        assertTrue(testSearch("8/8/8/5ppp/5pkp/8/6KP/8 w - - 0 1", "", Search.ALPHABETA, depth, "h2h3")); 
+        
+        // One ahead - black
+        assertTrue(testSearch("8/pk6/8/PKP5/PPP5/8/8/8 b - - 0 1", "", Search.ALPHABETA, depth, "a7a6")); 
+        assertTrue(testSearch("8/3pk3/8/3PKP2/3PPP2/8/8/8 b - - 0 1", "", Search.ALPHABETA, depth, "d7d6"));
+        assertTrue(testSearch("8/QP4kp/8/5PKP/5PPP/8/1N6/8 b - - 0 1", "", Search.ALPHABETA, depth, "h7h6"));
+        
+        // Two ahead - white
+        assertTrue(testSearch("q7/nbr5/ppp5/pkp5/8/2P5/PN6/7K w - - 0 1", "", Search.ALPHABETA, depth, "a2a4")); 
+        assertTrue(testSearch("q7/nbr5/2ppp3/2pkp3/4p3/4P3/2PN4/6K1 w - - 0 1", "", Search.ALPHABETA, depth, "c2c4")); 
+        assertTrue(testSearch("8/8/5ppp/5pkp/8/6K1/7P/8 w - - 0 1", "", Search.ALPHABETA, depth, "h2h4")); 
+        
+        // Two ahead - black
+        assertTrue(testSearch("8/p7/1k6/8/BKP5/NBN5/8/8 b - - 0 1", "", Search.ALPHABETA, depth, "a7a5"));
+        assertTrue(testSearch("1Q5Q/3p4/2k2pp1/2p1p1p1/2p1K1p1/4P3/8/Q7 b - - 0 1",  "", Search.ALPHABETA, depth, "d7d5"));
+        assertTrue(testSearch("8/QP5p/6k1/5N2/5PKP/5PPP/8/8 b - - 0 1", "", Search.ALPHABETA, depth, "h7h5"));
+       }
+    }
+    
     @Test
     public void testPawnPromotions() throws Exception {
        //assertTrue(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",            "", Search.MINMAX,    1,   "a7b8Q"));
@@ -220,7 +246,7 @@ public class mainTest {
        assertTrue(testSearch("k7/P1p5/KP6/8/8/8/1P5p/8 b - - 0 1", "", Search.MINMAX,    4,  "c7b6"));
        assertTrue(testSearch("k7/P1p5/KP6/8/8/8/1P5p/8 b - - 0 1", "", Search.ALPHABETA, 4,  "c7b6"));
     }
-    
+
     @Test
     public void knightTest() throws Exception {
      assertTrue(testSearch("k7/4R3/8/3n4/8/2Q5/8/K7 b - - 0 1", "", Search.MINMAX,    5,  "d5e7 d5c3"));
