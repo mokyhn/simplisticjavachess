@@ -227,12 +227,14 @@ public class mainTest {
      assertTrue(testSearch("k7/4R3/8/3n4/8/2Q5/8/K7 b - - 0 1", "", Search.ALPHABETA, 5,  "d5e7 d5c3"));
      assertTrue(testSearch("k7/4n3/8/3P4/8/8/8/K7 b - - 0 1", "", Search.ALPHABETA, 5, "e7d5"));
      assertTrue(testSearch("k7/4n3/8/5P2/8/8/8/K7 b - - 0 1", "", Search.ALPHABETA, 5, "e7f5"));
-     assertTrue(testSearchDoNotPlayThis("rnbqkb1r/pppppppp/8/1P1PP3/2P3n1/P1NB1N1P/1BQ2PP1/R4RK1 b - - 0 1", Search.ALPHABETA, 3, "g4e5"));
-     assertTrue(testSearchDoNotPlayThis("rnbqkb1r/pppppppp/8/1P1PP3/2P3n1/P1NB1N1P/1BQ2PP1/R4RK1 b - - 0 1", Search.ALPHABETA, 4, "g4e5"));
-     assertTrue(testSearchDoNotPlayThis("rnbqkb1r/pppppppp/8/1P1PP3/2P3n1/P1NB1N1P/1BQ2PP1/R4RK1 b - - 0 1", Search.ALPHABETA, 5, "g4e5"));
-     assertTrue(testSearchDoNotPlayThis("rnbqkb1r/pppppppp/8/1P1PP3/2P3n1/P1NB1N1P/1BQ2PP1/R4RK1 b - - 0 1", Search.ALPHABETA, 6, "g4e5"));
+     assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 2, "g4e5"));
+     assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 3, "g4e5"));
+     assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 4, "g4e5"));
+     assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 5, "g4e5"));
+     assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 6, "g4e5"));
+     assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 7, "g4e5"));
     }
-
+    
     @Test
     public void BratkoKopecTest() throws Exception {
      //assertTrue(testSearch("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b - - 1 0", "", Search.ALPHABETA, 7, "d6d1")); //BK.01
