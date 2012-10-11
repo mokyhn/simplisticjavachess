@@ -1,3 +1,14 @@
+/**
+ * @author Morten Kühnrich
+ * @year 2005
+ * Used to represent a position using three different representations:
+ *     # a piece list
+ *     # a 2 dimensional piece array
+ *     # a bitboard
+ * All of these are maintained so that the represent the same position at all
+ * times. We can use different representations in different parts of the code
+ * for our algorithms.
+ */
 package sjc;
 
 public final class Position implements Cloneable {
@@ -157,10 +168,8 @@ public final class Position implements Cloneable {
         r = Math.abs(dx);
         dx = dx / r;
         dy = dy / r;
-        //System.out.println("Vector " + dx + "," + dy);
         for (ir = 1; ir < r; ir++) {
           if (!freeSquare(ir*dx + x1, ir*dy + y1)) {
-           //System.out.println("Found something at " + (r*dx + x1) + ", " + (r*dy + y1) + "investigating " + x1 + "," + y1 + "," + x2 + "," + y2 + "with r = " + ir);
            allFree = false;
            break;
          }
@@ -224,6 +233,7 @@ public final class Position implements Cloneable {
         return false; 
     }
 
+    // FOR TESTING: areRepresentationsIsomorphic();
      public void areRepresentationsIsomorphic() {
       final int nr1 = numberOfPieces;
       int nr2 = 0;
@@ -244,7 +254,6 @@ public final class Position implements Cloneable {
      }
      
       public boolean freeSquare(int x, int y)  {
-          // FOR TESTING: areRepresentationsIsomorphic();
           return xyPosition[x][y] == null;
       }
 
