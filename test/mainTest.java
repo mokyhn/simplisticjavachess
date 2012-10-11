@@ -259,11 +259,22 @@ public class mainTest {
      assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 5, "g4e5"));
      assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 6, "g4e5"));
      assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 7, "g4e5"));
+    
+     for (int depth = 2; depth < 8; depth++) {
+      //White knight example
+      assertTrue(testSearch("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w - - 0 1", "", Search.ALPHABETA, depth, "d4e6"));
+      
+      // Black knight example
+      assertTrue(testSearch("1kr3b1/1B2P3/PPP3p1/Q3K3/4n1pn/1PP3P1/3Bnn2/8 b - - 1 1", "", Search.ALPHABETA, depth, "h4f3"));
+     
+     }
+     
+     
     }
     
     @Test
     public void BratkoKopecTest() throws Exception {
-     //assertTrue(testSearch("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b - - 1 0", "", Search.ALPHABETA, 7, "d6d1")); //BK.01
+     assertTrue(testSearch("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b - - 1 0", "", Search.ALPHABETA, 7, "d6d1")); //BK.01
     }
     
       //System.out.println("End game tactics : pawn breakthrough");
