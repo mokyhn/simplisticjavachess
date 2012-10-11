@@ -1,11 +1,17 @@
+/**
+ *
+ * @author Morten Kühnrich
+ * @year 2010
+ * This class encapsulates the information needed to
+ * check for three-fold-repetition.
+ * The class also records the history of when the castling positibility was lost
+ * for a given player
+ */
 package sjc;
 
 import java.util.Stack;
 
-/**
- *
- * @author mku
- */
+
 public final class History implements Cloneable {
     private Stack<State> stateHistory; // A stack of previous game states
 

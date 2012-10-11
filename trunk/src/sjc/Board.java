@@ -1,3 +1,9 @@
+/**
+ * @author Morten Kühnrich
+ * @year 2010
+ * Permits a concise representation of board layouts.
+ * Practical for checking three-fold-repetition.
+ */
 package sjc;
 
 
@@ -299,8 +305,6 @@ public final class Board implements Cloneable {
     
     // Given a position in the FEN - notation.
     // Set up the board
-    // TODO: 1) Error handling in case of parse errors.
-    //       2) Simplify the code somewhat
     private void setupFENboard(String sfen) {
         int x = 0;
         int y = 7;
@@ -380,7 +384,6 @@ public final class Board implements Cloneable {
                final int yPawn = (int) (fen.charAt(i+1) - '1');
                assert xPawn >= 0 && xPawn <= 7;
                assert yPawn >= 0 && yPawn <= 7;
-               //i++;
                final Piece p = getPieceXY(xPawn, yPawn-state.inMove);
                if (p != null && p.type == Piece.PAWN) {
                    state.move = new Move(xPawn, yPawn+state.inMove, xPawn, yPawn-state.inMove, Move.NORMALMOVE, Piece.EMPTY, state.inMove);                   

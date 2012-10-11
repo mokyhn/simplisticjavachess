@@ -1,3 +1,9 @@
+/**
+ * @author Morten Kühnrich
+ * @year 2010
+ * Permits a concise representation of board layouts.
+ * Practical for checking three-fold-repetition.
+ */
 package sjc;
 /*
  * Bitboard structures

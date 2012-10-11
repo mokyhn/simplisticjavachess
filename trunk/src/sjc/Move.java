@@ -1,3 +1,11 @@
+/**
+ *
+ * @author Morten Kühnrich
+ * @year 2010
+ * This class encapsulates the information needed to
+ * represent a piece that moves.
+ */
+
 package sjc;
 
 public final class Move implements Cloneable {

@@ -1,3 +1,11 @@
+/**
+ *
+ * @author Morten Kühnrich
+ * @year 2005
+ * This class encapsulates the information needed to
+ * represent the pieces of a chess game.
+ */
+
 package sjc;
 
 public final class Piece implements Cloneable {

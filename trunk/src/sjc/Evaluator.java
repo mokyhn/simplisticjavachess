@@ -1,5 +1,6 @@
 /**
  * @author Morten Kühnrich
+ * @year 2005
  * Evaluates a given board position.
  * A positive evaluation means that white has an advantage,
  * and a negative evaluation signifies that black has an advantage.
@@ -8,12 +9,8 @@
 package sjc;
 
 public final class Evaluator {
-/* TODO: Detailed attack array for each square would be nice. Black material attacking a square
-   and white material attacking a square...
-   We could use this for evaluating the position and mobility of white/black
-   and to (easily) compute the outcome of an exchange serie. */
-        public static final int WHITE_IS_MATED = -2147480000; //Integer.MIN_VALUE;//
-        public static final int BLACK_IS_MATED =  2147480000; // Integer.MAX_VALUE;//
+        public static final int WHITE_IS_MATED = -2147480000; 
+        public static final int BLACK_IS_MATED =  2147480000; 
         public static final int DRAW           =  0;
 
         public static final int PAWNVALUE      = 1;
