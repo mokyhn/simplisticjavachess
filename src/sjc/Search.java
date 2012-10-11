@@ -3,9 +3,6 @@ package sjc;
 import java.util.ArrayList; 
 import java.util.Iterator;
 
-//TODO: A result record class with value and move as fields. Maby also comparison methods?
-//TODO: Add recording of the principal variations.
-
 public final class Search {
     // Various serach methods
     public final static int ALPHABETA = 1,
@@ -134,8 +131,8 @@ public final class Search {
         if (moves.isEmpty()) {  // A draw
             return 0;
         } */
-        
-        for (int i = 0; (i < moves.size() && alpha < beta ); i++) {  
+        int i;
+        for (i = 0; (i < moves.size() && alpha < beta ); i++) {  
             m = moves.get(i);
             analyzeBoard.performMove(m);
             if (analyzeBoard.isInCheck(m.whoMoves)) {
@@ -172,7 +169,13 @@ public final class Search {
              }
             }    
         }
-         
+        
+        // For the purpose of statistics
+        if (alpha >=  beta) {
+                wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()) - i;
+                noCutOffs++;
+        }
+        
         // Mate or draw
         if (!thereWasALegalMove) {
            if (analyzeBoard.isInCheck(inMove)) {
@@ -185,11 +188,6 @@ public final class Search {
                return 0;
            } // draw
          }
-        
-            /*if (alpha <= beta) { 
-                wastedGeneratedMoves = wastedGeneratedMoves + (moves.size()-(i+1));
-                noCutOffs++;
-                return alpha; }*/
         
         return inMove == Piece.WHITE ? alpha : beta;
     }
