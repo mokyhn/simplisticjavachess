@@ -253,12 +253,7 @@ public class mainTest {
      assertTrue(testSearch("k7/4R3/8/3n4/8/2Q5/8/K7 b - - 0 1", "", Search.ALPHABETA, 5,  "d5e7 d5c3"));
      assertTrue(testSearch("k7/4n3/8/3P4/8/8/8/K7 b - - 0 1", "", Search.ALPHABETA, 5, "e7d5"));
      assertTrue(testSearch("k7/4n3/8/5P2/8/8/8/K7 b - - 0 1", "", Search.ALPHABETA, 5, "e7f5"));
-     assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 2, "g4e5"));
-     assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 3, "g4e5"));
-     assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 4, "g4e5"));
-     assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 5, "g4e5"));
-     assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 6, "g4e5"));
-     assertTrue(testSearchDoNotPlayThis("1n2k2r/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b k - 0 1", Search.ALPHABETA, 7, "g4e5"));
+  
     
      for (int depth = 2; depth < 8; depth++) {
       //White knight example
@@ -266,7 +261,7 @@ public class mainTest {
       
       // Black knight example
       assertTrue(testSearch("1kr3b1/1B2P3/PPP3p1/Q3K3/4n1pn/1PP3P1/3Bnn2/8 b - - 1 1", "", Search.ALPHABETA, depth, "h4f3"));
-     
+      assertTrue(testSearchDoNotPlayThis("1n3rk1/4pppp/8/4P3/6n1/2N2N1P/5PP1/5RK1 b - - 1 1", Search.ALPHABETA, depth, "g4e5"));
      }
      
      
