@@ -136,8 +136,9 @@ public class mainTest {
      * using alphabeta search
      */
     @Test
-    public void testSimplePawnMoves() throws Exception {
-       for (int depth = 2; depth < 8; depth++) {
+    public void testSimplePawnMoves() throws Exception {  
+         assertTrue(testSearchDoNotPlayThis("rnbqkbnr/ppp2p1p/8/P2pp1p1/8/8/1PPPPPPP/RNBQKBNR w KQkq d6 0 4", Search.ALPHABETA, 6, "a5a6"));
+        for (int depth = 2; depth < 8; depth++) {
         // One ahead - white
         assertTrue(testSearch("q7/nbr5/p7/ppp5/pkp5/8/P1P5/1N4K1 w - - 0 1", "", Search.ALPHABETA, depth, "a2a3")); 
         assertTrue(testSearch("q7/nbr5/8/2ppp3/2pkp3/4p3/2P1P3/3N2K1 w - - 0 1", "",  Search.ALPHABETA, depth, "c2c3"));
