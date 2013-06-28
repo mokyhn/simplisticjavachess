@@ -43,8 +43,8 @@ public class mainTest {
        Search  engine       = new Search();
        
        Move strongestMove;
-                    
-       engine.dosearch(b, plyDepth, method);
+       engine.setPlyDepth(plyDepth);             
+       engine.dosearch(b, method);
        strongestMove = engine.getStrongestMove();
 
        if (expectedMoves.isEmpty())       
@@ -73,7 +73,8 @@ public class mainTest {
        int i;
        Move strongestMove;
                     
-       engine.dosearch(b, plyDepth, method);
+       engine.setPlyDepth(plyDepth);
+       engine.dosearch(b, method);
        strongestMove = engine.getStrongestMove();
        
         for (i = 0; i < unExpectedMovesStr.length; i++) {
@@ -137,7 +138,8 @@ public class mainTest {
      */
     @Test
     public void testSimplePawnMoves() throws Exception {  
-         assertTrue(testSearchDoNotPlayThis("rnbqkbnr/ppp2p1p/8/P2pp1p1/8/8/1PPPPPPP/RNBQKBNR w KQkq d6 0 4", Search.ALPHABETA, 6, "a5a6"));
+        // This fails:
+        assertTrue(testSearchDoNotPlayThis("rnbqkbnr/ppp2p1p/8/P2pp1p1/8/8/1PPPPPPP/RNBQKBNR w KQkq d6 0 4", Search.ALPHABETA, 4, "a5a6"));
         for (int depth = 2; depth < 8; depth++) {
         // One ahead - white
         assertTrue(testSearch("q7/nbr5/p7/ppp5/pkp5/8/P1P5/1N4K1 w - - 0 1", "", Search.ALPHABETA, depth, "a2a3")); 
@@ -162,9 +164,8 @@ public class mainTest {
     }
     
     @Test
-    public void testPawnPromotions() throws Exception {
-       //assertTrue(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",            "", Search.MINMAX,    1,   "a7b8Q"));
-       //assertTrue(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.MINMAX,    1,   "a7b8Q"));
+    public void testPawnPromotions() throws Exception {       
+       assertTrue(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.MINMAX,    1,   "a7b8Q"));
        assertTrue(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.ALPHABETA, 1,    "a7b8Q"));
        assertTrue(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.MINMAX,    2,    "a7b8Q"));
        assertTrue(testSearch("nn3k2/P7/8/8/8/8/8/4K3 w - - 0 1",         "", Search.ALPHABETA, 2,    "a7b8Q"));
