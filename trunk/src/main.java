@@ -1,8 +1,6 @@
 //-enableassertions
 
-/*
- * TODO: Draw by insufficient material
- */
+
 
 import java.io.*;
 import java.util.ArrayList;
@@ -97,7 +95,8 @@ class main {
             str = reader.readLine();
 
             if (str.trim().equalsIgnoreCase("go")) {
-                engine1.dosearch(interfaceBoard, plyDepth, searchMethod);
+                engine1.setPlyDepth(plyDepth);
+                engine1.dosearch(interfaceBoard, searchMethod);
                 System.out.println(engine1.moveAndStatistics());
                 if (engine1.getStrongestMove() != null) {
                 interfaceBoard.performMove(engine1.getStrongestMove());
@@ -132,7 +131,8 @@ class main {
                           !interfaceBoard.drawBy50MoveRule() ||
                           !interfaceBoard.isDraw() ||
                           !interfaceBoard.isMate()); i++) {
-                      res = engine1.dosearch(interfaceBoard, plyDepth, Search.ALPHABETA);
+                      engine1.setPlyDepth(plyDepth);
+                      res = engine1.dosearch(interfaceBoard, Search.ALPHABETA);
                       System.out.println(engine1.moveAndStatistics());
                       if (engine1.getStrongestMove() == null) {
                        System.out.println("Game ended....");
@@ -140,7 +140,8 @@ class main {
                       interfaceBoard.performMove(engine1.getStrongestMove());
                       System.out.println(interfaceBoard.toString());
                       checkForDrawOrMate(interfaceBoard);
-                      engine2.dosearch(interfaceBoard, plyDepth, Search.RANDOM);
+                      engine2.setPlyDepth(plyDepth);
+                      engine2.dosearch(interfaceBoard,  Search.RANDOM);
                       //engine2.dosearch(interfaceBoard, 2, Search.ALPHABETA);
                       System.out.println(engine2.moveAndStatistics());
                       if (engine2.getStrongestMove() != null)
