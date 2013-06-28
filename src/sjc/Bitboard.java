@@ -37,6 +37,7 @@ public final class Bitboard implements Cloneable {
 
     
     private int colorIndex(int color) {
+     assert(color == Piece.WHITE || color == Piece.BLACK);
      if (color == Piece.BLACK) { return 0; }
      return 1;
     }
@@ -68,6 +69,7 @@ public final class Bitboard implements Cloneable {
 
     // Returns number in the interval 0..63 from x and y in the interval 0..7
     private static int squareNoFromPos(int x, int y) {
+        assert(x >= 0 && x <= 7 && y >= 0 && y <= 7);        
         return y * 8 + x;
     }
 
@@ -81,10 +83,18 @@ public final class Bitboard implements Cloneable {
                                          setBitHigh(squareNoFromPos(p.xPos, p.yPos));    
     }
     
+    public boolean hasPiece(int x, int y, int color, int type) {
+        return (bb[colorIndex(color)][type] & 
+                setBitHigh(squareNoFromPos(x, y)))
+                > 0;
+    }
+    
     public Piece removePiece(int x, int y) {        
         final int UNDF  = 254; 
         int       color = UNDF;
         int       type  = UNDF;
+        
+        assert(x>=0 && x <= 7 && y >= 0 && y <= 7);
         
         for (int t = 0; t < NUM_PIECE_TYPES; t++) {
             if ((bb[0][t] & setBitHigh(squareNoFromPos(x, y))) != 0) {
@@ -141,9 +151,9 @@ public final class Bitboard implements Cloneable {
 
     @Override
     public boolean equals(Object obj) {
-        final Bitboard b2 = (Bitboard) obj;
+        if (obj == null) return false;
         
-        if (b2 == null) return false;
+        final Bitboard b2 = (Bitboard) obj;
         
         for (int t = 0; t < NUM_PIECE_TYPES; t++) {
             if (this.bb[0][t] != b2.bb[0][t] ||
