@@ -1,6 +1,6 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Morten Kühnrich 2012
+ * 
  */
 package sjc;
 
@@ -72,7 +72,8 @@ public class Telnet {
             if (m != null) System.out.println("Found move " + m.toString());
                if (m != null && m.whoMoves == Piece.WHITE) {
                theBoard.performMove(m);
-               engine.dosearch(theBoard, 3, Search.ALPHABETA);
+               engine.setPlyDepth(3);
+               engine.dosearch(theBoard, Search.ALPHABETA);               
                System.out.println("Found " + engine.getStrongestMove().toString());
                dout.writeBytes(engine.getStrongestMove().toString() + "\n");
                theBoard.performMove(engine.getStrongestMove());
