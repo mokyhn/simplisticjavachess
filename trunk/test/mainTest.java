@@ -84,9 +84,6 @@ public class mainTest {
          }
         }
 
-       if (unExpectedMoves.isEmpty())       
-       System.out.println("Unexpected moves:       none" + ", actual " + strongestMove);
-       else System.out.println("Unxpected moves:       " + unExpectedMoves.toString() + ", move: ___" + engine.moveAndStatistics() + "___");           
        
        
        if (strongestMove == null && unExpectedMoves.isEmpty()) return true;
@@ -94,7 +91,14 @@ public class mainTest {
        Iterator<Move> it = unExpectedMoves.iterator();
        
        while (it.hasNext()) {
-        if (it.next().equal(strongestMove)) return false;
+        if (it.next().equal(strongestMove)) 
+        {
+               if (unExpectedMoves.isEmpty())       
+                 System.out.println("Unexpected moves:       none" + ", actual " + strongestMove);
+                    else System.out.println("Unxpected moves:       " + unExpectedMoves.toString() + ", move: ___" + engine.moveAndStatistics() + "___");           
+
+            return false;
+        }
        }
        
         return true;    
@@ -129,7 +133,15 @@ public class mainTest {
        
         return testSearchAux(b, method, plyDepth, expectedMoves);
     }    
-  
+
+    @Test
+    public void testSimplePawnMoves1() throws Exception {
+        // This fails:
+        System.out.println("Test1:");
+        assertTrue(testSearchDoNotPlayThis("rnbqkbnr/ppp2p1p/8/P2pp1p1/8/8/1PPPPPPP/RNBQKBNR w KQkq - 0 4", Search.ALPHABETA, 4, "a5a6"));
+    }
+    
+    
     /*
      * It is tested that evaluation handles regular pawn moves, one and two steps ahead
      * This is tested for both black and white
@@ -137,10 +149,9 @@ public class mainTest {
      * using alphabeta search
      */
     @Test
-    public void testSimplePawnMoves() throws Exception {  
-        // This fails:
-        assertTrue(testSearchDoNotPlayThis("rnbqkbnr/ppp2p1p/8/P2pp1p1/8/8/1PPPPPPP/RNBQKBNR w KQkq d6 0 4", Search.ALPHABETA, 4, "a5a6"));
+    public void testSimplePawnMoves2() throws Exception {  
         for (int depth = 2; depth < 8; depth++) {
+        System.out.println("Test " + depth);
         // One ahead - white
         assertTrue(testSearch("q7/nbr5/p7/ppp5/pkp5/8/P1P5/1N4K1 w - - 0 1", "", Search.ALPHABETA, depth, "a2a3")); 
         assertTrue(testSearch("q7/nbr5/8/2ppp3/2pkp3/4p3/2P1P3/3N2K1 w - - 0 1", "",  Search.ALPHABETA, depth, "c2c3"));
@@ -278,29 +289,3 @@ public class mainTest {
        //assert(testSearch("7k/ppp5/8/PPP5/8/8/8/7K w - - 0 1", Search.ALPHABETA, 9, "b5b6"));
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
