@@ -6,13 +6,13 @@ import java.util.Iterator;
 public final class Search {
     // Various serach methods
     public final static int ALPHABETA = 1,
-                     MINMAX    = 2,
-                     RANDOM    = 3;
+                            MINMAX    = 2,
+                            RANDOM    = 3;
 
    
     // Main variables used in the search
     private Board analyzeBoard;
-    private int   plyDepth;
+    private int   _plyDepth;
     private Move  strongestMove;
     private int   searchResult;
 
@@ -32,14 +32,18 @@ public final class Search {
           strongestMove        = null;
     }
 
-    public int dosearch(Board b, int plyDepth, int method) {
+    public void setPlyDepth(int pd) {
+         assert(pd >= 0 && pd <= 20);
+        _plyDepth = pd;
+    }
+    
+    public int dosearch(Board b, int method) {
         analyzeBoard         = b.clone();
 
         searchResult         = 0;
         noPositions          = 0;
         noCutOffs            = 0;
-        wastedGeneratedMoves = 0;
-        this.plyDepth        = plyDepth;
+        wastedGeneratedMoves = 0;        
         startTime           = System.nanoTime();
 
         strongestMove = null;
@@ -52,12 +56,12 @@ public final class Search {
         switch (method) {
             case ALPHABETA:
                 System.out.println("Alpha-Beta search...");
-                searchResult = alphaBetaSearch(plyDepth, plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
+                searchResult = alphaBetaSearch(_plyDepth, _plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
 
                 break;
             case MINMAX:
                 System.out.println("MIN-MAX search...");
-                searchResult = minMaxSearch(plyDepth, plyDepth);
+                searchResult = minMaxSearch(_plyDepth, _plyDepth);
                 break;
             case RANDOM:
                 System.out.println("Random search...");
@@ -83,7 +87,7 @@ public final class Search {
         
         return("move "          + strongestMoveStr +
                " Evaluation "   + searchResult +
-               " at "           + plyDepth +
+               " at "           + _plyDepth +
                " ply in "       + noPositions +
                " positions in " + getTimeUsage() 
                + " mSecs = "    + ((float) noPositions/(float) getTimeUsage())
@@ -94,11 +98,15 @@ public final class Search {
     
     public int alphaBetaSearch(int currentPlyDepth, int totalPlyDepth, int alpha, int beta) {
         ArrayList<Move> moves;
-        Move m;
-        int eval;
-        Boolean thereWasALegalMove = false;
-        final int inMove = analyzeBoard.inMove();
-        int distanceToRoot = totalPlyDepth - currentPlyDepth;
+        Move            m;
+        int             evaluation;
+        Boolean         thereWasALegalMove = false;
+        final int       inMove = analyzeBoard.inMove();
+        int             distanceToRoot = totalPlyDepth - currentPlyDepth;
+        
+        // Assertions
+        assert(currentPlyDepth <= totalPlyDepth);
+        assert(currentPlyDepth >= 0 && totalPlyDepth >= 0);
         
         // If the game has ended return immediately.
         if (analyzeBoard.isDraw()) return 0;
@@ -131,9 +139,13 @@ public final class Search {
         if (moves.isEmpty()) {  // A draw
             return 0;
         } */
+        evaluation = 0;
         int i;
         for (i = 0; (i < moves.size() && alpha < beta ); i++) {  
             m = moves.get(i);
+            if (m.toString().contains("a5") && m.toString().contains("a6")) {
+             System.out.println("WHITE: Eval, alpha = " + evaluation + ", " + alpha + " " + m.toString());
+            }
             analyzeBoard.performMove(m);
             if (analyzeBoard.isInCheck(m.whoMoves)) {
               analyzeBoard.retractMove(); // The move was not legal
@@ -142,20 +154,20 @@ public final class Search {
             thereWasALegalMove = true;
             
             //System.out.print("(" + m.toString());
-            eval = alphaBetaSearch(currentPlyDepth-1, totalPlyDepth, alpha, beta);
+            evaluation = alphaBetaSearch(currentPlyDepth-1, totalPlyDepth, alpha, beta);
             //System.out.println(")");
             analyzeBoard.retractMove();
             
             if (inMove == Piece.WHITE) {               
-                if (eval > alpha) {
-                 alpha = eval;
+                if (evaluation > alpha) {
+                 alpha = evaluation;
                  if (currentPlyDepth == totalPlyDepth)  {
                      //System.out.println("WHITE: Eval, alpha = " + eval + ", " + alpha + " " + m.toString());
                      strongestMove = m;
                  }
                 }
             } else {
-             if (eval < beta) {
+             if (evaluation < beta) {
                  if (currentPlyDepth == totalPlyDepth)  {
                              //if (m.toString().contains("e5")) { 
                              //    System.out.printf("\nBLACK: move = %s, Eval=%d, alpha=%d, beta=%d, sd = %d\n", m.toString(), eval , alpha, beta, currentPlyDepth);
@@ -165,7 +177,7 @@ public final class Search {
                              //}
                              strongestMove = m;
                          }        
-                 beta = eval;
+                 beta = evaluation;
              }
             }    
         }
