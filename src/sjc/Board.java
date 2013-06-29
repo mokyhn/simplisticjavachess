@@ -113,7 +113,8 @@ public final class Board implements Cloneable {
         return p;
     }
 
- 
+    //TODO: 2013, check for draw here! A move might lead to a draw state.
+    //The draw flag of the board should be set accordingly.
     public void performMove(Move m) {
        Piece p;
             
