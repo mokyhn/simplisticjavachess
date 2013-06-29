@@ -156,6 +156,14 @@ public final class Search {
             //System.out.print("(" + m.toString());
             evaluation = alphaBetaSearch(currentPlyDepth-1, totalPlyDepth, alpha, beta);
             //System.out.println(")");
+            /* if (m.toString().contains("a5") && m.toString().contains("a6")) {
+             System.out.println("WHITE: Eval, alpha = " + alpha +
+                                " beta = " + beta +
+                                " currentDepth " + currentPlyDepth +
+                                " evaluation = " + evaluation + " " +
+                                " move " + m.toString() +
+                                analyzeBoard.toString() + "\n\n\n\n");
+            }*/
             analyzeBoard.retractMove();
             
             if (inMove == Piece.WHITE) {               
