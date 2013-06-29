@@ -197,6 +197,15 @@ public class mainTest {
    }   
    
    
+
+    @Test
+    public void testSimplePawnMoves0() throws Exception {
+        // This fails:
+        System.out.println("Test0:");
+        assertTrue(testSearchDoNotPlayThis("k2n4/1p6/8/P7/8/2K5/8/8 w - - 0 4", ALPHABETA, 4, "a5a6"));
+    }
+
+   
    
     @Test
     public void testSimplePawnMoves1() throws Exception {
