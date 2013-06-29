@@ -162,14 +162,24 @@ public class mainTest {
         return testSearchAux(b, method, plyDepth, expectedMoves);
     }    
 
-
    @Test
    public void simpleAlphaBetaTest1() throws Exception {
-    assertTrue(testSearch("3k4/3P4/3K4/8/8/8/8/8 w - - 0 1", "", ALPHABETA, 5, "d6e6 d6c6"));       
+    assertTrue(testSearch("8/8/8/3k4/3P4/8/3K4/8 w - - 0 1", "", ALPHABETA, 2, "d2d3 d2c3 d2e3"));       
    }
     
    @Test
    public void simpleAlphaBetaTest2() throws Exception {
+    assertTrue(testSearch("8/3k4/8/3p4/3K4/8/8/8 b - - 1 1", "", ALPHABETA, 2, "d7d6 d7c6 d7e6"));       
+   }   
+   
+
+   @Test
+   public void simpleAlphaBetaTest3() throws Exception {
+    assertTrue(testSearch("3k4/3P4/3K4/8/8/8/8/8 w - - 0 1", "", ALPHABETA, 5, "d6e6 d6c6"));       
+   }
+    
+   @Test
+   public void simpleAlphaBetaTest4() throws Exception {
     assertTrue(testSearch("8/8/8/8/8/3k4/3p4/3K4 b - - 1 1", "", ALPHABETA, 5, "d3e3 d3c3"));       
    }   
 
@@ -177,12 +187,12 @@ public class mainTest {
     // and pawn promotions and possible stale mate
     // or losing a pawn.
    @Test
-   public void simpleAlphaBetaTest3() throws Exception {
+   public void simpleAlphaBetaTest5() throws Exception {
     assertTrue(testSearch("3k4/3P4/8/3K4/8/8/8/8 w - - 0 1", "", ALPHABETA, 5, "d5e6 d5c6"));       
    }
     
    @Test
-   public void simpleAlphaBetaTest4() throws Exception {
+   public void simpleAlphaBetaTest6() throws Exception {
     assertTrue(testSearch("8/8/8/8/3k4/8/3p4/3K4 b - - 1 1", "", ALPHABETA, 5, "d4e3 d4c3"));       
    }   
    
