@@ -332,7 +332,7 @@ public class mainTest {
      assertTrue(testSearch("k7/4n3/8/5P2/8/8/8/K7 b - - 0 1", "", ALPHABETA, 5, "e7f5"));
   
     
-     for (int depth = 2; depth < 8; depth++) {
+     for (int depth = 2; depth < 7; depth++) {
       //White knight example
       assertTrue(testSearch("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w - - 0 1", "", ALPHABETA, depth, "d4e6"));
       
@@ -343,12 +343,12 @@ public class mainTest {
      
      
     }
-    
+    /* Time consuming! Have patience
     @Test
     public void BratkoKopecTest() throws Exception {
      assertTrue(testSearch("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b - - 1 0", "", ALPHABETA, 7, "d6d1")); //BK.01
     }
-    
+    */
       //System.out.println("End game tactics : pawn breakthrough");
        //assert(testSearch("7k/ppp5/8/PPP5/8/8/8/7K w - - 0 1", ALPHABETA, 9, "b5b6"));
 
