@@ -11,7 +11,7 @@ import sjc.*;
 
 
 class main {
-    static Board standardChessSetupFEN = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    static Board GUIBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     
     public static void checkForDrawOrMate(Board b) {      
         if (b.isDraw()) {
@@ -65,16 +65,16 @@ class main {
 
             if (str.trim().equalsIgnoreCase("go")) {
                 engine1.setPlyDepth(plyDepth);
-                engine1.dosearch(standardChessSetupFEN, searchMethod);
+                engine1.dosearch(GUIBoard, searchMethod);
                 System.out.println(engine1.moveAndStatistics());
                 if (engine1.getStrongestMove() != null) {
-                standardChessSetupFEN.performMove(engine1.getStrongestMove());
-                checkForDrawOrMate(standardChessSetupFEN);
-                System.out.println(standardChessSetupFEN.toString()); }                
-            } else if (str.matches("undo")) { standardChessSetupFEN.retractMove(); }
+                GUIBoard.performMove(engine1.getStrongestMove());
+                checkForDrawOrMate(GUIBoard);
+                System.out.println(GUIBoard.toString()); }                
+            } else if (str.matches("undo")) { GUIBoard.retractMove(); }
               else if (str.matches("allmoves")) {
                 Movegenerator mg = new Movegenerator();
-                ArrayList<Move> mlist = mg.generateAllMoves(standardChessSetupFEN);
+                ArrayList<Move> mlist = mg.generateAllMoves(GUIBoard);
                 Move myMove;
 
                 for (int i = 0; i < mlist.size(); i++) {
@@ -83,41 +83,41 @@ class main {
                 }
                 
             } else if (str.matches("incheck")) { 
-                if (standardChessSetupFEN.isInCheck(standardChessSetupFEN.inMove())) System.out.println("Yes!");
+                if (GUIBoard.isInCheck(GUIBoard.inMove())) System.out.println("Yes!");
                 else System.out.println("No...");}
-              else if (str.trim().equalsIgnoreCase("black")) { standardChessSetupFEN.setBlackToMove(); }
-              else if (str.trim().equalsIgnoreCase("white")) { standardChessSetupFEN.setWhiteToMove(); }
-              else if (str.matches("branching")) {System.out.println(engine1.findBranchingFactor(standardChessSetupFEN, 4));}
+              else if (str.trim().equalsIgnoreCase("black")) { GUIBoard.setBlackToMove(); }
+              else if (str.trim().equalsIgnoreCase("white")) { GUIBoard.setWhiteToMove(); }
+              else if (str.matches("branching")) {System.out.println(engine1.findBranchingFactor(GUIBoard, 4));}
               else if (str.startsWith("sim ")) {
                   simSteps = Integer.parseInt(str.substring(4));
                   engine1 = new Search();
                   engine2 = new Search();
                   
-                  System.out.println(standardChessSetupFEN.toString());
+                  System.out.println(GUIBoard.toString());
                   int res = 0;
                   for (int i = 0; i < simSteps && (res != Evaluator.WHITE_IS_MATED || res != Evaluator.BLACK_IS_MATED || 
-                          !standardChessSetupFEN.drawBy3RepetionsRule()||
-                          !standardChessSetupFEN.drawBy50MoveRule() ||
-                          !standardChessSetupFEN.isDraw() ||
-                          !standardChessSetupFEN.isMate()); i++) {
+                          !GUIBoard.drawBy3RepetionsRule()||
+                          !GUIBoard.drawBy50MoveRule() ||
+                          !GUIBoard.isDraw() ||
+                          !GUIBoard.isMate()); i++) {
                       engine1.setPlyDepth(plyDepth);
-                      res = engine1.dosearch(standardChessSetupFEN, Search.ALPHABETA);
+                      res = engine1.dosearch(GUIBoard, Search.ALPHABETA);
                       System.out.println(engine1.moveAndStatistics());
                       if (engine1.getStrongestMove() == null) {
                        System.out.println("Game ended....");
                       } else
-                      standardChessSetupFEN.performMove(engine1.getStrongestMove());
-                      System.out.println(standardChessSetupFEN.toString());
-                      checkForDrawOrMate(standardChessSetupFEN);
+                      GUIBoard.performMove(engine1.getStrongestMove());
+                      System.out.println(GUIBoard.toString());
+                      checkForDrawOrMate(GUIBoard);
                       engine2.setPlyDepth(plyDepth);
-                      engine2.dosearch(standardChessSetupFEN,  Search.RANDOM);
+                      engine2.dosearch(GUIBoard,  Search.RANDOM);
                       //engine2.dosearch(interfaceBoard, 2, Search.ALPHABETA);
                       System.out.println(engine2.moveAndStatistics());
                       if (engine2.getStrongestMove() != null)
-                       standardChessSetupFEN.performMove(engine2.getStrongestMove());
+                       GUIBoard.performMove(engine2.getStrongestMove());
                       else System.out.println("No move to perform in position!");
-                      System.out.println(standardChessSetupFEN.toString());
-                      checkForDrawOrMate(standardChessSetupFEN);
+                      System.out.println(GUIBoard.toString());
+                      checkForDrawOrMate(GUIBoard);
                   }
               
               }
@@ -125,23 +125,23 @@ class main {
                   System.out.println("White attacks the squares:");
                   for (x = 0; x < 8; x++) {
                    for (y = 0; y < 8; y++) {
-                       if (standardChessSetupFEN.attacks(x, y, Piece.BLACK)) System.out.print(Chessio.numToChar(x) + Chessio.numToNumChar(y)+ ", ");
+                       if (GUIBoard.attacks(x, y, Piece.BLACK)) System.out.print(Chessio.numToChar(x) + Chessio.numToNumChar(y)+ ", ");
                    }
                   }
                   System.out.println("\nBlack attacks the squares:"); 
                   for (x = 0; x < 8; x++) {
                    for (y = 0; y < 8; y++) {
-                       if (standardChessSetupFEN.attacks(x, y, Piece.WHITE)) System.out.print(Chessio.numToChar(x) + Chessio.numToNumChar(y) + ", ");
+                       if (GUIBoard.attacks(x, y, Piece.WHITE)) System.out.print(Chessio.numToChar(x) + Chessio.numToNumChar(y) + ", ");
                    }                  
                }
               }
               else if (str.trim().equalsIgnoreCase("new"))   {
-                standardChessSetupFEN = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+                GUIBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
                 engine1 = new Search();
                 engine2 = new Search();
             }
              else if (str.startsWith("setboard")) {
-                standardChessSetupFEN = new Board(str.substring(9, str.length()));
+                GUIBoard = new Board(str.substring(9, str.length()));
                 engine1       = new Search();
             } 
              else if (str.startsWith("alpha")) {
@@ -163,7 +163,7 @@ class main {
                 System.exit(0); }
               else if (str.trim().startsWith("sd")) { plyDepth = Integer.parseInt(str.replaceAll(" ", "").substring(2)); }
               else if (str.matches("help")) { io.printWelcomeText(); io.printHelpText(); }
-              else if (str.matches("print") || str.matches("p")) { System.out.println(standardChessSetupFEN.toString()); }
+              else if (str.matches("print") || str.matches("p")) { System.out.println(GUIBoard.toString()); }
               
               else if (str.equalsIgnoreCase("xboard")) {
                xboardMode = true;
@@ -173,24 +173,24 @@ class main {
                        str.equalsIgnoreCase("force") ||
                        str.contains("protover")) {}
               else if (str.matches("bitboard")) {
-               System.out.println(standardChessSetupFEN.getBitboardString());
+               System.out.println(GUIBoard.getBitboardString());
               }
               else {
                 try {
-                    m = io.parseMove(standardChessSetupFEN, str);                    
-                    if (!standardChessSetupFEN.isDraw() || !standardChessSetupFEN.isMate()) {
-                       Iterator<Move> theMoves = Movegenerator.generateAllMoves(standardChessSetupFEN).listIterator();
+                    m = io.parseMove(GUIBoard, str);                    
+                    if (!GUIBoard.isDraw() || !GUIBoard.isMate()) {
+                       Iterator<Move> theMoves = Movegenerator.generateAllMoves(GUIBoard).listIterator();
                        // Check if move m is among the possible moves
                       while (theMoves.hasNext()) {
                         if (m.equal(theMoves.next())) {
-                        standardChessSetupFEN.performMove(m);
-                        if (standardChessSetupFEN.isInCheck(m.whoMoves))  throw new NoMoveException();        
+                        GUIBoard.performMove(m);
+                        if (GUIBoard.isInCheck(m.whoMoves))  throw new NoMoveException();        
                       }
                     }
                     } else  throw new NoMoveException();
                                       
-                    checkForDrawOrMate(standardChessSetupFEN);
-                    System.out.println(standardChessSetupFEN.toString());
+                    checkForDrawOrMate(GUIBoard);
+                    System.out.println(GUIBoard.toString());
 
                 } catch (NoMoveException e) { System.out.println("Not a valid move " + e.err); }
             }
