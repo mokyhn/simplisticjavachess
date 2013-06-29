@@ -145,12 +145,12 @@ public class mainTest {
     /*
      * It is tested that evaluation handles regular pawn moves, one and two steps ahead
      * This is tested for both black and white
-     * in search depths from 2 to 7
+     * in search depths from 2 to 6
      * using alphabeta search
      */
     @Test
     public void testSimplePawnMoves2() throws Exception {  
-        for (int depth = 2; depth < 8; depth++) {
+        for (int depth = 2; depth < 7; depth++) {
         System.out.println("Test " + depth);
         // One ahead - white
         assertTrue(testSearch("q7/nbr5/p7/ppp5/pkp5/8/P1P5/1N4K1 w - - 0 1", "", Search.ALPHABETA, depth, "a2a3")); 
