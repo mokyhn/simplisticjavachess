@@ -22,7 +22,7 @@ public class Telnet {
     public void test() throws Exception
     {
         //String command;
-        Search  engine       = new Search();
+        AbstractSearch  engine       = new AlphaBetaSearch();
         Board   theBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
         ICCProtocol  icc = new ICCProtocol();
         Move m;
@@ -73,7 +73,8 @@ public class Telnet {
                if (m != null && m.whoMoves == Piece.WHITE) {
                theBoard.performMove(m);
                engine.setPlyDepth(3);
-               engine.dosearch(theBoard, Search.ALPHABETA);               
+               engine.setBoard(theBoard);
+               engine.search();               
                System.out.println("Found " + engine.getStrongestMove().toString());
                dout.writeBytes(engine.getStrongestMove().toString() + "\n");
                theBoard.performMove(engine.getStrongestMove());

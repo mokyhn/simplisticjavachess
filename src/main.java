@@ -40,12 +40,11 @@ class main {
 
         int     plyDepth      = 5;
         Chessio io            = new Chessio();
-        Search  engine1       = new Search();
-        Search  engine2       = new Search();
+        AbstractSearch  engine1 = new AlphaBetaSearch();
+        AbstractSearch  engine2 = new AlphaBetaSearch();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String str            = null;
         int simSteps          = 0;
-        int searchMethod      = Search.MINMAX;
         Boolean xboardMode    = false;
         Move    m;
 
@@ -65,8 +64,9 @@ class main {
 
             if (str.trim().equalsIgnoreCase("go")) {
                 engine1.setPlyDepth(plyDepth);
-                engine1.dosearch(GUIBoard, searchMethod);
-                System.out.println(engine1.moveAndStatistics());
+                engine1.setBoard(GUIBoard);
+                engine1.dosearch();
+                System.out.println(engine1.getStatistics());
                 if (engine1.getStrongestMove() != null) {
                 GUIBoard.performMove(engine1.getStrongestMove());
                 checkForDrawOrMate(GUIBoard);
@@ -90,8 +90,8 @@ class main {
               else if (str.matches("branching")) {System.out.println(engine1.findBranchingFactor(GUIBoard, 4));}
               else if (str.startsWith("sim ")) {
                   simSteps = Integer.parseInt(str.substring(4));
-                  engine1 = new Search();
-                  engine2 = new Search();
+                  engine1 = new AlphaBetaSearch();
+                  engine2 = new RandomSearch();
                   
                   System.out.println(GUIBoard.toString());
                   int res = 0;
@@ -101,8 +101,9 @@ class main {
                           !GUIBoard.isDraw() ||
                           !GUIBoard.isMate()); i++) {
                       engine1.setPlyDepth(plyDepth);
-                      res = engine1.dosearch(GUIBoard, Search.ALPHABETA);
-                      System.out.println(engine1.moveAndStatistics());
+                      engine1.setBoard(GUIBoard);
+                      res = engine1.dosearch();
+                      System.out.println(engine1.getStatistics());
                       if (engine1.getStrongestMove() == null) {
                        System.out.println("Game ended....");
                       } else
@@ -110,9 +111,10 @@ class main {
                       System.out.println(GUIBoard.toString());
                       checkForDrawOrMate(GUIBoard);
                       engine2.setPlyDepth(plyDepth);
-                      engine2.dosearch(GUIBoard,  Search.RANDOM);
+                      engine2.setBoard(GUIBoard);
+                      engine2.dosearch();
                       //engine2.dosearch(interfaceBoard, 2, Search.ALPHABETA);
-                      System.out.println(engine2.moveAndStatistics());
+                      System.out.println(engine2.getStatistics());
                       if (engine2.getStrongestMove() != null)
                        GUIBoard.performMove(engine2.getStrongestMove());
                       else System.out.println("No move to perform in position!");
@@ -137,21 +139,21 @@ class main {
               }
               else if (str.trim().equalsIgnoreCase("new"))   {
                 GUIBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-                engine1 = new Search();
-                engine2 = new Search();
+                engine1 = new AlphaBetaSearch();
+                engine2 = new AlphaBetaSearch();
             }
              else if (str.startsWith("setboard")) {
                 GUIBoard = new Board(str.substring(9, str.length()));
-                engine1       = new Search();
+                engine1       = new AlphaBetaSearch();
             } 
              else if (str.startsWith("alpha")) {
-              searchMethod = Search.ALPHABETA;
+              engine1 = new AlphaBetaSearch();
              }
              else if (str.startsWith("minmax")) {
-              searchMethod = Search.MINMAX;
+              engine1 = new MinMaxSearch();
              }
              else if (str.startsWith("random")) {
-              searchMethod = Search.RANDOM;
+              engine1 = new RandomSearch();
              }
              else if (str.startsWith("telnet")) {
               Telnet telnet = new Telnet();

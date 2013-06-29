@@ -56,9 +56,9 @@ public class AlphaBetaSearch extends AbstractSearch {
         int i;
         for (i = 0; (i < moves.size() && alpha < beta ); i++) {  
             m = moves.get(i);
-            if (m.toString().contains("a5") && m.toString().contains("a6")) {
+            /*if (m.toString().contains("a5") && m.toString().contains("a6")) {
              System.out.println("WHITE: Eval, alpha = " + evaluation + ", " + alpha + " " + m.toString());
-            }
+            }*/
             analyzeBoard.performMove(m);
             if (analyzeBoard.isInCheck(m.whoMoves)) {
               analyzeBoard.retractMove(); // The move was not legal
