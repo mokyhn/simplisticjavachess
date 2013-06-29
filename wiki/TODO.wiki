@@ -10,9 +10,8 @@ From this point on, one could start to go for optimizations of different sorts i
 
 = Concrete problems to solve now = 
   * Go through the structure of the program and refactor if needed
+  * Add evaluation class that hold evaluations and allows general operations wrt. comparison and flags for draw, mate etc.
   * An abstract way to handle search results (evaluations) and board evaluations driven by moves. So if b ---m--->b' then eval(b') = current_eval(b) "+" eval(m), where b and b' are boards and m is a move.
-  * (done) Test the "Draw on threefold repetition" part of the implementation
-  * Test the "50 move rule draw" part of the implementation
   * Draw by insufficient material 
   * Principal Variations in search engine
   * A transposition table
@@ -29,6 +28,7 @@ From this point on, one could start to go for optimizations of different sorts i
   * inCheck and correct movegeneration
 
 = Fixed =
+  * Test the "Draw on threefold repetition" part of the implementation
   * Draw on threefold repetition
   * 50 move rule draw
   * Movenumbers printed on screen
