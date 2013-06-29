@@ -11,7 +11,7 @@ public abstract class AbstractSearch {
     protected Board analyzeBoard;
     protected int   _plyDepth;
     protected Move  strongestMove;
-    private int     searchResult;
+    private int     _finalEvaluation;
 
 
     // For statistical pusposes
@@ -38,7 +38,7 @@ public abstract class AbstractSearch {
         }
         
         return("move "          + strongestMoveStr +
-               " Evaluation "   + searchResult +
+               " Evaluation "   + _finalEvaluation +
                " at "           + _plyDepth +
                " ply in "       + noPositions +
                " positions in " + getTimeUsage() 
@@ -52,7 +52,7 @@ public abstract class AbstractSearch {
     public AbstractSearch() {
           noPositions          = 0;
           noCutOffs            = 0;
-          searchResult         = 0;
+          _finalEvaluation     = 0;
           wastedGeneratedMoves = 0;
           strongestMove        = null;
     }
@@ -68,7 +68,7 @@ public abstract class AbstractSearch {
           throw new Exception("Supply a board to be analyzed first.");
         }
         
-        searchResult         = 0;
+        _finalEvaluation     = 0;
         noPositions          = 0;
         noCutOffs            = 0;
         wastedGeneratedMoves = 0;        
@@ -85,16 +85,16 @@ public abstract class AbstractSearch {
         
         
         
-        searchResult = search();        
+        _finalEvaluation = search();        
         
         endTime = System.nanoTime();
         
         
-        return searchResult;
+        return _finalEvaluation;
     }
 
     // Abstract method that is requiered from the implementor.
-    public abstract int search();
+    protected abstract int search();
 
     public String findBranchingFactor(Board b, int ply) {
         analyzeBoard  = b.clone();
