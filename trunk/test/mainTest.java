@@ -43,7 +43,7 @@ public class mainTest {
     }
 
     
-    private static boolean testSearchAux(Board b, int method, int plyDepth, ArrayList<Move> expectedMoves) throws NoMoveException {
+    private static boolean testSearchAux(Board b, int method, int plyDepth, ArrayList<Move> expectedMoves) throws NoMoveException, Exception {
        AbstractSearch  engine;
        
        Move strongestMove;
@@ -60,7 +60,7 @@ public class mainTest {
        }
        engine.setPlyDepth(plyDepth); 
        engine.setBoard(b);
-       engine.search();
+       engine.dosearch();
        strongestMove = engine.getStrongestMove();
 
        if (expectedMoves.isEmpty())       
@@ -79,7 +79,7 @@ public class mainTest {
         return false;    
      }
       
-    private static boolean testSearchDoNotPlayThis(String fen, int method, int plyDepth, String moves) throws NoMoveException {
+    private static boolean testSearchDoNotPlayThis(String fen, int method, int plyDepth, String moves) throws NoMoveException, Exception {
        String[] unExpectedMovesStr = moves.split(" ");
        ArrayList<Move> unExpectedMoves = new ArrayList<Move>();
        Chessio cio                   = new Chessio();
@@ -102,7 +102,7 @@ public class mainTest {
        }
        engine.setPlyDepth(plyDepth); 
        engine.setBoard(b);
-       engine.search();
+       engine.dosearch();
        strongestMove = engine.getStrongestMove();
        
         for (i = 0; i < unExpectedMovesStr.length; i++) {
@@ -133,7 +133,7 @@ public class mainTest {
      }
     
     
-    public static boolean testSearch(String fen, String moveSequence, int method, int plyDepth, String expectedMoveStrs) throws NoMoveException {
+    public static boolean testSearch(String fen, String moveSequence, int method, int plyDepth, String expectedMoveStrs) throws NoMoveException, Exception {
         String[] moveStrings          = moveSequence.split(" ");
         Board b                       = new Board(fen);
         Chessio cio                   = new Chessio();
@@ -162,6 +162,32 @@ public class mainTest {
         return testSearchAux(b, method, plyDepth, expectedMoves);
     }    
 
+
+   @Test
+   public void simpleAlphaBetaTest1() throws Exception {
+    assertTrue(testSearch("3k4/3P4/3K4/8/8/8/8/8 w - - 0 1", "", ALPHABETA, 5, "d6e6 d6c6"));       
+   }
+    
+   @Test
+   public void simpleAlphaBetaTest2() throws Exception {
+    assertTrue(testSearch("8/8/8/8/8/3k4/3p4/3K4 b - - 1 1", "", ALPHABETA, 5, "d3e3 d3c3"));       
+   }   
+
+    // The following two tests combines a test of alpha/beta pruning
+    // and pawn promotions and possible stale mate
+    // or losing a pawn.
+   @Test
+   public void simpleAlphaBetaTest3() throws Exception {
+    assertTrue(testSearch("3k4/3P4/8/3K4/8/8/8/8 w - - 0 1", "", ALPHABETA, 5, "d5e6 d5c6"));       
+   }
+    
+   @Test
+   public void simpleAlphaBetaTest4() throws Exception {
+    assertTrue(testSearch("8/8/8/8/3k4/8/3p4/3K4 b - - 1 1", "", ALPHABETA, 5, "d4e3 d4c3"));       
+   }   
+   
+   
+   
     @Test
     public void testSimplePawnMoves1() throws Exception {
         // This fails:
@@ -169,7 +195,7 @@ public class mainTest {
         assertTrue(testSearchDoNotPlayThis("rnbqkbnr/ppp2p1p/8/P2pp1p1/8/8/1PPPPPPP/RNBQKBNR w KQkq - 0 4", ALPHABETA, 4, "a5a6"));
     }
     
-    
+     
     /*
      * It is tested that evaluation handles regular pawn moves, one and two steps ahead
      * This is tested for both black and white
