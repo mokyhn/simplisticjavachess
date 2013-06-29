@@ -126,7 +126,7 @@ public class AlphaBetaSearch extends AbstractSearch {
     }
 
         
-    public int search() {
+    protected final int search() {
       System.out.println("Alpha-Beta search...");
       return alphaBetaSearch(_plyDepth, _plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }

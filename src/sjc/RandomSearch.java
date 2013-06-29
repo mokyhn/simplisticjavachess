@@ -63,7 +63,7 @@ public class RandomSearch extends AbstractSearch {
       return Evaluator.evaluate(analyzeBoard);
     }
 
-    public int search() {
+    protected final int search() {
      System.out.println("Random search...");
      return randomSearch();
     }
