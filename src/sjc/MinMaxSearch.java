@@ -26,7 +26,8 @@ public class MinMaxSearch extends AbstractSearch {
                        bestScore        = 0;
        int             inMove;
        boolean         firstCalculation = true;
-             
+      int             distanceToRoot = plyDepth - depthToGo;
+        
         if (depthToGo == 0) {
             noPositions++;
             return (analyzeBoard.drawBy3RepetionsRule() || analyzeBoard.drawBy50MoveRule()) ? 0 : Evaluator.evaluate(analyzeBoard);
@@ -44,12 +45,17 @@ public class MinMaxSearch extends AbstractSearch {
         if (moves.isEmpty()) return 0; // A draw
 
         boolean result;
+        boolean thereWasALegalMove = false;
         for (int i = 0; i < moves.size(); i++) {
-                m = moves.get(i);
+            
+            m = moves.get(i);
                  result = analyzeBoard.performMove(m);
             
                   if (result == false) continue; // The pseudo legal move m turned out to be illegal.
                 //Nice verbose trace: System.out.print("(" + (plyDepth-depthToGo) +": "+ m.toString());
+                
+                  
+                thereWasALegalMove = true; 
                 score = minMaxSearch(plyDepth, depthToGo - 1);
                 analyzeBoard.retractMove();
                 //Nice verbose trace: System.out.println(")");
@@ -75,6 +81,18 @@ public class MinMaxSearch extends AbstractSearch {
 
                 
         }
+        // Mate or draw
+        if (!thereWasALegalMove) {
+           if (analyzeBoard.isInCheck(inMove)) {
+            analyzeBoard.setMate();            
+            //System.out.println("Matefound:\n" + analyzeBoard.toString());
+            if (inMove == Piece.WHITE) return Evaluator.WHITE_IS_MATED+distanceToRoot;
+            else return Evaluator.BLACK_IS_MATED-distanceToRoot;
+           } else {
+               analyzeBoard.setDraw();
+               return 0;
+           } // draw
+         }
 
         return bestScore;
 
