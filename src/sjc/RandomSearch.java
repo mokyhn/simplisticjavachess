@@ -32,15 +32,17 @@ public class RandomSearch extends AbstractSearch {
       }
       
       whoMoves = analyzeBoard.inMove();
+      boolean result;
       while (retry && n > 0) {
           r = Math.random();
           theMove = moves.get((int) Math.ceil((n-1)*r));
-          analyzeBoard.performMove(theMove);
-          if (analyzeBoard.isInCheck(whoMoves)) {
-           analyzeBoard.retractMove();
-           moves.remove(theMove);
-           n = moves.size();
-           System.out.println("Neglected: " + theMove.toString());
+          result = analyzeBoard.performMove(theMove);
+   
+          if (result == false)
+           {
+             moves.remove(theMove);
+             n = moves.size();
+             System.out.println("Neglected: " + theMove.toString());
           } else {
               retry = false;
               strongestMove = theMove;
