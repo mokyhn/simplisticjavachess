@@ -136,6 +136,8 @@ public class AlphaBetaSearch extends AbstractSearch {
         assert(currentPlyDepth <= totalPlyDepth);
         assert(currentPlyDepth >= 0 && totalPlyDepth >= 0);
         
+        //--------------------Part 1. Immediate evaluations of different kinds
+        
         // If the game has ended return immediately.
         if (analyzeBoard.isDraw()) 
         {
@@ -164,20 +166,20 @@ public class AlphaBetaSearch extends AbstractSearch {
             noPositions++;
             return Evaluator.evaluate(analyzeBoard);
         }
-                
+        
+        //--------------------Part 2. Move generation and variation search
         ArrayList<Move> possibleMoves = Movegenerator.generateAllMoves(analyzeBoard);
 
         int i;
+        
+        boolean result;
+        
         for (i = 0; (i < possibleMoves.size() && alpha < beta ); i++) {  // TODO: Is this condition right?
             Move m = possibleMoves.get(i);
-            /*if (m.toString().contains("a5") && m.toString().contains("a6")) {
-             System.out.println("WHITE: Eval, alpha = " + evaluation + ", " + alpha + " " + m.toString());
-            }*/
-            analyzeBoard.performMove(m);
-            if (analyzeBoard.isInCheck(m.whoMoves)) {
-              analyzeBoard.retractMove(); // The move was not legal
-              continue;                   // Try next pseudolegal move
-            }
+            result = analyzeBoard.performMove(m);
+            
+            if (result == false) continue; // The pseudo legal move m turned out to be illegal.
+            
             thereWasALegalMove = true;
             
             //System.out.print("(" + m.toString());

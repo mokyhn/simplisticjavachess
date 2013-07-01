@@ -185,8 +185,8 @@ class main {
                        // Check if move m is among the possible moves
                       while (theMoves.hasNext()) {
                         if (m.equal(theMoves.next())) {
-                        GUIBoard.performMove(m);
-                        if (GUIBoard.isInCheck(m.whoMoves))  throw new NoMoveException();        
+                        boolean result = GUIBoard.performMove(m);
+                        if (result == false)  throw new NoMoveException();        
                       }
                     }
                     } else  throw new NoMoveException();

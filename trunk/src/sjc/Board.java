@@ -113,9 +113,10 @@ public final class Board implements Cloneable {
         return p;
     }
 
-    //TODO: 2013, check for draw here! A move might lead to a draw state.
-    //The draw flag of the board should be set accordingly.
-    public void performMove(Move m) {
+    // TODO: 2013, Should we check for draw here? 
+    // A move might lead to a draw state.
+    // The draw flag of the board might be set accordingly.
+    public boolean performMove(Move m) {
        Piece p;
             
        p = getPieceXY(m.fromX, m.fromY);
@@ -235,7 +236,17 @@ public final class Board implements Cloneable {
         // Swap the move color
         state.inMove = -state.inMove;
 
-
+        boolean legalityOfMove = true;
+        
+        // The player that did the move is in check
+        // his or her move is hence not legal
+        if (isInCheck(-state.inMove)) 
+        {
+            legalityOfMove = false;
+            this.retractMove();
+        }
+        
+        return legalityOfMove;
     }
 
     public boolean retractMove() {

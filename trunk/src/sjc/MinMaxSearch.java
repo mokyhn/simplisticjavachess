@@ -43,9 +43,12 @@ public class MinMaxSearch extends AbstractSearch {
                 
         if (moves.isEmpty()) return 0; // A draw
 
+        boolean result;
         for (int i = 0; i < moves.size(); i++) {
                 m = moves.get(i);
-                analyzeBoard.performMove(m);                
+                 result = analyzeBoard.performMove(m);
+            
+                  if (result == false) continue; // The pseudo legal move m turned out to be illegal.
                 //Nice verbose trace: System.out.print("(" + (plyDepth-depthToGo) +": "+ m.toString());
                 score = minMaxSearch(plyDepth, depthToGo - 1);
                 analyzeBoard.retractMove();
