@@ -126,6 +126,13 @@ public class AlphaBetaSearch extends AbstractSearch {
         return inMove == Piece.WHITE ? alpha : beta;
     }
 
+    private String humanReadable(Integer v) {
+     
+              if (v == Integer.MAX_VALUE) {return  "+inf";}
+             if (v == Integer.MIN_VALUE) {return "-inf";}
+     return v.toString();
+    }
+    
     //TODO: Rework this algorithm. The algorithm above is the "old" almost working...
     private int alphaBetaSearch(int currentPlyDepth, int totalPlyDepth, int alpha, int beta) {
         Boolean         thereWasALegalMove = false;
@@ -164,6 +171,10 @@ public class AlphaBetaSearch extends AbstractSearch {
         
         if (currentPlyDepth == 0) {
             noPositions++;
+            System.out.print("<d0 " );
+            
+            System.out.print(" evaluation=\""+ humanReadable(Evaluator.evaluate(analyzeBoard)) + "," + humanReadable(alpha) + "," + humanReadable(beta) + "\">");
+            System.out.print("</d0>");
             return Evaluator.evaluate(analyzeBoard);
         }
         
@@ -183,17 +194,18 @@ public class AlphaBetaSearch extends AbstractSearch {
             
             thereWasALegalMove = true;
             
-            //System.out.print("(" + m.toString());
-            int variantEvaluation = alphaBetaSearch(currentPlyDepth - 1, totalPlyDepth, alpha, beta);
-            //System.out.println(")");
-            /* if (m.toString().contains("a5") && m.toString().contains("a6")) {
-             System.out.println("WHITE: Eval, alpha = " + alpha +
-                                " beta = " + beta +
-                                " currentDepth " + currentPlyDepth +
-                                " evaluation = " + evaluation + " " +
-                                " move " + m.toString() +
-                                analyzeBoard.toString() + "\n\n\n\n");
-            }*/
+            String movestr = m.toString(); //m.toString().replace('-', 'z')).replace('=', 'z');
+            
+            
+            String sb = "<" + movestr  + ">";
+            String eb = "</" + movestr + ">";
+            
+            System.out.print(sb + m.toString() );
+             int variantEvaluation = alphaBetaSearch(currentPlyDepth - 1, totalPlyDepth, alpha, beta);
+             
+             System.out.print(" is " + humanReadable(variantEvaluation) + "," + humanReadable(alpha) + "," + humanReadable(beta));
+            
+            System.out.print(eb);
             analyzeBoard.retractMove();
             
             if (inMove == Piece.WHITE) 
@@ -203,7 +215,7 @@ public class AlphaBetaSearch extends AbstractSearch {
                  alpha = variantEvaluation;
                  if (currentPlyDepth == totalPlyDepth)  
                  {
-                     //System.out.println("WHITE: Eval, alpha = " + eval + ", " + alpha + " " + m.toString());
+                     
                      strongestMove = m;
                  }
                 }
@@ -220,12 +232,6 @@ public class AlphaBetaSearch extends AbstractSearch {
                 {
                    if (currentPlyDepth == totalPlyDepth)  
                    {
-                             //if (m.toString().contains("e5")) { 
-                             //    System.out.printf("\nBLACK: move = %s, Eval=%d, alpha=%d, beta=%d, sd = %d\n", m.toString(), eval , alpha, beta, currentPlyDepth);
-                            // }
-                             //if (m.toString().contains("h6") ) { 
-                             //    System.out.printf("\nBLACK: move = %s, Eval=%d, alpha=%d, beta=%d, sd = %d\n", m.toString(), eval , alpha, beta, currentPlyDepth);
-                             //}
                              strongestMove = m;
                    }        
                    beta = variantEvaluation;
@@ -238,7 +244,7 @@ public class AlphaBetaSearch extends AbstractSearch {
                }
             }    
         }
-        
+        System.out.println();
         // Mate or draw
         if (!thereWasALegalMove) {
            if (analyzeBoard.isInCheck(inMove)) {
@@ -262,3 +268,20 @@ public class AlphaBetaSearch extends AbstractSearch {
       return alphaBetaSearch(_plyDepth, _plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 }
+
+                             //if (m.toString().contains("e5")) { 
+                             //    System.out.printf("\nBLACK: move = %s, Eval=%d, alpha=%d, beta=%d, sd = %d\n", m.toString(), eval , alpha, beta, currentPlyDepth);
+                            // }
+                             //if (m.toString().contains("h6") ) { 
+                             //    System.out.printf("\nBLACK: move = %s, Eval=%d, alpha=%d, beta=%d, sd = %d\n", m.toString(), eval , alpha, beta, currentPlyDepth);
+                             //}
+
+
+            /* if (m.toString().contains("a5") && m.toString().contains("a6")) {
+             System.out.println("WHITE: Eval, alpha = " + alpha +
+                                " beta = " + beta +
+                                " currentDepth " + currentPlyDepth +
+                                " evaluation = " + evaluation + " " +
+                                " move " + m.toString() +
+                                analyzeBoard.toString() + "\n\n\n\n");
+            }*/
