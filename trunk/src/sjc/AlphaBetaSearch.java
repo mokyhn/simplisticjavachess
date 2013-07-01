@@ -174,8 +174,9 @@ public class AlphaBetaSearch extends AbstractSearch {
         
         boolean result;
         
-        for (i = 0; (i < possibleMoves.size() && alpha < beta ); i++) {  // TODO: Is this condition right?
+        for (i = 0; (i < possibleMoves.size() ); i++) { 
             Move m = possibleMoves.get(i);
+            
             result = analyzeBoard.performMove(m);
             
             if (result == false) continue; // The pseudo legal move m turned out to be illegal.
@@ -183,7 +184,7 @@ public class AlphaBetaSearch extends AbstractSearch {
             thereWasALegalMove = true;
             
             //System.out.print("(" + m.toString());
-            int variantEvaluation = alphaBetaSearch(currentPlyDepth-1, totalPlyDepth, alpha, beta);
+            int variantEvaluation = alphaBetaSearch(currentPlyDepth - 1, totalPlyDepth, alpha, beta);
             //System.out.println(")");
             /* if (m.toString().contains("a5") && m.toString().contains("a6")) {
              System.out.println("WHITE: Eval, alpha = " + alpha +
@@ -195,17 +196,30 @@ public class AlphaBetaSearch extends AbstractSearch {
             }*/
             analyzeBoard.retractMove();
             
-            if (inMove == Piece.WHITE) {               
-                if (variantEvaluation > alpha) {
+            if (inMove == Piece.WHITE) 
+            {               
+                if (variantEvaluation > alpha) 
+                {
                  alpha = variantEvaluation;
-                 if (currentPlyDepth == totalPlyDepth)  {
+                 if (currentPlyDepth == totalPlyDepth)  
+                 {
                      //System.out.println("WHITE: Eval, alpha = " + eval + ", " + alpha + " " + m.toString());
                      strongestMove = m;
                  }
                 }
-            } else {
-             if (variantEvaluation < beta) {
-                 if (currentPlyDepth == totalPlyDepth)  {
+                if (alpha >= beta) {
+                    wastedGeneratedMoves = wastedGeneratedMoves + (possibleMoves.size()) - i;
+                    noCutOffs++;
+                    return beta;
+                }
+                
+            } 
+            else 
+            {
+                if (variantEvaluation < beta) 
+                {
+                   if (currentPlyDepth == totalPlyDepth)  
+                   {
                              //if (m.toString().contains("e5")) { 
                              //    System.out.printf("\nBLACK: move = %s, Eval=%d, alpha=%d, beta=%d, sd = %d\n", m.toString(), eval , alpha, beta, currentPlyDepth);
                             // }
@@ -213,16 +227,16 @@ public class AlphaBetaSearch extends AbstractSearch {
                              //    System.out.printf("\nBLACK: move = %s, Eval=%d, alpha=%d, beta=%d, sd = %d\n", m.toString(), eval , alpha, beta, currentPlyDepth);
                              //}
                              strongestMove = m;
-                         }        
-                 beta = variantEvaluation;
-             }
+                   }        
+                   beta = variantEvaluation;
+               }
+               if (beta <= alpha) 
+               {
+                   wastedGeneratedMoves = wastedGeneratedMoves + (possibleMoves.size()) - i;
+                   noCutOffs++;
+                   return alpha;
+               }
             }    
-        }
-        
-        // For the purpose of statistics
-        if (alpha >=  beta) {
-                wastedGeneratedMoves = wastedGeneratedMoves + (possibleMoves.size()) - i;
-                noCutOffs++;
         }
         
         // Mate or draw
