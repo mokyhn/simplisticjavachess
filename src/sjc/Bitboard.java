@@ -43,7 +43,7 @@ public final class Bitboard implements Cloneable {
     }
 
     private int indexToColor(int index) {
-     assert(1==0);
+     assert(index == 0 || index == 1);
      return index == 0 ? Piece.BLACK : Piece.WHITE;
     }
     
