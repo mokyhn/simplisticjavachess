@@ -1,6 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * @author Morten Kühnrich
  */
 //package sjc;
 
@@ -17,24 +16,46 @@ import sjc.*;
  * @author moku
  */
 public class BitboardTest {
-    
-    public BitboardTest() {
-    }
+    public BitboardTest() {}
     
     @BeforeClass
-    public static void setUpClass() {
-    }
+    public static void setUpClass() {    }
     
     @AfterClass
-    public static void tearDownClass() {
-    }
-    
+    public static void tearDownClass() {    }
+ 
     @Before
-    public void setUp() {
-    }
-    
+    public void setUp() {    }
+
     @After
-    public void tearDown() {
+    public void tearDown() {    }
+
+
+     /**
+     * Test of insertPiece method, of class Bitboard.
+     */
+    @Test
+    public void testBitboardConstructor() {
+        System.out.println("testBitboardConstructor");
+        Board b = new Board();
+
+        Piece p1 = new Piece(1, 2, Piece.WHITE, Piece.KING);
+        Piece p2 = new Piece(7, 4, Piece.BLACK, Piece.KING);
+        Piece p3 = new Piece(5, 5, 'Q');
+        Piece p4 = new Piece(6, 6, 'q');
+
+        b.insertPiece(p1);
+        b.insertPiece(p2);
+        b.insertPiece(p3);
+        b.insertPiece(p4);
+
+
+        Bitboard instance = new Bitboard(b);
+              
+        assertTrue(instance.hasPiece(1, 2, Piece.WHITE, Piece.KING));
+        assertTrue(instance.hasPiece(7, 4, Piece.BLACK, Piece.KING));
+        assertTrue(instance.hasPiece(5, 5, Piece.WHITE, Piece.QUEEN));
+        assertTrue(instance.hasPiece(6, 6, Piece.BLACK, Piece.QUEEN));
     }
 
     /**
