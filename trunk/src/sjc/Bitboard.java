@@ -5,11 +5,14 @@
  * Practical for checking three-fold-repetition.
  */
 package sjc;
+
+import sjc.Interfaces.IBitBoard;
+
 /*
  * Bitboard structures
  */
-public final class Bitboard implements Cloneable {
-    public long bb[][];
+public final class Bitboard implements IBitBoard {
+    private long bb[][];
 
     /**
      * Total number of colors: black and white, that is 2
@@ -164,8 +167,9 @@ public final class Bitboard implements Cloneable {
         return true;
     }
 
+   
     @Override
-      public Bitboard clone() {
+    public Bitboard clone() {
         int t;
 
         final Bitboard theClone = new Bitboard();
