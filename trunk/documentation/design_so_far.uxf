@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>0</x>
+      <y>0</y>
+      <w>360</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>Bitboard
+--
+--
++insertPiece(Piece p)
++boolean hasPiece(x, y, color, type)
++Piece removePiece(x, y)
++String toString()
++boolean equals(obj)
++IBitBoard clone()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>460</x>
+      <y>0</y>
+      <w>240</w>
+      <h>290</h>
+    </coordinates>
+    <panel_attributes>State
+--
++Move move
++int inMove
++int moveNumber
++Bitboard bbposition
++boolean  blackCanCastleShort       
++boolean  blackCanCastleLong
++boolean  whiteCanCastleShort
++boolean  whiteCanCastleLong
++boolean  drawFlag
++boolean  mateFlag
++int halfMoveClock
++int halfMovesIndex3PosRepition
++Piece inCheckByPiece
+--
++String toString()
++State clone()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>330</x>
+      <y>40</y>
+      <w>150</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>130;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>0</x>
+      <y>250</y>
+      <w>330</w>
+      <h>250</h>
+    </coordinates>
+    <panel_attributes>Position
+--
+-Piece[]   piecePosition
+-Piece[][] xyPosition
++Bitboard bitboard????
+--
+int numberOfPieces()
++Piece getPiece(int i)
++Piece getPieceXY(final int x, final int y)
++insertPiece(final Piece p)
++Piece removePiece(final int x, final int y)
++movePiece(int xFrom, int yFrom, int xTo, int yTo)
++boolean attacks(int x, int y, int inMove
++boolean freeSquare(int x, int y)
++String toString()
++Position clone()
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>140</x>
+      <y>100</y>
+      <w>50</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>30;30;30;150</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>40</x>
+      <y>610</y>
+      <w>310</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>Piece
+--
++xPos
++yPos
++color
++type
+--
++boolean equals(Piece p)
++String getPieceLetter(int color, int pieceType)
++String toString()
++Piece clone()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>70</x>
+      <y>470</y>
+      <w>88</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1..*
+has&gt;</panel_attributes>
+    <additional_attributes>50;30;50;140</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>730</x>
+      <y>370</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>History
+--
+-Stack&lt;State&gt; stateHistory
+--
++void add(State s)
++State pop()
++State peek()
++int size()
++State get(int index)
++boolean isEmpty()
++String toString()
++History clone()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>550</x>
+      <y>260</y>
+      <w>290</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=*
+m2=1
+&lt;Has</panel_attributes>
+    <additional_attributes>30;30;270;110</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>760</x>
+      <y>10</y>
+      <w>370</w>
+      <h>320</h>
+    </coordinates>
+    <panel_attributes>Move
+--
++fromX
++fromY
++toX
++toY
++type 
++aCapturedPiece
++whoMoves
+--
++Move genMove(Board b, Piece fp, int dX, int dY)
++boolean aCapture()
++boolean equal(Move m)
++boolean aSimplePromotion()
++boolean aCapturePromotion()
++int promotionTo()
++_String posToString(int x, int y)_
++_String pieceNumberToChar(int num)_
++Move clone()
++String toString()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>670</x>
+      <y>50</y>
+      <w>110</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>30;30;90;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>390</x>
+      <y>370</y>
+      <w>290</w>
+      <h>530</h>
+    </coordinates>
+    <panel_attributes>Board
+--
+-Position position
+-State state
+-History history
+--
++int getNumberOfPieces()
++int inMove() 
++setBlackToMove()
++setWhiteToMove()
++setDraw()
++setMate()
++boolean isDraw()
++boolean isMate()
++Move    getLastMove()
++Piece getPiece(final int i)
++insertPiece(Piece p)
++Piece removePiece(int x, int y)
++boolean freeSquare(int x, int y)
++boolean canCastleShort()
++boolean canCastleLong()
++boolean attacks(int x, int y)
++boolean attacks(int x, int y, int sideToMove)
++String  getBitboardString()
++Boolean drawBy50MoveRule() 
++Boolean isInCheck(int color)
++Boolean drawBy3RepetionsRule()
++Piece getPieceXY(int x, int y)
++boolean performMove(Move m)
++boolean retractMove()
++String toString()
++History clone()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>650</x>
+      <y>490</y>
+      <w>100</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>80;30;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>440</x>
+      <y>260</y>
+      <w>50</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>30;30;30;110</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>300</x>
+      <y>450</y>
+      <w>110</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-
+m1=1
+m2=1
+</panel_attributes>
+    <additional_attributes>30;30;90;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>770</x>
+      <y>640</y>
+      <w>320</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>MoveGenerator
+--
++ArrayList&lt;Move&gt; generateAllMoves(Board b)
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>930</x>
+      <y>300</y>
+      <w>80</w>
+      <h>360</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>60;30;30;340</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>650</x>
+      <y>600</y>
+      <w>140</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>30;30;120;60</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>280</x>
+      <y>660</y>
+      <w>830</w>
+      <h>300</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>30;120;30;280;810;280;790;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>860</x>
+      <y>820</y>
+      <w>200</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>Evaluate
+--
++int evaluate(Board b)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>650</x>
+      <y>830</y>
+      <w>230</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>30;30;210;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>820</x>
+      <y>730</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>Search</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>650</x>
+      <y>720</y>
+      <w>190</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>30;40;170;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>790</x>
+      <y>660</y>
+      <w>80</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>30;30;60;70</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>860</x>
+      <y>730</y>
+      <w>80</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>60;90;30;30</additional_attributes>
+  </element>
+</diagram>
