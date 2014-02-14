@@ -79,7 +79,7 @@ int numberOfPieces()
 +insertPiece(final Piece p)
 +Piece removePiece(final int x, final int y)
 +movePiece(int xFrom, int yFrom, int xTo, int yTo)
-+boolean attacks(int x, int y, int inMove
++boolean attacks(int x, int y, int inMove)
 +boolean freeSquare(int x, int y)
 +String toString()
 +Position clone()
@@ -192,8 +192,8 @@ m2=1
 +boolean aSimplePromotion()
 +boolean aCapturePromotion()
 +int promotionTo()
-+_String posToString(int x, int y)_
-+_String pieceNumberToChar(int num)_
+_+String posToString(int x, int y)_
+_+String pieceNumberToChar(int num)_
 +Move clone()
 +String toString()</panel_attributes>
     <additional_attributes/>
@@ -411,5 +411,35 @@ m2=1
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
     <additional_attributes>60;90;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>190</x>
+      <y>140</y>
+      <w>230</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Clases Bitboard, State 
+and Position could be
+related through inheritance e.g:
+Bitboard &lt;--Position&lt;--State</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Note</type>
+    <coordinates>
+      <x>40</x>
+      <y>800</y>
+      <w>210</w>
+      <h>130</h>
+    </coordinates>
+    <panel_attributes>Parts of current 
+Board should
+"Game" and
+"Board" should be only
+Board related stuff.
+</panel_attributes>
+    <additional_attributes/>
   </element>
 </diagram>
