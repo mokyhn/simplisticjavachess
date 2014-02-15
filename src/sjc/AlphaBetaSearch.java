@@ -171,10 +171,10 @@ public class AlphaBetaSearch extends AbstractSearch {
         
         if (currentPlyDepth == 0) {
             noPositions++;
-            System.out.print("<d0 " );
+            //System.out.print("<d0 " );
             
-            System.out.print(" evaluation=\""+ humanReadable(Evaluator.evaluate(analyzeBoard)) + "," + humanReadable(alpha) + "," + humanReadable(beta) + "\">");
-            System.out.print("</d0>");
+            //System.out.print(" evaluation=\""+ humanReadable(Evaluator.evaluate(analyzeBoard)) + "," + humanReadable(alpha) + "," + humanReadable(beta) + "\">");
+            //System.out.print("</d0>");
             return Evaluator.evaluate(analyzeBoard);
         }
         
@@ -200,12 +200,12 @@ public class AlphaBetaSearch extends AbstractSearch {
             String sb = "<" + movestr  + ">";
             String eb = "</" + movestr + ">";
             
-            System.out.print(sb + m.toString() );
+            //System.out.print(sb + m.toString() );
              int variantEvaluation = alphaBetaSearch(currentPlyDepth - 1, totalPlyDepth, alpha, beta);
              
-             System.out.print(" is " + humanReadable(variantEvaluation) + "," + humanReadable(alpha) + "," + humanReadable(beta));
+             //System.out.print(" is " + humanReadable(variantEvaluation) + "," + humanReadable(alpha) + "," + humanReadable(beta));
             
-            System.out.print(eb);
+            //System.out.print(eb);
             analyzeBoard.retractMove();
             
             if (inMove == Piece.WHITE) 
@@ -244,7 +244,7 @@ public class AlphaBetaSearch extends AbstractSearch {
                }
             }    
         }
-        System.out.println();
+        //System.out.println();
         // Mate or draw
         if (!thereWasALegalMove) {
            if (analyzeBoard.isInCheck(inMove)) {
