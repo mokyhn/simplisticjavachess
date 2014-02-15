@@ -88,7 +88,7 @@ public final class Move implements Cloneable {
                   tX      < 0 || tX       > 7 ||
                   tY      < 0 || tY       > 7) return null;                        
 
-            tp = b.getPieceXY(tX, tY);
+            tp = b.getPiece(tX, tY);
             
             if (tp != null && tp.color == -b.inMove()) {
                 takenPiece = tp.type;
