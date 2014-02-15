@@ -1,56 +1,28 @@
 /**
  * @author Morten Kühnrich
  * @year 2010
- * Permits a concise representation of board layouts.
- * Practical for checking three-fold-repetition.
+ * A concise representation of board layouts.
  */
 package sjc;
 
 import sjc.Interfaces.IBitBoard;
 
-/*
- * Bitboard structures
- */
-public final class Bitboard implements IBitBoard {
-    private long bb[][];
+public class Bitboard implements IBitBoard {
+    protected static final int NUM_COLORS      = 2; // Black and white
+    protected static final int NUM_PIECE_TYPES = 6; // Pawn, knight, bishop, rook, queen, king,
 
-    /**
-     * Total number of colors: black and white, that is 2
-     */
-    private static final int NUM_COLORS      = 2; 
-    
-    /**
-     * Number of different piece types: pawn, knight, bishop, rook, queen, king,
-     * that is 6
-     */
-    private static final int NUM_PIECE_TYPES = 6;  
-    
-    
-    /**
-     * Creates an empty bitboard 
-     */
+    protected long bb[][];  
+     
+    // Create an empty bitboard
     public Bitboard() {
        bb = new long[NUM_COLORS][NUM_PIECE_TYPES];
     
        for (int t = 0; t < NUM_PIECE_TYPES; t++) {
             bb[0][t] = 0;
             bb[1][t] = 0;
-        }
-    };
-
-    
-    private int colorIndex(int color) {
-     assert(color == Piece.WHITE || color == Piece.BLACK);
-     if (color == Piece.BLACK) { return 0; }
-     return 1;
+       }
     }
 
-    private int indexToColor(int index) {
-     assert(index == 0 || index == 1);
-     return index == 0 ? Piece.BLACK : Piece.WHITE;
-    }
-    
-    
     /**
      * Construct a bitboard from a board
      * @param b the input board
@@ -63,33 +35,45 @@ public final class Bitboard implements IBitBoard {
  
         for (int i = 0; i < b.getNumberOfPieces(); i++) {
             p = b.getPiece(i);
-            c = colorIndex(p.color);
+            c = getIndexFromColor(p.color);
             t = p.type;
             if (t != Piece.EMPTY) {
-                bb[c][t] =  bb[c][t] | setBitHigh(squareNoFromPos(p.xPos, p.yPos));
+                bb[c][t] =  bb[c][t] | setBitHigh(getSquareNoFromPos(p.xPos, p.yPos));
             }
         }
     }
 
+    protected int getIndexFromColor(int color) {
+     assert(color == Piece.WHITE || color == Piece.BLACK);
+     if (color == Piece.BLACK) { return 0; }
+     return 1;
+    }
+
+    protected int getColorFromIndex(int index) {
+     assert(index == 0 || index == 1);
+     return index == 0 ? Piece.BLACK : Piece.WHITE;
+    }
+    
+
     // Returns number in the interval 0..63 from x and y in the interval 0..7
-    private static int squareNoFromPos(int x, int y) {
+    protected int getSquareNoFromPos(int x, int y) {
         assert(x >= 0 && x <= 7 && y >= 0 && y <= 7);        
         return y * 8 + x;
     }
 
     // Set bit with index bitNo to high - i.e. 1
-    private static long setBitHigh(int bitNo) {
+    private long setBitHigh(int bitNo) {
         return 1L << bitNo;
     }
 
     public void insertPiece(Piece p) {       
-       bb[colorIndex(p.color)][p.type] = bb[colorIndex(p.color)][p.type] | 
-                                         setBitHigh(squareNoFromPos(p.xPos, p.yPos));    
+       bb[getIndexFromColor(p.color)][p.type] = bb[getIndexFromColor(p.color)][p.type] |
+                                         setBitHigh(getSquareNoFromPos(p.xPos, p.yPos));
     }
     
     public boolean hasPiece(int x, int y, int color, int type) {
-        return (bb[colorIndex(color)][type] & 
-                setBitHigh(squareNoFromPos(x, y)))
+        return (bb[getIndexFromColor(color)][type] &
+                setBitHigh(getSquareNoFromPos(x, y)))
                 > 0;
     }
     
@@ -101,12 +85,12 @@ public final class Bitboard implements IBitBoard {
         assert(x>=0 && x <= 7 && y >= 0 && y <= 7);
         
         for (int t = 0; t < NUM_PIECE_TYPES; t++) {
-            if ((bb[0][t] & setBitHigh(squareNoFromPos(x, y))) != 0) {
+            if ((bb[0][t] & setBitHigh(getSquareNoFromPos(x, y))) != 0) {
                 color = Piece.BLACK;
                 type  = t;
                 break;
             }
-            if ((bb[1][t] & setBitHigh(squareNoFromPos(x, y))) != 0) {
+            if ((bb[1][t] & setBitHigh(getSquareNoFromPos(x, y))) != 0) {
                 color = Piece.WHITE;
                 type  = t;
                 break;               
@@ -115,8 +99,8 @@ public final class Bitboard implements IBitBoard {
         
         assert(color != UNDF && type != UNDF);
         
-        bb[colorIndex(color)][type] = bb[colorIndex(color)][type] ^  // Bitwise XOR
-                                          setBitHigh(squareNoFromPos(x, y));    
+        bb[getIndexFromColor(color)][type] = bb[getIndexFromColor(color)][type] ^  // Bitwise XOR
+                                          setBitHigh(getSquareNoFromPos(x, y));
         
         return new Piece(x, y, color, type);
     }
@@ -127,7 +111,7 @@ public final class Bitboard implements IBitBoard {
         
         for (y = 7; y >= 0; y--) {
          for (x = 0; x <= 7; x++) {
-             if (((1L << squareNoFromPos(x, y)) & b) == 0) {
+             if (((1L << getSquareNoFromPos(x, y)) & b) == 0) {
                  r = r + '.';
              } else r = r + '+';
          }
@@ -178,5 +162,4 @@ public final class Bitboard implements IBitBoard {
 
         return theClone;
       }
-
 }
