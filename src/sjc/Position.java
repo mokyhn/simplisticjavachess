@@ -11,19 +11,20 @@
  */
 package sjc;
 
-public final class Position implements Cloneable {
+public final class Position extends Bitboard implements Cloneable  {
 
     private Piece[]     piecePosition;
     private Piece[][]   xyPosition;
-    public  Bitboard    bitboard;
+    //#MKUpublic  Bitboard    bitboard;
     private int         numberOfPieces;
 
     public Position() {
+        super();
         int x, y;
         numberOfPieces = 0;
         piecePosition       = new Piece[32];
         xyPosition     = new Piece[8][8];
-        bitboard       = new Bitboard();
+        //#MKUbitboard       = new Bitboard();
         
         for (x = 0; x < 8; x++)
             for (y = 0; y < 8; y++) xyPosition[x][y] = null;
@@ -56,7 +57,7 @@ public final class Position implements Cloneable {
 
         xyPosition[p.xPos][p.yPos] = p;
         
-        bitboard.insertPiece(p);
+        super.insertPiece(p);
     }
 
 
@@ -82,7 +83,7 @@ public final class Position implements Cloneable {
 
         xyPosition[x][y] = null;
         
-        bitboard.removePiece(x, y);
+        super.removePiece(x, y);
         
         return p;
     } 
@@ -100,8 +101,8 @@ public final class Position implements Cloneable {
         assert p.xPos == xyPosition[p.xPos][p.yPos].xPos && p.yPos == xyPosition[p.xPos][p.yPos].yPos;
         xyPosition[xFrom][yFrom] = null;
         
-        bitboard.removePiece(xFrom, yFrom);
-        bitboard.insertPiece(p);
+        super.removePiece(xFrom, yFrom);
+        super.insertPiece(p);
     }
 
     public int numberOfPieces() {
@@ -296,7 +297,11 @@ public final class Position implements Cloneable {
             theClone.xyPosition[p.xPos][p.yPos] = p;
         }
 
-        theClone.bitboard = bitboard.clone();
+        //#MKUtheClone.bitboard = bitboard.clone();
+        for (int t = 0; t < NUM_PIECE_TYPES; t++) {
+            theClone.bb[0][t] = this.bb[0][t];
+            theClone.bb[1][t] = this.bb[1][t];
+        }
         
         assert theClone.numberOfPieces() == this.numberOfPieces();
         return theClone;
