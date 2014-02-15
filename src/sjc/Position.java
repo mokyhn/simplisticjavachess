@@ -42,6 +42,7 @@ public final class Position extends Bitboard implements Cloneable  {
         return p;
     }
 
+    
     public Piece getPiece(final int x, final int y) {
         final Piece p = xyPosition[x][y];
         // For testing: areRepresentationsIsomorphic();

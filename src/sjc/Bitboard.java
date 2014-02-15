@@ -77,6 +77,20 @@ public class Bitboard implements IBitBoard {
                 > 0;
     }
     
+    //Todo: Is this code correct?
+    public Piece getPiece(int x, int y) {
+      for (int type = 0; type < NUM_PIECE_TYPES; type++) {
+        if ((bb[0][type] & setBitHigh(getSquareNoFromPos(x, y))) > 0) {
+         return new Piece(x, y, Piece.BLACK, type);
+        }
+        if ((bb[1][type] & setBitHigh(getSquareNoFromPos(x, y))) > 0) {
+         return new Piece(x, y, Piece.WHITE, type);
+        }
+      }
+      return null;
+    }
+    
+    
     public Piece removePiece(int x, int y) {        
         final int UNDF  = 254; 
         int       color = UNDF;
