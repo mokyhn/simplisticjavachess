@@ -106,8 +106,8 @@ public final class Board implements Cloneable {
     }
 
     // Find a piece at a certain location
-    public Piece getPieceXY(int x, int y) {
-        final Piece p =  position.getPieceXY(x, y);
+    public Piece getPiece(int x, int y) {
+        final Piece p =  position.getPiece(x, y);
 
         if (p != null) assert p.xPos == x && p.yPos == y;
         return p;
@@ -119,7 +119,7 @@ public final class Board implements Cloneable {
     public boolean performMove(Move m) {
        Piece p;
             
-       p = getPieceXY(m.fromX, m.fromY);
+       p = getPiece(m.fromX, m.fromY);
        
        state.moveNumber++;
 
@@ -174,7 +174,7 @@ public final class Board implements Cloneable {
         }
 
         if (m.aCapturePromotion()) {
-            if (getPieceXY(m.toX, m.toY).type == Piece.ROOK) {
+            if (getPiece(m.toX, m.toY).type == Piece.ROOK) {
                 if (m.whoMoves == Piece.WHITE && m.toY == 7) {
                   if (m.toX == 0 && state.blackCanCastleLong)  state.blackCanCastleLong  = false;
                   if (m.toX == 7 && state.blackCanCastleShort) state.blackCanCastleShort = false;
@@ -216,7 +216,7 @@ public final class Board implements Cloneable {
 
             case Move.CAPTURE:
                 // Capturing a rook may affect casteling opputunities!
-                if (getPieceXY(m.toX, m.toY).type == Piece.ROOK) {
+                if (getPiece(m.toX, m.toY).type == Piece.ROOK) {
                     if (m.whoMoves == Piece.WHITE && m.toY == 7) {
                       if (m.toX == 0 && state.blackCanCastleLong)  state.blackCanCastleLong  = false;
                       if (m.toX == 7 && state.blackCanCastleShort) state.blackCanCastleShort = false;
@@ -396,7 +396,7 @@ public final class Board implements Cloneable {
                final int yPawn = (int) (fen.charAt(i+1) - '1');
                assert xPawn >= 0 && xPawn <= 7;
                assert yPawn >= 0 && yPawn <= 7;
-               final Piece p = getPieceXY(xPawn, yPawn-state.inMove);
+               final Piece p = getPiece(xPawn, yPawn-state.inMove);
                if (p != null && p.type == Piece.PAWN) {
                    state.move = new Move(xPawn, yPawn+state.inMove, xPawn, yPawn-state.inMove, Move.NORMALMOVE, Piece.EMPTY, state.inMove);                   
                    history.add(state);

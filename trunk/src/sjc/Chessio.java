@@ -51,7 +51,7 @@ public final class Chessio {
             throw new NoMoveException();
         }
 
-        p = b.getPieceXY(fromX, fromY);
+        p = b.getPiece(fromX, fromY);
         if (p == null) throw new NoMoveException("No piece at (" + fromX + ", " + fromY +")");
         if (p.color != whoToMove) { throw new NoMoveException("Trying to move piece of opposite color. In move is " + (whoToMove == Piece.WHITE ? "white" : "not white")); }
 
@@ -90,7 +90,7 @@ public final class Chessio {
             }
 
             // A capturing move
-            pto = b.getPieceXY(toX, toY);
+            pto = b.getPiece(toX, toY);
             if (pto != null && pto.color == -whoToMove) {
                m.type           = Move.CAPTURE;
                m.aCapturedPiece = pto.type;
@@ -119,7 +119,7 @@ public final class Chessio {
             // Capture and promote
             if (fromX != toX && 
                 !b.freeSquare(toX, toY) &&
-                 b.getPieceXY(toX, toY).color == -p.color) {
+                 b.getPiece(toX, toY).color == -p.color) {
                 switch (s[4]) {
                     case 'K': m.type = Move.CAPTURE_AND_PROMOTE_TO_KNIGHT; break;
                     case 'B': m.type = Move.CAPTURE_AND_PROMOTE_TO_BISHOP; break;
@@ -127,7 +127,7 @@ public final class Chessio {
                     case 'R': m.type = Move.CAPTURE_AND_PROMOTE_TO_ROOK;   break;
                 }
                 
-                m.aCapturedPiece = b.getPieceXY(toX, toY).type;
+                m.aCapturedPiece = b.getPiece(toX, toY).type;
                 
                return m; 
              }       
