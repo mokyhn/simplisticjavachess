@@ -43,7 +43,7 @@ public class Bitboard implements IBitBoard {
         }
     }
 
-    protected int getIndexFromColor(int color) {
+    protected final int getIndexFromColor(int color) {
      assert(color == Piece.WHITE || color == Piece.BLACK);
      if (color == Piece.BLACK) { return 0; }
      return 1;
@@ -56,7 +56,7 @@ public class Bitboard implements IBitBoard {
     
 
     // Returns number in the interval 0..63 from x and y in the interval 0..7
-    protected int getSquareNoFromPos(int x, int y) {
+    protected final int getSquareNoFromPos(int x, int y) {
         assert(x >= 0 && x <= 7 && y >= 0 && y <= 7);        
         return y * 8 + x;
     }
