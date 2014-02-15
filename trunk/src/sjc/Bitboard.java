@@ -54,7 +54,23 @@ public class Bitboard implements IBitBoard {
      return index == 0 ? Piece.BLACK : Piece.WHITE;
     }
     
+    private int countOnes(long v) {
+     int res = 0; 
 
+     for (int i = 0; i < 64; i++) {
+      res += ((1L << i) & v) != 0 ? 1 : 0;
+     }
+     return res;
+    }
+
+    public int getNumberOfPieces() {
+       int res = 0;
+        for (int t = 0; t < 6; t++) {
+         res += countOnes(bb[0][t]) + countOnes(bb[1][t]);
+        }
+       return res;
+    }
+    
     // Returns number in the interval 0..63 from x and y in the interval 0..7
     protected final int getSquareNoFromPos(int x, int y) {
         assert(x >= 0 && x <= 7 && y >= 0 && y <= 7);        
@@ -72,18 +88,20 @@ public class Bitboard implements IBitBoard {
     }
     
     public boolean hasPiece(int x, int y, int color, int type) {
+        assert(color == -1 || color == 1);
+        assert(type >= 0 && type < 6);
         return (bb[getIndexFromColor(color)][type] &
                 setBitHigh(getSquareNoFromPos(x, y)))
-                > 0;
+                != 0;
     }
     
     //Todo: Is this code correct?
     public Piece getPiece(int x, int y) {
       for (int type = 0; type < NUM_PIECE_TYPES; type++) {
-        if ((bb[0][type] & setBitHigh(getSquareNoFromPos(x, y))) > 0) {
+        if ((bb[0][type] & setBitHigh(getSquareNoFromPos(x, y))) != 0) {
          return new Piece(x, y, Piece.BLACK, type);
         }
-        if ((bb[1][type] & setBitHigh(getSquareNoFromPos(x, y))) > 0) {
+        if ((bb[1][type] & setBitHigh(getSquareNoFromPos(x, y))) != 0) {
          return new Piece(x, y, Piece.WHITE, type);
         }
       }

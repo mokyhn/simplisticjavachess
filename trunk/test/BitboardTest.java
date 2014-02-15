@@ -164,4 +164,49 @@ public class BitboardTest {
         assertTrue(instance1.equals(instance2));
     
     }
+    
+    @Test
+    public void extremetyTest1() {
+     System.out.println("extremetyTest1");
+     Bitboard b = new Bitboard();
+     b.insertPiece(new Piece(7,7,Piece.BLACK, Piece.PAWN));
+     assertTrue(b.hasPiece(7,7, Piece.BLACK, Piece.PAWN));
+    }
+    
+    @Test
+    public void testBitboardInsertDelete() {
+        System.out.println("testBitboardInsertDelete");
+        int color, type, x, y;
+        int translatedColor;
+        
+        Bitboard b = new Bitboard();
+        
+        int n = 0;
+        for (type = 0; type < 6; type++)  {            
+                for (color = 0; color < 1; color++) {
+                        for (x = 0; x < 8; x++) {
+                                for (y = 0; y < 8; y++) {
+                                    n++;
+                                    translatedColor =  color == 0 ? Piece.BLACK : Piece.WHITE;
+                                    b.insertPiece(new Piece(x, y, translatedColor, type));                                   
+                                    assertTrue(b.hasPiece(x, y, translatedColor, type));
+                                    assertTrue(b.getNumberOfPieces() == n);                        
+                                }
+                        }
+                        assertTrue(n==64);
+
+                        for (x = 0; x < 8; x++) {
+                                for (y = 0; y < 8; y++) {
+                                   translatedColor =  color == 0 ? Piece.BLACK : Piece.WHITE;
+                                   b.removePiece(x, y);
+                                   assertTrue(!b.hasPiece(x, y, translatedColor, type));
+                                   n--;
+                                   assertTrue(b.getNumberOfPieces() == n);
+                                }
+                        }
+                        assertTrue(n==0);
+                }
+                assertTrue(n==0);
+        }
+    }
 }
