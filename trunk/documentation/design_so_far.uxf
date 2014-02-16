@@ -71,11 +71,10 @@
 --
 -Piece[]   piecePosition
 -Piece[][] xyPosition
-+Bitboard bitboard????
 --
-int numberOfPieces()
+int getNumberOfPieces()
 +Piece getPiece(int i)
-+Piece getPieceXY(final int x, final int y)
++Piece getPiece(final int x, final int y)
 +insertPiece(final Piece p)
 +Piece removePiece(final int x, final int y)
 +movePiece(int xFrom, int yFrom, int xTo, int yTo)
@@ -85,17 +84,6 @@ int numberOfPieces()
 +Position clone()
 </panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>140</x>
-      <y>100</y>
-      <w>50</w>
-      <h>170</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>30;30;30;150</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
@@ -420,10 +408,10 @@ m2=1
       <w>230</w>
       <h>90</h>
     </coordinates>
-    <panel_attributes>Clases Bitboard, State 
+    <panel_attributes>Clases State 
 and Position could be
 related through inheritance e.g:
-Bitboard &lt;--Position&lt;--State</panel_attributes>
+Position&lt;--State</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -441,5 +429,16 @@ Board should
 Board related stuff.
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>90</x>
+      <y>100</y>
+      <w>50</w>
+      <h>170</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;150</additional_attributes>
   </element>
 </diagram>
