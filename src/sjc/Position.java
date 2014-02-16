@@ -8,14 +8,23 @@
  * All of these are maintained so that the represent the same position at all
  * times. We can use different representations in different parts of the code
  * for our algorithms.
+ *//**
+ * @author Morten Kühnrich
+ * @year 2005
+ * Used to represent a position using three different representations:
+ *     # a piece list
+ *     # a 2 dimensional piece array
+ *     # a bitboard
+ * All of these are maintained so that the represent the same position at all
+ * times. We can use different representations in different parts of the code
+ * for our algorithms.
  */
 package sjc;
 
 public final class Position extends Bitboard implements Cloneable  {
 
     private Piece[]     piecePosition;
-    private Piece[][]   xyPosition;
-    //#MKUpublic  Bitboard    bitboard;
+    private Piece[][]   xyPosition;    
     private int         numberOfPieces;
 
     public Position() {
@@ -24,7 +33,6 @@ public final class Position extends Bitboard implements Cloneable  {
         numberOfPieces = 0;
         piecePosition       = new Piece[32];
         xyPosition     = new Piece[8][8];
-        //#MKUbitboard       = new Bitboard();
         
         for (x = 0; x < 8; x++)
             for (y = 0; y < 8; y++) xyPosition[x][y] = null;
@@ -106,7 +114,9 @@ public final class Position extends Bitboard implements Cloneable  {
         super.insertPiece(p);
     }
 
-    public int numberOfPieces() {
+    
+    @Override
+    public int getNumberOfPieces() {
         return numberOfPieces;
     }
     
@@ -298,13 +308,12 @@ public final class Position extends Bitboard implements Cloneable  {
             theClone.xyPosition[p.xPos][p.yPos] = p;
         }
 
-        //#MKUtheClone.bitboard = bitboard.clone();
         for (int t = 0; t < NUM_PIECE_TYPES; t++) {
             theClone.bb[0][t] = this.bb[0][t];
             theClone.bb[1][t] = this.bb[1][t];
         }
         
-        assert theClone.numberOfPieces() == this.numberOfPieces();
+        assert theClone.getNumberOfPieces() == this.getNumberOfPieces();
         return theClone;
     }
 }

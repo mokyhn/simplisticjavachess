@@ -25,7 +25,7 @@ public final class Board implements Cloneable {
     }
 
 
-    public int     getNumberOfPieces()       { return position.numberOfPieces(); }
+    public int     getNumberOfPieces()       { return position.getNumberOfPieces(); }
     public int     inMove()                  { return state.inMove;  }
     public void    setBlackToMove()          { state.inMove = Piece.BLACK;}
     public void    setWhiteToMove()          { state.inMove = Piece.WHITE;}
