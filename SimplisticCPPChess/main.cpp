@@ -18,7 +18,7 @@ using namespace std;
  */
 int main(int argc, char** argv) {
     cout << "Hello world!" << endl;
-    cout << getIndexFromColor(PieceColor.WHITE);
+    cout << (getIndexFromColor(PieceColor::WHITE) == 1);
     return 0;
 }
 
