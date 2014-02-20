@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "piecetype.h"
+#include "bitboard.h"
 
 using namespace std;
 
@@ -17,7 +18,7 @@ using namespace std;
  */
 int main(int argc, char** argv) {
     cout << "Hello world!" << endl;
-    cout << PieceType::BISHOP;
+    cout << getIndexFromColor(PieceColor.WHITE);
     return 0;
 }
 
