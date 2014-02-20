@@ -6,6 +6,9 @@
  */
 
 #include <cstdlib>
+#include <iostream>
+
+#include "piecetype.h"
 
 using namespace std;
 
@@ -13,7 +16,8 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-
+    cout << "Hello world!" << endl;
+    cout << PieceType::BISHOP;
     return 0;
 }
 
