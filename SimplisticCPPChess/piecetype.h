@@ -8,6 +8,8 @@
 #ifndef PIECETYPE_H
 #define	PIECETYPE_H
 
+#include <cstdint>
+
 #define NUM_COLORS 2 
 
 enum PieceColor : int8_t
