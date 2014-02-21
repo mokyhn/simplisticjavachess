@@ -21,15 +21,15 @@ enum PieceColor : int8_t
 
 #define NUM_PIECE_TYPES 6
 
-enum PieceType : uint8_t 
+enum PieceType : char 
 {
-        PAWN = 0,
-        BISHOP,
-        KNIGHT,
-        ROOK,
-        QUEEN,
-        KING,
-        EMPTY
+        PAWN = 'P',
+        BISHOP = 'B',
+        KNIGHT = 'N',
+        ROOK = 'R',
+        QUEEN = 'Q',
+        KING = 'K',
+        EMPTY = '.'
 };
 
 
