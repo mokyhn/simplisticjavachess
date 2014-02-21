@@ -38,6 +38,12 @@ int main(int argc, char** argv) {
     assert(setBitHigh(4) == 16);
     assert( sizeof(setBitHigh(17)) == 8); // 8 bytes 
     
+    BitBoard b1 = BitBoard();
+    
+    b1.insertPiece(0, 0, PieceColor::BLACK, PieceType::ROOK);
+    
+    cout << b1;
+    
     return 0;
 }
 

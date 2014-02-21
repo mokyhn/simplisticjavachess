@@ -14,22 +14,22 @@
 
 enum PieceColor : int8_t
 {
- BLACK = -1,
- WHITE = 1,
- NO_COLOR = 0
+        BLACK = -1,
+        WHITE = 1,
+        NO_COLOR = 0
 };
 
 #define NUM_PIECE_TYPES 6
 
 enum PieceType : uint8_t 
 {
-    PAWN = 0,
-    BISHOP,
-    KNIGHT,
-    ROOK,
-    QUEEN,
-    KING,
-    EMPTY
+        PAWN = 0,
+        BISHOP,
+        KNIGHT,
+        ROOK,
+        QUEEN,
+        KING,
+        EMPTY
 };
 
 

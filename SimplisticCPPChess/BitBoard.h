@@ -10,6 +10,7 @@
 
 #include "piecetype.h"
 #include <cstdint>
+#include <ostream>
 
 #define getIndexFromColor(COLOR) (COLOR == PieceColor::WHITE ? 1 : 0)
 #define getColorFromIndex(INDEX) (INDEX == 1 ? PieceColor::WHITE : PieceColor::BLACK)
@@ -20,17 +21,13 @@ class BitBoard {
 public:
     BitBoard();
     //BitBoard(const BitBoard& orig);
-          //DONE:
-      //inline uint8_t getIndexFromColor(PieceColor color);
-      //inline PieceColor getColorFromIndex(uint8_t index);
-      //inline uint8_t getSquareNoFromPos(uint8_t x, uint8_t y);
-      //inline int64_t setBitHigh(uint8_t bitNo); 
-      
       //TODO:
-      //void insertPiece(uint8_t x, uint8_t y, PieceColor color, PieceType type);
+      void insertPiece(uint8_t x, uint8_t y, PieceColor color, PieceType type);
       //bool hasPiece(uint8_t x, uint8_t y, PieceColor color, PieceType type);
       // getPiece(int x, int y) 
       //public Piece removePiece(int x, int y) 
+       friend std::ostream& operator<<(std::ostream &strm, const BitBoard &bb);  
+      
     virtual ~BitBoard();
 protected:
      uint64_t bb[NUM_COLORS][NUM_PIECE_TYPES];    
