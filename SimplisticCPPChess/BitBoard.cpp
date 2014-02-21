@@ -22,16 +22,20 @@ void BitBoard::insertPiece(uint8_t x, uint8_t y, PieceColor color, PieceType typ
 }
 
 std::ostream& operator<<(std::ostream &strm, const BitBoard &bb) { 
-    int x, y;
+    int x, y, t;
     
     strm << "\n _______________\n";
 
  for (y = 7; y >= 0; y--) {
-            for (x = 0; x < 8; x++) {
+            for (x = 0; x < 8; x++) {                
                  strm << " "; 
+                 for (t = 0; t < 1; t++) {
                   //p =  getPiece(x, y);
                   //if (p == null) s = s + ".";
-                  //else s = s + p.toString(); 
+                  //else s = s + p.toString();
+                     if (bb[][]) {
+                     }
+                 } 
             }
           strm << "     " << y+1 << "\n";
         } // end last for-loop
