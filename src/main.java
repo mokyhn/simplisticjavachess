@@ -4,6 +4,7 @@
 // You might want to run this program with:
 //-enableassertions
 
+import GUI.ChessGUI;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -136,6 +137,9 @@ class main {
                        if (GUIBoard.attacks(x, y, Piece.WHITE)) System.out.print(Chessio.numToChar(x) + Chessio.numToNumChar(y) + ", ");
                    }                  
                }
+              }
+              else if (str.trim().equalsIgnoreCase("gui")) {
+               GUI.ChessGUI cg = new ChessGUI();
               }
               else if (str.trim().equalsIgnoreCase("new"))   {
                 GUIBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
