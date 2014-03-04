@@ -69,7 +69,7 @@ public class ChessGUI extends JFrame {
         
         
         
-        setSize(fontSizeInPixels*8,fontSizeInPixels*8);
+        //setSize(fontSizeInPixels*8,fontSizeInPixels*8); NOT needed pack will deal with it
         setTitle("Simplistic Java Chess");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
@@ -136,7 +136,7 @@ public class ChessGUI extends JFrame {
        }
       }
       
-       this.setResizable(false);
+      this.setResizable(false);
       pack();
       setVisible(true);
      
