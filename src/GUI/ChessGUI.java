@@ -1,11 +1,14 @@
 
 package GUI;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JFrame;
@@ -72,7 +75,7 @@ public class ChessGUI extends JFrame {
         //setSize(fontSizeInPixels*8,fontSizeInPixels*8); NOT needed pack will deal with it
         setTitle("Simplistic Java Chess");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        
+       
         
        /* JLabel jl1 = new JLabel("bklmnopqrstuvxyzw");
         JLabel jl2 = new JLabel("BKLMNOPQRSTUVXW");
@@ -132,7 +135,28 @@ public class ChessGUI extends JFrame {
          }
          JLabel l = new JLabel(figurine);
          l.setFont(chessFont);
+         l.setName(x +"," + y);
+         l.setOpaque(true);
+         l.setBackground(Color.lightGray);
          add(l);
+         l.addMouseListener(new MouseAdapter()  
+            {  
+                public void mouseClicked(MouseEvent e)  
+                {  
+                   // you can open a new frame here as
+                   // i have assumed you have declared "frame" as instance variable
+                   JLabel jl = (JLabel) e.getSource();
+                   //JFrame frame = new JFrame("new frame " + jl.getName());
+                   if (jl.getBackground()==Color.lightGray) {
+                    //jl.setForeground(Color.green);
+                    jl.setBackground(Color.green);
+                   } 
+                   else jl.setBackground(Color.lightGray);
+                   //frame.setVisible(true);
+
+                }  
+            }); 
+         
        }
       }
       
