@@ -7,7 +7,7 @@
  * The class also records the history of when the castling positibility was lost
  * for a given player
  */
-package sjc;
+package com.simplisticchess;
 
 import java.util.Stack;
 

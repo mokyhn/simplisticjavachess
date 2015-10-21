@@ -1,4 +1,4 @@
-package sjc;
+package com.simplisticchess;
 
 /**
  *

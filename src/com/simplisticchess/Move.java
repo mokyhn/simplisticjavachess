@@ -6,7 +6,7 @@
  * represent a piece that moves.
  */
 
-package sjc;
+package com.simplisticchess;
 
 public final class Move implements Cloneable {
         public int fromX,

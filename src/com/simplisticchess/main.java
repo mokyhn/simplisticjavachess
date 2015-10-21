@@ -1,14 +1,27 @@
+package com.simplisticchess;
+
 // Simple Java Chess
 // Morten Kühnrich
 // 2013
 // You might want to run this program with:
 //-enableassertions
 
-import GUI.ChessGUI;
+import com.simplisticchess.NoMoveException;
+import com.simplisticchess.Chessio;
+import com.simplisticchess.AlphaBetaSearch;
+import com.simplisticchess.Telnet;
+import com.simplisticchess.Move;
+import com.simplisticchess.RandomSearch;
+import com.simplisticchess.Evaluator;
+import com.simplisticchess.Board;
+import com.simplisticchess.AbstractSearch;
+import com.simplisticchess.Piece;
+import com.simplisticchess.MinMaxSearch;
+import com.simplisticchess.Movegenerator;
+import com.simplisticchess.GUI.ChessGUI;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-import sjc.*;
 
 
 class main {
@@ -139,7 +152,7 @@ class main {
                }
               }
               else if (str.trim().equalsIgnoreCase("gui")) {
-               GUI.ChessGUI cg = new ChessGUI();
+               com.simplisticchess.GUI.ChessGUI cg = new ChessGUI();
               }
               else if (str.trim().equalsIgnoreCase("new"))   {
                 GUIBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");

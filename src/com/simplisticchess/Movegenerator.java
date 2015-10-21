@@ -1,4 +1,4 @@
-package sjc;
+package com.simplisticchess;
 
 //TODO: Implementation via an iterator. 
 //A numbering of all moves generated. A function on the form

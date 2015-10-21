@@ -6,7 +6,7 @@
  * represent the pieces of a chess game.
  */
 
-package sjc;
+package com.simplisticchess;
 
 public final class Piece implements Cloneable {
     public int xPos,

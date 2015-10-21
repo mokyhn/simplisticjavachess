@@ -1,4 +1,4 @@
-package GUI;
+package com.simplisticchess.GUI;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -12,8 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import sjc.Board;
-import sjc.Piece;
+import com.simplisticchess.Board;
+import com.simplisticchess.Piece;
 
 /**
  *

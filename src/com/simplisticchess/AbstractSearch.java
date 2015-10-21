@@ -2,7 +2,7 @@
  * @author Morten Kühnrich
  * 2013
  */
-package sjc;
+package com.simplisticchess;
 
 import java.util.Iterator;
 

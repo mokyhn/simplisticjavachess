@@ -1,6 +1,6 @@
 package sjc.Interfaces;
 
-import sjc.Piece;
+import com.simplisticchess.Piece;
 
 /**
  *

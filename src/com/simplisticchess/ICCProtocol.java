@@ -1,4 +1,4 @@
-package sjc;
+package com.simplisticchess;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -6,7 +6,7 @@
  * A negative evaluation signifies that black has an advantage.
  * The evaluation 0 is given for positions where black and white has equal play.
  */
-package sjc;
+package com.simplisticchess;
 
 public final class Evaluator {
         public static final int WHITE_IS_MATED = -2147480000; 

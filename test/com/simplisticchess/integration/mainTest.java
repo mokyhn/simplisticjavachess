@@ -1,3 +1,5 @@
+package com.simplisticchess.integration;
+
 /**
  * @author Morten Kühnrich
  * @year 2012
@@ -7,6 +9,13 @@
  * moves and avoids certain other moves.
  */
 
+import com.simplisticchess.MinMaxSearch;
+import com.simplisticchess.AlphaBetaSearch;
+import com.simplisticchess.AbstractSearch;
+import com.simplisticchess.Move;
+import com.simplisticchess.Chessio;
+import com.simplisticchess.Board;
+import com.simplisticchess.NoMoveException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.junit.After;
@@ -15,7 +24,6 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import sjc.*;
 
 public class mainTest {
     // Various serach methods

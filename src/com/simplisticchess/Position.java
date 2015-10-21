@@ -19,7 +19,7 @@
  * times. We can use different representations in different parts of the code
  * for our algorithms.
  */
-package sjc;
+package com.simplisticchess;
 
 public final class Position extends Bitboard implements Cloneable  {
 

@@ -4,7 +4,7 @@
  * 2013
  */
 
-package sjc;
+package com.simplisticchess;
 
 import java.util.ArrayList;
 

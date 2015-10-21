@@ -1,4 +1,4 @@
-package sjc;
+package com.simplisticchess;
 
 public final class NoMoveException extends Exception {
     public String err;	

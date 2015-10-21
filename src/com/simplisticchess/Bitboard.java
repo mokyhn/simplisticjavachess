@@ -3,7 +3,7 @@
  * @year 2010
  * A concise representation of board layouts.
  */
-package sjc;
+package com.simplisticchess;
 
 import sjc.Interfaces.IBitBoard;
 

@@ -2,7 +2,7 @@
  * Morten Kühnrich 2012
  * 
  */
-package sjc;
+package com.simplisticchess;
 
   
 import java.net.*;

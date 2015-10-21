@@ -4,7 +4,7 @@
  * Permits a concise representation of board layouts.
  * Practical for checking three-fold-repetition.
  */
-package sjc;
+package com.simplisticchess;
 
 
 public final class Board implements Cloneable {
