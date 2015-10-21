@@ -1,4 +1,4 @@
-package sjc.Interfaces;
+package com.simplisticchess;
 
 import com.simplisticchess.Piece;
 

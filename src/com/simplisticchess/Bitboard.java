@@ -5,8 +5,6 @@
  */
 package com.simplisticchess;
 
-import sjc.Interfaces.IBitBoard;
-
 public class Bitboard implements IBitBoard {
     protected static final int NUM_COLORS      = 2; // Black and white
     protected static final int NUM_PIECE_TYPES = 6; // Pawn, knight, bishop, rook, queen, king,
