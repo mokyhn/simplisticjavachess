@@ -193,3 +193,20 @@ public class Bitboard implements IBitBoard {
         return theClone;
       }
 }
+
+interface IBitBoard extends Cloneable {
+
+    public void insertPiece(Piece p);
+
+    public boolean hasPiece(int x, int y, int color, int type);
+
+    public Piece removePiece(int x, int y);
+
+    @Override
+    public String toString();
+
+    @Override
+    public boolean equals(Object obj);
+
+    public IBitBoard clone();
+}
