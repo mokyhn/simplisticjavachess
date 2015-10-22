@@ -23,6 +23,13 @@ public final class Point
         this(p.getX(), p.getY());
     }
     
+    public Point(String position)
+    {
+        position = position.toLowerCase();
+        x = (byte) (position.charAt(0) - 'a');
+        y = (byte) (-1 + position.charAt(1) - '0');
+    }
+    
     public byte getX() 
     {
         return x;
@@ -48,7 +55,8 @@ public final class Point
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         int hash = 10 * this.x + this.y;
         return hash;
     }
@@ -59,7 +67,5 @@ public final class Point
     {
         return letters[x] + y;
     }
-    
-    
     
 }

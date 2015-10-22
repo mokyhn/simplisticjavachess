@@ -1,13 +1,16 @@
 package com.simplisticchess.position;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class PointTest {
+    @Test 
+    public void testStringContructor()
+    {
+        Point p = new Point("F7");
+        assertEquals(new Point(5, 6), p);
+    }
+    
     @Test
     public void testCopyConstructor() 
     {
@@ -29,5 +32,13 @@ public class PointTest {
     {
         Point p = new Point(3, 5);        
         assertEquals("d5", p.toString());
+    }
+    
+    @Test
+    public void testFromToStringComposition()
+    {
+        assertEquals(new Point("a0").toString(), "a0");
+        assertEquals(new Point("a4").toString(), "a4");
+        assertEquals(new Point("h8").toString(), "h8");
     }
 }
