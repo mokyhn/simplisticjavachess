@@ -9,7 +9,7 @@ import com.simplisticchess.piece.Piece;
 import com.simplisticchess.State;
 import com.simplisticchess.Utils;
 import com.simplisticchess.move.Move;
-import com.simplisticchess.piece.Piece.Color;
+import com.simplisticchess.piece.Color;
 
 public final class Board
 {

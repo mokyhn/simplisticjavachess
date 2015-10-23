@@ -9,7 +9,7 @@ import com.simplisticchess.board.Board;
 import com.simplisticchess.search.AbstractSearch;
 import com.simplisticchess.search.AlphaBetaSearch;
 import com.simplisticchess.move.Move;
-import com.simplisticchess.piece.Piece.Color;
+import com.simplisticchess.piece.Color;
 import java.net.*;
 import java.io.*;
 

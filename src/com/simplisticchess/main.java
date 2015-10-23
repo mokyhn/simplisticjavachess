@@ -13,7 +13,7 @@ import com.simplisticchess.search.AbstractSearch;
 import com.simplisticchess.search.MinMaxSearch;
 import com.simplisticchess.search.AlphaBetaSearch;
 import com.simplisticchess.move.Move;
-import com.simplisticchess.piece.Piece.Color;
+import com.simplisticchess.piece.Color;
 
 import java.io.*;
 import java.util.ArrayList;

@@ -6,7 +6,7 @@ package com.simplisticchess.board;
  */
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.move.Move;
-import com.simplisticchess.piece.Piece.Color;
+import com.simplisticchess.piece.Color;
 
 //TODO: This "is-a-relation" should go away. It is ugly.
 public final class Position extends BitBoard

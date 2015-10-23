@@ -5,7 +5,7 @@ package com.simplisticchess.evaluate;
  */
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.board.Board;
-import com.simplisticchess.piece.Piece.Color;
+import com.simplisticchess.piece.Color;
 
 public final class Evaluator
 {

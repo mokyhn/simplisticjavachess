@@ -7,7 +7,7 @@ package com.simplisticchess.unit;
 import com.simplisticchess.board.BitBoard;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.piece.Piece;
-import com.simplisticchess.piece.Piece.Color;
+import com.simplisticchess.piece.Color;
 
 import org.junit.Test;
 import static org.junit.Assert.*;

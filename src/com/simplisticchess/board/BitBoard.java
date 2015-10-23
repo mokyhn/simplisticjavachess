@@ -4,7 +4,7 @@ package com.simplisticchess.board;
  * @author Morten Kühnrich
  */
 import com.simplisticchess.piece.Piece;
-import com.simplisticchess.piece.Piece.Color;
+import com.simplisticchess.piece.Color;
 
 public class BitBoard implements IBitBoard
 {

@@ -8,7 +8,7 @@ package com.simplisticchess.move;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.Chessio;
 import com.simplisticchess.piece.Piece;
-import com.simplisticchess.piece.Piece.Color;
+import com.simplisticchess.piece.Color;
 
 public final class Move
 {

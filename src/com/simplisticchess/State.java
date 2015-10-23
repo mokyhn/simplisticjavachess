@@ -3,7 +3,7 @@ package com.simplisticchess;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.board.BitBoard;
 import com.simplisticchess.move.Move;
-import com.simplisticchess.piece.Piece.Color;
+import com.simplisticchess.piece.Color;
 
 public final class State
 {

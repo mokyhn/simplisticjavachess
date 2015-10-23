@@ -9,7 +9,7 @@ package com.simplisticchess;
  * castling possibility was lost for a given player
  */
 import com.simplisticchess.move.Move;
-import com.simplisticchess.piece.Piece.Color;
+import com.simplisticchess.piece.Color;
 import java.util.Stack;
 
 public final class History
