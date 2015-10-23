@@ -295,7 +295,7 @@ public final class Position extends Bitboard implements Cloneable  {
           for (y = 0; y < 8; y++) theClone.xyPosition[x][y] = null;
 
         for (i = 0; i < numberOfPieces; i++) {
-            p = piecePosition[i].clone();
+            p = new Piece(piecePosition[i]);
             theClone.piecePosition[i] = p;
             theClone.xyPosition[p.xPos][p.yPos] = p;
         }

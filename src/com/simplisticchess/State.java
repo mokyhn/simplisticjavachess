@@ -92,8 +92,10 @@ public final class State implements Cloneable{
          theClone.bbposition                 = this.bbposition.clone();
         } 
         
-        if (inCheckByPiece == null) theClone.inCheckByPiece = null;
-        else                        theClone.inCheckByPiece = inCheckByPiece.clone();
+        if (inCheckByPiece != null) 
+        {
+            theClone.inCheckByPiece = new Piece(inCheckByPiece);
+        }
                
         return theClone;
     }

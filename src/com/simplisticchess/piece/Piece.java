@@ -5,7 +5,7 @@ package com.simplisticchess.piece;
  * @author Morten Kühnrich
  */
 
-public final class Piece implements Cloneable {
+public final class Piece {
     public int xPos,
                yPos,
                color,
@@ -33,7 +33,16 @@ public final class Piece implements Cloneable {
         type  = t;
     }
 
+    public Piece(Piece piece) 
+    {
+        this(piece.xPos, piece.yPos, piece.color, piece.type);
+    }
+    
     public boolean equals(Piece p) {
+        if (p == null) {
+            return false;
+        }
+        
         return p.color == this.color &&
                p.type  == this.type  &&
                p.xPos  == this.xPos  &&
@@ -130,20 +139,6 @@ public final class Piece implements Cloneable {
     @Override
     public  String toString() {
         return getPieceLetter(color, type);
-    }
-
-    
-    @Override
-    public Piece clone() {
-        final Piece theClone = new Piece();
-
-        // Initialize theClone.
-        theClone.xPos  = this.xPos;
-        theClone.yPos  = this.yPos;
-        theClone.color = this.color;
-        theClone.type  = this.type;
-
-        return theClone;
     }
 
 }
