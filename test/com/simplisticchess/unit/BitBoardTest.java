@@ -141,13 +141,9 @@ public class BitBoardTest {
         assertTrue(instance1.equals(instance2));          
     }
 
-    /**
-     * Test of clone method, of class Bitboard.
-     */
     @Test
-    public void testClone() {
-        System.out.println("clone");
-                Piece p1 = new Piece(1, 2, Piece.WHITE, Piece.KING);
+    public void testCopyConstructor() {
+        Piece p1 = new Piece(1, 2, Piece.WHITE, Piece.KING);
         Piece p2 = new Piece(7, 4, Piece.BLACK, Piece.KING);
         Piece p3 = new Piece(5, 5, 'Q');
         Piece p4 = new Piece(6, 6, 'q');
