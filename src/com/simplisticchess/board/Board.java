@@ -273,7 +273,7 @@ public final class Board implements Cloneable {
 
             if (m.aCapturePromotion()) {
                 removePiece(m.toX, m.toY);
-                insertPiece(new Piece(m.toX,   m.toY,   -m.whoMoves, m.aCapturedPiece));
+                insertPiece(new Piece(m.toX,   m.toY,   -m.whoMoves, m.capturedPiece));
                 insertPiece(new Piece(m.fromX, m.fromY, m.whoMoves, Piece.PAWN));
                 return true;
             }
@@ -310,7 +310,7 @@ public final class Board implements Cloneable {
 
                 case Move.CAPTURE:
                     position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
-                    insertPiece(new Piece(m.toX, m.toY, -m.whoMoves, m.aCapturedPiece));
+                    insertPiece(new Piece(m.toX, m.toY, -m.whoMoves, m.capturedPiece));
                     break;
             }
             return true;

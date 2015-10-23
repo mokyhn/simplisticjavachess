@@ -2,210 +2,260 @@
  *
  * @author Morten Kühnrich
  */
-
 package com.simplisticchess.move;
 
 import com.simplisticchess.board.Board;
 import com.simplisticchess.Chessio;
 import com.simplisticchess.piece.Piece;
 
-public final class Move implements Cloneable {
-        public int fromX,
-                   fromY,
-                   toX,
-                   toY,
-                   type,           // The move type
-		   aCapturedPiece, // Used for storing pieces that are taken
-			           // by the piece which moves
-                   whoMoves;
+public final class Move
+{
 
-        
-	// The different move types
-	public final static int NORMALMOVE                   = 0,
+    public int fromX,
+            fromY,
+            toX,
+            toY,
+            type, // The move type
+            capturedPiece, // Used for storing pieces that are taken
+            // by the piece which moves
+            whoMoves;
 
-			// Normal capture
-			CAPTURE                       = 1,
+    // The different move types
+    public final static int NORMALMOVE = 0,
+            // Normal capture
+            CAPTURE = 1,
+            // The enpassant capture move
+            CAPTURE_ENPASSANT = 2,
+            // Capture and promotion at the same time
+            CAPTURE_AND_PROMOTE_TO_BISHOP = 3,
+            CAPTURE_AND_PROMOTE_TO_KNIGHT = 4,
+            CAPTURE_AND_PROMOTE_TO_ROOK = 5,
+            CAPTURE_AND_PROMOTE_TO_QUEEN = 6,
+            // Simple promotions
+            PROMOTE_TO_BISHOP = 7,
+            PROMOTE_TO_KNIGHT = 8,
+            PROMOTE_TO_ROOK = 9,
+            PROMOTE_TO_QUEEN = 10,
+            // Casteling
+            CASTLE_SHORT = 11,
+            CASTLE_LONG = 12,
+            // Speciel moves
+            RESIGN = 13,
+            CALL_FOR_DRAW = 14;
 
-			// The enpassant capture move
-			CAPTURE_ENPASSANT             = 2,
+    public Move()
+    {
+    }
 
-			// Capture and promotion at the same time
-			CAPTURE_AND_PROMOTE_TO_BISHOP = 3,
-			CAPTURE_AND_PROMOTE_TO_KNIGHT = 4, 
-                        CAPTURE_AND_PROMOTE_TO_ROOK   = 5,
-			CAPTURE_AND_PROMOTE_TO_QUEEN  = 6,
+    public Move(int fromX, int fromY, int toX, int toY, int type, int capturedPiece, int whoMoves)
+    {
+        assert fromX >= 0 && fromX <= 7
+                && fromY >= 0 && fromY <= 7
+                && toX >= 0 && toX <= 7
+                && toY >= 0 && toY <= 7
+                && (!(fromX == toX && fromY == toY)) : "(fX, fY, tX, tY) = " + "(" + fromX + ", " + fromY + ", " + toX + "," + toY + ")";
 
-			// Simple promotions
-			PROMOTE_TO_BISHOP             = 7,
-                        PROMOTE_TO_KNIGHT             = 8,
-                        PROMOTE_TO_ROOK               = 9,
-			PROMOTE_TO_QUEEN              = 10,
+        this.fromX = fromX;
+        this.fromY = fromY;
+        this.toX = toX;
+        this.toY = toY;
+        this.type = type;
+        this.capturedPiece = capturedPiece;
+        this.whoMoves = whoMoves;
+    }
 
-			// Casteling
-			CASTLE_SHORT                  = 11,
-                        CASTLE_LONG                   = 12,
+    public Move(Move move)
+    {
+        fromX = move.fromX;
+        fromY = move.fromY;
+        toX = move.toX;
+        toY = move.toY;
+        type = move.type;
+        whoMoves = move.whoMoves;
+        capturedPiece = move.capturedPiece;
+    }
 
-                        // Speciel moves
-                        RESIGN                        = 13,
-                        CALL_FOR_DRAW                 = 14;
-                        
+    // Used for generation of knight, bishop, rook and queen moves
+    public static Move genMove(Board b, Piece fp, int dX, int dY)
+    {
+        Piece tp;
 
-        public Move() {
-	}
+        Move m = null;
 
-	public Move(int fX, int fY, int tX, int tY, int t, int p, int who) {
-            assert fX >= 0 && fX <= 7 &&
-                   fY >= 0 && fY <= 7 &&
-                   tX >= 0 && tX <= 7 &&
-                   tY >= 0 && tY <= 7 &&
-                   (!(fX == tX && fY == tY)) : "(fX, fY, tX, tY) = " + "(" + fX + ", " +  fY + ", " + tX + "," + tY + ")" ;
+        final int tX = fp.xPos + dX,
+                tY = fp.yPos + dY;
 
-                fromX          = fX;
-		fromY          = fY;
-		toX            = tX;
-		toY            = tY;
-		type           = t;
-		aCapturedPiece = p;
-		whoMoves       = who;
-	}
+        int takenPiece;
+        int moveType;
 
+        assert fp.color == b.inMove();
 
-        // Used for generation of knight, bishop, rook and queen moves
-	public static Move genMove(Board b, Piece fp, int dX, int dY) {
-            Piece tp;
-            
-            Move m = null;
-            
-            final int tX = fp.xPos + dX, 
-                      tY = fp.yPos + dY;
-            
-            int takenPiece = Piece.EMPTY;
-            int moveType   = Move.NORMALMOVE;
-            
-            assert fp.color == b.inMove();
-            
-            if   (fp.xPos < 0 || fp.xPos  > 7 ||
-                  fp.yPos < 0 || fp.yPos  > 7 ||
-                  tX      < 0 || tX       > 7 ||
-                  tY      < 0 || tY       > 7) return null;                        
-
-            tp = b.getPiece(tX, tY);
-            
-            if (tp != null && tp.color == -b.inMove()) {
-                takenPiece = tp.type;
-                moveType   = Move.CAPTURE;    
-                m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, b.inMove());
-            } else            
-            if (b.freeSquare(tX, tY)) 
-                    {
-                takenPiece = Piece.EMPTY;
-                moveType   = Move.NORMALMOVE;
-                m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, b.inMove());
-            }
-            
-            return m;
-	}
-        
-        public boolean aCapture() {
-         return this.type >= 1 && this.type <= 6;
-        }
-        
-	public boolean equal(Move m) {
-                if (m == null) return false;
-                
-                return  fromX == m.fromX && 
-                        toX == m.toX     && 
-                        fromY == m.fromY && 
-                        toY == m.toY     && 
-                        type == m.type   &&
-                        aCapturedPiece == m.aCapturedPiece &&
-                        whoMoves == m.whoMoves;
-	}
-
-	public boolean aSimplePromotion() {
-		return (type >= PROMOTE_TO_BISHOP) && (type <= PROMOTE_TO_QUEEN);
-	}
-
-	public boolean aCapturePromotion() {
-		return (type >= CAPTURE_AND_PROMOTE_TO_BISHOP)
-				&& (type <= CAPTURE_AND_PROMOTE_TO_QUEEN);
-	}
-
-	public int promotionTo() {
-            int r = Piece.EMPTY;
-            
-            assert(type == CAPTURE_AND_PROMOTE_TO_BISHOP ||
-                       type == CAPTURE_AND_PROMOTE_TO_KNIGHT ||
-                       type == CAPTURE_AND_PROMOTE_TO_ROOK   ||
-                       type == CAPTURE_AND_PROMOTE_TO_QUEEN  ||
-                       type == PROMOTE_TO_BISHOP             ||
-                       type == PROMOTE_TO_KNIGHT             ||
-                       type == PROMOTE_TO_ROOK               ||
-                       type == PROMOTE_TO_QUEEN) : "Wrong promotion code";
-		
-            switch (type) {
-		case CAPTURE_AND_PROMOTE_TO_BISHOP:  r = Piece.BISHOP; break;
-		case CAPTURE_AND_PROMOTE_TO_KNIGHT:  r = Piece.KNIGHT; break;
-		case CAPTURE_AND_PROMOTE_TO_ROOK:    r = Piece.ROOK;   break;
-                case CAPTURE_AND_PROMOTE_TO_QUEEN:   r = Piece.QUEEN;  break;
-		case PROMOTE_TO_BISHOP:              r = Piece.BISHOP; break;
-		case PROMOTE_TO_KNIGHT:              r = Piece.KNIGHT; break;
-		case PROMOTE_TO_ROOK:                r = Piece.ROOK;   break;
-		case PROMOTE_TO_QUEEN:               r = Piece.QUEEN;  
-		}
-            return r;
+        if (fp.xPos < 0 || fp.xPos > 7
+                || fp.yPos < 0 || fp.yPos > 7
+                || tX < 0 || tX > 7
+                || tY < 0 || tY > 7)
+        {
+            return null;
         }
 
+        tp = b.getPiece(tX, tY);
 
-	public static String posToString(int x, int y) { return Chessio.numToChar(x) + Chessio.numToNumChar(y); }
-
-        public static String pieceNumberToChar(int num) {
-          String letter = "";
-            switch (num) {
-			case Piece.BISHOP: letter = "B"; break;
-			case Piece.KNIGHT: letter = "K"; break;
-			case Piece.ROOK:   letter = "R"; break;
-			case Piece.QUEEN:  letter = "Q"; break;
-			}
-          return letter;
+        if (tp != null && tp.color == -b.inMove())
+        {
+            takenPiece = tp.type;
+            moveType = Move.CAPTURE;
+            m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, b.inMove());
+        } else if (b.freeSquare(tX, tY))
+        {
+            takenPiece = Piece.EMPTY;
+            moveType = Move.NORMALMOVE;
+            m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, b.inMove());
         }
 
-        @Override
-        public Move clone() {
-            final Move theClone = new Move();
-            theClone.fromX          = this.fromX;
-            theClone.fromY          = this.fromY;
-            theClone.toX            = this.toX;
-            theClone.toY            = this.toY;
-            theClone.type           = this.type;
-            theClone.whoMoves       = this.whoMoves;
-            theClone.aCapturedPiece = this.aCapturedPiece;
-            return theClone;
+        return m;
+    }
+
+    public boolean aCapture()
+    {
+        return this.type >= 1 && this.type <= 6;
+    }
+
+    public boolean equal(Move m)
+    {
+        if (m == null)
+        {
+            return false;
         }
 
-        @Override
-        public String toString() {
-		if (type == NORMALMOVE) { return posToString(fromX, fromY) + "-" + posToString(toX, toY); }
+        return fromX == m.fromX
+                && toX == m.toX
+                && fromY == m.fromY
+                && toY == m.toY
+                && type == m.type
+                && capturedPiece == m.capturedPiece
+                && whoMoves == m.whoMoves;
+    }
 
-		// Normal capture moves
-		if (type == CAPTURE_ENPASSANT || type == CAPTURE) { return posToString(fromX, fromY)  + "x" + posToString(toX, toY); } 
+    public boolean aSimplePromotion()
+    {
+        return (type >= PROMOTE_TO_BISHOP) && (type <= PROMOTE_TO_QUEEN);
+    }
 
-		// mate
-		if (type == CAPTURE && aCapturedPiece == Piece.KING) { return "mate"; }
+    public boolean aCapturePromotion()
+    {
+        return (type >= CAPTURE_AND_PROMOTE_TO_BISHOP)
+                && (type <= CAPTURE_AND_PROMOTE_TO_QUEEN);
+    }
 
-		// Promotions
-		if (aSimplePromotion()) {
-		      return posToString(fromX, fromY) + "-" + posToString(toX, toY) + "="+pieceNumberToChar(promotionTo());
-		  }
+    public int promotionTo()
+    {
+        int r = Piece.EMPTY;
 
-		if (aCapturePromotion()) {
-                     return posToString(fromX, fromY) +  "x" + posToString(toX, toY) +  "="+pieceNumberToChar(promotionTo()); // 
-                }
+        assert (type == CAPTURE_AND_PROMOTE_TO_BISHOP
+                || type == CAPTURE_AND_PROMOTE_TO_KNIGHT
+                || type == CAPTURE_AND_PROMOTE_TO_ROOK
+                || type == CAPTURE_AND_PROMOTE_TO_QUEEN
+                || type == PROMOTE_TO_BISHOP
+                || type == PROMOTE_TO_KNIGHT
+                || type == PROMOTE_TO_ROOK
+                || type == PROMOTE_TO_QUEEN) : "Wrong promotion code";
 
-		if (type == CASTLE_SHORT) {	return "o-o"; }
-		if (type == CASTLE_LONG)  {	return "o-o-o"; }
+        switch (type)
+        {
+            case CAPTURE_AND_PROMOTE_TO_BISHOP:
+                r = Piece.BISHOP;
+                break;
+            case CAPTURE_AND_PROMOTE_TO_KNIGHT:
+                r = Piece.KNIGHT;
+                break;
+            case CAPTURE_AND_PROMOTE_TO_ROOK:
+                r = Piece.ROOK;
+                break;
+            case CAPTURE_AND_PROMOTE_TO_QUEEN:
+                r = Piece.QUEEN;
+                break;
+            case PROMOTE_TO_BISHOP:
+                r = Piece.BISHOP;
+                break;
+            case PROMOTE_TO_KNIGHT:
+                r = Piece.KNIGHT;
+                break;
+            case PROMOTE_TO_ROOK:
+                r = Piece.ROOK;
+                break;
+            case PROMOTE_TO_QUEEN:
+                r = Piece.QUEEN;
+        }
+        return r;
+    }
 
-		return "ERR: getMoveStr";
-	}
+    public static String posToString(int x, int y)
+    {
+        return Chessio.numToChar(x) + Chessio.numToNumChar(y);
+    }
+
+    public static String pieceNumberToChar(int num)
+    {
+        String letter = "";
+        switch (num)
+        {
+            case Piece.BISHOP:
+                letter = "B";
+                break;
+            case Piece.KNIGHT:
+                letter = "K";
+                break;
+            case Piece.ROOK:
+                letter = "R";
+                break;
+            case Piece.QUEEN:
+                letter = "Q";
+                break;
+        }
+        return letter;
+    }
+
+    @Override
+    public String toString()
+    {
+        if (type == NORMALMOVE)
+        {
+            return posToString(fromX, fromY) + "-" + posToString(toX, toY);
+        }
+
+        // Normal capture moves
+        if (type == CAPTURE_ENPASSANT || type == CAPTURE)
+        {
+            return posToString(fromX, fromY) + "x" + posToString(toX, toY);
+        }
+
+        // mate
+        if (type == CAPTURE && capturedPiece == Piece.KING)
+        {
+            return "mate";
+        }
+
+        // Promotions
+        if (aSimplePromotion())
+        {
+            return posToString(fromX, fromY) + "-" + posToString(toX, toY) + "=" + pieceNumberToChar(promotionTo());
+        }
+
+        if (aCapturePromotion())
+        {
+            return posToString(fromX, fromY) + "x" + posToString(toX, toY) + "=" + pieceNumberToChar(promotionTo()); // 
+        }
+
+        if (type == CASTLE_SHORT)
+        {
+            return "o-o";
+        }
+        if (type == CASTLE_LONG)
+        {
+            return "o-o-o";
+        }
+
+        return "ERR: getMoveStr";
+    }
 
 }

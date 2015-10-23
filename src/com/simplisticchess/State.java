@@ -48,7 +48,7 @@ public final class State
 
     public State(State state)
     {
-        move = state.move.clone();
+        move = new Move(state.move);
         inMove = state.inMove;
         moveNumber = state.moveNumber;
         blackCanCastleLong = state.blackCanCastleLong;

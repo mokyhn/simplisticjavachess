@@ -21,10 +21,22 @@ public final class Chessio {
         if (str == null) throw new NoMoveException();
         if (b   == null) throw new NoMoveException();
         
-        if (str.equalsIgnoreCase("o-o")    && b.inMove() == Piece.WHITE) str = "e1g1";
-        if (str.equalsIgnoreCase("o-o-o")  && b.inMove() == Piece.WHITE) str = "e1c1";
-        if (str.equalsIgnoreCase("o-o")    && b.inMove() == Piece.BLACK) str = "e8g8";
-        if (str.equalsIgnoreCase("o-o-o")  && b.inMove() == Piece.BLACK) str = "e8c8";
+        if (str.equalsIgnoreCase("o-o")    && b.inMove() == Piece.WHITE) 
+        {
+            str = "e1g1";
+        }
+        if (str.equalsIgnoreCase("o-o-o")  && b.inMove() == Piece.WHITE) 
+        {
+            str = "e1c1";
+        }
+        if (str.equalsIgnoreCase("o-o")    && b.inMove() == Piece.BLACK) 
+        {
+            str = "e8g8";
+        }
+        if (str.equalsIgnoreCase("o-o-o")  && b.inMove() == Piece.BLACK) 
+        {
+            str = "e8c8";
+        }
         
         
         s = str.toCharArray();        
@@ -64,7 +76,7 @@ public final class Chessio {
         m.fromY          = fromY;
         m.toX            = toX;
         m.toY            = toY;
-        m.aCapturedPiece = Piece.EMPTY;
+        m.capturedPiece = Piece.EMPTY;
         m.whoMoves       = whoToMove;
 
         if (str.length() == 4) {
@@ -83,7 +95,7 @@ public final class Chessio {
             if (p.type == Piece.PAWN) {
                 if ((fromX != toX) && (b.freeSquare(toX, toY))) {
                     m.type = Move.CAPTURE_ENPASSANT;
-                    m.aCapturedPiece = Piece.PAWN;
+                    m.capturedPiece = Piece.PAWN;
                     return m;
                 }
             }
@@ -98,7 +110,7 @@ public final class Chessio {
             pto = b.getPiece(toX, toY);
             if (pto != null && pto.color == -whoToMove) {
                m.type           = Move.CAPTURE;
-               m.aCapturedPiece = pto.type;
+               m.capturedPiece = pto.type;
                return m;
              }
         }
@@ -132,7 +144,7 @@ public final class Chessio {
                     case 'R': m.type = Move.CAPTURE_AND_PROMOTE_TO_ROOK;   break;
                 }
                 
-                m.aCapturedPiece = b.getPiece(toX, toY).type;
+                m.capturedPiece = b.getPiece(toX, toY).type;
                 
                return m; 
              }       
