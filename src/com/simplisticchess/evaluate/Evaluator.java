@@ -5,6 +5,7 @@ package com.simplisticchess.evaluate;
  */
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.board.Board;
+import com.simplisticchess.piece.Piece.Color;
 
 public final class Evaluator
 {
@@ -32,26 +33,26 @@ public final class Evaluator
             switch (p.type)
             {
                 case Piece.PAWN:
-                    result = PAWNVALUE * p.color + result;
+                    result = PAWNVALUE * p.color.getColor() + result;
                     break;
                 case Piece.ROOK:
-                    result = ROOKVALUE * p.color + result;
+                    result = ROOKVALUE * p.color.getColor() + result;
                     break;
                 case Piece.BISHOP:
-                    result = BISHOPVALUE * p.color + result;
+                    result = BISHOPVALUE * p.color.getColor() + result;
                     break;
                 case Piece.KNIGHT:
-                    result = KNIGHTVALUE * p.color + result;
+                    result = KNIGHTVALUE * p.color.getColor() + result;
                     break;
                 case Piece.QUEEN:
-                    result = QUEENVALUE * p.color + result;
+                    result = QUEENVALUE * p.color.getColor() + result;
                     break;
                 case Piece.KING:
-                    if (p.color == Piece.BLACK)
+                    if (p.color == Color.BLACK)
                     {
                         thereIsABlackKing = true;
                     }
-                    if (p.color == Piece.WHITE)
+                    if (p.color == Color.WHITE)
                     {
                         thereIsAWhiteKing = true;
                     }

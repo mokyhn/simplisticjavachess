@@ -8,8 +8,8 @@ package com.simplisticchess;
  * three-fold-repetition. The class also records the history of when the
  * castling possibility was lost for a given player
  */
-import com.simplisticchess.piece.Piece;
 import com.simplisticchess.move.Move;
+import com.simplisticchess.piece.Piece.Color;
 import java.util.Stack;
 
 public final class History
@@ -71,7 +71,7 @@ public final class History
         for (int i = 0; i < stateHistory.size(); i++)
         {
             m = stateHistory.get(i).move;
-            if (m.whoMoves == Piece.WHITE)
+            if (m.whoMoves == Color.WHITE)
             {
                 prefix = (i + 2) / 2 + ".";
             }

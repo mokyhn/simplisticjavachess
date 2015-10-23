@@ -2,8 +2,8 @@ package com.simplisticchess.search;
 
 import com.simplisticchess.evaluate.Evaluator;
 import com.simplisticchess.movegenerator.Movegenerator;
-import com.simplisticchess.piece.Piece;
 import com.simplisticchess.move.Move;
+import com.simplisticchess.piece.Piece.Color;
 import java.util.ArrayList;
 
 /**
@@ -29,7 +29,7 @@ public class MinMaxSearch extends AbstractSearch
         Move m;
         int score = 0,
                 bestScore = 0;
-        int inMove;
+        
         boolean firstCalculation = true;
         int distanceToRoot = plyDepth - depthToGo;
 
@@ -41,7 +41,7 @@ public class MinMaxSearch extends AbstractSearch
 
         moves = Movegenerator.generateAllMoves(analyzeBoard);
 
-        inMove = analyzeBoard.inMove();
+        Color inMove = analyzeBoard.inMove();
 
         if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED
                 || Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)
@@ -80,7 +80,7 @@ public class MinMaxSearch extends AbstractSearch
                 firstCalculation = false;
             } else
             {
-                if (inMove == Piece.WHITE)
+                if (inMove == Color.WHITE)
                 {
                     if (score > bestScore)
                     {
@@ -92,7 +92,7 @@ public class MinMaxSearch extends AbstractSearch
                     }
                 }
 
-                if (inMove == Piece.BLACK)
+                if (inMove == Color.BLACK)
                 {
                     if (score < bestScore)
                     {
@@ -113,7 +113,7 @@ public class MinMaxSearch extends AbstractSearch
             {
                 analyzeBoard.setMate();
                 //System.out.println("Matefound:\n" + analyzeBoard.toString());
-                if (inMove == Piece.WHITE)
+                if (inMove == Color.WHITE)
                 {
                     return Evaluator.WHITE_IS_MATED + distanceToRoot;
                 } else

@@ -5,11 +5,11 @@ package com.simplisticchess;
  * @author Morten Kühnrich
  */
   
-import com.simplisticchess.piece.Piece;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.search.AbstractSearch;
 import com.simplisticchess.search.AlphaBetaSearch;
 import com.simplisticchess.move.Move;
+import com.simplisticchess.piece.Piece.Color;
 import java.net.*;
 import java.io.*;
 
@@ -68,10 +68,10 @@ public class Telnet {
           
             icc.setBoard(theBoard);
             icc.setMoveString(s);
-            icc.setColor(Piece.WHITE); // Get White moves
+            icc.setColor(Color.WHITE); // Get White moves
             m = icc.getMove();
             if (m != null) System.out.println("Found move " + m.toString());
-               if (m != null && m.whoMoves == Piece.WHITE) {
+               if (m != null && m.whoMoves == Color.WHITE) {
                theBoard.performMove(m);
                engine.setPlyDepth(3);
                engine.setBoard(theBoard);

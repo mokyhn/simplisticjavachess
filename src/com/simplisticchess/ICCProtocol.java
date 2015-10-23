@@ -1,9 +1,9 @@
 package com.simplisticchess;
 
-import com.simplisticchess.piece.Piece;
 import com.simplisticchess.move.NoMoveException;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.move.Move;
+import com.simplisticchess.piece.Piece.Color;
 
 /**
  *
@@ -67,8 +67,8 @@ public class ICCProtocol {
     }
     
     // Get moves for color c
-    public void setColor(int c) {
-        if (c == Piece.WHITE) 
+    public void setColor(Color c) {
+        if (c == Color.WHITE) 
             filterColor = "W";
         else filterColor = "B";
     }

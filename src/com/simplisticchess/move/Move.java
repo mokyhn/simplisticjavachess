@@ -8,6 +8,7 @@ package com.simplisticchess.move;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.Chessio;
 import com.simplisticchess.piece.Piece;
+import com.simplisticchess.piece.Piece.Color;
 
 public final class Move
 {
@@ -17,9 +18,10 @@ public final class Move
             toX,
             toY,
             type, // The move type
-            capturedPiece, // Used for storing pieces that are taken
+            capturedPiece; // Used for storing pieces that are taken
             // by the piece which moves
-            whoMoves;
+
+    public Color        whoMoves;
 
     // The different move types
     public final static int NORMALMOVE = 0,
@@ -48,7 +50,7 @@ public final class Move
     {
     }
 
-    public Move(int fromX, int fromY, int toX, int toY, int type, int capturedPiece, int whoMoves)
+    public Move(int fromX, int fromY, int toX, int toY, int type, int capturedPiece, Color whoMoves)
     {
         assert fromX >= 0 && fromX <= 7
                 && fromY >= 0 && fromY <= 7
@@ -101,7 +103,7 @@ public final class Move
 
         tp = b.getPiece(tX, tY);
 
-        if (tp != null && tp.color == -b.inMove())
+        if (tp != null && tp.color == b.inMove().flip())
         {
             takenPiece = tp.type;
             moveType = Move.CAPTURE;

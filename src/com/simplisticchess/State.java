@@ -3,12 +3,13 @@ package com.simplisticchess;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.board.BitBoard;
 import com.simplisticchess.move.Move;
+import com.simplisticchess.piece.Piece.Color;
 
 public final class State
 {
 
     public Move move;
-    public int inMove;
+    public Color inMove;
 
     public int moveNumber = 0;
 

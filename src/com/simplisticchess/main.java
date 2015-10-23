@@ -4,7 +4,6 @@ package com.simplisticchess;
  * @author Morten Kühnrich
  */
 
-import com.simplisticchess.piece.Piece;
 import com.simplisticchess.move.NoMoveException;
 import com.simplisticchess.movegenerator.Movegenerator;
 import com.simplisticchess.evaluate.Evaluator;
@@ -14,6 +13,7 @@ import com.simplisticchess.search.AbstractSearch;
 import com.simplisticchess.search.MinMaxSearch;
 import com.simplisticchess.search.AlphaBetaSearch;
 import com.simplisticchess.move.Move;
+import com.simplisticchess.piece.Piece.Color;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -182,7 +182,7 @@ class main
                 {
                     for (y = 0; y < 8; y++)
                     {
-                        if (GUIBoard.attacks(x, y, Piece.BLACK))
+                        if (GUIBoard.attacks(x, y, Color.BLACK))
                         {
                             System.out.print(Chessio.numToChar(x) + Chessio.numToNumChar(y) + ", ");
                         }
@@ -193,7 +193,7 @@ class main
                 {
                     for (y = 0; y < 8; y++)
                     {
-                        if (GUIBoard.attacks(x, y, Piece.WHITE))
+                        if (GUIBoard.attacks(x, y, Color.WHITE))
                         {
                             System.out.print(Chessio.numToChar(x) + Chessio.numToNumChar(y) + ", ");
                         }

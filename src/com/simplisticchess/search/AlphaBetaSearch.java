@@ -6,8 +6,8 @@ package com.simplisticchess.search;
  */
 import com.simplisticchess.evaluate.Evaluator;
 import com.simplisticchess.movegenerator.Movegenerator;
-import com.simplisticchess.piece.Piece;
 import com.simplisticchess.move.Move;
+import com.simplisticchess.piece.Piece.Color;
 import java.util.ArrayList;
 
 public class AlphaBetaSearch extends AbstractSearch
@@ -19,7 +19,7 @@ public class AlphaBetaSearch extends AbstractSearch
         Move m;
         int evaluation;
         Boolean thereWasALegalMove = false;
-        final int inMove = analyzeBoard.inMove();
+        final Color inMove = analyzeBoard.inMove();
         int distanceToRoot = totalPlyDepth - currentPlyDepth;
 
         // Assertions
@@ -33,7 +33,7 @@ public class AlphaBetaSearch extends AbstractSearch
         }
         if (analyzeBoard.isMate())
         {
-            if (inMove == Piece.WHITE)
+            if (inMove == Color.WHITE)
             {
                 return Evaluator.WHITE_IS_MATED + distanceToRoot;
             } else
@@ -95,7 +95,7 @@ public class AlphaBetaSearch extends AbstractSearch
              }*/
             analyzeBoard.retractMove();
 
-            if (inMove == Piece.WHITE)
+            if (inMove == Color.WHITE)
             {
                 if (evaluation > alpha)
                 {
@@ -139,7 +139,7 @@ public class AlphaBetaSearch extends AbstractSearch
             {
                 analyzeBoard.setMate();
                 //System.out.println("Matefound:\n" + analyzeBoard.toString());
-                if (inMove == Piece.WHITE)
+                if (inMove == Color.WHITE)
                 {
                     return Evaluator.WHITE_IS_MATED + distanceToRoot;
                 } else
@@ -153,7 +153,7 @@ public class AlphaBetaSearch extends AbstractSearch
             } // draw
         }
 
-        return inMove == Piece.WHITE ? alpha : beta;
+        return inMove == Color.WHITE ? alpha : beta;
     }
 
     private String humanReadable(Integer v)
@@ -174,7 +174,7 @@ public class AlphaBetaSearch extends AbstractSearch
     private int alphaBetaSearch(int currentPlyDepth, int totalPlyDepth, int alpha, int beta)
     {
         Boolean thereWasALegalMove = false;
-        final int inMove = analyzeBoard.inMove();
+        final Color inMove = analyzeBoard.inMove();
         int distanceToRoot = totalPlyDepth - currentPlyDepth;
 
         // Assertions
@@ -190,7 +190,7 @@ public class AlphaBetaSearch extends AbstractSearch
 
         if (analyzeBoard.isMate())
         {
-            if (inMove == Piece.WHITE)
+            if (inMove == Color.WHITE)
             {
                 return Evaluator.WHITE_IS_MATED + distanceToRoot;
             } else
@@ -247,7 +247,7 @@ public class AlphaBetaSearch extends AbstractSearch
             //System.out.print(eb);
             analyzeBoard.retractMove();
 
-            if (inMove == Piece.WHITE)
+            if (inMove == Color.WHITE)
             {
                 if (variantEvaluation > alpha)
                 {
@@ -291,7 +291,7 @@ public class AlphaBetaSearch extends AbstractSearch
             {
                 analyzeBoard.setMate();
                 //System.out.println("Matefound:\n" + analyzeBoard.toString());
-                if (inMove == Piece.WHITE)
+                if (inMove == Color.WHITE)
                 {
                     return Evaluator.WHITE_IS_MATED + distanceToRoot;
                 } else
@@ -305,7 +305,7 @@ public class AlphaBetaSearch extends AbstractSearch
             } // draw
         }
 
-        return inMove == Piece.WHITE ? alpha : beta;
+        return inMove == Color.WHITE ? alpha : beta;
     }
 
     public final int search()

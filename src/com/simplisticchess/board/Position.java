@@ -6,6 +6,7 @@ package com.simplisticchess.board;
  */
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.move.Move;
+import com.simplisticchess.piece.Piece.Color;
 
 //TODO: This "is-a-relation" should go away. It is ugly.
 public final class Position extends BitBoard
@@ -229,7 +230,7 @@ public final class Position extends BitBoard
         return false;
     }
 
-    public boolean attacks(int x, int y, int inMove)
+    public boolean attacks(int x, int y, Color inMove)
     {
         Piece p;
 
@@ -238,12 +239,12 @@ public final class Position extends BitBoard
             p = getPiece(i);
 
             // Chose one of opposite color
-            if (p.color == -inMove && !(p.xPos == x && p.yPos == y))
+            if (p.color == inMove.flip() && !(p.xPos == x && p.yPos == y))
             {
                 switch (p.type)
                 {
                     case Piece.PAWN:
-                        if ((y == p.yPos + p.color)
+                        if ((y == p.yPos + p.color.getColor())
                                 && ((x == p.xPos + 1)
                                 || (x == p.xPos - 1)))
                         {

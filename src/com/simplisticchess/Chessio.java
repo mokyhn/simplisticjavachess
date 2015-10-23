@@ -4,6 +4,7 @@ import com.simplisticchess.piece.Piece;
 import com.simplisticchess.move.NoMoveException;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.move.Move;
+import com.simplisticchess.piece.Piece.Color;
 
 public final class Chessio {
     
@@ -13,7 +14,7 @@ public final class Chessio {
     // Output: a move
     public Move parseMove(Board b, String str) throws NoMoveException {
         int    fromX, fromY, toX, toY;
-        int    whoToMove = b.inMove();
+        Color    whoToMove = b.inMove();
         char[] s;       
         Move m           = new Move();
         Piece  p, pto;
@@ -21,19 +22,19 @@ public final class Chessio {
         if (str == null) throw new NoMoveException();
         if (b   == null) throw new NoMoveException();
         
-        if (str.equalsIgnoreCase("o-o")    && b.inMove() == Piece.WHITE) 
+        if (str.equalsIgnoreCase("o-o")    && b.inMove() == Color.WHITE) 
         {
             str = "e1g1";
         }
-        if (str.equalsIgnoreCase("o-o-o")  && b.inMove() == Piece.WHITE) 
+        if (str.equalsIgnoreCase("o-o-o")  && b.inMove() == Color.WHITE) 
         {
             str = "e1c1";
         }
-        if (str.equalsIgnoreCase("o-o")    && b.inMove() == Piece.BLACK) 
+        if (str.equalsIgnoreCase("o-o")    && b.inMove() == Color.BLACK) 
         {
             str = "e8g8";
         }
-        if (str.equalsIgnoreCase("o-o-o")  && b.inMove() == Piece.BLACK) 
+        if (str.equalsIgnoreCase("o-o-o")  && b.inMove() == Color.BLACK) 
         {
             str = "e8c8";
         }
@@ -70,7 +71,7 @@ public final class Chessio {
 
         p = b.getPiece(fromX, fromY);
         if (p == null) throw new NoMoveException("No piece at (" + fromX + ", " + fromY +")");
-        if (p.color != whoToMove) { throw new NoMoveException("Trying to move piece of opposite color. In move is " + (whoToMove == Piece.WHITE ? "white" : "not white")); }
+        if (p.color != whoToMove) { throw new NoMoveException("Trying to move piece of opposite color. In move is " + (whoToMove == Color.WHITE ? "white" : "not white")); }
 
         m.fromX          = fromX;
         m.fromY          = fromY;
@@ -108,7 +109,7 @@ public final class Chessio {
 
             // A capturing move
             pto = b.getPiece(toX, toY);
-            if (pto != null && pto.color == -whoToMove) {
+            if (pto != null && pto.color == whoToMove.flip()) {
                m.type           = Move.CAPTURE;
                m.capturedPiece = pto.type;
                return m;
@@ -118,8 +119,8 @@ public final class Chessio {
         // Promotion moves
         if (str.length() == 5  && 
             p.type == Piece.PAWN &&
-           ((p.color == Piece.WHITE && fromY == 6) ||
-            (p.color == Piece.BLACK && fromY == 1))) {
+           ((p.color == Color.WHITE && fromY == 6) ||
+            (p.color == Color.BLACK && fromY == 1))) {
             
             // Simple promotions
             if (fromX == toX && b.freeSquare(toX, toY)) {
@@ -136,7 +137,7 @@ public final class Chessio {
             // Capture and promote
             if (fromX != toX && 
                 !b.freeSquare(toX, toY) &&
-                 b.getPiece(toX, toY).color == -p.color) {
+                 b.getPiece(toX, toY).color == p.color.flip()) {
                 switch (s[4]) {
                     case 'K': m.type = Move.CAPTURE_AND_PROMOTE_TO_KNIGHT; break;
                     case 'B': m.type = Move.CAPTURE_AND_PROMOTE_TO_BISHOP; break;

@@ -8,11 +8,32 @@ package com.simplisticchess.piece;
 public final class Piece {
     public int xPos,
                yPos,
-               color,
                type;
 
-    public static final int   BLACK    = -1,
-                              WHITE    =  1;
+    public Color color;
+    
+    public enum Color {
+        
+        BLACK(-1), 
+        WHITE(1);
+        
+        private final int color;
+        
+        Color(int color) 
+        {
+            this.color = color;
+        }
+        
+        public int getColor()
+        {
+            return color;
+        }
+  
+        public Color flip() 
+        {
+            return this == BLACK ? WHITE : BLACK;
+        }
+    }
 
     public static final int   PAWN   = 0,
                               BISHOP = 1,
@@ -24,7 +45,7 @@ public final class Piece {
 
     public Piece() { }
 
-    public Piece(int x, int y, int c, int t) {
+    public Piece(int x, int y, Color c, int t) {
         assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error in x or y ";
         xPos  = x;
         yPos  = y;
@@ -49,15 +70,14 @@ public final class Piece {
     }
     
    
-    public static String getPieceLetter(int color, int pieceType) {
+    public static String getPieceLetter(Color color, int pieceType) {
       String r = "";
 
-        assert(color == WHITE || color == BLACK);
         assert(pieceType == PAWN   || pieceType == ROOK || pieceType == BISHOP ||
                pieceType == KNIGHT || pieceType == KING || pieceType == QUEEN  ||
                pieceType == EMPTY);
       
-        if (color == BLACK) {
+        if (color == Color.BLACK) {
 
         switch (pieceType) {
             case PAWN:   r = "p"; break;
@@ -70,7 +90,7 @@ public final class Piece {
         }
      }
 
-        if (color == WHITE) {
+        if (color == Color.WHITE) {
             switch (pieceType) {
             case PAWN:   r = "P"; break;
             case ROOK:   r = "R"; break;
@@ -93,40 +113,40 @@ public final class Piece {
 
         switch (pieceLetter) {
             case 'p': type  = PAWN;
-                      color = BLACK;
+                      color = Color.BLACK;
                       break;
             case 'r': type  = ROOK;
-                      color = BLACK;
+                      color = Color.BLACK;
                       break;
             case 'n': type  = KNIGHT;
-                      color = BLACK;
+                      color = Color.BLACK;
                       break;
             case 'b': type  = BISHOP;
-                      color = BLACK;
+                      color = Color.BLACK;
                       break;
             case 'k': type  = KING;
-                      color = BLACK;
+                      color = Color.BLACK;
                       break;
             case 'q': type  = QUEEN;
-                      color = BLACK;
+                      color = Color.BLACK;
                       break;
             case 'P': type  = PAWN;
-                      color = WHITE;
+                      color = Color.WHITE;
                       break;
             case 'R': type  = ROOK;
-                      color = WHITE;
+                      color = Color.WHITE;
                       break;
             case 'N': type  = KNIGHT;
-                      color = WHITE;
+                      color = Color.WHITE;
                       break;
             case 'B': type  = BISHOP;
-                      color = WHITE;
+                      color = Color.WHITE;
                       break;
             case 'K': type  = KING;
-                      color = WHITE;
+                      color = Color.WHITE;
                       break;
             case 'Q': type  = QUEEN;
-                      color = WHITE;
+                      color = Color.WHITE;
                       break;
 
             default: System.out.println("Unexpected error in Piece constructor");

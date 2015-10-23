@@ -2,8 +2,8 @@ package com.simplisticchess.search;
 
 import com.simplisticchess.evaluate.Evaluator;
 import com.simplisticchess.movegenerator.Movegenerator;
-import com.simplisticchess.piece.Piece;
 import com.simplisticchess.move.Move;
+import com.simplisticchess.piece.Piece.Color;
 import java.util.ArrayList;
 
 /**
@@ -31,7 +31,7 @@ public class RandomSearch extends AbstractSearch
             System.exit(0);
         }
 
-        final int whoMoves = analyzeBoard.inMove();
+        final Color whoMoves = analyzeBoard.inMove();
         boolean result;
 
         boolean retry = true;
@@ -60,7 +60,7 @@ public class RandomSearch extends AbstractSearch
             if (analyzeBoard.isInCheck(whoMoves))
             {
                 analyzeBoard.setMate();
-                if (whoMoves == Piece.WHITE)
+                if (whoMoves == Color.WHITE)
                 {
                     return Evaluator.WHITE_IS_MATED;
                 } else

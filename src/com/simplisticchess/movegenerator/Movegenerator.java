@@ -14,6 +14,7 @@ package com.simplisticchess.movegenerator;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.move.Move;
+import com.simplisticchess.piece.Piece.Color;
 import java.util.ArrayList;
 
 public final class Movegenerator
@@ -28,7 +29,7 @@ public final class Movegenerator
     public static ArrayList<Move> pawnMoves(Board b, Piece p)
     {
 
-        final int c = b.inMove();
+        final Color c = b.inMove();
         final int fx = p.xPos;
         final int fy = p.yPos;
 
@@ -39,78 +40,78 @@ public final class Movegenerator
         final ArrayList<Move> Moves = new ArrayList<Move>();
 
         // Normal one step forward pawn move
-        if (((fy < 6) && (c == Piece.WHITE))
-                || (fy > 1) && (c == Piece.BLACK))
+        if (((fy < 6) && (c == Color.WHITE))
+                || (fy > 1) && (c == Color.BLACK))
         {
-            if (b.freeSquare(fx, fy + c * 1))
+            if (b.freeSquare(fx, fy + c.getColor() * 1))
             {
-                Moves.add(new Move(fx, fy, fx, fy + c * 1, Move.NORMALMOVE, Piece.EMPTY, c));
+                Moves.add(new Move(fx, fy, fx, fy + c.getColor() * 1, Move.NORMALMOVE, Piece.EMPTY, c));
             }
         }
 
         // Normal two step forward pawn move
-        if (((fy == 1) && (c == Piece.WHITE))
-                || ((fy == 6) && (c == Piece.BLACK)))
+        if (((fy == 1) && (c == Color.WHITE))
+                || ((fy == 6) && (c == Color.BLACK)))
         {
-            if (b.freeSquare(fx, fy + c * 1) && b.freeSquare(fx, fy + c * 2))
+            if (b.freeSquare(fx, fy + c.getColor() * 1) && b.freeSquare(fx, fy + c.getColor() * 2))
             {
-                Moves.add(new Move(fx, fy, fx, (fy + c * 2), Move.NORMALMOVE, Piece.EMPTY, c));
+                Moves.add(new Move(fx, fy, fx, (fy + c.getColor() * 2), Move.NORMALMOVE, Piece.EMPTY, c));
             }
         }
 
         // Non capturing PAWN promotion
-        if (((fy == 6) && (c == Piece.WHITE) && b.freeSquare(fx, 7))
-                || ((fy == 1) && (c == Piece.BLACK) && b.freeSquare(fx, 0)))
+        if (((fy == 6) && (c == Color.WHITE) && b.freeSquare(fx, 7))
+                || ((fy == 1) && (c == Color.BLACK) && b.freeSquare(fx, 0)))
         {
-            Moves.add(new Move(fx, fy, fx, fy + c, Move.PROMOTE_TO_QUEEN, Piece.EMPTY, c));
-            Moves.add(new Move(fx, fy, fx, fy + c, Move.PROMOTE_TO_ROOK, Piece.EMPTY, c));
-            Moves.add(new Move(fx, fy, fx, fy + c, Move.PROMOTE_TO_KNIGHT, Piece.EMPTY, c));
-            Moves.add(new Move(fx, fy, fx, fy + c, Move.PROMOTE_TO_BISHOP, Piece.EMPTY, c));
+            Moves.add(new Move(fx, fy, fx, fy + c.getColor(), Move.PROMOTE_TO_QUEEN, Piece.EMPTY, c));
+            Moves.add(new Move(fx, fy, fx, fy + c.getColor(), Move.PROMOTE_TO_ROOK, Piece.EMPTY, c));
+            Moves.add(new Move(fx, fy, fx, fy + c.getColor(), Move.PROMOTE_TO_KNIGHT, Piece.EMPTY, c));
+            Moves.add(new Move(fx, fy, fx, fy + c.getColor(), Move.PROMOTE_TO_BISHOP, Piece.EMPTY, c));
         }
 
         // Normal diagonal capturing to the left
-        if ((fx > 0) && (fy != (5 * c + 7) / 2))
+        if ((fx > 0) && (fy != (5 * c.getColor() + 7) / 2))
         {
-            leftPiece = b.getPiece(fx - 1, fy + c);
+            leftPiece = b.getPiece(fx - 1, fy + c.getColor());
             if (leftPiece != null && leftPiece.color != c)
             {
-                Moves.add(new Move(fx, fy, fx - 1, fy + c, Move.CAPTURE, leftPiece.type, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE, leftPiece.type, c));
             }
         }
 
         // Normal diagonal capturing to the right
-        if ((fx < 7) && (fy != (5 * c + 7) / 2))
+        if ((fx < 7) && (fy != (5 * c.getColor() + 7) / 2))
         {
-            rightPiece = b.getPiece(fx + 1, fy + c);
+            rightPiece = b.getPiece(fx + 1, fy + c.getColor());
             if (rightPiece != null && rightPiece.color != c)
             {
-                Moves.add(new Move(fx, fy, fx + 1, fy + c, Move.CAPTURE, rightPiece.type, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE, rightPiece.type, c));
             }
         }
 
         // Promotion via diagonal capturing to the left
-        if ((fx > 0) && (fy == (5 * c + 7) / 2))
+        if ((fx > 0) && (fy == (5 * c.getColor() + 7) / 2))
         {
-            leftPiece = b.getPiece(fx - 1, fy + c);
+            leftPiece = b.getPiece(fx - 1, fy + c.getColor());
             if (leftPiece != null && leftPiece.color != c)
             {
-                Moves.add(new Move(fx, fy, fx - 1, fy + c, Move.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece.type, c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c, Move.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece.type, c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c, Move.CAPTURE_AND_PROMOTE_TO_QUEEN, leftPiece.type, c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c, Move.CAPTURE_AND_PROMOTE_TO_ROOK, leftPiece.type, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece.type, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece.type, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_QUEEN, leftPiece.type, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_ROOK, leftPiece.type, c));
             }
         }
 
         // Promotion via diagonal capturing to the right
-        if ((fx < 7) && (fy == (5 * c + 7) / 2))
+        if ((fx < 7) && (fy == (5 * c.getColor() + 7) / 2))
         {
-            rightPiece = b.getPiece(fx + 1, fy + c);
+            rightPiece = b.getPiece(fx + 1, fy + c.getColor());
             if (rightPiece != null && rightPiece.color != c)
             {
-                Moves.add(new Move(fx, fy, fx + 1, fy + c, Move.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece.type, c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c, Move.CAPTURE_AND_PROMOTE_TO_KNIGHT, rightPiece.type, c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c, Move.CAPTURE_AND_PROMOTE_TO_QUEEN, rightPiece.type, c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c, Move.CAPTURE_AND_PROMOTE_TO_ROOK, rightPiece.type, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece.type, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_KNIGHT, rightPiece.type, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_QUEEN, rightPiece.type, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_ROOK, rightPiece.type, c));
             }
 
         }
@@ -128,7 +129,7 @@ public final class Movegenerator
                         && (lastMovePiece.type == Piece.PAWN)
                         && (Math.abs(lastMove.fromY - lastMove.toY) == 2))
                 {
-                    Moves.add(new Move(fx, fy, fx - 1, fy + c, Move.CAPTURE_ENPASSANT, Piece.EMPTY, c));
+                    Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_ENPASSANT, Piece.EMPTY, c));
                 }
             }
 
@@ -140,7 +141,7 @@ public final class Movegenerator
                         && (lastMovePiece.type == Piece.PAWN)
                         && (Math.abs(lastMove.fromY - lastMove.toY) == 2))
                 {
-                    Moves.add(new Move(fx, fy, fx + 1, fy + c, Move.CAPTURE_ENPASSANT, Piece.EMPTY, c));
+                    Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_ENPASSANT, Piece.EMPTY, c));
 
                 }
             }
@@ -158,7 +159,7 @@ public final class Movegenerator
     public static ArrayList<Move> kingMoves(Board b, Piece p)
     {
         final ArrayList<Move> Moves = new ArrayList<Move>();
-        final int c = b.inMove();
+        final Color c = b.inMove();
         final int fx = p.xPos;
         final int fy = p.yPos;
 
@@ -341,7 +342,7 @@ public final class Movegenerator
     public static ArrayList<Move> generateMoves(Board b, Piece p)
     {
         ArrayList<Move> Moves = new ArrayList<Move>();
-        final int sideToMove = b.inMove();
+        final Color sideToMove = b.inMove();
 
         if (p.color != sideToMove)
         {
