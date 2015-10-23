@@ -3,7 +3,6 @@ package com.simplisticchess.board;
 /**
  * @author Morten Kühnrich
  */
-
 import com.simplisticchess.evaluate.Evaluator;
 import com.simplisticchess.History;
 import com.simplisticchess.piece.Piece;
@@ -11,196 +10,314 @@ import com.simplisticchess.State;
 import com.simplisticchess.Utils;
 import com.simplisticchess.move.Move;
 
+public final class Board
+{
 
-public final class Board {
-    private                Position position; // Current position of pieces
-    private State          state;             // State wrt. casteling, 
-                                              // latest move and movenumber etc.
-    private History        history;           // Previus states.
+    private Position position; // Current position of pieces
+    private State state;             // State wrt. casteling, 
+    // latest move and movenumber etc.
+    private History history;           // Previus states.
 
-    public Board() {
-        position          = new Position();        
-        state             = new State();
-        history           = new History();
+    public Board()
+    {
+        position = new Position();
+        state = new State();
+        history = new History();
     }
-    
-    public Board(String fen) {
+
+    public Board(String fen)
+    {
         this();
-        setupFENboard(fen);  
+        setupFENboard(fen);
     }
 
-    public Board(Board board) {
-        this.position   = new Position(board.position);
-        this.state      = new State(board.state);        
-        this.history    = new History(board.history);
+    public Board(Board board)
+    {
+        this.position = new Position(board.position);
+        this.state = new State(board.state);
+        this.history = new History(board.history);
     }
 
-    public int     getNumberOfPieces()       { return position.getNumberOfPieces(); }
-    public int     inMove()                  { return state.inMove;  }
-    public void    setBlackToMove()          { state.inMove = Piece.BLACK;}
-    public void    setWhiteToMove()          { state.inMove = Piece.WHITE;}
-    public void    setDraw()                 { state.drawFlag = true;}
-    public void    setMate()                 { state.mateFlag = true;}
-    public boolean isDraw()                  { return state.drawFlag;}
-    public boolean isMate()                  { return state.mateFlag;}
-    
-    public Move    getLastMove()             { return history.peek().move; }
-    public Piece   getPiece(final int i)     { return position.getPiece(i); }
-    public void    insertPiece(Piece p)      { position.insertPiece(p); }
-    public Piece   removePiece(int x, int y) { return position.removePiece(x, y); }
-    public boolean freeSquare(int x, int y)  { return position.freeSquare(x, y); }
-    public boolean canCastleShort() {
-     return (state.inMove == Piece.BLACK && state.blackCanCastleShort) ||
-            (state.inMove == Piece.WHITE && state.whiteCanCastleShort);
-            
+    public int getNumberOfPieces()
+    {
+        return position.getNumberOfPieces();
     }
-    public boolean canCastleLong() {
-     return (state.inMove == Piece.BLACK && state.blackCanCastleLong) ||
-            (state.inMove == Piece.WHITE && state.whiteCanCastleLong);
-            
+
+    public int inMove()
+    {
+        return state.inMove;
     }
-            
+
+    public void setBlackToMove()
+    {
+        state.inMove = Piece.BLACK;
+    }
+
+    public void setWhiteToMove()
+    {
+        state.inMove = Piece.WHITE;
+    }
+
+    public void setDraw()
+    {
+        state.drawFlag = true;
+    }
+
+    public void setMate()
+    {
+        state.mateFlag = true;
+    }
+
+    public boolean isDraw()
+    {
+        return state.drawFlag;
+    }
+
+    public boolean isMate()
+    {
+        return state.mateFlag;
+    }
+
+    public Move getLastMove()
+    {
+        return history.peek().move;
+    }
+
+    public Piece getPiece(final int i)
+    {
+        return position.getPiece(i);
+    }
+
+    public void insertPiece(Piece p)
+    {
+        position.insertPiece(p);
+    }
+
+    public Piece removePiece(int x, int y)
+    {
+        return position.removePiece(x, y);
+    }
+
+    public boolean freeSquare(int x, int y)
+    {
+        return position.freeSquare(x, y);
+    }
+
+    public boolean canCastleShort()
+    {
+        return (state.inMove == Piece.BLACK && state.blackCanCastleShort)
+                || (state.inMove == Piece.WHITE && state.whiteCanCastleShort);
+
+    }
+
+    public boolean canCastleLong()
+    {
+        return (state.inMove == Piece.BLACK && state.blackCanCastleLong)
+                || (state.inMove == Piece.WHITE && state.whiteCanCastleLong);
+
+    }
+
     /**
-     * 
+     *
      * @param x
      * @param y
-     * @return true if the side not in move, in board b attacks square (x, y) and otherwise false
+     * @return true if the side not in move, in board b attacks square (x, y)
+     * and otherwise false
      */
-    public boolean attacks(int x, int y)     { return position.attacks( x,  y,  state.inMove); }
-   
+    public boolean attacks(int x, int y)
+    {
+        return position.attacks(x, y, state.inMove);
+    }
+
     /**
-     * 
+     *
      * @param x
      * @param y
      * @param sideToMove
-     * @return true if the side not in move, in board b attacks square (x, y) and otherwise false
+     * @return true if the side not in move, in board b attacks square (x, y)
+     * and otherwise false
      */
-    public boolean attacks(int x, int y, int sideToMove) {return position.attacks(x, y, sideToMove);}
-    
-    public String  getBitboardString()       { return ((BitBoard) position).toString();}
-    public Boolean drawBy50MoveRule()        { return state.halfMoveClock >= 50;   }
+    public boolean attacks(int x, int y, int sideToMove)
+    {
+        return position.attacks(x, y, sideToMove);
+    }
+
+    public String getBitboardString()
+    {
+        return ((BitBoard) position).toString();
+    }
+
+    public Boolean drawBy50MoveRule()
+    {
+        return state.halfMoveClock >= 50;
+    }
 
     /**
-     * 
+     *
      * @param color
      * @return Is player with color color in check by opponent?
      */
-    public Boolean isInCheck(int color) {
+    public Boolean isInCheck(int color)
+    {
         Boolean res = false;
         Piece p;
-        int kingx = -1, 
+        int kingx = -1,
                 kingy = -1;
-        
-        for (int i = 0; i < getNumberOfPieces(); i++) {
-         p = getPiece(i);
-         if (p.type == Piece.KING && p.color == color) {
-          kingx = p.xPos;
-          kingy = p.yPos;
-          break;
-         }
+
+        for (int i = 0; i < getNumberOfPieces(); i++)
+        {
+            p = getPiece(i);
+            if (p.type == Piece.KING && p.color == color)
+            {
+                kingx = p.xPos;
+                kingy = p.yPos;
+                break;
+            }
         }
-        if (kingx != -1 && position.attacks(kingx, kingy, color)) res = true;
+        if (kingx != -1 && position.attacks(kingx, kingy, color))
+        {
+            res = true;
+        }
         return res;
     }
-    
-    public Boolean drawBy3RepetionsRule() {
+
+    public Boolean drawBy3RepetionsRule()
+    {
         State h;
         int k = 0;
 
-        for (int i = state.halfMovesIndex3PosRepition; i < history.size(); i ++) {
+        for (int i = state.halfMovesIndex3PosRepition; i < history.size(); i++)
+        {
             h = history.get(i);
-            if (((BitBoard) position).equals((BitBoard) h.bbposition)) k++;
+            if (((BitBoard) position).equals((BitBoard) h.bbposition))
+            {
+                k++;
+            }
         }
 
         return k >= 3;
     }
 
     // Find a piece at a certain location
-    public Piece getPiece(int x, int y) {
-        final Piece p =  position.getPiece(x, y);
+    public Piece getPiece(int x, int y)
+    {
+        final Piece p = position.getPiece(x, y);
 
-        if (p != null) assert p.xPos == x && p.yPos == y;
+        if (p != null)
+        {
+            assert p.xPos == x && p.yPos == y;
+        }
         return p;
     }
 
     // TODO: 2013, Should we check for draw here? 
     // A move might lead to a draw state.
     // The draw flag of the board might be set accordingly.
-    public boolean performMove(Move m) {
-       Piece p;
-            
-       p = getPiece(m.fromX, m.fromY);
-       
-       state.moveNumber++;
+    public boolean performMove(Move m)
+    {
+        Piece p;
 
-       // Put the move m on the stack
-       state.move = m;       
-       history.add(new State(state));
+        p = getPiece(m.fromX, m.fromY);
 
+        state.moveNumber++;
 
-       // Used to determine the 50-move rule, three times repition
-       if (p.type == Piece.PAWN) {
-           state.halfMoveClock              = 0;
-           state.halfMovesIndex3PosRepition = state.moveNumber;
-       }
-       else state.halfMoveClock++;
+        // Put the move m on the stack
+        state.move = m;
+        history.add(new State(state));
 
-       // Moving a rook can disallow castling in the future
-        if (p.type == Piece.ROOK) {
-            if (m.whoMoves == Piece.BLACK) {
-              if (m.fromX == 0 && state.blackCanCastleLong)  {
-                  state.blackCanCastleLong  = false;
-              }
-              if (m.fromX == 7 && state.blackCanCastleShort) {
-                  state.blackCanCastleShort = false;
-              }
-            }
-            else {
-              if (m.fromX == 0 && state.whiteCanCastleLong)  {
-                  state.whiteCanCastleLong  = false;
-              }
-              if (m.fromX == 7 && state.whiteCanCastleShort) {
-                  state.whiteCanCastleShort = false;
-              }
+        // Used to determine the 50-move rule, three times repition
+        if (p.type == Piece.PAWN)
+        {
+            state.halfMoveClock = 0;
+            state.halfMovesIndex3PosRepition = state.moveNumber;
+        } else
+        {
+            state.halfMoveClock++;
+        }
+
+        // Moving a rook can disallow castling in the future
+        if (p.type == Piece.ROOK)
+        {
+            if (m.whoMoves == Piece.BLACK)
+            {
+                if (m.fromX == 0 && state.blackCanCastleLong)
+                {
+                    state.blackCanCastleLong = false;
+                }
+                if (m.fromX == 7 && state.blackCanCastleShort)
+                {
+                    state.blackCanCastleShort = false;
+                }
+            } else
+            {
+                if (m.fromX == 0 && state.whiteCanCastleLong)
+                {
+                    state.whiteCanCastleLong = false;
+                }
+                if (m.fromX == 7 && state.whiteCanCastleShort)
+                {
+                    state.whiteCanCastleShort = false;
+                }
             }
         }
 
         // Moving the king will disallow castling in the future
-        if (p.type == Piece.KING) {
-            if (m.whoMoves == Piece.BLACK) {
-                  state.blackCanCastleShort = false;
-                  state.blackCanCastleLong  = false;
+        if (p.type == Piece.KING)
+        {
+            if (m.whoMoves == Piece.BLACK)
+            {
+                state.blackCanCastleShort = false;
+                state.blackCanCastleLong = false;
             }
 
-             if (m.whoMoves == Piece.WHITE) {
-                  state.whiteCanCastleShort = false;
-                  state.whiteCanCastleLong  = false;
-              }           
+            if (m.whoMoves == Piece.WHITE)
+            {
+                state.whiteCanCastleShort = false;
+                state.whiteCanCastleLong = false;
+            }
         }
-        
-        if (m.aSimplePromotion()) {
+
+        if (m.aSimplePromotion())
+        {
             insertPiece(new Piece(m.toX, m.toY, m.whoMoves, m.promotionTo()));
             removePiece(m.fromX, m.fromY);
         }
 
-        if (m.aCapturePromotion()) {
-            if (getPiece(m.toX, m.toY).type == Piece.ROOK) {
-                if (m.whoMoves == Piece.WHITE && m.toY == 7) {
-                  if (m.toX == 0 && state.blackCanCastleLong)  state.blackCanCastleLong  = false;
-                  if (m.toX == 7 && state.blackCanCastleShort) state.blackCanCastleShort = false;
+        if (m.aCapturePromotion())
+        {
+            if (getPiece(m.toX, m.toY).type == Piece.ROOK)
+            {
+                if (m.whoMoves == Piece.WHITE && m.toY == 7)
+                {
+                    if (m.toX == 0 && state.blackCanCastleLong)
+                    {
+                        state.blackCanCastleLong = false;
+                    }
+                    if (m.toX == 7 && state.blackCanCastleShort)
+                    {
+                        state.blackCanCastleShort = false;
+                    }
                 }
-                if (m.whoMoves == Piece.BLACK && m.toY == 0) {
-                  if (m.toX == 0 && state.whiteCanCastleLong)  state.whiteCanCastleLong  = false;
-                  if (m.toX == 7 && state.whiteCanCastleShort) state.whiteCanCastleShort = false;
+                if (m.whoMoves == Piece.BLACK && m.toY == 0)
+                {
+                    if (m.toX == 0 && state.whiteCanCastleLong)
+                    {
+                        state.whiteCanCastleLong = false;
+                    }
+                    if (m.toX == 7 && state.whiteCanCastleShort)
+                    {
+                        state.whiteCanCastleShort = false;
+                    }
                 }
             }
 
-            removePiece(m.toX,   m.toY);
+            removePiece(m.toX, m.toY);
             removePiece(m.fromX, m.fromY);
             insertPiece(new Piece(m.toX, m.toY, m.whoMoves, m.promotionTo()));
         }
 
-        switch (m.type) {
+        switch (m.type)
+        {
             case Move.NORMALMOVE:
                 position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 break;
@@ -210,7 +327,7 @@ public final class Board {
                 removePiece(m.toX, m.fromY);
                 break;
 
-            case Move.CASTLE_SHORT:               
+            case Move.CASTLE_SHORT:
                 // Move the king first
                 position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 // Then the rook
@@ -226,14 +343,29 @@ public final class Board {
 
             case Move.CAPTURE:
                 // Capturing a rook may affect casteling opputunities!
-                if (getPiece(m.toX, m.toY).type == Piece.ROOK) {
-                    if (m.whoMoves == Piece.WHITE && m.toY == 7) {
-                      if (m.toX == 0 && state.blackCanCastleLong)  state.blackCanCastleLong  = false;
-                      if (m.toX == 7 && state.blackCanCastleShort) state.blackCanCastleShort = false;
+                if (getPiece(m.toX, m.toY).type == Piece.ROOK)
+                {
+                    if (m.whoMoves == Piece.WHITE && m.toY == 7)
+                    {
+                        if (m.toX == 0 && state.blackCanCastleLong)
+                        {
+                            state.blackCanCastleLong = false;
+                        }
+                        if (m.toX == 7 && state.blackCanCastleShort)
+                        {
+                            state.blackCanCastleShort = false;
+                        }
                     }
-                    if (m.whoMoves == Piece.BLACK && m.toY == 0) {
-                      if (m.toX == 0 && state.whiteCanCastleLong)  state.whiteCanCastleLong  = false;
-                      if (m.toX == 7 && state.whiteCanCastleShort) state.whiteCanCastleShort = false;
+                    if (m.whoMoves == Piece.BLACK && m.toY == 0)
+                    {
+                        if (m.toX == 0 && state.whiteCanCastleLong)
+                        {
+                            state.whiteCanCastleLong = false;
+                        }
+                        if (m.toX == 7 && state.whiteCanCastleShort)
+                        {
+                            state.whiteCanCastleShort = false;
+                        }
                     }
                 }
                 // Do the capture
@@ -242,55 +374,61 @@ public final class Board {
                 break;
         }
 
-       
         // Swap the move color
         state.inMove = -state.inMove;
 
         boolean legalityOfMove = true;
-        
+
         // The player that did the move is in check
         // his or her move is hence not legal
-        if (isInCheck(-state.inMove)) 
+        if (isInCheck(-state.inMove))
         {
             legalityOfMove = false;
             this.retractMove();
         }
-        
+
         return legalityOfMove;
     }
 
-    public boolean retractMove() {
+    public boolean retractMove()
+    {
         int color = 0;
-        Move        m;
+        Move m;
 
         state.moveNumber--;
 
-        try {
+        try
+        {
             state = history.pop();
-            m     = state.move;
+            m = state.move;
 
-            if (m.aSimplePromotion()) {
+            if (m.aSimplePromotion())
+            {
                 insertPiece(new Piece(m.fromX, m.fromY, m.whoMoves, Piece.PAWN));
                 removePiece(m.toX, m.toY);
             }
 
-            if (m.aCapturePromotion()) {
+            if (m.aCapturePromotion())
+            {
                 removePiece(m.toX, m.toY);
-                insertPiece(new Piece(m.toX,   m.toY,   -m.whoMoves, m.capturedPiece));
+                insertPiece(new Piece(m.toX, m.toY, -m.whoMoves, m.capturedPiece));
                 insertPiece(new Piece(m.fromX, m.fromY, m.whoMoves, Piece.PAWN));
                 return true;
             }
 
-            switch (m.type) {
+            switch (m.type)
+            {
                 case Move.NORMALMOVE:
                     position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     break;
 
                 case Move.CAPTURE_ENPASSANT:
-                    if (m.whoMoves == Piece.WHITE) {
+                    if (m.whoMoves == Piece.WHITE)
+                    {
                         color = Piece.BLACK;
                     }
-                    if (m.whoMoves == Piece.BLACK) {
+                    if (m.whoMoves == Piece.BLACK)
+                    {
                         color = Piece.WHITE;
                     }
                     insertPiece(new Piece(m.toX, m.fromY, color, Piece.PAWN));
@@ -298,14 +436,14 @@ public final class Board {
                     break;
 
                 case Move.CASTLE_SHORT:
-                  // Move the king back
+                    // Move the king back
                     position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     // Then the rook
                     position.movePiece(5, m.fromY, 7, m.fromY);
                     break;
 
                 case Move.CASTLE_LONG:
-                   // Move the king back
+                    // Move the king back
                     position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     // Then the rook
                     position.movePiece(3, m.fromY, 0, m.fromY);
@@ -317,17 +455,16 @@ public final class Board {
                     break;
             }
             return true;
-        } catch (java.util.EmptyStackException e) {
+        } catch (java.util.EmptyStackException e)
+        {
             return false;
         }
     }
 
-
-   
-    
     // Given a position in the FEN - notation.
     // Set up the board
-    private void setupFENboard(String sfen) {
+    private void setupFENboard(String sfen)
+    {
         int x = 0;
         int y = 7;
         int i;
@@ -337,145 +474,198 @@ public final class Board {
         String num1 = "";
         String num2 = "";
 
-       state.whiteCanCastleShort = false;
-       state.whiteCanCastleLong  = false;
-       state.blackCanCastleShort = false;
-       state.blackCanCastleLong  = false;
+        state.whiteCanCastleShort = false;
+        state.whiteCanCastleLong = false;
+        state.blackCanCastleShort = false;
+        state.blackCanCastleLong = false;
 
-       // Parsing part no. 1
-       parsingPartNo = 1;
+        // Parsing part no. 1
+        parsingPartNo = 1;
 
         // Traverse input string
-        for (i = 0; i < fen.length(); i++) {
-            c = fen.charAt(i);						
+        for (i = 0; i < fen.length(); i++)
+        {
+            c = fen.charAt(i);
             assert x <= 8 && y >= 0 : "Error (Not a correct FEN board)";
 
-            if (parsingPartNo == 1) {
-                if (c == ' ') {
+            if (parsingPartNo == 1)
+            {
+                if (c == ' ')
+                {
                     parsingPartNo = 2;
                     continue;
                 }
 
-                if (c >= '1' && c <= '8') { x = x + (int) (c - '0'); }
-                else if (c >= 'b' && c <= 'r') {
+                if (c >= '1' && c <= '8')
+                {
+                    x = x + (int) (c - '0');
+                } else if (c >= 'b' && c <= 'r')
+                {
                     insertPiece(new Piece(x, y, c));
                     x++;
                     continue;
-                }
-                else if (c >= 'B' && c <= 'R') {
+                } else if (c >= 'B' && c <= 'R')
+                {
                     insertPiece(new Piece(x, y, c));
                     x++;
                     continue;
-                } else if (c == '/') {
+                } else if (c == '/')
+                {
                     y--;
                     x = 0;
                     continue;
                 }
             }
-             
-            if (parsingPartNo == 2) {                
-                switch (c) {
-                    case 'w': state.inMove = Piece.WHITE; break;
-                    case 'b': state.inMove = Piece.BLACK; break;
-                    case ' ': parsingPartNo = 3; continue;   
+
+            if (parsingPartNo == 2)
+            {
+                switch (c)
+                {
+                    case 'w':
+                        state.inMove = Piece.WHITE;
+                        break;
+                    case 'b':
+                        state.inMove = Piece.BLACK;
+                        break;
+                    case ' ':
+                        parsingPartNo = 3;
+                        continue;
                 }
             }
 
-            if (parsingPartNo == 3) {
-                switch (c) {
-                    case 'K': state.whiteCanCastleShort = true; break;
-                    case 'Q': state.whiteCanCastleLong  = true; break;
-                    case 'k': state.blackCanCastleShort = true; break;
-                    case 'q': state.blackCanCastleLong  = true; break;
-                    case ' ': parsingPartNo = 4; continue;
+            if (parsingPartNo == 3)
+            {
+                switch (c)
+                {
+                    case 'K':
+                        state.whiteCanCastleShort = true;
+                        break;
+                    case 'Q':
+                        state.whiteCanCastleLong = true;
+                        break;
+                    case 'k':
+                        state.blackCanCastleShort = true;
+                        break;
+                    case 'q':
+                        state.blackCanCastleLong = true;
+                        break;
+                    case ' ':
+                        parsingPartNo = 4;
+                        continue;
                 }
             }
 
-            if (parsingPartNo == 4) {             
-             if (c == ' ') {
-                 parsingPartNo = 5;
-                 continue;
-             }
+            if (parsingPartNo == 4)
+            {
+                if (c == ' ')
+                {
+                    parsingPartNo = 5;
+                    continue;
+                }
 
-              if (c == '-') {
-                  continue;
-              }
+                if (c == '-')
+                {
+                    continue;
+                }
 
-              if (c != ' ') {
-               final int xPawn = (int) (c - 'a');
-               final int yPawn = (int) (fen.charAt(i+1) - '1');
-               assert xPawn >= 0 && xPawn <= 7;
-               assert yPawn >= 0 && yPawn <= 7;
-               final Piece p = getPiece(xPawn, yPawn-state.inMove);
-               if (p != null && p.type == Piece.PAWN) {
-                   state.move = new Move(xPawn, yPawn+state.inMove, xPawn, yPawn-state.inMove, Move.NORMALMOVE, Piece.EMPTY, state.inMove);                   
-                   history.add(state);
-               }
+                if (c != ' ')
+                {
+                    final int xPawn = (int) (c - 'a');
+                    final int yPawn = (int) (fen.charAt(i + 1) - '1');
+                    assert xPawn >= 0 && xPawn <= 7;
+                    assert yPawn >= 0 && yPawn <= 7;
+                    final Piece p = getPiece(xPawn, yPawn - state.inMove);
+                    if (p != null && p.type == Piece.PAWN)
+                    {
+                        state.move = new Move(xPawn, yPawn + state.inMove, xPawn, yPawn - state.inMove, Move.NORMALMOVE, Piece.EMPTY, state.inMove);
+                        history.add(state);
+                    }
 
-               parsingPartNo = 5;
-               i = i + 2;
-               
-              }
+                    parsingPartNo = 5;
+                    i = i + 2;
 
-              if (fen.charAt(i) == ' ') {
-                  parsingPartNo = 5;
-                  continue;
-              }
+                }
+
+                if (fen.charAt(i) == ' ')
+                {
+                    parsingPartNo = 5;
+                    continue;
+                }
             }
 
-            if (parsingPartNo == 5) {
-              if (c == ' ') {
-                  parsingPartNo = 6;
-                  continue;
-              }
+            if (parsingPartNo == 5)
+            {
+                if (c == ' ')
+                {
+                    parsingPartNo = 6;
+                    continue;
+                }
 
-              if (c != ' ') {
-                  num1 = num1 + c;
-              }
+                if (c != ' ')
+                {
+                    num1 = num1 + c;
+                }
             }
 
-            if (parsingPartNo == 6) {
-              if (c == ' ') { // end of story :)
-                  parsingPartNo = 7;
-                  continue;
-              }
+            if (parsingPartNo == 6)
+            {
+                if (c == ' ')
+                { // end of story :)
+                    parsingPartNo = 7;
+                    continue;
+                }
 
-              if (c != ' ') {
-                  num2 = num2 + c;
-              }  
+                if (c != ' ')
+                {
+                    num2 = num2 + c;
+                }
             }
-                    
+
+        }
+
+        state.halfMoveClock = Integer.parseInt(num1);
+        state.moveNumber = 2 * Integer.parseInt(num2) - 2;
+        if (state.moveNumber != 0 && state.inMove == Piece.BLACK)
+        {
+            state.moveNumber--;
+        }
+
     }
 
-       state.halfMoveClock = Integer.parseInt(num1);
-       state.moveNumber    = 2 * Integer.parseInt(num2) - 2;
-       if (state.moveNumber != 0 && state.inMove == Piece.BLACK) state.moveNumber--;
-
-    }
-    
-
-  /**
-   * Returns the board as ASCII art and game other information
-   */
+    /**
+     * Returns the board as ASCII art and game other information
+     */
     @Override
-    public String toString() {
-    String s = position.toString();
+    public String toString()
+    {
+        String s = position.toString();
 
-    if (inMove() == Piece.WHITE) s = s + "  White to move\n";
-    else s = s + "  Black to move\n";
+        if (inMove() == Piece.WHITE)
+        {
+            s = s + "  White to move\n";
+        } else
+        {
+            s = s + "  Black to move\n";
+        }
 
-    s = s + state.toString();
+        s = s + state.toString();
 
-    if (!history.isEmpty()) {         
-         if (-state.inMove == Piece.WHITE) s = s + "Last move " + (state.moveNumber+1)/2 + "."    +  history.peek().move.toString() + "\n";
-         else                              s = s + "Last move " + (state.moveNumber+1)/2 + "...." +  history.peek().move.toString() + "\n";
-       }
+        if (!history.isEmpty())
+        {
+            if (-state.inMove == Piece.WHITE)
+            {
+                s = s + "Last move " + (state.moveNumber + 1) / 2 + "." + history.peek().move.toString() + "\n";
+            } else
+            {
+                s = s + "Last move " + (state.moveNumber + 1) / 2 + "...." + history.peek().move.toString() + "\n";
+            }
+        }
 
-    s = s + "Immediate evaluation: " + Evaluator.evaluate(this) + "\n";
-    
-    s = s + "Move history: " + history.toString();
+        s = s + "Immediate evaluation: " + Evaluator.evaluate(this) + "\n";
 
-    return s;
+        s = s + "Move history: " + history.toString();
+
+        return s;
     }
 
 }

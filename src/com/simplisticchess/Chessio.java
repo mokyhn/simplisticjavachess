@@ -189,8 +189,8 @@ public final class Chessio {
 
     public static void printWelcomeText() {
         System.out.println("----------------------------------------------------");
-        System.out.println("A Simplistic Chessprogram, under serious development");
-        System.out.println("Morten Kuhnrich (for now) 2007");
+        System.out.println("A Simplistic Chessprogram, under development");
+        System.out.println("Morten Kuhnrich");
         System.out.println("Type help if you need help");
         System.out.println("----------------------------------------------------");
 

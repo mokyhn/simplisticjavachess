@@ -1,14 +1,17 @@
 package com.simplisticchess.move;
 
-public final class NoMoveException extends Exception {
-    public String err;	
+public final class NoMoveException extends Exception
+{
 
-    public NoMoveException() {         
+    public String err;
+
+    public NoMoveException()
+    {
     }
 
-    
-    public NoMoveException(String e) {
-            err = e;
-	}
+    public NoMoveException(String e)
+    {
+        err = e;
+    }
 
 }

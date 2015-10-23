@@ -26,7 +26,7 @@ public class BitBoard implements IBitBoard
     }
 
     /**
-     * Construct a bitboard from a board
+     * Construct a bitBoard from a board
      *
      * @param b the input board
      */

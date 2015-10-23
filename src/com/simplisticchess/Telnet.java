@@ -1,9 +1,9 @@
-/*
- * Morten Kühnrich 2012
- * 
- */
 package com.simplisticchess;
 
+/**
+ *
+ * @author Morten Kühnrich
+ */
   
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.board.Board;
@@ -14,10 +14,6 @@ import java.net.*;
 import java.io.*;
 
 
-/**
- *
- * @author mku
- */
 public class Telnet {
     private String ca(String s, int i) {
      return Character.toString(s.charAt(i));

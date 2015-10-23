@@ -1,8 +1,9 @@
+package com.simplisticchess.move;
+
 /**
  *
  * @author Morten Kühnrich
  */
-package com.simplisticchess.move;
 
 import com.simplisticchess.board.Board;
 import com.simplisticchess.Chessio;

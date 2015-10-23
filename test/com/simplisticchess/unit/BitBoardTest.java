@@ -7,29 +7,11 @@ package com.simplisticchess.unit;
 import com.simplisticchess.board.BitBoard;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.piece.Piece;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class BitBoardTest {
-    public BitBoardTest() {}
-    
-    @BeforeClass
-    public static void setUpClass() {    }
-    
-    @AfterClass
-    public static void tearDownClass() {    }
- 
-    @Before
-    public void setUp() {    }
-
-    @After
-    public void tearDown() {    }
-
-
      /**
      * Test of insertPiece method, of class BitBoard.
      */
