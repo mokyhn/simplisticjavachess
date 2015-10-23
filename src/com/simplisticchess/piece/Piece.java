@@ -1,5 +1,7 @@
 package com.simplisticchess.piece;
 
+import static com.simplisticchess.piece.PieceType.*;
+
 /**
  *
  * @author Morten Kühnrich
@@ -7,27 +9,18 @@ package com.simplisticchess.piece;
 
 public final class Piece {
     public int xPos,
-               yPos,
-               type;
+               yPos;
+    
+    public PieceType type;
 
     public Color color;
 
-    public static final int   PAWN   = 0,
-                              BISHOP = 1,
-                              KNIGHT = 2,
-                              ROOK   = 3,
-                              QUEEN  = 4,
-                              KING   = 5,
-                              EMPTY  = 6;
-
-    public Piece() { }
-
-    public Piece(int x, int y, Color c, int t) {
+    public Piece(int x, int y, Color c, PieceType t) {
         assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error in x or y ";
-        xPos  = x;
-        yPos  = y;
-        color = c;
-        type  = t;
+        this.xPos  = x;
+        this.yPos  = y;
+        this.color = c;
+        this.type  = t;
     }
 
     public Piece(Piece piece) 
@@ -47,12 +40,9 @@ public final class Piece {
     }
     
    
-    public static String getPieceLetter(Color color, int pieceType) {
+    public static String getPieceLetter(Color color, PieceType pieceType) {
       String r = "";
 
-        assert(pieceType == PAWN   || pieceType == ROOK || pieceType == BISHOP ||
-               pieceType == KNIGHT || pieceType == KING || pieceType == QUEEN  ||
-               pieceType == EMPTY);
       
         if (color == Color.BLACK) {
 
@@ -63,7 +53,6 @@ public final class Piece {
             case KNIGHT: r = "n"; break;
             case KING:   r = "k"; break;
             case QUEEN:  r = "q"; break;
-            case EMPTY:  r = "#"; break;
         }
      }
 
@@ -75,7 +64,6 @@ public final class Piece {
             case KNIGHT: r = "N"; break;
             case KING:   r = "K"; break;
             case QUEEN:  r = "Q"; break;
-            case EMPTY:  r = "#"; break;
             }
         }
       return r;    

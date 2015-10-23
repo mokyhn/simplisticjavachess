@@ -9,19 +9,20 @@ import com.simplisticchess.board.Board;
 import com.simplisticchess.Chessio;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.Color;
+import com.simplisticchess.piece.PieceType;
 
 public final class Move
 {
 
-    public int fromX,
-            fromY,
-            toX,
-            toY,
-            type, // The move type
-            capturedPiece; // Used for storing pieces that are taken
-            // by the piece which moves
+    public int fromX;
+    public int fromY;
+    public int toX;
+    public int toY;
+    public int type; // The move type
+    public PieceType capturedPiece; // Used for storing pieces that are taken
+                              // by the piece which moves
 
-    public Color        whoMoves;
+    public Color whoMoves;
 
     // The different move types
     public final static int NORMALMOVE = 0,
@@ -50,7 +51,7 @@ public final class Move
     {
     }
 
-    public Move(int fromX, int fromY, int toX, int toY, int type, int capturedPiece, Color whoMoves)
+    public Move(int fromX, int fromY, int toX, int toY, int type, PieceType capturedPiece, Color whoMoves)
     {
         assert fromX >= 0 && fromX <= 7
                 && fromY >= 0 && fromY <= 7
@@ -88,7 +89,6 @@ public final class Move
         final int tX = fp.xPos + dX,
                 tY = fp.yPos + dY;
 
-        int takenPiece;
         int moveType;
 
         assert fp.color == b.inMove();
@@ -102,6 +102,8 @@ public final class Move
         }
 
         tp = b.getPiece(tX, tY);
+        
+        PieceType takenPiece;
 
         if (tp != null && tp.color == b.inMove().flip())
         {
@@ -110,7 +112,7 @@ public final class Move
             m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, b.inMove());
         } else if (b.freeSquare(tX, tY))
         {
-            takenPiece = Piece.EMPTY;
+            takenPiece = null;
             moveType = Move.NORMALMOVE;
             m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, b.inMove());
         }
@@ -150,9 +152,9 @@ public final class Move
                 && (type <= CAPTURE_AND_PROMOTE_TO_QUEEN);
     }
 
-    public int promotionTo()
+    public PieceType promotionTo()
     {
-        int r = Piece.EMPTY;
+        PieceType pieceType;
 
         assert (type == CAPTURE_AND_PROMOTE_TO_BISHOP
                 || type == CAPTURE_AND_PROMOTE_TO_KNIGHT
@@ -166,30 +168,33 @@ public final class Move
         switch (type)
         {
             case CAPTURE_AND_PROMOTE_TO_BISHOP:
-                r = Piece.BISHOP;
+                pieceType = PieceType.BISHOP;
                 break;
             case CAPTURE_AND_PROMOTE_TO_KNIGHT:
-                r = Piece.KNIGHT;
+                pieceType = PieceType.KNIGHT;
                 break;
             case CAPTURE_AND_PROMOTE_TO_ROOK:
-                r = Piece.ROOK;
+                pieceType = PieceType.ROOK;
                 break;
             case CAPTURE_AND_PROMOTE_TO_QUEEN:
-                r = Piece.QUEEN;
+                pieceType = PieceType.QUEEN;
                 break;
             case PROMOTE_TO_BISHOP:
-                r = Piece.BISHOP;
+                pieceType = PieceType.BISHOP;
                 break;
             case PROMOTE_TO_KNIGHT:
-                r = Piece.KNIGHT;
+                pieceType = PieceType.KNIGHT;
                 break;
             case PROMOTE_TO_ROOK:
-                r = Piece.ROOK;
+                pieceType = PieceType.ROOK;
                 break;
             case PROMOTE_TO_QUEEN:
-                r = Piece.QUEEN;
+                pieceType = PieceType.QUEEN;
+                break;
+            default:
+                pieceType = null;
         }
-        return r;
+        return pieceType;
     }
 
     public static String posToString(int x, int y)
@@ -197,21 +202,22 @@ public final class Move
         return Chessio.numToChar(x) + Chessio.numToNumChar(y);
     }
 
-    public static String pieceNumberToChar(int num)
+    //TODO: Do this inside PieceType...
+    public static String pieceNumberToChar(PieceType pieceType)
     {
         String letter = "";
-        switch (num)
+        switch (pieceType)
         {
-            case Piece.BISHOP:
+            case BISHOP:
                 letter = "B";
                 break;
-            case Piece.KNIGHT:
+            case KNIGHT:
                 letter = "K";
                 break;
-            case Piece.ROOK:
+            case ROOK:
                 letter = "R";
                 break;
-            case Piece.QUEEN:
+            case QUEEN:
                 letter = "Q";
                 break;
         }
@@ -233,7 +239,7 @@ public final class Move
         }
 
         // mate
-        if (type == CAPTURE && capturedPiece == Piece.KING)
+        if (type == CAPTURE && capturedPiece == PieceType.KING)
         {
             return "mate";
         }

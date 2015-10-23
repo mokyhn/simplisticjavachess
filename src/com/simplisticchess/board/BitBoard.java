@@ -5,25 +5,20 @@ package com.simplisticchess.board;
  */
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.Color;
+import com.simplisticchess.piece.PieceType;
 
+//TODO: Get rid of bitboards and use hash values instead
 public class BitBoard implements IBitBoard
 {
 
     protected static final int NUM_COLORS = 2; // Black and white
-    protected static final int NUM_PIECE_TYPES = 6; // Pawn, knight, bishop, rook, queen, king,
 
     protected long bb[][];
 
     // Create an empty bitboard
     public BitBoard()
     {
-        bb = new long[NUM_COLORS][NUM_PIECE_TYPES];
-
-        for (int t = 0; t < NUM_PIECE_TYPES; t++)
-        {
-            bb[0][t] = 0;
-            bb[1][t] = 0;
-        }
+        bb = new long[NUM_COLORS][PieceType.values().length];
     }
 
     /**
@@ -36,16 +31,15 @@ public class BitBoard implements IBitBoard
         this();    // Call constructor
 
         Piece p;
-        int c, t;
-
+ 
         for (int i = 0; i < b.getNumberOfPieces(); i++)
         {
             p = b.getPiece(i);
-            c = getIndexFromColor(p.color);
-            t = p.type;
-            if (t != Piece.EMPTY)
+            int c = getIndexFromColor(p.color);
+            PieceType t = p.type;
+            if (t != null)
             {
-                bb[c][t] = bb[c][t] | setBitHigh(getSquareNoFromPos(p.xPos, p.yPos));
+                bb[c][t.getType()] = bb[c][t.getType()] | setBitHigh(getSquareNoFromPos(p.xPos, p.yPos));
             }
         }
     }
@@ -54,7 +48,7 @@ public class BitBoard implements IBitBoard
     {
         this();
         
-        for (int t = 0; t < NUM_PIECE_TYPES; t++)
+        for (int t = 0; t < PieceType.values().length; t++)
         {
             this.bb[0][t] = bitBoard.bb[0][t];
             this.bb[1][t] = bitBoard.bb[1][t];
@@ -108,14 +102,13 @@ public class BitBoard implements IBitBoard
 
     public void insertPiece(Piece p)
     {
-        bb[getIndexFromColor(p.color)][p.type] = bb[getIndexFromColor(p.color)][p.type]
+        bb[getIndexFromColor(p.color)][p.type.getType()] = bb[getIndexFromColor(p.color)][p.type.getType()]
                 | setBitHigh(getSquareNoFromPos(p.xPos, p.yPos));
     }
 
-    public boolean hasPiece(int x, int y, Color color, int type)
+    public boolean hasPiece(int x, int y, Color color, PieceType type)
     {
-        assert (type >= 0 && type < 6);
-        return (bb[getIndexFromColor(color)][type]
+        return (bb[getIndexFromColor(color)][type.getType()]
                 & setBitHigh(getSquareNoFromPos(x, y)))
                 != 0;
     }
@@ -123,13 +116,13 @@ public class BitBoard implements IBitBoard
     //Todo: Is this code correct?
     public Piece getPiece(int x, int y)
     {
-        for (int type = 0; type < NUM_PIECE_TYPES; type++)
+        for (PieceType type : PieceType.values())
         {
-            if ((bb[0][type] & setBitHigh(getSquareNoFromPos(x, y))) != 0)
+            if ((bb[0][type.getType()] & setBitHigh(getSquareNoFromPos(x, y))) != 0)
             {
                 return new Piece(x, y, Color.BLACK, type);
             }
-            if ((bb[1][type] & setBitHigh(getSquareNoFromPos(x, y))) != 0)
+            if ((bb[1][type.getType()] & setBitHigh(getSquareNoFromPos(x, y))) != 0)
             {
                 return new Piece(x, y, Color.WHITE, type);
             }
@@ -141,19 +134,19 @@ public class BitBoard implements IBitBoard
     {
         final int UNDF = 254;
         Color color = null;
-        int type = UNDF;
+        PieceType type = null;
 
         assert (x >= 0 && x <= 7 && y >= 0 && y <= 7);
 
-        for (int t = 0; t < NUM_PIECE_TYPES; t++)
+        for (PieceType t : PieceType.values())
         {
-            if ((bb[0][t] & setBitHigh(getSquareNoFromPos(x, y))) != 0)
+            if ((bb[0][t.getType()] & setBitHigh(getSquareNoFromPos(x, y))) != 0)
             {
                 color = Color.BLACK;
                 type = t;
                 break;
             }
-            if ((bb[1][t] & setBitHigh(getSquareNoFromPos(x, y))) != 0)
+            if ((bb[1][t.getType()] & setBitHigh(getSquareNoFromPos(x, y))) != 0)
             {
                 color = Color.WHITE;
                 type = t;
@@ -161,7 +154,7 @@ public class BitBoard implements IBitBoard
             }
         }
         
-        bb[getIndexFromColor(color)][type] = bb[getIndexFromColor(color)][type] ^ // Bitwise XOR
+        bb[getIndexFromColor(color)][type.getType()] = bb[getIndexFromColor(color)][type.getType()] ^ // Bitwise XOR
                 setBitHigh(getSquareNoFromPos(x, y));
 
         return new Piece(x, y, color, type);
@@ -194,15 +187,15 @@ public class BitBoard implements IBitBoard
     {
         String s = "";
 
-        for (int t = 0; t < NUM_PIECE_TYPES; t++)
+        for (PieceType t : PieceType.values())
         {
             s = s + "Black " + Piece.getPieceLetter(Color.BLACK, t)
                     + "\n"
-                    + bitboard2String(bb[0][t]);
+                    + bitboard2String(bb[0][t.getType()]);
 
             s = s + "White " + Piece.getPieceLetter(Color.WHITE, t)
                     + "\n"
-                    + bitboard2String(bb[1][t]);
+                    + bitboard2String(bb[1][t.getType()]);
         }
 
         return s;
@@ -217,10 +210,10 @@ public class BitBoard implements IBitBoard
         }
         final BitBoard b2 = (BitBoard) obj;
 
-        for (int t = 0; t < NUM_PIECE_TYPES; t++)
+        for (PieceType t : PieceType.values())
         {
-            if (this.bb[0][t] != b2.bb[0][t]
-                    || this.bb[1][t] != b2.bb[1][t])
+            if (this.bb[0][t.getType()] != b2.bb[0][t.getType()]
+                    || this.bb[1][t.getType()] != b2.bb[1][t.getType()])
             {
                 return false;
             }
@@ -235,7 +228,7 @@ interface IBitBoard
 
     public void insertPiece(Piece p);
 
-    public boolean hasPiece(int x, int y, Color color, int type);
+    public boolean hasPiece(int x, int y, Color color, PieceType type);
 
     public Piece removePiece(int x, int y);
 

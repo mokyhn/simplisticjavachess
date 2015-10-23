@@ -5,6 +5,7 @@ import com.simplisticchess.move.NoMoveException;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
+import com.simplisticchess.piece.PieceType;
 
 public final class Chessio {
     
@@ -77,12 +78,12 @@ public final class Chessio {
         m.fromY          = fromY;
         m.toX            = toX;
         m.toY            = toY;
-        m.capturedPiece = Piece.EMPTY;
+        m.capturedPiece = null;
         m.whoMoves       = whoToMove;
 
         if (str.length() == 4) {
             // White or black does a short or a long castling
-            if (p.type == Piece.KING && fromY == toY && (fromY == 0 || fromY == 7)) {
+            if (p.type == PieceType.KING && fromY == toY && (fromY == 0 || fromY == 7)) {
                 if (fromX == 4 && toX == 6) {
                         m.type = Move.CASTLE_SHORT;
                         return m;
@@ -93,10 +94,10 @@ public final class Chessio {
             }
 
             // ENPASSENT Move
-            if (p.type == Piece.PAWN) {
+            if (p.type == PieceType.PAWN) {
                 if ((fromX != toX) && (b.freeSquare(toX, toY))) {
                     m.type = Move.CAPTURE_ENPASSANT;
-                    m.capturedPiece = Piece.PAWN;
+                    m.capturedPiece = PieceType.PAWN;
                     return m;
                 }
             }
@@ -118,7 +119,7 @@ public final class Chessio {
 
         // Promotion moves
         if (str.length() == 5  && 
-            p.type == Piece.PAWN &&
+            p.type == PieceType.PAWN &&
            ((p.color == Color.WHITE && fromY == 6) ||
             (p.color == Color.BLACK && fromY == 1))) {
             

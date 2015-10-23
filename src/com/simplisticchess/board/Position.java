@@ -7,6 +7,7 @@ package com.simplisticchess.board;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
+import com.simplisticchess.piece.PieceType;
 
 //TODO: This "is-a-relation" should go away. It is ugly.
 public final class Position extends BitBoard
@@ -39,10 +40,10 @@ public final class Position extends BitBoard
             this.xyPosition[p.xPos][p.yPos] = p;
         }
 
-        for (int t = 0; t < NUM_PIECE_TYPES; t++)
+        for (PieceType t : PieceType.values())
         {
-            this.bb[0][t] = position.bb[0][t];
-            this.bb[1][t] = position.bb[1][t];
+            this.bb[0][t.getType()] = position.bb[0][t.getType()];
+            this.bb[1][t.getType()] = position.bb[1][t.getType()];
         }
     }
 
@@ -243,7 +244,7 @@ public final class Position extends BitBoard
             {
                 switch (p.type)
                 {
-                    case Piece.PAWN:
+                    case PAWN:
                         if ((y == p.yPos + p.color.getColor())
                                 && ((x == p.xPos + 1)
                                 || (x == p.xPos - 1)))
@@ -251,19 +252,19 @@ public final class Position extends BitBoard
                             return true;
                         }
                         break;
-                    case Piece.ROOK:
+                    case ROOK:
                         if (rookAttack(p.xPos, p.yPos, x, y))
                         {
                             return true;
                         }
                         break;
-                    case Piece.BISHOP:
+                    case BISHOP:
                         if (bishopAttack(p.xPos, p.yPos, x, y))
                         {
                             return true;
                         }
                         break;
-                    case Piece.KNIGHT:
+                    case KNIGHT:
                         if (((x == p.xPos - 2) && (y == p.yPos + 1))
                                 || ((x == p.xPos - 2) && (y == p.yPos - 1))
                                 || ((x == p.xPos - 1) && (y == p.yPos - 2))
@@ -276,14 +277,14 @@ public final class Position extends BitBoard
                             return true;
                         }
                         break;
-                    case Piece.QUEEN:
+                    case QUEEN:
                         if (rookAttack(p.xPos, p.yPos, x, y)
                                 || bishopAttack(p.xPos, p.yPos, x, y))
                         {
                             return true;
                         }
                         break;
-                    case Piece.KING:
+                    case KING:
                         if ((x == p.xPos || x == p.xPos - 1 || x == p.xPos + 1)
                                 && (y == p.yPos || y == p.yPos - 1 || y == p.yPos + 1))
                         {

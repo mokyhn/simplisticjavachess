@@ -32,22 +32,22 @@ public final class Evaluator
             p = b.getPiece(i);
             switch (p.type)
             {
-                case Piece.PAWN:
+                case PAWN:
                     result = PAWNVALUE * p.color.getColor() + result;
                     break;
-                case Piece.ROOK:
+                case ROOK:
                     result = ROOKVALUE * p.color.getColor() + result;
                     break;
-                case Piece.BISHOP:
+                case BISHOP:
                     result = BISHOPVALUE * p.color.getColor() + result;
                     break;
-                case Piece.KNIGHT:
+                case KNIGHT:
                     result = KNIGHTVALUE * p.color.getColor() + result;
                     break;
-                case Piece.QUEEN:
+                case QUEEN:
                     result = QUEENVALUE * p.color.getColor() + result;
                     break;
-                case Piece.KING:
+                case KING:
                     if (p.color == Color.BLACK)
                     {
                         thereIsABlackKing = true;
