@@ -11,7 +11,6 @@ import com.simplisticchess.History;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.State;
 import com.simplisticchess.Utils;
-import com.simplisticchess.board.Bitboard;
 import com.simplisticchess.move.Move;
 
 
@@ -133,7 +132,7 @@ public final class Board implements Cloneable {
 
        // Put the move m on the stack
        state.move = m;       
-       history.add(state.clone());
+       history.add(new State(state));
 
 
        // Used to determine the 50-move rule, three times repition
@@ -481,7 +480,7 @@ public final class Board implements Cloneable {
     public Board clone() {
         final Board theClone      = new Board();
         theClone.position   = position.clone();
-        theClone.state      = this.state.clone();        
+        theClone.state      = new State(state);        
         theClone.history    = this.history.clone();
 
         return theClone;

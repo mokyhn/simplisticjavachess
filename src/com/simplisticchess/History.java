@@ -4,7 +4,7 @@
  * @year 2010
  * This class encapsulates the information needed to
  * check for three-fold-repetition.
- * The class also records the history of when the castling positibility was lost
+ * The class also records the history of when the castling possibility was lost
  * for a given player
  */
 package com.simplisticchess;
@@ -15,7 +15,7 @@ import java.util.Stack;
 
 
 public final class History implements Cloneable {
-    private Stack<State> stateHistory; // A stack of previous game states
+    private final Stack<State> stateHistory; // A stack of previous game states
 
     public History() {
         stateHistory =  new Stack<State>();
@@ -69,7 +69,7 @@ public final class History implements Cloneable {
         final History theClone = new History();
         final int size = stateHistory.size();
         for (int i = 0; i < size; i ++) {
-            (theClone.stateHistory).push((stateHistory.get(i)).clone());
+            (theClone.stateHistory).push(new State(stateHistory.get(i)));
         }
         return theClone;
     }
