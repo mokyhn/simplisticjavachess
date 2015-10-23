@@ -25,7 +25,10 @@ public abstract class AbstractSearch {
     protected int  wastedGeneratedMoves;
 
     // Setters
-    public void setBoard(Board b) { analyzeBoard = b.clone();}
+    public void setBoard(Board b) 
+    { 
+        analyzeBoard = new Board(b);
+    }
     
     // Getters
     public Move getStrongestMove() { return strongestMove;  }
@@ -100,7 +103,7 @@ public abstract class AbstractSearch {
     public abstract int search();
 
     public String findBranchingFactor(Board b, int ply) {
-        analyzeBoard  = b.clone();
+        analyzeBoard  = new Board(b);
         noPositions   = 0;
 
         countNodesTmp(ply);

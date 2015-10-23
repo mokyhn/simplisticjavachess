@@ -12,7 +12,7 @@ import com.simplisticchess.Utils;
 import com.simplisticchess.move.Move;
 
 
-public final class Board implements Cloneable {
+public final class Board {
     private                Position position; // Current position of pieces
     private State          state;             // State wrt. casteling, 
                                               // latest move and movenumber etc.
@@ -29,6 +29,11 @@ public final class Board implements Cloneable {
         setupFENboard(fen);  
     }
 
+    public Board(Board board) {
+        this.position   = new Position(board.position);
+        this.state      = new State(board.state);        
+        this.history    = new History(board.history);
+    }
 
     public int     getNumberOfPieces()       { return position.getNumberOfPieces(); }
     public int     inMove()                  { return state.inMove;  }
@@ -471,17 +476,6 @@ public final class Board implements Cloneable {
     s = s + "Move history: " + history.toString();
 
     return s;
-    }
-  
-  
-    @Override
-    public Board clone() {
-        final Board theClone      = new Board();
-        theClone.position   = position.clone();
-        theClone.state      = new State(state);        
-        theClone.history    = new History(this.history);
-
-        return theClone;
     }
 
 }
