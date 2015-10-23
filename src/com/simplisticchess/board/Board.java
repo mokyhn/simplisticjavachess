@@ -1,10 +1,8 @@
+package com.simplisticchess.board;
+
 /**
  * @author Morten Kühnrich
- * @year 2010
- * Permits a concise representation of board layouts.
- * Practical for checking three-fold-repetition.
  */
-package com.simplisticchess.board;
 
 import com.simplisticchess.evaluate.Evaluator;
 import com.simplisticchess.History;
@@ -481,7 +479,7 @@ public final class Board implements Cloneable {
         final Board theClone      = new Board();
         theClone.position   = position.clone();
         theClone.state      = new State(state);        
-        theClone.history    = this.history.clone();
+        theClone.history    = new History(this.history);
 
         return theClone;
     }
