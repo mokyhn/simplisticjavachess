@@ -36,7 +36,7 @@ public class BitBoard implements IBitBoard
         {
             p = b.getPiece(i);
             int c = getIndexFromColor(p.color);
-            PieceType t = p.type;
+            PieceType t = p.pieceType;
             if (t != null)
             {
                 bb[c][t.getType()] = bb[c][t.getType()] | setBitHigh(getSquareNoFromPos(p.xPos, p.yPos));
@@ -102,7 +102,7 @@ public class BitBoard implements IBitBoard
 
     public void insertPiece(Piece p)
     {
-        bb[getIndexFromColor(p.color)][p.type.getType()] = bb[getIndexFromColor(p.color)][p.type.getType()]
+        bb[getIndexFromColor(p.color)][p.pieceType.getType()] = bb[getIndexFromColor(p.color)][p.pieceType.getType()]
                 | setBitHigh(getSquareNoFromPos(p.xPos, p.yPos));
     }
 
@@ -187,15 +187,15 @@ public class BitBoard implements IBitBoard
     {
         String s = "";
 
-        for (PieceType t : PieceType.values())
+        for (PieceType pieceType : PieceType.values())
         {
-            s = s + "Black " + Piece.getPieceLetter(Color.BLACK, t)
+            s = s + "Black " + pieceType.getPieceLetter(Color.BLACK)
                     + "\n"
-                    + bitboard2String(bb[0][t.getType()]);
+                    + bitboard2String(bb[0][pieceType.getType()]);
 
-            s = s + "White " + Piece.getPieceLetter(Color.WHITE, t)
+            s = s + "White " + pieceType.getPieceLetter(Color.WHITE)
                     + "\n"
-                    + bitboard2String(bb[1][t.getType()]);
+                    + bitboard2String(bb[1][pieceType.getType()]);
         }
 
         return s;

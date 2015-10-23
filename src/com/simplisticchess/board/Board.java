@@ -169,7 +169,7 @@ public final class Board
         for (int i = 0; i < getNumberOfPieces(); i++)
         {
             p = getPiece(i);
-            if (p.type == PieceType.KING && p.color == color)
+            if (p.pieceType == PieceType.KING && p.color == color)
             {
                 kingx = p.xPos;
                 kingy = p.yPos;
@@ -228,7 +228,7 @@ public final class Board
         history.add(new State(state));
 
         // Used to determine the 50-move rule, three times repition
-        if (p.type == PieceType.PAWN)
+        if (p.pieceType == PieceType.PAWN)
         {
             state.halfMoveClock = 0;
             state.halfMovesIndex3PosRepition = state.moveNumber;
@@ -238,7 +238,7 @@ public final class Board
         }
 
         // Moving a rook can disallow castling in the future
-        if (p.type == PieceType.ROOK)
+        if (p.pieceType == PieceType.ROOK)
         {
             if (m.whoMoves == Color.BLACK)
             {
@@ -264,7 +264,7 @@ public final class Board
         }
 
         // Moving the king will disallow castling in the future
-        if (p.type == PieceType.KING)
+        if (p.pieceType == PieceType.KING)
         {
             if (m.whoMoves == Color.BLACK)
             {
@@ -287,7 +287,7 @@ public final class Board
 
         if (m.aCapturePromotion())
         {
-            if (getPiece(m.toX, m.toY).type == PieceType.ROOK)
+            if (getPiece(m.toX, m.toY).pieceType == PieceType.ROOK)
             {
                 if (m.whoMoves == Color.WHITE && m.toY == 7)
                 {
@@ -345,7 +345,7 @@ public final class Board
 
             case Move.CAPTURE:
                 // Capturing a rook may affect casteling opputunities!
-                if (getPiece(m.toX, m.toY).type == PieceType.ROOK)
+                if (getPiece(m.toX, m.toY).pieceType == PieceType.ROOK)
                 {
                     if (m.whoMoves == Color.WHITE && m.toY == 7)
                     {
@@ -577,7 +577,7 @@ public final class Board
                     assert xPawn >= 0 && xPawn <= 7;
                     assert yPawn >= 0 && yPawn <= 7;
                     final Piece p = getPiece(xPawn, yPawn - state.inMove.getColor());
-                    if (p != null && p.type == PieceType.PAWN)
+                    if (p != null && p.pieceType == PieceType.PAWN)
                     {
                         state.move = new Move(xPawn, yPawn + state.inMove.getColor(), 
                                               xPawn, yPawn - state.inMove.getColor(), 

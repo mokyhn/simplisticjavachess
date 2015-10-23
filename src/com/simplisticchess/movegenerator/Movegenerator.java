@@ -76,7 +76,7 @@ public final class Movegenerator
             leftPiece = b.getPiece(fx - 1, fy + c.getColor());
             if (leftPiece != null && leftPiece.color != c)
             {
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE, leftPiece.type, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE, leftPiece.pieceType, c));
             }
         }
 
@@ -86,7 +86,7 @@ public final class Movegenerator
             rightPiece = b.getPiece(fx + 1, fy + c.getColor());
             if (rightPiece != null && rightPiece.color != c)
             {
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE, rightPiece.type, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE, rightPiece.pieceType, c));
             }
         }
 
@@ -96,10 +96,10 @@ public final class Movegenerator
             leftPiece = b.getPiece(fx - 1, fy + c.getColor());
             if (leftPiece != null && leftPiece.color != c)
             {
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece.type, c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece.type, c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_QUEEN, leftPiece.type, c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_ROOK, leftPiece.type, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece.pieceType, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece.pieceType, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_QUEEN, leftPiece.pieceType, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_ROOK, leftPiece.pieceType, c));
             }
         }
 
@@ -109,10 +109,10 @@ public final class Movegenerator
             rightPiece = b.getPiece(fx + 1, fy + c.getColor());
             if (rightPiece != null && rightPiece.color != c)
             {
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece.type, c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_KNIGHT, rightPiece.type, c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_QUEEN, rightPiece.type, c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_ROOK, rightPiece.type, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece.pieceType, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_KNIGHT, rightPiece.pieceType, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_QUEEN, rightPiece.pieceType, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_AND_PROMOTE_TO_ROOK, rightPiece.pieceType, c));
             }
 
         }
@@ -127,7 +127,7 @@ public final class Movegenerator
                 lastMovePiece = b.getPiece(lastMove.toX, lastMove.toY);
                 // The piece stands to the left
                 if (lastMovePiece != null && (lastMove.toX == fx - 1) && (lastMove.toY == fy)
-                        && (lastMovePiece.type == PieceType.PAWN)
+                        && (lastMovePiece.pieceType == PieceType.PAWN)
                         && (Math.abs(lastMove.fromY - lastMove.toY) == 2))
                 {
                     Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), Move.CAPTURE_ENPASSANT, null, c));
@@ -139,7 +139,7 @@ public final class Movegenerator
                 lastMovePiece = b.getPiece(lastMove.toX, lastMove.toY);
                 // The piece stands to the right
                 if (lastMovePiece != null && (lastMove.toX == fx + 1) && (lastMove.toY == fy)
-                        && (lastMovePiece.type == PieceType.PAWN)
+                        && (lastMovePiece.pieceType == PieceType.PAWN)
                         && (Math.abs(lastMove.fromY - lastMove.toY) == 2))
                 {
                     Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), Move.CAPTURE_ENPASSANT, null, c));
@@ -176,7 +176,7 @@ public final class Movegenerator
                 && !b.isInCheck(c))
         {
             assert (b.getPiece(7, fy) != null);
-            assert (b.getPiece(7, fy).type == PieceType.ROOK) : "Expected rook, found wirdo piece: " + b.getPiece(7, fy).toString() + "fx, fy=" + fx + ", " + fy + "c = " + c;
+            assert (b.getPiece(7, fy).pieceType == PieceType.ROOK) : "Expected rook, found wirdo piece: " + b.getPiece(7, fy).toString() + "fx, fy=" + fx + ", " + fy + "c = " + c;
             assert (b.getPiece(7, fy).color == c);
             Moves.add(new Move(fx, fy, fx + 2, fy, Move.CASTLE_SHORT, null, c));
         }
@@ -208,7 +208,7 @@ public final class Movegenerator
                     pTo = b.getPiece(fx - 1, fy);
                     if (pTo != null && pTo.color != c)
                     {
-                        Moves.add(new Move(fx, fy, fx - 1, fy, Move.CAPTURE, pTo.type, c));
+                        Moves.add(new Move(fx, fy, fx - 1, fy, Move.CAPTURE, pTo.pieceType, c));
                     }
                 }
             }
@@ -224,7 +224,7 @@ public final class Movegenerator
                     pTo = b.getPiece(fx - 1, fy + 1);
                     if (pTo != null && pTo.color != c)
                     {
-                        Moves.add(new Move(fx, fy, fx - 1, fy + 1, Move.CAPTURE, pTo.type, c));
+                        Moves.add(new Move(fx, fy, fx - 1, fy + 1, Move.CAPTURE, pTo.pieceType, c));
                     }
                 }
             }
@@ -240,7 +240,7 @@ public final class Movegenerator
                     pTo = b.getPiece(fx - 1, fy - 1);
                     if (pTo != null && pTo.color != c)
                     {
-                        Moves.add(new Move(fx, fy, fx - 1, fy - 1, Move.CAPTURE, pTo.type, c));
+                        Moves.add(new Move(fx, fy, fx - 1, fy - 1, Move.CAPTURE, pTo.pieceType, c));
                     }
                 }
             }
@@ -260,7 +260,7 @@ public final class Movegenerator
                     pTo = b.getPiece(fx + 1, fy);
                     if (pTo != null && pTo.color != c)
                     {
-                        Moves.add(new Move(fx, fy, fx + 1, fy, Move.CAPTURE, pTo.type, c));
+                        Moves.add(new Move(fx, fy, fx + 1, fy, Move.CAPTURE, pTo.pieceType, c));
                     }
                 }
             }
@@ -278,7 +278,7 @@ public final class Movegenerator
                         pTo = b.getPiece(fx + 1, fy + 1);
                         if (pTo != null && pTo.color != c)
                         {
-                            Moves.add(new Move(fx, fy, fx + 1, fy + 1, Move.CAPTURE, pTo.type, c));
+                            Moves.add(new Move(fx, fy, fx + 1, fy + 1, Move.CAPTURE, pTo.pieceType, c));
                         }
                     }
                 }
@@ -297,7 +297,7 @@ public final class Movegenerator
                         pTo = b.getPiece(fx + 1, fy - 1);
                         if (pTo != null && pTo.color != c)
                         {
-                            Moves.add(new Move(fx, fy, fx + 1, fy - 1, Move.CAPTURE, pTo.type, c));
+                            Moves.add(new Move(fx, fy, fx + 1, fy - 1, Move.CAPTURE, pTo.pieceType, c));
                         }
                     }
                 }
@@ -315,7 +315,7 @@ public final class Movegenerator
                 pTo = b.getPiece(fx, fy + 1);
                 if (pTo != null && pTo.color != c)
                 {
-                    Moves.add(new Move(fx, fy, fx, fy + 1, Move.CAPTURE, pTo.type, c));
+                    Moves.add(new Move(fx, fy, fx, fy + 1, Move.CAPTURE, pTo.pieceType, c));
                 }
             }
         }
@@ -331,7 +331,7 @@ public final class Movegenerator
                 pTo = b.getPiece(fx, fy - 1);
                 if (pTo != null && pTo.color != c)
                 {
-                    Moves.add(new Move(fx, fy, fx, fy - 1, Move.CAPTURE, pTo.type, c));
+                    Moves.add(new Move(fx, fy, fx, fy - 1, Move.CAPTURE, pTo.pieceType, c));
                 }
             }
         }
@@ -350,7 +350,7 @@ public final class Movegenerator
             return Moves;
         }
 
-        switch (p.type)
+        switch (p.pieceType)
         {
             case PAWN:
                 return pawnMoves(b, p);

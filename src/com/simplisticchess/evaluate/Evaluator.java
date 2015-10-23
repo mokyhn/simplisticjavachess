@@ -30,7 +30,7 @@ public final class Evaluator
         for (int i = 0; i < b.getNumberOfPieces(); i++)
         {
             p = b.getPiece(i);
-            switch (p.type)
+            switch (p.pieceType)
             {
                 case PAWN:
                     result = PAWNVALUE * p.color.getColor() + result;

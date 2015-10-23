@@ -25,4 +25,31 @@ public enum PieceType
         return type;
     }
     
+    public String getPieceLetter() 
+    {
+        switch (this)
+        {
+            case PAWN:
+                return "P";
+            case BISHOP:
+                return "B";
+            case KNIGHT:
+                return "N";
+            case ROOK:
+                return "R";
+            case QUEEN:
+                return "Q";
+            case KING:
+                return "K";
+            default:
+                return null; // Not reachable
+        }    
+    }
+    
+    public String getPieceLetter(Color color) 
+    {
+        String r = getPieceLetter();
+        return color == Color.BLACK ? r.toLowerCase() : r.toUpperCase();   
+    }
+    
 }

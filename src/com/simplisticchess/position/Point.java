@@ -9,6 +9,7 @@ public final class Point
     
     public Point(byte x, byte y) 
     {
+        assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error in x or y ";
         this.x = x;
         this.y = y;
     }
@@ -28,6 +29,7 @@ public final class Point
         position = position.toLowerCase();
         x = (byte) (position.charAt(0) - 'a');
         y = (byte) (-1 + position.charAt(1) - '0');
+        assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error in x or y ";
     }
     
     public byte getX() 

@@ -107,7 +107,7 @@ public final class Move
 
         if (tp != null && tp.color == b.inMove().flip())
         {
-            takenPiece = tp.type;
+            takenPiece = tp.pieceType;
             moveType = Move.CAPTURE;
             m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, b.inMove());
         } else if (b.freeSquare(tX, tY))
@@ -202,28 +202,6 @@ public final class Move
         return Chessio.numToChar(x) + Chessio.numToNumChar(y);
     }
 
-    //TODO: Do this inside PieceType...
-    public static String pieceNumberToChar(PieceType pieceType)
-    {
-        String letter = "";
-        switch (pieceType)
-        {
-            case BISHOP:
-                letter = "B";
-                break;
-            case KNIGHT:
-                letter = "K";
-                break;
-            case ROOK:
-                letter = "R";
-                break;
-            case QUEEN:
-                letter = "Q";
-                break;
-        }
-        return letter;
-    }
-
     @Override
     public String toString()
     {
@@ -247,12 +225,12 @@ public final class Move
         // Promotions
         if (aSimplePromotion())
         {
-            return posToString(fromX, fromY) + "-" + posToString(toX, toY) + "=" + pieceNumberToChar(promotionTo());
+            return posToString(fromX, fromY) + "-" + posToString(toX, toY) + "=" + promotionTo().getPieceLetter();
         }
 
         if (aCapturePromotion())
         {
-            return posToString(fromX, fromY) + "x" + posToString(toX, toY) + "=" + pieceNumberToChar(promotionTo()); // 
+            return posToString(fromX, fromY) + "x" + posToString(toX, toY) + "=" + promotionTo().getPieceLetter(); 
         }
 
         if (type == CASTLE_SHORT)

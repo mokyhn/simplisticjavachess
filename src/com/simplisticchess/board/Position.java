@@ -242,7 +242,7 @@ public final class Position extends BitBoard
             // Chose one of opposite color
             if (p.color == inMove.flip() && !(p.xPos == x && p.yPos == y))
             {
-                switch (p.type)
+                switch (p.pieceType)
                 {
                     case PAWN:
                         if ((y == p.yPos + p.color.getColor())

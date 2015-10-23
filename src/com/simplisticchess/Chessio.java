@@ -83,7 +83,7 @@ public final class Chessio {
 
         if (str.length() == 4) {
             // White or black does a short or a long castling
-            if (p.type == PieceType.KING && fromY == toY && (fromY == 0 || fromY == 7)) {
+            if (p.pieceType == PieceType.KING && fromY == toY && (fromY == 0 || fromY == 7)) {
                 if (fromX == 4 && toX == 6) {
                         m.type = Move.CASTLE_SHORT;
                         return m;
@@ -94,7 +94,7 @@ public final class Chessio {
             }
 
             // ENPASSENT Move
-            if (p.type == PieceType.PAWN) {
+            if (p.pieceType == PieceType.PAWN) {
                 if ((fromX != toX) && (b.freeSquare(toX, toY))) {
                     m.type = Move.CAPTURE_ENPASSANT;
                     m.capturedPiece = PieceType.PAWN;
@@ -112,14 +112,14 @@ public final class Chessio {
             pto = b.getPiece(toX, toY);
             if (pto != null && pto.color == whoToMove.flip()) {
                m.type           = Move.CAPTURE;
-               m.capturedPiece = pto.type;
+               m.capturedPiece = pto.pieceType;
                return m;
              }
         }
 
         // Promotion moves
         if (str.length() == 5  && 
-            p.type == PieceType.PAWN &&
+            p.pieceType == PieceType.PAWN &&
            ((p.color == Color.WHITE && fromY == 6) ||
             (p.color == Color.BLACK && fromY == 1))) {
             
@@ -146,7 +146,7 @@ public final class Chessio {
                     case 'R': m.type = Move.CAPTURE_AND_PROMOTE_TO_ROOK;   break;
                 }
                 
-                m.capturedPiece = b.getPiece(toX, toY).type;
+                m.capturedPiece = b.getPiece(toX, toY).pieceType;
                 
                return m; 
              }       
