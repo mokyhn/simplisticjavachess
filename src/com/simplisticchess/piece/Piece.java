@@ -1,12 +1,9 @@
+package com.simplisticchess.piece;
+
 /**
  *
  * @author Morten Kühnrich
- * @year 2005
- * This class encapsulates the information needed to
- * represent the pieces of a chess game.
  */
-
-package com.simplisticchess;
 
 public final class Piece implements Cloneable {
     public int xPos,

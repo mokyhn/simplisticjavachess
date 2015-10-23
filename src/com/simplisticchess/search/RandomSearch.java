@@ -1,14 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.simplisticchess;
+package com.simplisticchess.search;
 
+import com.simplisticchess.evaluate.Evaluator;
+import com.simplisticchess.movegenerator.Movegenerator;
+import com.simplisticchess.piece.Piece;
+import com.simplisticchess.move.Move;
 import java.util.ArrayList;
 
 /**
  *
- * @author moku
+ * @author Morten Kühnrich
  */
 public class RandomSearch extends AbstractSearch {
    private int randomSearch() {
@@ -65,8 +65,9 @@ public class RandomSearch extends AbstractSearch {
       return Evaluator.evaluate(analyzeBoard);
     }
 
-    protected final int search() {
-     System.out.println("Random search...");
-     return randomSearch();
+    public final int search() 
+    {
+        System.out.println("Random search...");
+        return randomSearch();
     }
 }

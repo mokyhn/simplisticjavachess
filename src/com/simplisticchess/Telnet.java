@@ -5,6 +5,11 @@
 package com.simplisticchess;
 
   
+import com.simplisticchess.piece.Piece;
+import com.simplisticchess.board.Board;
+import com.simplisticchess.search.AbstractSearch;
+import com.simplisticchess.search.AlphaBetaSearch;
+import com.simplisticchess.move.Move;
 import java.net.*;
 import java.io.*;
 

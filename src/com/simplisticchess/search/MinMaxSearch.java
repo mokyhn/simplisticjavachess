@@ -1,18 +1,24 @@
+package com.simplisticchess.search;
+
+
+
+import com.simplisticchess.evaluate.Evaluator;
+import com.simplisticchess.movegenerator.Movegenerator;
+import com.simplisticchess.piece.Piece;
+import com.simplisticchess.move.Move;
+import java.util.ArrayList;
+
 /**
  *
  * @author Morten Kühnrich
- * 2013
  */
-package com.simplisticchess;
-
-import java.util.ArrayList;
 
 
 public class MinMaxSearch extends AbstractSearch {
      
     /**
-     * Reference implementation of Min-Max search witout fancy optimizations and
-     * tricks. This method can be used to compare the soundess of other 
+     * Reference implementation of Min-Max search without fancy optimizations and
+     * tricks. This method can be used to compare the soundness of other 
      * search methods
      * @param plyDepth The overall search depth in ply's
      * @param depthToGo The currently searched depth
@@ -21,7 +27,7 @@ public class MinMaxSearch extends AbstractSearch {
      */
     private int minMaxSearch(int plyDepth, int depthToGo) {
        ArrayList<Move> moves;
-       Move            m                = null;
+       Move            m;
        int             score            = 0,
                        bestScore        = 0;
        int             inMove;
@@ -98,8 +104,9 @@ public class MinMaxSearch extends AbstractSearch {
 
     }
 
-    protected final int search() {
-     System.out.println("MIN-MAX search...");
-     return minMaxSearch(_plyDepth, _plyDepth);
+    public final int search()
+    {
+        System.out.println("MIN-MAX search...");
+        return minMaxSearch(_plyDepth, _plyDepth);
     }
 }

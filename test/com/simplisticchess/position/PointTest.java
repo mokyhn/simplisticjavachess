@@ -31,13 +31,13 @@ public class PointTest {
     public void testToString()
     {
         Point p = new Point(3, 5);        
-        assertEquals("d5", p.toString());
+        assertEquals("d6", p.toString());
     }
     
     @Test
     public void testFromToStringComposition()
     {
-        assertEquals(new Point("a0").toString(), "a0");
+        assertEquals(new Point("a1").toString(), "a1");
         assertEquals(new Point("a4").toString(), "a4");
         assertEquals(new Point("h8").toString(), "h8");
     }

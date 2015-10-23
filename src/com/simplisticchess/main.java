@@ -6,6 +6,16 @@ package com.simplisticchess;
 // You might want to run this program with:
 //-enableassertions
 
+import com.simplisticchess.piece.Piece;
+import com.simplisticchess.move.NoMoveException;
+import com.simplisticchess.movegenerator.Movegenerator;
+import com.simplisticchess.evaluate.Evaluator;
+import com.simplisticchess.board.Board;
+import com.simplisticchess.search.RandomSearch;
+import com.simplisticchess.search.AbstractSearch;
+import com.simplisticchess.search.MinMaxSearch;
+import com.simplisticchess.search.AlphaBetaSearch;
+import com.simplisticchess.move.Move;
 import com.simplisticchess.GUI.ChessGUI;
 import java.io.*;
 import java.util.ArrayList;

@@ -2,8 +2,11 @@
  * @author Morten Kühnrich
  * 2013
  */
-package com.simplisticchess;
+package com.simplisticchess.search;
 
+import com.simplisticchess.board.Board;
+import com.simplisticchess.movegenerator.Movegenerator;
+import com.simplisticchess.move.Move;
 import java.util.Iterator;
 
 public abstract class AbstractSearch {
@@ -94,7 +97,7 @@ public abstract class AbstractSearch {
     }
 
     // Abstract method that is requiered from the implementor.
-    protected abstract int search();
+    public abstract int search();
 
     public String findBranchingFactor(Board b, int ply) {
         analyzeBoard  = b.clone();

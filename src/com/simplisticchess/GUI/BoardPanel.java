@@ -12,8 +12,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import com.simplisticchess.Board;
-import com.simplisticchess.Piece;
+import com.simplisticchess.board.Board;
+import com.simplisticchess.piece.Piece;
 
 /**
  *

@@ -3,7 +3,9 @@
  * @year 2010
  * A concise representation of board layouts.
  */
-package com.simplisticchess;
+package com.simplisticchess.board;
+
+import com.simplisticchess.piece.Piece;
 
 public class Bitboard implements IBitBoard {
     protected static final int NUM_COLORS      = 2; // Black and white

@@ -1,12 +1,13 @@
 /**
  *
  * @author Morten Kühnrich
- * @year 2010
- * This class encapsulates the information needed to
- * represent a piece that moves.
  */
 
-package com.simplisticchess;
+package com.simplisticchess.move;
+
+import com.simplisticchess.board.Board;
+import com.simplisticchess.Chessio;
+import com.simplisticchess.piece.Piece;
 
 public final class Move implements Cloneable {
         public int fromX,
@@ -20,7 +21,7 @@ public final class Move implements Cloneable {
 
         
 	// The different move types
-	final static int NORMALMOVE                   = 0,
+	public final static int NORMALMOVE                   = 0,
 
 			// Normal capture
 			CAPTURE                       = 1,

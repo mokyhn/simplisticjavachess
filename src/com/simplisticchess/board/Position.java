@@ -1,6 +1,5 @@
 /**
  * @author Morten Kühnrich
- * @year 2005
  * Used to represent a position using three different representations:
  *     # a piece list
  *     # a 2 dimensional piece array
@@ -8,23 +7,16 @@
  * All of these are maintained so that the represent the same position at all
  * times. We can use different representations in different parts of the code
  * for our algorithms.
- *//**
- * @author Morten Kühnrich
- * @year 2005
- * Used to represent a position using three different representations:
- *     # a piece list
- *     # a 2 dimensional piece array
- *     # a bitboard
- * All of these are maintained so that the represent the same position at all
- * times. We can use different representations in different parts of the code
- * for our algorithms.
- */
-package com.simplisticchess;
+ * */
+package com.simplisticchess.board;
+
+import com.simplisticchess.piece.Piece;
+import com.simplisticchess.move.Move;
 
 public final class Position extends Bitboard implements Cloneable  {
 
-    private Piece[]     piecePosition;
-    private Piece[][]   xyPosition;    
+    private final Piece[]     piecePosition;
+    private final Piece[][]   xyPosition;    
     private int         numberOfPieces;
 
     public Position() {

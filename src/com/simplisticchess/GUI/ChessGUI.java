@@ -13,8 +13,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import com.simplisticchess.Board;
-import com.simplisticchess.Piece;
+import com.simplisticchess.board.Board;
+import com.simplisticchess.piece.Piece;
 
 
 public class ChessGUI extends JFrame {

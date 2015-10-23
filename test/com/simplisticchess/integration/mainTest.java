@@ -9,13 +9,13 @@ package com.simplisticchess.integration;
  * moves and avoids certain other moves.
  */
 
-import com.simplisticchess.MinMaxSearch;
-import com.simplisticchess.AlphaBetaSearch;
-import com.simplisticchess.AbstractSearch;
-import com.simplisticchess.Move;
+import com.simplisticchess.search.MinMaxSearch;
+import com.simplisticchess.search.AlphaBetaSearch;
+import com.simplisticchess.search.AbstractSearch;
+import com.simplisticchess.move.Move;
 import com.simplisticchess.Chessio;
-import com.simplisticchess.Board;
-import com.simplisticchess.NoMoveException;
+import com.simplisticchess.board.Board;
+import com.simplisticchess.move.NoMoveException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import org.junit.After;

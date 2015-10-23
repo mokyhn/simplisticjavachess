@@ -9,6 +9,8 @@
  */
 package com.simplisticchess;
 
+import com.simplisticchess.piece.Piece;
+import com.simplisticchess.move.Move;
 import java.util.Stack;
 
 

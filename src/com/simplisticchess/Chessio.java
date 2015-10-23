@@ -1,5 +1,10 @@
 package com.simplisticchess;
 
+import com.simplisticchess.piece.Piece;
+import com.simplisticchess.move.NoMoveException;
+import com.simplisticchess.board.Board;
+import com.simplisticchess.move.Move;
+
 public final class Chessio {
     
     

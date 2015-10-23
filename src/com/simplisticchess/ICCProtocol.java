@@ -1,5 +1,9 @@
 package com.simplisticchess;
 
+import com.simplisticchess.piece.Piece;
+import com.simplisticchess.move.NoMoveException;
+import com.simplisticchess.board.Board;
+import com.simplisticchess.move.Move;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 

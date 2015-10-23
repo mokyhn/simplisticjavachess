@@ -2,13 +2,13 @@ package com.simplisticchess;
 
 /**
  *
- * @author mku
- * Various simple help functions used in various parts of the chess program
+ * @author Morten Kühnrich
  */
+
 public final class Utils {
  
     /**
-     * Replaces occurences of sequences of consequtive white spaces with single white spaces
+     * Replaces sequences of consecutive white spaces with single white spaces
      * @param s Input string
      * @return A trimmed string
      */

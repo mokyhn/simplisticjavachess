@@ -65,7 +65,7 @@ public final class Point
     @Override
     public String toString()
     {
-        return letters[x] + y;
+        return letters[x] + (y + 1);
     }
     
 }

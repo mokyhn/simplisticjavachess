@@ -1,5 +1,9 @@
 package com.simplisticchess;
 
+import com.simplisticchess.piece.Piece;
+import com.simplisticchess.board.Bitboard;
+import com.simplisticchess.move.Move;
+
 public final class State implements Cloneable{
     public Move     move;
     public int      inMove;

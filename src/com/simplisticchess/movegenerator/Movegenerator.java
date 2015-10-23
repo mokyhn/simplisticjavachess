@@ -1,4 +1,4 @@
-package com.simplisticchess;
+package com.simplisticchess.movegenerator;
 
 //TODO: Implementation via an iterator. 
 //A numbering of all moves generated. A function on the form
@@ -12,6 +12,9 @@ package com.simplisticchess;
 // Eliminatate generation of a number of moves when king is in check...
 // The king is not allowed to be in check while another piece is moved...
 
+import com.simplisticchess.piece.Piece;
+import com.simplisticchess.board.Board;
+import com.simplisticchess.move.Move;
 import java.util.ArrayList;
 
 public final class Movegenerator {

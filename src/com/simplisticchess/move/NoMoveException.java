@@ -1,4 +1,4 @@
-package com.simplisticchess;
+package com.simplisticchess.move;
 
 public final class NoMoveException extends Exception {
     public String err;	

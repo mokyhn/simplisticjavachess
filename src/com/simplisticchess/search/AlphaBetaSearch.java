@@ -4,8 +4,12 @@
  * 2013
  */
 
-package com.simplisticchess;
+package com.simplisticchess.search;
 
+import com.simplisticchess.evaluate.Evaluator;
+import com.simplisticchess.movegenerator.Movegenerator;
+import com.simplisticchess.piece.Piece;
+import com.simplisticchess.move.Move;
 import java.util.ArrayList;
 
 public class AlphaBetaSearch extends AbstractSearch {
@@ -263,9 +267,10 @@ public class AlphaBetaSearch extends AbstractSearch {
 
     
     
-    protected final int search() {
-      System.out.println("Alpha-Beta search...");
-      return alphaBetaSearch(_plyDepth, _plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    public final int search() 
+    {
+        System.out.println("Alpha-Beta search...");
+        return alphaBetaSearch(_plyDepth, _plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
 }
 

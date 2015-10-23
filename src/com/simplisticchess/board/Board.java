@@ -4,7 +4,15 @@
  * Permits a concise representation of board layouts.
  * Practical for checking three-fold-repetition.
  */
-package com.simplisticchess;
+package com.simplisticchess.board;
+
+import com.simplisticchess.evaluate.Evaluator;
+import com.simplisticchess.History;
+import com.simplisticchess.piece.Piece;
+import com.simplisticchess.State;
+import com.simplisticchess.Utils;
+import com.simplisticchess.board.Bitboard;
+import com.simplisticchess.move.Move;
 
 
 public final class Board implements Cloneable {

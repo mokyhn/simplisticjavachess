@@ -3,11 +3,10 @@ package com.simplisticchess.unit;
 /*
  * @author Morten Kühnrich
  */
-//package sjc;
 
-import com.simplisticchess.Bitboard;
-import com.simplisticchess.Board;
-import com.simplisticchess.Piece;
+import com.simplisticchess.board.Bitboard;
+import com.simplisticchess.board.Board;
+import com.simplisticchess.piece.Piece;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -15,10 +14,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author moku
- */
 public class BitboardTest {
     public BitboardTest() {}
     
