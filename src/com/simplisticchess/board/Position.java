@@ -13,7 +13,7 @@ package com.simplisticchess.board;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.move.Move;
 
-public final class Position extends Bitboard implements Cloneable  {
+public final class Position extends BitBoard implements Cloneable  {
 
     private final Piece[]     piecePosition;
     private final Piece[][]   xyPosition;    

@@ -1,7 +1,7 @@
 package com.simplisticchess;
 
 import com.simplisticchess.piece.Piece;
-import com.simplisticchess.board.Bitboard;
+import com.simplisticchess.board.BitBoard;
 import com.simplisticchess.move.Move;
 
 public final class State
@@ -12,7 +12,7 @@ public final class State
 
     public int moveNumber = 0;
 
-    public Bitboard bbposition; // Used wrt. check for draw by threefold repetition. Could be used in a hash table for search evaluations.
+    public BitBoard bbposition; // Used wrt. check for draw by threefold repetition. Could be used in a hash table for search evaluations.
 
     public boolean blackCanCastleShort;
     public boolean blackCanCastleLong;
@@ -62,7 +62,7 @@ public final class State
 
         if (this.bbposition != null)
         {
-            bbposition = state.bbposition.clone();
+            bbposition = new BitBoard(state.bbposition);
         }
 
         if (inCheckByPiece != null)

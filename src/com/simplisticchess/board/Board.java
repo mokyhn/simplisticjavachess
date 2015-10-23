@@ -74,7 +74,7 @@ public final class Board implements Cloneable {
      */
     public boolean attacks(int x, int y, int sideToMove) {return position.attacks(x, y, sideToMove);}
     
-    public String  getBitboardString()       { return ((Bitboard) position).toString();}
+    public String  getBitboardString()       { return ((BitBoard) position).toString();}
     public Boolean drawBy50MoveRule()        { return state.halfMoveClock >= 50;   }
 
     /**
@@ -106,7 +106,7 @@ public final class Board implements Cloneable {
 
         for (int i = state.halfMovesIndex3PosRepition; i < history.size(); i ++) {
             h = history.get(i);
-            if (((Bitboard) position).equals((Bitboard) h.bbposition)) k++;
+            if (((BitBoard) position).equals((BitBoard) h.bbposition)) k++;
         }
 
         return k >= 3;

@@ -4,7 +4,7 @@ package com.simplisticchess.unit;
  * @author Morten Kühnrich
  */
 
-import com.simplisticchess.board.Bitboard;
+import com.simplisticchess.board.BitBoard;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.piece.Piece;
 import org.junit.After;
@@ -14,8 +14,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class BitboardTest {
-    public BitboardTest() {}
+public class BitBoardTest {
+    public BitBoardTest() {}
     
     @BeforeClass
     public static void setUpClass() {    }
@@ -31,7 +31,7 @@ public class BitboardTest {
 
 
      /**
-     * Test of insertPiece method, of class Bitboard.
+     * Test of insertPiece method, of class BitBoard.
      */
     @Test
     public void testBitboardConstructor() {
@@ -49,7 +49,7 @@ public class BitboardTest {
         b.insertPiece(p4);
 
 
-        Bitboard instance = new Bitboard(b);
+        BitBoard instance = new BitBoard(b);
               
         assertTrue(instance.hasPiece(1, 2, Piece.WHITE, Piece.KING));
         assertTrue(instance.hasPiece(7, 4, Piece.BLACK, Piece.KING));
@@ -68,7 +68,7 @@ public class BitboardTest {
         Piece p3 = new Piece(5, 5, 'Q');
         Piece p4 = new Piece(6, 6, 'q');
         
-        Bitboard instance = new Bitboard();
+        BitBoard instance = new BitBoard();
         instance.insertPiece(p1);
         instance.insertPiece(p2);
         instance.insertPiece(p3);
@@ -92,7 +92,7 @@ public class BitboardTest {
         Piece p3 = new Piece(5, 5, 'Q');
         Piece p4 = new Piece(6, 6, 'q');
         
-        Bitboard instance = new Bitboard();
+        BitBoard instance = new BitBoard();
         instance.insertPiece(p1);
         instance.insertPiece(p2);
         instance.insertPiece(p3);
@@ -123,8 +123,8 @@ public class BitboardTest {
     public void testEquals() {
         System.out.println("equals");       
         
-        Bitboard instance1 = new Bitboard();        
-        Bitboard instance2 = new Bitboard();
+        BitBoard instance1 = new BitBoard();        
+        BitBoard instance2 = new BitBoard();
 
         Piece p1 = new Piece(1, 2, Piece.WHITE, Piece.KING);
         Piece p2 = new Piece(7, 4, Piece.BLACK, Piece.KING);
@@ -152,13 +152,13 @@ public class BitboardTest {
         Piece p3 = new Piece(5, 5, 'Q');
         Piece p4 = new Piece(6, 6, 'q');
         
-        Bitboard instance1 = new Bitboard();
+        BitBoard instance1 = new BitBoard();
         instance1.insertPiece(p1);
         instance1.insertPiece(p2);
         instance1.insertPiece(p3);
         instance1.insertPiece(p4);
         
-        Bitboard instance2 = instance1.clone();
+        BitBoard instance2 = new BitBoard(instance1);
         
         assertTrue(instance1.equals(instance2));
     
@@ -167,7 +167,7 @@ public class BitboardTest {
     @Test
     public void extremetyTest1() {
      System.out.println("extremetyTest1");
-     Bitboard b = new Bitboard();
+     BitBoard b = new BitBoard();
      b.insertPiece(new Piece(7,7,Piece.BLACK, Piece.PAWN));
      assertTrue(b.hasPiece(7,7, Piece.BLACK, Piece.PAWN));
     }
@@ -178,7 +178,7 @@ public class BitboardTest {
         int color, type, x, y;
         int translatedColor;
         
-        Bitboard b = new Bitboard();
+        BitBoard b = new BitBoard();
         
         int n = 0;
         for (type = 0; type < 6; type++)  {            
