@@ -12,8 +12,7 @@ public final class Piece {
                type;
 
     public static final int   BLACK    = -1,
-                              WHITE    =  1,
-                              NO_COLOR =  0;
+                              WHITE    =  1;
 
     public static final int   PAWN   = 0,
                               BISHOP = 1,

@@ -38,7 +38,6 @@ public final class State
     {
         this.move = new Move();
         this.moveNumber = 0;
-        this.inMove = Piece.NO_COLOR;
         this.halfMoveClock = 0;
         this.halfMovesIndex3PosRepition = 0;
         this.inCheckByPiece = null;
