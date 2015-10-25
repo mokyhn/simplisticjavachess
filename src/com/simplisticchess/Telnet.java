@@ -70,7 +70,9 @@ public class Telnet {
             icc.setMoveString(s);
             icc.setColor(Color.WHITE); // Get White moves
             m = icc.getMove();
-            if (m != null) System.out.println("Found move " + m.toString());
+            if (m != null) {
+                System.out.println("Found move " + m.toString());
+         }
                if (m != null && m.whoMoves == Color.WHITE) {
                theBoard.performMove(m);
                engine.setPlyDepth(3);

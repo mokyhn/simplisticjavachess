@@ -20,8 +20,12 @@ public final class Chessio {
         Move m           = new Move();
         Piece  p, pto;
 
-        if (str == null) throw new NoMoveException();
-        if (b   == null) throw new NoMoveException();
+        if (str == null) {
+            throw new NoMoveException();
+        }
+        if (b   == null) {
+            throw new NoMoveException();
+        }
         
         if (str.equalsIgnoreCase("o-o")    && b.inMove() == Color.WHITE) 
         {
@@ -71,7 +75,9 @@ public final class Chessio {
         }
 
         p = b.getPiece(fromX, fromY);
-        if (p == null) throw new NoMoveException("No piece at (" + fromX + ", " + fromY +")");
+        if (p == null) {
+            throw new NoMoveException("No piece at (" + fromX + ", " + fromY +")");
+        }
         if (p.color != whoToMove) { throw new NoMoveException("Trying to move piece of opposite color. In move is " + (whoToMove == Color.WHITE ? "white" : "not white")); }
 
         m.fromX          = fromX;

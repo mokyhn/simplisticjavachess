@@ -68,9 +68,12 @@ public class ICCProtocol {
     
     // Get moves for color c
     public void setColor(Color c) {
-        if (c == Color.WHITE) 
+        if (c == Color.WHITE) { 
             filterColor = "W";
-        else filterColor = "B";
+        } else
+        {
+            filterColor = "B";
+        }
     }
     
     public boolean isAMoveResponse() {     
@@ -115,12 +118,22 @@ public class ICCProtocol {
         String s = parts[MOVE_STRING];
         String inMove = parts[WHO_IN_MOVE];      
         
-        if (s.equalsIgnoreCase("none")) return null;
+        if (s.equalsIgnoreCase("none")) {
+            return null;
+        }
         
-        if (s.toLowerCase().contains("o-o")   && inMove.equalsIgnoreCase("W")) return "e1g1";
-        if (s.toLowerCase().contains("o-o-o") && inMove.equalsIgnoreCase("W")) return "e1c1";
-        if (s.toLowerCase().contains("o-o")   && inMove.equalsIgnoreCase("B")) return "e8g8";
-        if (s.toLowerCase().contains("o-o-o") && inMove.equalsIgnoreCase("B")) return "e8c8";
+        if (s.toLowerCase().contains("o-o")   && inMove.equalsIgnoreCase("W")) {
+            return "e1g1";
+        }
+        if (s.toLowerCase().contains("o-o-o") && inMove.equalsIgnoreCase("W")) {
+            return "e1c1";
+        }
+        if (s.toLowerCase().contains("o-o")   && inMove.equalsIgnoreCase("B")) {
+            return "e8g8";
+        }
+        if (s.toLowerCase().contains("o-o-o") && inMove.equalsIgnoreCase("B")) {
+            return "e8c8";
+        }
         
         s = s.substring(2); // Remove Figurine letter and symbol "/"
         
@@ -138,12 +151,13 @@ public class ICCProtocol {
     public Move getMove() {
      Chessio io = new Chessio();
      
-     if (isAMoveResponse())        
-        try {
-            return io.parseMove(theboard, getAlgebraicMoveStr());
-        } catch (NoMoveException ex) {
-            System.out.println("Move parse error in ICCProtocol.java");
-        }
+     if (isAMoveResponse()) {
+         try {
+             return io.parseMove(theboard, getAlgebraicMoveStr());
+         } catch (NoMoveException ex) {
+             System.out.println("Move parse error in ICCProtocol.java");
+         }
+     }
        return null; 
     }
     
