@@ -319,7 +319,7 @@ public final class Board
             insertPiece(new Piece(m.toX, m.toY, m.whoMoves, m.promotionTo()));
         }
 
-        switch (m.type)
+        switch (m.moveType)
         {
             case NORMALMOVE:
                 position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
@@ -419,7 +419,7 @@ public final class Board
                 return true;
             }
 
-            switch (m.type)
+            switch (m.moveType)
             {
                 case NORMALMOVE:
                     position.movePiece(m.toX, m.toY, m.fromX, m.fromY);

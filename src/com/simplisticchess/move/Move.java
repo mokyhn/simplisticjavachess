@@ -18,7 +18,7 @@ public final class Move
     public int fromY;
     public int toX;
     public int toY;
-    public MoveType type; 
+    public MoveType moveType; 
     public PieceType capturedPiece; // Used for storing pieces that are taken
                               // by the piece which moves
 
@@ -40,7 +40,7 @@ public final class Move
         this.fromY = fromY;
         this.toX = toX;
         this.toY = toY;
-        this.type = type;
+        this.moveType = type;
         this.capturedPiece = capturedPiece;
         this.whoMoves = whoMoves;
     }
@@ -51,7 +51,7 @@ public final class Move
         fromY = move.fromY;
         toX = move.toX;
         toY = move.toY;
-        type = move.type;
+        moveType = move.moveType;
         whoMoves = move.whoMoves;
         capturedPiece = move.capturedPiece;
     }
@@ -99,23 +99,23 @@ public final class Move
 
     public boolean aCapture()
     {
-        return type.isCapture();
+        return moveType.isCapture();
     }
 
   
     public boolean aSimplePromotion()
     {
-        return type.isSimplePromotion();
+        return moveType.isSimplePromotion();
     }
 
     public boolean aCapturePromotion()
     {
-        return type.isCapturePromotion();
+        return moveType.isCapturePromotion();
     }
 
     public PieceType promotionTo()
     {
-        return type.getPromotionPiece();
+        return moveType.getPromotionPiece();
     }
 
     public static String posToString(int x, int y)
@@ -135,7 +135,7 @@ public final class Move
                 && toX == m.toX
                 && fromY == m.fromY
                 && toY == m.toY
-                && type == m.type
+                && moveType == m.moveType
                 && capturedPiece == m.capturedPiece
                 && whoMoves == m.whoMoves;
     }
@@ -143,19 +143,19 @@ public final class Move
     @Override
     public String toString()
     {
-        if (type == MoveType.NORMALMOVE)
+        if (moveType == MoveType.NORMALMOVE)
         {
             return posToString(fromX, fromY) + "-" + posToString(toX, toY);
         }
 
         // Normal capture moves
-        if (type == MoveType.CAPTURE_ENPASSANT || type == MoveType.CAPTURE)
+        if (moveType == MoveType.CAPTURE_ENPASSANT || moveType == MoveType.CAPTURE)
         {
             return posToString(fromX, fromY) + "x" + posToString(toX, toY);
         }
 
         // mate
-        if (type == MoveType.CAPTURE && capturedPiece == PieceType.KING)
+        if (moveType == MoveType.CAPTURE && capturedPiece == PieceType.KING)
         {
             return "mate";
         }
@@ -171,11 +171,11 @@ public final class Move
             return posToString(fromX, fromY) + "x" + posToString(toX, toY) + "=" + promotionTo().getPieceLetter(); 
         }
 
-        if (type == MoveType.CASTLE_SHORT)
+        if (moveType == MoveType.CASTLE_SHORT)
         {
             return "o-o";
         }
-        if (type == MoveType.CASTLE_LONG)
+        if (moveType == MoveType.CASTLE_LONG)
         {
             return "o-o-o";
         }
