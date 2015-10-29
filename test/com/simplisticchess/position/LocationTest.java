@@ -3,26 +3,26 @@ package com.simplisticchess.position;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class PointTest {
+public class LocationTest {
     @Test 
     public void testStringContructor()
     {
-        Point p = new Point("F7");
-        assertEquals(new Point(5, 6), p);
+        Location p = new Location("F7");
+        assertEquals(new Location(5, 6), p);
     }
     
     @Test
     public void testCopyConstructor() 
     {
-        Point p1 = new Point(3, 5);        
-        Point p2 = new Point(p1);
+        Location p1 = new Location(3, 5);        
+        Location p2 = new Location(p1);
         assertEquals(p1, p2);       
     }
     
     @Test
     public void testGetters() 
     {
-        Point p = new Point(3, 5);        
+        Location p = new Location(3, 5);        
         assertEquals(3, p.getX());
         assertEquals(5, p.getY());
     }
@@ -30,15 +30,15 @@ public class PointTest {
     @Test
     public void testToString()
     {
-        Point p = new Point(3, 5);        
+        Location p = new Location(3, 5);        
         assertEquals("d6", p.toString());
     }
     
     @Test
     public void testFromToStringComposition()
     {
-        assertEquals(new Point("a1").toString(), "a1");
-        assertEquals(new Point("a4").toString(), "a4");
-        assertEquals(new Point("h8").toString(), "h8");
+        assertEquals(new Location("a1").toString(), "a1");
+        assertEquals(new Location("a4").toString(), "a4");
+        assertEquals(new Location("h8").toString(), "h8");
     }
 }

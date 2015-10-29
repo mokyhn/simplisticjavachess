@@ -1,30 +1,30 @@
 package com.simplisticchess.position;
 
-public final class Point 
+public final class Location 
 {
     final byte x;
     final byte y;
     
     private final static String letters[] = {"a", "b", "c", "d", "e", "f", "g", "h"};
     
-    public Point(byte x, byte y) 
+    public Location(byte x, byte y) 
     {
         assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error in x or y ";
         this.x = x;
         this.y = y;
     }
     
-    public Point(int x, int y)
+    public Location(int x, int y)
     {
         this((byte) x, (byte) y);
     }
     
-    public Point(Point p)
+    public Location(Location p)
     {
         this(p.getX(), p.getY());
     }
     
-    public Point(String position)
+    public Location(String position)
     {
         position = position.toLowerCase();
         x = (byte) (position.charAt(0) - 'a');
@@ -45,9 +45,9 @@ public final class Point
     @Override
     public boolean equals(Object o)
     {
-        if (o instanceof Point)
+        if (o instanceof Location)
         {
-            Point p = (Point) o;
+            Location p = (Location) o;
             return x == p.getX() && y == p.getY();
         }
         else
