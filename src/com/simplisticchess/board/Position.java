@@ -20,7 +20,6 @@ public final class Position extends BitBoard
     public Position()
     {
         super();
-        int x, y;
         numberOfPieces = 0;
         piecePosition = new Piece[32];
         xyPosition = new Piece[8][8];
@@ -297,34 +296,6 @@ public final class Position extends BitBoard
         }
 
         return false;
-    }
-
-    // FOR TESTING: areRepresentationsIsomorphic();
-    public void areRepresentationsIsomorphic()
-    {
-        final int nr1 = numberOfPieces;
-        int nr2 = 0;
-        int x, y;
-        Piece p1, p2;
-        for (x = 0; x < 8; x++)
-        {
-            for (y = 0; y < 8; y++)
-            {
-                if (xyPosition[x][y] != null)
-                {
-                    nr2++;
-                }
-            }
-        }
-        assert nr1 == nr2 : "Listboard = " + nr1 + " and x,y-arrayboard has " + nr2;
-
-        // Are the pieces the same?
-        for (int i = 0; i < numberOfPieces; i++)
-        {
-            p1 = piecePosition[i];
-            p2 = xyPosition[p1.xPos][p1.yPos];
-            assert p1.equals(p2) : "Had " + p1.toString() + " in list board and " + p2.toString() + " in xyBoard...";
-        }
     }
 
     public boolean freeSquare(int x, int y)
