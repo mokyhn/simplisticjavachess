@@ -28,18 +28,6 @@ public final class Piece {
         this(piece.xPos, piece.yPos, piece.color, piece.pieceType);
     }
     
-    public boolean equals(Piece p) {
-        if (p == null) {
-            return false;
-        }
-        
-        return p.color == this.color &&
-               p.pieceType  == this.pieceType  &&
-               p.xPos  == this.xPos  &&
-               p.yPos  == this.yPos;
-    }
-    
-    
     public Piece(int x, int y, char pieceLetter)  {
         assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error in x or y ";
 
@@ -90,6 +78,30 @@ public final class Piece {
             }
      }
 
+    @Override
+    public boolean equals(Object object) 
+    {
+        if (object instanceof Piece) 
+        {
+            Piece p = (Piece) object;
+            return  p.color == this.color &&
+                p.pieceType  == this.pieceType  &&
+                p.xPos  == this.xPos  &&
+                p.yPos  == this.yPos;
+        }
+        else 
+        {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return this.color.getColor() * 1000 + this.pieceType.getType() * 100 + this.yPos * 10 + this.xPos;
+    }
+    
+    
     @Override
     public String toString() {
         return pieceType.getPieceLetter(color);
