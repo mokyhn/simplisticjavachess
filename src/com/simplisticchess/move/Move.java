@@ -18,40 +18,17 @@ public final class Move
     public int fromY;
     public int toX;
     public int toY;
-    public int type; // The move type
+    public MoveType type; 
     public PieceType capturedPiece; // Used for storing pieces that are taken
                               // by the piece which moves
 
     public Color whoMoves;
 
-    // The different move types
-    public final static int NORMALMOVE = 0,
-            // Normal capture
-            CAPTURE = 1,
-            // The enpassant capture move
-            CAPTURE_ENPASSANT = 2,
-            // Capture and promotion at the same time
-            CAPTURE_AND_PROMOTE_TO_BISHOP = 3,
-            CAPTURE_AND_PROMOTE_TO_KNIGHT = 4,
-            CAPTURE_AND_PROMOTE_TO_ROOK = 5,
-            CAPTURE_AND_PROMOTE_TO_QUEEN = 6,
-            // Simple promotions
-            PROMOTE_TO_BISHOP = 7,
-            PROMOTE_TO_KNIGHT = 8,
-            PROMOTE_TO_ROOK = 9,
-            PROMOTE_TO_QUEEN = 10,
-            // Casteling
-            CASTLE_SHORT = 11,
-            CASTLE_LONG = 12,
-            // Speciel moves
-            RESIGN = 13,
-            CALL_FOR_DRAW = 14;
-
     public Move()
     {
     }
 
-    public Move(int fromX, int fromY, int toX, int toY, int type, PieceType capturedPiece, Color whoMoves)
+    public Move(int fromX, int fromY, int toX, int toY, MoveType type, PieceType capturedPiece, Color whoMoves)
     {
         assert fromX >= 0 && fromX <= 7
                 && fromY >= 0 && fromY <= 7
@@ -89,7 +66,7 @@ public final class Move
         final int tX = fp.xPos + dX,
                 tY = fp.yPos + dY;
 
-        int moveType;
+        MoveType moveType;
 
         assert fp.color == b.inMove();
 
@@ -108,12 +85,12 @@ public final class Move
         if (tp != null && tp.color == b.inMove().flip())
         {
             takenPiece = tp.pieceType;
-            moveType = Move.CAPTURE;
+            moveType = MoveType.CAPTURE;
             m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, b.inMove());
         } else if (b.freeSquare(tX, tY))
         {
             takenPiece = null;
-            moveType = Move.NORMALMOVE;
+            moveType = MoveType.NORMALMOVE;
             m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, b.inMove());
         }
 
@@ -122,9 +99,31 @@ public final class Move
 
     public boolean aCapture()
     {
-        return this.type >= 1 && this.type <= 6;
+        return type.isCapture();
     }
 
+  
+    public boolean aSimplePromotion()
+    {
+        return type.isSimplePromotion();
+    }
+
+    public boolean aCapturePromotion()
+    {
+        return type.isCapturePromotion();
+    }
+
+    public PieceType promotionTo()
+    {
+        return type.getPromotionPiece();
+    }
+
+    public static String posToString(int x, int y)
+    {
+        return Chessio.numToChar(x) + Chessio.numToNumChar(y);
+    }
+  
+    
     public boolean equal(Move m)
     {
         if (m == null)
@@ -141,83 +140,22 @@ public final class Move
                 && whoMoves == m.whoMoves;
     }
 
-    public boolean aSimplePromotion()
-    {
-        return (type >= PROMOTE_TO_BISHOP) && (type <= PROMOTE_TO_QUEEN);
-    }
-
-    public boolean aCapturePromotion()
-    {
-        return (type >= CAPTURE_AND_PROMOTE_TO_BISHOP)
-                && (type <= CAPTURE_AND_PROMOTE_TO_QUEEN);
-    }
-
-    public PieceType promotionTo()
-    {
-        PieceType pieceType;
-
-        assert (type == CAPTURE_AND_PROMOTE_TO_BISHOP
-                || type == CAPTURE_AND_PROMOTE_TO_KNIGHT
-                || type == CAPTURE_AND_PROMOTE_TO_ROOK
-                || type == CAPTURE_AND_PROMOTE_TO_QUEEN
-                || type == PROMOTE_TO_BISHOP
-                || type == PROMOTE_TO_KNIGHT
-                || type == PROMOTE_TO_ROOK
-                || type == PROMOTE_TO_QUEEN) : "Wrong promotion code";
-
-        switch (type)
-        {
-            case CAPTURE_AND_PROMOTE_TO_BISHOP:
-                pieceType = PieceType.BISHOP;
-                break;
-            case CAPTURE_AND_PROMOTE_TO_KNIGHT:
-                pieceType = PieceType.KNIGHT;
-                break;
-            case CAPTURE_AND_PROMOTE_TO_ROOK:
-                pieceType = PieceType.ROOK;
-                break;
-            case CAPTURE_AND_PROMOTE_TO_QUEEN:
-                pieceType = PieceType.QUEEN;
-                break;
-            case PROMOTE_TO_BISHOP:
-                pieceType = PieceType.BISHOP;
-                break;
-            case PROMOTE_TO_KNIGHT:
-                pieceType = PieceType.KNIGHT;
-                break;
-            case PROMOTE_TO_ROOK:
-                pieceType = PieceType.ROOK;
-                break;
-            case PROMOTE_TO_QUEEN:
-                pieceType = PieceType.QUEEN;
-                break;
-            default:
-                pieceType = null;
-        }
-        return pieceType;
-    }
-
-    public static String posToString(int x, int y)
-    {
-        return Chessio.numToChar(x) + Chessio.numToNumChar(y);
-    }
-
     @Override
     public String toString()
     {
-        if (type == NORMALMOVE)
+        if (type == MoveType.NORMALMOVE)
         {
             return posToString(fromX, fromY) + "-" + posToString(toX, toY);
         }
 
         // Normal capture moves
-        if (type == CAPTURE_ENPASSANT || type == CAPTURE)
+        if (type == MoveType.CAPTURE_ENPASSANT || type == MoveType.CAPTURE)
         {
             return posToString(fromX, fromY) + "x" + posToString(toX, toY);
         }
 
         // mate
-        if (type == CAPTURE && capturedPiece == PieceType.KING)
+        if (type == MoveType.CAPTURE && capturedPiece == PieceType.KING)
         {
             return "mate";
         }
@@ -233,11 +171,11 @@ public final class Move
             return posToString(fromX, fromY) + "x" + posToString(toX, toY) + "=" + promotionTo().getPieceLetter(); 
         }
 
-        if (type == CASTLE_SHORT)
+        if (type == MoveType.CASTLE_SHORT)
         {
             return "o-o";
         }
-        if (type == CASTLE_LONG)
+        if (type == MoveType.CASTLE_LONG)
         {
             return "o-o-o";
         }

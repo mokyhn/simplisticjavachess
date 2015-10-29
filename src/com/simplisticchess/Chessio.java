@@ -4,6 +4,7 @@ import com.simplisticchess.piece.Piece;
 import com.simplisticchess.move.NoMoveException;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.move.Move;
+import com.simplisticchess.move.MoveType;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.PieceType;
 
@@ -91,10 +92,10 @@ public final class Chessio {
             // White or black does a short or a long castling
             if (p.pieceType == PieceType.KING && fromY == toY && (fromY == 0 || fromY == 7)) {
                 if (fromX == 4 && toX == 6) {
-                        m.type = Move.CASTLE_SHORT;
+                        m.type = MoveType.CASTLE_SHORT;
                         return m;
                 } else if (fromX == 4 && toX == 2) {
-                        m.type = Move.CASTLE_LONG;
+                        m.type = MoveType.CASTLE_LONG;
                         return m;
                 }
             }
@@ -102,7 +103,7 @@ public final class Chessio {
             // ENPASSENT Move
             if (p.pieceType == PieceType.PAWN) {
                 if ((fromX != toX) && (b.freeSquare(toX, toY))) {
-                    m.type = Move.CAPTURE_ENPASSANT;
+                    m.type = MoveType.CAPTURE_ENPASSANT;
                     m.capturedPiece = PieceType.PAWN;
                     return m;
                 }
@@ -110,14 +111,14 @@ public final class Chessio {
 
             // Normal move
             if (b.freeSquare(toX, toY)) {
-                m.type = Move.NORMALMOVE;
+                m.type = MoveType.NORMALMOVE;
                 return m;
             }
 
             // A capturing move
             pto = b.getPiece(toX, toY);
             if (pto != null && pto.color == whoToMove.flip()) {
-               m.type           = Move.CAPTURE;
+               m.type           = MoveType.CAPTURE;
                m.capturedPiece = pto.pieceType;
                return m;
              }
@@ -132,11 +133,11 @@ public final class Chessio {
             // Simple promotions
             if (fromX == toX && b.freeSquare(toX, toY)) {
                 switch (s[4]) {
-                case 'N': m.type = Move.PROMOTE_TO_KNIGHT; break;    
-                case 'K': m.type = Move.PROMOTE_TO_KNIGHT; break;
-                case 'B': m.type = Move.PROMOTE_TO_BISHOP; break;
-                case 'Q': m.type = Move.PROMOTE_TO_QUEEN;  break;
-                case 'R': m.type = Move.PROMOTE_TO_ROOK;   break;
+                case 'N': m.type = MoveType.PROMOTE_TO_KNIGHT; break;    
+                case 'K': m.type = MoveType.PROMOTE_TO_KNIGHT; break;
+                case 'B': m.type = MoveType.PROMOTE_TO_BISHOP; break;
+                case 'Q': m.type = MoveType.PROMOTE_TO_QUEEN;  break;
+                case 'R': m.type = MoveType.PROMOTE_TO_ROOK;   break;
              }
              return m;   
             }
@@ -146,10 +147,10 @@ public final class Chessio {
                 !b.freeSquare(toX, toY) &&
                  b.getPiece(toX, toY).color == p.color.flip()) {
                 switch (s[4]) {
-                    case 'K': m.type = Move.CAPTURE_AND_PROMOTE_TO_KNIGHT; break;
-                    case 'B': m.type = Move.CAPTURE_AND_PROMOTE_TO_BISHOP; break;
-                    case 'Q': m.type = Move.CAPTURE_AND_PROMOTE_TO_QUEEN;  break;
-                    case 'R': m.type = Move.CAPTURE_AND_PROMOTE_TO_ROOK;   break;
+                    case 'K': m.type = MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT; break;
+                    case 'B': m.type = MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP; break;
+                    case 'Q': m.type = MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN;  break;
+                    case 'R': m.type = MoveType.CAPTURE_AND_PROMOTE_TO_ROOK;   break;
                 }
                 
                 m.capturedPiece = b.getPiece(toX, toY).pieceType;

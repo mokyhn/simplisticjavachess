@@ -3,13 +3,14 @@ package com.simplisticchess.board;
 /**
  * @author Morten Kühnrich
  */
-import com.simplisticchess.evaluate.Evaluator;
 import com.simplisticchess.History;
-import com.simplisticchess.piece.Piece;
 import com.simplisticchess.State;
 import com.simplisticchess.Utils;
+import com.simplisticchess.evaluate.Evaluator;
 import com.simplisticchess.move.Move;
+import com.simplisticchess.move.MoveType;
 import com.simplisticchess.piece.Color;
+import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
 
 public final class Board
@@ -320,30 +321,30 @@ public final class Board
 
         switch (m.type)
         {
-            case Move.NORMALMOVE:
+            case NORMALMOVE:
                 position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 break;
 
-            case Move.CAPTURE_ENPASSANT:
+            case CAPTURE_ENPASSANT:
                 position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 removePiece(m.toX, m.fromY);
                 break;
 
-            case Move.CASTLE_SHORT:
+            case CASTLE_SHORT:
                 // Move the king first
                 position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 // Then the rook
                 position.movePiece(7, m.fromY, 5, m.fromY);
                 break;
 
-            case Move.CASTLE_LONG:
+            case CASTLE_LONG:
                 // Move the king first
                 position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
                 // Then the rook
                 position.movePiece(0, m.fromY, 3, m.fromY);
                 break;
 
-            case Move.CAPTURE:
+            case CAPTURE:
                 // Capturing a rook may affect casteling opputunities!
                 if (getPiece(m.toX, m.toY).pieceType == PieceType.ROOK)
                 {
@@ -420,11 +421,11 @@ public final class Board
 
             switch (m.type)
             {
-                case Move.NORMALMOVE:
+                case NORMALMOVE:
                     position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     break;
 
-                case Move.CAPTURE_ENPASSANT:
+                case CAPTURE_ENPASSANT:
                     if (m.whoMoves == Color.WHITE)
                     {
                         color = Color.BLACK;
@@ -437,21 +438,21 @@ public final class Board
                     position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     break;
 
-                case Move.CASTLE_SHORT:
+                case CASTLE_SHORT:
                     // Move the king back
                     position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     // Then the rook
                     position.movePiece(5, m.fromY, 7, m.fromY);
                     break;
 
-                case Move.CASTLE_LONG:
+                case CASTLE_LONG:
                     // Move the king back
                     position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     // Then the rook
                     position.movePiece(3, m.fromY, 0, m.fromY);
                     break;
 
-                case Move.CAPTURE:
+                case CAPTURE:
                     position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
                     insertPiece(new Piece(m.toX, m.toY, m.whoMoves.flip(), m.capturedPiece));
                     break;
@@ -581,7 +582,7 @@ public final class Board
                     {
                         state.move = new Move(xPawn, yPawn + state.inMove.getColor(), 
                                               xPawn, yPawn - state.inMove.getColor(), 
-                                Move.NORMALMOVE, null, state.inMove);
+                                MoveType.NORMALMOVE, null, state.inMove);
                         history.add(state);
                     }
 

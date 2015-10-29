@@ -58,7 +58,7 @@ public enum MoveType
 
   
 
-    public PieceType promotionTo()
+    public PieceType getPromotionPiece()
     {
         PieceType pieceType;
 
