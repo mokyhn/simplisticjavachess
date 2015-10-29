@@ -102,6 +102,7 @@ public final class Piece {
     }
     
     
+    // TODO: This one should have it's own method which is not called toString...
     @Override
     public String toString() {
         return pieceType.getPieceLetter(color);

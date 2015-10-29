@@ -13,7 +13,7 @@ import com.simplisticchess.piece.PieceType;
 public final class Position extends BitBoard
 {
 
-    private final Piece[] piecePosition;
+    private final Piece[] pieces;
     private final Piece[][] xyPosition;
     private int numberOfPieces;
 
@@ -21,7 +21,7 @@ public final class Position extends BitBoard
     {
         super();
         numberOfPieces = 0;
-        piecePosition = new Piece[32];
+        pieces = new Piece[32];
         xyPosition = new Piece[8][8];
     }
 
@@ -34,8 +34,8 @@ public final class Position extends BitBoard
 
         for (int i = 0; i < numberOfPieces; i++)
         {
-            p = new Piece(position.piecePosition[i]);
-            this.piecePosition[i] = p;
+            p = new Piece(position.pieces[i]);
+            this.pieces[i] = p;
             this.xyPosition[p.xPos][p.yPos] = p;
         }
 
@@ -48,7 +48,7 @@ public final class Position extends BitBoard
 
     public Piece getPiece(final int i)
     {
-        final Piece p = piecePosition[i];
+        final Piece p = pieces[i];
         assert p != null;
 
         final Piece ptmp = xyPosition[p.xPos][p.yPos];
@@ -73,7 +73,7 @@ public final class Position extends BitBoard
     {
         assert numberOfPieces < 32 : "PieceList:insertPiece: Inserting to many pieces";
         assert p != null;
-        piecePosition[numberOfPieces] = p;
+        pieces[numberOfPieces] = p;
         numberOfPieces++;
 
         xyPosition[p.xPos][p.yPos] = p;
@@ -94,10 +94,10 @@ public final class Position extends BitBoard
 
         for (i = 0; i < numberOfPieces && flag; i++)
         {
-            if (piecePosition[i].xPos == x
-                    && piecePosition[i].yPos == y)
+            if (pieces[i].xPos == x
+                    && pieces[i].yPos == y)
             {
-                piecePosition[i] = piecePosition[numberOfPieces - 1];
+                pieces[i] = pieces[numberOfPieces - 1];
                 numberOfPieces--;
                 flag = false;
             }
