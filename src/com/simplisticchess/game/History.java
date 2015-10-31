@@ -1,4 +1,4 @@
-package com.simplisticchess;
+package com.simplisticchess.game;
 
 /**
  *
@@ -8,6 +8,7 @@ package com.simplisticchess;
  * three-fold-repetition. The class also records the history of when the
  * castling possibility was lost for a given player
  */
+import com.simplisticchess.game.State;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
 import java.util.Stack;

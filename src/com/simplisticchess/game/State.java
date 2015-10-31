@@ -1,4 +1,4 @@
-package com.simplisticchess;
+package com.simplisticchess.game;
 
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.board.BitBoard;

@@ -3,8 +3,8 @@ package com.simplisticchess.board;
 /**
  * @author Morten Kühnrich
  */
-import com.simplisticchess.History;
-import com.simplisticchess.State;
+import com.simplisticchess.game.History;
+import com.simplisticchess.game.State;
 import com.simplisticchess.Utils;
 import com.simplisticchess.evaluator.Evaluator;
 import com.simplisticchess.move.Move;
