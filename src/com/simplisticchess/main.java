@@ -3,7 +3,6 @@ package com.simplisticchess;
 /**
  * @author Morten Kühnrich
  */
-
 import com.simplisticchess.move.NoMoveException;
 import com.simplisticchess.movegenerator.MoveGenerator;
 import com.simplisticchess.evaluator.Evaluator;
@@ -24,32 +23,6 @@ class main
 
     static Board GUIBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
 
-    public static void checkForDrawOrMate(Board b)
-    {
-        if (b.isDraw())
-        {
-            System.out.println("Draw");
-            //System.exit(0);
-        }
-
-        if (b.isMate())
-        {
-            System.out.println("Mate");
-            //System.exit(0);
-        }
-
-        if (b.drawBy3RepetionsRule())
-        {
-            System.out.println("Draw by threefold repetition...");
-            //System.exit(0);
-        }
-
-        if (b.drawBy50MoveRule())
-        {
-            System.out.println("Draw by 50 moves rule...");
-            //System.exit(0);
-        }
-    }
 
     public static void main(String param[]) throws java.io.IOException, NoMoveException, Exception
     {
@@ -280,19 +253,47 @@ class main
             }
         }
     }
+    
+    
+    private static void checkForDrawOrMate(Board b)
+    {
+        if (b.isDraw())
+        {
+            System.out.println("Draw");
+            //System.exit(0);
+        }
+
+        if (b.isMate())
+        {
+            System.out.println("Mate");
+            //System.exit(0);
+        }
+
+        if (b.drawBy3RepetionsRule())
+        {
+            System.out.println("Draw by threefold repetition...");
+            //System.exit(0);
+        }
+
+        if (b.drawBy50MoveRule())
+        {
+            System.out.println("Draw by 50 moves rule...");
+            //System.exit(0);
+        }
+    }
 }
 
 // Garbage - leftovers from ealier
-        // Do a simple setup with pawns and knights.
+// Do a simple setup with pawns and knights.
 //Board interfaceBoard = new Board("1n2k1n1/pppppppp/8/8/8/8/PPPPPPPP/1N2K1N1 w KQkq - 0 1");
-       // Do a simple setup with pawns and bishops.
+// Do a simple setup with pawns and bishops.
 //Board interfaceBoard = new Board("2b1kb2/p7/8/8/8/8/P7/2B1KB2 w KQkq - 0 1");
-         // Do a simple setup with pawns and knights and bishops.
+// Do a simple setup with pawns and knights and bishops.
 //Board interfaceBoard = new Board("1nb1kbn1/pppppppp/8/8/8/8/PPPPPPPP/1NB1KBN1 w KQkq - 0 1");
-        // A test setup
+// A test setup
 //Board interfaceBoard = new Board("4k1n1/pppppppp/n7/8/1P6/P1N2N2/2PPPPPP/4K3 b - - 0 1");
-        // A simple knight setup.
+// A simple knight setup.
 //Board interfaceBoard = new Board("k7/4R3/8/3n4/8/2Q5/8/K7 b KQkq - 0 1");
-        // A simple rook setup
+// A simple rook setup
 //Board interfaceBoard = new Board("r3k2r/pppppppp/8/8/8/8/PPPPPPPP/R3K2R w - 0 1");
 
