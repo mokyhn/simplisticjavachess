@@ -9,27 +9,28 @@ import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.PieceType;
 
-//TODO: This "is-a-relation" should go away. It is ugly.
-public final class Position extends BitBoard
+public final class Position
 {
 
     private final Piece[] pieces;
     private final Piece[][] xyPosition;
     private int numberOfPieces;
-
+    
+    public BitBoard bitBoard;
+            
     public Position()
     {
         super();
         numberOfPieces = 0;
         pieces = new Piece[32];
         xyPosition = new Piece[8][8];
+        bitBoard = new BitBoard();
     }
 
     public Position(Position position)
     {
         this();
         Piece p;
-
         this.numberOfPieces = position.numberOfPieces;
 
         for (int i = 0; i < numberOfPieces; i++)
@@ -41,8 +42,8 @@ public final class Position extends BitBoard
 
         for (PieceType t : PieceType.values())
         {
-            this.bb[0][t.getType()] = position.bb[0][t.getType()];
-            this.bb[1][t.getType()] = position.bb[1][t.getType()];
+            this.bitBoard.bb[0][t.getType()] = position.bitBoard.bb[0][t.getType()];
+            this.bitBoard.bb[1][t.getType()] = position.bitBoard.bb[1][t.getType()];
         }
     }
 
@@ -78,7 +79,7 @@ public final class Position extends BitBoard
 
         xyPosition[p.xPos][p.yPos] = p;
 
-        super.insertPiece(p);
+        bitBoard.insertPiece(p);
     }
 
     // Remove a piece from location x, y and return the piece
@@ -105,7 +106,7 @@ public final class Position extends BitBoard
 
         xyPosition[x][y] = null;
 
-        super.removePiece(x, y);
+        bitBoard.removePiece(x, y);
 
         return p;
     }
@@ -124,11 +125,10 @@ public final class Position extends BitBoard
         assert p.xPos == xyPosition[p.xPos][p.yPos].xPos && p.yPos == xyPosition[p.xPos][p.yPos].yPos;
         xyPosition[xFrom][yFrom] = null;
 
-        super.removePiece(xFrom, yFrom);
-        super.insertPiece(p);
+        bitBoard.removePiece(xFrom, yFrom);
+        bitBoard.insertPiece(p);
     }
 
-    @Override
     public int getNumberOfPieces()
     {
         return numberOfPieces;

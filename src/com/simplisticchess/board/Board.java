@@ -147,7 +147,7 @@ public final class Board
 
     public String getBitboardString()
     {
-        return ((BitBoard) position).toString();
+        return ((BitBoard) position.bitBoard).toString();
     }
 
     public Boolean drawBy50MoveRule()
@@ -192,7 +192,7 @@ public final class Board
         for (int i = state.halfMovesIndex3PosRepition; i < history.size(); i++)
         {
             h = history.get(i);
-            if (((BitBoard) position).equals((BitBoard) h.bbposition))
+            if (((BitBoard) position.bitBoard).equals((BitBoard) h.bbposition))
             {
                 k++;
             }

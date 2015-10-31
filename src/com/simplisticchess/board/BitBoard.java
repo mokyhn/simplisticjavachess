@@ -7,7 +7,6 @@ import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.PieceType;
 
-//TODO: Get rid of bitboards and use hash values instead
 public class BitBoard implements IBitBoard
 {
 
