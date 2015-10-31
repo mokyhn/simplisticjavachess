@@ -22,10 +22,10 @@ import java.util.ArrayList;
 
 
 
-public final class Movegenerator
+public final class MoveGenerator
 {
 
-    public Movegenerator()
+    public MoveGenerator()
     {
     }
 

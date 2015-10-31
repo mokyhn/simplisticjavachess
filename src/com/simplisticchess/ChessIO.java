@@ -8,7 +8,7 @@ import com.simplisticchess.move.MoveType;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.PieceType;
 
-public final class Chessio {
+public final class ChessIO {
     
     
     // Input: the current position, a move string, and the knowledge of

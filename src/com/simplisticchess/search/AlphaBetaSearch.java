@@ -5,7 +5,7 @@ package com.simplisticchess.search;
  * @author Morten Kühnrich
  */
 import com.simplisticchess.evaluator.Evaluator;
-import com.simplisticchess.movegenerator.Movegenerator;
+import com.simplisticchess.movegenerator.MoveGenerator;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
 import java.util.ArrayList;
@@ -60,7 +60,7 @@ public class AlphaBetaSearch extends AbstractSearch
          Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)  {               
          return Evaluator.evaluate(analyzeBoard);
          }*/
-        moves = Movegenerator.generateAllMoves(analyzeBoard);
+        moves = MoveGenerator.generateAllMoves(analyzeBoard);
 
         /* Not needed...
          if (moves.isEmpty()) {  // A draw
@@ -217,7 +217,7 @@ public class AlphaBetaSearch extends AbstractSearch
         }
 
         //--------------------Part 2. Move generation and variation search
-        ArrayList<Move> possibleMoves = Movegenerator.generateAllMoves(analyzeBoard);
+        ArrayList<Move> possibleMoves = MoveGenerator.generateAllMoves(analyzeBoard);
 
         int i;
 

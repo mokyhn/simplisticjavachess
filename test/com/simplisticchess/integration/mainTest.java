@@ -7,7 +7,7 @@ import com.simplisticchess.search.MinMaxSearch;
 import com.simplisticchess.search.AlphaBetaSearch;
 import com.simplisticchess.search.AbstractSearch;
 import com.simplisticchess.move.Move;
-import com.simplisticchess.Chessio;
+import com.simplisticchess.ChessIO;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.move.NoMoveException;
 
@@ -81,7 +81,7 @@ public class mainTest
     {
         String[] unExpectedMovesStr = moves.split(" ");
         ArrayList<Move> unExpectedMoves = new ArrayList<Move>();
-        Chessio cio = new Chessio();
+        ChessIO cio = new ChessIO();
         Board b = new Board(fen);
         Move m;
         AbstractSearch engine;
@@ -147,7 +147,7 @@ public class mainTest
     {
         String[] moveStrings = moveSequence.split(" ");
         Board b = new Board(fen);
-        Chessio cio = new Chessio();
+        ChessIO cio = new ChessIO();
         String[] expectedMoveStrings = expectedMoveStrs.split(" ");
         ArrayList<Move> expectedMoves = new ArrayList<Move>();
         Move m = null;

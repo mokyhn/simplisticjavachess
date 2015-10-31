@@ -6,7 +6,7 @@ package com.simplisticchess.search;
  */
 
 import com.simplisticchess.board.Board;
-import com.simplisticchess.movegenerator.Movegenerator;
+import com.simplisticchess.movegenerator.MoveGenerator;
 import com.simplisticchess.move.Move;
 import java.util.Iterator;
 
@@ -137,7 +137,7 @@ public abstract class AbstractSearch
             return;
         }
 
-        moves = Movegenerator.generateAllMoves(analyzeBoard).listIterator();
+        moves = MoveGenerator.generateAllMoves(analyzeBoard).listIterator();
         while (moves.hasNext())
         {
             analyzeBoard.performMove(moves.next());

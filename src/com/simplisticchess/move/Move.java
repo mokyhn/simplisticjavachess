@@ -6,7 +6,7 @@ package com.simplisticchess.move;
  */
 
 import com.simplisticchess.board.Board;
-import com.simplisticchess.Chessio;
+import com.simplisticchess.ChessIO;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.PieceType;
@@ -120,7 +120,7 @@ public final class Move
 
     public static String posToString(int x, int y)
     {
-        return Chessio.numToChar(x) + Chessio.numToNumChar(y);
+        return ChessIO.numToChar(x) + ChessIO.numToNumChar(y);
     }
   
     

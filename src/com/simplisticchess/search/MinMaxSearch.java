@@ -1,7 +1,7 @@
 package com.simplisticchess.search;
 
 import com.simplisticchess.evaluator.Evaluator;
-import com.simplisticchess.movegenerator.Movegenerator;
+import com.simplisticchess.movegenerator.MoveGenerator;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class MinMaxSearch extends AbstractSearch
             return (analyzeBoard.drawBy3RepetionsRule() || analyzeBoard.drawBy50MoveRule()) ? 0 : Evaluator.evaluate(analyzeBoard);
         }
 
-        moves = Movegenerator.generateAllMoves(analyzeBoard);
+        moves = MoveGenerator.generateAllMoves(analyzeBoard);
 
         Color inMove = analyzeBoard.inMove();
 

@@ -1,7 +1,7 @@
 package com.simplisticchess.search;
 
 import com.simplisticchess.evaluator.Evaluator;
-import com.simplisticchess.movegenerator.Movegenerator;
+import com.simplisticchess.movegenerator.MoveGenerator;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class RandomSearch extends AbstractSearch
     {
         strongestMove = null;
 
-        ArrayList<Move> moves = Movegenerator.generateAllMoves(analyzeBoard);
+        ArrayList<Move> moves = MoveGenerator.generateAllMoves(analyzeBoard);
         int n = moves.size();
 
         if (n == 0)

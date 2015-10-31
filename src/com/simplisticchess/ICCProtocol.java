@@ -149,7 +149,7 @@ public class ICCProtocol {
     }
     
     public Move getMove() {
-     Chessio io = new Chessio();
+     ChessIO io = new ChessIO();
      
      if (isAMoveResponse()) {
          try {

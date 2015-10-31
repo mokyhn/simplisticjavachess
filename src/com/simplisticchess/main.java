@@ -5,7 +5,7 @@ package com.simplisticchess;
  */
 
 import com.simplisticchess.move.NoMoveException;
-import com.simplisticchess.movegenerator.Movegenerator;
+import com.simplisticchess.movegenerator.MoveGenerator;
 import com.simplisticchess.evaluator.Evaluator;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.search.RandomSearch;
@@ -55,11 +55,11 @@ class main
     {
 
         int plyDepth = 5;
-        Chessio io = new Chessio();
+        ChessIO io = new ChessIO();
         AbstractSearch engine1 = new AlphaBetaSearch();
         AbstractSearch engine2 = new AlphaBetaSearch();
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String str = null;
+        String str;
         int simSteps = 0;
         Boolean xboardMode = false;
         Move m;
@@ -76,7 +76,7 @@ class main
 
         if (!xboardMode)
         {
-            io.printWelcomeText();
+            ChessIO.printWelcomeText();
         }
 
         while (true)
@@ -104,8 +104,7 @@ class main
                 GUIBoard.retractMove();
             } else if (str.matches("allmoves"))
             {
-                Movegenerator mg = new Movegenerator();
-                ArrayList<Move> mlist = mg.generateAllMoves(GUIBoard);
+                ArrayList<Move> mlist = MoveGenerator.generateAllMoves(GUIBoard);
                 Move myMove;
 
                 for (int i = 0; i < mlist.size(); i++)
@@ -184,7 +183,7 @@ class main
                     {
                         if (GUIBoard.attacks(x, y, Color.BLACK))
                         {
-                            System.out.print(Chessio.numToChar(x) + Chessio.numToNumChar(y) + ", ");
+                            System.out.print(ChessIO.numToChar(x) + ChessIO.numToNumChar(y) + ", ");
                         }
                     }
                 }
@@ -195,7 +194,7 @@ class main
                     {
                         if (GUIBoard.attacks(x, y, Color.WHITE))
                         {
-                            System.out.print(Chessio.numToChar(x) + Chessio.numToNumChar(y) + ", ");
+                            System.out.print(ChessIO.numToChar(x) + ChessIO.numToNumChar(y) + ", ");
                         }
                     }
                 }
@@ -230,8 +229,8 @@ class main
                 plyDepth = Integer.parseInt(str.replaceAll(" ", "").substring(2));
             } else if (str.matches("help"))
             {
-                io.printWelcomeText();
-                io.printHelpText();
+                ChessIO.printWelcomeText();
+                ChessIO.printHelpText();
             } else if (str.matches("print") || str.matches("p"))
             {
                 System.out.println(GUIBoard.toString());
@@ -253,7 +252,7 @@ class main
                     m = io.parseMove(GUIBoard, str);
                     if (!GUIBoard.isDraw() || !GUIBoard.isMate())
                     {
-                        Iterator<Move> theMoves = Movegenerator.generateAllMoves(GUIBoard).listIterator();
+                        Iterator<Move> theMoves = MoveGenerator.generateAllMoves(GUIBoard).listIterator();
                         // Check if move m is among the possible moves
                         while (theMoves.hasNext())
                         {
