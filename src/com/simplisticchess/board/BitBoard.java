@@ -67,13 +67,7 @@ public class BitBoard implements IBitBoard
 
     private int countOnes(long v)
     {
-        int res = 0;
-
-        for (int i = 0; i < 64; i++)
-        {
-            res += ((1L << i) & v) != 0 ? 1 : 0;
-        }
-        return res;
+        return Long.bitCount(v);
     }
 
     public int getNumberOfPieces()
