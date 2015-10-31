@@ -4,7 +4,7 @@ package com.simplisticchess.search;
  *
  * @author Morten Kühnrich
  */
-import com.simplisticchess.evaluate.Evaluator;
+import com.simplisticchess.evaluator.Evaluator;
 import com.simplisticchess.movegenerator.Movegenerator;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;

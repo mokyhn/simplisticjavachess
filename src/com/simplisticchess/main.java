@@ -6,7 +6,7 @@ package com.simplisticchess;
 
 import com.simplisticchess.move.NoMoveException;
 import com.simplisticchess.movegenerator.Movegenerator;
-import com.simplisticchess.evaluate.Evaluator;
+import com.simplisticchess.evaluator.Evaluator;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.search.RandomSearch;
 import com.simplisticchess.search.AbstractSearch;

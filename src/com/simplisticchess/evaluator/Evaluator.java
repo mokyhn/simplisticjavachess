@@ -1,4 +1,4 @@
-package com.simplisticchess.evaluate;
+package com.simplisticchess.evaluator;
 
 /**
  * @author Morten Kühnrich

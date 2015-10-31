@@ -6,7 +6,7 @@ package com.simplisticchess.board;
 import com.simplisticchess.History;
 import com.simplisticchess.State;
 import com.simplisticchess.Utils;
-import com.simplisticchess.evaluate.Evaluator;
+import com.simplisticchess.evaluator.Evaluator;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.move.MoveType;
 import com.simplisticchess.piece.Color;
