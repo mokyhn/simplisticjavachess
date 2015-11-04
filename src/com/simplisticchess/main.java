@@ -18,6 +18,9 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+
+//TODO: Refactor main.
+// 1) Cleanup, 2) A class for the datastructures and stuff we see here, 3) Introduction of our new nice CLI support.
 class main
 {
 
