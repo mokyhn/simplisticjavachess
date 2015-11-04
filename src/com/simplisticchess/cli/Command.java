@@ -8,5 +8,6 @@ public interface Command
 {
     boolean isApplicable(String str);
     void execute(String[] arguments);
-    String help();
+    String helpCommand();
+    String helpExplanation();
 }

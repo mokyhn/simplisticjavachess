@@ -18,8 +18,13 @@ public class CommandQuit implements Command
         System.exit(0);
     }
 
-    public String help()
+    public String helpCommand()
     {
-        return "quit, q, bye, exit - Exits the chess program";
+        return "quit, q, bye, exit";
+    }
+    
+    public String helpExplanation()
+    {
+        return "Exits the chess program";
     }
 }

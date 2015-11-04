@@ -36,7 +36,7 @@ public class CommandLineInterface
     {
         for (Command command : commands) 
         {
-            System.out.println(command.help());
+            System.out.println(command.helpCommand() + " - " + command.helpExplanation());
         }
     
     }

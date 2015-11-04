@@ -6,7 +6,7 @@ package com.simplisticchess.cli;
  */
 public class ChessCLI
 {
-    private CommandLineInterface cli = new CommandLineInterface();
+    private final CommandLineInterface cli = new CommandLineInterface();
     
     public ChessCLI()
     {
