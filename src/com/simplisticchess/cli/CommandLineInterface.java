@@ -1,12 +1,9 @@
 package com.simplisticchess.cli;
 
-import com.simplisticchess.Utils;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -34,22 +31,29 @@ public class CommandLineInterface
     {
         this.promptText = promptText;
     }
-    
-    private void executeCommand(LinkedList<String> commandAndArgs)
+
+    private void displayHelp() 
     {
-        if (!commandAndArgs.isEmpty())
+        for (Command command : commands) 
+        {
+            System.out.println(command.help());
+        }
+    
+    }
+    
+    private void executeCommand(String[] commandAndArgs)
+    {
+        if (commandAndArgs.length > 0)
         {       
             for (Command command : commands)
             {      
-                if (command.isApplicable(commandAndArgs.getFirst()))
+                if (command.isApplicable(commandAndArgs[0]))
                 {
-                    commandAndArgs.pollFirst();
-                        command.execute(commandAndArgs.toArray(new String[] {}));
-                    }
+                    command.execute(commandAndArgs);
                 }
-
             }
         }
+    }
 
     public void start()
     {
@@ -60,8 +64,11 @@ public class CommandLineInterface
             System.out.print("\n" + promptText);
             try
             {
-                String stringInput = reader.readLine();
-                executeCommand(new LinkedList<String>(Arrays.asList(stringInput.trim().toLowerCase().split("\\s+"))));
+                String stringInput = reader.readLine().trim().toLowerCase();
+                if (stringInput.equals("help")) {
+                    displayHelp();
+                }
+                executeCommand(stringInput.trim().toLowerCase().split("\\s+"));
             } 
             catch (IOException ex)
             {
@@ -75,10 +82,6 @@ public class CommandLineInterface
     {
     }
     
-    public static void main(String param[])
-    {
-        CommandLineInterface cli = new CommandLineInterface();
-        cli.start();
-    }
+   
     
 }
