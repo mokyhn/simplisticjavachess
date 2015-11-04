@@ -6,14 +6,16 @@
         <group>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/Command.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/board/Position.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/CommandQuit.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/game/History.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/ChessCLI.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/board/Bits.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/board/Board.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/board/BitBoard.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/game/State.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/test/com/simplisticchess/board/BitsTest.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/Utils.java</file>
-            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/main.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/Main.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/CommandLineInterface.java</file>
         </group>
     </open-files>

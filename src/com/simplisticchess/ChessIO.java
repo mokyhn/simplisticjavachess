@@ -14,7 +14,7 @@ public final class ChessIO {
     // Input: the current position, a move string, and the knowledge of
     // who is the next to move: Parse the movestring to a move
     // Output: a move
-    public Move parseMove(Board b, String str) throws NoMoveException {
+    public static Move parseMove(Board b, String str) throws NoMoveException {
         int    fromX, fromY, toX, toY;
         Color    whoToMove = b.inMove();
         char[] s;       

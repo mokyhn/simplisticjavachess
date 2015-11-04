@@ -18,69 +18,46 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
-//TODO: Refactor main.
-// 1) Cleanup, 2) A class for the datastructures and stuff we see here, 3) Introduction of our new nice CLI support.
-class main
+//TODO: Refactor main
+//Introduce our new nice CLI support.
+class Main
 {
 
-    static Board GUIBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-
-
-    public static void main(String param[]) throws java.io.IOException, NoMoveException, Exception
+    ChessGame chessGame = new ChessGame();
+    
+    public Main() 
     {
-
-        int plyDepth = 5;
-        ChessIO io = new ChessIO();
-        AbstractSearch engine1 = new AlphaBetaSearch();
-        AbstractSearch engine2 = new AlphaBetaSearch();
+        chessGame.setBoard(new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
+    }
+    
+    public void run(String param[]) throws java.io.IOException, NoMoveException, Exception
+    {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String str;
-        int simSteps = 0;
-        Boolean xboardMode = false;
-        Move m;
-
-        int x, y;
-
-        if (param.length > 0)
-        {
-            if (param[0].contains("xboard"))
-            {
-                xboardMode = true;
-            }
-        }
-
-        if (!xboardMode)
-        {
-            ChessIO.printWelcomeText();
-        }
-
+       
         while (true)
         {
-            if (!xboardMode)
-            {
-                System.out.print("\n> ");
-            }
-            str = reader.readLine();
+            String str = reader.readLine().trim().toLowerCase();
 
-            if (str.trim().equalsIgnoreCase("go"))
-            {
-                engine1.setPlyDepth(plyDepth);
-                engine1.setBoard(GUIBoard);
+            if (str.equals("go"))
+            {   
+                AbstractSearch engine1 = new AlphaBetaSearch();
+
+                engine1.setPlyDepth(chessGame.getSearchDepth());
+                engine1.setBoard(chessGame.getBoard());
                 engine1.dosearch();
                 System.out.println(engine1.getStatistics());
                 if (engine1.getStrongestMove() != null)
                 {
-                    GUIBoard.performMove(engine1.getStrongestMove());
-                    checkForDrawOrMate(GUIBoard);
-                    System.out.println(GUIBoard.toString());
+                    chessGame.getBoard().performMove(engine1.getStrongestMove());
+                    checkForDrawOrMate(chessGame.getBoard());
+                    System.out.println(chessGame.getBoard().toString());
                 }
             } else if (str.matches("undo"))
             {
-                GUIBoard.retractMove();
+                chessGame.getBoard().retractMove();
             } else if (str.matches("allmoves"))
             {
-                ArrayList<Move> mlist = MoveGenerator.generateAllMoves(GUIBoard);
+                ArrayList<Move> mlist = MoveGenerator.generateAllMoves(chessGame.getBoard());
                 Move myMove;
 
                 for (int i = 0; i < mlist.size(); i++)
@@ -91,7 +68,7 @@ class main
 
             } else if (str.matches("incheck"))
             {
-                if (GUIBoard.isInCheck(GUIBoard.inMove()))
+                if (chessGame.getBoard().isInCheck(chessGame.getBoard().inMove()))
                 {
                     System.out.println("Yes!");
                 } else
@@ -100,29 +77,29 @@ class main
                 }
             } else if (str.trim().equalsIgnoreCase("black"))
             {
-                GUIBoard.setBlackToMove();
+                chessGame.getBoard().setBlackToMove();
             } else if (str.trim().equalsIgnoreCase("white"))
             {
-                GUIBoard.setWhiteToMove();
+                chessGame.getBoard().setWhiteToMove();
             } else if (str.matches("branching"))
             {
-                System.out.println(engine1.findBranchingFactor(GUIBoard, 4));
+                System.out.println(new AlphaBetaSearch().findBranchingFactor(chessGame.getBoard(), 4));
             } else if (str.startsWith("sim "))
             {
-                simSteps = Integer.parseInt(str.substring(4));
-                engine1 = new AlphaBetaSearch();
-                engine2 = new RandomSearch();
+                int simSteps = Integer.parseInt(str.substring(4));
+                    AbstractSearch engine1 = new AlphaBetaSearch();
+                AbstractSearch engine2 = new RandomSearch();
 
-                System.out.println(GUIBoard.toString());
+                System.out.println(chessGame.getBoard().toString());
                 int res = 0;
                 for (int i = 0; i < simSteps && (res != Evaluator.WHITE_IS_MATED || res != Evaluator.BLACK_IS_MATED
-                        || !GUIBoard.drawBy3RepetionsRule()
-                        || !GUIBoard.drawBy50MoveRule()
-                        || !GUIBoard.isDraw()
-                        || !GUIBoard.isMate()); i++)
+                        || !chessGame.getBoard().drawBy3RepetionsRule()
+                        || !chessGame.getBoard().drawBy50MoveRule()
+                        || !chessGame.getBoard().isDraw()
+                        || !chessGame.getBoard().isMate()); i++)
                 {
-                    engine1.setPlyDepth(plyDepth);
-                    engine1.setBoard(GUIBoard);
+                    engine1.setPlyDepth(chessGame.getSearchDepth());
+                    engine1.setBoard(chessGame.getBoard());
                     res = engine1.dosearch();
                     System.out.println(engine1.getStatistics());
                     if (engine1.getStrongestMove() == null)
@@ -130,68 +107,68 @@ class main
                         System.out.println("Game ended....");
                     } else
                     {
-                        GUIBoard.performMove(engine1.getStrongestMove());
+                        chessGame.getBoard().performMove(engine1.getStrongestMove());
                     }
-                    System.out.println(GUIBoard.toString());
-                    checkForDrawOrMate(GUIBoard);
-                    engine2.setPlyDepth(plyDepth);
-                    engine2.setBoard(GUIBoard);
+                    System.out.println(chessGame.getBoard().toString());
+                    checkForDrawOrMate(chessGame.getBoard());
+                    engine2.setPlyDepth(chessGame.getSearchDepth());
+                    engine2.setBoard(chessGame.getBoard());
                     engine2.dosearch();
                     //engine2.dosearch(interfaceBoard, 2, Search.ALPHABETA);
                     System.out.println(engine2.getStatistics());
                     if (engine2.getStrongestMove() != null)
                     {
-                        GUIBoard.performMove(engine2.getStrongestMove());
+                        chessGame.getBoard().performMove(engine2.getStrongestMove());
                     } else
                     {
                         System.out.println("No move to perform in position!");
                     }
-                    System.out.println(GUIBoard.toString());
-                    checkForDrawOrMate(GUIBoard);
+                    System.out.println(chessGame.getBoard().toString());
+                    checkForDrawOrMate(chessGame.getBoard());
                 }
 
             } else if (str.matches("attacks"))
             {
                 System.out.println("White attacks the squares:");
-                for (x = 0; x < 8; x++)
+                for (int x = 0; x < 8; x++)
                 {
-                    for (y = 0; y < 8; y++)
+                    for (int y = 0; y < 8; y++)
                     {
-                        if (GUIBoard.attacks(x, y, Color.BLACK))
+                        if (chessGame.getBoard().attacks(x, y, Color.BLACK))
                         {
                             System.out.print(ChessIO.numToChar(x) + ChessIO.numToNumChar(y) + ", ");
                         }
                     }
                 }
                 System.out.println("\nBlack attacks the squares:");
-                for (x = 0; x < 8; x++)
+                for (int x = 0; x < 8; x++)
                 {
-                    for (y = 0; y < 8; y++)
+                    for (int y = 0; y < 8; y++)
                     {
-                        if (GUIBoard.attacks(x, y, Color.WHITE))
+                        if (chessGame.getBoard().attacks(x, y, Color.WHITE))
                         {
                             System.out.print(ChessIO.numToChar(x) + ChessIO.numToNumChar(y) + ", ");
                         }
                     }
                 }
-            } else if (str.trim().equalsIgnoreCase("new"))
+            } else if (str.matches("new"))
             {
-                GUIBoard = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-                engine1 = new AlphaBetaSearch();
-                engine2 = new AlphaBetaSearch();
+                chessGame.setBoard(new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
+                AbstractSearch engine1 = new AlphaBetaSearch();
+                AbstractSearch engine2 = new AlphaBetaSearch();
             } else if (str.startsWith("setboard"))
             {
-                GUIBoard = new Board(str.substring(9, str.length()));
-                engine1 = new AlphaBetaSearch();
+                chessGame.setBoard(new Board(str.substring(9, str.length())));
+                AbstractSearch engine1 = new AlphaBetaSearch();
             } else if (str.startsWith("alpha"))
             {
-                engine1 = new AlphaBetaSearch();
+                AbstractSearch engine1 = new AlphaBetaSearch();
             } else if (str.startsWith("minmax"))
             {
-                engine1 = new MinMaxSearch();
+                AbstractSearch engine1 = new MinMaxSearch();
             } else if (str.startsWith("random"))
             {
-                engine1 = new RandomSearch();
+                AbstractSearch engine1 = new RandomSearch();
             } else if (str.startsWith("telnet"))
             {
                 Telnet telnet = new Telnet();
@@ -202,39 +179,37 @@ class main
                 System.exit(0);
             } else if (str.trim().startsWith("sd"))
             {
-                plyDepth = Integer.parseInt(str.replaceAll(" ", "").substring(2));
+                chessGame.setSearchDepth(Integer.parseInt(str.replaceAll(" ", "").substring(2)));
             } else if (str.matches("help"))
             {
                 ChessIO.printWelcomeText();
                 ChessIO.printHelpText();
             } else if (str.matches("print") || str.matches("p"))
             {
-                System.out.println(GUIBoard.toString());
-            } else if (str.equalsIgnoreCase("xboard"))
-            {
-                xboardMode = true;
-            } else if (str.equalsIgnoreCase("xboard")
+                System.out.println(chessGame.getBoard().toString());
+            } 
+             else if (str.equalsIgnoreCase("xboard")
                     || str.equalsIgnoreCase("variant")
                     || str.equalsIgnoreCase("force")
                     || str.contains("protover"))
             {
             } else if (str.matches("bitboard"))
             {
-                System.out.println(GUIBoard.getBitboardString());
+                System.out.println(chessGame.getBoard().getBitboardString());
             } else
             {
                 try
                 {
-                    m = io.parseMove(GUIBoard, str);
-                    if (!GUIBoard.isDraw() || !GUIBoard.isMate())
+                    Move m = ChessIO.parseMove(chessGame.getBoard(), str);
+                    if (!chessGame.getBoard().isDraw() || !chessGame.getBoard().isMate())
                     {
-                        Iterator<Move> theMoves = MoveGenerator.generateAllMoves(GUIBoard).listIterator();
+                        Iterator<Move> theMoves = MoveGenerator.generateAllMoves(chessGame.getBoard()).listIterator();
                         // Check if move m is among the possible moves
                         while (theMoves.hasNext())
                         {
                             if (m.equal(theMoves.next()))
                             {
-                                boolean result = GUIBoard.performMove(m);
+                                boolean result = chessGame.getBoard().performMove(m);
                                 if (result == false)
                                 {
                                     throw new NoMoveException();
@@ -246,8 +221,8 @@ class main
                         throw new NoMoveException();
                     }
 
-                    checkForDrawOrMate(GUIBoard);
-                    System.out.println(GUIBoard.toString());
+                    checkForDrawOrMate(chessGame.getBoard());
+                    System.out.println(chessGame.getBoard().toString());
 
                 } catch (NoMoveException e)
                 {
@@ -256,8 +231,7 @@ class main
             }
         }
     }
-    
-    
+
     private static void checkForDrawOrMate(Board b)
     {
         if (b.isDraw())
@@ -284,8 +258,13 @@ class main
             //System.exit(0);
         }
     }
-}
 
+    public static void main(String param[]) throws java.io.IOException, NoMoveException, Exception
+    {
+        Main m = new Main();
+        m.run(param);
+    }
+}
 // Garbage - leftovers from ealier
 // Do a simple setup with pawns and knights.
 //Board interfaceBoard = new Board("1n2k1n1/pppppppp/8/8/8/8/PPPPPPPP/1N2K1N1 w KQkq - 0 1");

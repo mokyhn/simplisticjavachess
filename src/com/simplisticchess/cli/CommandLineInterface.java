@@ -19,7 +19,7 @@ public class CommandLineInterface
     public CommandLineInterface()
     {
         commands = new ArrayList<Command>();
-        promptText = "> ";
+        promptText = "";
     }
     
     public void registerCommand(Command command)
@@ -72,7 +72,6 @@ public class CommandLineInterface
             } 
             catch (IOException ex)
             {
-                ex.printStackTrace();
             }
 
         }
