@@ -151,11 +151,10 @@ class Main
                         }
                     }
                 }
-            } else if (str.matches("new"))
+            } else if (str.matches("new")) //Ported as CLI
             {
                 chessGame.setBoard(new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"));
                 AbstractSearch engine1 = new AlphaBetaSearch();
-                AbstractSearch engine2 = new AlphaBetaSearch();
             } else if (str.startsWith("setboard"))
             {
                 chessGame.setBoard(new Board(str.substring(9, str.length())));
@@ -174,14 +173,14 @@ class Main
                 Telnet telnet = new Telnet();
                 telnet.test();
             } else if (str.trim().equalsIgnoreCase("quit") || str.matches("q") || str.matches("bye") || str.trim().equalsIgnoreCase("exit"))
-            {
+            { // Ported as CLI
                 System.out.print("\nGoodbye\n\n");
                 System.exit(0);
             } else if (str.trim().startsWith("sd"))
             {
                 chessGame.setSearchDepth(Integer.parseInt(str.replaceAll(" ", "").substring(2)));
             } else if (str.matches("help"))
-            {
+            { // Ported to CLI
                 ChessIO.printWelcomeText();
                 ChessIO.printHelpText();
             } else if (str.matches("print") || str.matches("p"))

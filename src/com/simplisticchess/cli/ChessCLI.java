@@ -1,16 +1,20 @@
 package com.simplisticchess.cli;
 
+import com.simplisticchess.ChessGame;
+
 /**
  *
- * @author mku
+ * @author Morten Kühnrich
  */
 public class ChessCLI
 {
     private final CommandLineInterface cli = new CommandLineInterface();
+    private final ChessGame chessGame = new ChessGame();
     
     public ChessCLI()
     {
         cli.registerCommand(new CommandQuit());
+        cli.registerCommand(new CommandNew(chessGame));
     }
     
     public CommandLineInterface getCLI() 
