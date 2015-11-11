@@ -4,6 +4,7 @@ package com.simplisticchess.cli;
  *
  * @author Morten Kühnrich
  */
+@ChessEngineCommunicationProtocol
 public class CommandQuit implements Command
 {
 
@@ -14,7 +15,6 @@ public class CommandQuit implements Command
 
     public void execute(String[] arguments)
     {
-        System.out.print("\nGoodbye\n\n");
         System.exit(0);
     }
 

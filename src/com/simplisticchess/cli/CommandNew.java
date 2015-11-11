@@ -7,6 +7,8 @@ import com.simplisticchess.board.Board;
  *
  * @author Morten Kühnrich
  */
+
+@ChessEngineCommunicationProtocol
 public class CommandNew implements Command
 {
     private final ChessGame chessGame;
