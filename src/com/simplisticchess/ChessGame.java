@@ -15,6 +15,7 @@ public class ChessGame
     
     public ChessGame()
     {
+        board = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     }
 
     public void setBoard(Board board)

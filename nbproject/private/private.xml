@@ -12,12 +12,15 @@
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/board/Bits.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/Utils.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/ChessIO.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/ChessEngineCommunicationProtocol.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/CommandNew.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/game/History.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/board/Board.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/ChessCLI.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/game/State.java</file>
-            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/Telnet.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/test/com/simplisticchess/board/BitsTest.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/Telnet.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/CommandPrint.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/Main.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/CommandLineInterface.java</file>
         </group>

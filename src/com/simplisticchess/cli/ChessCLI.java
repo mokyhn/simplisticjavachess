@@ -13,8 +13,18 @@ public class ChessCLI
     
     public ChessCLI()
     {
-        cli.registerCommand(new CommandQuit());
+        /*
+        Chess Engine Communication Protocol commands
+        */
+        cli.registerCommand(new CommandGo(chessGame));
         cli.registerCommand(new CommandNew(chessGame));
+        cli.registerCommand(new CommandQuit());
+        
+        /*
+        Customized commands not part of the Chess Engine Communication Protocol
+        */
+        cli.registerCommand(new CommandPrint(chessGame));
+        
     }
     
     public CommandLineInterface getCLI() 

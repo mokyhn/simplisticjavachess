@@ -38,7 +38,7 @@ class Main
         {
             String str = reader.readLine().trim().toLowerCase();
 
-            if (str.equals("go"))
+            if (str.equals("go")) // Is ported to CLI
             {   
                 AbstractSearch engine1 = new AlphaBetaSearch();
 
@@ -183,7 +183,7 @@ class Main
             { // Ported to CLI
                 ChessIO.printWelcomeText();
                 ChessIO.printHelpText();
-            } else if (str.matches("print") || str.matches("p"))
+            } else if (str.matches("print") || str.matches("p")) // Migrated to CLI
             {
                 System.out.println(chessGame.getBoard().toString());
             } 
