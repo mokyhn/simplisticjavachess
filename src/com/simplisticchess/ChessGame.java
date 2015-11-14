@@ -15,43 +15,23 @@ import java.util.Iterator;
 public class ChessGame
 {
     private Board board;
-    private AbstractSearch selectedEngine;
-    private int searchDepth = 5;
+    private AbstractSearch engine;
     
     public ChessGame()
     {
         board = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
-        selectedEngine = new AlphaBetaSearch();
+        engine = new AlphaBetaSearch();
     }
 
-    public void setBoard(Board board)
-    {
-        this.board = board;
-    }
     
     public void setBoard(String fen)
     {
         this.board = new Board(fen);
     }
     
-    public Board getBoard() 
-    {
-        return board;
-    }
-    
     public void setSearchDepth(int searchDepth)
     {
-        selectedEngine.setPlyDepth(searchDepth); 
-    }
-
-    public AbstractSearch getSelectedEngine()
-    {
-        return selectedEngine;
-    }
-
-    public void setSelectedEngine(AbstractSearch selectedEngine)
-    {
-        this.selectedEngine = selectedEngine;
+        engine.setPlyDepth(searchDepth); 
     }
 
     public void black()
@@ -61,19 +41,19 @@ public class ChessGame
   
     public void go()
     {
-        selectedEngine.setBoard(board);
+        engine.setBoard(board);
         try
         {
-            selectedEngine.dosearch();
+            engine.dosearch();
         } catch (Exception ex)
         {
             System.out.print("\nError ");
             ex.printStackTrace();
         }
-        System.out.println(selectedEngine.getStatistics());
-        if (selectedEngine.getStrongestMove() != null)
+        System.out.println(engine.getStatistics());
+        if (engine.getStrongestMove() != null)
         {
-            board.performMove(selectedEngine.getStrongestMove());
+            board.performMove(engine.getStrongestMove());
             checkForDrawOrMate(board);
             print();
         }
@@ -129,7 +109,7 @@ public class ChessGame
 
     public void setSd(int depth)
     {
-        selectedEngine.setPlyDepth(depth);
+        engine.setPlyDepth(depth);
     }
 
     public void move(String str)
@@ -168,9 +148,5 @@ public class ChessGame
                     System.out.println("Not a valid move " + e.err);
                 }
     }
-
- 
-
-
 
 }
