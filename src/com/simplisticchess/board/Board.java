@@ -466,6 +466,7 @@ public final class Board
 
     // Given a position in the FEN - notation.
     // Set up the board
+    // TODO: This function is not robust enough. It may throw exceptions. sfen = 11 is an example
     private void setupFENboard(String sfen)
     {
         int x = 0;

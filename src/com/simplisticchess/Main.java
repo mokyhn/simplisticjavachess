@@ -42,7 +42,7 @@ class Main
             {   
                 AbstractSearch engine1 = new AlphaBetaSearch();
 
-                engine1.setPlyDepth(chessGame.getSearchDepth());
+                //engine1.setPlyDepth(chessGame.getSearchDepth());
                 engine1.setBoard(chessGame.getBoard());
                 engine1.dosearch();
                 System.out.println(engine1.getStatistics());
@@ -95,7 +95,7 @@ class Main
                         || !chessGame.getBoard().isDraw()
                         || !chessGame.getBoard().isMate()); i++)
                 {
-                    engine1.setPlyDepth(chessGame.getSearchDepth());
+                    //engine1.setPlyDepth(chessGame.getSearchDepth());
                     engine1.setBoard(chessGame.getBoard());
                     res = engine1.dosearch();
                     System.out.println(engine1.getStatistics());
@@ -108,7 +108,7 @@ class Main
                     }
                     System.out.println(chessGame.getBoard().toString());
                     checkForDrawOrMate(chessGame.getBoard());
-                    engine2.setPlyDepth(chessGame.getSearchDepth());
+                    //engine2.setPlyDepth(chessGame.getSearchDepth());
                     engine2.setBoard(chessGame.getBoard());
                     engine2.dosearch();
                     //engine2.dosearch(interfaceBoard, 2, Search.ALPHABETA);
@@ -173,7 +173,7 @@ class Main
             { // Ported as CLI
                 System.out.print("\nGoodbye\n\n");
                 System.exit(0);
-            } else if (str.trim().startsWith("sd"))
+            } else if (str.trim().startsWith("sd")) // Ported to cli
             {
                 chessGame.setSearchDepth(Integer.parseInt(str.replaceAll(" ", "").substring(2)));
             } else if (str.matches("help"))

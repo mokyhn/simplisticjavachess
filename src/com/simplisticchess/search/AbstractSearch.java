@@ -74,6 +74,7 @@ public abstract class AbstractSearch
         noPositions = 0;
         noCutOffs = 0;
         _finalEvaluation = 0;
+        _plyDepth = 3;
         wastedGeneratedMoves = 0;
         strongestMove = null;
     }

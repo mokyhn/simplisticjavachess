@@ -36,7 +36,10 @@ public class CommandLineInterface
     {
         for (Command command : commands) 
         {
-            System.out.println(command.helpCommand() + " - " + command.helpExplanation());
+            if (command.helpCommand() != null && command.helpExplanation() != null) 
+            {
+                System.out.println(command.helpCommand() + " - " + command.helpExplanation());
+            }
         }
     
     }
@@ -50,6 +53,7 @@ public class CommandLineInterface
                 if (command.isApplicable(commandAndArgs[0]))
                 {
                     command.execute(commandAndArgs);
+                    break;
                 }
             }
         }
