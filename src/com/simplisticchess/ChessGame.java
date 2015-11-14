@@ -49,6 +49,11 @@ public class ChessGame
         this.selectedEngine = selectedEngine;
     }
 
+    public void black()
+    {
+        board.setBlackToMove();
+    }
+  
     public void go()
     {
         AbstractSearch engine = new AlphaBetaSearch();
@@ -115,8 +120,13 @@ public class ChessGame
         board.undo();
     }
 
+    public void white()
+    {
+        board.setWhiteToMove();
+    }
 
  
+
 
 
 }

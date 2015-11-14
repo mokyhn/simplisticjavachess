@@ -75,15 +75,12 @@ class Main
                 {
                     System.out.println("No...");
                 }
-            } else if (str.trim().equalsIgnoreCase("black"))
+            } else if (str.trim().equalsIgnoreCase("black")) // Ported to cli
             {
                 chessGame.getBoard().setBlackToMove();
-            } else if (str.trim().equalsIgnoreCase("white"))
+            } else if (str.trim().equalsIgnoreCase("white")) // Ported to cli
             {
                 chessGame.getBoard().setWhiteToMove();
-            } else if (str.matches("branching"))
-            {
-                System.out.println(new AlphaBetaSearch().findBranchingFactor(chessGame.getBoard(), 4));
             } else if (str.startsWith("sim "))
             {
                 int simSteps = Integer.parseInt(str.substring(4));
