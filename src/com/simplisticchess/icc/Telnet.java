@@ -1,4 +1,4 @@
-package com.simplisticchess;
+package com.simplisticchess.icc;
 
 /**
  *

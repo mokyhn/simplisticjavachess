@@ -1,5 +1,6 @@
-package com.simplisticchess;
+package com.simplisticchess.icc;
 
+import com.simplisticchess.ChessIO;
 import com.simplisticchess.move.NoMoveException;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.move.Move;
@@ -8,9 +9,6 @@ import com.simplisticchess.piece.Color;
 /**
  *
  * @author mku
- * Use Icsdrone and rather support UCI or xboard/crafty protocol
- * arene, stockfish
- * http://wbec-ridderkerk.nl/html/details1/PolyGlot.html --> plyglot
  */
 public class ICCProtocol {
     private final static int LINE_TAG    = 0; // identifies line

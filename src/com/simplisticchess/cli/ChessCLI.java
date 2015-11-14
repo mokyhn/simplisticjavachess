@@ -50,10 +50,5 @@ public class ChessCLI
         return cli;
     }
     
-    public static void main(String param[])
-    {
-        ChessCLI cli = new ChessCLI();
-        cli.getCLI().start();
-    }
 }
 

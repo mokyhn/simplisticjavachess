@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+        <file>
+            <url>src/com/simplisticchess/Main.java</url>
+            <bookmark id="1">
+                <name/>
+                <line>186</line>
+                <key/>
+            </bookmark>
+        </file>
+    </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/Command.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/ChessGame.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/board/Board.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/ChessCLI.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/cecpcommands/CommandMove.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/search/AbstractSearch.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/cecpcommands/CommandSetBoard.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/cecpcommands/CommandXBoard.java</file>
             <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/Main.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/ChessIO.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/CommandLineInterface.java</file>
+            <file>file:/home/mku/tmp/simplisticjavachess/src/com/simplisticchess/cli/cecpcommands/CommandSd.java</file>
         </group>
     </open-files>
 </project-private>
