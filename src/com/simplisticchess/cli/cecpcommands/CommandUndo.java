@@ -1,41 +1,42 @@
-package com.simplisticchess.cli;
+package com.simplisticchess.cli.cecpcommands;
 
 import com.simplisticchess.ChessGame;
+import com.simplisticchess.cli.Command;
 
 /**
  *
  * @author Morten Kühnrich
  */
+
 @ChessEngineCommunicationProtocol
-public class CommandGo implements Command
+public class CommandUndo implements Command
 {
 
     private final ChessGame chessGame;
-
-    public CommandGo(ChessGame chessGame)
+    
+    public CommandUndo(ChessGame chessGame) 
     {
         this.chessGame = chessGame;
     }
-
+    
     public boolean isApplicable(String str)
     {
-        return str.matches("go");
+        return str.matches("undo");
     }
 
     public void execute(String[] arguments)
     {
-        chessGame.go();
+        chessGame.undo();
     }
-
 
     public String helpCommand()
     {
-        return "go";
+        return "undo";
     }
 
     public String helpExplanation()
     {
-        return "Engine plays the color that is on move";
+        return "Undo the last move";
     }
-
+    
 }

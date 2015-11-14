@@ -1,6 +1,7 @@
-package com.simplisticchess.cli;
+package com.simplisticchess.cli.noncecpcommands;
 
 import com.simplisticchess.ChessGame;
+import com.simplisticchess.cli.Command;
 
 /**
  *

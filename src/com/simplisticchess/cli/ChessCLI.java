@@ -1,5 +1,10 @@
 package com.simplisticchess.cli;
 
+import com.simplisticchess.cli.noncecpcommands.CommandPrint;
+import com.simplisticchess.cli.cecpcommands.CommandUndo;
+import com.simplisticchess.cli.cecpcommands.CommandQuit;
+import com.simplisticchess.cli.cecpcommands.CommandNew;
+import com.simplisticchess.cli.cecpcommands.CommandGo;
 import com.simplisticchess.ChessGame;
 
 /**

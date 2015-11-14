@@ -1,4 +1,6 @@
-package com.simplisticchess.cli;
+package com.simplisticchess.cli.cecpcommands;
+
+import com.simplisticchess.cli.Command;
 
 /**
  *
