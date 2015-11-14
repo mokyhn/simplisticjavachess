@@ -68,7 +68,7 @@ public class MinMaxSearch extends AbstractSearch
 
             thereWasALegalMove = true;
             score = minMaxSearch(plyDepth, depthToGo - 1);
-            analyzeBoard.retractMove();
+            analyzeBoard.undo();
             //Nice verbose trace: System.out.println(")");
             if (firstCalculation)
             {

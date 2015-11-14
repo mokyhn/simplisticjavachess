@@ -387,13 +387,13 @@ public final class Board
         if (isInCheck(state.inMove.flip()))
         {
             legalityOfMove = false;
-            this.retractMove();
+            this.undo();
         }
 
         return legalityOfMove;
     }
 
-    public boolean retractMove()
+    public boolean undo()
     {
         Color color = null;
         Move m;
@@ -639,10 +639,11 @@ public final class Board
 
     /**
      * Returns the board as ASCII art and game other information
+     * @return An ASCII representation of the board
      */
-    @Override
-    public String toString()
+    public String getASCIIBoard()
     {
+    
         String s = position.toString();
 
         if (inMove() == Color.WHITE)

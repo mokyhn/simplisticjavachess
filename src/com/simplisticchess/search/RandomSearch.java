@@ -51,7 +51,7 @@ public class RandomSearch extends AbstractSearch
             {
                 retry = false;
                 strongestMove = theMove;
-                analyzeBoard.retractMove();
+                analyzeBoard.undo();
             }
         }
 

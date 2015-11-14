@@ -81,7 +81,7 @@ public class Telnet {
                System.out.println("Found " + engine.getStrongestMove().toString());
                dout.writeBytes(engine.getStrongestMove().toString() + "\n");
                theBoard.performMove(engine.getStrongestMove());
-               System.out.println(theBoard.toString());
+               System.out.println(theBoard.getASCIIBoard());
                }
             
          }

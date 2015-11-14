@@ -77,7 +77,7 @@ public class AlphaBetaSearch extends AbstractSearch
             analyzeBoard.performMove(m);
             if (analyzeBoard.isInCheck(m.whoMoves))
             {
-                analyzeBoard.retractMove(); // The move was not legal
+                analyzeBoard.undo(); // The move was not legal
                 continue;                   // Try next pseudolegal move
             }
             thereWasALegalMove = true;
@@ -93,7 +93,7 @@ public class AlphaBetaSearch extends AbstractSearch
              " move " + m.toString() +
              analyzeBoard.toString() + "\n\n\n\n");
              }*/
-            analyzeBoard.retractMove();
+            analyzeBoard.undo();
 
             if (inMove == Color.WHITE)
             {
@@ -245,7 +245,7 @@ public class AlphaBetaSearch extends AbstractSearch
 
              //System.out.print(" is " + humanReadable(variantEvaluation) + "," + humanReadable(alpha) + "," + humanReadable(beta));
             //System.out.print(eb);
-            analyzeBoard.retractMove();
+            analyzeBoard.undo();
 
             if (inMove == Color.WHITE)
             {

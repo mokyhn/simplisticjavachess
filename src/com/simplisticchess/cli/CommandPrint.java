@@ -22,7 +22,7 @@ public class CommandPrint implements Command
 
     public void execute(String[] arguments)
     {
-        System.out.println(chessGame.getBoard().toString());
+        chessGame.print();
     }
 
     public String helpCommand()

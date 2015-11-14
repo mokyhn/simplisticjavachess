@@ -52,9 +52,9 @@ class Main
                     checkForDrawOrMate(chessGame.getBoard());
                     System.out.println(chessGame.getBoard().toString());
                 }
-            } else if (str.matches("undo"))
+            } else if (str.matches("undo")) // Is ported to CLI
             {
-                chessGame.getBoard().retractMove();
+                chessGame.getBoard().undo();
             } else if (str.matches("allmoves"))
             {
                 ArrayList<Move> mlist = MoveGenerator.generateAllMoves(chessGame.getBoard());

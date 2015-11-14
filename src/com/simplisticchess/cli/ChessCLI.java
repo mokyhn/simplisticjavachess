@@ -18,6 +18,7 @@ public class ChessCLI
         */
         cli.registerCommand(new CommandGo(chessGame));
         cli.registerCommand(new CommandNew(chessGame));
+        cli.registerCommand(new CommandUndo(chessGame));
         cli.registerCommand(new CommandQuit());
         
         /*

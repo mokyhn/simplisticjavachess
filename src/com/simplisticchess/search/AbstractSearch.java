@@ -142,7 +142,7 @@ public abstract class AbstractSearch
         {
             analyzeBoard.performMove(moves.next());
             countNodesTmp(plydepth - 1);
-            analyzeBoard.retractMove();
+            analyzeBoard.undo();
         }
     }
 }

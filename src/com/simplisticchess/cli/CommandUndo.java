@@ -8,32 +8,34 @@ import com.simplisticchess.ChessGame;
  */
 
 @ChessEngineCommunicationProtocol
-public class CommandNew implements Command
+public class CommandUndo implements Command
 {
+
     private final ChessGame chessGame;
     
-    public CommandNew(ChessGame chessGame) 
+    public CommandUndo(ChessGame chessGame) 
     {
         this.chessGame = chessGame;
     }
-
+    
     public boolean isApplicable(String str)
     {
-        return str.matches("new");
+        return str.matches("undo");
     }
 
     public void execute(String[] arguments)
     {
-        chessGame.newgame();
+        chessGame.undo();
     }
 
     public String helpCommand()
     {
-        return "new";
+        return "undo";
     }
 
     public String helpExplanation()
     {
-        return "Start over";
+        return "Undo the last move";
     }
+    
 }
