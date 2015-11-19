@@ -1,6 +1,7 @@
 package com.simplisticchess.piece;
 
 import static com.simplisticchess.piece.PieceType.*;
+import com.simplisticchess.position.Location;
 
 /**
  *
@@ -8,31 +9,33 @@ import static com.simplisticchess.piece.PieceType.*;
  */
 
 public final class Piece {
-    private int xPos;
-    private int yPos;
+    Location location;
     
     private PieceType pieceType;
 
     private Color color;
 
     public Piece(int xPos, int yPos, Color color, PieceType pieceType) {
-        assert xPos >= 0 && xPos <= 7 && yPos >= 0 && yPos <= 7 : "Piece range error in x or y ";
-        this.xPos  = xPos;
-        this.yPos  = yPos;
+        this.location = new Location(xPos, yPos);        
+        this.color = color;
+        this.pieceType  = pieceType;
+    }
+    
+    public Piece(Location location, Color color, PieceType pieceType) {
+        this.location = new Location(location);        
         this.color = color;
         this.pieceType  = pieceType;
     }
 
     public Piece(Piece piece) 
     {
-        this(piece.xPos, piece.yPos, piece.color, piece.pieceType);
+        this(piece.getLocation(), piece.color, piece.pieceType);
     }
     
     public Piece(int x, int y, char pieceLetter)  {
         assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error in x or y ";
 
-        xPos = x;
-        yPos = y;
+        location = new Location(x, y);
 
         switch (pieceLetter) {
             case 'p': pieceType  = PAWN;
@@ -108,12 +111,17 @@ public final class Piece {
         return getPieceType().getPieceLetter(getColor());
     }
 
+    public Location getLocation()
+    {
+        return location;
+    }
+    
     /**
      * @return the xPos
      */
     public int getxPos()
     {
-        return xPos;
+        return location.getX();
     }
 
     /**
@@ -121,7 +129,7 @@ public final class Piece {
      */
     public void setxPos(int xPos)
     {
-        this.xPos = xPos;
+        location = new Location(xPos, location.getY());
     }
 
     /**
@@ -129,7 +137,7 @@ public final class Piece {
      */
     public int getyPos()
     {
-        return yPos;
+        return location.getY();
     }
 
     /**
@@ -137,9 +145,13 @@ public final class Piece {
      */
     public void setyPos(int yPos)
     {
-        this.yPos = yPos;
+        location = new Location(location.getX(), yPos);
     }
 
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+    
     /**
      * @return the pieceType
      */

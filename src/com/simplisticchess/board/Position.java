@@ -7,6 +7,7 @@ package com.simplisticchess.board;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.PieceType;
+import com.simplisticchess.position.Location;
 
 public final class Position
 {
@@ -110,6 +111,11 @@ public final class Position
         return p;
     }
 
+    public void movePiece(Location from, Location to) 
+    {
+        movePiece(from.getX(), from.getY(), to.getX(), to.getY());
+    }
+    
     public void movePiece(int xFrom, int yFrom, int xTo, int yTo)
     {
         final Piece p = xyPosition[xFrom][yFrom];

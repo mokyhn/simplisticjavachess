@@ -11,6 +11,7 @@ import com.simplisticchess.move.MoveType;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
+import com.simplisticchess.position.Location;
 
 public final class Board
 {
@@ -95,11 +96,21 @@ public final class Board
         position.insertPiece(p);
     }
 
+    public Piece removePiece(Location location)
+    {
+        return removePiece(location.getX(), location.getY());
+    }
+    
     public Piece removePiece(int x, int y)
     {
         return position.removePiece(x, y);
     }
 
+    public boolean freeSquare(Location location)
+    {
+        return freeSquare(location.getX(), location.getY());
+    }
+    
     public boolean freeSquare(int x, int y)
     {
         return position.freeSquare(x, y);
@@ -200,6 +211,11 @@ public final class Board
         return k >= 3;
     }
 
+    public Piece getPiece(Location location) 
+    {
+        return getPiece(location.getX(), location.getY());
+    }
+    
     // Find a piece at a certain location
     public Piece getPiece(int x, int y)
     {
