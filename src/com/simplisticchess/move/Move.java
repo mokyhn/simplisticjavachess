@@ -221,14 +221,7 @@ public final class Move
         return fromX;
     }
 
-    /**
-     * @param fromX the fromX to set
-     */
-    public void setFromX(int fromX)
-    {
-        this.fromX = fromX;
-    }
-
+ 
     /**
      * @return the fromY
      */
@@ -237,15 +230,7 @@ public final class Move
         return fromY;
     }
 
-    /**
-     * @param fromY the fromY to set
-     */
-    public void setFromY(int fromY)
-    {
-        this.fromY = fromY;
-    }
-
-    /**
+     /**
      * @return the toX
      */
     public int getToX()
@@ -253,13 +238,6 @@ public final class Move
         return toX;
     }
 
-    /**
-     * @param toX the toX to set
-     */
-    public void setToX(int toX)
-    {
-        this.toX = toX;
-    }
 
     /**
      * @return the toY
@@ -270,14 +248,6 @@ public final class Move
     }
 
     /**
-     * @param toY the toY to set
-     */
-    public void setToY(int toY)
-    {
-        this.toY = toY;
-    }
-
-    /**
      * @return the moveType
      */
     public MoveType getMoveType()
@@ -285,13 +255,6 @@ public final class Move
         return moveType;
     }
 
-    /**
-     * @param moveType the moveType to set
-     */
-    public void setMoveType(MoveType moveType)
-    {
-        this.moveType = moveType;
-    }
 
     /**
      * @return the capturedPiece
@@ -301,13 +264,6 @@ public final class Move
         return capturedPiece;
     }
 
-    /**
-     * @param capturedPiece the capturedPiece to set
-     */
-    public void setCapturedPiece(PieceType capturedPiece)
-    {
-        this.capturedPiece = capturedPiece;
-    }
 
     /**
      * @return the whoMoves
@@ -317,12 +273,5 @@ public final class Move
         return whoMoves;
     }
 
-    /**
-     * @param whoMoves the whoMoves to set
-     */
-    public void setWhoMoves(Color whoMoves)
-    {
-        this.whoMoves = whoMoves;
-    }
 
 }
