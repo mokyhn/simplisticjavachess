@@ -47,6 +47,12 @@ public final class Position
         }
     }
 
+    public Piece getPiece(Location location)
+    {
+        final Piece p = xyPosition[location.getX()][location.getY()];
+        return p;
+    }
+    
     public Piece getPiece(final int i)
     {
         final Piece p = pieces[i];
@@ -59,16 +65,6 @@ public final class Position
         return p;
     }
 
-    public Piece getPiece(final int x, final int y)
-    {
-        final Piece p = xyPosition[x][y];
-        // For testing: areRepresentationsIsomorphic();
-        if (p != null)
-        {
-            assert p.getxPos() == x && p.getyPos() == y;
-        }
-        return p;
-    }
 
     public void insertPiece(final Piece p)
     {
@@ -134,7 +130,7 @@ public final class Position
         return numberOfPieces;
     }
 
-    private boolean rookAttack(int x1, int y1, int x2, int y2)
+    private boolean rookAttack(Location l1, Location l2)
     {
         Boolean allFree = true;
         int lowX, // From x pos
@@ -144,21 +140,21 @@ public final class Position
                 ix, // Iterate x
                 iy;    // Iterate y
 
-        if (x1 == x2)
+        if (l1.getX() == l2.getX())
         {
             allFree = true;
-            if (y1 < y2)
+            if (l1.getY() < l2.getY())
             {
-                lowY = y1;
-                highY = y2;
+                lowY = l1.getY();
+                highY = l2.getY();
             } else
             {
-                lowY = y2;
-                highY = y1;
+                lowY = l2.getY();
+                highY = l1.getY();
             }
             for (iy = lowY + 1; iy < highY; iy++)
             {
-                if (!freeSquare(x1, iy))
+                if (!freeSquare(l1.getX(), iy))
                 {
                     allFree = false;
                     break;
@@ -169,21 +165,21 @@ public final class Position
                 return true;
             }
         }
-        if (y1 == y2)
+        if (l1.getY() == l2.getY())
         {
             allFree = true;
-            if (x1 < x2)
+            if (l1.getX() < l2.getX())
             {
-                lowX = x1;
-                highX = x2;
+                lowX = l1.getX();
+                highX = l2.getX();
             } else
             {
-                lowX = x2;
-                highX = x1;
+                lowX = l2.getX();
+                highX = l1.getX();
             }
             for (ix = lowX + 1; ix < highX; ix++)
             {
-                if (!freeSquare(ix, y1))
+                if (!freeSquare(ix, l1.getY()))
                 {
                     allFree = false;
                     break;
@@ -197,15 +193,15 @@ public final class Position
         return false;
     }
 
-    private boolean bishopAttack(int x1, int y1, int x2, int y2)
+    private boolean bishopAttack(Location l1, Location l2)
     {
         final int r; // Radius
         int ir;      // Iterator over radii
         int dx;
         int dy;
         boolean allFree = true;
-        dx = x2 - x1;
-        dy = y2 - y1;
+        dx = l2.getX() - l1.getX();
+        dy = l2.getY() - l1.getY();
 
         // First condition that allows one to be threatened by a bishop
         if (Math.abs(dx) == Math.abs(dy))
@@ -215,7 +211,7 @@ public final class Position
             dy = dy / r;
             for (ir = 1; ir < r; ir++)
             {
-                if (!freeSquare(ir * dx + x1, ir * dy + y1))
+                if (!freeSquare(ir * dx + l1.getX(), ir * dy + l1.getY()))
                 {
                     allFree = false;
                     break;
@@ -230,7 +226,7 @@ public final class Position
         return false;
     }
 
-    public boolean attacks(int x, int y, Color inMove)
+    public boolean attacks(Location location, Color inMove)
     {
         Piece p;
 
@@ -239,53 +235,53 @@ public final class Position
             p = getPiece(i);
 
             // Chose one of opposite color
-            if (p.getColor() == inMove.flip() && !(p.getxPos() == x && p.getyPos() == y))
+            if (p.getColor() == inMove.flip() && !(p.getxPos() == location.getX() && p.getyPos() == location.getY()))
             {
                 switch (p.getPieceType())
                 {
                     case PAWN:
-                        if ((y == p.getyPos() + p.getColor().getColor())
-                                && ((x == p.getxPos() + 1)
-                                || (x == p.getxPos() - 1)))
+                        if ((location.getY() == p.getyPos() + p.getColor().getColor())
+                                && ((location.getX() == p.getxPos() + 1)
+                                || (location.getX() == p.getxPos() - 1)))
                         {
                             return true;
                         }
                         break;
                     case ROOK:
-                        if (rookAttack(p.getxPos(), p.getyPos(), x, y))
+                        if (rookAttack(p.getLocation(), location))
                         {
                             return true;
                         }
                         break;
                     case BISHOP:
-                        if (bishopAttack(p.getxPos(), p.getyPos(), x, y))
+                        if (bishopAttack(p.getLocation(), location))
                         {
                             return true;
                         }
                         break;
                     case KNIGHT:
-                        if (((x == p.getxPos() - 2) && (y == p.getyPos() + 1))
-                                || ((x == p.getxPos() - 2) && (y == p.getyPos() - 1))
-                                || ((x == p.getxPos() - 1) && (y == p.getyPos() - 2))
-                                || ((x == p.getxPos() + 1) && (y == p.getyPos() + 2))
-                                || ((x == p.getxPos() - 1) && (y == p.getyPos() + 2))
-                                || ((x == p.getxPos() + 1) && (y == p.getyPos() - 2))
-                                || ((x == p.getxPos() + 2) && (y == p.getyPos() + 1))
-                                || ((x == p.getxPos() + 2) && (y == p.getyPos() - 1)))
+                        if (((location.getX() == p.getxPos() - 2) && (location.getY() == p.getyPos() + 1))
+                                || ((location.getX() == p.getxPos() - 2) && (location.getY() == p.getyPos() - 1))
+                                || ((location.getX() == p.getxPos() - 1) && (location.getY() == p.getyPos() - 2))
+                                || ((location.getX() == p.getxPos() + 1) && (location.getY() == p.getyPos() + 2))
+                                || ((location.getX() == p.getxPos() - 1) && (location.getY() == p.getyPos() + 2))
+                                || ((location.getX() == p.getxPos() + 1) && (location.getY() == p.getyPos() - 2))
+                                || ((location.getX() == p.getxPos() + 2) && (location.getY() == p.getyPos() + 1))
+                                || ((location.getX() == p.getxPos() + 2) && (location.getY() == p.getyPos() - 1)))
                         {
                             return true;
                         }
                         break;
                     case QUEEN:
-                        if (rookAttack(p.getxPos(), p.getyPos(), x, y)
-                                || bishopAttack(p.getxPos(), p.getyPos(), x, y))
+                        if (rookAttack(p.getLocation(), location)
+                                || bishopAttack(p.getLocation(), location))
                         {
                             return true;
                         }
                         break;
                     case KING:
-                        if ((x == p.getxPos() || x == p.getxPos() - 1 || x == p.getxPos() + 1)
-                                && (y == p.getyPos() || y == p.getyPos() - 1 || y == p.getyPos() + 1))
+                        if ((location.getX() == p.getxPos() || location.getX() == p.getxPos() - 1 || location.getX() == p.getxPos() + 1)
+                                && (location.getY() == p.getyPos() || location.getY() == p.getyPos() - 1 || location.getY() == p.getyPos() + 1))
                         {
                             return true;
                         }
@@ -320,7 +316,7 @@ public final class Position
             for (x = 0; x < 8; x++)
             {
                 s = s + " ";
-                p = getPiece(x, y);
+                p = getPiece(new Location(x, y));
                 if (p == null)
                 {
                     s = s + ".";

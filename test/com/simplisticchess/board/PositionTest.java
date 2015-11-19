@@ -23,7 +23,7 @@ public class PositionTest
         {
             for (y = 0; y < 8; y++)
             {
-                if (position.getPiece(x,y) != null)
+                if (position.getPiece(new Location(x,y)) != null)
                 {
                     n++;
                 }
@@ -38,7 +38,7 @@ public class PositionTest
         for (int i = 0; i < position.getNumberOfPieces(); i++)
         {
             Piece p1 = position.getPiece(i);
-            Piece p2 = position.getPiece(p1.getxPos(), p1.getyPos());
+            Piece p2 = position.getPiece(p1.getLocation());
             if (!p1.equals(p2)) 
             {
                 return false;

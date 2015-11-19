@@ -134,7 +134,7 @@ public final class Board
      */
     public boolean attacks(int x, int y)
     {
-        return position.attacks(x, y, state.inMove);
+        return position.attacks(new Location(x, y), state.inMove);
     }
 
     /**
@@ -147,7 +147,7 @@ public final class Board
      */
     public boolean attacks(int x, int y, Color sideToMove)
     {
-        return position.attacks(x, y, sideToMove);
+        return position.attacks(new Location(x, y), sideToMove);
     }
 
     public String getBitboardString()
@@ -168,24 +168,20 @@ public final class Board
     public Boolean isInCheck(Color color)
     {
         Boolean res = false;
-        Piece p;
-        int kingx = -1,
-                kingy = -1;
-
+        
         for (int i = 0; i < getNumberOfPieces(); i++)
         {
-            p = getPiece(i);
+            Piece p = getPiece(i);
             if (p.getPieceType() == PieceType.KING && p.getColor() == color)
             {
-                kingx = p.getxPos();
-                kingy = p.getyPos();
+                if (position.attacks(p.getLocation(), color))
+                {
+                    res = true;
+                }
                 break;
             }
         }
-        if (kingx != -1 && position.attacks(kingx, kingy, color))
-        {
-            res = true;
-        }
+     
         return res;
     }
 
@@ -206,20 +202,10 @@ public final class Board
         return k >= 3;
     }
 
-    public Piece getPiece(Location location) 
-    {
-        return getPiece(location.getX(), location.getY());
-    }
     
-    // Find a piece at a certain location
     public Piece getPiece(int x, int y)
     {
-        final Piece p = position.getPiece(x, y);
-
-        if (p != null)
-        {
-            assert p.getxPos() == x && p.getyPos() == y;
-        }
+        final Piece p = position.getPiece(new Location(x, y));
         return p;
     }
 
