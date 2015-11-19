@@ -35,8 +35,8 @@ public final class MoveGenerator
     {
 
         final Color c = b.inMove();
-        final int fx = p.xPos;
-        final int fy = p.yPos;
+        final int fx = p.getxPos();
+        final int fy = p.getyPos();
 
         Piece leftPiece;
         Piece rightPiece;
@@ -78,9 +78,9 @@ public final class MoveGenerator
         if ((fx > 0) && (fy != (5 * c.getColor() + 7) / 2))
         {
             leftPiece = b.getPiece(fx - 1, fy + c.getColor());
-            if (leftPiece != null && leftPiece.color != c)
+            if (leftPiece != null && leftPiece.getColor() != c)
             {
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE, leftPiece.pieceType, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE, leftPiece.getPieceType(), c));
             }
         }
 
@@ -88,9 +88,9 @@ public final class MoveGenerator
         if ((fx < 7) && (fy != (5 * c.getColor() + 7) / 2))
         {
             rightPiece = b.getPiece(fx + 1, fy + c.getColor());
-            if (rightPiece != null && rightPiece.color != c)
+            if (rightPiece != null && rightPiece.getColor() != c)
             {
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE, rightPiece.pieceType, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE, rightPiece.getPieceType(), c));
             }
         }
 
@@ -98,12 +98,12 @@ public final class MoveGenerator
         if ((fx > 0) && (fy == (5 * c.getColor() + 7) / 2))
         {
             leftPiece = b.getPiece(fx - 1, fy + c.getColor());
-            if (leftPiece != null && leftPiece.color != c)
+            if (leftPiece != null && leftPiece.getColor() != c)
             {
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece.pieceType, c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece.pieceType, c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN, leftPiece.pieceType, c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_ROOK, leftPiece.pieceType, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece.getPieceType(), c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece.getPieceType(), c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN, leftPiece.getPieceType(), c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_ROOK, leftPiece.getPieceType(), c));
             }
         }
 
@@ -111,12 +111,12 @@ public final class MoveGenerator
         if ((fx < 7) && (fy == (5 * c.getColor() + 7) / 2))
         {
             rightPiece = b.getPiece(fx + 1, fy + c.getColor());
-            if (rightPiece != null && rightPiece.color != c)
+            if (rightPiece != null && rightPiece.getColor() != c)
             {
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece.pieceType, c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, rightPiece.pieceType, c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN, rightPiece.pieceType, c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_ROOK, rightPiece.pieceType, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece.getPieceType(), c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, rightPiece.getPieceType(), c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN, rightPiece.getPieceType(), c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_ROOK, rightPiece.getPieceType(), c));
             }
 
         }
@@ -128,11 +128,11 @@ public final class MoveGenerator
             if (fx > 0)
             {
 
-                lastMovePiece = b.getPiece(lastMove.toX, lastMove.toY);
+                lastMovePiece = b.getPiece(lastMove.getToX(), lastMove.getToY());
                 // The piece stands to the left
-                if (lastMovePiece != null && (lastMove.toX == fx - 1) && (lastMove.toY == fy)
-                        && (lastMovePiece.pieceType == PieceType.PAWN)
-                        && (Math.abs(lastMove.fromY - lastMove.toY) == 2))
+                if (lastMovePiece != null && (lastMove.getToX() == fx - 1) && (lastMove.getToY() == fy)
+                        && (lastMovePiece.getPieceType() == PieceType.PAWN)
+                        && (Math.abs(lastMove.getFromY() - lastMove.getToY()) == 2))
                 {
                     Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_ENPASSANT, null, c));
                 }
@@ -140,11 +140,11 @@ public final class MoveGenerator
 
             if (fx < 7)
             {
-                lastMovePiece = b.getPiece(lastMove.toX, lastMove.toY);
+                lastMovePiece = b.getPiece(lastMove.getToX(), lastMove.getToY());
                 // The piece stands to the right
-                if (lastMovePiece != null && (lastMove.toX == fx + 1) && (lastMove.toY == fy)
-                        && (lastMovePiece.pieceType == PieceType.PAWN)
-                        && (Math.abs(lastMove.fromY - lastMove.toY) == 2))
+                if (lastMovePiece != null && (lastMove.getToX() == fx + 1) && (lastMove.getToY() == fy)
+                        && (lastMovePiece.getPieceType() == PieceType.PAWN)
+                        && (Math.abs(lastMove.getFromY() - lastMove.getToY()) == 2))
                 {
                     Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_ENPASSANT, null, c));
 
@@ -165,8 +165,8 @@ public final class MoveGenerator
     {
         final ArrayList<Move> Moves = new ArrayList<Move>();
         final Color c = b.inMove();
-        final int fx = p.xPos;
-        final int fy = p.yPos;
+        final int fx = p.getxPos();
+        final int fy = p.getyPos();
 
         Piece pTo = null;
 
@@ -180,8 +180,8 @@ public final class MoveGenerator
                 && !b.isInCheck(c))
         {
             assert (b.getPiece(7, fy) != null);
-            assert (b.getPiece(7, fy).pieceType == PieceType.ROOK) : "Expected rook, found wirdo piece: " + b.getPiece(7, fy).toString() + "fx, fy=" + fx + ", " + fy + "c = " + c;
-            assert (b.getPiece(7, fy).color == c);
+            assert (b.getPiece(7, fy).getPieceType() == PieceType.ROOK) : "Expected rook, found wirdo piece: " + b.getPiece(7, fy).toString() + "fx, fy=" + fx + ", " + fy + "c = " + c;
+            assert (b.getPiece(7, fy).getColor() == c);
             Moves.add(new Move(fx, fy, fx + 2, fy, MoveType.CASTLE_SHORT, null, c));
         }
 
@@ -210,9 +210,9 @@ public final class MoveGenerator
                 } else
                 {
                     pTo = b.getPiece(fx - 1, fy);
-                    if (pTo != null && pTo.color != c)
+                    if (pTo != null && pTo.getColor() != c)
                     {
-                        Moves.add(new Move(fx, fy, fx - 1, fy, MoveType.CAPTURE, pTo.pieceType, c));
+                        Moves.add(new Move(fx, fy, fx - 1, fy, MoveType.CAPTURE, pTo.getPieceType(), c));
                     }
                 }
             }
@@ -226,9 +226,9 @@ public final class MoveGenerator
                 } else
                 {
                     pTo = b.getPiece(fx - 1, fy + 1);
-                    if (pTo != null && pTo.color != c)
+                    if (pTo != null && pTo.getColor() != c)
                     {
-                        Moves.add(new Move(fx, fy, fx - 1, fy + 1, MoveType.CAPTURE, pTo.pieceType, c));
+                        Moves.add(new Move(fx, fy, fx - 1, fy + 1, MoveType.CAPTURE, pTo.getPieceType(), c));
                     }
                 }
             }
@@ -242,9 +242,9 @@ public final class MoveGenerator
                 } else
                 {
                     pTo = b.getPiece(fx - 1, fy - 1);
-                    if (pTo != null && pTo.color != c)
+                    if (pTo != null && pTo.getColor() != c)
                     {
-                        Moves.add(new Move(fx, fy, fx - 1, fy - 1, MoveType.CAPTURE, pTo.pieceType, c));
+                        Moves.add(new Move(fx, fy, fx - 1, fy - 1, MoveType.CAPTURE, pTo.getPieceType(), c));
                     }
                 }
             }
@@ -262,9 +262,9 @@ public final class MoveGenerator
                 } else
                 {
                     pTo = b.getPiece(fx + 1, fy);
-                    if (pTo != null && pTo.color != c)
+                    if (pTo != null && pTo.getColor() != c)
                     {
-                        Moves.add(new Move(fx, fy, fx + 1, fy, MoveType.CAPTURE, pTo.pieceType, c));
+                        Moves.add(new Move(fx, fy, fx + 1, fy, MoveType.CAPTURE, pTo.getPieceType(), c));
                     }
                 }
             }
@@ -280,9 +280,9 @@ public final class MoveGenerator
                     } else
                     {
                         pTo = b.getPiece(fx + 1, fy + 1);
-                        if (pTo != null && pTo.color != c)
+                        if (pTo != null && pTo.getColor() != c)
                         {
-                            Moves.add(new Move(fx, fy, fx + 1, fy + 1, MoveType.CAPTURE, pTo.pieceType, c));
+                            Moves.add(new Move(fx, fy, fx + 1, fy + 1, MoveType.CAPTURE, pTo.getPieceType(), c));
                         }
                     }
                 }
@@ -299,9 +299,9 @@ public final class MoveGenerator
                     } else
                     {
                         pTo = b.getPiece(fx + 1, fy - 1);
-                        if (pTo != null && pTo.color != c)
+                        if (pTo != null && pTo.getColor() != c)
                         {
-                            Moves.add(new Move(fx, fy, fx + 1, fy - 1, MoveType.CAPTURE, pTo.pieceType, c));
+                            Moves.add(new Move(fx, fy, fx + 1, fy - 1, MoveType.CAPTURE, pTo.getPieceType(), c));
                         }
                     }
                 }
@@ -317,9 +317,9 @@ public final class MoveGenerator
             } else
             {
                 pTo = b.getPiece(fx, fy + 1);
-                if (pTo != null && pTo.color != c)
+                if (pTo != null && pTo.getColor() != c)
                 {
-                    Moves.add(new Move(fx, fy, fx, fy + 1, MoveType.CAPTURE, pTo.pieceType, c));
+                    Moves.add(new Move(fx, fy, fx, fy + 1, MoveType.CAPTURE, pTo.getPieceType(), c));
                 }
             }
         }
@@ -333,9 +333,9 @@ public final class MoveGenerator
             } else
             {
                 pTo = b.getPiece(fx, fy - 1);
-                if (pTo != null && pTo.color != c)
+                if (pTo != null && pTo.getColor() != c)
                 {
-                    Moves.add(new Move(fx, fy, fx, fy - 1, MoveType.CAPTURE, pTo.pieceType, c));
+                    Moves.add(new Move(fx, fy, fx, fy - 1, MoveType.CAPTURE, pTo.getPieceType(), c));
                 }
             }
         }
@@ -349,12 +349,12 @@ public final class MoveGenerator
         ArrayList<Move> Moves = new ArrayList<Move>();
         final Color sideToMove = b.inMove();
 
-        if (p.color != sideToMove)
+        if (p.getColor() != sideToMove)
         {
             return Moves;
         }
 
-        switch (p.pieceType)
+        switch (p.getPieceType())
         {
             case PAWN:
                 return pawnMoves(b, p);
@@ -434,7 +434,7 @@ public final class MoveGenerator
         //System.out.println("h");
         //System.exit(0);
         // Move up and right
-        for (d = 1; ((p.xPos + d <= 7) && (p.yPos + d <= 7)); d++)
+        for (d = 1; ((p.getxPos() + d <= 7) && (p.getyPos() + d <= 7)); d++)
         {
             newMove = Move.genMove(b, p, d, d);
             if (newMove == null)
@@ -449,7 +449,7 @@ public final class MoveGenerator
         }
 
         // Move up and left
-        for (d = 1; ((p.xPos - d >= 0) && (p.yPos + d <= 7)); d++)
+        for (d = 1; ((p.getxPos() - d >= 0) && (p.getyPos() + d <= 7)); d++)
         {
             newMove = Move.genMove(b, p, -d, d);
             if (newMove == null)
@@ -464,7 +464,7 @@ public final class MoveGenerator
         }
 
         // Move down and left
-        for (d = 1; ((p.xPos - d >= 0) && (p.yPos - d >= 0)); d++)
+        for (d = 1; ((p.getxPos() - d >= 0) && (p.getyPos() - d >= 0)); d++)
         {
             newMove = Move.genMove(b, p, -d, -d);
             if (newMove == null)
@@ -479,7 +479,7 @@ public final class MoveGenerator
         }
 
         // Move down and right
-        for (d = 1; ((p.xPos + d <= 7) && (p.yPos - d >= 0)); d++)
+        for (d = 1; ((p.getxPos() + d <= 7) && (p.getyPos() - d >= 0)); d++)
         {
             newMove = Move.genMove(b, p, d, -d);
             if (newMove == null)
@@ -506,7 +506,7 @@ public final class MoveGenerator
         //System.out.println("h");
         //System.exit(0);
         // Move up
-        for (d = 1; (p.yPos + d <= 7); d++)
+        for (d = 1; (p.getyPos() + d <= 7); d++)
         {
             newMove = Move.genMove(b, p, 0, d);
             if (newMove == null)
@@ -521,7 +521,7 @@ public final class MoveGenerator
         }
 
         // Move down
-        for (d = 1; (p.yPos - d >= 0); d++)
+        for (d = 1; (p.getyPos() - d >= 0); d++)
         {
             newMove = Move.genMove(b, p, 0, -d);
             if (newMove == null)
@@ -536,7 +536,7 @@ public final class MoveGenerator
         }
 
         // Move left
-        for (d = 1; (p.xPos - d >= 0); d++)
+        for (d = 1; (p.getxPos() - d >= 0); d++)
         {
             newMove = Move.genMove(b, p, -d, 0);
             if (newMove == null)
@@ -551,7 +551,7 @@ public final class MoveGenerator
         }
 
         // Move right 
-        for (d = 1; (p.xPos + d <= 7); d++)
+        for (d = 1; (p.getxPos() + d <= 7); d++)
         {
             newMove = Move.genMove(b, p, d, 0);
             if (newMove == null)

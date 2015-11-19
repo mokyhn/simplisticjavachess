@@ -13,15 +13,15 @@ import com.simplisticchess.piece.PieceType;
 public final class Move
 {
 
-    public int fromX;
-    public int fromY;
-    public int toX;
-    public int toY;
-    public MoveType moveType; 
-    public PieceType capturedPiece; // Used for storing pieces that are taken
+    private int fromX;
+    private int fromY;
+    private int toX;
+    private int toY;
+    private MoveType moveType; 
+    private PieceType capturedPiece; // Used for storing pieces that are taken
                               // by the piece which moves
 
-    public Color whoMoves;
+    private Color whoMoves;
 
     public Move()
     {
@@ -62,15 +62,15 @@ public final class Move
 
         Move m = null;
 
-        final int tX = fp.xPos + dX,
-                tY = fp.yPos + dY;
+        final int tX = fp.getxPos() + dX,
+                tY = fp.getyPos() + dY;
 
         MoveType moveType;
 
-        assert fp.color == b.inMove();
+        assert fp.getColor() == b.inMove();
 
-        if (fp.xPos < 0 || fp.xPos > 7
-                || fp.yPos < 0 || fp.yPos > 7
+        if (fp.getxPos() < 0 || fp.getxPos() > 7
+                || fp.getyPos() < 0 || fp.getyPos() > 7
                 || tX < 0 || tX > 7
                 || tY < 0 || tY > 7)
         {
@@ -81,16 +81,16 @@ public final class Move
         
         PieceType takenPiece;
 
-        if (tp != null && tp.color == b.inMove().flip())
+        if (tp != null && tp.getColor() == b.inMove().flip())
         {
-            takenPiece = tp.pieceType;
+            takenPiece = tp.getPieceType();
             moveType = MoveType.CAPTURE;
-            m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, b.inMove());
+            m = new Move(fp.getxPos(), fp.getyPos(), tX, tY, moveType, takenPiece, b.inMove());
         } else if (b.freeSquare(tX, tY))
         {
             takenPiece = null;
             moveType = MoveType.NORMALMOVE;
-            m = new Move(fp.xPos, fp.yPos, tX, tY, moveType, takenPiece, b.inMove());
+            m = new Move(fp.getxPos(), fp.getyPos(), tX, tY, moveType, takenPiece, b.inMove());
         }
 
         return m;
@@ -98,23 +98,23 @@ public final class Move
 
     public boolean aCapture()
     {
-        return moveType.isCapture();
+        return getMoveType().isCapture();
     }
 
   
     public boolean aSimplePromotion()
     {
-        return moveType.isSimplePromotion();
+        return getMoveType().isSimplePromotion();
     }
 
     public boolean aCapturePromotion()
     {
-        return moveType.isCapturePromotion();
+        return getMoveType().isCapturePromotion();
     }
 
     public PieceType promotionTo()
     {
-        return moveType.getPromotionPiece();
+        return getMoveType().getPromotionPiece();
     }
 
     private String posToString(int x, int y)
@@ -161,31 +161,31 @@ public final class Move
             return false;
         }
 
-        return fromX == m.fromX
-                && toX == m.toX
-                && fromY == m.fromY
-                && toY == m.toY
-                && moveType == m.moveType
-                && capturedPiece == m.capturedPiece
-                && whoMoves == m.whoMoves;
+        return getFromX() == m.getFromX()
+                && getToX() == m.getToX()
+                && getFromY() == m.getFromY()
+                && getToY() == m.getToY()
+                && getMoveType() == m.getMoveType()
+                && getCapturedPiece() == m.getCapturedPiece()
+                && getWhoMoves() == m.getWhoMoves();
     }
 
     @Override
     public String toString()
     {
-        if (moveType == MoveType.NORMALMOVE)
+        if (getMoveType() == MoveType.NORMALMOVE)
         {
-            return posToString(fromX, fromY) + "-" + posToString(toX, toY);
+            return posToString(getFromX(), getFromY()) + "-" + posToString(getToX(), getToY());
         }
 
         // Normal capture moves
-        if (moveType == MoveType.CAPTURE_ENPASSANT || moveType == MoveType.CAPTURE)
+        if (getMoveType() == MoveType.CAPTURE_ENPASSANT || getMoveType() == MoveType.CAPTURE)
         {
-            return posToString(fromX, fromY) + "x" + posToString(toX, toY);
+            return posToString(getFromX(), getFromY()) + "x" + posToString(getToX(), getToY());
         }
 
         // mate
-        if (moveType == MoveType.CAPTURE && capturedPiece == PieceType.KING)
+        if (getMoveType() == MoveType.CAPTURE && getCapturedPiece() == PieceType.KING)
         {
             return "mate";
         }
@@ -193,24 +193,136 @@ public final class Move
         // Promotions
         if (aSimplePromotion())
         {
-            return posToString(fromX, fromY) + "-" + posToString(toX, toY) + "=" + promotionTo().getPieceLetter();
+            return posToString(getFromX(), getFromY()) + "-" + posToString(getToX(), getToY()) + "=" + promotionTo().getPieceLetter();
         }
 
         if (aCapturePromotion())
         {
-            return posToString(fromX, fromY) + "x" + posToString(toX, toY) + "=" + promotionTo().getPieceLetter(); 
+            return posToString(getFromX(), getFromY()) + "x" + posToString(getToX(), getToY()) + "=" + promotionTo().getPieceLetter(); 
         }
 
-        if (moveType == MoveType.CASTLE_SHORT)
+        if (getMoveType() == MoveType.CASTLE_SHORT)
         {
             return "o-o";
         }
-        if (moveType == MoveType.CASTLE_LONG)
+        if (getMoveType() == MoveType.CASTLE_LONG)
         {
             return "o-o-o";
         }
 
         return "ERR: getMoveStr";
+    }
+
+    /**
+     * @return the fromX
+     */
+    public int getFromX()
+    {
+        return fromX;
+    }
+
+    /**
+     * @param fromX the fromX to set
+     */
+    public void setFromX(int fromX)
+    {
+        this.fromX = fromX;
+    }
+
+    /**
+     * @return the fromY
+     */
+    public int getFromY()
+    {
+        return fromY;
+    }
+
+    /**
+     * @param fromY the fromY to set
+     */
+    public void setFromY(int fromY)
+    {
+        this.fromY = fromY;
+    }
+
+    /**
+     * @return the toX
+     */
+    public int getToX()
+    {
+        return toX;
+    }
+
+    /**
+     * @param toX the toX to set
+     */
+    public void setToX(int toX)
+    {
+        this.toX = toX;
+    }
+
+    /**
+     * @return the toY
+     */
+    public int getToY()
+    {
+        return toY;
+    }
+
+    /**
+     * @param toY the toY to set
+     */
+    public void setToY(int toY)
+    {
+        this.toY = toY;
+    }
+
+    /**
+     * @return the moveType
+     */
+    public MoveType getMoveType()
+    {
+        return moveType;
+    }
+
+    /**
+     * @param moveType the moveType to set
+     */
+    public void setMoveType(MoveType moveType)
+    {
+        this.moveType = moveType;
+    }
+
+    /**
+     * @return the capturedPiece
+     */
+    public PieceType getCapturedPiece()
+    {
+        return capturedPiece;
+    }
+
+    /**
+     * @param capturedPiece the capturedPiece to set
+     */
+    public void setCapturedPiece(PieceType capturedPiece)
+    {
+        this.capturedPiece = capturedPiece;
+    }
+
+    /**
+     * @return the whoMoves
+     */
+    public Color getWhoMoves()
+    {
+        return whoMoves;
+    }
+
+    /**
+     * @param whoMoves the whoMoves to set
+     */
+    public void setWhoMoves(Color whoMoves)
+    {
+        this.whoMoves = whoMoves;
     }
 
 }

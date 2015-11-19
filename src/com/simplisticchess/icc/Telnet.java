@@ -73,7 +73,7 @@ public class Telnet {
             if (m != null) {
                 System.out.println("Found move " + m.toString());
          }
-               if (m != null && m.whoMoves == Color.WHITE) {
+               if (m != null && m.getWhoMoves() == Color.WHITE) {
                theBoard.performMove(m);
                engine.setPlyDepth(3);
                engine.setBoard(theBoard);

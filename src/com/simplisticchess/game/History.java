@@ -71,7 +71,7 @@ public final class History
         for (int i = 0; i < stateHistory.size(); i++)
         {
             m = stateHistory.get(i).move;
-            if (m.whoMoves == Color.WHITE)
+            if (m.getWhoMoves() == Color.WHITE)
             {
                 prefix = (i + 2) / 2 + ".";
             }

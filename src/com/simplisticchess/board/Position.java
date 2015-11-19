@@ -15,7 +15,7 @@ public final class Position
     private final Piece[][] xyPosition;
     private int numberOfPieces;
     
-    public BitBoard bitBoard;
+    private BitBoard bitBoard;
             
     public Position()
     {
@@ -36,7 +36,7 @@ public final class Position
         {
             p = new Piece(position.pieces[i]);
             this.pieces[i] = p;
-            this.xyPosition[p.xPos][p.yPos] = p;
+            this.xyPosition[p.getxPos()][p.getyPos()] = p;
         }
 
         for (PieceType t : PieceType.values())
@@ -51,10 +51,10 @@ public final class Position
         final Piece p = pieces[i];
         assert p != null;
 
-        final Piece ptmp = xyPosition[p.xPos][p.yPos];
-        assert ptmp != null : "Unexpected null value with piece " + i + " of type " + p.toString() + " at (" + p.xPos + "," + p.yPos + ")" + "\n"
+        final Piece ptmp = xyPosition[p.getxPos()][p.getyPos()];
+        assert ptmp != null : "Unexpected null value with piece " + i + " of type " + p.toString() + " at (" + p.getxPos() + "," + p.getyPos() + ")" + "\n"
                 + this.toString();
-        assert ptmp.xPos == p.xPos && ptmp.yPos == p.yPos;
+        assert ptmp.getxPos() == p.getxPos() && ptmp.getyPos() == p.getyPos();
         return p;
     }
 
@@ -64,7 +64,7 @@ public final class Position
         // For testing: areRepresentationsIsomorphic();
         if (p != null)
         {
-            assert p.xPos == x && p.yPos == y;
+            assert p.getxPos() == x && p.getyPos() == y;
         }
         return p;
     }
@@ -76,9 +76,9 @@ public final class Position
         pieces[numberOfPieces] = p;
         numberOfPieces++;
 
-        xyPosition[p.xPos][p.yPos] = p;
+        xyPosition[p.getxPos()][p.getyPos()] = p;
 
-        bitBoard.insertPiece(p);
+        getBitBoard().insertPiece(p);
     }
 
     // Remove a piece from location x, y and return the piece
@@ -90,12 +90,12 @@ public final class Position
 
         assert (p != null) : "removePiece at " + x + ","  + y + "\n" + this.toString();
 
-        assert (p.xPos == x) && (p.yPos == y);
+        assert (p.getxPos() == x) && (p.getyPos() == y);
 
         for (i = 0; i < numberOfPieces && flag; i++)
         {
-            if (pieces[i].xPos == x
-                    && pieces[i].yPos == y)
+            if (pieces[i].getxPos() == x
+                    && pieces[i].getyPos() == y)
             {
                 pieces[i] = pieces[numberOfPieces - 1];
                 numberOfPieces--;
@@ -105,7 +105,7 @@ public final class Position
 
         xyPosition[x][y] = null;
 
-        bitBoard.removePiece(x, y);
+        getBitBoard().removePiece(x, y);
 
         return p;
     }
@@ -117,15 +117,15 @@ public final class Position
         assert (xFrom != xTo || yFrom != yTo) : "Cannot move from c to c";
         assert (p != null) : this.toString() + "\n" + "Tried move " + xFrom + "," + yFrom + " to " + xTo + "," + yTo;
 
-        p.xPos = xTo;
-        p.yPos = yTo;
+        p.setxPos(xTo);
+        p.setyPos(yTo);
 
         xyPosition[xTo][yTo] = p;
-        assert p.xPos == xyPosition[p.xPos][p.yPos].xPos && p.yPos == xyPosition[p.xPos][p.yPos].yPos;
+        assert p.getxPos() == xyPosition[p.getxPos()][p.getyPos()].getxPos() && p.getyPos() == xyPosition[p.getxPos()][p.getyPos()].getyPos();
         xyPosition[xFrom][yFrom] = null;
 
-        bitBoard.removePiece(xFrom, yFrom);
-        bitBoard.insertPiece(p);
+        getBitBoard().removePiece(xFrom, yFrom);
+        getBitBoard().insertPiece(p);
     }
 
     public int getNumberOfPieces()
@@ -238,53 +238,53 @@ public final class Position
             p = getPiece(i);
 
             // Chose one of opposite color
-            if (p.color == inMove.flip() && !(p.xPos == x && p.yPos == y))
+            if (p.getColor() == inMove.flip() && !(p.getxPos() == x && p.getyPos() == y))
             {
-                switch (p.pieceType)
+                switch (p.getPieceType())
                 {
                     case PAWN:
-                        if ((y == p.yPos + p.color.getColor())
-                                && ((x == p.xPos + 1)
-                                || (x == p.xPos - 1)))
+                        if ((y == p.getyPos() + p.getColor().getColor())
+                                && ((x == p.getxPos() + 1)
+                                || (x == p.getxPos() - 1)))
                         {
                             return true;
                         }
                         break;
                     case ROOK:
-                        if (rookAttack(p.xPos, p.yPos, x, y))
+                        if (rookAttack(p.getxPos(), p.getyPos(), x, y))
                         {
                             return true;
                         }
                         break;
                     case BISHOP:
-                        if (bishopAttack(p.xPos, p.yPos, x, y))
+                        if (bishopAttack(p.getxPos(), p.getyPos(), x, y))
                         {
                             return true;
                         }
                         break;
                     case KNIGHT:
-                        if (((x == p.xPos - 2) && (y == p.yPos + 1))
-                                || ((x == p.xPos - 2) && (y == p.yPos - 1))
-                                || ((x == p.xPos - 1) && (y == p.yPos - 2))
-                                || ((x == p.xPos + 1) && (y == p.yPos + 2))
-                                || ((x == p.xPos - 1) && (y == p.yPos + 2))
-                                || ((x == p.xPos + 1) && (y == p.yPos - 2))
-                                || ((x == p.xPos + 2) && (y == p.yPos + 1))
-                                || ((x == p.xPos + 2) && (y == p.yPos - 1)))
+                        if (((x == p.getxPos() - 2) && (y == p.getyPos() + 1))
+                                || ((x == p.getxPos() - 2) && (y == p.getyPos() - 1))
+                                || ((x == p.getxPos() - 1) && (y == p.getyPos() - 2))
+                                || ((x == p.getxPos() + 1) && (y == p.getyPos() + 2))
+                                || ((x == p.getxPos() - 1) && (y == p.getyPos() + 2))
+                                || ((x == p.getxPos() + 1) && (y == p.getyPos() - 2))
+                                || ((x == p.getxPos() + 2) && (y == p.getyPos() + 1))
+                                || ((x == p.getxPos() + 2) && (y == p.getyPos() - 1)))
                         {
                             return true;
                         }
                         break;
                     case QUEEN:
-                        if (rookAttack(p.xPos, p.yPos, x, y)
-                                || bishopAttack(p.xPos, p.yPos, x, y))
+                        if (rookAttack(p.getxPos(), p.getyPos(), x, y)
+                                || bishopAttack(p.getxPos(), p.getyPos(), x, y))
                         {
                             return true;
                         }
                         break;
                     case KING:
-                        if ((x == p.xPos || x == p.xPos - 1 || x == p.xPos + 1)
-                                && (y == p.yPos || y == p.yPos - 1 || y == p.yPos + 1))
+                        if ((x == p.getxPos() || x == p.getxPos() - 1 || x == p.getxPos() + 1)
+                                && (y == p.getyPos() || y == p.getyPos() - 1 || y == p.getyPos() + 1))
                         {
                             return true;
                         }
@@ -328,6 +328,22 @@ public final class Position
         s = s + " _______________\n";
         s = s + " a b c d e f g h\n";
         return s;
+    }
+
+    /**
+     * @return the bitBoard
+     */
+    public BitBoard getBitBoard()
+    {
+        return bitBoard;
+    }
+
+    /**
+     * @param bitBoard the bitBoard to set
+     */
+    public void setBitBoard(BitBoard bitBoard)
+    {
+        this.bitBoard = bitBoard;
     }
 
 }

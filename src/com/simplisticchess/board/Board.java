@@ -146,7 +146,7 @@ public final class Board
 
     public String getBitboardString()
     {
-        return ((BitBoard) position.bitBoard).toString();
+        return ((BitBoard) position.getBitBoard()).toString();
     }
 
     public Boolean drawBy50MoveRule()
@@ -169,10 +169,10 @@ public final class Board
         for (int i = 0; i < getNumberOfPieces(); i++)
         {
             p = getPiece(i);
-            if (p.pieceType == PieceType.KING && p.color == color)
+            if (p.getPieceType() == PieceType.KING && p.getColor() == color)
             {
-                kingx = p.xPos;
-                kingy = p.yPos;
+                kingx = p.getxPos();
+                kingy = p.getyPos();
                 break;
             }
         }
@@ -191,7 +191,7 @@ public final class Board
         for (int i = state.halfMovesIndex3PosRepition; i < history.size(); i++)
         {
             h = history.get(i);
-            if (((BitBoard) position.bitBoard).equals((BitBoard) h.bbposition))
+            if (((BitBoard) position.getBitBoard()).equals((BitBoard) h.bbposition))
             {
                 k++;
             }
@@ -207,7 +207,7 @@ public final class Board
 
         if (p != null)
         {
-            assert p.xPos == x && p.yPos == y;
+            assert p.getxPos() == x && p.getyPos() == y;
         }
         return p;
     }
@@ -219,7 +219,7 @@ public final class Board
     {
         Piece p;
 
-        p = getPiece(m.fromX, m.fromY);
+        p = getPiece(m.getFromX(), m.getFromY());
 
         state.moveNumber++;
 
@@ -228,7 +228,7 @@ public final class Board
         history.add(new State(state));
 
         // Used to determine the 50-move rule, three times repition
-        if (p.pieceType == PieceType.PAWN)
+        if (p.getPieceType() == PieceType.PAWN)
         {
             state.halfMoveClock = 0;
             state.halfMovesIndex3PosRepition = state.moveNumber;
@@ -238,25 +238,25 @@ public final class Board
         }
 
         // Moving a rook can disallow castling in the future
-        if (p.pieceType == PieceType.ROOK)
+        if (p.getPieceType() == PieceType.ROOK)
         {
-            if (m.whoMoves == Color.BLACK)
+            if (m.getWhoMoves() == Color.BLACK)
             {
-                if (m.fromX == 0 && state.blackCanCastleLong)
+                if (m.getFromX() == 0 && state.blackCanCastleLong)
                 {
                     state.blackCanCastleLong = false;
                 }
-                if (m.fromX == 7 && state.blackCanCastleShort)
+                if (m.getFromX() == 7 && state.blackCanCastleShort)
                 {
                     state.blackCanCastleShort = false;
                 }
             } else
             {
-                if (m.fromX == 0 && state.whiteCanCastleLong)
+                if (m.getFromX() == 0 && state.whiteCanCastleLong)
                 {
                     state.whiteCanCastleLong = false;
                 }
-                if (m.fromX == 7 && state.whiteCanCastleShort)
+                if (m.getFromX() == 7 && state.whiteCanCastleShort)
                 {
                     state.whiteCanCastleShort = false;
                 }
@@ -264,15 +264,15 @@ public final class Board
         }
 
         // Moving the king will disallow castling in the future
-        if (p.pieceType == PieceType.KING)
+        if (p.getPieceType() == PieceType.KING)
         {
-            if (m.whoMoves == Color.BLACK)
+            if (m.getWhoMoves() == Color.BLACK)
             {
                 state.blackCanCastleShort = false;
                 state.blackCanCastleLong = false;
             }
 
-            if (m.whoMoves == Color.WHITE)
+            if (m.getWhoMoves() == Color.WHITE)
             {
                 state.whiteCanCastleShort = false;
                 state.whiteCanCastleLong = false;
@@ -281,98 +281,98 @@ public final class Board
 
         if (m.aSimplePromotion())
         {
-            insertPiece(new Piece(m.toX, m.toY, m.whoMoves, m.promotionTo()));
-            removePiece(m.fromX, m.fromY);
+            insertPiece(new Piece(m.getToX(), m.getToY(), m.getWhoMoves(), m.promotionTo()));
+            removePiece(m.getFromX(), m.getFromY());
         }
 
         if (m.aCapturePromotion())
         {
-            if (getPiece(m.toX, m.toY).pieceType == PieceType.ROOK)
+            if (getPiece(m.getToX(), m.getToY()).getPieceType() == PieceType.ROOK)
             {
-                if (m.whoMoves == Color.WHITE && m.toY == 7)
+                if (m.getWhoMoves() == Color.WHITE && m.getToY() == 7)
                 {
-                    if (m.toX == 0 && state.blackCanCastleLong)
+                    if (m.getToX() == 0 && state.blackCanCastleLong)
                     {
                         state.blackCanCastleLong = false;
                     }
-                    if (m.toX == 7 && state.blackCanCastleShort)
+                    if (m.getToX() == 7 && state.blackCanCastleShort)
                     {
                         state.blackCanCastleShort = false;
                     }
                 }
-                if (m.whoMoves == Color.BLACK && m.toY == 0)
+                if (m.getWhoMoves() == Color.BLACK && m.getToY() == 0)
                 {
-                    if (m.toX == 0 && state.whiteCanCastleLong)
+                    if (m.getToX() == 0 && state.whiteCanCastleLong)
                     {
                         state.whiteCanCastleLong = false;
                     }
-                    if (m.toX == 7 && state.whiteCanCastleShort)
+                    if (m.getToX() == 7 && state.whiteCanCastleShort)
                     {
                         state.whiteCanCastleShort = false;
                     }
                 }
             }
 
-            removePiece(m.toX, m.toY);
-            removePiece(m.fromX, m.fromY);
-            insertPiece(new Piece(m.toX, m.toY, m.whoMoves, m.promotionTo()));
+            removePiece(m.getToX(), m.getToY());
+            removePiece(m.getFromX(), m.getFromY());
+            insertPiece(new Piece(m.getToX(), m.getToY(), m.getWhoMoves(), m.promotionTo()));
         }
 
-        switch (m.moveType)
+        switch (m.getMoveType())
         {
             case NORMALMOVE:
-                position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
+                position.movePiece(m.getFromX(), m.getFromY(), m.getToX(), m.getToY());
                 break;
 
             case CAPTURE_ENPASSANT:
-                position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
-                removePiece(m.toX, m.fromY);
+                position.movePiece(m.getFromX(), m.getFromY(), m.getToX(), m.getToY());
+                removePiece(m.getToX(), m.getFromY());
                 break;
 
             case CASTLE_SHORT:
                 // Move the king first
-                position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
+                position.movePiece(m.getFromX(), m.getFromY(), m.getToX(), m.getToY());
                 // Then the rook
-                position.movePiece(7, m.fromY, 5, m.fromY);
+                position.movePiece(7, m.getFromY(), 5, m.getFromY());
                 break;
 
             case CASTLE_LONG:
                 // Move the king first
-                position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
+                position.movePiece(m.getFromX(), m.getFromY(), m.getToX(), m.getToY());
                 // Then the rook
-                position.movePiece(0, m.fromY, 3, m.fromY);
+                position.movePiece(0, m.getFromY(), 3, m.getFromY());
                 break;
 
             case CAPTURE:
                 // Capturing a rook may affect casteling opputunities!
-                if (getPiece(m.toX, m.toY).pieceType == PieceType.ROOK)
+                if (getPiece(m.getToX(), m.getToY()).getPieceType() == PieceType.ROOK)
                 {
-                    if (m.whoMoves == Color.WHITE && m.toY == 7)
+                    if (m.getWhoMoves() == Color.WHITE && m.getToY() == 7)
                     {
-                        if (m.toX == 0 && state.blackCanCastleLong)
+                        if (m.getToX() == 0 && state.blackCanCastleLong)
                         {
                             state.blackCanCastleLong = false;
                         }
-                        if (m.toX == 7 && state.blackCanCastleShort)
+                        if (m.getToX() == 7 && state.blackCanCastleShort)
                         {
                             state.blackCanCastleShort = false;
                         }
                     }
-                    if (m.whoMoves == Color.BLACK && m.toY == 0)
+                    if (m.getWhoMoves() == Color.BLACK && m.getToY() == 0)
                     {
-                        if (m.toX == 0 && state.whiteCanCastleLong)
+                        if (m.getToX() == 0 && state.whiteCanCastleLong)
                         {
                             state.whiteCanCastleLong = false;
                         }
-                        if (m.toX == 7 && state.whiteCanCastleShort)
+                        if (m.getToX() == 7 && state.whiteCanCastleShort)
                         {
                             state.whiteCanCastleShort = false;
                         }
                     }
                 }
                 // Do the capture
-                removePiece(m.toX, m.toY);
-                position.movePiece(m.fromX, m.fromY, m.toX, m.toY);
+                removePiece(m.getToX(), m.getToY());
+                position.movePiece(m.getFromX(), m.getFromY(), m.getToX(), m.getToY());
                 break;
         }
 
@@ -406,54 +406,54 @@ public final class Board
 
             if (m.aSimplePromotion())
             {
-                insertPiece(new Piece(m.fromX, m.fromY, m.whoMoves, PieceType.PAWN));
-                removePiece(m.toX, m.toY);
+                insertPiece(new Piece(m.getFromX(), m.getFromY(), m.getWhoMoves(), PieceType.PAWN));
+                removePiece(m.getToX(), m.getToY());
             }
 
             if (m.aCapturePromotion())
             {
-                removePiece(m.toX, m.toY);
-                insertPiece(new Piece(m.toX, m.toY, m.whoMoves.flip(), m.capturedPiece));
-                insertPiece(new Piece(m.fromX, m.fromY, m.whoMoves, PieceType.PAWN));
+                removePiece(m.getToX(), m.getToY());
+                insertPiece(new Piece(m.getToX(), m.getToY(), m.getWhoMoves().flip(), m.getCapturedPiece()));
+                insertPiece(new Piece(m.getFromX(), m.getFromY(), m.getWhoMoves(), PieceType.PAWN));
                 return true;
             }
 
-            switch (m.moveType)
+            switch (m.getMoveType())
             {
                 case NORMALMOVE:
-                    position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
+                    position.movePiece(m.getToX(), m.getToY(), m.getFromX(), m.getFromY());
                     break;
 
                 case CAPTURE_ENPASSANT:
-                    if (m.whoMoves == Color.WHITE)
+                    if (m.getWhoMoves() == Color.WHITE)
                     {
                         color = Color.BLACK;
                     }
-                    if (m.whoMoves == Color.BLACK)
+                    if (m.getWhoMoves() == Color.BLACK)
                     {
                         color = Color.WHITE;
                     }
-                    insertPiece(new Piece(m.toX, m.fromY, color, PieceType.PAWN));
-                    position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
+                    insertPiece(new Piece(m.getToX(), m.getFromY(), color, PieceType.PAWN));
+                    position.movePiece(m.getToX(), m.getToY(), m.getFromX(), m.getFromY());
                     break;
 
                 case CASTLE_SHORT:
                     // Move the king back
-                    position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
+                    position.movePiece(m.getToX(), m.getToY(), m.getFromX(), m.getFromY());
                     // Then the rook
-                    position.movePiece(5, m.fromY, 7, m.fromY);
+                    position.movePiece(5, m.getFromY(), 7, m.getFromY());
                     break;
 
                 case CASTLE_LONG:
                     // Move the king back
-                    position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
+                    position.movePiece(m.getToX(), m.getToY(), m.getFromX(), m.getFromY());
                     // Then the rook
-                    position.movePiece(3, m.fromY, 0, m.fromY);
+                    position.movePiece(3, m.getFromY(), 0, m.getFromY());
                     break;
 
                 case CAPTURE:
-                    position.movePiece(m.toX, m.toY, m.fromX, m.fromY);
-                    insertPiece(new Piece(m.toX, m.toY, m.whoMoves.flip(), m.capturedPiece));
+                    position.movePiece(m.getToX(), m.getToY(), m.getFromX(), m.getFromY());
+                    insertPiece(new Piece(m.getToX(), m.getToY(), m.getWhoMoves().flip(), m.getCapturedPiece()));
                     break;
             }
             return true;
@@ -578,7 +578,7 @@ public final class Board
                     assert xPawn >= 0 && xPawn <= 7;
                     assert yPawn >= 0 && yPawn <= 7;
                     final Piece p = getPiece(xPawn, yPawn - state.inMove.getColor());
-                    if (p != null && p.pieceType == PieceType.PAWN)
+                    if (p != null && p.getPieceType() == PieceType.PAWN)
                     {
                         state.move = new Move(xPawn, yPawn + state.inMove.getColor(), 
                                               xPawn, yPawn - state.inMove.getColor(), 

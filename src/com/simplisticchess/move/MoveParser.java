@@ -68,42 +68,42 @@ public final class MoveParser
 
         Color whoToMove = b.inMove();
 
-        if (p.color != whoToMove)
+        if (p.getColor() != whoToMove)
         {
             return null;
         }
 
         Move m = new Move();
-        m.fromX = fromX;
-        m.fromY = fromY;
-        m.toX = toX;
-        m.toY = toY;
-        m.capturedPiece = null;
-        m.whoMoves = whoToMove;
+        m.setFromX(fromX);
+        m.setFromY(fromY);
+        m.setToX(toX);
+        m.setToY(toY);
+        m.setCapturedPiece(null);
+        m.setWhoMoves(whoToMove);
 
         if (str.length() == 4)
         {
             // White or black does a short or a long castling
-            if (p.pieceType == PieceType.KING && fromY == toY && (fromY == 0 || fromY == 7))
+            if (p.getPieceType() == PieceType.KING && fromY == toY && (fromY == 0 || fromY == 7))
             {
                 if (fromX == 4 && toX == 6)
                 {
-                    m.moveType = MoveType.CASTLE_SHORT;
+                    m.setMoveType(MoveType.CASTLE_SHORT);
                     return m;
                 } else if (fromX == 4 && toX == 2)
                 {
-                    m.moveType = MoveType.CASTLE_LONG;
+                    m.setMoveType(MoveType.CASTLE_LONG);
                     return m;
                 }
             }
 
             // ENPASSENT Move
-            if (p.pieceType == PieceType.PAWN)
+            if (p.getPieceType() == PieceType.PAWN)
             {
                 if ((fromX != toX) && (b.freeSquare(toX, toY)))
                 {
-                    m.moveType = MoveType.CAPTURE_ENPASSANT;
-                    m.capturedPiece = PieceType.PAWN;
+                    m.setMoveType(MoveType.CAPTURE_ENPASSANT);
+                    m.setCapturedPiece(PieceType.PAWN);
                     return m;
                 }
             }
@@ -111,26 +111,26 @@ public final class MoveParser
             // Normal move
             if (b.freeSquare(toX, toY))
             {
-                m.moveType = MoveType.NORMALMOVE;
+                m.setMoveType(MoveType.NORMALMOVE);
                 return m;
             }
 
             // A capturing move
             Piece pto;
             pto = b.getPiece(toX, toY);
-            if (pto != null && pto.color == whoToMove.flip())
+            if (pto != null && pto.getColor() == whoToMove.flip())
             {
-                m.moveType = MoveType.CAPTURE;
-                m.capturedPiece = pto.pieceType;
+                m.setMoveType(MoveType.CAPTURE);
+                m.setCapturedPiece(pto.getPieceType());
                 return m;
             }
         }
 
         // Promotion moves
         if (str.length() == 5
-                && p.pieceType == PieceType.PAWN
-                && ((p.color == Color.WHITE && fromY == 6)
-                || (p.color == Color.BLACK && fromY == 1)))
+                && p.getPieceType() == PieceType.PAWN
+                && ((p.getColor() == Color.WHITE && fromY == 6)
+                || (p.getColor() == Color.BLACK && fromY == 1)))
         {
 
             // Simple promotions
@@ -139,19 +139,19 @@ public final class MoveParser
                 switch (s[4])
                 {
                     case 'N':
-                        m.moveType = MoveType.PROMOTE_TO_KNIGHT;
+                        m.setMoveType(MoveType.PROMOTE_TO_KNIGHT);
                         break;
                     case 'K':
-                        m.moveType = MoveType.PROMOTE_TO_KNIGHT;
+                        m.setMoveType(MoveType.PROMOTE_TO_KNIGHT);
                         break;
                     case 'B':
-                        m.moveType = MoveType.PROMOTE_TO_BISHOP;
+                        m.setMoveType(MoveType.PROMOTE_TO_BISHOP);
                         break;
                     case 'Q':
-                        m.moveType = MoveType.PROMOTE_TO_QUEEN;
+                        m.setMoveType(MoveType.PROMOTE_TO_QUEEN);
                         break;
                     case 'R':
-                        m.moveType = MoveType.PROMOTE_TO_ROOK;
+                        m.setMoveType(MoveType.PROMOTE_TO_ROOK);
                         break;
                 }
                 return m;
@@ -160,25 +160,25 @@ public final class MoveParser
             // Capture and promote
             if (fromX != toX
                     && !b.freeSquare(toX, toY)
-                    && b.getPiece(toX, toY).color == p.color.flip())
+                    && b.getPiece(toX, toY).getColor() == p.getColor().flip())
             {
                 switch (s[4])
                 {
                     case 'K':
-                        m.moveType = MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT;
+                        m.setMoveType(MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT);
                         break;
                     case 'B':
-                        m.moveType = MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP;
+                        m.setMoveType(MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP);
                         break;
                     case 'Q':
-                        m.moveType = MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN;
+                        m.setMoveType(MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN);
                         break;
                     case 'R':
-                        m.moveType = MoveType.CAPTURE_AND_PROMOTE_TO_ROOK;
+                        m.setMoveType(MoveType.CAPTURE_AND_PROMOTE_TO_ROOK);
                         break;
                 }
 
-                m.capturedPiece = b.getPiece(toX, toY).pieceType;
+                m.setCapturedPiece(b.getPiece(toX, toY).getPieceType());
 
                 return m;
             }

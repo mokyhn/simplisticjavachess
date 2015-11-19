@@ -34,11 +34,11 @@ public class BitBoard implements IBitBoard
         for (int i = 0; i < b.getNumberOfPieces(); i++)
         {
             p = b.getPiece(i);
-            int c = getIndexFromColor(p.color);
-            PieceType t = p.pieceType;
+            int c = getIndexFromColor(p.getColor());
+            PieceType t = p.getPieceType();
             if (t != null)
             {
-                bb[c][t.getType()] = bb[c][t.getType()] | setBitHigh(getSquareNoFromPos(p.xPos, p.yPos));
+                bb[c][t.getType()] = bb[c][t.getType()] | setBitHigh(getSquareNoFromPos(p.getxPos(), p.getyPos()));
             }
         }
     }
@@ -95,8 +95,8 @@ public class BitBoard implements IBitBoard
 
     public void insertPiece(Piece p)
     {
-        bb[getIndexFromColor(p.color)][p.pieceType.getType()] = bb[getIndexFromColor(p.color)][p.pieceType.getType()]
-                | setBitHigh(getSquareNoFromPos(p.xPos, p.yPos));
+        bb[getIndexFromColor(p.getColor())][p.getPieceType().getType()] = bb[getIndexFromColor(p.getColor())][p.getPieceType().getType()]
+                | setBitHigh(getSquareNoFromPos(p.getxPos(), p.getyPos()));
     }
 
     public boolean hasPiece(int x, int y, Color color, PieceType type)

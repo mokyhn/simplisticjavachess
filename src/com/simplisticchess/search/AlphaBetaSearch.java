@@ -75,7 +75,7 @@ public class AlphaBetaSearch extends AbstractSearch
              System.out.println("WHITE: Eval, alpha = " + evaluation + ", " + alpha + " " + m.toString());
              }*/
             analyzeBoard.performMove(m);
-            if (analyzeBoard.isInCheck(m.whoMoves))
+            if (analyzeBoard.isInCheck(m.getWhoMoves()))
             {
                 analyzeBoard.undo(); // The move was not legal
                 continue;                   // Try next pseudolegal move

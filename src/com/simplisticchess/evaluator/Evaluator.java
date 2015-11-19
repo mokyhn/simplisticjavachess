@@ -30,29 +30,29 @@ public final class Evaluator
         for (int i = 0; i < b.getNumberOfPieces(); i++)
         {
             p = b.getPiece(i);
-            switch (p.pieceType)
+            switch (p.getPieceType())
             {
                 case PAWN:
-                    result = PAWNVALUE * p.color.getColor() + result;
+                    result = PAWNVALUE * p.getColor().getColor() + result;
                     break;
                 case ROOK:
-                    result = ROOKVALUE * p.color.getColor() + result;
+                    result = ROOKVALUE * p.getColor().getColor() + result;
                     break;
                 case BISHOP:
-                    result = BISHOPVALUE * p.color.getColor() + result;
+                    result = BISHOPVALUE * p.getColor().getColor() + result;
                     break;
                 case KNIGHT:
-                    result = KNIGHTVALUE * p.color.getColor() + result;
+                    result = KNIGHTVALUE * p.getColor().getColor() + result;
                     break;
                 case QUEEN:
-                    result = QUEENVALUE * p.color.getColor() + result;
+                    result = QUEENVALUE * p.getColor().getColor() + result;
                     break;
                 case KING:
-                    if (p.color == Color.BLACK)
+                    if (p.getColor() == Color.BLACK)
                     {
                         thereIsABlackKing = true;
                     }
-                    if (p.color == Color.WHITE)
+                    if (p.getColor() == Color.WHITE)
                     {
                         thereIsAWhiteKing = true;
                     }
