@@ -1,6 +1,6 @@
 package com.simplisticchess.icc;
 
-import com.simplisticchess.ChessIO;
+import com.simplisticchess.move.MoveParser;
 import com.simplisticchess.move.NoMoveException;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.move.Move;
@@ -147,7 +147,7 @@ public class ICCProtocol {
     }
     
     public Move getMove() {
-     ChessIO io = new ChessIO();
+     MoveParser io = new MoveParser();
      
      if (isAMoveResponse()) {
          try {

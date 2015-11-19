@@ -89,7 +89,7 @@ public final class Position
         Boolean flag = true;
         Piece p = xyPosition[x][y];
 
-        assert (p != null) : "removePiece at " + Move.posToString(x, y) + "\n" + this.toString();
+        assert (p != null) : "removePiece at " + x + ","  + y + "\n" + this.toString();
 
         assert (p.xPos == x) && (p.yPos == y);
 
@@ -116,7 +116,7 @@ public final class Position
         final Piece p = xyPosition[xFrom][yFrom];
 
         assert (xFrom != xTo || yFrom != yTo) : "Cannot move from c to c";
-        assert (p != null) : this.toString() + "\n" + "Tried move " + Move.posToString(xFrom, yFrom) + " to " + Move.posToString(xTo, yTo);
+        assert (p != null) : this.toString() + "\n" + "Tried move " + xFrom + "," + yFrom + " to " + xTo + "," + yTo;
 
         p.xPos = xTo;
         p.yPos = yTo;

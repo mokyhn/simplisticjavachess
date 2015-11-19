@@ -5,7 +5,6 @@ package com.simplisticchess.board;
  */
 import com.simplisticchess.game.History;
 import com.simplisticchess.game.State;
-import com.simplisticchess.Utils;
 import com.simplisticchess.evaluator.Evaluator;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.move.MoveType;
@@ -474,7 +473,7 @@ public final class Board
         int i;
         int parsingPartNo;
         char c;
-        final String fen = Utils.trimWhiteSpace(sfen.trim());
+        final String fen = trimWhiteSpace(sfen.trim());
         String num1 = "";
         String num2 = "";
 
@@ -636,6 +635,32 @@ public final class Board
             state.moveNumber--;
         }
 
+    }
+
+    private String trimWhiteSpace(final String s)
+    {
+        String t = "";
+        char c;
+        boolean flag = false;
+
+        for (int i = 0; i < s.length(); i++)
+        {
+            c = s.charAt(i);
+
+            if (c == ' ' && !flag)
+            {
+                flag = true;
+                t = t + ' ';
+            }
+
+            if (c != ' ')
+            {
+                flag = false;
+                t = t + c;
+            }
+        }
+
+        return t;
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.simplisticchess;
 
+import com.simplisticchess.move.MoveParser;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.move.NoMoveException;
@@ -116,7 +117,7 @@ public class ChessGame
     {
         try
                 {
-                    Move m = ChessIO.parseMove(board, str);
+                    Move m = MoveParser.parseMove(board, str);
                     if (!board.isDraw() || !board.isMate())
                     {
                         Iterator<Move> theMoves = MoveGenerator.generateAllMoves(board).listIterator();
