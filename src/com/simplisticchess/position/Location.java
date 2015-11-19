@@ -70,4 +70,24 @@ public final class Location
         return letters[x] + (y + 1);
     }
     
+    /**
+     * 
+     * @param location
+     * @return true if x equals, i.e. the locations specify the same column
+     */
+    public boolean onSameFile(Location location) 
+    {
+        return x == location.x;
+    }
+    
+    /**
+     * 
+     * @param location
+     * @return true if y equals, i.e. the locations specify the same row
+     */
+    public boolean onSameRank(Location location)
+    {
+        return y == location.y;
+    }
+    
 }

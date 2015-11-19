@@ -501,12 +501,12 @@ public final class Board
                     x = x + (int) (c - '0');
                 } else if (c >= 'b' && c <= 'r')
                 {
-                    insertPiece(new Piece(x, y, c));
+                    insertPiece(new Piece(new Location(x, y), c));
                     x++;
                     continue;
                 } else if (c >= 'B' && c <= 'R')
                 {
-                    insertPiece(new Piece(x, y, c));
+                    insertPiece(new Piece(new Location(x, y), c));
                     x++;
                     continue;
                 } else if (c == '/')

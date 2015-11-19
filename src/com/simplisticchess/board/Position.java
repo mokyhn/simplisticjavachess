@@ -132,7 +132,7 @@ public final class Position
 
     private boolean rookAttack(Location l1, Location l2)
     {
-        Boolean allFree = true;
+        Boolean allFree;
         int lowX, // From x pos
                 highX, // To x pos
                 lowY, // From y pos 
@@ -140,7 +140,7 @@ public final class Position
                 ix, // Iterate x
                 iy;    // Iterate y
 
-        if (l1.getX() == l2.getX())
+        if (l1.onSameFile(l2))
         {
             allFree = true;
             if (l1.getY() < l2.getY())
@@ -165,7 +165,7 @@ public final class Position
                 return true;
             }
         }
-        if (l1.getY() == l2.getY())
+        if (l1.onSameRank(l2))
         {
             allFree = true;
             if (l1.getX() < l2.getX())

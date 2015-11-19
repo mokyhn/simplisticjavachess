@@ -26,8 +26,8 @@ public final class Piece {
         this(piece.getLocation(), piece.color, piece.pieceType);
     }
     
-    public Piece(int x, int y, char pieceLetter)  {
-        location = new Location(x, y);
+    public Piece(Location location, char pieceLetter)  {
+        this.location = new Location(location);
 
         switch (pieceLetter) {
             case 'p': pieceType  = PAWN;

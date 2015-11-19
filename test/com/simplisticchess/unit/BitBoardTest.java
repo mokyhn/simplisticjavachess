@@ -25,8 +25,8 @@ public class BitBoardTest {
 
         Piece p1 = new Piece(new Location(1, 2), Color.WHITE, PieceType.KING);
         Piece p2 = new Piece(new Location(7, 4), Color.BLACK, PieceType.KING);
-        Piece p3 = new Piece(5, 5, 'Q');
-        Piece p4 = new Piece(6, 6, 'q');
+        Piece p3 = new Piece(new Location(5, 5), 'Q');
+        Piece p4 = new Piece(new Location(6, 6), 'q');
 
         b.insertPiece(p1);
         b.insertPiece(p2);
@@ -50,8 +50,8 @@ public class BitBoardTest {
         System.out.println("insertPiece");
         Piece p1 = new Piece(new Location(1, 2), Color.WHITE, PieceType.KING);
         Piece p2 = new Piece(new Location(7, 4), Color.BLACK, PieceType.KING);
-        Piece p3 = new Piece(5, 5, 'Q');
-        Piece p4 = new Piece(6, 6, 'q');
+        Piece p3 = new Piece(new Location(5, 5), 'Q');
+        Piece p4 = new Piece(new Location(6, 6), 'q');
         
         BitBoard instance = new BitBoard();
         instance.insertPiece(p1);
@@ -74,8 +74,8 @@ public class BitBoardTest {
 
         Piece p1 = new Piece(new Location(1, 2), Color.WHITE, PieceType.KING);
         Piece p2 = new Piece(new Location(7, 4), Color.BLACK, PieceType.KING);
-        Piece p3 = new Piece(5, 5, 'Q');
-        Piece p4 = new Piece(6, 6, 'q');
+        Piece p3 = new Piece(new Location(5, 5), 'Q');
+        Piece p4 = new Piece(new Location(6, 6), 'q');
         
         BitBoard instance = new BitBoard();
         instance.insertPiece(p1);
@@ -84,10 +84,10 @@ public class BitBoardTest {
         instance.insertPiece(p4);
         
         
-        Piece expResult1 = new Piece(1,2, 'K');
-        Piece expResult2 = new Piece(7,4, 'k');
-        Piece expResult3 = new Piece(6,6, 'q');
-        Piece expResult4 = new Piece(5,5, 'Q');
+        Piece expResult1 = new Piece(new Location(1,2), 'K');
+        Piece expResult2 = new Piece(new Location(7,4), 'k');
+        Piece expResult3 = new Piece(new Location(6,6), 'q');
+        Piece expResult4 = new Piece(new Location(5,5), 'Q');
         
         Piece result1 = instance.removePiece(new Location(1, 2));
         Piece result2 = instance.removePiece(new Location(7, 4));
@@ -113,8 +113,8 @@ public class BitBoardTest {
 
         Piece p1 = new Piece(new Location(1, 2), Color.WHITE, PieceType.KING);
         Piece p2 = new Piece(new Location(7, 4), Color.BLACK, PieceType.KING);
-        Piece p3 = new Piece(5, 5, 'Q');
-        Piece p4 = new Piece(6, 6, 'q');
+        Piece p3 = new Piece(new Location(5, 5), 'Q');
+        Piece p4 = new Piece(new Location(6, 6), 'q');
              
         instance1.insertPiece(p1);
         instance1.insertPiece(p2);
@@ -130,8 +130,8 @@ public class BitBoardTest {
     public void testCopyConstructor() {
         Piece p1 = new Piece(new Location(1, 2), Color.WHITE, PieceType.KING);
         Piece p2 = new Piece(new Location(7, 4), Color.BLACK, PieceType.KING);
-        Piece p3 = new Piece(5, 5, 'Q');
-        Piece p4 = new Piece(6, 6, 'q');
+        Piece p3 = new Piece(new Location(5, 5), 'Q');
+        Piece p4 = new Piece(new Location(6, 6), 'q');
         
         BitBoard instance1 = new BitBoard();
         instance1.insertPiece(p1);
