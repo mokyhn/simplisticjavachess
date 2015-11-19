@@ -37,7 +37,6 @@ public final class State
 
     public State()
     {
-        this.move = new Move();
         this.moveNumber = 0;
         this.halfMoveClock = 0;
         this.halfMovesIndex3PosRepition = 0;
@@ -48,7 +47,7 @@ public final class State
 
     public State(State state)
     {
-        move = new Move(state.move);
+        move = state.move == null ? null : new Move(state.move);
         inMove = state.inMove;
         moveNumber = state.moveNumber;
         blackCanCastleLong = state.blackCanCastleLong;

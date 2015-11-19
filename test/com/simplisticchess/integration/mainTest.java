@@ -148,26 +148,27 @@ public class mainTest
         Board b = new Board(fen);
         String[] expectedMoveStrings = expectedMoveStrs.split(" ");
         ArrayList<Move> expectedMoves = new ArrayList<Move>();
-        Move m = null;
         int i;
 
-        for (i = 0; i < moveStrings.length; i++)
+        Move m;
+        for (String str : moveStrings)
         {
-            if (moveStrings[i] != null)
+            if (str != null)
             {
-                m = MoveParser.parseMove(b, moveStrings[i]);
+                m = MoveParser.parseMove(b, str);
+                if (m != null)
+                {
+                    b.performMove(m);
+                }
             }
-            if (m != null)
-            {
-                b.performMove(m);
-            }
+           
         }
 
-        for (i = 0; i < expectedMoveStrings.length; i++)
+        for (String str : expectedMoveStrings)
         {
-            if (expectedMoveStrings[i] != null)
+            if (str != null)
             {
-                m = MoveParser.parseMove(b, expectedMoveStrings[i]);
+                m = MoveParser.parseMove(b, str);
                 if (m != null)
                 {
                     expectedMoves.add(m);

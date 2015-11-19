@@ -9,23 +9,19 @@ import com.simplisticchess.board.Board;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.PieceType;
+import com.simplisticchess.position.Location;
 
 public final class Move
 {
 
-    private int fromX;
-    private int fromY;
-    private int toX;
-    private int toY;
-    private MoveType moveType; 
-    private PieceType capturedPiece; // Used for storing pieces that are taken
+    private final Location from;
+    private final Location to;
+    
+    private final MoveType moveType; 
+    private final PieceType capturedPiece; // Used for storing pieces that are taken
                               // by the piece which moves
 
-    private Color whoMoves;
-
-    public Move()
-    {
-    }
+    private final Color whoMoves;
 
     public Move(int fromX, int fromY, int toX, int toY, MoveType type, PieceType capturedPiece, Color whoMoves)
     {
@@ -35,10 +31,8 @@ public final class Move
                 && toY >= 0 && toY <= 7
                 && (!(fromX == toX && fromY == toY)) : "(fX, fY, tX, tY) = " + "(" + fromX + ", " + fromY + ", " + toX + "," + toY + ")";
 
-        this.fromX = fromX;
-        this.fromY = fromY;
-        this.toX = toX;
-        this.toY = toY;
+        from = new Location(fromX, fromY);
+        to = new Location(toX, toY);
         this.moveType = type;
         this.capturedPiece = capturedPiece;
         this.whoMoves = whoMoves;
@@ -46,10 +40,8 @@ public final class Move
 
     public Move(Move move)
     {
-        fromX = move.fromX;
-        fromY = move.fromY;
-        toX = move.toX;
-        toY = move.toY;
+        from = new Location(move.getFrom());
+        to = new Location(move.getTo());
         moveType = move.moveType;
         whoMoves = move.whoMoves;
         capturedPiece = move.capturedPiece;
@@ -213,61 +205,50 @@ public final class Move
         return "ERR: getMoveStr";
     }
 
-    /**
-     * @return the fromX
-     */
     public int getFromX()
     {
-        return fromX;
+        return from.getX();
     }
 
  
-    /**
-     * @return the fromY
-     */
     public int getFromY()
     {
-        return fromY;
+        return from.getY();
     }
 
-     /**
-     * @return the toX
-     */
     public int getToX()
     {
-        return toX;
+        return to.getX();
     }
 
 
-    /**
-     * @return the toY
-     */
     public int getToY()
     {
-        return toY;
+        return to.getY();
     }
 
-    /**
-     * @return the moveType
-     */
+    public Location getFrom()
+    {
+        return from;
+    }
+    
+    public Location getTo()
+    {
+        return to;
+    }
+   
     public MoveType getMoveType()
     {
         return moveType;
     }
 
 
-    /**
-     * @return the capturedPiece
-     */
     public PieceType getCapturedPiece()
     {
         return capturedPiece;
     }
 
 
-    /**
-     * @return the whoMoves
-     */
     public Color getWhoMoves()
     {
         return whoMoves;
