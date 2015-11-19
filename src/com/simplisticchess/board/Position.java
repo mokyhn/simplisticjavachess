@@ -5,7 +5,6 @@ package com.simplisticchess.board;
  *
  */
 import com.simplisticchess.piece.Piece;
-import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.PieceType;
 

@@ -81,7 +81,6 @@ public class mainTest
     {
         String[] unExpectedMovesStr = moves.split(" ");
         ArrayList<Move> unExpectedMoves = new ArrayList<Move>();
-        MoveParser cio = new MoveParser();
         Board b = new Board(fen);
         Move m;
         AbstractSearch engine;
@@ -109,7 +108,7 @@ public class mainTest
         {
             if (unExpectedMovesStr[i] != null)
             {
-                m = cio.parseMove(b, unExpectedMovesStr[i]);
+                m = MoveParser.parseMove(b, unExpectedMovesStr[i]);
                 if (m != null)
                 {
                     unExpectedMoves.add(m);
@@ -147,7 +146,6 @@ public class mainTest
     {
         String[] moveStrings = moveSequence.split(" ");
         Board b = new Board(fen);
-        MoveParser cio = new MoveParser();
         String[] expectedMoveStrings = expectedMoveStrs.split(" ");
         ArrayList<Move> expectedMoves = new ArrayList<Move>();
         Move m = null;
@@ -157,7 +155,7 @@ public class mainTest
         {
             if (moveStrings[i] != null)
             {
-                m = cio.parseMove(b, moveStrings[i]);
+                m = MoveParser.parseMove(b, moveStrings[i]);
             }
             if (m != null)
             {
@@ -169,7 +167,7 @@ public class mainTest
         {
             if (expectedMoveStrings[i] != null)
             {
-                m = cio.parseMove(b, expectedMoveStrings[i]);
+                m = MoveParser.parseMove(b, expectedMoveStrings[i]);
                 if (m != null)
                 {
                     expectedMoves.add(m);

@@ -147,11 +147,10 @@ public class ICCProtocol {
     }
     
     public Move getMove() {
-     MoveParser io = new MoveParser();
-     
+    
      if (isAMoveResponse()) {
          try {
-             return io.parseMove(theboard, getAlgebraicMoveStr());
+             return MoveParser.parseMove(theboard, getAlgebraicMoveStr());
          } catch (NoMoveException ex) {
              System.out.println("Move parse error in ICCProtocol.java");
          }
