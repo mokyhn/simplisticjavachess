@@ -3,6 +3,7 @@ package com.simplisticchess.board;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
+import com.simplisticchess.position.Location;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -53,14 +54,14 @@ public class PositionTest
         assertTrue(areRepresentationsIsomorphic( new Position()));
         
         Position position = new Position();
-        position.insertPiece(new Piece(2,3,Color.BLACK,PieceType.KING));
+        position.insertPiece(new Piece(new Location(2,3),Color.BLACK,PieceType.KING));
         
         assertTrue(areRepresentationsIsomorphic(position));
         
-        position.insertPiece(new Piece(0,0,Color.WHITE,PieceType.KING));
+        position.insertPiece(new Piece(new Location(0,0),Color.WHITE,PieceType.KING));
         assertTrue(areRepresentationsIsomorphic(position));
         
-        position.insertPiece(new Piece(7,7,Color.BLACK,PieceType.PAWN));
+        position.insertPiece(new Piece(new Location(7,7),Color.BLACK,PieceType.PAWN));
         assertTrue(areRepresentationsIsomorphic(position));
        
     }
@@ -70,8 +71,8 @@ public class PositionTest
     public void testInsertingOnTop()
     {
         Position position = new Position();
-        position.insertPiece(new Piece(2,3,Color.BLACK,PieceType.KING));
-        position.insertPiece(new Piece(2,3,Color.WHITE,PieceType.PAWN));
+        position.insertPiece(new Piece(new Location(2,3),Color.BLACK,PieceType.KING));
+        position.insertPiece(new Piece(new Location(2,3),Color.WHITE,PieceType.PAWN));
         assertTrue(areRepresentationsIsomorphic(position));
 
     }

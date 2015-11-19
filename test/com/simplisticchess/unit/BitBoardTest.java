@@ -9,6 +9,7 @@ import com.simplisticchess.board.Board;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.PieceType;
+import com.simplisticchess.position.Location;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -22,8 +23,8 @@ public class BitBoardTest {
         System.out.println("testBitboardConstructor");
         Board b = new Board();
 
-        Piece p1 = new Piece(1, 2, Color.WHITE, PieceType.KING);
-        Piece p2 = new Piece(7, 4, Color.BLACK, PieceType.KING);
+        Piece p1 = new Piece(new Location(1, 2), Color.WHITE, PieceType.KING);
+        Piece p2 = new Piece(new Location(7, 4), Color.BLACK, PieceType.KING);
         Piece p3 = new Piece(5, 5, 'Q');
         Piece p4 = new Piece(6, 6, 'q');
 
@@ -35,10 +36,10 @@ public class BitBoardTest {
 
         BitBoard instance = new BitBoard(b);
               
-        assertTrue(instance.hasPiece(1, 2, Color.WHITE, PieceType.KING));
-        assertTrue(instance.hasPiece(7, 4, Color.BLACK, PieceType.KING));
-        assertTrue(instance.hasPiece(5, 5, Color.WHITE, PieceType.QUEEN));
-        assertTrue(instance.hasPiece(6, 6, Color.BLACK, PieceType.QUEEN));
+        assertTrue(instance.hasPiece(new Location(1, 2), Color.WHITE, PieceType.KING));
+        assertTrue(instance.hasPiece(new Location(7, 4), Color.BLACK, PieceType.KING));
+        assertTrue(instance.hasPiece(new Location(5, 5), Color.WHITE, PieceType.QUEEN));
+        assertTrue(instance.hasPiece(new Location(6, 6), Color.BLACK, PieceType.QUEEN));
     }
 
     /**
@@ -47,8 +48,8 @@ public class BitBoardTest {
     @Test
     public void testInsertPiece() {
         System.out.println("insertPiece");
-        Piece p1 = new Piece(1, 2, Color.WHITE, PieceType.KING);
-        Piece p2 = new Piece(7, 4, Color.BLACK, PieceType.KING);
+        Piece p1 = new Piece(new Location(1, 2), Color.WHITE, PieceType.KING);
+        Piece p2 = new Piece(new Location(7, 4), Color.BLACK, PieceType.KING);
         Piece p3 = new Piece(5, 5, 'Q');
         Piece p4 = new Piece(6, 6, 'q');
         
@@ -58,10 +59,10 @@ public class BitBoardTest {
         instance.insertPiece(p3);
         instance.insertPiece(p4);
               
-        assertTrue(instance.hasPiece(1, 2, Color.WHITE, PieceType.KING));
-        assertTrue(instance.hasPiece(7, 4, Color.BLACK, PieceType.KING));
-        assertTrue(instance.hasPiece(5, 5, Color.WHITE, PieceType.QUEEN));
-        assertTrue(instance.hasPiece(6, 6, Color.BLACK, PieceType.QUEEN));
+        assertTrue(instance.hasPiece(new Location(1, 2), Color.WHITE, PieceType.KING));
+        assertTrue(instance.hasPiece(new Location(7, 4), Color.BLACK, PieceType.KING));
+        assertTrue(instance.hasPiece(new Location(5, 5), Color.WHITE, PieceType.QUEEN));
+        assertTrue(instance.hasPiece(new Location(6, 6), Color.BLACK, PieceType.QUEEN));
     }
 
     /**
@@ -71,8 +72,8 @@ public class BitBoardTest {
     public void testRemovePiece() {
         System.out.println("removePiece");
 
-        Piece p1 = new Piece(1, 2, Color.WHITE, PieceType.KING);
-        Piece p2 = new Piece(7, 4, Color.BLACK, PieceType.KING);
+        Piece p1 = new Piece(new Location(1, 2), Color.WHITE, PieceType.KING);
+        Piece p2 = new Piece(new Location(7, 4), Color.BLACK, PieceType.KING);
         Piece p3 = new Piece(5, 5, 'Q');
         Piece p4 = new Piece(6, 6, 'q');
         
@@ -88,10 +89,10 @@ public class BitBoardTest {
         Piece expResult3 = new Piece(6,6, 'q');
         Piece expResult4 = new Piece(5,5, 'Q');
         
-        Piece result1 = instance.removePiece(1, 2);
-        Piece result2 = instance.removePiece(7, 4);
-        Piece result3 = instance.removePiece(6, 6);
-        Piece result4 = instance.removePiece(5, 5);
+        Piece result1 = instance.removePiece(new Location(1, 2));
+        Piece result2 = instance.removePiece(new Location(7, 4));
+        Piece result3 = instance.removePiece(new Location(6, 6));
+        Piece result4 = instance.removePiece(new Location(5, 5));
         
         assertTrue(result1.equals(expResult1));
         assertTrue(result2.equals(expResult2));
@@ -110,8 +111,8 @@ public class BitBoardTest {
         BitBoard instance1 = new BitBoard();        
         BitBoard instance2 = new BitBoard();
 
-        Piece p1 = new Piece(1, 2, Color.WHITE, PieceType.KING);
-        Piece p2 = new Piece(7, 4, Color.BLACK, PieceType.KING);
+        Piece p1 = new Piece(new Location(1, 2), Color.WHITE, PieceType.KING);
+        Piece p2 = new Piece(new Location(7, 4), Color.BLACK, PieceType.KING);
         Piece p3 = new Piece(5, 5, 'Q');
         Piece p4 = new Piece(6, 6, 'q');
              
@@ -127,8 +128,8 @@ public class BitBoardTest {
 
     @Test
     public void testCopyConstructor() {
-        Piece p1 = new Piece(1, 2, Color.WHITE, PieceType.KING);
-        Piece p2 = new Piece(7, 4, Color.BLACK, PieceType.KING);
+        Piece p1 = new Piece(new Location(1, 2), Color.WHITE, PieceType.KING);
+        Piece p2 = new Piece(new Location(7, 4), Color.BLACK, PieceType.KING);
         Piece p3 = new Piece(5, 5, 'Q');
         Piece p4 = new Piece(6, 6, 'q');
         
@@ -148,8 +149,8 @@ public class BitBoardTest {
     public void extremetyTest1() {
      System.out.println("extremetyTest1");
      BitBoard b = new BitBoard();
-     b.insertPiece(new Piece(7,7,Color.BLACK, PieceType.PAWN));
-     assertTrue(b.hasPiece(7,7, Color.BLACK, PieceType.PAWN));
+     b.insertPiece(new Piece(new Location(7,7),Color.BLACK, PieceType.PAWN));
+     assertTrue(b.hasPiece(new Location(7,7), Color.BLACK, PieceType.PAWN));
     }
     
     @Test
@@ -167,8 +168,8 @@ public class BitBoardTest {
                                 for (y = 0; y < 8; y++) {
                                     n++;
                                     translatedColor =  color == 0 ? Color.BLACK : Color.WHITE;
-                                    b.insertPiece(new Piece(x, y, translatedColor, type));                                   
-                                    assertTrue(b.hasPiece(x, y, translatedColor, type));
+                                    b.insertPiece(new Piece(new Location(x, y), translatedColor, type));                                   
+                                    assertTrue(b.hasPiece(new Location(x, y), translatedColor, type));
                                     assertTrue(b.getNumberOfPieces() == n);                        
                                 }
                         }
@@ -177,8 +178,8 @@ public class BitBoardTest {
                         for (x = 0; x < 8; x++) {
                                 for (y = 0; y < 8; y++) {
                                    translatedColor =  color == 0 ? Color.BLACK : Color.WHITE;
-                                   b.removePiece(x, y);
-                                   assertTrue(!b.hasPiece(x, y, translatedColor, type));
+                                   b.removePiece(new Location(x, y));
+                                   assertTrue(!b.hasPiece(new Location(x, y), translatedColor, type));
                                    n--;
                                    assertTrue(b.getNumberOfPieces() == n);
                                 }

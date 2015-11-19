@@ -98,17 +98,12 @@ public final class Board
 
     public Piece removePiece(Location location)
     {
-        return removePiece(location.getX(), location.getY());
-    }
-    
-    public Piece removePiece(int x, int y)
-    {
-        return position.removePiece(x, y);
+        return position.removePiece(location);
     }
 
     public boolean freeSquare(Location location)
     {
-        return freeSquare(location.getX(), location.getY());
+        return position.freeSquare(location);
     }
     
     public boolean freeSquare(int x, int y)
@@ -297,8 +292,8 @@ public final class Board
 
         if (m.aSimplePromotion())
         {
-            insertPiece(new Piece(m.getToX(), m.getToY(), m.getWhoMoves(), m.promotionTo()));
-            removePiece(m.getFromX(), m.getFromY());
+            insertPiece(new Piece(m.getTo(), m.getWhoMoves(), m.promotionTo()));
+            removePiece(m.getFrom());
         }
 
         if (m.aCapturePromotion())
@@ -329,34 +324,34 @@ public final class Board
                 }
             }
 
-            removePiece(m.getToX(), m.getToY());
-            removePiece(m.getFromX(), m.getFromY());
-            insertPiece(new Piece(m.getToX(), m.getToY(), m.getWhoMoves(), m.promotionTo()));
+            removePiece(m.getTo());
+            removePiece(m.getFrom());
+            insertPiece(new Piece(m.getTo(), m.getWhoMoves(), m.promotionTo()));
         }
 
         switch (m.getMoveType())
         {
             case NORMALMOVE:
-                position.movePiece(m.getFromX(), m.getFromY(), m.getToX(), m.getToY());
+                position.movePiece(m.getFrom(), m.getTo());
                 break;
 
             case CAPTURE_ENPASSANT:
-                position.movePiece(m.getFromX(), m.getFromY(), m.getToX(), m.getToY());
-                removePiece(m.getToX(), m.getFromY());
+                position.movePiece(m.getFrom(), m.getTo());
+                removePiece(new Location(m.getToX(), m.getFromY()));
                 break;
 
             case CASTLE_SHORT:
                 // Move the king first
-                position.movePiece(m.getFromX(), m.getFromY(), m.getToX(), m.getToY());
+                position.movePiece(m.getFrom(), m.getTo());
                 // Then the rook
-                position.movePiece(7, m.getFromY(), 5, m.getFromY());
+                position.movePiece(new Location(7, m.getFromY()), new Location(5, m.getFromY()));
                 break;
 
             case CASTLE_LONG:
                 // Move the king first
-                position.movePiece(m.getFromX(), m.getFromY(), m.getToX(), m.getToY());
+                position.movePiece(m.getFrom(), m.getTo());
                 // Then the rook
-                position.movePiece(0, m.getFromY(), 3, m.getFromY());
+                position.movePiece(new Location(0, m.getFromY()), new Location(3, m.getFromY()));
                 break;
 
             case CAPTURE:
@@ -387,8 +382,8 @@ public final class Board
                     }
                 }
                 // Do the capture
-                removePiece(m.getToX(), m.getToY());
-                position.movePiece(m.getFromX(), m.getFromY(), m.getToX(), m.getToY());
+                removePiece(m.getTo());
+                position.movePiece(m.getFrom(), m.getTo());
                 break;
         }
 
@@ -422,22 +417,22 @@ public final class Board
 
             if (m.aSimplePromotion())
             {
-                insertPiece(new Piece(m.getFromX(), m.getFromY(), m.getWhoMoves(), PieceType.PAWN));
-                removePiece(m.getToX(), m.getToY());
+                insertPiece(new Piece(m.getFrom(), m.getWhoMoves(), PieceType.PAWN));
+                removePiece(m.getTo());
             }
 
             if (m.aCapturePromotion())
             {
-                removePiece(m.getToX(), m.getToY());
-                insertPiece(new Piece(m.getToX(), m.getToY(), m.getWhoMoves().flip(), m.getCapturedPiece()));
-                insertPiece(new Piece(m.getFromX(), m.getFromY(), m.getWhoMoves(), PieceType.PAWN));
+                removePiece(m.getTo());
+                insertPiece(new Piece(m.getTo(), m.getWhoMoves().flip(), m.getCapturedPiece()));
+                insertPiece(new Piece(m.getFrom(), m.getWhoMoves(), PieceType.PAWN));
                 return true;
             }
 
             switch (m.getMoveType())
             {
                 case NORMALMOVE:
-                    position.movePiece(m.getToX(), m.getToY(), m.getFromX(), m.getFromY());
+                    position.movePiece(m.getTo(), m.getFrom());
                     break;
 
                 case CAPTURE_ENPASSANT:
@@ -449,27 +444,27 @@ public final class Board
                     {
                         color = Color.WHITE;
                     }
-                    insertPiece(new Piece(m.getToX(), m.getFromY(), color, PieceType.PAWN));
-                    position.movePiece(m.getToX(), m.getToY(), m.getFromX(), m.getFromY());
+                    insertPiece(new Piece(new Location(m.getTo().getX(), m.getFrom().getY()), color, PieceType.PAWN));
+                    position.movePiece(m.getTo(), m.getFrom());
                     break;
 
                 case CASTLE_SHORT:
                     // Move the king back
-                    position.movePiece(m.getToX(), m.getToY(), m.getFromX(), m.getFromY());
+                    position.movePiece(m.getTo(), m.getFrom());
                     // Then the rook
-                    position.movePiece(5, m.getFromY(), 7, m.getFromY());
+                    position.movePiece(new Location(5, m.getFromY()), new Location(7, m.getFromY()));
                     break;
 
                 case CASTLE_LONG:
                     // Move the king back
-                    position.movePiece(m.getToX(), m.getToY(), m.getFromX(), m.getFromY());
+                    position.movePiece(new Location(m.getToX(), m.getToY()), m.getFrom());
                     // Then the rook
-                    position.movePiece(3, m.getFromY(), 0, m.getFromY());
+                    position.movePiece(new Location(3, m.getFromY()), new Location(0, m.getFromY()));
                     break;
 
                 case CAPTURE:
-                    position.movePiece(m.getToX(), m.getToY(), m.getFromX(), m.getFromY());
-                    insertPiece(new Piece(m.getToX(), m.getToY(), m.getWhoMoves().flip(), m.getCapturedPiece()));
+                    position.movePiece(m.getTo(), m.getFrom());
+                    insertPiece(new Piece(m.getTo(), m.getWhoMoves().flip(), m.getCapturedPiece()));
                     break;
             }
             return true;

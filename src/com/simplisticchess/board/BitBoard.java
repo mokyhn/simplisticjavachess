@@ -6,6 +6,7 @@ package com.simplisticchess.board;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.PieceType;
+import com.simplisticchess.position.Location;
 
 public class BitBoard implements IBitBoard
 {
@@ -38,7 +39,7 @@ public class BitBoard implements IBitBoard
             PieceType t = p.getPieceType();
             if (t != null)
             {
-                bb[c][t.getType()] = bb[c][t.getType()] | setBitHigh(getSquareNoFromPos(p.getxPos(), p.getyPos()));
+                bb[c][t.getType()] = bb[c][t.getType()] | setBitHigh(getSquareNoFromPos(p.getLocation()));
             }
         }
     }
@@ -81,10 +82,9 @@ public class BitBoard implements IBitBoard
     }
 
     // Returns number in the interval 0..63 from x and y in the interval 0..7
-    protected final int getSquareNoFromPos(int x, int y)
+    protected final int getSquareNoFromPos(Location location)
     {
-        assert (x >= 0 && x <= 7 && y >= 0 && y <= 7);
-        return y * 8 + x;
+        return location.getY() * 8 + location.getX();
     }
 
     // Set bit with index bitNo to high - i.e. 1
@@ -96,50 +96,31 @@ public class BitBoard implements IBitBoard
     public void insertPiece(Piece p)
     {
         bb[getIndexFromColor(p.getColor())][p.getPieceType().getType()] = bb[getIndexFromColor(p.getColor())][p.getPieceType().getType()]
-                | setBitHigh(getSquareNoFromPos(p.getxPos(), p.getyPos()));
+                | setBitHigh(getSquareNoFromPos(p.getLocation()));
     }
 
-    public boolean hasPiece(int x, int y, Color color, PieceType type)
+    public boolean hasPiece(Location location, Color color, PieceType type)
     {
         return (bb[getIndexFromColor(color)][type.getType()]
-                & setBitHigh(getSquareNoFromPos(x, y)))
+                & setBitHigh(getSquareNoFromPos(location)))
                 != 0;
     }
 
-    //Todo: Is this code correct?
-    public Piece getPiece(int x, int y)
-    {
-        for (PieceType type : PieceType.values())
-        {
-            if ((bb[0][type.getType()] & setBitHigh(getSquareNoFromPos(x, y))) != 0)
-            {
-                return new Piece(x, y, Color.BLACK, type);
-            }
-            if ((bb[1][type.getType()] & setBitHigh(getSquareNoFromPos(x, y))) != 0)
-            {
-                return new Piece(x, y, Color.WHITE, type);
-            }
-        }
-        return null;
-    }
-
-    public Piece removePiece(int x, int y)
+    public Piece removePiece(Location location)
     {
         final int UNDF = 254;
         Color color = null;
         PieceType type = null;
 
-        assert (x >= 0 && x <= 7 && y >= 0 && y <= 7);
-
         for (PieceType t : PieceType.values())
         {
-            if ((bb[0][t.getType()] & setBitHigh(getSquareNoFromPos(x, y))) != 0)
+            if ((bb[0][t.getType()] & setBitHigh(getSquareNoFromPos(location))) != 0)
             {
                 color = Color.BLACK;
                 type = t;
                 break;
             }
-            if ((bb[1][t.getType()] & setBitHigh(getSquareNoFromPos(x, y))) != 0)
+            if ((bb[1][t.getType()] & setBitHigh(getSquareNoFromPos(location))) != 0)
             {
                 color = Color.WHITE;
                 type = t;
@@ -148,9 +129,9 @@ public class BitBoard implements IBitBoard
         }
         
         bb[getIndexFromColor(color)][type.getType()] = bb[getIndexFromColor(color)][type.getType()] ^ // Bitwise XOR
-                setBitHigh(getSquareNoFromPos(x, y));
+                setBitHigh(getSquareNoFromPos(location));
 
-        return new Piece(x, y, color, type);
+        return new Piece(location, color, type);
     }
 
     private String bitboard2String(long b)
@@ -162,7 +143,7 @@ public class BitBoard implements IBitBoard
         {
             for (x = 0; x <= 7; x++)
             {
-                if (((1L << getSquareNoFromPos(x, y)) & b) == 0)
+                if (((1L << getSquareNoFromPos(new Location(x, y))) & b) == 0)
                 {
                     r = r + '.';
                 } else
@@ -221,8 +202,8 @@ interface IBitBoard
 
     public void insertPiece(Piece p);
 
-    public boolean hasPiece(int x, int y, Color color, PieceType type);
+    public boolean hasPiece(Location location, Color color, PieceType type);
 
-    public Piece removePiece(int x, int y);
+    public Piece removePiece(Location location);
 
 }

@@ -83,20 +83,20 @@ public final class Position
     }
 
     // Remove a piece from location x, y and return the piece
-    public Piece removePiece(final int x, final int y)
+    public Piece removePiece(Location location)
     {
         int i;
         Boolean flag = true;
-        Piece p = xyPosition[x][y];
+        Piece p = xyPosition[location.getX()][location.getY()];
 
-        assert (p != null) : "removePiece at " + x + ","  + y + "\n" + this.toString();
+        assert (p != null) : "removePiece at " + location.getX() + ","  + location.getY() + "\n" + this.toString();
 
-        assert (p.getxPos() == x) && (p.getyPos() == y);
+        assert (p.getxPos() == location.getX()) && (p.getyPos() == location.getY());
 
         for (i = 0; i < numberOfPieces && flag; i++)
         {
-            if (pieces[i].getxPos() == x
-                    && pieces[i].getyPos() == y)
+            if (pieces[i].getxPos() == location.getX()
+                    && pieces[i].getyPos() == location.getY())
             {
                 pieces[i] = pieces[numberOfPieces - 1];
                 numberOfPieces--;
@@ -104,33 +104,28 @@ public final class Position
             }
         }
 
-        xyPosition[x][y] = null;
+        xyPosition[location.getX()][location.getY()] = null;
 
-        getBitBoard().removePiece(x, y);
+        getBitBoard().removePiece(location);
 
         return p;
     }
-
-    public void movePiece(Location from, Location to) 
+   
+    public void movePiece(Location from, Location to)
     {
-        movePiece(from.getX(), from.getY(), to.getX(), to.getY());
-    }
-    
-    public void movePiece(int xFrom, int yFrom, int xTo, int yTo)
-    {
-        final Piece p = xyPosition[xFrom][yFrom];
+        final Piece p = xyPosition[from.getX()][from.getY()];
 
-        assert (xFrom != xTo || yFrom != yTo) : "Cannot move from c to c";
-        assert (p != null) : this.toString() + "\n" + "Tried move " + xFrom + "," + yFrom + " to " + xTo + "," + yTo;
+        assert (from.getX() != to.getX() || from.getY() != to.getY()) : "Cannot move from c to c";
+        assert (p != null) : this.toString() + "\n" + "Tried move " + from.getX() + "," + from.getY() + " to " + to.getX() + "," + to.getY();
 
-        p.setxPos(xTo);
-        p.setyPos(yTo);
+        p.setxPos(to.getX());
+        p.setyPos(to.getY());
 
-        xyPosition[xTo][yTo] = p;
+        xyPosition[to.getX()][to.getY()] = p;
         assert p.getxPos() == xyPosition[p.getxPos()][p.getyPos()].getxPos() && p.getyPos() == xyPosition[p.getxPos()][p.getyPos()].getyPos();
-        xyPosition[xFrom][yFrom] = null;
+        xyPosition[from.getX()][from.getY()] = null;
 
-        getBitBoard().removePiece(xFrom, yFrom);
+        getBitBoard().removePiece(from);
         getBitBoard().insertPiece(p);
     }
 
@@ -303,6 +298,11 @@ public final class Position
         return false;
     }
 
+    public boolean freeSquare(Location location)
+    {
+        return freeSquare(location.getX(), location.getY());
+    }
+    
     public boolean freeSquare(int x, int y)
     {
         return xyPosition[x][y] == null;
