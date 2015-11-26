@@ -124,7 +124,7 @@ public class ChessGame
                         // Check if move m is among the possible moves
                         while (theMoves.hasNext())
                         {
-                            if (m.equal(theMoves.next()))
+                            if (m.equals(theMoves.next()))
                             {
                                 boolean result = board.performMove(m);
                                 if (result)

@@ -68,7 +68,7 @@ public class mainTest
 
         while (it.hasNext())
         {
-            if (it.next().equal(strongestMove))
+            if (it.next().equals(strongestMove))
             {
                 return true;
             }
@@ -125,7 +125,7 @@ public class mainTest
 
         while (it.hasNext())
         {
-            if (it.next().equal(strongestMove))
+            if (it.next().equals(strongestMove))
             {
                 if (unExpectedMoves.isEmpty())
                 {

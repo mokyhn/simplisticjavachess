@@ -112,20 +112,35 @@ public final class Move
             return "";
     }
     
-    public boolean equal(Move m)
+    @Override
+    public boolean equals(Object object)
     {
-        if (m == null)
+        if (object instanceof Move) 
+        {
+            Move m = (Move) object;
+
+            return this.from.equals(m.from)
+                && this.to.equals(m.to)
+                && this.getMoveType() == m.getMoveType()
+                && this.getCapturedPiece() == m.getCapturedPiece()
+                && this.getWhoMoves() == m.getWhoMoves();
+        }
+        else
         {
             return false;
         }
+    }
 
-        return getFromX() == m.getFromX()
-                && getToX() == m.getToX()
-                && getFromY() == m.getFromY()
-                && getToY() == m.getToY()
-                && getMoveType() == m.getMoveType()
-                && getCapturedPiece() == m.getCapturedPiece()
-                && getWhoMoves() == m.getWhoMoves();
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 59 * hash + (this.from != null ? this.from.hashCode() : 0);
+        hash = 59 * hash + (this.to != null ? this.to.hashCode() : 0);
+        hash = 59 * hash + (this.moveType != null ? this.moveType.hashCode() : 0);
+        hash = 59 * hash + (this.capturedPiece != null ? this.capturedPiece.hashCode() : 0);
+        hash = 59 * hash + (this.whoMoves != null ? this.whoMoves.hashCode() : 0);
+        return hash;
     }
 
     @Override

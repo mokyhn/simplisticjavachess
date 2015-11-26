@@ -46,12 +46,12 @@ public final class Location
     }
     
     @Override
-    public boolean equals(Object o)
+    public boolean equals(Object object)
     {
-        if (o instanceof Location)
+        if (object instanceof Location)
         {
-            Location p = (Location) o;
-            return x == p.getX() && y == p.getY();
+            Location location = (Location) object;
+            return this.x == location.getX() && this.y == location.getY();
         }
         else
         {
