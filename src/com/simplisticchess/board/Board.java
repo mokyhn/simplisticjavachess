@@ -91,6 +91,17 @@ public final class Board
         return position.getPiece(i);
     }
 
+    public Piece getPiece(int x, int y)
+    {
+        final Piece p = position.getPiece(new Location(x, y));
+        return p;
+    }
+    
+    public Piece getPiece(Location location)
+    {
+        return position.getPiece(location);
+    }
+    
     public void insertPiece(Piece p)
     {
         position.insertPiece(p);
@@ -203,11 +214,7 @@ public final class Board
     }
 
     
-    public Piece getPiece(int x, int y)
-    {
-        final Piece p = position.getPiece(new Location(x, y));
-        return p;
-    }
+ 
 
     // TODO: 2013, Should we check for draw here? 
     // A move might lead to a draw state.

@@ -24,12 +24,15 @@ public final class Location
         this(p.getX(), p.getY());
     }
     
-    public Location(String position)
+    public Location(String position) throws Exception
     {
         position = position.toLowerCase();
         x = (byte) (position.charAt(0) - 'a');
         y = (byte) (-1 + position.charAt(1) - '0');
-        assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error in x or y ";
+        if (x < 0 || x > 7 || y < 0 || y > 7)
+        {
+            throw new Exception();
+        }
     }
     
     public byte getX() 
@@ -75,19 +78,41 @@ public final class Location
      * @param location
      * @return true if x equals, i.e. the locations specify the same column
      */
-    public boolean onSameFile(Location location) 
+    public boolean fileEquals(Location location) 
     {
         return x == location.x;
     }
+
+     /**
+     * 
+     * @param location
+     * @return true if x not equals, i.e. the locations do not specify the same column
+     */
+    public boolean fileDifferent(Location location) 
+    {
+        return x != location.x;
+    }
+   
     
     /**
      * 
      * @param location
      * @return true if y equals, i.e. the locations specify the same row
      */
-    public boolean onSameRank(Location location)
+    public boolean rankEquals(Location location)
     {
         return y == location.y;
     }
+
+    /**
+     * 
+     * @param location
+     * @return true if y not equals, i.e. the locations do not specify the same row
+     */
+    public boolean rankDifferent(Location location)
+    {
+        return y != location.y;
+    }
+    
     
 }

@@ -5,8 +5,6 @@ package com.simplisticchess.move;
  * @author Morten Kühnrich
  */
 
-import com.simplisticchess.board.Board;
-import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.PieceType;
 import com.simplisticchess.position.Location;
@@ -38,6 +36,15 @@ public final class Move
         this.whoMoves = whoMoves;
     }
 
+    public Move (Location from, Location to, MoveType type, PieceType capturedPiece, Color whoMoves)
+    {
+        this.from = from;
+        this.to = to;
+        this.moveType = type;
+        this.capturedPiece = capturedPiece;
+        this.whoMoves = whoMoves;        
+    }
+    
     public Move(Move move)
     {
         from = new Location(move.getFrom());

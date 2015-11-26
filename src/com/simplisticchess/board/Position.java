@@ -140,7 +140,7 @@ public final class Position
                 ix, // Iterate x
                 iy;    // Iterate y
 
-        if (l1.onSameFile(l2))
+        if (l1.fileEquals(l2))
         {
             allFree = true;
             if (l1.getY() < l2.getY())
@@ -165,7 +165,7 @@ public final class Position
                 return true;
             }
         }
-        if (l1.onSameRank(l2))
+        if (l1.rankEquals(l2))
         {
             allFree = true;
             if (l1.getX() < l2.getX())

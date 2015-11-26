@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 public class LocationTest {
     @Test 
-    public void testStringContructor()
+    public void testStringContructor() throws Exception 
     {
         Location p = new Location("F7");
         assertEquals(new Location(5, 6), p);
@@ -35,7 +35,7 @@ public class LocationTest {
     }
     
     @Test
-    public void testFromToStringComposition()
+    public void testFromToStringComposition() throws Exception
     {
         assertEquals(new Location("a1").toString(), "a1");
         assertEquals(new Location("a4").toString(), "a4");
