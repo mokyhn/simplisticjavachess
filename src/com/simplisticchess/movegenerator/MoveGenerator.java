@@ -374,48 +374,79 @@ public final class MoveGenerator
         return Moves;
     }
 
+    // Used for generation of knight, bishop, rook and queen moves
+    private static Move genMove(Board b, Piece fp, int dX, int dY)
+    {
+        Piece tp;
+        Move m = null;
+        final int tX = fp.getxPos() + dX;
+        final int tY = fp.getyPos() + dY;
+        MoveType moveType;
+        assert fp.getColor() == b.inMove();
+        if (fp.getxPos() < 0 || fp.getxPos() > 7 || fp.getyPos() < 0 || fp.getyPos() > 7 || tX < 0 || tX > 7 || tY < 0 || tY > 7)
+        {
+            return null;
+        }
+        tp = b.getPiece(tX, tY);
+        PieceType takenPiece;
+        if (tp != null && tp.getColor() == b.inMove().flip())
+        {
+            takenPiece = tp.getPieceType();
+            moveType = MoveType.CAPTURE;
+            m = new Move(fp.getxPos(), fp.getyPos(), tX, tY, moveType, takenPiece, b.inMove());
+        } else if (b.freeSquare(tX, tY))
+        {
+            takenPiece = null;
+            moveType = MoveType.NORMALMOVE;
+            m = new Move(fp.getxPos(), fp.getyPos(), tX, tY, moveType, takenPiece, b.inMove());
+        }
+        return m;
+    }
+
+
+    
     public static ArrayList<Move> knightMoves(Board b, Piece p)
     {
         final ArrayList<Move> Moves = new ArrayList<Move>();
 
         Move newMove;
 
-        newMove = Move.genMove(b, p, -2, 1);
+        newMove = genMove(b, p, -2, 1);
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = Move.genMove(b, p, -2, -1);
+        newMove = genMove(b, p, -2, -1);
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = Move.genMove(b, p, -1, 2);
+        newMove = genMove(b, p, -1, 2);
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = Move.genMove(b, p, 1, 2);
+        newMove = genMove(b, p, 1, 2);
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = Move.genMove(b, p, -1, -2);
+        newMove = genMove(b, p, -1, -2);
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = Move.genMove(b, p, 1, -2);
+        newMove = genMove(b, p, 1, -2);
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = Move.genMove(b, p, 2, 1);
+        newMove = genMove(b, p, 2, 1);
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = Move.genMove(b, p, 2, -1);
+        newMove = genMove(b, p, 2, -1);
         if (newMove != null)
         {
             Moves.add(newMove);
@@ -436,7 +467,7 @@ public final class MoveGenerator
         // Move up and right
         for (d = 1; ((p.getxPos() + d <= 7) && (p.getyPos() + d <= 7)); d++)
         {
-            newMove = Move.genMove(b, p, d, d);
+            newMove = genMove(b, p, d, d);
             if (newMove == null)
             {
                 break; // The square was occupied by my own piece
@@ -451,7 +482,7 @@ public final class MoveGenerator
         // Move up and left
         for (d = 1; ((p.getxPos() - d >= 0) && (p.getyPos() + d <= 7)); d++)
         {
-            newMove = Move.genMove(b, p, -d, d);
+            newMove = genMove(b, p, -d, d);
             if (newMove == null)
             {
                 break; // The square was occupied by my own piece
@@ -466,7 +497,7 @@ public final class MoveGenerator
         // Move down and left
         for (d = 1; ((p.getxPos() - d >= 0) && (p.getyPos() - d >= 0)); d++)
         {
-            newMove = Move.genMove(b, p, -d, -d);
+            newMove = genMove(b, p, -d, -d);
             if (newMove == null)
             {
                 break; // The square was occupied by my own piece
@@ -481,7 +512,7 @@ public final class MoveGenerator
         // Move down and right
         for (d = 1; ((p.getxPos() + d <= 7) && (p.getyPos() - d >= 0)); d++)
         {
-            newMove = Move.genMove(b, p, d, -d);
+            newMove = genMove(b, p, d, -d);
             if (newMove == null)
             {
                 break; // The square was occupied by my own piece
@@ -508,7 +539,7 @@ public final class MoveGenerator
         // Move up
         for (d = 1; (p.getyPos() + d <= 7); d++)
         {
-            newMove = Move.genMove(b, p, 0, d);
+            newMove = genMove(b, p, 0, d);
             if (newMove == null)
             {
                 break; // The square was occupied by my own piece
@@ -523,7 +554,7 @@ public final class MoveGenerator
         // Move down
         for (d = 1; (p.getyPos() - d >= 0); d++)
         {
-            newMove = Move.genMove(b, p, 0, -d);
+            newMove = genMove(b, p, 0, -d);
             if (newMove == null)
             {
                 break; // The square was occupied by my own piece
@@ -538,7 +569,7 @@ public final class MoveGenerator
         // Move left
         for (d = 1; (p.getxPos() - d >= 0); d++)
         {
-            newMove = Move.genMove(b, p, -d, 0);
+            newMove = genMove(b, p, -d, 0);
             if (newMove == null)
             {
                 break; // The square was occupied by my own piece
@@ -553,7 +584,7 @@ public final class MoveGenerator
         // Move right 
         for (d = 1; (p.getxPos() + d <= 7); d++)
         {
-            newMove = Move.genMove(b, p, d, 0);
+            newMove = genMove(b, p, d, 0);
             if (newMove == null)
             {
                 break; // The square was occupied by my own piece
