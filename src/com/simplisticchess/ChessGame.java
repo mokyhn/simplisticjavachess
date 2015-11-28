@@ -5,6 +5,7 @@ import com.simplisticchess.board.Board;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.move.InvalidMoveException;
 import com.simplisticchess.movegenerator.MoveGenerator;
+import com.simplisticchess.position.InvalidLocationException;
 import com.simplisticchess.search.AbstractSearch;
 import com.simplisticchess.search.AlphaBetaSearch;
 import java.util.Iterator;
@@ -144,9 +145,14 @@ public class ChessGame
                     checkForDrawOrMate(board);
                     System.out.println(board.getASCIIBoard());
 
-                } catch (InvalidMoveException e)
+                }
+                catch (InvalidMoveException e)
                 {
                     System.out.println("Not a valid move " + e.err);
+                }
+                catch (InvalidLocationException e)
+                {
+                    System.out.println("Invalid location entered");
                 }
     }
 

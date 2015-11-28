@@ -5,6 +5,7 @@ import com.simplisticchess.move.InvalidMoveException;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
+import com.simplisticchess.position.InvalidLocationException;
 
 /**
  *
@@ -157,7 +158,7 @@ public class ICCProtocol
         return s;
     }
 
-    public Move getMove()
+    public Move getMove() throws InvalidLocationException
     {
 
         if (isAMoveResponse())
