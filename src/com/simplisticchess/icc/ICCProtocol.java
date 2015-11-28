@@ -1,7 +1,7 @@
 package com.simplisticchess.icc;
 
 import com.simplisticchess.move.MoveParser;
-import com.simplisticchess.move.NoMoveException;
+import com.simplisticchess.move.InvalidMoveException;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;

@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 public class LocationTest {
     @Test 
-    public void testStringContructor() throws Exception 
+    public void testStringContructor() throws InvalidLocationException 
     {
         Location p = new Location("F7");
         assertEquals(new Location(5, 6), p);
@@ -35,10 +35,22 @@ public class LocationTest {
     }
     
     @Test
-    public void testFromToStringComposition() throws Exception
+    public void testFromToStringComposition() throws InvalidLocationException
     {
         assertEquals(new Location("a1").toString(), "a1");
         assertEquals(new Location("a4").toString(), "a4");
         assertEquals(new Location("h8").toString(), "h8");
+    }
+    
+    @Test(expected=InvalidLocationException.class)
+    public void testInvalidFile() throws InvalidLocationException
+    {
+        Location location = new Location("i4");
+    }
+    
+    @Test(expected=InvalidLocationException.class)
+    public void testInvalidRank() throws InvalidLocationException
+    {
+        Location location = new Location("a9");
     }
 }

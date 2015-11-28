@@ -24,14 +24,14 @@ public final class Location
         this(p.getX(), p.getY());
     }
     
-    public Location(String position) throws Exception
+    public Location(String position) throws InvalidLocationException
     {
         position = position.toLowerCase();
         x = (byte) (position.charAt(0) - 'a');
         y = (byte) (-1 + position.charAt(1) - '0');
         if (x < 0 || x > 7 || y < 0 || y > 7)
         {
-            throw new Exception();
+            throw new InvalidLocationException();
         }
     }
     

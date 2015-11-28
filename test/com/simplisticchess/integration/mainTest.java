@@ -9,7 +9,7 @@ import com.simplisticchess.search.AbstractSearch;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.move.MoveParser;
 import com.simplisticchess.board.Board;
-import com.simplisticchess.move.NoMoveException;
+import com.simplisticchess.move.InvalidMoveException;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -29,7 +29,7 @@ public class mainTest
     {
     }
 
-    private static boolean testSearchAux(Board b, int method, int plyDepth, ArrayList<Move> expectedMoves) throws NoMoveException, Exception
+    private static boolean testSearchAux(Board b, int method, int plyDepth, ArrayList<Move> expectedMoves) throws InvalidMoveException, Exception
     {
         AbstractSearch engine;
 
@@ -77,7 +77,7 @@ public class mainTest
         return false;
     }
 
-    private static boolean testSearchDoNotPlayThis(String fen, int method, int plyDepth, String moves) throws NoMoveException, Exception
+    private static boolean testSearchDoNotPlayThis(String fen, int method, int plyDepth, String moves) throws InvalidMoveException, Exception
     {
         String[] unExpectedMovesStr = moves.split(" ");
         ArrayList<Move> unExpectedMoves = new ArrayList<Move>();
@@ -142,7 +142,7 @@ public class mainTest
         return true;
     }
 
-    public static boolean testSearch(String fen, String moveSequence, int method, int plyDepth, String expectedMoveStrs) throws NoMoveException, Exception
+    public static boolean testSearch(String fen, String moveSequence, int method, int plyDepth, String expectedMoveStrs) throws InvalidMoveException, Exception
     {
         String[] moveStrings = moveSequence.split(" ");
         Board b = new Board(fen);

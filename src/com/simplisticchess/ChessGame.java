@@ -3,7 +3,7 @@ package com.simplisticchess;
 import com.simplisticchess.move.MoveParser;
 import com.simplisticchess.board.Board;
 import com.simplisticchess.move.Move;
-import com.simplisticchess.move.NoMoveException;
+import com.simplisticchess.move.InvalidMoveException;
 import com.simplisticchess.movegenerator.MoveGenerator;
 import com.simplisticchess.search.AbstractSearch;
 import com.simplisticchess.search.AlphaBetaSearch;
@@ -132,19 +132,19 @@ public class ChessGame
                                     break;
                                 } else 
                                 {
-                                    throw new NoMoveException();
+                                    throw new InvalidMoveException();
                                 }
                             }
                         }
                     } else
                     {
-                        throw new NoMoveException();
+                        throw new InvalidMoveException();
                     }
 
                     checkForDrawOrMate(board);
                     System.out.println(board.getASCIIBoard());
 
-                } catch (NoMoveException e)
+                } catch (InvalidMoveException e)
                 {
                     System.out.println("Not a valid move " + e.err);
                 }
