@@ -23,11 +23,7 @@ public final class Move
 
     public Move(int fromX, int fromY, int toX, int toY, MoveType type, PieceType capturedPiece, Color whoMoves)
     {
-        assert fromX >= 0 && fromX <= 7
-                && fromY >= 0 && fromY <= 7
-                && toX >= 0 && toX <= 7
-                && toY >= 0 && toY <= 7
-                && (!(fromX == toX && fromY == toY)) : "(fX, fY, tX, tY) = " + "(" + fromX + ", " + fromY + ", " + toX + "," + toY + ")";
+        assert (!(fromX == toX && fromY == toY)) : "(fX, fY, tX, tY) = " + "(" + fromX + ", " + fromY + ", " + toX + "," + toY + ")";
 
         from = new Location(fromX, fromY);
         to = new Location(toX, toY);
@@ -74,44 +70,7 @@ public final class Move
     {
         return getMoveType().getPromotionPiece();
     }
-
-    private String posToString(int x, int y)
-    {
-        return numToChar(x) + numToNumChar(y);
-    }
-  
-    private static String numToChar(int pos) {
-            switch (pos) {
-            case 0: return "a";
-            case 1:	return "b";
-            case 2:	return "c";
-            case 3:	return "d";
-            case 4:	return "e";
-            case 5:	return "f";
-            case 6:	return "g";
-            case 7:	return "h";
-            }
-            System.out.println( "ERR: numToChar: input was " + pos);
-            System.exit(1);
-            return "";
-    }
-
-    private String numToNumChar(int pos) {
-            switch (pos) {
-            case 0: return "1";
-            case 1:	return "2";
-            case 2:	return "3";
-            case 3:	return "4";
-            case 4:	return "5";
-            case 5:	return "6";
-            case 6:	return "7";
-            case 7:	return "8";
-            }
-            System.out.println( "ERR: numToNumChar: input was " + pos);
-            System.exit(1);
-            return "";
-    }
-    
+   
     @Override
     public boolean equals(Object object)
     {
@@ -148,13 +107,13 @@ public final class Move
     {
         if (getMoveType() == MoveType.NORMALMOVE)
         {
-            return posToString(getFromX(), getFromY()) + "-" + posToString(getToX(), getToY());
+            return from.toString() + "-" + to.toString();
         }
 
         // Normal capture moves
         if (getMoveType() == MoveType.CAPTURE_ENPASSANT || getMoveType() == MoveType.CAPTURE)
         {
-            return posToString(getFromX(), getFromY()) + "x" + posToString(getToX(), getToY());
+            return from.toString() + "x" + to.toString();
         }
 
         // mate
@@ -166,12 +125,12 @@ public final class Move
         // Promotions
         if (aSimplePromotion())
         {
-            return posToString(getFromX(), getFromY()) + "-" + posToString(getToX(), getToY()) + "=" + promotionTo().getPieceLetter();
+            return from.toString() + "-" + to.toString() + "=" + promotionTo().getPieceLetter();
         }
 
         if (aCapturePromotion())
         {
-            return posToString(getFromX(), getFromY()) + "x" + posToString(getToX(), getToY()) + "=" + promotionTo().getPieceLetter(); 
+            return from.toString() + "x" + to.toString() + "=" + promotionTo().getPieceLetter(); 
         }
 
         if (getMoveType() == MoveType.CASTLE_SHORT)
@@ -184,28 +143,6 @@ public final class Move
         }
 
         return "ERR: getMoveStr";
-    }
-
-    public int getFromX()
-    {
-        return from.getX();
-    }
-
- 
-    public int getFromY()
-    {
-        return from.getY();
-    }
-
-    public int getToX()
-    {
-        return to.getX();
-    }
-
-
-    public int getToY()
-    {
-        return to.getY();
     }
 
     public Location getFrom()

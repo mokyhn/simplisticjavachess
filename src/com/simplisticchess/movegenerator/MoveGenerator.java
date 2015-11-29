@@ -128,11 +128,11 @@ public final class MoveGenerator
             if (fx > 0)
             {
 
-                lastMovePiece = b.getPiece(lastMove.getToX(), lastMove.getToY());
+                lastMovePiece = b.getPiece(lastMove.getTo());
                 // The piece stands to the left
-                if (lastMovePiece != null && (lastMove.getToX() == fx - 1) && (lastMove.getToY() == fy)
+                if (lastMovePiece != null && (lastMove.getTo().getX() == fx - 1) && (lastMove.getTo().getY() == fy)
                         && (lastMovePiece.getPieceType() == PieceType.PAWN)
-                        && (Math.abs(lastMove.getFromY() - lastMove.getToY()) == 2))
+                        && (Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2))
                 {
                     Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_ENPASSANT, null, c));
                 }
@@ -140,11 +140,11 @@ public final class MoveGenerator
 
             if (fx < 7)
             {
-                lastMovePiece = b.getPiece(lastMove.getToX(), lastMove.getToY());
+                lastMovePiece = b.getPiece(lastMove.getTo());
                 // The piece stands to the right
-                if (lastMovePiece != null && (lastMove.getToX() == fx + 1) && (lastMove.getToY() == fy)
+                if (lastMovePiece != null && (lastMove.getTo().getX() == fx + 1) && (lastMove.getTo().getY() == fy)
                         && (lastMovePiece.getPieceType() == PieceType.PAWN)
-                        && (Math.abs(lastMove.getFromY() - lastMove.getToY()) == 2))
+                        && (Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2))
                 {
                     Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_ENPASSANT, null, c));
 
@@ -168,7 +168,6 @@ public final class MoveGenerator
         final int fx = p.getxPos();
         final int fy = p.getyPos();
 
-        Piece pTo = null;
 
         // Castling short
         if (fx == 4
@@ -197,6 +196,8 @@ public final class MoveGenerator
         {
             Moves.add(new Move(fx, fy, fx - 2, fy, MoveType.CASTLE_LONG, null, c));
         }
+        
+        Piece pTo;
 
         // King moves left
         if (fx > 0)

@@ -223,7 +223,7 @@ public final class Board
     {
         Piece p;
 
-        p = getPiece(m.getFromX(), m.getFromY());
+        p = getPiece(m.getFrom());
 
         state.moveNumber++;
 
@@ -246,21 +246,21 @@ public final class Board
         {
             if (m.getWhoMoves() == Color.BLACK)
             {
-                if (m.getFromX() == 0 && state.blackCanCastleLong)
+                if (m.getFrom().getX() == 0 && state.blackCanCastleLong)
                 {
                     state.blackCanCastleLong = false;
                 }
-                if (m.getFromX() == 7 && state.blackCanCastleShort)
+                if (m.getFrom().getX()== 7 && state.blackCanCastleShort)
                 {
                     state.blackCanCastleShort = false;
                 }
             } else
             {
-                if (m.getFromX() == 0 && state.whiteCanCastleLong)
+                if (m.getFrom().getX() == 0 && state.whiteCanCastleLong)
                 {
                     state.whiteCanCastleLong = false;
                 }
-                if (m.getFromX() == 7 && state.whiteCanCastleShort)
+                if (m.getFrom().getX() == 7 && state.whiteCanCastleShort)
                 {
                     state.whiteCanCastleShort = false;
                 }
@@ -291,26 +291,26 @@ public final class Board
 
         if (m.aCapturePromotion())
         {
-            if (getPiece(m.getToX(), m.getToY()).getPieceType() == PieceType.ROOK)
+            if (getPiece(m.getTo()).getPieceType() == PieceType.ROOK)
             {
-                if (m.getWhoMoves() == Color.WHITE && m.getToY() == 7)
+                if (m.getWhoMoves() == Color.WHITE && m.getTo().getY() == 7)
                 {
-                    if (m.getToX() == 0 && state.blackCanCastleLong)
+                    if (m.getTo().getX() == 0 && state.blackCanCastleLong)
                     {
                         state.blackCanCastleLong = false;
                     }
-                    if (m.getToX() == 7 && state.blackCanCastleShort)
+                    if (m.getTo().getX() == 7 && state.blackCanCastleShort)
                     {
                         state.blackCanCastleShort = false;
                     }
                 }
-                if (m.getWhoMoves() == Color.BLACK && m.getToY() == 0)
+                if (m.getWhoMoves() == Color.BLACK && m.getTo().getY() == 0)
                 {
-                    if (m.getToX() == 0 && state.whiteCanCastleLong)
+                    if (m.getTo().getX() == 0 && state.whiteCanCastleLong)
                     {
                         state.whiteCanCastleLong = false;
                     }
-                    if (m.getToX() == 7 && state.whiteCanCastleShort)
+                    if (m.getTo().getX() == 7 && state.whiteCanCastleShort)
                     {
                         state.whiteCanCastleShort = false;
                     }
@@ -330,45 +330,45 @@ public final class Board
 
             case CAPTURE_ENPASSANT:
                 position.movePiece(m.getFrom(), m.getTo());
-                removePiece(new Location(m.getToX(), m.getFromY()));
+                removePiece(new Location(m.getTo().getX(), m.getFrom().getY()));
                 break;
 
             case CASTLE_SHORT:
                 // Move the king first
                 position.movePiece(m.getFrom(), m.getTo());
                 // Then the rook
-                position.movePiece(new Location(7, m.getFromY()), new Location(5, m.getFromY()));
+                position.movePiece(new Location(7, m.getFrom().getY()), new Location(5, m.getFrom().getY()));
                 break;
 
             case CASTLE_LONG:
                 // Move the king first
                 position.movePiece(m.getFrom(), m.getTo());
                 // Then the rook
-                position.movePiece(new Location(0, m.getFromY()), new Location(3, m.getFromY()));
+                position.movePiece(new Location(0, m.getFrom().getY()), new Location(3, m.getFrom().getY()));
                 break;
 
             case CAPTURE:
                 // Capturing a rook may affect casteling opputunities!
-                if (getPiece(m.getToX(), m.getToY()).getPieceType() == PieceType.ROOK)
+                if (getPiece(m.getTo()).getPieceType() == PieceType.ROOK)
                 {
-                    if (m.getWhoMoves() == Color.WHITE && m.getToY() == 7)
+                    if (m.getWhoMoves() == Color.WHITE && m.getTo().getY() == 7)
                     {
-                        if (m.getToX() == 0 && state.blackCanCastleLong)
+                        if (m.getTo().getX() == 0 && state.blackCanCastleLong)
                         {
                             state.blackCanCastleLong = false;
                         }
-                        if (m.getToX() == 7 && state.blackCanCastleShort)
+                        if (m.getTo().getX() == 7 && state.blackCanCastleShort)
                         {
                             state.blackCanCastleShort = false;
                         }
                     }
-                    if (m.getWhoMoves() == Color.BLACK && m.getToY() == 0)
+                    if (m.getWhoMoves() == Color.BLACK && m.getTo().getY() == 0)
                     {
-                        if (m.getToX() == 0 && state.whiteCanCastleLong)
+                        if (m.getTo().getX() == 0 && state.whiteCanCastleLong)
                         {
                             state.whiteCanCastleLong = false;
                         }
-                        if (m.getToX() == 7 && state.whiteCanCastleShort)
+                        if (m.getTo().getX() == 7 && state.whiteCanCastleShort)
                         {
                             state.whiteCanCastleShort = false;
                         }
@@ -445,14 +445,14 @@ public final class Board
                     // Move the king back
                     position.movePiece(m.getTo(), m.getFrom());
                     // Then the rook
-                    position.movePiece(new Location(5, m.getFromY()), new Location(7, m.getFromY()));
+                    position.movePiece(new Location(5, m.getFrom().getY()), new Location(7, m.getFrom().getY()));
                     break;
 
                 case CASTLE_LONG:
                     // Move the king back
-                    position.movePiece(new Location(m.getToX(), m.getToY()), m.getFrom());
+                    position.movePiece(new Location(m.getTo()), m.getFrom());
                     // Then the rook
-                    position.movePiece(new Location(3, m.getFromY()), new Location(0, m.getFromY()));
+                    position.movePiece(new Location(3, m.getFrom().getY()), new Location(0, m.getFrom().getY()));
                     break;
 
                 case CAPTURE:
