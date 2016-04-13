@@ -1,9 +1,9 @@
-package com.simplisticchess.search;
-
 /*
  * @author Morten Kühnrich
- * 2013
  */
+
+
+package com.simplisticchess.search;
 
 import com.simplisticchess.board.Board;
 import com.simplisticchess.movegenerator.MoveGenerator;
@@ -19,12 +19,13 @@ public abstract class AbstractSearch
     protected Move strongestMove;
     private int _finalEvaluation;
 
+    protected MoveGenerator moveGenerator = new MoveGenerator();
+    
     // For statistical pusposes
     private long startTime;
     private long endTime;
     protected int noPositions;
     protected int noCutOffs;
-    protected int wastedGeneratedMoves;
 
     // Setters
     public void setBoard(Board b)
@@ -64,8 +65,7 @@ public abstract class AbstractSearch
                 + " positions in " + getTimeUsage()
                 + " mSecs = " + ((float) noPositions / (float) getTimeUsage())
                 + " kN/s with " + noCutOffs
-                + " cutoffs "
-                + " wasted moves " + wastedGeneratedMoves);
+                + " cutoffs ");
     }
 
     // Constructor
@@ -75,7 +75,6 @@ public abstract class AbstractSearch
         noCutOffs = 0;
         _finalEvaluation = 0;
         _plyDepth = 3;
-        wastedGeneratedMoves = 0;
         strongestMove = null;
     }
 
@@ -95,7 +94,6 @@ public abstract class AbstractSearch
         _finalEvaluation = 0;
         noPositions = 0;
         noCutOffs = 0;
-        wastedGeneratedMoves = 0;
         startTime = System.nanoTime();
 
         strongestMove = null;
@@ -138,7 +136,7 @@ public abstract class AbstractSearch
             return;
         }
 
-        moves = MoveGenerator.generateAllMoves(analyzeBoard).listIterator();
+        moves = moveGenerator.generateMoves(analyzeBoard);
         while (moves.hasNext())
         {
             analyzeBoard.performMove(moves.next());

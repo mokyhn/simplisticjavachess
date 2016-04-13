@@ -1,16 +1,5 @@
 package com.simplisticchess.movegenerator;
 
-//TODO: Implementation via an iterator. 
-//A numbering of all moves generated. A function on the form
-//genmoves(board, moveid) such that only moves with a certain id
-//are generated.
-// This can be used to optimize our search engine such that not all
-// moves have to be generated beforehand. We can simply generated one move
-// at a time. (when cutoffs occur in the alpha beta search we will not have
-// wasted time for generating moves which where never searched anyway.
-// Eliminatate generation of a number of moves when king is in check...
-// The king is not allowed to be in check while another piece is moved...
-
 import com.simplisticchess.board.Board;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.move.MoveType;
@@ -18,20 +7,19 @@ import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 
 
 
-public final class MoveGenerator
+public class MoveGenerator
 {
 
     public MoveGenerator()
     {
     }
 
-    // Input: Given a board b, and that there is a pawn p
-    // Output: The set of moves this pawn can perform.
-    public static ArrayList<Move> pawnMoves(Board b, Piece p)
+    private ArrayList<Move> pawnMoves(Board b, Piece p)
     {
 
         final Color c = b.inMove();
@@ -161,7 +149,7 @@ public final class MoveGenerator
 
     }
 
-    public static ArrayList<Move> kingMoves(Board b, Piece p)
+    private ArrayList<Move> kingMoves(Board b, Piece p)
     {
         final ArrayList<Move> Moves = new ArrayList<Move>();
         final Color c = b.inMove();
@@ -345,7 +333,7 @@ public final class MoveGenerator
     }
 
     // Genereate the possible moves for one single piece
-    public static ArrayList<Move> generateMoves(Board b, Piece p)
+    private ArrayList<Move> generateMoves(Board b, Piece p)
     {
         ArrayList<Move> Moves = new ArrayList<Move>();
         final Color sideToMove = b.inMove();
@@ -376,7 +364,7 @@ public final class MoveGenerator
     }
 
     // Used for generation of knight, bishop, rook and queen moves
-    private static Move genMove(Board b, Piece fp, int dX, int dY)
+    private Move genMove(Board b, Piece fp, int dX, int dY)
     {
         Piece tp;
         Move m = null;
@@ -406,7 +394,7 @@ public final class MoveGenerator
 
 
     
-    public static ArrayList<Move> knightMoves(Board b, Piece p)
+    private ArrayList<Move> knightMoves(Board b, Piece p)
     {
         final ArrayList<Move> Moves = new ArrayList<Move>();
 
@@ -456,7 +444,7 @@ public final class MoveGenerator
         return Moves;
     }
 
-    public static ArrayList<Move> bishopMoves(Board b, Piece p)
+    private ArrayList<Move> bishopMoves(Board b, Piece p)
     {
         final ArrayList<Move> Moves = new ArrayList<Move>();
         int d; // Displacement
@@ -528,7 +516,7 @@ public final class MoveGenerator
         return Moves;
     }
 
-    public static ArrayList<Move> rookMoves(Board b, Piece p)
+    private ArrayList<Move> rookMoves(Board b, Piece p)
     {
         final ArrayList<Move> Moves = new ArrayList<Move>();
         int d; // Displacement
@@ -600,7 +588,7 @@ public final class MoveGenerator
         return Moves;
     }
 
-    public static ArrayList<Move> generateAllMoves(Board b)
+    private ArrayList<Move> generateAllMoves(Board b)
     {
         final ArrayList<Move> moves = new ArrayList<Move>();
         ArrayList<Move> r = null;
@@ -622,4 +610,17 @@ public final class MoveGenerator
 
         return moves;
     }
+    
+    public Iterator<Move> generateMoves(Board b)
+    {
+        final ArrayList<Move> moves = generateAllMoves(b);
+        
+        // TODO: This logic should be refined in the future so that we do no
+        // generate all moves at once.
+        
+        return moves.iterator();
+    }
 }
+
+// TODO: Eliminatate generation of a number of moves when king is in check...
+// The king is not allowed to be in check while another piece is moved...

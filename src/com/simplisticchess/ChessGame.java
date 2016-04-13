@@ -1,3 +1,9 @@
+/**
+ *
+ * @author Morten Kühnrich
+ */
+
+
 package com.simplisticchess;
 
 import com.simplisticchess.move.MoveParser;
@@ -10,14 +16,11 @@ import com.simplisticchess.search.AbstractSearch;
 import com.simplisticchess.search.AlphaBetaSearch;
 import java.util.Iterator;
 
-/**
- *
- * @author Morten Kühnrich
- */
 public class ChessGame
 {
     private Board board;
-    private AbstractSearch engine;
+    private final AbstractSearch engine;
+    private final MoveGenerator moveGenerator = new MoveGenerator();
     
     public ChessGame()
     {
@@ -121,7 +124,7 @@ public class ChessGame
                     Move m = MoveParser.parseMove(board, str);
                     if (!board.isDraw() || !board.isMate())
                     {
-                        Iterator<Move> theMoves = MoveGenerator.generateAllMoves(board).listIterator();
+                        Iterator<Move> theMoves = moveGenerator.generateMoves(board);
                         // Check if move m is among the possible moves
                         while (theMoves.hasNext())
                         {

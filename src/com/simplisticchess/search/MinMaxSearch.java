@@ -1,15 +1,18 @@
-package com.simplisticchess.search;
-
-import com.simplisticchess.evaluator.Evaluator;
-import com.simplisticchess.movegenerator.MoveGenerator;
-import com.simplisticchess.move.Move;
-import com.simplisticchess.piece.Color;
-import java.util.ArrayList;
-
 /**
  *
  * @author Morten Kühnrich
  */
+
+
+package com.simplisticchess.search;
+
+import com.simplisticchess.evaluator.Evaluator;
+import com.simplisticchess.move.Move;
+import com.simplisticchess.movegenerator.MoveGenerator;
+import com.simplisticchess.piece.Color;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class MinMaxSearch extends AbstractSearch
 {
 
@@ -25,7 +28,7 @@ public class MinMaxSearch extends AbstractSearch
      */
     private int minMaxSearch(int plyDepth, int depthToGo)
     {
-        ArrayList<Move> moves;
+        Iterator<Move> moves;
         Move m;
         int score = 0,
                 bestScore = 0;
@@ -39,7 +42,7 @@ public class MinMaxSearch extends AbstractSearch
             return (analyzeBoard.drawBy3RepetionsRule() || analyzeBoard.drawBy50MoveRule()) ? 0 : Evaluator.evaluate(analyzeBoard);
         }
 
-        moves = MoveGenerator.generateAllMoves(analyzeBoard);
+        moves = moveGenerator.generateMoves(analyzeBoard);
 
         Color inMove = analyzeBoard.inMove();
 
@@ -49,16 +52,16 @@ public class MinMaxSearch extends AbstractSearch
             return Evaluator.evaluate(analyzeBoard);
         }
 
-        if (moves.isEmpty())
+        if (!moves.hasNext())
         {
             return 0; // A draw
         }
         boolean result;
         boolean thereWasALegalMove = false;
-        for (int i = 0; i < moves.size(); i++)
+        while (moves.hasNext())
         {
 
-            m = moves.get(i);
+            m = moves.next();
             result = analyzeBoard.performMove(m);
 
             if (result == false)
