@@ -12,6 +12,7 @@ import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PawnMoveGenerator
 {
@@ -144,5 +145,42 @@ public class PawnMoveGenerator
         return Moves;
 
     }
+
+
+    // TODO: The following can be refined so that not all moves are generated at once
+    public Iterator<Move> iterator(final Board b, final Piece p)
+    {
+        return new Iterator<Move>()
+        {
+            Iterator<Move> generated = null;
+            
+            public boolean hasNext()
+            {
+                if (generated == null) 
+                {
+                    generated = generateMoves(b, p).iterator();
+                }
+                return generated.hasNext();
+            }
+
+            public Move next()
+            {
+                if (hasNext()) 
+                {
+                    return generated.next();
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            public void remove()
+            {                
+            }
+        };
+    }
+
+    
     
 }

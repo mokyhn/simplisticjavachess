@@ -29,68 +29,62 @@ public class MoveGenerator
         queenMoveGenerator = new QueenMoveGenerator();
     }
 
-
-    private ArrayList<Move> generateAllMoves(Board b)
+  
+    // Genereate the possible move iterator for one single piece
+    private Iterator<Move> generateMoves(Board b, Piece p)
     {
-        final ArrayList<Move> moves = new ArrayList<Move>();
-        ArrayList<Move> r;
-        Piece p;
-
-        if (b.isDraw() || b.isMate())
-        {
-            return moves; // I.e. no moves to generate...
-        }
-        for (int i = 0; i < b.getNumberOfPieces(); i++)
-        {
-            p = b.getPiece(i);
-            r = generateMoves(b, p);
-            if (r != null && !r.isEmpty())
-            {
-                moves.addAll(r);
-            }
-        }
-
-        return moves;
-    }
-    
-    // Genereate the possible moves for one single piece
-    private ArrayList<Move> generateMoves(Board b, Piece p)
-    {
-        ArrayList<Move> Moves = new ArrayList<Move>();
         final Color sideToMove = b.inMove();
 
         if (p.getColor() != sideToMove)
         {
-            return Moves;
+            return null;
         }
 
         switch (p.getPieceType())
         {
             case PAWN:
-                return pawnMoveGenerator.generateMoves(b, p);
+                return pawnMoveGenerator.iterator(b, p);
             case KING:
-                return kingMoveGenerator.generateMoves(b, p);
+                return kingMoveGenerator.iterator(b, p);
             case KNIGHT:
-                return knightMoveGenerator.generateMoves(b, p);
+                return knightMoveGenerator.iterator(b, p);
             case BISHOP:
-                return bishopMoveGenerator.generateMoves(b, p);
+                return bishopMoveGenerator.iterator(b, p);
             case ROOK:
-                return rookMoveGenerator.generateMoves(b, p);
+                return rookMoveGenerator.iterator(b, p);
             case QUEEN:
-               return queenMoveGenerator.generateMoves(b, p);
-        }
-        return Moves;
+               return queenMoveGenerator.iterator(b, p);
+            default:
+                return null; // Not reachable
+        }        
     }
     
     public Iterator<Move> generateMoves(Board b)
     {
-        final ArrayList<Move> moves = generateAllMoves(b);
+        final ArrayList<Iterator<Move>> moveIterators = new ArrayList<Iterator<Move>>();
+
+        if (b.isDraw() || b.isMate())
+        {
+            return IteratorUtils.buildEmptyIterator();
+        }
         
-        // TODO: This logic should be refined in the future so that we do no
-        // generate all moves at once.
+        //TODO: THis is a hack to make the implementation work.
+        //If this is not used we get null pointer exceptions.
+        Board boardClone = new Board(b);
         
-        return moves.iterator();
+        
+        for (int i = 0; i < boardClone.getNumberOfPieces(); i++)
+        {            
+            Iterator<Move> it = generateMoves(boardClone, boardClone.getPiece(i));
+            if (it != null) 
+            {
+                moveIterators.add(it);
+            }
+        }
+
+        return IteratorUtils.compose(moveIterators);
     }
+  
 }
 
 // TODO: Eliminatate generation of a number of moves when king is in check...

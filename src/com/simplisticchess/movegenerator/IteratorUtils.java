@@ -87,4 +87,24 @@ public class IteratorUtils
             };
         }
     }
+    
+    public static <T> Iterator<T> buildEmptyIterator()
+    {
+        return new Iterator<T>() 
+        {
+            public boolean hasNext()
+            {
+                return false;
+            }
+
+            public T next()
+            {
+                return null;
+            }
+
+            public void remove()
+            {            
+            }
+        };
+    }
 }
