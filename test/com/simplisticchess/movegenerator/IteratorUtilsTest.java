@@ -2,9 +2,10 @@ package com.simplisticchess.movegenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Iterator;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  *
@@ -39,14 +40,14 @@ public class IteratorUtilsTest
     
     
     @Test
-    public void testEmptyAndEmpty()
+    public void testEmptyAndEmpty_compose_two()
     {
         Iterator result = IteratorUtils.compose(emptyIterator(), emptyIterator());
         assertFalse(result.hasNext());
     }
     
     @Test
-    public void testEmptyAndOne()
+    public void testEmptyAndOne_compose_two()
     {
         Iterator result = IteratorUtils.compose(emptyIterator(), oneElementIterator());
         assertTrue(result.hasNext());
@@ -55,7 +56,7 @@ public class IteratorUtilsTest
     }
 
     @Test
-    public void testOneAndEmpty() 
+    public void testOneAndEmpty_compose_two() 
     {
         Iterator result = IteratorUtils.compose(oneElementIterator(), emptyIterator());
         assertTrue(result.hasNext());
@@ -64,7 +65,7 @@ public class IteratorUtilsTest
     }
         
     @Test
-    public void testOneAndOne() 
+    public void testOneAndOne_compose_two() 
     {
         Iterator result = IteratorUtils.compose(oneElementIterator(), oneElementIterator());
         assertTrue(result.hasNext());
@@ -75,7 +76,7 @@ public class IteratorUtilsTest
     }    
     
     @Test
-    public void testThreeAndThree() 
+    public void testThreeAndThree_compose_two() 
     {
         Iterator result = IteratorUtils.compose(threeElementIterator(), threeElementIterator());
         assertTrue(result.hasNext());
@@ -94,7 +95,7 @@ public class IteratorUtilsTest
     } 
     
     @Test
-    public void testReversedThreeAndThree() 
+    public void testReversedThreeAndThree_compose_two() 
     {
         Iterator result = IteratorUtils.compose(reversedThreeElementIterator(), threeElementIterator());
         assertTrue(result.hasNext());
@@ -112,4 +113,111 @@ public class IteratorUtilsTest
         assertFalse(result.hasNext());        
     } 
 
+    @Test
+    public void testEmptyAndEmpty_compose_many()
+    {
+        Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(emptyIterator(), emptyIterator());
+        Iterator result = IteratorUtils.compose(input);
+        assertFalse(result.hasNext());
+    }
+    
+    @Test
+    public void testEmptyAndOne_compose_many()
+    {
+        Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(emptyIterator(), oneElementIterator());
+        Iterator result = IteratorUtils.compose(input);
+        assertTrue(result.hasNext());
+        assertEquals(1, result.next());
+        assertFalse(result.hasNext());   
+    }
+
+    @Test
+    public void testOneAndEmpty_compose_many()
+    {
+       Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(oneElementIterator(), emptyIterator());
+        Iterator result = IteratorUtils.compose(input);
+        assertTrue(result.hasNext());
+        assertEquals(1, result.next());
+        assertFalse(result.hasNext());   
+    }
+        
+    @Test
+    public void testOneAndOne_compose_many()
+    {
+        Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(oneElementIterator(), oneElementIterator());
+        Iterator result = IteratorUtils.compose(input);
+        assertTrue(result.hasNext());
+        assertEquals(1, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(1, result.next());
+        assertFalse(result.hasNext());   
+    }    
+    
+    @Test
+    public void testThreeAndThree_compose_many() 
+    {
+        Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(threeElementIterator(), threeElementIterator());
+        Iterator result = IteratorUtils.compose(input);
+        assertTrue(result.hasNext());
+        assertEquals(1, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(2, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(3, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(1, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(2, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(3, result.next());
+        assertFalse(result.hasNext());        
+    } 
+    
+    @Test
+    public void testReversedThreeAndThree_compose_many() 
+    {
+        Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(reversedThreeElementIterator(), threeElementIterator());
+        Iterator result = IteratorUtils.compose(input);
+        assertTrue(result.hasNext());
+        assertEquals(3, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(2, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(1, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(1, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(2, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(3, result.next());
+        assertFalse(result.hasNext());        
+    }     
+ 
+    @Test
+    public void testReversedThreeEmptyAndThreeAndThree_compose_many() 
+    {
+        Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(reversedThreeElementIterator(), emptyIterator(), threeElementIterator(), threeElementIterator());
+        Iterator result = IteratorUtils.compose(input);
+        assertTrue(result.hasNext());
+        assertEquals(3, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(2, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(1, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(1, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(2, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(3, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(1, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(2, result.next());
+        assertTrue(result.hasNext());
+        assertEquals(3, result.next());
+        assertFalse(result.hasNext());
+        assertNull(result.next());
+    }     
+    
 }
