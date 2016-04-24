@@ -60,8 +60,6 @@ public class AlphaBetaSearch extends AbstractSearch
         //--------------------Part 2. Move generation and variation search
         Iterator<Move> moveIterator = moveGenerator.generateMoves(analyzeBoard);
 
-        int i;
-
         boolean result;
 
         while (moveIterator.hasNext())
@@ -76,10 +74,10 @@ public class AlphaBetaSearch extends AbstractSearch
             }
             thereWasALegalMove = true;
 
-            String movestr = m.toString(); //m.toString().replace('-', 'z')).replace('=', 'z');
+            //String movestr = m.toString(); //m.toString().replace('-', 'z')).replace('=', 'z');
 
-            String sb = "<" + movestr + ">";
-            String eb = "</" + movestr + ">";
+            //String sb = "<" + movestr + ">";
+            //String eb = "</" + movestr + ">";
 
             //System.out.print(sb + m.toString() );
             int variantEvaluation = alphaBetaSearch(currentPlyDepth - 1, totalPlyDepth, alpha, beta);

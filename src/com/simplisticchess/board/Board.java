@@ -13,7 +13,7 @@ import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
 import com.simplisticchess.position.Location;
 
-public final class Board
+public class Board
 {
 
     private Position position; // Current position of pieces

@@ -53,59 +53,39 @@ public class Position
     
     public Piece getPiece(Location location)
     {
-        final Piece p = xyPosition[location.getX()][location.getY()];
-        return p;
+        return xyPosition[location.getX()][location.getY()];
     }
     
-    public Piece getPiece(final int i)
+    public Piece getPiece(int i)
     {
-        final Piece p = pieces.get(i);
-        assert p != null;
-
-        final Piece ptmp = xyPosition[p.getxPos()][p.getyPos()];
-        assert ptmp != null : "Unexpected null value with piece " + i + " of type " + p.toString() + " at (" + p.getxPos() + "," + p.getyPos() + ")" + "\n"
-                + this.toString();
-        assert ptmp.getxPos() == p.getxPos() && ptmp.getyPos() == p.getyPos();
-        return p;
+        return pieces.get(i);
     }
 
 
-    public void insertPiece(final Piece p)
+    public void insertPiece(Piece p)
     {
-        assert p != null;
         pieces.add(p);
-
         xyPosition[p.getxPos()][p.getyPos()] = p;
-
-        getBitBoard().insertPiece(p);
+        bitBoard.insertPiece(p);
     }
 
-    // Remove a piece from location x, y and return the piece
+    // Remove a piece from location and return the piece
     public Piece removePiece(Location location)
     {
         Piece p = xyPosition[location.getX()][location.getY()];
-        assert (p.getxPos() == location.getX()) && (p.getyPos() == location.getY());
         pieces.remove(p);
-
         xyPosition[location.getX()][location.getY()] = null;
-
-        getBitBoard().removePiece(location);
-
+        bitBoard.removePiece(location);
         return p;
     }
    
     public void movePiece(Location from, Location to)
     {
-        final Piece p = xyPosition[from.getX()][from.getY()];
-
-        assert (from.getX() != to.getX() || from.getY() != to.getY()) : "Cannot move from c to c";
-        assert (p != null) : this.toString() + "\n" + "Tried move " + from.getX() + "," + from.getY() + " to " + to.getX() + "," + to.getY();
-
-        p.setxPos(to.getX());
-        p.setyPos(to.getY());
-
+        Piece p = xyPosition[from.getX()][from.getY()];
+          
+        p.setLocation(to);
+        
         xyPosition[to.getX()][to.getY()] = p;
-        assert p.getxPos() == xyPosition[p.getxPos()][p.getyPos()].getxPos() && p.getyPos() == xyPosition[p.getxPos()][p.getyPos()].getyPos();
         xyPosition[from.getX()][from.getY()] = null;
 
         getBitBoard().removePiece(from);
