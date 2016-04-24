@@ -1,45 +1,41 @@
-package com.simplisticchess.board;
-
 /**
  * @author Morten Kühnrich
  *
  */
-import com.simplisticchess.piece.Piece;
+
+package com.simplisticchess.board;
+
 import com.simplisticchess.piece.Color;
+import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
 import com.simplisticchess.position.Location;
+import java.util.ArrayList;
 
-public final class Position
+public class Position
 {
+    private static final int DEFAULT_NUMBER_OF_PIECES_CAPACITY = 32;
 
-    private final Piece[] pieces;
-    private final Piece[][] xyPosition;
-    private int numberOfPieces;
+    private ArrayList<Piece> pieces;
+    private Piece[][] xyPosition;
     
     private BitBoard bitBoard;
             
     public Position()
     {
-        super();
-        numberOfPieces = 0;
-        pieces = new Piece[32];
-        xyPosition = new Piece[8][8];
-        bitBoard = new BitBoard();
+        init(DEFAULT_NUMBER_OF_PIECES_CAPACITY);   
     }
 
     public Position(Position position)
     {
-        this();
-        Piece p;
-        this.numberOfPieces = position.numberOfPieces;
+        init(position.pieces.size());
 
-        for (int i = 0; i < numberOfPieces; i++)
+        for (Piece p : position.pieces)
         {
-            p = new Piece(position.pieces[i]);
-            this.pieces[i] = p;
-            this.xyPosition[p.getxPos()][p.getyPos()] = p;
+            Piece newPiece = new Piece(p);
+            this.pieces.add(newPiece);
+            this.xyPosition[newPiece.getxPos()][newPiece.getyPos()] = newPiece;
         }
-
+        
         for (PieceType t : PieceType.values())
         {
             this.bitBoard.bb[0][t.getType()] = position.bitBoard.bb[0][t.getType()];
@@ -47,6 +43,14 @@ public final class Position
         }
     }
 
+    private void init(int n)
+    {
+        pieces = new ArrayList<Piece>(n);
+        xyPosition = new Piece[8][8];
+        bitBoard = new BitBoard();
+    
+    }  
+    
     public Piece getPiece(Location location)
     {
         final Piece p = xyPosition[location.getX()][location.getY()];
@@ -55,7 +59,7 @@ public final class Position
     
     public Piece getPiece(final int i)
     {
-        final Piece p = pieces[i];
+        final Piece p = pieces.get(i);
         assert p != null;
 
         final Piece ptmp = xyPosition[p.getxPos()][p.getyPos()];
@@ -68,10 +72,8 @@ public final class Position
 
     public void insertPiece(final Piece p)
     {
-        assert numberOfPieces < 32 : "PieceList:insertPiece: Inserting to many pieces";
         assert p != null;
-        pieces[numberOfPieces] = p;
-        numberOfPieces++;
+        pieces.add(p);
 
         xyPosition[p.getxPos()][p.getyPos()] = p;
 
@@ -81,24 +83,9 @@ public final class Position
     // Remove a piece from location x, y and return the piece
     public Piece removePiece(Location location)
     {
-        int i;
-        Boolean flag = true;
         Piece p = xyPosition[location.getX()][location.getY()];
-
-        assert (p != null) : "removePiece at " + location.getX() + ","  + location.getY() + "\n" + this.toString();
-
         assert (p.getxPos() == location.getX()) && (p.getyPos() == location.getY());
-
-        for (i = 0; i < numberOfPieces && flag; i++)
-        {
-            if (pieces[i].getxPos() == location.getX()
-                    && pieces[i].getyPos() == location.getY())
-            {
-                pieces[i] = pieces[numberOfPieces - 1];
-                numberOfPieces--;
-                flag = false;
-            }
-        }
+        pieces.remove(p);
 
         xyPosition[location.getX()][location.getY()] = null;
 
@@ -127,7 +114,7 @@ public final class Position
 
     public int getNumberOfPieces()
     {
-        return numberOfPieces;
+        return pieces.size();
     }
 
     private boolean rookAttack(Location l1, Location l2)
@@ -228,12 +215,8 @@ public final class Position
 
     public boolean attacks(Location location, Color inMove)
     {
-        Piece p;
-
-        for (int i = 0; i < numberOfPieces; i++)
+        for (Piece p : pieces)
         {
-            p = getPiece(i);
-
             // Chose one of opposite color
             if (p.getColor() == inMove.flip() && !(p.getxPos() == location.getX() && p.getyPos() == location.getY()))
             {
@@ -332,9 +315,6 @@ public final class Position
         return s;
     }
 
-    /**
-     * @return the bitBoard
-     */
     public BitBoard getBitBoard()
     {
         return bitBoard;
