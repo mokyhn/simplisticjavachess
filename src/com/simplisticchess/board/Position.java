@@ -339,13 +339,5 @@ public final class Position
     {
         return bitBoard;
     }
-
-    /**
-     * @param bitBoard the bitBoard to set
-     */
-    public void setBitBoard(BitBoard bitBoard)
-    {
-        this.bitBoard = bitBoard;
-    }
-
+  
 }

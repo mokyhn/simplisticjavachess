@@ -161,11 +161,6 @@ public final class Board
         return position.attacks(new Location(x, y), sideToMove);
     }
 
-    public String getBitboardString()
-    {
-        return ((BitBoard) position.getBitBoard()).toString();
-    }
-
     public Boolean drawBy50MoveRule()
     {
         return state.halfMoveClock >= 50;
