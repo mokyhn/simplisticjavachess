@@ -1,8 +1,10 @@
-package com.simplisticchess.board;
-
 /**
  * @author Morten Kühnrich
  */
+
+package com.simplisticchess.board;
+
+
 import com.simplisticchess.game.History;
 import com.simplisticchess.game.State;
 import com.simplisticchess.evaluator.Evaluator;
@@ -146,19 +148,6 @@ public class Board
     public boolean attacks(int x, int y)
     {
         return position.attacks(new Location(x, y), state.inMove);
-    }
-
-    /**
-     *
-     * @param x
-     * @param y
-     * @param sideToMove
-     * @return true if the side not in move, in board b attacks square (x, y)
-     * and otherwise false
-     */
-    public boolean attacks(int x, int y, Color sideToMove)
-    {
-        return position.attacks(new Location(x, y), sideToMove);
     }
 
     public Boolean drawBy50MoveRule()
