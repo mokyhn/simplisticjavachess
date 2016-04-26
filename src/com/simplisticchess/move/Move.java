@@ -1,9 +1,11 @@
-package com.simplisticchess.move;
-
 /**
  *
  * @author Morten Kühnrich
  */
+
+package com.simplisticchess.move;
+
+
 
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.PieceType;
@@ -16,15 +18,14 @@ public final class Move
     private final Location to;
     
     private final MoveType moveType; 
-    private final PieceType capturedPiece; // Used for storing pieces that are taken
-                              // by the piece which moves
+    
+    // The piece captured 
+    private final PieceType capturedPiece; 
 
     private final Color whoMoves;
 
     public Move(int fromX, int fromY, int toX, int toY, MoveType type, PieceType capturedPiece, Color whoMoves)
     {
-        assert (!(fromX == toX && fromY == toY)) : "(fX, fY, tX, tY) = " + "(" + fromX + ", " + fromY + ", " + toX + "," + toY + ")";
-
         from = new Location(fromX, fromY);
         to = new Location(toX, toY);
         this.moveType = type;
@@ -105,24 +106,27 @@ public final class Move
     @Override
     public String toString()
     {
-        if (getMoveType() == MoveType.NORMALMOVE)
+        switch (moveType)
         {
-            return from.toString() + "-" + to.toString();
+            case NORMALMOVE:
+                return from.toString() + "-" + to.toString();
+            case CAPTURE:
+                if (capturedPiece == PieceType.KING)
+                {
+                    return "mate";
+ 
+                }
+            
+                /* Intented fall through */
+            
+            case CAPTURE_ENPASSANT:
+                return from.toString() + "x" + to.toString();
+            case CASTLE_SHORT:
+                return "o-o";
+            case CASTLE_LONG:
+                return "o-o-o";
         }
 
-        // Normal capture moves
-        if (getMoveType() == MoveType.CAPTURE_ENPASSANT || getMoveType() == MoveType.CAPTURE)
-        {
-            return from.toString() + "x" + to.toString();
-        }
-
-        // mate
-        if (getMoveType() == MoveType.CAPTURE && getCapturedPiece() == PieceType.KING)
-        {
-            return "mate";
-        }
-
-        // Promotions
         if (aSimplePromotion())
         {
             return from.toString() + "-" + to.toString() + "=" + promotionTo().getPieceLetter();
@@ -132,17 +136,8 @@ public final class Move
         {
             return from.toString() + "x" + to.toString() + "=" + promotionTo().getPieceLetter(); 
         }
-
-        if (getMoveType() == MoveType.CASTLE_SHORT)
-        {
-            return "o-o";
-        }
-        if (getMoveType() == MoveType.CASTLE_LONG)
-        {
-            return "o-o-o";
-        }
-
-        return "ERR: getMoveStr";
+     
+        return null;
     }
 
     public Location getFrom()
