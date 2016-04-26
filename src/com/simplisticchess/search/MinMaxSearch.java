@@ -62,7 +62,7 @@ public class MinMaxSearch extends AbstractSearch
         {
 
             m = moves.next();
-            result = analyzeBoard.performMove(m);
+            result = analyzeBoard.doMove(m);
 
             if (result == false)
             {

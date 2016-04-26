@@ -139,7 +139,7 @@ public abstract class AbstractSearch
         moves = moveGenerator.generateMoves(analyzeBoard);
         while (moves.hasNext())
         {
-            analyzeBoard.performMove(moves.next());
+            analyzeBoard.doMove(moves.next());
             countNodesTmp(plydepth - 1);
             analyzeBoard.undo();
         }

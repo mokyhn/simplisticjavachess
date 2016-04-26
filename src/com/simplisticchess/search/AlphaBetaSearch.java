@@ -66,7 +66,7 @@ public class AlphaBetaSearch extends AbstractSearch
         {
             Move m = moveIterator.next();
 
-            result = analyzeBoard.performMove(m);
+            result = analyzeBoard.doMove(m);
 
             if (result == false)
             {

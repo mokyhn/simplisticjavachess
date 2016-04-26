@@ -58,7 +58,7 @@ public class ChessGame
         System.out.println(engine.getStatistics());
         if (engine.getStrongestMove() != null)
         {
-            board.performMove(engine.getStrongestMove());
+            board.doMove(engine.getStrongestMove());
             checkForDrawOrMate(board);
             print();
         }
@@ -130,7 +130,7 @@ public class ChessGame
                         {
                             if (m.equals(theMoves.next()))
                             {
-                                boolean result = board.performMove(m);
+                                boolean result = board.doMove(m);
                                 if (result)
                                 {
                                     break;

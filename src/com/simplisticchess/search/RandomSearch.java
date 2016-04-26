@@ -49,7 +49,7 @@ public class RandomSearch extends AbstractSearch
         {
             double r = Math.random();
             Move theMove = moves.get((int) Math.ceil((n - 1) * r));
-            result = analyzeBoard.performMove(theMove);
+            result = analyzeBoard.doMove(theMove);
 
             if (result == false)
             {

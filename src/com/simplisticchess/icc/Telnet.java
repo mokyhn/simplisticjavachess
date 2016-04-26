@@ -74,13 +74,13 @@ public class Telnet {
                 System.out.println("Found move " + m.toString());
          }
                if (m != null && m.getWhoMoves() == Color.WHITE) {
-               theBoard.performMove(m);
+               theBoard.doMove(m);
                engine.setPlyDepth(3);
                engine.setBoard(theBoard);
                engine.search();               
                System.out.println("Found " + engine.getStrongestMove().toString());
                dout.writeBytes(engine.getStrongestMove().toString() + "\n");
-               theBoard.performMove(engine.getStrongestMove());
+               theBoard.doMove(engine.getStrongestMove());
                System.out.println(theBoard.getASCIIBoard());
                }
             

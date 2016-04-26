@@ -18,10 +18,9 @@ import com.simplisticchess.position.Location;
 public class Board
 {
 
-    private Position position; // Current position of pieces
-    private State state;             // State wrt. casteling, 
-    // latest move and movenumber etc.
-    private History history;           // Previus states.
+    private Position position;
+    private State state;
+    private History history;
 
     public Board()
     {
@@ -203,7 +202,7 @@ public class Board
     // TODO: 2013, Should we check for draw here? 
     // A move might lead to a draw state.
     // The draw flag of the board might be set accordingly.
-    public boolean performMove(Move m)
+    public boolean doMove(Move m)
     {
         Piece p;
 

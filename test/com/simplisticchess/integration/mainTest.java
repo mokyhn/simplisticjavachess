@@ -158,7 +158,7 @@ public class mainTest
                 m = MoveParser.parseMove(b, str);
                 if (m != null)
                 {
-                    b.performMove(m);
+                    b.doMove(m);
                 }
             }
            
