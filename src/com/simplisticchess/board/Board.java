@@ -330,17 +330,8 @@ public class Board
                 position.movePiece(move.getTo(), move.getFrom());
                 break;
 
-            case CAPTURE_ENPASSANT:
-                Color color;
-                if (move.getWhoMoves() == Color.WHITE)
-                {
-                    color = Color.BLACK;
-                }
-                else                
-                {
-                    color = Color.WHITE;
-                }
-                insertPiece(new Piece(new Location(move.getTo().getX(), move.getFrom().getY()), color, PieceType.PAWN));
+            case CAPTURE_ENPASSANT:          
+                insertPiece(new Piece(new Location(move.getTo().getX(), move.getFrom().getY()), move.getWhoMoves().flip(), PieceType.PAWN));
                 position.movePiece(move.getTo(), move.getFrom());
                 break;
 
