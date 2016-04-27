@@ -17,10 +17,10 @@ public final class State
     // Could also be used in a hash table for search evaluations.
     public BitBoard bbposition; 
 
-    public boolean blackCanCastleShort;
-    public boolean blackCanCastleLong;
-    public boolean whiteCanCastleShort;
-    public boolean whiteCanCastleLong;
+    private boolean blackCanCastleShort;
+    private boolean blackCanCastleLong;
+    private boolean whiteCanCastleShort;
+    private boolean whiteCanCastleLong;
 
     public boolean drawFlag;
     public boolean mateFlag;
@@ -62,6 +62,51 @@ public final class State
    
     }
 
+    public void setCanCastleShort(boolean flag, Color color) 
+    {
+        if (color == Color.WHITE) 
+        {
+            whiteCanCastleShort = flag;
+        } 
+        else
+        {
+            blackCanCastleShort = flag;
+        }
+    }
+
+    public void setCanCastleLong(boolean flag, Color color) 
+    {
+        if (color == Color.WHITE) 
+        {
+            whiteCanCastleLong = flag;
+        } 
+        else
+        {
+            blackCanCastleLong = flag;
+        }
+    }
+    
+    public boolean getCanCastleShort(Color color) 
+    {
+        return color == Color.WHITE ? whiteCanCastleShort : blackCanCastleShort;
+    }
+    
+    public boolean getCanCastleShort()
+    {
+        return getCanCastleShort(inMove);
+    }
+    
+    public boolean getCanCastleLong(Color color) 
+    {
+        return color == Color.WHITE ? whiteCanCastleLong : blackCanCastleLong;
+    }
+   
+    public boolean getCanCastleLong()
+    {
+        return getCanCastleLong(inMove);
+    }
+
+    
     @Override
     public String toString()
     {
