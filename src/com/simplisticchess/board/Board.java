@@ -9,7 +9,6 @@ import com.simplisticchess.game.History;
 import com.simplisticchess.game.State;
 import com.simplisticchess.evaluator.Evaluator;
 import com.simplisticchess.move.Move;
-import com.simplisticchess.move.MoveType;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
@@ -32,7 +31,7 @@ public class Board
     public Board(String fen)
     {
         this();
-        setupFENboard(fen);
+        FENParser.setupFENboard(this, fen);
     }
 
     public Board(Board board)
@@ -133,6 +132,17 @@ public class Board
         return state.getCanCastleLong();
     }
 
+    public void setCanCastleShort(boolean flag, Color color)
+    {
+        state.setCanCastleShort(flag, color);
+    }
+
+    public void setCanCastleLong(boolean flag, Color color)
+    {
+        state.setCanCastleLong(flag, color);
+    }
+
+    
     /**
      *
      * @param x
@@ -355,200 +365,6 @@ public class Board
         }
     }
 
-    // Given a position in the FEN - notation.
-    // Set up the board
-    // TODO: This function is not robust enough. It may throw exceptions. sfen = 11 is an example
-    private void setupFENboard(String sfen)
-    {
-        int x = 0;
-        int y = 7;
-        int i;
-        int parsingPartNo;
-        char c;
-        final String fen = trimWhiteSpace(sfen.trim());
-        String num1 = "";
-        String num2 = "";
-
-        // Parsing part no. 1
-        parsingPartNo = 1;
-
-        // Traverse input string
-        for (i = 0; i < fen.length(); i++)
-        {
-            c = fen.charAt(i);
-            assert x <= 8 && y >= 0 : "Error (Not a correct FEN board)";
-
-            if (parsingPartNo == 1)
-            {
-                if (c == ' ')
-                {
-                    parsingPartNo = 2;
-                    continue;
-                }
-
-                if (c >= '1' && c <= '8')
-                {
-                    x = x + (int) (c - '0');
-                } else if (c >= 'b' && c <= 'r')
-                {
-                    insertPiece(new Piece(new Location(x, y), c));
-                    x++;
-                    continue;
-                } else if (c >= 'B' && c <= 'R')
-                {
-                    insertPiece(new Piece(new Location(x, y), c));
-                    x++;
-                    continue;
-                } else if (c == '/')
-                {
-                    y--;
-                    x = 0;
-                    continue;
-                }
-            }
-
-            if (parsingPartNo == 2)
-            {
-                switch (c)
-                {
-                    case 'w':
-                        state.inMove = Color.WHITE;
-                        break;
-                    case 'b':
-                        state.inMove = Color.BLACK;
-                        break;
-                    case ' ':
-                        parsingPartNo = 3;
-                        continue;
-                }
-            }
-
-            if (parsingPartNo == 3)
-            {
-                switch (c)
-                {
-                    case 'K':
-                        state.setCanCastleShort(true, Color.WHITE);
-                        break;
-                    case 'Q':
-                        state.setCanCastleLong(true, Color.WHITE);
-                        break;
-                    case 'k':
-                        state.setCanCastleShort(true, Color.BLACK);
-                        break;
-                    case 'q':
-                        state.setCanCastleLong(true, Color.BLACK);
-                        break;
-                    case ' ':
-                        parsingPartNo = 4;
-                        continue;
-                }
-            }
-
-            if (parsingPartNo == 4)
-            {
-                if (c == ' ')
-                {
-                    parsingPartNo = 5;
-                    continue;
-                }
-
-                if (c == '-')
-                {
-                    continue;
-                }
-
-                if (c != ' ')
-                {
-                    final int xPawn = (int) (c - 'a');
-                    final int yPawn = (int) (fen.charAt(i + 1) - '1');
-                    assert xPawn >= 0 && xPawn <= 7;
-                    assert yPawn >= 0 && yPawn <= 7;
-                    final Piece p = getPiece(xPawn, yPawn - state.inMove.getColor());
-                    if (p != null && p.getPieceType() == PieceType.PAWN)
-                    {
-                        state.move = new Move(xPawn, yPawn + state.inMove.getColor(), 
-                                              xPawn, yPawn - state.inMove.getColor(), 
-                                MoveType.NORMALMOVE, null, state.inMove);
-                        history.add(state);
-                    }
-
-                    parsingPartNo = 5;
-                    i = i + 2;
-
-                }
-
-                if (fen.charAt(i) == ' ')
-                {
-                    parsingPartNo = 5;
-                    continue;
-                }
-            }
-
-            if (parsingPartNo == 5)
-            {
-                if (c == ' ')
-                {
-                    parsingPartNo = 6;
-                    continue;
-                }
-
-                if (c != ' ')
-                {
-                    num1 = num1 + c;
-                }
-            }
-
-            if (parsingPartNo == 6)
-            {
-                if (c == ' ')
-                { // end of story :)
-                    parsingPartNo = 7;
-                    continue;
-                }
-
-                if (c != ' ')
-                {
-                    num2 = num2 + c;
-                }
-            }
-
-        }
-
-        state.halfMoveClock = Integer.parseInt(num1);
-        state.moveNumber = 2 * Integer.parseInt(num2) - 2;
-        if (state.moveNumber != 0 && state.inMove == Color.BLACK)
-        {
-            state.moveNumber--;
-        }
-
-    }
-
-    private String trimWhiteSpace(final String s)
-    {
-        String t = "";
-        char c;
-        boolean flag = false;
-
-        for (int i = 0; i < s.length(); i++)
-        {
-            c = s.charAt(i);
-
-            if (c == ' ' && !flag)
-            {
-                flag = true;
-                t = t + ' ';
-            }
-
-            if (c != ' ')
-            {
-                flag = false;
-                t = t + c;
-            }
-        }
-
-        return t;
-    }
 
     /**
      * Returns the board as ASCII art and game other information
