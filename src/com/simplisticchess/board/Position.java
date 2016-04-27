@@ -299,5 +299,20 @@ public class Position
     {
         return bitBoard;
     }
+
+    public boolean isInCheck(Color color)
+    {
+        for (Piece p : pieces)
+        {
+            if (p.getPieceType() == PieceType.KING && p.getColor() == color)
+            {
+                if (attacks(p.getLocation(), color))
+                {
+                    return true;
+                }                
+            }
+        }     
+        return false;
+    }
   
 }
