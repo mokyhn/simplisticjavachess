@@ -15,7 +15,7 @@ import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
 import com.simplisticchess.position.Location;
 
-public class Board implements IBoard
+public class Board
 {
 
     private Position position;
@@ -42,7 +42,6 @@ public class Board implements IBoard
         this.history = new History(board.history);
     }
 
-    @Override
     public int getNumberOfPieces()
     {
         return position.getNumberOfPieces();
@@ -88,7 +87,6 @@ public class Board implements IBoard
         return history.peek().move;
     }
 
-    @Override
     public Piece getPiece(int i)
     {
         return position.getPiece(i);
@@ -100,7 +98,6 @@ public class Board implements IBoard
         return p;
     }
     
-    @Override
     public Piece getPiece(Location location)
     {
         return position.getPiece(location);
@@ -205,18 +202,16 @@ public class Board implements IBoard
     // TODO: 2013, Should we check for draw here? 
     // A move might lead to a draw state.
     // The draw flag of the board might be set accordingly.
-    @Override
     public boolean doMove(Move m)
     {
         Piece p;
 
         p = getPiece(m.getFrom());
 
-        state.moveNumber++;
-
         // Put the move m on the stack
         state.move = m;
         history.add(new State(state));
+        state.moveNumber++;
 
         // Used to determine the 50-move rule, three times repition
         if (p.getPieceType() == PieceType.PAWN)
@@ -383,13 +378,10 @@ public class Board implements IBoard
         return legalityOfMove;
     }
 
-    @Override
     public boolean undo()
     {
         Color color = null;
         Move m;
-
-        state.moveNumber--;
 
         try
         {

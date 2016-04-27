@@ -61,7 +61,6 @@ public final class Evaluator
             }
         }
 
-        assert (!(!thereIsABlackKing && !thereIsAWhiteKing));
         if (thereIsABlackKing == false)
         {
             result = BLACK_IS_MATED;
