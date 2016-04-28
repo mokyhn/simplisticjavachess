@@ -8,9 +8,7 @@ package com.simplisticchess.search;
 
 import com.simplisticchess.evaluator.Evaluator;
 import com.simplisticchess.move.Move;
-import com.simplisticchess.movegenerator.MoveGenerator;
 import com.simplisticchess.piece.Color;
-import java.util.ArrayList;
 import java.util.Iterator;
 
 public class MinMaxSearch extends AbstractSearch
@@ -28,13 +26,11 @@ public class MinMaxSearch extends AbstractSearch
      */
     private int minMaxSearch(int plyDepth, int depthToGo)
     {
-        Iterator<Move> moves;
-        Move m;
-        int score = 0,
-                bestScore = 0;
+        
+        int score;
+        int bestScore = 0;
         
         boolean firstCalculation = true;
-        int distanceToRoot = plyDepth - depthToGo;
 
         if (depthToGo == 0)
         {
@@ -42,7 +38,7 @@ public class MinMaxSearch extends AbstractSearch
             return (analyzeBoard.drawBy3RepetionsRule() || analyzeBoard.drawBy50MoveRule()) ? 0 : Evaluator.evaluate(analyzeBoard);
         }
 
-        moves = moveGenerator.generateMoves(analyzeBoard);
+        Iterator<Move> moves = moveGenerator.generateMoves(analyzeBoard);
 
         Color inMove = analyzeBoard.inMove();
 
@@ -61,8 +57,8 @@ public class MinMaxSearch extends AbstractSearch
         while (moves.hasNext())
         {
 
-            m = moves.next();
-            result = analyzeBoard.doMove(m);
+            Move move = moves.next();
+            result = analyzeBoard.doMove(move);
 
             if (result == false)
             {
@@ -78,37 +74,38 @@ public class MinMaxSearch extends AbstractSearch
                 bestScore = score;
                 if (plyDepth == depthToGo)
                 {
-                    strongestMove = m;
+                    strongestMove = move;
                 }
                 firstCalculation = false;
-            } else
+            } 
+            else
             {
-                if (inMove == Color.WHITE)
+                switch (inMove) 
                 {
-                    if (score > bestScore)
-                    {
-                        bestScore = score;
-                        if (plyDepth == depthToGo)
+                    case WHITE:
+                        if (score > bestScore)
                         {
-                            strongestMove = m; // Used to extract strongest move
+                            bestScore = score;
+                            if (plyDepth == depthToGo)
+                            {
+                                strongestMove = move; // Used to extract strongest move
+                            }
                         }
-                    }
-                }
-
-                if (inMove == Color.BLACK)
-                {
-                    if (score < bestScore)
-                    {
-                        bestScore = score;
-                        if (plyDepth == depthToGo)
+                    break;
+                    case BLACK:
+                        if (score < bestScore)
                         {
-                            strongestMove = m; // Used to extract strongest move
+                            bestScore = score;
+                            if (plyDepth == depthToGo)
+                            {
+                                strongestMove = move; // Used to extract strongest move
+                            }
                         }
-                    }
                 }
             }
-
         }
+        
+        int distanceToRoot = plyDepth - depthToGo;
         // Mate or draw
         if (!thereWasALegalMove)
         {

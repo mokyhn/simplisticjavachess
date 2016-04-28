@@ -133,12 +133,17 @@ public class mainTest
     }
 
     @Test
-    public void kingTakes() throws Exception
+    public void kingTakes_MinMax() throws Exception
     {
         assertTrue(testSearch("4k3/7p/7K/8/8/8/8/8 w", "", MINMAX, 5, "h6h7"));
-        assertTrue(testSearch("4k3/7p/7K/8/8/8/8/8 w", "", ALPHABETA, 5, "h6h7"));
     }
 
+    @Test
+    public void kingTakes_AlphaBeta() throws Exception
+    {
+        assertTrue(testSearch("4k3/7p/7K/8/8/8/8/8 w", "", ALPHABETA, 5, "h6h7"));
+    }    
+    
     @Test
     public void castlingTest() throws Exception
     {

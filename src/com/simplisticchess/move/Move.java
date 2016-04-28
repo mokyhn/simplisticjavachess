@@ -77,13 +77,13 @@ public final class Move
     {
         if (object instanceof Move) 
         {
-            Move m = (Move) object;
+            Move move = (Move) object;
 
-            return this.from.equals(m.from)
-                && this.to.equals(m.to)
-                && this.getMoveType() == m.getMoveType()
-                && this.getCapturedPiece() == m.getCapturedPiece()
-                && this.getWhoMoves() == m.getWhoMoves();
+            return this.from.equals(move.from)
+                && this.to.equals(move.to)
+                && this.getMoveType() == move.getMoveType()
+                && this.getCapturedPiece() == move.getCapturedPiece()
+                && this.getWhoMoves() == move.getWhoMoves();
         }
         else
         {
