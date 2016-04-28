@@ -97,26 +97,9 @@ public class FENParser
                         board.setCanCastleLong(true, Color.BLACK);
                         break;
                     case ' ':
-                        parsingPartNo = 4;
-                        continue;
+                        parsingPartNo = 4;                        
                 }
-            }
-
-            if (parsingPartNo == 4)
-            {
-                if (c == ' ')
-                {
-                    parsingPartNo = 5;
-                    continue;
-                }
-
-                if (c == '-')
-                {
-                    break;
-                }
-
-               
-            }
+            }            
         }
     }
 
