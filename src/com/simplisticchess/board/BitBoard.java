@@ -108,7 +108,6 @@ public class BitBoard implements IBitBoard
 
     public Piece removePiece(Location location)
     {
-        final int UNDF = 254;
         Color color = null;
         PieceType type = null;
 

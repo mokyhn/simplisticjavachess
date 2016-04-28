@@ -29,7 +29,7 @@ public class MoveGeneratorUtil
         }
         tp = b.getPiece(tX, tY);
         PieceType takenPiece;
-        if (tp != null && tp.getColor() == b.inMove().flip())
+        if (tp != null && tp.getColor() == b.inMove().opponent())
         {
             takenPiece = tp.getPieceType();
             moveType = MoveType.CAPTURE;

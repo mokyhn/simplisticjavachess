@@ -5,8 +5,11 @@ package com.simplisticchess.game;
  * @author Morten Kühnrich
  *
  * This class encapsulates the information needed to check for
- * three-fold-repetition. The class also records the history of when the
+ * three-fold-repetition. 
+ * 
+ * The class also records the history of when the
  * castling possibility was lost for a given player
+ * 
  */
 import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
@@ -15,7 +18,8 @@ import java.util.Stack;
 public final class History
 {
 
-    private final Stack<State> stateHistory; // A stack of previous game states
+    /* A stack of previous game states */
+    private final Stack<State> stateHistory; 
 
     public History()
     {

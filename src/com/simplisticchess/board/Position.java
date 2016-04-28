@@ -198,7 +198,7 @@ public class Position
         for (Piece p : pieces)
         {
             // Chose one of opposite color
-            if (p.getColor() == inMove.flip() && !(p.getxPos() == location.getX() && p.getyPos() == location.getY()))
+            if (p.getColor() == inMove.opponent() && !(p.getxPos() == location.getX() && p.getyPos() == location.getY()))
             {
                 switch (p.getPieceType())
                 {

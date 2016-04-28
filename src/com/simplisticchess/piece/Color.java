@@ -19,7 +19,7 @@ public enum Color
         return color;
     }
 
-    public Color flip()
+    public Color opponent()
     {
         return this == BLACK ? WHITE : BLACK;
     }

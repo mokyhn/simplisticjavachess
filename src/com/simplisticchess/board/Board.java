@@ -310,13 +310,13 @@ public class Board
         }
 
         // Swap the move color
-        state.inMove = state.inMove.flip();
+        state.inMove = state.inMove.opponent();
 
         boolean legalityOfMove = true;
 
         // The player that did the move is in check
         // his or her move is hence not legal
-        if (isInCheck(state.inMove.flip()))
+        if (isInCheck(state.inMove.opponent()))
         {
             legalityOfMove = false;
             this.undo();
@@ -344,7 +344,7 @@ public class Board
         if (move.aCapturePromotion())
         {
             removePiece(move.getTo());
-            insertPiece(new Piece(move.getTo(), move.getWhoMoves().flip(), move.getCapturedPiece()));
+            insertPiece(new Piece(move.getTo(), move.getWhoMoves().opponent(), move.getCapturedPiece()));
             insertPiece(new Piece(move.getFrom(), move.getWhoMoves(), PieceType.PAWN));
         }
 
@@ -355,7 +355,7 @@ public class Board
                 break;
 
             case CAPTURE_ENPASSANT:          
-                insertPiece(new Piece(new Location(move.getTo().getX(), move.getFrom().getY()), move.getWhoMoves().flip(), PieceType.PAWN));
+                insertPiece(new Piece(new Location(move.getTo().getX(), move.getFrom().getY()), move.getWhoMoves().opponent(), PieceType.PAWN));
                 position.movePiece(move.getTo(), move.getFrom());
                 break;
 
@@ -375,7 +375,7 @@ public class Board
 
             case CAPTURE:
                 position.movePiece(move.getTo(), move.getFrom());
-                insertPiece(new Piece(move.getTo(), move.getWhoMoves().flip(), move.getCapturedPiece()));
+                insertPiece(new Piece(move.getTo(), move.getWhoMoves().opponent(), move.getCapturedPiece()));
                 break;
         }
     }
@@ -402,7 +402,7 @@ public class Board
 
         if (!history.isEmpty())
         {
-            if (state.inMove.flip() == Color.WHITE)
+            if (state.inMove.opponent() == Color.WHITE)
             {
                 s = s + "Last move " + (state.moveNumber + 1) / 2 + "." + history.peek().move.toString() + "\n";
             } else

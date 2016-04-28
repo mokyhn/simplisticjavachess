@@ -18,13 +18,15 @@ import java.util.Iterator;
 
 public class ChessGame
 {
+    private static final String INITIAL_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
+    
     private Board board;
     private final AbstractSearch engine;
     private final MoveGenerator moveGenerator = new MoveGenerator();
     
     public ChessGame()
     {
-        board = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        board = new Board(INITIAL_POSITION);
         engine = new AlphaBetaSearch();
     }
 
@@ -44,17 +46,10 @@ public class ChessGame
         board.setBlackToMove();
     }
   
-    public void go()
+    public void go() throws Exception
     {
         engine.setBoard(board);
-        try
-        {
-            engine.dosearch();
-        } catch (Exception ex)
-        {
-            System.out.print("\nError ");
-            ex.printStackTrace();
-        }
+        engine.dosearch();
         System.out.println(engine.getStatistics());
         if (engine.getStrongestMove() != null)
         {
@@ -93,10 +88,9 @@ public class ChessGame
 
     }
     
-    
     public void newgame()
     {
-        board = new Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        board = new Board(INITIAL_POSITION);
     }
 
     public void print()
@@ -122,43 +116,43 @@ public class ChessGame
     public void move(String str)
     {
         try
+        {
+            Move m = MoveParser.parseMove(board, str);
+            if (!board.isDraw() || !board.isMate())
+            {
+                Iterator<Move> theMoves = moveGenerator.generateMoves(board);
+                // Check if move m is among the possible moves
+                while (theMoves.hasNext())
                 {
-                    Move m = MoveParser.parseMove(board, str);
-                    if (!board.isDraw() || !board.isMate())
+                    if (m.equals(theMoves.next()))
                     {
-                        Iterator<Move> theMoves = moveGenerator.generateMoves(board);
-                        // Check if move m is among the possible moves
-                        while (theMoves.hasNext())
+                        boolean result = board.doMove(m);
+                        if (result)
                         {
-                            if (m.equals(theMoves.next()))
-                            {
-                                boolean result = board.doMove(m);
-                                if (result)
-                                {
-                                    break;
-                                } else 
-                                {
-                                    throw new InvalidMoveException();
-                                }
-                            }
+                            break;
                         }
-                    } else
-                    {
-                        throw new InvalidMoveException();
+                        else
+                        {
+                            throw new InvalidMoveException();
+                        }
                     }
+                }
+            } 
+            else
+            {
+                throw new InvalidMoveException();
+            }
 
-                    checkForDrawOrMate(board);
-                    System.out.println(board.getASCIIBoard());
+            checkForDrawOrMate(board);
+            System.out.println(board.getASCIIBoard());
 
-                }
-                catch (InvalidMoveException e)
-                {
-                    System.out.println("Not a valid move " + e.err);
-                }
-                catch (InvalidLocationException e)
-                {
-                    System.out.println("Invalid location entered");
-                }
+        } catch (InvalidMoveException e)
+        {
+            System.out.println("Not a valid move " + e.err);
+        } catch (InvalidLocationException e)
+        {
+            System.out.println("Invalid location entered");
+        }
     }
 
 }

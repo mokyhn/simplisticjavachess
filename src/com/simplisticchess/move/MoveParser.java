@@ -70,7 +70,7 @@ public final class MoveParser
             // A capturing move
             Piece pto;
             pto = b.getPiece(to);
-            if (pto != null && pto.getColor() == whoToMove.flip())
+            if (pto != null && pto.getColor() == whoToMove.opponent())
             {
                 return new Move(from, to, MoveType.CAPTURE, pto.getPieceType(), whoToMove);
             }
@@ -112,7 +112,7 @@ public final class MoveParser
             // Capture and promote
             if (from.fileDifferent(to)
                     && !b.freeSquare(to)
-                    && b.getPiece(to).getColor() == p.getColor().flip())
+                    && b.getPiece(to).getColor() == p.getColor().opponent())
             {
                 switch (str.charAt(4))
                 {
