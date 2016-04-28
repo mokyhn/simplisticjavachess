@@ -39,6 +39,7 @@ public class Board
 
     public Board(Board board)
     {
+        this.moveNumber = board.moveNumber;
         this.state = new State(board.state);
         this.position = new Position(board.position);
         this.history = new History(board.history);
