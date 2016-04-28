@@ -88,8 +88,8 @@ public class Position
         xyPosition[to.getX()][to.getY()] = p;
         xyPosition[from.getX()][from.getY()] = null;
 
-        getBitBoard().removePiece(from);
-        getBitBoard().insertPiece(p);
+        bitBoard.removePiece(from);
+        bitBoard.insertPiece(p);
     }
 
     public int getNumberOfPieces()
@@ -300,6 +300,20 @@ public class Position
         return bitBoard;
     }
 
+    @Override
+    public boolean equals(Object object)
+    {
+        if (object instanceof Position)
+        {
+            Position position = (Position) object;
+            return bitBoard.equals(position.bitBoard);
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
     public boolean isInCheck(Color color)
     {
         for (Piece p : pieces)
