@@ -66,29 +66,31 @@ public class ChessGame
 
     private void checkForDrawOrMate(Board b)
     {
-        if (b.isDraw())
+        if (board.getGameResult() == null)
         {
-            System.out.println("Draw");
-            //System.exit(0);
+            return; // Keep silent;
         }
 
-        if (b.isMate())
+        switch (board.getGameResult())
         {
-            System.out.println("Mate");
-            //System.exit(0);
+            case DRAW:
+                System.out.println("Draw");
+                break;
+            case STALE_MATE:
+                break;
+            case MATE:
+                System.out.println("Mate");
+                break;
+            case DRAW_BY_50_MOVE_RULE:
+                System.out.println("Draw by 50 moves rule...");
+                break;
+            case DRAW_BY_REPETITION:
+                System.out.println("Draw by threefold repetition...");
+                break;
+            default:
+                throw new AssertionError(board.getGameResult().name());
         }
 
-        if (b.drawBy3RepetionsRule())
-        {
-            System.out.println("Draw by threefold repetition...");
-            //System.exit(0);
-        }
-
-        if (b.drawBy50MoveRule())
-        {
-            System.out.println("Draw by 50 moves rule...");
-            //System.exit(0);
-        }
     }
     
     

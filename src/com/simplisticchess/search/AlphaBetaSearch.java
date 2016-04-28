@@ -4,6 +4,7 @@
  */
 package com.simplisticchess.search;
 
+import com.simplisticchess.GameResult;
 import com.simplisticchess.evaluator.Evaluator;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
@@ -38,13 +39,6 @@ public class AlphaBetaSearch extends AbstractSearch
             {
                 return Evaluator.BLACK_IS_MATED - distanceToRoot;
             }
-        }
-
-        // Test for other kinds of draw.
-        if (analyzeBoard.drawBy50MoveRule() || analyzeBoard.drawBy3RepetionsRule())
-        {
-            analyzeBoard.setDraw();
-            return 0;
         }
 
         if (currentPlyDepth == 0)
@@ -126,7 +120,7 @@ public class AlphaBetaSearch extends AbstractSearch
         {
             if (analyzeBoard.isInCheck(inMove))
             {
-                analyzeBoard.setMate();
+                analyzeBoard.setGameResult(GameResult.MATE);
                 //System.out.println("Matefound:\n" + analyzeBoard.toString());
                 if (inMove == Color.WHITE)
                 {
@@ -135,11 +129,12 @@ public class AlphaBetaSearch extends AbstractSearch
                 {
                     return Evaluator.BLACK_IS_MATED - distanceToRoot;
                 }
-            } else
+            } 
+            else
             {
-                analyzeBoard.setDraw();
+                analyzeBoard.setGameResult(GameResult.STALE_MATE);
                 return 0;
-            } // draw
+            }
         }
 
         return inMove == Color.WHITE ? alpha : beta;

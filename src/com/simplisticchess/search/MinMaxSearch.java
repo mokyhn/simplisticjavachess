@@ -6,6 +6,7 @@
 
 package com.simplisticchess.search;
 
+import com.simplisticchess.GameResult;
 import com.simplisticchess.evaluator.Evaluator;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
@@ -16,17 +17,18 @@ public class MinMaxSearch extends AbstractSearch
 
     /**
      * Reference implementation of Min-Max search without fancy optimizations
-     * and tricks. This method can be used to compare the soundness of other
+     * and tricks. 
+     * 
+     * This method can be used to compare the soundness of other
      * search methods
      *
-     * @param plyDepth The overall search depth in ply's
+     * @param plyDepth The overall search depth
      * @param depthToGo The currently searched depth
      * @return The score. A positive value means white advantage, a negative
      * denotes black advantage and the score 0 denotes equal play.
      */
     private int minMaxSearch(int plyDepth, int depthToGo)
     {
-        
         int score;
         int bestScore = 0;
         
@@ -35,7 +37,7 @@ public class MinMaxSearch extends AbstractSearch
         if (depthToGo == 0)
         {
             noPositions++;
-            return (analyzeBoard.drawBy3RepetionsRule() || analyzeBoard.drawBy50MoveRule()) ? 0 : Evaluator.evaluate(analyzeBoard);
+            return analyzeBoard.isDraw() ? 0 : Evaluator.evaluate(analyzeBoard);
         }
 
         Iterator<Move> moves = moveGenerator.generateMoves(analyzeBoard);
@@ -111,7 +113,7 @@ public class MinMaxSearch extends AbstractSearch
         {
             if (analyzeBoard.isInCheck(inMove))
             {
-                analyzeBoard.setMate();
+                analyzeBoard.setGameResult(GameResult.MATE);               
                 //System.out.println("Matefound:\n" + analyzeBoard.toString());
                 if (inMove == Color.WHITE)
                 {
@@ -122,7 +124,7 @@ public class MinMaxSearch extends AbstractSearch
                 }
             } else
             {
-                analyzeBoard.setDraw();
+                analyzeBoard.setGameResult(GameResult.STALE_MATE);
                 return 0;
             } // draw
         }

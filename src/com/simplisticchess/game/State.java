@@ -1,5 +1,6 @@
 package com.simplisticchess.game;
 
+import com.simplisticchess.GameResult;
 import com.simplisticchess.board.BitBoard;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
@@ -22,9 +23,8 @@ public final class State
     private boolean whiteCanCastleShort;
     private boolean whiteCanCastleLong;
 
-    public boolean drawFlag;
-    public boolean mateFlag;
-
+    public GameResult gameResult;
+    
     /**
      * Number of half moves since the last pawn advance or capture.
      * Used to determine if a draw can be claimed under the fifty-move rule.
@@ -52,8 +52,7 @@ public final class State
         whiteCanCastleShort = state.whiteCanCastleShort;
         halfMoveClock = state.halfMoveClock;
         halfMovesIndex3PosRepition = state.halfMovesIndex3PosRepition;
-        drawFlag = state.drawFlag;
-        mateFlag = state.mateFlag;
+        gameResult = state.gameResult;
 
         if (this.bbposition != null)
         {
@@ -118,13 +117,17 @@ public final class State
         String whiteCastleLong  = whiteCanCastleLong  ? "X" : " ";
 
         result = "\n----------------------------State----------------------------\n";
-        if (drawFlag)
+        
+        switch (gameResult) 
         {
-            result = result + "It's a draw!\n";
-        }
-        if (mateFlag)
-        {
-            result = result + "Mate!\n";
+            case DRAW:
+            case DRAW_BY_50_MOVE_RULE:
+            case DRAW_BY_REPETITION:
+            case STALE_MATE:
+                result = result + "It's a draw!\n";
+            break;    
+            case MATE:
+                result = result + "Mate!\n";
         }
         result = result + "Black can castle long: [" + blackCastleLong + "],       Black can castle short: [" + blackCastleShort + "]\n";
         result = result + "White can castle long: [" + whiteCastleLong + "],       White can castle short: [" + whiteCastleShort + "]\n";

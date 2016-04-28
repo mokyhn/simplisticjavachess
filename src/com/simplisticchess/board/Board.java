@@ -5,6 +5,7 @@
 package com.simplisticchess.board;
 
 
+import com.simplisticchess.GameResult;
 import com.simplisticchess.game.History;
 import com.simplisticchess.game.State;
 import com.simplisticchess.evaluator.Evaluator;
@@ -61,24 +62,38 @@ public class Board
         state.inMove = Color.WHITE;
     }
 
-    public void setDraw()
+    public void setGameResult(GameResult gameResult)
     {
-        state.drawFlag = true;
+        state.gameResult = gameResult;
     }
 
-    public void setMate()
+    public GameResult getGameResult()
     {
-        state.mateFlag = true;
-    }
-
+        return state.gameResult;
+    }    
+    
     public boolean isDraw()
     {
-        return state.drawFlag;
+        if (state.gameResult == null)
+        {
+            return false;
+        }
+        
+        switch (state.gameResult) 
+        {
+            case DRAW:
+            case DRAW_BY_50_MOVE_RULE:
+            case DRAW_BY_REPETITION:
+            case STALE_MATE:
+                return true;
+            default:
+                return false;
+        }
     }
 
     public boolean isMate()
     {
-        return state.mateFlag;
+        return state.gameResult == GameResult.MATE;
     }
 
     public Move getLastMove()
@@ -155,12 +170,7 @@ public class Board
         return position.attacks(new Location(x, y), state.inMove);
     }
 
-    public Boolean drawBy50MoveRule()
-    {
-        return state.halfMoveClock >= 50;
-    }
-
-    /**
+        /**
      *
      * @param color
      * @return Is player with color color in check by opponent?
@@ -172,7 +182,7 @@ public class Board
 
     //TODO: This is not strong enough. Positions differ by en passent capabilities
     //and also with castling rights...
-    public Boolean drawBy3RepetionsRule()
+    private void checkDrawBy3RepetionsRule()
     {
         State h;
         int k = 0;
@@ -186,10 +196,19 @@ public class Board
             }
         }
 
-        return k >= 3;
+        if (k >= 3 && state.gameResult == null) 
+        {
+            state.gameResult = GameResult.DRAW_BY_REPETITION;
+        }
     }
 
-    
+    private void checkDrawBy50MoveRule()
+    {
+        if (state.halfMoveClock >= 50 && state.gameResult == null)
+        {
+            state.gameResult = GameResult.DRAW_BY_50_MOVE_RULE;
+        }
+    }
  
 
     // TODO: 2013, Should we check for draw here? 
@@ -301,6 +320,11 @@ public class Board
         {
             legalityOfMove = false;
             this.undo();
+        }
+        else
+        {
+            checkDrawBy50MoveRule();
+            checkDrawBy3RepetionsRule();            
         }
 
         return legalityOfMove;

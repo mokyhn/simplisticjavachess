@@ -5,6 +5,7 @@
 
 package com.simplisticchess.search;
 
+import com.simplisticchess.GameResult;
 import com.simplisticchess.evaluator.Evaluator;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.movegenerator.MoveGenerator;
@@ -68,7 +69,7 @@ public class RandomSearch extends AbstractSearch
         {
             if (analyzeBoard.isInCheck(whoMoves))
             {
-                analyzeBoard.setMate();
+                analyzeBoard.setGameResult(GameResult.MATE);               
                 if (whoMoves == Color.WHITE)
                 {
                     return Evaluator.WHITE_IS_MATED;
@@ -78,7 +79,7 @@ public class RandomSearch extends AbstractSearch
                 }
             } else
             {
-                analyzeBoard.setDraw();
+                analyzeBoard.setGameResult(GameResult.STALE_MATE);               
                 return 0;
             }
         }
