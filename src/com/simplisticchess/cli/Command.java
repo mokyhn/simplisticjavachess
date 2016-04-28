@@ -7,7 +7,7 @@ package com.simplisticchess.cli;
 public interface Command
 {
     boolean isApplicable(String str);
-    void execute(String[] arguments);
+    void execute(String[] arguments) throws Exception;
     String helpCommand();
     String helpExplanation();
 }

@@ -23,7 +23,7 @@ public class CommandGo implements Command
         return str.matches("go");
     }
 
-    public void execute(String[] arguments)
+    public void execute(String[] arguments) throws Exception
     {
         chessGame.go();
     }

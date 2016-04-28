@@ -44,7 +44,7 @@ public class CommandLineInterface
     
     }
     
-    private void executeCommand(String[] commandAndArgs)
+    private void executeCommand(String[] commandAndArgs) throws Exception
     {
         if (commandAndArgs.length > 0)
         {       
@@ -59,25 +59,19 @@ public class CommandLineInterface
         }
     }
 
-    public void start()
+    public void start() throws Exception
     {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         while (true)
         {
             System.out.print("\n" + promptText);
-            try
-            {
-                String stringInput = reader.readLine().trim().toLowerCase();
-                if (stringInput.equals("help")) {
-                    displayHelp();
-                }
-                executeCommand(stringInput.trim().toLowerCase().split("\\s+"));
-            } 
-            catch (IOException ex)
-            {
-            }
 
+            String stringInput = reader.readLine().trim().toLowerCase();
+            if (stringInput.equals("help")) {
+                displayHelp();
+            }
+            executeCommand(stringInput.trim().toLowerCase().split("\\s+"));          
         }
     }
     

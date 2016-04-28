@@ -18,6 +18,8 @@ import com.simplisticchess.position.Location;
 public class Board
 {
 
+    int moveNumber;
+
     private State state;
     private Position position;
     private History history;
@@ -212,16 +214,15 @@ public class Board
     {
         Piece piece = getPiece(move.getFrom());
 
-        // Put the move m on the stack
         state.move = move;
         history.add(new State(state));
-        state.moveNumber++;
+        moveNumber++;
 
         // Used to determine the 50-move rule, three times repition
         if (piece.getPieceType() == PieceType.PAWN)
         {
             state.halfMoveClock = 0;
-            state.halfMovesIndex3PosRepition = state.moveNumber;
+            state.halfMovesIndex3PosRepition = moveNumber;
         } else
         {
             state.halfMoveClock++;
@@ -327,6 +328,7 @@ public class Board
     public void undo()
     {
         state = history.pop();
+        moveNumber--;
         Move move = state.move;
 
         if (move.aSimplePromotion())
@@ -398,10 +400,10 @@ public class Board
         {
             if (state.inMove.opponent() == Color.WHITE)
             {
-                s = s + "Last move " + (state.moveNumber + 1) / 2 + "." + history.peek().move.toString() + "\n";
+                s = s + "Last move " + (moveNumber + 1) / 2 + "." + history.peek().move.toString() + "\n";
             } else
             {
-                s = s + "Last move " + (state.moveNumber + 1) / 2 + "...." + history.peek().move.toString() + "\n";
+                s = s + "Last move " + (moveNumber + 1) / 2 + "...." + history.peek().move.toString() + "\n";
             }
         }
 

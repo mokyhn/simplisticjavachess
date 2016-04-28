@@ -11,9 +11,6 @@ public final class State
     public Move move;
     public Color inMove;
 
-    public int moveNumber;
-    
-
     // Used wrt. check for draw by threefold repetition. 
     // Could also be used in a hash table for search evaluations.
     public BitBoard bbposition; 
@@ -45,7 +42,6 @@ public final class State
     {
         move = state.move == null ? null : new Move(state.move);
         inMove = state.inMove;
-        moveNumber = state.moveNumber;
         blackCanCastleLong = state.blackCanCastleLong;
         blackCanCastleShort = state.blackCanCastleShort;
         whiteCanCastleLong = state.whiteCanCastleLong;
@@ -118,22 +114,24 @@ public final class State
 
         result = "\n----------------------------State----------------------------\n";
         
-        switch (gameResult) 
+        if (gameResult != null) 
         {
-            case DRAW:
-            case DRAW_BY_50_MOVE_RULE:
-            case DRAW_BY_REPETITION:
-            case STALE_MATE:
-                result = result + "It's a draw!\n";
-            break;    
-            case MATE:
-                result = result + "Mate!\n";
+            switch (gameResult) 
+            {
+                case DRAW:
+                case DRAW_BY_50_MOVE_RULE:
+                case DRAW_BY_REPETITION:
+                case STALE_MATE:
+                    result = result + "It's a draw!\n";
+                break;    
+                case MATE:
+                    result = result + "Mate!\n";
+            }
         }
         result = result + "Black can castle long: [" + blackCastleLong + "],       Black can castle short: [" + blackCastleShort + "]\n";
         result = result + "White can castle long: [" + whiteCastleLong + "],       White can castle short: [" + whiteCastleShort + "]\n";
         result = result + "Number of half moves since last pawn move: " + halfMoveClock + "\n";
         result = result + "Index searched from when checking 3 fold repetition: " + halfMovesIndex3PosRepition + "\n";
-        result = result + "Ply Move number " + moveNumber + "\n";
 
         return result;
     }
