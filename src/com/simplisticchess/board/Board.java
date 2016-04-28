@@ -18,14 +18,14 @@ import com.simplisticchess.position.Location;
 public class Board
 {
 
-    private Position position;
     private State state;
+    private Position position;
     private History history;
 
     public Board()
     {
-        position = new Position();
         state = new State();
+        position = new Position();
         history = new History();
     }
 
@@ -37,14 +37,9 @@ public class Board
 
     public Board(Board board)
     {
-        this.position = new Position(board.position);
         this.state = new State(board.state);
+        this.position = new Position(board.position);
         this.history = new History(board.history);
-    }
-
-    public int getNumberOfPieces()
-    {
-        return position.getNumberOfPieces();
     }
 
     public Color inMove()
@@ -96,9 +91,30 @@ public class Board
         return state.gameResult == GameResult.MATE;
     }
 
-    public Move getLastMove()
+
+    public boolean canCastleShort()
     {
-        return history.peek().move;
+        return state.getCanCastleShort();
+    }
+
+    public boolean canCastleLong()
+    {
+        return state.getCanCastleLong();
+    }
+
+    public void setCanCastleShort(boolean flag, Color color)
+    {
+        state.setCanCastleShort(flag, color);
+    }
+
+    public void setCanCastleLong(boolean flag, Color color)
+    {
+        state.setCanCastleLong(flag, color);
+    }
+    
+    public int getNumberOfPieces()
+    {
+        return position.getNumberOfPieces();
     }
 
     public Piece getPiece(int i)
@@ -137,32 +153,9 @@ public class Board
         return position.freeSquare(x, y);
     }
 
-    public boolean canCastleShort()
-    {
-        return state.getCanCastleShort();
-    }
-
-    public boolean canCastleLong()
-    {
-        return state.getCanCastleLong();
-    }
-
-    public void setCanCastleShort(boolean flag, Color color)
-    {
-        state.setCanCastleShort(flag, color);
-    }
-
-    public void setCanCastleLong(boolean flag, Color color)
-    {
-        state.setCanCastleLong(flag, color);
-    }
-
     
-    /**
-     *
-     * @param x
-     * @param y
-     * @return true if the side not in move, in board b attacks square (x, y)
+    /*
+     * true if the side not in move attacks square (x, y)
      * and otherwise false
      */
     public boolean attacks(int x, int y)
@@ -170,7 +163,7 @@ public class Board
         return position.attacks(new Location(x, y), state.inMove);
     }
 
-        /**
+    /**
      *
      * @param color
      * @return Is player with color color in check by opponent?
@@ -178,6 +171,11 @@ public class Board
     public Boolean isInCheck(Color color)
     {
         return position.isInCheck(color);        
+    }
+    
+    public Move getLastMove()
+    {
+        return history.peek().move;
     }
 
     //TODO: This is not strong enough. Positions differ by en passent capabilities
@@ -210,10 +208,6 @@ public class Board
         }
     }
  
-
-    // TODO: 2013, Should we check for draw here? 
-    // A move might lead to a draw state.
-    // The draw flag of the board might be set accordingly.
     public boolean doMove(Move move)
     {
         Piece piece = getPiece(move.getFrom());
