@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
+        <file>
+            <url>src/com/simplisticchess/board/Board.java</url>
+            <bookmark id="2">
+                <name/>
+                <line>312</line>
+                <key/>
+            </bookmark>
+        </file>
         <file>
             <url>src/com/simplisticchess/Main.java</url>
             <bookmark id="1">
@@ -12,6 +20,21 @@
         </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/cli/CommandLineInterface.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/search/AlphaBetaSearch.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/board/FENParser.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/cli/cecpcommands/CommandGo.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/movegenerator/MoveGenerator.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/board/BitBoard.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/move/MoveParser.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/game/History.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/game/State.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/board/Board.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/cli/Command.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/ChessGame.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/board/Position.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/piece/Color.java</file>
+        </group>
     </open-files>
 </project-private>

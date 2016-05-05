@@ -5,11 +5,11 @@
 
 package com.simplisticchess.board;
 
-import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
 import com.simplisticchess.position.Location;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class Position
 {
@@ -61,7 +61,12 @@ public class Position
         return pieces.get(i);
     }
 
-
+    public Collection<Piece> getPieces() 
+    {
+        return pieces;
+    }
+    
+    
     public void insertPiece(Piece p)
     {
         pieces.add(p);
@@ -97,166 +102,8 @@ public class Position
         return pieces.size();
     }
 
-    private boolean rookAttack(Location l1, Location l2)
-    {
-        Boolean allFree;
-        int lowX, // From x pos
-                highX, // To x pos
-                lowY, // From y pos 
-                highY, // To y pos
-                ix, // Iterate x
-                iy;    // Iterate y
 
-        if (l1.fileEquals(l2))
-        {
-            allFree = true;
-            if (l1.getY() < l2.getY())
-            {
-                lowY = l1.getY();
-                highY = l2.getY();
-            } else
-            {
-                lowY = l2.getY();
-                highY = l1.getY();
-            }
-            for (iy = lowY + 1; iy < highY; iy++)
-            {
-                if (!freeSquare(l1.getX(), iy))
-                {
-                    allFree = false;
-                    break;
-                }
-            }
-            if (allFree)
-            {
-                return true;
-            }
-        }
-        if (l1.rankEquals(l2))
-        {
-            allFree = true;
-            if (l1.getX() < l2.getX())
-            {
-                lowX = l1.getX();
-                highX = l2.getX();
-            } else
-            {
-                lowX = l2.getX();
-                highX = l1.getX();
-            }
-            for (ix = lowX + 1; ix < highX; ix++)
-            {
-                if (!freeSquare(ix, l1.getY()))
-                {
-                    allFree = false;
-                    break;
-                }
-            }
-            if (allFree)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean bishopAttack(Location l1, Location l2)
-    {
-        final int r; // Radius
-        int ir;      // Iterator over radii
-        int dx;
-        int dy;
-        boolean allFree = true;
-        dx = l2.getX() - l1.getX();
-        dy = l2.getY() - l1.getY();
-
-        // First condition that allows one to be threatened by a bishop
-        if (Math.abs(dx) == Math.abs(dy))
-        {
-            r = Math.abs(dx);
-            dx = dx / r;
-            dy = dy / r;
-            for (ir = 1; ir < r; ir++)
-            {
-                if (!freeSquare(ir * dx + l1.getX(), ir * dy + l1.getY()))
-                {
-                    allFree = false;
-                    break;
-                }
-            }
-            if (allFree)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public boolean attacks(Location location, Color inMove)
-    {
-        for (Piece p : pieces)
-        {
-            // Chose one of opposite color
-            if (p.getColor() == inMove.opponent() && !(p.getxPos() == location.getX() && p.getyPos() == location.getY()))
-            {
-                switch (p.getPieceType())
-                {
-                    case PAWN:
-                        if ((location.getY() == p.getyPos() + p.getColor().getColor())
-                                && ((location.getX() == p.getxPos() + 1)
-                                || (location.getX() == p.getxPos() - 1)))
-                        {
-                            return true;
-                        }
-                        break;
-                    case ROOK:
-                        if (rookAttack(p.getLocation(), location))
-                        {
-                            return true;
-                        }
-                        break;
-                    case BISHOP:
-                        if (bishopAttack(p.getLocation(), location))
-                        {
-                            return true;
-                        }
-                        break;
-                    case KNIGHT:
-                        if (((location.getX() == p.getxPos() - 2) && (location.getY() == p.getyPos() + 1))
-                                || ((location.getX() == p.getxPos() - 2) && (location.getY() == p.getyPos() - 1))
-                                || ((location.getX() == p.getxPos() - 1) && (location.getY() == p.getyPos() - 2))
-                                || ((location.getX() == p.getxPos() + 1) && (location.getY() == p.getyPos() + 2))
-                                || ((location.getX() == p.getxPos() - 1) && (location.getY() == p.getyPos() + 2))
-                                || ((location.getX() == p.getxPos() + 1) && (location.getY() == p.getyPos() - 2))
-                                || ((location.getX() == p.getxPos() + 2) && (location.getY() == p.getyPos() + 1))
-                                || ((location.getX() == p.getxPos() + 2) && (location.getY() == p.getyPos() - 1)))
-                        {
-                            return true;
-                        }
-                        break;
-                    case QUEEN:
-                        if (rookAttack(p.getLocation(), location)
-                                || bishopAttack(p.getLocation(), location))
-                        {
-                            return true;
-                        }
-                        break;
-                    case KING:
-                        if ((location.getX() == p.getxPos() || location.getX() == p.getxPos() - 1 || location.getX() == p.getxPos() + 1)
-                                && (location.getY() == p.getyPos() || location.getY() == p.getyPos() - 1 || location.getY() == p.getyPos() + 1))
-                        {
-                            return true;
-                        }
-                        break;
-                    default:
-                }
-            }
-        }
-
-        return false;
-    }
-
+  
     public boolean freeSquare(Location location)
     {
         return freeSquare(location.getX(), location.getY());
@@ -267,8 +114,7 @@ public class Position
         return xyPosition[x][y] == null;
     }
 
-    @Override
-    public String toString()
+    public String getPositionString()
     {
         int x, y;
         Piece p;
@@ -314,19 +160,6 @@ public class Position
         }
     }
     
-    public boolean isInCheck(Color color)
-    {
-        for (Piece p : pieces)
-        {
-            if (p.getPieceType() == PieceType.KING && p.getColor() == color)
-            {
-                if (attacks(p.getLocation(), color))
-                {
-                    return true;
-                }                
-            }
-        }     
-        return false;
-    }
+  
   
 }

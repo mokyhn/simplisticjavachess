@@ -163,7 +163,7 @@ public class Board
      */
     public boolean attacks(int x, int y)
     {
-        return position.attacks(new Location(x, y), state.inMove);
+        return PositionInference.attacks(position, new Location(x, y), state.inMove);
     }
 
     /**
@@ -173,7 +173,7 @@ public class Board
      */
     public Boolean isInCheck(Color color)
     {
-        return position.isInCheck(color);        
+        return PositionInference.isInCheck(position, color);
     }
     
     public Move getLastMove()
@@ -385,7 +385,7 @@ public class Board
     public String getASCIIBoard()
     {
     
-        String s = position.toString();
+        String s = position.getPositionString();
 
         if (inMove() == Color.WHITE)
         {
