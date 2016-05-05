@@ -30,11 +30,8 @@ public class BitBoard implements IBitBoard
     {
         this();    // Call constructor
 
-        Piece p;
- 
-        for (int i = 0; i < b.getNumberOfPieces(); i++)
+        for (Piece p : b.getPieces())
         {
-            p = b.getPiece(i);
             int c = getIndexFromColor(p.getColor());
             PieceType t = p.getPieceType();
             if (t != null)

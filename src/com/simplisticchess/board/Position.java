@@ -29,9 +29,9 @@ public class Position
     {
         init(position.pieces.size());
 
-        for (Piece p : position.pieces)
+        for (Piece piece : position.pieces)
         {
-            Piece newPiece = new Piece(p);
+            Piece newPiece = new Piece(piece);
             this.pieces.add(newPiece);
             this.xyPosition[newPiece.getxPos()][newPiece.getyPos()] = newPiece;
         }
@@ -50,30 +50,25 @@ public class Position
         bitBoard = new BitBoard();
     
     }  
+
+    public void insertPiece(Piece piece)
+    {
+        pieces.add(piece);
+        xyPosition[piece.getxPos()][piece.getyPos()] = piece;
+        bitBoard.insertPiece(piece);
+    }
+    
     
     public Piece getPiece(Location location)
     {
         return xyPosition[location.getX()][location.getY()];
     }
-    
-    public Piece getPiece(int i)
-    {
-        return pieces.get(i);
-    }
-
+  
     public Collection<Piece> getPieces() 
     {
         return pieces;
     }
-    
-    
-    public void insertPiece(Piece p)
-    {
-        pieces.add(p);
-        xyPosition[p.getxPos()][p.getyPos()] = p;
-        bitBoard.insertPiece(p);
-    }
-
+        
     // Remove a piece from location and return the piece
     public Piece removePiece(Location location)
     {
@@ -97,13 +92,6 @@ public class Position
         bitBoard.insertPiece(p);
     }
 
-    public int getNumberOfPieces()
-    {
-        return pieces.size();
-    }
-
-
-  
     public boolean freeSquare(Location location)
     {
         return freeSquare(location.getX(), location.getY());
@@ -141,11 +129,6 @@ public class Position
         return s;
     }
 
-    public BitBoard getBitBoard()
-    {
-        return bitBoard;
-    }
-
     @Override
     public boolean equals(Object object)
     {
@@ -160,6 +143,10 @@ public class Position
         }
     }
     
-  
+
+    public BitBoard getBitBoard()
+    {
+        return bitBoard;
+    }  
   
 }

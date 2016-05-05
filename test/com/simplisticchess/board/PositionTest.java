@@ -30,14 +30,13 @@ public class PositionTest
             }
         }
         
-        if (n != position.getNumberOfPieces()) 
+        if (n != position.getPieces().size()) 
         {
             return false;
         }
         
-        for (int i = 0; i < position.getNumberOfPieces(); i++)
-        {
-            Piece p1 = position.getPiece(i);
+        for (Piece p1 : position.getPieces())
+        {            
             Piece p2 = position.getPiece(p1.getLocation());
             if (!p1.equals(p2)) 
             {

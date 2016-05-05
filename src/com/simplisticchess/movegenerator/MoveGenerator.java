@@ -73,9 +73,9 @@ public class MoveGenerator
         Board boardClone = new Board(b);
         
         
-        for (int i = 0; i < boardClone.getNumberOfPieces(); i++)
+        for (Piece piece : boardClone.getPieces())
         {            
-            Iterator<Move> it = generateMoves(boardClone, boardClone.getPiece(i));
+            Iterator<Move> it = generateMoves(boardClone, piece);
             if (it != null) 
             {
                 moveIterators.add(it);

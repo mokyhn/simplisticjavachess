@@ -14,6 +14,7 @@ import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
 import com.simplisticchess.position.Location;
+import java.util.Collection;
 
 public class Board
 {
@@ -115,16 +116,11 @@ public class Board
         state.setCanCastleLong(flag, color);
     }
     
-    public int getNumberOfPieces()
+    public Collection<Piece> getPieces()
     {
-        return position.getNumberOfPieces();
+        return position.getPieces();
     }
-
-    public Piece getPiece(int i)
-    {
-        return position.getPiece(i);
-    }
-
+    
     public Piece getPiece(int x, int y)
     {
         final Piece p = position.getPiece(new Location(x, y));

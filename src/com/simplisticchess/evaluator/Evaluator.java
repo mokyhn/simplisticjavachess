@@ -23,13 +23,12 @@ public final class Evaluator
     public static int evaluate(Board b)
     {
         int result = 0;
-        Piece p;
+        
         boolean thereIsAWhiteKing = false;
         boolean thereIsABlackKing = false;
 
-        for (int i = 0; i < b.getNumberOfPieces(); i++)
+        for (Piece p : b.getPieces())
         {
-            p = b.getPiece(i);
             switch (p.getPieceType())
             {
                 case PAWN:
