@@ -410,5 +410,19 @@ public class Board
 
         return s;
     }
+    
+    @Override
+    public boolean equals(Object object) 
+    {
+        if (object instanceof Board)
+        {
+            Board board = (Board) object;
+            return this.position.equals(board.position);
+        }
+        else
+        {
+            return false;
+        }
+    }
 
 }
