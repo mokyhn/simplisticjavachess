@@ -3,14 +3,6 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="2">
         <file>
-            <url>src/com/simplisticchess/board/Board.java</url>
-            <bookmark id="2">
-                <name/>
-                <line>312</line>
-                <key/>
-            </bookmark>
-        </file>
-        <file>
             <url>src/com/simplisticchess/Main.java</url>
             <bookmark id="1">
                 <name/>
@@ -18,23 +10,31 @@
                 <key/>
             </bookmark>
         </file>
+        <file>
+            <url>src/com/simplisticchess/board/Board.java</url>
+            <bookmark id="2">
+                <name/>
+                <line>308</line>
+                <key/>
+            </bookmark>
+        </file>
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/cli/CommandLineInterface.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/search/AlphaBetaSearch.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/board/FENParser.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/cli/cecpcommands/CommandGo.java</file>
+            <file>file:/home/mku/simplisticjavachess/test/com/simplisticchess/piece/PieceTest.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/movegenerator/KingMoveGenerator.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/position/Location.java</file>
+            <file>file:/home/mku/simplisticjavachess/test/com/simplisticchess/unit/BitBoardTest.java</file>
+            <file>file:/home/mku/simplisticjavachess/test/com/simplisticchess/board/PositionTest.java</file>
             <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/movegenerator/MoveGenerator.java</file>
             <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/board/BitBoard.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/move/MoveParser.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/game/History.java</file>
             <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/game/State.java</file>
             <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/board/Board.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/cli/Command.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/ChessGame.java</file>
+            <file>file:/home/mku/simplisticjavachess/test/com/simplisticchess/movegenerator/IteratorUtilsTest.java</file>
+            <file>file:/home/mku/simplisticjavachess/test/com/simplisticchess/position/LocationTest.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/board/PositionInference.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/evaluator/Evaluator.java</file>
             <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/board/Position.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/piece/Color.java</file>
         </group>
     </open-files>
 </project-private>

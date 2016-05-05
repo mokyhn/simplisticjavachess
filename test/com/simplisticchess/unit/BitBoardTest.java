@@ -43,7 +43,7 @@ public class BitBoardTest {
     }
 
     /**
-     * Test of insertPiece method, of class Bitboard.
+     * Test of insertPiece method, of class BitBoard.
      */
     @Test
     public void testInsertPiece() {
@@ -66,7 +66,7 @@ public class BitBoardTest {
     }
 
     /**
-     * Test of removePiece method, of class Bitboard.
+     * Test of removePiece method, of class BitBoard.
      */
     @Test
     public void testRemovePiece() {
@@ -102,7 +102,7 @@ public class BitBoardTest {
 
 
     /**
-     * Test of equals method, of class Bitboard.
+     * Test of equals method, of class BitBoard.
      */
     @Test
     public void testEquals() {
