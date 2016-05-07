@@ -7,6 +7,7 @@ import com.simplisticchess.piece.Color;
 
 public final class State
 {
+    public int moveNumber;
 
     public Move move;
     public Color inMove;
@@ -40,6 +41,7 @@ public final class State
     
     public State(State state)
     {
+        moveNumber = state.moveNumber;
         move = state.move == null ? null : new Move(state.move);
         inMove = state.inMove;
         blackCanCastleLong = state.blackCanCastleLong;

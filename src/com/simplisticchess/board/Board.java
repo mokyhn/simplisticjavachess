@@ -19,8 +19,6 @@ import java.util.Collection;
 public class Board
 {
 
-    int moveNumber;
-
     private State state;
     private Position position;
     private History history;
@@ -40,7 +38,6 @@ public class Board
 
     public Board(Board board)
     {
-        this.moveNumber = board.moveNumber;
         this.state = new State(board.state);
         this.position = new Position(board.position);
         this.history = new History(board.history);
@@ -208,18 +205,18 @@ public class Board
     }
  
     public boolean doMove(Move move)
-    {
+    {        
         Piece piece = position.getPiece(move.getFrom());
-
+      
         state.move = move;
+        state.moveNumber++;
         history.add(new State(state));
-        moveNumber++;
-
+        
         // Used to determine the 50-move rule, three times repition
         if (piece.getPieceType() == PieceType.PAWN)
         {
             state.halfMoveClock = 0;
-            state.halfMovesIndex3PosRepition = moveNumber;
+            state.halfMovesIndex3PosRepition = state.moveNumber;
         } else
         {
             state.halfMoveClock++;
@@ -304,28 +301,29 @@ public class Board
         // Swap the move color
         state.inMove = state.inMove.opponent();
 
-        boolean legalityOfMove = true;
+        boolean wasMoveLegal;
 
         // The player that did the move is in check
         // his or her move is hence not legal
         if (isInCheck(state.inMove.opponent()))
         {
-            legalityOfMove = false;
+            wasMoveLegal = false;
             this.undo();
         }
         else
         {
             checkDrawBy50MoveRule();
-            checkDrawBy3RepetionsRule();            
+            checkDrawBy3RepetionsRule();
+            wasMoveLegal = true;
         }
 
-        return legalityOfMove;
+        return wasMoveLegal;
     }
 
     public void undo()
     {
-        state = history.pop();
-        moveNumber--;
+        state = history.pop();  
+        state.moveNumber--;
         Move move = state.move;
 
         if (move.aSimplePromotion())
@@ -397,10 +395,10 @@ public class Board
         {
             if (state.inMove.opponent() == Color.WHITE)
             {
-                s = s + "Last move " + (moveNumber + 1) / 2 + "." + history.peek().move.toString() + "\n";
+                s = s + "Last move " + (state.moveNumber + 1) / 2 + "." + history.peek().move.toString() + "\n";
             } else
             {
-                s = s + "Last move " + (moveNumber + 1) / 2 + "...." + history.peek().move.toString() + "\n";
+                s = s + "Last move " + (state.moveNumber + 1) / 2 + "...." + history.peek().move.toString() + "\n";
             }
         }
 

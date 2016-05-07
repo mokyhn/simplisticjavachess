@@ -20,22 +20,8 @@ public class MinMaxSearch extends AbstractSearch
         return minMaxSearch(_plyDepth, _plyDepth);
     }
    
-    /**
-     * Reference implementation of Min-Max search
-     * 
-     * This method can be used to compare the soundness of other
-     * search methods
-     *
-     * @param plyDepth The overall search depth
-     * @param depthToGo The currently searched depth
-     * @return The score. A positive value means white advantage, a negative
-     * denotes black advantage and the score 0 denotes equal play.
-     */
     private int minMaxSearch(int plyDepth, int depthToGo)
-    {
-        int score;
-        int bestScore = 0;
-        
+    {     
         boolean firstCalculation = true;
 
         if (depthToGo == 0)
@@ -58,13 +44,16 @@ public class MinMaxSearch extends AbstractSearch
         {
             return 0; // A draw
         }
-        boolean result;
+       
         boolean thereWasALegalMove = false;
+
+        int score;
+        int bestScore = 0;
+           
         while (moves.hasNext())
         {
-
             Move move = moves.next();
-            result = analyzeBoard.doMove(move);
+            boolean result = analyzeBoard.doMove(move);
 
             if (result == false)
             {
