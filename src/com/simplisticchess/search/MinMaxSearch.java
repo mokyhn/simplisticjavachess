@@ -14,10 +14,14 @@ import java.util.Iterator;
 
 public class MinMaxSearch extends AbstractSearch
 {
-
+    public final int search()
+    {
+        System.out.println("MIN-MAX search...");
+        return minMaxSearch(_plyDepth, _plyDepth);
+    }
+   
     /**
-     * Reference implementation of Min-Max search without fancy optimizations
-     * and tricks. 
+     * Reference implementation of Min-Max search
      * 
      * This method can be used to compare the soundness of other
      * search methods
@@ -133,9 +137,4 @@ public class MinMaxSearch extends AbstractSearch
 
     }
 
-    public final int search()
-    {
-        System.out.println("MIN-MAX search...");
-        return minMaxSearch(_plyDepth, _plyDepth);
-    }
 }

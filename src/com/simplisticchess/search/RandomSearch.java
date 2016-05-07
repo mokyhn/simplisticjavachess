@@ -15,7 +15,12 @@ import java.util.Iterator;
 
 public class RandomSearch extends AbstractSearch
 {
-
+    public final int search()
+    {
+        System.out.println("Random search...");
+        return randomSearch();
+    }
+    
     private int randomSearch()
     {
         strongestMove = null;
@@ -87,9 +92,4 @@ public class RandomSearch extends AbstractSearch
         return Evaluator.evaluate(analyzeBoard);
     }
 
-    public final int search()
-    {
-        System.out.println("Random search...");
-        return randomSearch();
-    }
 }

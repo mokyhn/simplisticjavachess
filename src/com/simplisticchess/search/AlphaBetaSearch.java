@@ -12,19 +12,18 @@ import java.util.Iterator;
 
 public class AlphaBetaSearch extends AbstractSearch
 {
-
+    public final int search()
+    {
+        System.out.println("Alpha-Beta search...");
+        return alphaBetaSearch(_plyDepth, _plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+  
     private int alphaBetaSearch(int currentPlyDepth, int totalPlyDepth, int alpha, int beta)
     {
         Boolean thereWasALegalMove = false;
         final Color inMove = analyzeBoard.inMove();
         int distanceToRoot = totalPlyDepth - currentPlyDepth;
 
-        // Assertions
-        assert (currentPlyDepth <= totalPlyDepth);
-        assert (currentPlyDepth >= 0 && totalPlyDepth >= 0);
-
-        //--------------------Part 1. Immediate evaluations of different kinds
-        // If the game has ended return immediately.
         if (analyzeBoard.isDraw())
         {
             return 0;
@@ -51,7 +50,6 @@ public class AlphaBetaSearch extends AbstractSearch
             return Evaluator.evaluate(analyzeBoard);
         }
 
-        //--------------------Part 2. Move generation and variation search
         Iterator<Move> moveIterator = moveGenerator.generateMoves(analyzeBoard);
 
         boolean result;
@@ -140,24 +138,5 @@ public class AlphaBetaSearch extends AbstractSearch
         return inMove == Color.WHITE ? alpha : beta;
     }
 
-    public final int search()
-    {
-        System.out.println("Alpha-Beta search...");
-        return alphaBetaSearch(_plyDepth, _plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
-    }
 }
 
-                             //if (m.toString().contains("e5")) { 
-//    System.out.printf("\nBLACK: move = %s, Eval=%d, alpha=%d, beta=%d, sd = %d\n", m.toString(), eval , alpha, beta, currentPlyDepth);
-// }
-//if (m.toString().contains("h6") ) { 
-//    System.out.printf("\nBLACK: move = %s, Eval=%d, alpha=%d, beta=%d, sd = %d\n", m.toString(), eval , alpha, beta, currentPlyDepth);
-//}
-/* if (m.toString().contains("a5") && m.toString().contains("a6")) {
- System.out.println("WHITE: Eval, alpha = " + alpha +
- " beta = " + beta +
- " currentDepth " + currentPlyDepth +
- " evaluation = " + evaluation + " " +
- " move " + m.toString() +
- analyzeBoard.toString() + "\n\n\n\n");
- }*/
