@@ -2,6 +2,8 @@ package com.simplisticchess.cli.cecpcommands;
 
 import com.simplisticchess.ChessGame;
 import com.simplisticchess.cli.Command;
+import com.simplisticchess.move.InvalidMoveException;
+import com.simplisticchess.position.InvalidLocationException;
 
 /**
  *
@@ -25,7 +27,18 @@ public class CommandMove implements Command
 
     public void execute(String[] arguments)
     {
-        chessGame.move(arguments[0]);
+        try 
+        {
+            chessGame.move(arguments[0]);
+        }
+        catch (InvalidLocationException e)
+        {
+            System.out.println("Invalid location given");
+        }
+        catch (InvalidMoveException e) 
+        {
+            System.out.println("Invalid move");
+        } 
     }
 
     public String helpCommand()

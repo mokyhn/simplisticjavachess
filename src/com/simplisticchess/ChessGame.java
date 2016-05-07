@@ -45,22 +45,16 @@ public class ChessGame
     {
         board.setBlackToMove();
     }
-  
-    public void go() throws Exception
+    
+    public void newgame()
     {
-        engine.setBoard(board);
-        engine.dosearch();
-        System.out.println(engine.getStatistics());
-        if (engine.getStrongestMove() != null)
-        {
-            board.doMove(engine.getStrongestMove());
-            checkForDrawOrMate(board);
-            print();
-        }
+        board = new Board(INITIAL_POSITION);
     }
 
-    private void checkForDrawOrMate(Board b)
+    public void print()
     {
+        System.out.println(board.getASCIIBoard());
+
         if (board.getGameResult() == null)
         {
             return; // Keep silent;
@@ -83,21 +77,10 @@ public class ChessGame
                 System.out.println("Draw by threefold repetition...");
                 break;
             default:
-                throw new AssertionError(board.getGameResult().name());
         }
 
     }
-    
-    public void newgame()
-    {
-        board = new Board(INITIAL_POSITION);
-    }
-
-    public void print()
-    {
-        System.out.println(board.getASCIIBoard());
-    }
-    
+      
     public void undo()
     {
         board.undo();
@@ -113,46 +96,47 @@ public class ChessGame
         engine.setPlyDepth(depth);
     }
 
-    public void move(String str)
+   public void go() throws Exception
     {
-        try
+        engine.setBoard(board);
+        engine.dosearch();
+        System.out.println(engine.getStatistics());
+        if (engine.getStrongestMove() != null)
         {
-            Move m = MoveParser.parseMove(board, str);
-            if (!board.isDraw() || !board.isMate())
-            {
-                Iterator<Move> theMoves = moveGenerator.generateMoves(board);
-                // Check if move m is among the possible moves
-                while (theMoves.hasNext())
-                {
-                    if (m.equals(theMoves.next()))
-                    {
-                        boolean result = board.doMove(m);
-                        if (result)
-                        {
-                            break;
-                        }
-                        else
-                        {
-                            throw new InvalidMoveException();
-                        }
-                    }
-                }
-            } 
-            else
-            {
-                throw new InvalidMoveException();
-            }
-
-            checkForDrawOrMate(board);
-            System.out.println(board.getASCIIBoard());
-
-        } catch (InvalidMoveException e)
-        {
-            System.out.println("Not a valid move " + e.err);
-        } catch (InvalidLocationException e)
-        {
-            System.out.println("Invalid location entered");
+            board.doMove(engine.getStrongestMove());
+            print();
         }
     }
+   
+    public void move(String str) throws InvalidLocationException, InvalidMoveException
+    {
+        Move move = MoveParser.parseMove(board, str);
 
+        if (move == null || board.isDraw() || board.isMate()) 
+        {
+            throw new InvalidMoveException();
+        }
+        else
+        {
+            Iterator<Move> possibleMoves = moveGenerator.generateMoves(board);
+            while (possibleMoves.hasNext())
+            {
+                if (move.equals(possibleMoves.next()))
+                {
+                    boolean result = board.doMove(move);
+                    if (result)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        throw new InvalidMoveException();
+                    }
+                }
+            }
+        } 
+
+       print();   
+    }
+    
 }
