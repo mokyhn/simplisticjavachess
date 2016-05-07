@@ -209,7 +209,7 @@ public class Board
  
     public boolean doMove(Move move)
     {
-        Piece piece = getPiece(move.getFrom());
+        Piece piece = position.getPiece(move.getFrom());
 
         state.move = move;
         history.add(new State(state));

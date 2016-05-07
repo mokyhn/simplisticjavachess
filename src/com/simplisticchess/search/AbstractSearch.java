@@ -60,7 +60,7 @@ public abstract class AbstractSearch
 
         if (analyzeBoard.isDraw() || analyzeBoard.isMate())
         {
-            System.out.println("Sorry, the game has ended...");
+            System.out.println("Sorry, the game has ended..."); //TODO: Reuse the code that can print the game status.
             return 0;
         }
 
