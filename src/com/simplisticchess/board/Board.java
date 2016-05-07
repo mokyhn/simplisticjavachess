@@ -241,19 +241,7 @@ public class Board
                 state.setCanCastleShort(false, piece.getColor());
             }
         }
-
-        if (move.aCapture() && move.getCapturedPiece() == PieceType.ROOK)
-        {
-            if (move.getTo().getX() == 0)
-            {
-                state.setCanCastleLong(false, piece.getColor());
-            }
-            else if (move.getTo().getX() == 7)
-            {
-                state.setCanCastleShort(false, piece.getColor());
-            }        
-        }
-        
+               
         if (move.aSimplePromotion())
         {
             insertPiece(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()));
@@ -295,6 +283,17 @@ public class Board
             case CAPTURE:
                 removePiece(move.getTo());
                 position.movePiece(move.getFrom(), move.getTo());
+                if (move.getCapturedPiece() == PieceType.ROOK)
+                {
+                    if (move.getTo().getX() == 0)
+                    {
+                         state.setCanCastleLong(false, piece.getColor());
+                    }
+                     else if (move.getTo().getX() == 7)
+                    {
+                        state.setCanCastleShort(false, piece.getColor());
+                    }                     
+                }
                 break;
         }
 
