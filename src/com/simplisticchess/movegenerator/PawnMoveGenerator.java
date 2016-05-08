@@ -110,29 +110,32 @@ public class PawnMoveGenerator
         try
         {
             final Move lastMove = b.getLastMove();
-            if (fx > 0)
+            if (lastMove != null)
             {
-
-                lastMovePiece = b.getPiece(lastMove.getTo());
-                // The piece stands to the left
-                if (lastMovePiece != null && (lastMove.getTo().getX() == fx - 1) && (lastMove.getTo().getY() == fy)
-                        && (lastMovePiece.getPieceType() == PieceType.PAWN)
-                        && (Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2))
+                if (fx > 0)
                 {
-                    Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_ENPASSANT, null, c));
+
+                    lastMovePiece = b.getPiece(lastMove.getTo());
+                    // The piece stands to the left
+                    if (lastMovePiece != null && (lastMove.getTo().getX() == fx - 1) && (lastMove.getTo().getY() == fy)
+                            && (lastMovePiece.getPieceType() == PieceType.PAWN)
+                            && (Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2))
+                    {
+                        Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_ENPASSANT, null, c));
+                    }
                 }
-            }
 
-            if (fx < 7)
-            {
-                lastMovePiece = b.getPiece(lastMove.getTo());
-                // The piece stands to the right
-                if (lastMovePiece != null && (lastMove.getTo().getX() == fx + 1) && (lastMove.getTo().getY() == fy)
-                        && (lastMovePiece.getPieceType() == PieceType.PAWN)
-                        && (Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2))
+                if (fx < 7)
                 {
-                    Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_ENPASSANT, null, c));
+                    lastMovePiece = b.getPiece(lastMove.getTo());
+                    // The piece stands to the right
+                    if (lastMovePiece != null && (lastMove.getTo().getX() == fx + 1) && (lastMove.getTo().getY() == fy)
+                            && (lastMovePiece.getPieceType() == PieceType.PAWN)
+                            && (Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2))
+                    {
+                        Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_ENPASSANT, null, c));
 
+                    }
                 }
             }
 

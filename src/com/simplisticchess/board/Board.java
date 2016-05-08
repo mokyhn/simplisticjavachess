@@ -19,13 +19,14 @@ import java.util.Collection;
 public class Board
 {
 
-    private State state;
+    private State currentState;
     private Position position;
     private History history;
 
+    
     public Board()
     {
-        state = new State();
+        currentState = new State();
         position = new Position();
         history = new History();
     }
@@ -38,44 +39,43 @@ public class Board
 
     public Board(Board board)
     {
-        this.state = new State(board.state);
+        this.currentState = new State(board.currentState);
         this.position = new Position(board.position);
         this.history = new History(board.history);
     }
-
     public Color inMove()
     {
-        return state.inMove;
+        return currentState.inMove;
     }
 
     public void setBlackToMove()
     {
-        state.inMove = Color.BLACK;
+        currentState.inMove = Color.BLACK;
     }
 
     public void setWhiteToMove()
     {
-        state.inMove = Color.WHITE;
+        currentState.inMove = Color.WHITE;
     }
 
     public void setGameResult(GameResult gameResult)
     {
-        state.gameResult = gameResult;
+        currentState.gameResult = gameResult;
     }
 
     public GameResult getGameResult()
     {
-        return state.gameResult;
+        return currentState.gameResult;
     }    
     
     public boolean isDraw()
     {
-        if (state.gameResult == null)
+        if (currentState.gameResult == null)
         {
             return false;
         }
         
-        switch (state.gameResult) 
+        switch (currentState.gameResult) 
         {
             case DRAW:
             case DRAW_BY_50_MOVE_RULE:
@@ -89,28 +89,28 @@ public class Board
 
     public boolean isMate()
     {
-        return state.gameResult == GameResult.MATE;
+        return currentState.gameResult == GameResult.MATE;
     }
 
 
     public boolean canCastleShort()
     {
-        return state.getCanCastleShort();
+        return currentState.getCanCastleShort();
     }
 
     public boolean canCastleLong()
     {
-        return state.getCanCastleLong();
+        return currentState.getCanCastleLong();
     }
 
     public void setCanCastleShort(boolean flag, Color color)
     {
-        state.setCanCastleShort(flag, color);
+        currentState.setCanCastleShort(flag, color);
     }
 
     public void setCanCastleLong(boolean flag, Color color)
     {
-        state.setCanCastleLong(flag, color);
+        currentState.setCanCastleLong(flag, color);
     }
     
     public Collection<Piece> getPieces()
@@ -156,7 +156,7 @@ public class Board
      */
     public boolean attacks(int x, int y)
     {
-        return PositionInference.attacks(position, new Location(x, y), state.inMove);
+        return PositionInference.attacks(position, new Location(x, y), currentState.inMove);
     }
 
     /**
@@ -171,7 +171,7 @@ public class Board
     
     public Move getLastMove()
     {
-        return history.peek().move;
+        return currentState.move;
     }
 
     //TODO: This is not strong enough. Positions differ by en passent capabilities
@@ -181,7 +181,7 @@ public class Board
         State h;
         int k = 0;
 
-        for (int i = state.halfMovesIndex3PosRepition; i < history.size(); i++)
+        for (int i = currentState.halfMovesIndex3PosRepition; i < history.size(); i++)
         {
             h = history.get(i);
             if (((BitBoard) position.getBitBoard()).equals((BitBoard) h.bbposition))
@@ -190,43 +190,45 @@ public class Board
             }
         }
 
-        if (k >= 3 && state.gameResult == null) 
+        if (k >= 3 && currentState.gameResult == null) 
         {
-            state.gameResult = GameResult.DRAW_BY_REPETITION;
+            currentState.gameResult = GameResult.DRAW_BY_REPETITION;
         }
     }
 
     private void checkDrawBy50MoveRule()
     {
-        if (state.halfMoveClock >= 50 && state.gameResult == null)
+        if (currentState.halfMoveClock >= 50 && currentState.gameResult == null)
         {
-            state.gameResult = GameResult.DRAW_BY_50_MOVE_RULE;
+            currentState.gameResult = GameResult.DRAW_BY_50_MOVE_RULE;
         }
     }
  
     public boolean doMove(Move move)
     {        
         Piece piece = position.getPiece(move.getFrom());
-      
-        state.move = move;
-        state.moveNumber++;
-        history.add(new State(state));
+ 
+        history.add(currentState);
+                
+        State newState = new State(currentState);
+        newState.move = move;
+        newState.moveNumber++;
         
         // Used to determine the 50-move rule, three times repition
         if (piece.getPieceType() == PieceType.PAWN)
         {
-            state.halfMoveClock = 0;
-            state.halfMovesIndex3PosRepition = state.moveNumber;
+            newState.halfMoveClock = 0;
+            newState.halfMovesIndex3PosRepition = currentState.moveNumber;
         } else
         {
-            state.halfMoveClock++;
+            newState.halfMoveClock++;
         }
 
         // Moving the king will disallow castling in the future
         if (piece.getPieceType() == PieceType.KING && move.getFrom().getX() == 4)
         {
-            state.setCanCastleLong(false, piece.getColor());
-            state.setCanCastleShort(false, piece.getColor());
+            newState.setCanCastleLong(false, piece.getColor());
+            newState.setCanCastleShort(false, piece.getColor());
         }
         
         // Moving a rook can disallow castling in the future
@@ -234,11 +236,11 @@ public class Board
         {
             if (move.getFrom().getX() == 0)
             {
-                state.setCanCastleLong(false, piece.getColor());
+                newState.setCanCastleLong(false, piece.getColor());
             }
             else if (move.getFrom().getX() == 7)
             {
-                state.setCanCastleShort(false, piece.getColor());
+                newState.setCanCastleShort(false, piece.getColor());
             }
         }
                
@@ -287,24 +289,26 @@ public class Board
                 {
                     if (move.getTo().getX() == 0)
                     {
-                         state.setCanCastleLong(false, piece.getColor());
+                         newState.setCanCastleLong(false, piece.getColor());
                     }
                      else if (move.getTo().getX() == 7)
                     {
-                        state.setCanCastleShort(false, piece.getColor());
+                        newState.setCanCastleShort(false, piece.getColor());
                     }                     
                 }
                 break;
         }
 
         // Swap the move color
-        state.inMove = state.inMove.opponent();
+        newState.inMove = currentState.inMove.opponent();
 
+        currentState = newState;
+        
         boolean wasMoveLegal;
 
         // The player that did the move is in check
         // his or her move is hence not legal
-        if (isInCheck(state.inMove.opponent()))
+        if (isInCheck(currentState.inMove.opponent()))
         {
             wasMoveLegal = false;
             this.undo();
@@ -321,9 +325,8 @@ public class Board
 
     public void undo()
     {
-        state = history.pop();  
-        state.moveNumber--;
-        Move move = state.move;
+        Move move = currentState.move;      
+        currentState = history.pop();  
 
         if (move.aSimplePromotion())
         {
@@ -388,16 +391,16 @@ public class Board
             s = s + "  Black to move\n";
         }
 
-        s = s + state.toString();
+        s = s + currentState.toString();
 
         if (!history.isEmpty())
         {
-            if (state.inMove.opponent() == Color.WHITE)
+            if (currentState.inMove.opponent() == Color.WHITE)
             {
-                s = s + "Last move " + (state.moveNumber + 1) / 2 + "." + history.peek().move.toString() + "\n";
+                s = s + "Last move " + (currentState.moveNumber + 1) / 2 + "." + history.peek().move.toString() + "\n";
             } else
             {
-                s = s + "Last move " + (state.moveNumber + 1) / 2 + "...." + history.peek().move.toString() + "\n";
+                s = s + "Last move " + (currentState.moveNumber + 1) / 2 + "...." + history.peek().move.toString() + "\n";
             }
         }
 
@@ -413,8 +416,9 @@ public class Board
     {
         if (object instanceof Board)
         {
-            Board board = (Board) object;
-            return this.position.equals(board.position);
+            Board other = (Board) object;
+            return this.position.equals(other.position) &&
+                   this.currentState.equals(other.currentState);
         }
         else
         {

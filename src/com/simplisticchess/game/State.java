@@ -109,7 +109,7 @@ public final class State
         {
             State other = (State) object;
             
-            boolean bbPositionsMatch = false;
+            boolean bbPositionsMatch;
             
             if (this.bbposition == null) 
             {
@@ -117,10 +117,34 @@ public final class State
                 {
                     bbPositionsMatch = true;
                 }
+                else
+                {
+                    bbPositionsMatch = false;
+
+                }
             }
             else
             {
                 bbPositionsMatch = this.bbposition.equals(other.bbposition);
+            }
+                        
+            boolean movesMatch;
+
+            if (this.move == null)
+            {
+            
+                if (other.move == null)
+                {
+                    movesMatch = true;
+                }
+                else
+                {
+                    movesMatch = false;
+                }
+            }
+            else
+            {
+                movesMatch = this.move.equals(other.move);
             }
             
             return this.blackCanCastleLong == other.blackCanCastleLong   &&
@@ -132,7 +156,7 @@ public final class State
                    this.halfMoveClock == other.halfMoveClock &&
                    this.halfMovesIndex3PosRepition == other.halfMovesIndex3PosRepition &&
                    this.inMove == other.inMove &&
-                   this.move.equals(other.move) &&
+                   movesMatch &&
                    this.moveNumber == other.moveNumber;
         }
         else
