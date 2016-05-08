@@ -52,7 +52,7 @@ public final class State
         halfMovesIndex3PosRepition = state.halfMovesIndex3PosRepition;
         gameResult = state.gameResult;
 
-        if (this.bbposition != null)
+        if (state.bbposition != null)
         {
             bbposition = new BitBoard(state.bbposition);
         }
