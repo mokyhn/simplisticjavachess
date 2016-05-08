@@ -117,6 +117,34 @@ public class StateTest
         assertFalse(state1.equals(state2));
     }
     
+    @Test
+    public void testNotEqualsNullBitboard1()
+    {
+        State state1 = createDummyState();
+        State state2 = createDummyState();
+        
+        state1.bbposition = null;
+        assertFalse(state1.equals(state2));
+    }
+
+    @Test
+    public void testNotEqualsNullBitboard2()
+    {
+        State state1 = createDummyState();
+        State state2 = createDummyState();
+        
+        state2.bbposition = null;
+        assertFalse(state1.equals(state2));
+    }
     
-    
+  @Test
+    public void testNotEqualsNullBitboard3()
+    {
+        State state1 = createDummyState();
+        State state2 = createDummyState();
+        
+        state1.bbposition = null;
+        state2.bbposition = null;
+        assertTrue(state1.equals(state2));
+    }    
 }
