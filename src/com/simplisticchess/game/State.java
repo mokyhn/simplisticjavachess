@@ -103,6 +103,43 @@ public final class State
         return getCanCastleLong(inMove);
     }
 
+    public boolean equals(Object object)
+    {
+        if (object instanceof State)
+        {
+            State other = (State) object;
+            
+            boolean bbPositionsMatch = false;
+            
+            if (this.bbposition == null) 
+            {
+                if (other.bbposition == null)
+                {
+                    bbPositionsMatch = true;
+                }
+            }
+            else
+            {
+                bbPositionsMatch = this.bbposition.equals(other.bbposition);
+            }
+            
+            return this.blackCanCastleLong == other.blackCanCastleLong   &&
+                   this.blackCanCastleShort == other.blackCanCastleShort &&
+                   this.whiteCanCastleLong == other.whiteCanCastleLong &&
+                   this.whiteCanCastleShort == other.whiteCanCastleShort && 
+                   bbPositionsMatch &&
+                   this.gameResult == other.gameResult &&
+                   this.halfMoveClock == other.halfMoveClock &&
+                   this.halfMovesIndex3PosRepition == other.halfMovesIndex3PosRepition &&
+                   this.inMove == other.inMove &&
+                   this.move.equals(other.move) &&
+                   this.moveNumber == other.moveNumber;
+        }
+        else
+        {
+            return false;
+        }
+    }
     
     @Override
     public String toString()

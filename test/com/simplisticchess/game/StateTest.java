@@ -23,6 +23,21 @@ public class StateTest
     @Test
     public void testCopyConstructor() throws InvalidLocationException 
     {
+        State state = createDummyState();
+        
+        State stateClone = new State(state);
+        assertTrue(stateClone.bbposition.hasPiece(Locations.D4, Color.BLACK, PieceType.KNIGHT));
+        assertTrue(stateClone.gameResult == GameResult.DRAW_BY_50_MOVE_RULE);
+        assertTrue(stateClone.halfMoveClock == 42);
+        assertTrue(stateClone.halfMovesIndex3PosRepition == 41);
+        assertTrue(stateClone.inMove == Color.BLACK);
+        assertTrue(stateClone.moveNumber == 49);
+        assertTrue(stateClone.move.equals(Moves.BLACK_LONG_CASTLING()));
+        
+    }
+
+    private State createDummyState()
+    {
         // Setup
         State state = new State();
         BitBoard bitBoard = new BitBoard();
@@ -34,16 +49,7 @@ public class StateTest
         state.inMove = Color.BLACK;
         state.moveNumber = 49;
         state.move = Moves.BLACK_LONG_CASTLING();
-        
-        State stateClone = new State(state);
-        assertTrue(stateClone.bbposition.hasPiece(Locations.D4, Color.BLACK, PieceType.KNIGHT));
-        assertTrue(stateClone.gameResult == GameResult.DRAW_BY_50_MOVE_RULE);
-        assertTrue(stateClone.halfMoveClock == 42);
-        assertTrue(stateClone.halfMovesIndex3PosRepition == 41);
-        assertTrue(stateClone.inMove == Color.BLACK);
-        assertTrue(stateClone.moveNumber == 49);
-        assertTrue(stateClone.move.equals(Moves.BLACK_LONG_CASTLING()));
-        
+        return state;
     }
 
     @Test
@@ -83,6 +89,34 @@ public class StateTest
         assertTrue(state.getCanCastleLong(Color.WHITE));
     }
 
+    @Test
+    public void testEquals() 
+    {
+        State state1 = createDummyState();
+        State state2 = createDummyState();
+        assert(state1.equals(state2));
+    }
+    
+    @Test
+    public void testNotEquals1()
+    {
+        State state1 = createDummyState();
+        State state2 = createDummyState();
+        
+        state2.bbposition.removePiece(Locations.D4);
+        assertFalse(state1.equals(state2));
+    }
+    
+    @Test
+    public void testNotEquals2()
+    {
+        State state1 = createDummyState();
+        State state2 = createDummyState();
+        
+        state1.setCanCastleLong(true, Color.BLACK);
+        assertFalse(state1.equals(state2));
+    }
+    
     
     
 }

@@ -21,30 +21,10 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/position/Location.java</file>
-            <file>file:/home/mku/simplisticjavachess/test/com/simplisticchess/position/Locations.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/movegenerator/PawnMoveGenerator.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/game/History.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/board/Board.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/movegenerator/MoveGeneratorUtil.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/movegenerator/KnightMoveGenerator.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/evaluator/Evaluator.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/movegenerator/RookMoveGenerator.java</file>
-            <file>file:/home/mku/simplisticjavachess/test/com/simplisticchess/board/Boards.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/movegenerator/IteratorUtils.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/movegenerator/KingMoveGenerator.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/search/AlphaBetaSearch.java</file>
-            <file>file:/home/mku/simplisticjavachess/test/com/simplisticchess/board/BoardTest.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/movegenerator/MoveGenerator.java</file>
-            <file>file:/home/mku/simplisticjavachess/test/com/simplisticchess/move/Moves.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/search/AbstractSearch.java</file>
             <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/game/State.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/ChessGame.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/movegenerator/QueenMoveGenerator.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/board/PositionInference.java</file>
+            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/board/Board.java</file>
+            <file>file:/home/mku/simplisticjavachess/test/com/simplisticchess/board/BoardTest_Castling.java</file>
             <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/board/Position.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/movegenerator/BishopMoveGenerator.java</file>
-            <file>file:/home/mku/simplisticjavachess/src/com/simplisticchess/piece/Color.java</file>
         </group>
     </open-files>
 </project-private>
