@@ -53,10 +53,11 @@ public class MinMaxSearch extends AbstractSearch
         while (moves.hasNext())
         {
             Move move = moves.next();
-            boolean result = analyzeBoard.doMove(move);
+            boolean legal = analyzeBoard.doMove(move);
 
-            if (result == false)
+            if (!legal)
             {
+                analyzeBoard.undo();
                 continue; // The pseudo legal move m turned out to be illegal.
             }                //Nice verbose trace: System.out.print("(" + (plyDepth-depthToGo) +": "+ m.toString());
 

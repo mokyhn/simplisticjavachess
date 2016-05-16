@@ -52,17 +52,19 @@ public class AlphaBetaSearch extends AbstractSearch
 
         Iterator<Move> moveIterator = moveGenerator.generateMoves(analyzeBoard);
 
-        boolean result;
+        boolean legal;
 
         while (moveIterator.hasNext())
         {
             Move m = moveIterator.next();
 
-            result = analyzeBoard.doMove(m);
+            legal = analyzeBoard.doMove(m);
 
-            if (result == false)
+            if (!legal)
             {
+                analyzeBoard.undo();
                 continue; // The pseudo legal move m turned out to be illegal.
+                
             }
             thereWasALegalMove = true;
 

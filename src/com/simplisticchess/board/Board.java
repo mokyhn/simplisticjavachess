@@ -311,7 +311,6 @@ public class Board
         if (isInCheck(currentState.inMove.opponent()))
         {
             wasMoveLegal = false;
-            this.undo();
         }
         else
         {
@@ -326,7 +325,7 @@ public class Board
     public void undo()
     {
         Move move = currentState.move;      
-        currentState = history.pop();  
+        currentState = history.getPreviousState();  
 
         if (move.aSimplePromotion())
         {

@@ -40,14 +40,9 @@ public final class History
         stateHistory.push(s);
     }
 
-    public State pop()
+    public State getPreviousState()
     {
         return stateHistory.pop();
-    }
-
-    public State peek()
-    {
-        return stateHistory.peek();
     }
 
     public int size()

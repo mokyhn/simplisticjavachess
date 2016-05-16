@@ -47,7 +47,7 @@ public class RandomSearch extends AbstractSearch
         }
 
         final Color whoMoves = analyzeBoard.inMove();
-        boolean result;
+        boolean legal;
 
         boolean retry = true;
 
@@ -55,18 +55,20 @@ public class RandomSearch extends AbstractSearch
         {
             double r = Math.random();
             Move theMove = moves.get((int) Math.ceil((n - 1) * r));
-            result = analyzeBoard.doMove(theMove);
+            legal = analyzeBoard.doMove(theMove);
 
-            if (result == false)
-            {
-                moves.remove(theMove);
-                n = moves.size();
-                System.out.println("Neglected: " + theMove.toString());
-            } else
+            if (legal)
             {
                 retry = false;
                 strongestMove = theMove;
                 analyzeBoard.undo();
+            } 
+            else
+            {
+                analyzeBoard.undo();
+                moves.remove(theMove);
+                n = moves.size();
+                System.out.println("Neglected: " + theMove.toString());
             }
         }
 
