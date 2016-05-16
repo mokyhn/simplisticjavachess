@@ -7,6 +7,7 @@ package com.simplisticchess.board;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.position.Location;
+import com.simplisticjavachess.misc.Strings;
 
 public class FENParser
 {
@@ -24,7 +25,7 @@ public class FENParser
         int i;
         int parsingPartNo;
         char c;
-        final String fen = trimWhiteSpace(sfen.trim());
+        final String fen = Strings.trimWhiteSpace(sfen.trim());
         
         // Parsing part no. 1
         parsingPartNo = 1;
@@ -103,30 +104,6 @@ public class FENParser
         }
     }
 
-    private static String trimWhiteSpace(final String s)
-    {
-        String t = "";
-        char c;
-        boolean flag = false;
-
-        for (int i = 0; i < s.length(); i++)
-        {
-            c = s.charAt(i);
-
-            if (c == ' ' && !flag)
-            {
-                flag = true;
-                t = t + ' ';
-            }
-
-            if (c != ' ')
-            {
-                flag = false;
-                t = t + c;
-            }
-        }
-
-        return t;
-    }
+   
     
 }

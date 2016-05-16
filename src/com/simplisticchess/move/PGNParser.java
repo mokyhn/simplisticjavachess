@@ -1,6 +1,7 @@
 
 package com.simplisticchess.move;
 
+import com.simplisticjavachess.misc.Strings;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -10,21 +11,41 @@ import java.nio.file.Paths;
 
 public class PGNParser
 {
+    private enum states {
+        NOT_PARSING, 
+        PARSING_PAWNMOVE,
+        PARSING_PAWN_CAPTURES_MOVE}
     
+    public static void main(String[] args) throws IOException
+    {
+        parsePGN("your.pgn");
+    }
     
     
     public static void parsePGN(String file) throws IOException 
     {
         String contents = readFile(file, StandardCharsets.UTF_8);
-        contents = removeBracketedCharacters(contents, '{', '}');
-        contents = removeBracketedCharacters(contents, '(', ')');   
-        contents = contents.replaceAll("\\$[\\d*]", "");
         
-        contents = contents.replaceAll("[\\d+]\\.\\.\\.", "");
+        String input = preparePGN(contents);
         
-        System.out.println(contents);
+        System.out.println(input);
+                
     }
-        
+    
+    public static String preparePGN(String input) 
+    {
+        input = removeBracketedCharacters(input, '{', '}');
+        input = removeBracketedCharacters(input, '(', ')');   
+        input = removeBracketedCharacters(input, '[', ']');
+        input = input.replaceAll("\\$[\\d*]", "");  
+        input = input.replaceAll("[\\d*]+\\.\\.\\.", ""); // remove continuations for black
+        input = input.replaceAll("[\\d*]+\\.", "");    // remove move numbering
+        input = input.replaceAll("\\+", "");          // remove checks
+        input = input.replaceAll("[\t\n\r]", " ");    // remove tabulation and new line
+        input = Strings.trimWhiteSpace(input);
+        return input;
+    }
+    
     static String readFile(String path, Charset encoding) throws IOException 
     {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
