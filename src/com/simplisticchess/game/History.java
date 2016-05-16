@@ -65,23 +65,31 @@ public final class History
         return stateHistory.isEmpty();
     }
 
+    public Move getLastMove()
+    {
+        return stateHistory.peek().move;
+    }
+    
     @Override
     public String toString()
     {
         String r = "";
         String prefix = "";
-        Move m;
 
         for (int i = 0; i < stateHistory.size(); i++)
         {
-            m = stateHistory.get(i).move;
-            if (m.getWhoMoves() == Color.WHITE)
+            Move m = stateHistory.get(i).move;
+            
+            if (m != null)
             {
-                prefix = (i + 2) / 2 + ".";
+                if (m.getWhoMoves() == Color.WHITE)
+                {
+                    prefix = (i + 2) / 2 + ".";
+                }
+                //if (m.whoMoves == Piece.BLACK) prefix = (i+2)/2 + "....";
+                r = r + prefix + m.toString() + " ";
+                prefix = "";
             }
-            //if (m.whoMoves == Piece.BLACK) prefix = (i+2)/2 + "....";
-            r = r + prefix + m.toString() + " ";
-            prefix = "";
         }
 
         return r;

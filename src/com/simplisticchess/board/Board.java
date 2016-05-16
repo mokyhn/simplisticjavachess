@@ -395,12 +395,16 @@ public class Board
 
         if (!history.isEmpty())
         {
+            Move lastMove = history.getLastMove();
+            
+            String lastMoveStr = lastMove == null ? "" : lastMove.toString();
+            
             if (currentState.inMove.opponent() == Color.WHITE)
             {
-                s = s + "Last move " + (currentState.moveNumber + 1) / 2 + "." + history.peek().move.toString() + "\n";
+                s = s + "Last move " + (currentState.moveNumber + 1) / 2 + "." + lastMoveStr + "\n";
             } else
             {
-                s = s + "Last move " + (currentState.moveNumber + 1) / 2 + "...." + history.peek().move.toString() + "\n";
+                s = s + "Last move " + (currentState.moveNumber + 1) / 2 + "...." + lastMoveStr + "\n";
             }
         }
 

@@ -63,7 +63,7 @@ public class BoardTest_Castling
         assertEquals(actual, Boards.BLACK_IN_MOVE_CANNOT_CASTLE() );
     }
 
-        @Test
+    @Test
     public void testLongShortCastling()
     {
         // Test of doMove
