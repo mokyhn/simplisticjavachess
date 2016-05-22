@@ -34,7 +34,7 @@ public class Board
     public Board(String fen)
     {
         this();
-        FENParser.setupFENboard(this, fen);
+        FENUtils.importPosition(this, fen);
     }
 
     public Board(Board board)

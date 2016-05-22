@@ -23,5 +23,17 @@ public enum Color
     {
         return this == BLACK ? WHITE : BLACK;
     }
+
+    public String getColorString()
+    {
+        if (this == BLACK) 
+        {
+            return "b";
+        }
+        else
+        {
+            return "w";
+        }
+    }
     
 }

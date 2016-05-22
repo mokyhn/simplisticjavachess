@@ -8,6 +8,7 @@ package com.simplisticchess;
 
 import com.simplisticchess.move.MoveParser;
 import com.simplisticchess.board.Board;
+import com.simplisticchess.board.FENUtils;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.move.InvalidMoveException;
 import com.simplisticchess.movegenerator.MoveGenerator;

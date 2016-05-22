@@ -9,7 +9,7 @@ import com.simplisticchess.piece.Piece;
 import com.simplisticchess.position.Location;
 import com.simplisticjavachess.misc.Strings;
 
-public class FENParser
+public class FENUtils
 {
     // Given a position in the FEN - notation.
     // Set up the board
@@ -18,7 +18,7 @@ public class FENParser
     /**
      * Partial implementation which covers what we need for testing
      */
-    public static void setupFENboard(Board board, String sfen)
+    public static void importPosition(Board board, String sfen)
     {
         int x = 0;
         int y = 7;
@@ -104,6 +104,52 @@ public class FENParser
         }
     }
 
-   
-    
+    public static String exportPosition(Board board) 
+    {
+        String result = "";
+        int freeSpaces = -1;
+        
+        for (int y = 7; y >= 0; y--)
+        {
+            for (int x = 0; x < 8; x++)
+            {
+                Piece piece = board.getPiece(new Location(x, y));
+                if (piece == null)
+                {
+                    if (freeSpaces == -1)
+                    {
+                        freeSpaces = 1;
+                    }
+                    else
+                    {
+                        freeSpaces++;
+                    }
+                }
+                else
+                {
+                    if (freeSpaces > 0)
+                    {
+                        result += "" + freeSpaces;
+                        freeSpaces = -1;
+                    }
+                    
+                    result += piece.getPieceType().getPieceLetter(piece.getColor());
+                }                
+            }
+            if (freeSpaces > 0)
+            {
+                result += "" + freeSpaces;
+                freeSpaces = -1;
+            }
+            if (y > 0) 
+            {
+                result += "/";
+            }
+        }
+        
+        result += " " + board.inMove().getColorString();
+        return result;
+        
+        
+    }
 }
