@@ -150,8 +150,13 @@ public class Board
     }
 
     
+    public Position getPosition()
+    {
+        return position;
+    }
+    
     /*
-     * true if the side not in move attacks square (x, y)
+     * true if the side not in move (i.e. opponent) attacks square (x, y)
      * and otherwise false
      */
     public boolean attacks(int x, int y)

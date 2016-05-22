@@ -35,4 +35,16 @@ public class FENUtilsTest
         String result = FENUtils.exportPosition(board);
         assertEquals(test_position, result);
     }
+    
+    @Test
+    public void testImportExportPosition_Many()
+    {
+        for (String test_position : FENPositions.POSITIONS)
+        {
+            Board board = new Board();
+            FENUtils.importPosition(board, test_position);
+            String result = FENUtils.exportPosition(board);
+            assertEquals(test_position, result);
+        }
+    }    
 }
