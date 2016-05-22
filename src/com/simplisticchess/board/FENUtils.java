@@ -107,7 +107,7 @@ public class FENUtils
     public static String exportPosition(Board board) 
     {
         String result = "";
-        int freeSpaces = -1;
+        int countingFreeSpaces = -1;
         
         for (int y = 7; y >= 0; y--)
         {
@@ -116,30 +116,30 @@ public class FENUtils
                 Piece piece = board.getPiece(new Location(x, y));
                 if (piece == null)
                 {
-                    if (freeSpaces == -1)
+                    if (countingFreeSpaces == -1)
                     {
-                        freeSpaces = 1;
+                        countingFreeSpaces = 1;
                     }
                     else
                     {
-                        freeSpaces++;
+                        countingFreeSpaces++;
                     }
                 }
                 else
                 {
-                    if (freeSpaces > 0)
+                    if (countingFreeSpaces > 0)
                     {
-                        result += "" + freeSpaces;
-                        freeSpaces = -1;
+                        result += "" + countingFreeSpaces;
+                        countingFreeSpaces = -1;
                     }
                     
                     result += piece.getPieceType().getPieceLetter(piece.getColor());
                 }                
             }
-            if (freeSpaces > 0)
+            if (countingFreeSpaces > 0)
             {
-                result += "" + freeSpaces;
-                freeSpaces = -1;
+                result += "" + countingFreeSpaces;
+                countingFreeSpaces = -1;
             }
             if (y > 0) 
             {
