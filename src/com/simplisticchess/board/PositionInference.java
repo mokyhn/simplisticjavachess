@@ -18,7 +18,7 @@ public class PositionInference
         {
             if (p.getPieceType() == PieceType.KING && p.getColor() == color)
             {
-                if (PositionInference.attacks(position, p.getLocation(), color))
+                if (PositionInference.attacks(position, p.getLocation(), color) != null)
                 {
                     return true;
                 }
@@ -27,7 +27,7 @@ public class PositionInference
         return false;
     }
 
-    public static boolean attacks(Position position, Location location, Color inMove)
+    public static Piece attacks(Position position, Location location, Color inMove)
     {
         for (Piece p : position.getPieces())
         {
@@ -41,19 +41,19 @@ public class PositionInference
                                 && ((location.getX() == p.getxPos() + 1)
                                 || (location.getX() == p.getxPos() - 1)))
                         {
-                            return true;
+                            return p;
                         }
                         break;
                     case ROOK:
                         if (rookAttack(position, p.getLocation(), location))
                         {
-                            return true;
+                            return p;
                         }
                         break;
                     case BISHOP:
                         if (bishopAttack(position, p.getLocation(), location))
                         {
-                            return true;
+                            return p;
                         }
                         break;
                     case KNIGHT:
@@ -66,21 +66,21 @@ public class PositionInference
                                 || ((location.getX() == p.getxPos() + 2) && (location.getY() == p.getyPos() + 1))
                                 || ((location.getX() == p.getxPos() + 2) && (location.getY() == p.getyPos() - 1)))
                         {
-                            return true;
+                            return p;
                         }
                         break;
                     case QUEEN:
                         if (rookAttack(position, p.getLocation(), location)
                                 || bishopAttack(position, p.getLocation(), location))
                         {
-                            return true;
+                            return p;
                         }
                         break;
                     case KING:
                         if ((location.getX() == p.getxPos() || location.getX() == p.getxPos() - 1 || location.getX() == p.getxPos() + 1)
                                 && (location.getY() == p.getyPos() || location.getY() == p.getyPos() - 1 || location.getY() == p.getyPos() + 1))
                         {
-                            return true;
+                            return p;
                         }
                         break;
                     default:
@@ -88,7 +88,7 @@ public class PositionInference
             }
         }
 
-        return false;
+        return null;
     }
 
  

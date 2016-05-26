@@ -161,7 +161,7 @@ public class Board
      */
     public boolean attacks(int x, int y)
     {
-        return PositionInference.attacks(position, new Location(x, y), currentState.inMove);
+        return PositionInference.attacks(position, new Location(x, y), currentState.inMove) != null;
     }
 
     /**

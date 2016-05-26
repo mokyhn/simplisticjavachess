@@ -62,7 +62,8 @@ public class KingMoveGenerator
                 if (b.freeSquare(fx - 1, fy))
                 {
                     Moves.add(new Move(fx, fy, fx - 1, fy, MoveType.NORMALMOVE, null, c));
-                } else
+                } 
+                else
                 {
                     pTo = b.getPiece(fx - 1, fy);
                     if (pTo != null && pTo.getColor() != c)

@@ -150,7 +150,7 @@ public class RandomBoardGenerator
         
         for (Location location : test)
         {
-            if (!PositionInference.attacks(board.getPosition(), location, color) ) 
+            if (PositionInference.attacks(board.getPosition(), location, color) == null) 
             {
                 result.add(location);
             }
