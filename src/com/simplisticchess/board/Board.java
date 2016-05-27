@@ -290,7 +290,7 @@ public class Board
             case CAPTURE:
                 removePiece(move.getTo());
                 position.movePiece(move.getFrom(), move.getTo());
-                if (move.getCapturedPiece() == PieceType.ROOK)
+                if (move.getCapturedPiece().getPieceType() == PieceType.ROOK)
                 {
                     if (move.getTo().getX() == 0)
                     {
@@ -324,6 +324,10 @@ public class Board
             wasMoveLegal = true;
         }
 
+
+        assert(position.getPiece(move.getFrom()) == null);
+        assert(position.getPiece(move.getTo()) != null);
+        assert(position.getPiece(move.getTo()).getPieceType() != null);
         return wasMoveLegal;
     }
 
@@ -332,27 +336,31 @@ public class Board
         Move move = currentState.move;      
         currentState = history.getPreviousState();  
 
-        if (move.aSimplePromotion())
-        {
-            insertPiece(new Piece(move.getFrom(), move.getWhoMoves(), PieceType.PAWN));
-            removePiece(move.getTo());
-        }
-
-        if (move.aCapturePromotion())
-        {
-            removePiece(move.getTo());
-            insertPiece(new Piece(move.getTo(), move.getWhoMoves().opponent(), move.getCapturedPiece()));
-            insertPiece(new Piece(move.getFrom(), move.getWhoMoves(), PieceType.PAWN));
-        }
-
         switch (move.getMoveType())
         {
+            case PROMOTE_TO_BISHOP: /* Intended fallthrough */
+            case PROMOTE_TO_KNIGHT: /* Intended fallthrough */
+            case PROMOTE_TO_ROOK:   /* Intended fallthrough */
+            case PROMOTE_TO_QUEEN:  /* Intended fallthrough */
+                insertPiece(new Piece(move.getFrom(), move.getWhoMoves(), PieceType.PAWN));
+                removePiece(move.getTo());
+                break;
+
+            case CAPTURE_AND_PROMOTE_TO_BISHOP: /* Intended fallthrough */
+            case CAPTURE_AND_PROMOTE_TO_KNIGHT: /* Intended fallthrough */
+            case CAPTURE_AND_PROMOTE_TO_ROOK:   /* Intended fallthrough */
+            case CAPTURE_AND_PROMOTE_TO_QUEEN:  /* Intended fallthrough */
+                removePiece(move.getTo());
+                insertPiece(move.getCapturedPiece());
+                insertPiece(new Piece(move.getFrom(), move.getWhoMoves(), PieceType.PAWN));
+                break;
+
             case NORMALMOVE:
                 position.movePiece(move.getTo(), move.getFrom());
                 break;
 
             case CAPTURE_ENPASSANT:          
-                insertPiece(new Piece(new Location(move.getTo().getX(), move.getFrom().getY()), move.getWhoMoves().opponent(), PieceType.PAWN));
+                insertPiece(move.getCapturedPiece());
                 position.movePiece(move.getTo(), move.getFrom());
                 break;
 
@@ -372,8 +380,23 @@ public class Board
 
             case CAPTURE:
                 position.movePiece(move.getTo(), move.getFrom());
-                insertPiece(new Piece(move.getTo(), move.getWhoMoves().opponent(), move.getCapturedPiece()));
+                insertPiece(move.getCapturedPiece());
                 break;
+        }
+        
+        assert(position.getPiece(move.getFrom()) != null);
+        assert(position.getPiece(move.getFrom()).getPieceType() != null);
+        
+        if (move.aCapture()) 
+        {
+            if (position.getPiece(move.getTo()) == null) {
+                System.out.println("Problem with " + move.toString() + " " + move.getMoveType());
+            }
+            assert(position.getPiece(move.getTo()) != null);
+        }
+        else
+        {
+            assert(position.getPiece(move.getTo()) == null);
         }
     }
 

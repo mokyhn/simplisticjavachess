@@ -57,7 +57,8 @@ public final class MoveParser
             {
                 if (from.fileDifferent(to) && (b.freeSquare(to)))
                 {
-                    return new Move(from, to, MoveType.CAPTURE_ENPASSANT, PieceType.PAWN, whoToMove);
+                    return new Move(from, to, MoveType.CAPTURE_ENPASSANT, 
+                            b.getPiece(new Location(to.getX(), from.getY())), whoToMove);
                 }
             }
 
@@ -68,11 +69,10 @@ public final class MoveParser
             }
 
             // A capturing move
-            Piece pto;
-            pto = b.getPiece(to);
+            Piece pto = b.getPiece(to);
             if (pto != null && pto.getColor() == whoToMove.opponent())
             {
-                return new Move(from, to, MoveType.CAPTURE, pto.getPieceType(), whoToMove);
+                return new Move(from, to, MoveType.CAPTURE, pto, whoToMove);
             }
         }
 
@@ -133,7 +133,7 @@ public final class MoveParser
                         return null;
                 }
 
-                return new Move(from, to, moveType, b.getPiece(to).getPieceType(), whoToMove);
+                return new Move(from, to, moveType, b.getPiece(to), whoToMove);
             }
         }
 

@@ -25,7 +25,6 @@ public class PawnMoveGenerator
 
         Piece leftPiece;
         Piece rightPiece;
-        Piece lastMovePiece;
 
         final ArrayList<Move> Moves = new ArrayList<Move>();
 
@@ -65,7 +64,7 @@ public class PawnMoveGenerator
             leftPiece = b.getPiece(fx - 1, fy + c.getColor());
             if (leftPiece != null && leftPiece.getColor() != c)
             {
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE, leftPiece.getPieceType(), c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE, leftPiece, c));
             }
         }
 
@@ -75,7 +74,7 @@ public class PawnMoveGenerator
             rightPiece = b.getPiece(fx + 1, fy + c.getColor());
             if (rightPiece != null && rightPiece.getColor() != c)
             {
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE, rightPiece.getPieceType(), c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE, rightPiece, c));
             }
         }
 
@@ -85,10 +84,10 @@ public class PawnMoveGenerator
             leftPiece = b.getPiece(fx - 1, fy + c.getColor());
             if (leftPiece != null && leftPiece.getColor() != c)
             {
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece.getPieceType(), c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece.getPieceType(), c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN, leftPiece.getPieceType(), c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_ROOK, leftPiece.getPieceType(), c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN, leftPiece, c));
+                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_ROOK, leftPiece, c));
             }
         }
 
@@ -98,10 +97,10 @@ public class PawnMoveGenerator
             rightPiece = b.getPiece(fx + 1, fy + c.getColor());
             if (rightPiece != null && rightPiece.getColor() != c)
             {
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece.getPieceType(), c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, rightPiece.getPieceType(), c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN, rightPiece.getPieceType(), c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_ROOK, rightPiece.getPieceType(), c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, rightPiece, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN, rightPiece, c));
+                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_ROOK, rightPiece, c));
             }
 
         }
@@ -109,32 +108,33 @@ public class PawnMoveGenerator
         // En passant capture
         try
         {
-            final Move lastMove = b.getLastMove();
+            Move lastMove = b.getLastMove();
             if (lastMove != null)
             {
-                if (fx > 0)
-                {
-
-                    lastMovePiece = b.getPiece(lastMove.getTo());
-                    // The piece stands to the left
-                    if (lastMovePiece != null && (lastMove.getTo().getX() == fx - 1) && (lastMove.getTo().getY() == fy)
-                            && (lastMovePiece.getPieceType() == PieceType.PAWN)
-                            && (Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2))
+                Piece lastMovePiece = b.getPiece(lastMove.getTo());
+                
+                if (lastMovePiece.getPieceType() == PieceType.PAWN && 
+                    (Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2)) 
+                {                
+                    if (fx > 0)
                     {
-                        Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_ENPASSANT, null, c));
+                        // The piece stands to the left
+                        if ((lastMove.getTo().getX() == fx - 1) && (lastMove.getTo().getY() == fy))
+                        {
+                            Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), 
+                                    MoveType.CAPTURE_ENPASSANT, lastMovePiece, c));
+                        }
                     }
-                }
 
-                if (fx < 7)
-                {
-                    lastMovePiece = b.getPiece(lastMove.getTo());
-                    // The piece stands to the right
-                    if (lastMovePiece != null && (lastMove.getTo().getX() == fx + 1) && (lastMove.getTo().getY() == fy)
-                            && (lastMovePiece.getPieceType() == PieceType.PAWN)
-                            && (Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2))
+                    if (fx < 7)
                     {
-                        Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_ENPASSANT, null, c));
+                        // The piece stands to the right
+                        if ((lastMove.getTo().getX() == fx + 1) && (lastMove.getTo().getY() == fy))
+                        {
+                            Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), 
+                                    MoveType.CAPTURE_ENPASSANT, lastMovePiece, c));
 
+                        }
                     }
                 }
             }
@@ -149,8 +149,8 @@ public class PawnMoveGenerator
 
     }
 
-
-    // TODO: The following can be refined so that not all moves are generated at once
+    
+     // TODO: The following can be refined so that not all moves are generated at once
     public Iterator<Move> iterator(final Board b, final Piece p)
     {
         return new Iterator<Move>()

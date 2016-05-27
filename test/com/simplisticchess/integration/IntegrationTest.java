@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class mainTest
+public class IntegrationTest
 {
     private final static int ALPHABETA = 1;
     private final static int MINMAX = 2;
@@ -107,17 +107,47 @@ public class mainTest
     }
 
     @Test
-    public void testPawnCapture() throws Exception
+    public void testPawnCaptureMinMax1() throws Exception
     {
-        assertTrue(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w", "", MINMAX, 1, "g2h3"));
-        assertTrue(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w", "", ALPHABETA, 1, "g2h3"));
-        assertTrue(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w", "", MINMAX, 2, "g2h3"));
-        assertTrue(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w", "", ALPHABETA, 2, "g2h3"));
-        assertTrue(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w", "", MINMAX, 3, "g2h3"));
-        assertTrue(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w", "", ALPHABETA, 3, "g2h3"));
-        assertTrue(testSearch("k7/8/7P/8/8/1p6/P7/7K w", "", MINMAX, 5, "a2b3"));
+        assertTrue(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w", "", MINMAX, 1, "g2h3"));        
     }
 
+    @Test
+    public void testPawnCaptureAlphaBeta1() throws Exception
+    {
+        assertTrue(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w", "", ALPHABETA, 1, "g2h3"));
+    }
+
+    @Test
+    public void testPawnCaptureMinMax2() throws Exception
+    {
+        assertTrue(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w", "", MINMAX, 2, "g2h3"));
+    }    
+
+    @Test
+    public void testPawnCaptureAlphaBeta2() throws Exception
+    {
+        assertTrue(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w", "", ALPHABETA, 2, "g2h3"));
+    }
+
+    @Test
+    public void testPawnCaptureMinMax3() throws Exception
+    {
+        assertTrue(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w", "", MINMAX, 3, "g2h3"));
+    }    
+
+    @Test
+    public void testPawnCaptureAlphaBeta3() throws Exception
+    {
+        assertTrue(testSearch("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w", "", ALPHABETA, 3, "g2h3"));
+    }
+    
+    @Test
+    public void testPawnCaptureMinMax5() throws Exception
+    {
+        assertTrue(testSearch("k7/8/7P/8/8/1p6/P7/7K w", "", MINMAX, 5, "a2b3"));
+    }
+    
     @Test
     public void testThreefoldRepetitionDraw() throws Exception
     {

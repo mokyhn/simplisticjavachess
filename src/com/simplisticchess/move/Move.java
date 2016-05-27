@@ -8,6 +8,7 @@ package com.simplisticchess.move;
 
 
 import com.simplisticchess.piece.Color;
+import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
 import com.simplisticchess.position.Location;
 
@@ -19,12 +20,11 @@ public final class Move
     
     private final MoveType moveType; 
     
-    // The piece captured 
-    private final PieceType capturedPiece; 
+    private final Piece capturedPiece; 
 
     private final Color whoMoves;
 
-    public Move(int fromX, int fromY, int toX, int toY, MoveType type, PieceType capturedPiece, Color whoMoves)
+    public Move(int fromX, int fromY, int toX, int toY, MoveType type, Piece capturedPiece, Color whoMoves)
     {
         from = new Location(fromX, fromY);
         to = new Location(toX, toY);
@@ -33,7 +33,7 @@ public final class Move
         this.whoMoves = whoMoves;
     }
 
-    public Move (Location from, Location to, MoveType type, PieceType capturedPiece, Color whoMoves)
+    public Move(Location from, Location to, MoveType type, Piece capturedPiece, Color whoMoves)
     {
         this.from = from;
         this.to = to;
@@ -82,12 +82,32 @@ public final class Move
             return this.from.equals(move.from)
                 && this.to.equals(move.to)
                 && this.getMoveType() == move.getMoveType()
-                && this.getCapturedPiece() == move.getCapturedPiece()
+                && comparePieces(this.getCapturedPiece(), move.getCapturedPiece())
                 && this.getWhoMoves() == move.getWhoMoves();
         }
         else
         {
             return false;
+        }
+    }
+    
+    private boolean comparePieces(Piece piece1, Piece piece2)
+    {
+        if (piece1 == null && piece2 == null)
+        {
+            return true;
+        } 
+        else if (piece1 == null && piece2 != null) 
+        {
+            return false;
+        }
+        else if (piece1 != null && piece2 == null) 
+        {
+            return false;
+        } 
+        else
+        {
+            return piece1.equals(piece2);
         }
     }
 
@@ -111,7 +131,7 @@ public final class Move
             case NORMALMOVE:
                 return from.toString() + "-" + to.toString();
             case CAPTURE:
-                if (capturedPiece == PieceType.KING)
+                if (capturedPiece.getPieceType() == PieceType.KING)
                 {
                     return "mate";
  
@@ -156,7 +176,7 @@ public final class Move
     }
 
 
-    public PieceType getCapturedPiece()
+    public Piece getCapturedPiece()
     {
         return capturedPiece;
     }

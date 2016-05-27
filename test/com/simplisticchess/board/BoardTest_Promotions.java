@@ -4,6 +4,7 @@ package com.simplisticchess.board;
 import com.simplisticchess.move.Move;
 import com.simplisticchess.move.MoveType;
 import com.simplisticchess.piece.Color;
+import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
 import com.simplisticchess.position.Location;
 import com.simplisticchess.position.Locations;
@@ -140,20 +141,20 @@ public class BoardTest_Promotions
             Move[] moveList = 
                     new Move[] 
                     {
-                        new Move(Locations.A7, Locations.B8, moveType, PieceType.KNIGHT, Color.WHITE),
-                        new Move(Locations.B7, Locations.A8, moveType, PieceType.KNIGHT, Color.WHITE),
-                        new Move(Locations.B7, Locations.C8, moveType, PieceType.KNIGHT, Color.WHITE),
-                        new Move(Locations.C7, Locations.B8, moveType, PieceType.KNIGHT, Color.WHITE),
-                        new Move(Locations.C7, Locations.D8, moveType, PieceType.KNIGHT, Color.WHITE),
-                        new Move(Locations.D7, Locations.C8, moveType, PieceType.KNIGHT, Color.WHITE), 
-                        new Move(Locations.D7, Locations.E8, moveType, PieceType.KNIGHT, Color.WHITE),
-                        new Move(Locations.E7, Locations.D8, moveType, PieceType.KNIGHT, Color.WHITE),
-                        new Move(Locations.E7, Locations.F8, moveType, PieceType.KNIGHT, Color.WHITE),
-                        new Move(Locations.F7, Locations.E8, moveType, PieceType.KNIGHT, Color.WHITE), 
-                        new Move(Locations.F7, Locations.G8, moveType, PieceType.KNIGHT, Color.WHITE),
-                        new Move(Locations.G7, Locations.F8, moveType, PieceType.KNIGHT, Color.WHITE),
-                        new Move(Locations.G7, Locations.H8, moveType, PieceType.KNIGHT, Color.WHITE),
-                        new Move(Locations.H7, Locations.G8, moveType, PieceType.KNIGHT, Color.WHITE)
+                        new Move(Locations.A7, Locations.B8, moveType, new Piece(Locations.B8, Color.BLACK, PieceType.KNIGHT), Color.WHITE),
+                        new Move(Locations.B7, Locations.A8, moveType, new Piece(Locations.A8, Color.BLACK, PieceType.KNIGHT), Color.WHITE),
+                        new Move(Locations.B7, Locations.C8, moveType, new Piece(Locations.C8, Color.BLACK, PieceType.KNIGHT), Color.WHITE),
+                        new Move(Locations.C7, Locations.B8, moveType, new Piece(Locations.B8, Color.BLACK, PieceType.KNIGHT), Color.WHITE),
+                        new Move(Locations.C7, Locations.D8, moveType, new Piece(Locations.D8, Color.BLACK, PieceType.KNIGHT), Color.WHITE),
+                        new Move(Locations.D7, Locations.C8, moveType, new Piece(Locations.C8, Color.BLACK, PieceType.KNIGHT), Color.WHITE), 
+                        new Move(Locations.D7, Locations.E8, moveType, new Piece(Locations.E8, Color.BLACK, PieceType.KNIGHT), Color.WHITE),
+                        new Move(Locations.E7, Locations.D8, moveType, new Piece(Locations.D8, Color.BLACK, PieceType.KNIGHT), Color.WHITE),
+                        new Move(Locations.E7, Locations.F8, moveType, new Piece(Locations.F8, Color.BLACK, PieceType.KNIGHT), Color.WHITE),
+                        new Move(Locations.F7, Locations.E8, moveType, new Piece(Locations.E8, Color.BLACK, PieceType.KNIGHT), Color.WHITE), 
+                        new Move(Locations.F7, Locations.G8, moveType, new Piece(Locations.G8, Color.BLACK, PieceType.KNIGHT), Color.WHITE),
+                        new Move(Locations.G7, Locations.F8, moveType, new Piece(Locations.F8, Color.BLACK, PieceType.KNIGHT), Color.WHITE),
+                        new Move(Locations.G7, Locations.H8, moveType, new Piece(Locations.H8, Color.BLACK, PieceType.KNIGHT), Color.WHITE),
+                        new Move(Locations.H7, Locations.G8, moveType, new Piece(Locations.G8, Color.BLACK, PieceType.KNIGHT), Color.WHITE)
                     };
             
             for (Move move : moveList) { 
@@ -201,20 +202,20 @@ public class BoardTest_Promotions
             Move[] moveList = 
                     new Move[] 
                     {
-                        new Move(Locations.A2, Locations.B1, moveType, PieceType.KNIGHT, Color.BLACK),
-                        new Move(Locations.B2, Locations.A1, moveType, PieceType.KNIGHT, Color.BLACK),
-                        new Move(Locations.B2, Locations.C1, moveType, PieceType.KNIGHT, Color.BLACK),
-                        new Move(Locations.C2, Locations.B1, moveType, PieceType.KNIGHT, Color.BLACK),
-                        new Move(Locations.C2, Locations.D1, moveType, PieceType.KNIGHT, Color.BLACK),
-                        new Move(Locations.D2, Locations.C1, moveType, PieceType.KNIGHT, Color.BLACK), 
-                        new Move(Locations.D2, Locations.E1, moveType, PieceType.KNIGHT, Color.BLACK),
-                        new Move(Locations.E2, Locations.D1, moveType, PieceType.KNIGHT, Color.BLACK),
-                        new Move(Locations.E2, Locations.F1, moveType, PieceType.KNIGHT, Color.BLACK),
-                        new Move(Locations.F2, Locations.E1, moveType, PieceType.KNIGHT, Color.BLACK), 
-                        new Move(Locations.F2, Locations.G1, moveType, PieceType.KNIGHT, Color.BLACK),
-                        new Move(Locations.G2, Locations.F1, moveType, PieceType.KNIGHT, Color.BLACK),
-                        new Move(Locations.G2, Locations.H1, moveType, PieceType.KNIGHT, Color.BLACK),
-                        new Move(Locations.H2, Locations.G1, moveType, PieceType.KNIGHT, Color.BLACK)
+                        new Move(Locations.A2, Locations.B1, moveType, new Piece(Locations.B1, Color.WHITE, PieceType.KNIGHT), Color.BLACK),
+                        new Move(Locations.B2, Locations.A1, moveType, new Piece(Locations.A1, Color.WHITE, PieceType.KNIGHT), Color.BLACK),
+                        new Move(Locations.B2, Locations.C1, moveType, new Piece(Locations.C1, Color.WHITE, PieceType.KNIGHT), Color.BLACK),
+                        new Move(Locations.C2, Locations.B1, moveType, new Piece(Locations.B1, Color.WHITE, PieceType.KNIGHT), Color.BLACK),
+                        new Move(Locations.C2, Locations.D1, moveType, new Piece(Locations.D1, Color.WHITE, PieceType.KNIGHT), Color.BLACK),
+                        new Move(Locations.D2, Locations.C1, moveType, new Piece(Locations.C1, Color.WHITE, PieceType.KNIGHT), Color.BLACK), 
+                        new Move(Locations.D2, Locations.E1, moveType, new Piece(Locations.E1, Color.WHITE, PieceType.KNIGHT), Color.BLACK),
+                        new Move(Locations.E2, Locations.D1, moveType, new Piece(Locations.D1, Color.WHITE, PieceType.KNIGHT), Color.BLACK),
+                        new Move(Locations.E2, Locations.F1, moveType, new Piece(Locations.F1, Color.WHITE, PieceType.KNIGHT), Color.BLACK),
+                        new Move(Locations.F2, Locations.E1, moveType, new Piece(Locations.E1, Color.WHITE, PieceType.KNIGHT), Color.BLACK), 
+                        new Move(Locations.F2, Locations.G1, moveType, new Piece(Locations.G1, Color.WHITE, PieceType.KNIGHT), Color.BLACK),
+                        new Move(Locations.G2, Locations.F1, moveType, new Piece(Locations.F1, Color.WHITE, PieceType.KNIGHT), Color.BLACK),
+                        new Move(Locations.G2, Locations.H1, moveType, new Piece(Locations.H1, Color.WHITE, PieceType.KNIGHT), Color.BLACK),
+                        new Move(Locations.H2, Locations.G1, moveType, new Piece(Locations.G1, Color.WHITE, PieceType.KNIGHT), Color.BLACK)
                     };
             
             for (Move move : moveList) { 

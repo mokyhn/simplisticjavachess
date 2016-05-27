@@ -68,7 +68,7 @@ public class KingMoveGenerator
                     pTo = b.getPiece(fx - 1, fy);
                     if (pTo != null && pTo.getColor() != c)
                     {
-                        Moves.add(new Move(fx, fy, fx - 1, fy, MoveType.CAPTURE, pTo.getPieceType(), c));
+                        Moves.add(new Move(fx, fy, fx - 1, fy, MoveType.CAPTURE, pTo, c));
                     }
                 }
             }
@@ -84,7 +84,7 @@ public class KingMoveGenerator
                     pTo = b.getPiece(fx - 1, fy + 1);
                     if (pTo != null && pTo.getColor() != c)
                     {
-                        Moves.add(new Move(fx, fy, fx - 1, fy + 1, MoveType.CAPTURE, pTo.getPieceType(), c));
+                        Moves.add(new Move(fx, fy, fx - 1, fy + 1, MoveType.CAPTURE, pTo, c));
                     }
                 }
             }
@@ -100,7 +100,7 @@ public class KingMoveGenerator
                     pTo = b.getPiece(fx - 1, fy - 1);
                     if (pTo != null && pTo.getColor() != c)
                     {
-                        Moves.add(new Move(fx, fy, fx - 1, fy - 1, MoveType.CAPTURE, pTo.getPieceType(), c));
+                        Moves.add(new Move(fx, fy, fx - 1, fy - 1, MoveType.CAPTURE, pTo, c));
                     }
                 }
             }
@@ -120,7 +120,7 @@ public class KingMoveGenerator
                     pTo = b.getPiece(fx + 1, fy);
                     if (pTo != null && pTo.getColor() != c)
                     {
-                        Moves.add(new Move(fx, fy, fx + 1, fy, MoveType.CAPTURE, pTo.getPieceType(), c));
+                        Moves.add(new Move(fx, fy, fx + 1, fy, MoveType.CAPTURE, pTo, c));
                     }
                 }
             }
@@ -138,7 +138,7 @@ public class KingMoveGenerator
                         pTo = b.getPiece(fx + 1, fy + 1);
                         if (pTo != null && pTo.getColor() != c)
                         {
-                            Moves.add(new Move(fx, fy, fx + 1, fy + 1, MoveType.CAPTURE, pTo.getPieceType(), c));
+                            Moves.add(new Move(fx, fy, fx + 1, fy + 1, MoveType.CAPTURE, pTo, c));
                         }
                     }
                 }
@@ -157,7 +157,7 @@ public class KingMoveGenerator
                         pTo = b.getPiece(fx + 1, fy - 1);
                         if (pTo != null && pTo.getColor() != c)
                         {
-                            Moves.add(new Move(fx, fy, fx + 1, fy - 1, MoveType.CAPTURE, pTo.getPieceType(), c));
+                            Moves.add(new Move(fx, fy, fx + 1, fy - 1, MoveType.CAPTURE, pTo, c));
                         }
                     }
                 }
@@ -175,7 +175,7 @@ public class KingMoveGenerator
                 pTo = b.getPiece(fx, fy + 1);
                 if (pTo != null && pTo.getColor() != c)
                 {
-                    Moves.add(new Move(fx, fy, fx, fy + 1, MoveType.CAPTURE, pTo.getPieceType(), c));
+                    Moves.add(new Move(fx, fy, fx, fy + 1, MoveType.CAPTURE, pTo, c));
                 }
             }
         }
@@ -191,7 +191,7 @@ public class KingMoveGenerator
                 pTo = b.getPiece(fx, fy - 1);
                 if (pTo != null && pTo.getColor() != c)
                 {
-                    Moves.add(new Move(fx, fy, fx, fy - 1, MoveType.CAPTURE, pTo.getPieceType(), c));
+                    Moves.add(new Move(fx, fy, fx, fy - 1, MoveType.CAPTURE, pTo, c));
                 }
             }
         }

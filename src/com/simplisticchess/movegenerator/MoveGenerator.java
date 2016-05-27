@@ -59,23 +59,18 @@ public class MoveGenerator
         }        
     }
     
-    public Iterator<Move> generateMoves(Board b)
+    public Iterator<Move> generateMoves(Board board)
     {
         final ArrayList<Iterator<Move>> moveIterators = new ArrayList<Iterator<Move>>();
 
-        if (b.isDraw() || b.isMate())
+        if (board.isDraw() || board.isMate())
         {
             return IteratorUtils.buildEmptyIterator();
         }
         
-        //TODO: THis is a hack to make the implementation work.
-        //If this is not used we get null pointer exceptions.
-        Board boardClone = new Board(b);
-        
-        
-        for (Piece piece : boardClone.getPieces())
+        for (Piece piece : board.getPieces())
         {            
-            Iterator<Move> it = generateMoves(boardClone, piece);
+            Iterator<Move> it = generateMoves(board, piece);
             if (it != null) 
             {
                 moveIterators.add(it);
