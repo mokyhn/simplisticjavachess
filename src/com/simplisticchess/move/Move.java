@@ -57,15 +57,6 @@ public final class Move
     }
 
   
-    public boolean aSimplePromotion()
-    {
-        return getMoveType().isSimplePromotion();
-    }
-
-    public boolean aCapturePromotion()
-    {
-        return getMoveType().isCapturePromotion();
-    }
 
     public PieceType promotionTo()
     {
@@ -158,6 +149,16 @@ public final class Move
         }
      
         return null;
+    }
+
+    private boolean aSimplePromotion()
+    {
+        return getMoveType().isSimplePromotion();
+    }
+
+    private boolean aCapturePromotion()
+    {
+        return getMoveType().isCapturePromotion();
     }
 
     public Location getFrom()
