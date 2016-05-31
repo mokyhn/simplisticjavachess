@@ -34,13 +34,10 @@ public class IntegrationTest
         assertTrue(search("8/8/8/8/8/3k4/3p4/3K4 b", "", ALPHABETA, 5, "d3e3 d3c3"));
     }
 
-    // The following two tests combines a test of alpha/beta pruning
-    // and pawn promotions and possible stale mate
-    // or losing a pawn.
     @Test
-    public void simpleAlphaBetaTest5() throws Exception
+    public void staleMateAndPossiblePawnPromotion() throws Exception
     {
-        assertTrue(search("3k4/3P4/8/3K4/8/8/8/8 w", "", ALPHABETA, 5, "d5e6 d5c6"));
+        assertTrue(search("3k4/3P4/8/3K4/8/8/8/8 w", "", ALPHABETA, 5, "d5c5 d5c6 d5d6 d5e6 d5e5 d5e4 d5d4 d5c4"));
     }
 
     @Test
@@ -189,33 +186,16 @@ public class IntegrationTest
         assertTrue(search("k7/P1p5/KP6/8/8/8/1P5p/8 b", "", ALPHABETA, 4, "c7b6"));
     }
 
+
     @Test
-    public void knightTest() throws Exception
-    {
-        assertTrue(search("k7/4R3/8/3n4/8/2Q5/8/K7 b", "", MINMAX, 5, "d5e7 d5c3"));
-        assertTrue(search("k7/4R3/8/3n4/8/2Q5/8/K7 b", "", ALPHABETA, 5, "d5e7 d5c3"));
-        assertTrue(search("k7/4n3/8/3P4/8/8/8/K7 b", "", ALPHABETA, 5, "e7d5"));
-        assertTrue(search("k7/4n3/8/5P2/8/8/8/K7 b", "", ALPHABETA, 5, "e7f5"));
-
-        for (int depth = 2; depth < 7; depth++)
-        {
-            //White knight example
-            assertTrue(search("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "", ALPHABETA, depth, "d4e6"));
-
-            // Black knight example
-            assertTrue(search("1kr3b1/1B2P3/PPP3p1/Q3K3/4n1pn/1PP3P1/3Bnn2/8 b", "", ALPHABETA, depth, "h4f3"));
-        }
-
+    public void bratkoKopecTest() throws Exception {
+       assertTrue(search("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b", "", ALPHABETA, 7, "d6d1")); //BK.01
     }
-    /* Time consuming! Have patience
-     @Test
-     public void BratkoKopecTest() throws Exception {
-     assertTrue(testSearch("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b", "", ALPHABETA, 7, "d6d1")); //BK.01
-     }
-     */
-      //System.out.println("End game tactics : pawn breakthrough");
-    //assert(testSearch("7k/ppp5/8/PPP5/8/8/8/7K w", ALPHABETA, 9, "b5b6"));
-
+    
+    @Test
+    public void endGameTacticsTest()  throws Exception {
+        assert(search("7k/ppp5/8/PPP5/8/8/8/7K w", "", ALPHABETA, 10, "b5b6"));
+    }
   
     
 }
