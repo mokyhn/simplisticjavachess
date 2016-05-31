@@ -11,43 +11,23 @@ import com.simplisticchess.move.Move;
 import com.simplisticchess.movegenerator.MoveGenerator;
 import com.simplisticchess.piece.Color;
 import java.util.Iterator;
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class FullDepthSearchTest
 {
     //@Ignore("This test pinpoints where we have problems with move generation/move/undo/search... (assuming that we do not clone boards in the move generator)")
     @Test
-    public void testFullDepth() 
+    public void testFullDepth() throws Exception
     {
         int i = 0;
         for (String fen : FENPositions.POSITIONS)
         {
             
-            fen =  "K7/8/1p6/8/5p2/8/4P3/8 b";
 
             i++;
-            //System.out.println("testing position " + i);
+            System.out.println("testing position " + i + " with fen " + fen);
             Board board = new Board(fen);
-            try 
-            {
-                
-                System.out.println(board.getASCIIBoard());
-                testFullDepthSearchHelper(board, 0);
-            }
-            catch (Exception e)
-            {
-             e.printStackTrace();
-                System.out.println("Failed on position " + i + " " + fen);
-                System.out.println(board.getASCIIBoard());
-            }
-            finally 
-            {
-                if (i > 1) 
-                {
-                    return;
-                }
-            }
+            testFullDepthSearchHelper(board, 0);
            
         } 
 
@@ -57,7 +37,7 @@ public class FullDepthSearchTest
     {
 
             //System.out.println("Depth " + depth);
-            if (depth == 4) 
+            if (depth == 2) 
             {
                 return;
             }
@@ -78,16 +58,16 @@ public class FullDepthSearchTest
                 }
                 if (board.inMove() == Color.WHITE) 
                 {
-                    System.out.println(indent(depth, depth + "..." + move.toString()));
+                    //System.out.println(indent(depth, depth + "..." + move.toString()));
 
                 } else 
                 {
-                    System.out.println(indent(depth, depth + "   " + move.toString()));
+                    //System.out.println(indent(depth, depth + "   " + move.toString()));
                 }
                 
                 testFullDepthSearchHelper(board, depth+1);
                 
-                System.out.println(indent(depth, "undo"));
+                //System.out.println(indent(depth, "undo"));
                 board.undo();                
             }                           
         }

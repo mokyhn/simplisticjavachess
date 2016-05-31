@@ -5,8 +5,8 @@
 package com.simplisticchess.board;
 
 public class FENPositions
-{
-
+{    
+    
     public static final String[] POSITIONS = new String[]
     {
         "8/ppP2PK1/1p3P2/3pp3/3P1p1P/p2P4/1P2Pp2/6k1 b",

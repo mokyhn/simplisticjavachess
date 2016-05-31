@@ -16,7 +16,6 @@ public class MinMaxSearch extends AbstractSearch
 {
     public final int search()
     {
-        System.out.println("MIN-MAX search...");
         return minMaxSearch(_plyDepth, _plyDepth);
     }
    

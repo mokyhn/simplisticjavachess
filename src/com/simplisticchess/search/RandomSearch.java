@@ -17,7 +17,6 @@ public class RandomSearch extends AbstractSearch
 {
     public final int search()
     {
-        System.out.println("Random search...");
         return randomSearch();
     }
     
