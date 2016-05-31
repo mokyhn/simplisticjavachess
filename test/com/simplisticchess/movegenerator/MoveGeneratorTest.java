@@ -10,7 +10,6 @@ import com.simplisticchess.board.FENPositions;
 import com.simplisticchess.board.FENUtils;
 import com.simplisticchess.board.PositionInference;
 import com.simplisticchess.move.Move;
-import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
 import com.simplisticchess.position.Location;
@@ -85,27 +84,19 @@ public class MoveGeneratorTest
                     
                     Piece attacker = PositionInference.attacks(board.getPosition(), location, board.inMove().opponent());                                     
                     if (attacker != null && attacker.getPieceType() != PieceType.KING &&
+                            attacker.getPieceType() != PieceType.PAWN && 
                             board.getPiece(location) != null && 
                             board.getPiece(location).getColor() ==  board.inMove().opponent())
                     {
                         boolean found = false;
                         for (Move move : moves)
                         {
-                            if (!move.aCapture())
-                            {
-                                continue;
-                            }
-                            
-                            
                             if (move.getTo().equals(location))
                             {
                                 found = true;
                                 break;
-                            } else 
-                            {
-                                //System.out.println("tried " + move);
-                            }
-                        }
+                            } 
+                        }                        
                         assertTrue("i= "+i + "   Location = " + location + "\n" + board.getASCIIBoard(), found);
                     }
                 }

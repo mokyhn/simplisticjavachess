@@ -214,12 +214,13 @@ public class Board
     {        
         Piece piece = position.getPiece(move.getFrom());
  
+        currentState.bbposition = position.getBitBoard();
         history.add(currentState);
                 
         State newState = new State(currentState);
         newState.move = move;
         newState.moveNumber++;
-        
+
         // Used to determine the 50-move rule, three times repition
         if (piece.getPieceType() == PieceType.PAWN)
         {
@@ -390,7 +391,7 @@ public class Board
         
         assert(position.getPiece(move.getFrom()) != null);
         assert(position.getPiece(move.getFrom()).getPieceType() != null);
-        
+                
     }
 
 

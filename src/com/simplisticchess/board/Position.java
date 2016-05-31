@@ -81,15 +81,9 @@ public class Position
    
     public void movePiece(Location from, Location to)
     {
-        Piece p = xyPosition[from.getX()][from.getY()];
-          
-        p.setLocation(to);
-        
-        xyPosition[to.getX()][to.getY()] = p;
-        xyPosition[from.getX()][from.getY()] = null;
-
-        bitBoard.removePiece(from);
-        bitBoard.insertPiece(p);
+        Piece piece = removePiece(from);
+        Piece newPiece = piece.updateLocation(to);
+        insertPiece(newPiece);
     }
 
     public boolean freeSquare(Location location)

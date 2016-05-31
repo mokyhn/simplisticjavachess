@@ -50,7 +50,7 @@ public class PositionTest
     @Test
     public void testAreRepresentationsIsomorphic()
     { 
-        assertTrue(areRepresentationsIsomorphic( new Position()));
+        assertTrue(areRepresentationsIsomorphic(new Position()));
         
         Position position = new Position();
         position.insertPiece(new Piece(new Location(2,3),Color.BLACK,PieceType.KING));
@@ -64,17 +64,5 @@ public class PositionTest
         assertTrue(areRepresentationsIsomorphic(position));
        
     }
-
-    @Ignore("Since the insert-code does not handle this scenario")
-    @Test
-    public void testInsertingOnTop()
-    {
-        Position position = new Position();
-        position.insertPiece(new Piece(new Location(2,3),Color.BLACK,PieceType.KING));
-        position.insertPiece(new Piece(new Location(2,3),Color.WHITE,PieceType.PAWN));
-        assertTrue(areRepresentationsIsomorphic(position));
-
-    }
-  
     
 }

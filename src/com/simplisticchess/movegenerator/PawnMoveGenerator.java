@@ -11,18 +11,21 @@ import com.simplisticchess.move.MoveType;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
+import com.simplisticchess.position.Location;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 public class PawnMoveGenerator
 {
-    public ArrayList<Move> generateMoves(Board b, Piece p)
+    public ArrayList<Move> generateMoves(Board board, Piece piece)
     {
 
-        final Color c = b.inMove();
-        final int fx = p.getxPos();
-        final int fy = p.getyPos();
+        final Color c = board.inMove();
+        final int fx = piece.getxPos();
+        final int fy = piece.getyPos();
 
+        Location from = piece.getLocation();
+        
         Piece leftPiece;
         Piece rightPiece;
 
@@ -32,7 +35,7 @@ public class PawnMoveGenerator
         if (((fy < 6) && (c == Color.WHITE))
                 || (fy > 1) && (c == Color.BLACK))
         {
-            if (b.freeSquare(fx, fy + c.getColor() * 1))
+            if (board.freeSquare(fx, fy + c.getColor() * 1))
             {
                 Moves.add(new Move(fx, fy, fx, fy + c.getColor() * 1, MoveType.NORMALMOVE, null, c));
             }
@@ -42,15 +45,15 @@ public class PawnMoveGenerator
         if (((fy == 1) && (c == Color.WHITE))
                 || ((fy == 6) && (c == Color.BLACK)))
         {
-            if (b.freeSquare(fx, fy + c.getColor() * 1) && b.freeSquare(fx, fy + c.getColor() * 2))
+            if (board.freeSquare(fx, fy + c.getColor() * 1) && board.freeSquare(fx, fy + c.getColor() * 2))
             {
                 Moves.add(new Move(fx, fy, fx, (fy + c.getColor() * 2), MoveType.NORMALMOVE, null, c));
             }
         }
 
         // Non capturing PAWN promotion
-        if (((fy == 6) && (c == Color.WHITE) && b.freeSquare(fx, 7))
-                || ((fy == 1) && (c == Color.BLACK) && b.freeSquare(fx, 0)))
+        if (((fy == 6) && (c == Color.WHITE) && board.freeSquare(fx, 7))
+                || ((fy == 1) && (c == Color.BLACK) && board.freeSquare(fx, 0)))
         {
             Moves.add(new Move(fx, fy, fx, fy + c.getColor(), MoveType.PROMOTE_TO_QUEEN, null, c));
             Moves.add(new Move(fx, fy, fx, fy + c.getColor(), MoveType.PROMOTE_TO_ROOK, null, c));
@@ -61,27 +64,29 @@ public class PawnMoveGenerator
         // Normal diagonal capturing to the left
         if ((fx > 0) && (fy != (5 * c.getColor() + 7) / 2))
         {
-            leftPiece = b.getPiece(fx - 1, fy + c.getColor());
+            leftPiece = board.getPiece(from);
             if (leftPiece != null && leftPiece.getColor() != c)
             {
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE, leftPiece, c));
+                Location to = new Location(fx - 1, fy + c.getColor());
+                Moves.add(new Move(from, to, MoveType.CAPTURE, leftPiece, c));
             }
         }
 
         // Normal diagonal capturing to the right
         if ((fx < 7) && (fy != (5 * c.getColor() + 7) / 2))
         {
-            rightPiece = b.getPiece(fx + 1, fy + c.getColor());
+            Location to = new Location(fx + 1, fy + c.getColor());
+            rightPiece = board.getPiece(to);
             if (rightPiece != null && rightPiece.getColor() != c)
             {
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE, rightPiece, c));
+                Moves.add(new Move(from, to, MoveType.CAPTURE, rightPiece, c));
             }
         }
 
         // Promotion via diagonal capturing to the left
         if ((fx > 0) && (fy == (5 * c.getColor() + 7) / 2))
         {
-            leftPiece = b.getPiece(fx - 1, fy + c.getColor());
+            leftPiece = board.getPiece(fx - 1, fy + c.getColor());
             if (leftPiece != null && leftPiece.getColor() != c)
             {
                 Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece, c));
@@ -94,7 +99,7 @@ public class PawnMoveGenerator
         // Promotion via diagonal capturing to the right
         if ((fx < 7) && (fy == (5 * c.getColor() + 7) / 2))
         {
-            rightPiece = b.getPiece(fx + 1, fy + c.getColor());
+            rightPiece = board.getPiece(fx + 1, fy + c.getColor());
             if (rightPiece != null && rightPiece.getColor() != c)
             {
                 Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece, c));
@@ -106,44 +111,39 @@ public class PawnMoveGenerator
         }
 
         // En passant capture
-        try
+       
+        Move lastMove = board.getLastMove();
+        if (lastMove != null)
         {
-            Move lastMove = b.getLastMove();
-            if (lastMove != null)
-            {
-                Piece lastMovePiece = b.getPiece(lastMove.getTo());
-                
-                if (lastMovePiece.getPieceType() == PieceType.PAWN && 
-                    (Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2)) 
-                {                
-                    if (fx > 0)
+            Piece lastMovePiece = board.getPiece(lastMove.getTo());
+
+            if (lastMovePiece.getPieceType() == PieceType.PAWN && 
+                (Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2)) 
+            {                                
+                if (fx > 0)
+                {
+                    Location to = new Location(fx - 1, fy + c.getColor());
+                    // The piece stands to the left
+                    if ((lastMove.getTo().getX() == fx - 1) && (lastMove.getTo().getY() == fy))
                     {
-                        // The piece stands to the left
-                        if ((lastMove.getTo().getX() == fx - 1) && (lastMove.getTo().getY() == fy))
-                        {
-                            Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), 
-                                    MoveType.CAPTURE_ENPASSANT, lastMovePiece, c));
-                        }
+                        Moves.add(new Move(from, to, MoveType.CAPTURE_ENPASSANT, lastMovePiece, c));
                     }
+                }
 
-                    if (fx < 7)
+                if (fx < 7)
+                {
+                    Location to = new Location(fx + 1, fy + c.getColor());
+                    // The piece stands to the right
+                    if ((lastMove.getTo().getX() == fx + 1) && (lastMove.getTo().getY() == fy))
                     {
-                        // The piece stands to the right
-                        if ((lastMove.getTo().getX() == fx + 1) && (lastMove.getTo().getY() == fy))
-                        {
-                            Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), 
-                                    MoveType.CAPTURE_ENPASSANT, lastMovePiece, c));
+                        Moves.add(new Move(from, to, MoveType.CAPTURE_ENPASSANT, lastMovePiece, c));
 
-                        }
                     }
                 }
             }
-
-        } catch (java.util.EmptyStackException e)
-        {
-            // There were no last move. We must be a beginning of game.
-            // Hence no en passant moves are possible
         }
+
+         
 
         return Moves;
 

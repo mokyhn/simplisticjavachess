@@ -9,21 +9,19 @@ import com.simplisticchess.position.Location;
  */
 
 public final class Piece {
-    Location location;
-    
-    private PieceType pieceType;
-
-    private Color color;
+    private final Location location;    
+    private final PieceType pieceType;
+    private final Color color;
    
     public Piece(Location location, Color color, PieceType pieceType) {
-        this.location = new Location(location);        
+        this.location = location;        
         this.color = color;
         this.pieceType  = pieceType;
     }
 
     public Piece(Piece piece) 
     {
-        this(piece.getLocation(), piece.color, piece.pieceType);
+        this(new Location(piece.getLocation()), piece.color, piece.pieceType);
     }
     
     public Piece(Location location, char pieceLetter)  {
@@ -67,9 +65,8 @@ public final class Piece {
                       color = Color.WHITE;
                       break;
 
-            default: System.out.println("Unexpected error in Piece constructor");
-                     System.exit(1);
-
+            default: 
+                     throw new IllegalArgumentException("Unexpected error in Piece constructor");
             }
      }
 
@@ -113,23 +110,14 @@ public final class Piece {
         return location.getX();
     }
 
-    public void setxPos(int xPos)
-    {
-        location = new Location(xPos, location.getY());
-    }
 
     public int getyPos()
     {
         return location.getY();
     }
 
-    public void setyPos(int yPos)
-    {
-        location = new Location(location.getX(), yPos);
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
+    public Piece updateLocation(Location location) {
+        return new Piece(location, this.color, this.pieceType);
     }
     
     public PieceType getPieceType()
@@ -137,19 +125,9 @@ public final class Piece {
         return pieceType;
     }
 
-    public void setPieceType(PieceType pieceType)
-    {
-        this.pieceType = pieceType;
-    }
-
     public Color getColor()
     {
         return color;
-    }
-
-    public void setColor(Color color)
-    {
-        this.color = color;
     }
 
 }
