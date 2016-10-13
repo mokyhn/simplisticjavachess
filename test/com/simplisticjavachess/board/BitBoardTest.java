@@ -1,11 +1,9 @@
-package com.simplisticjavachess.unit;
+package com.simplisticjavachess.board;
 
 /*
  * @author Morten Kühnrich
  */
 
-import com.simplisticjavachess.board.BitBoard;
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.PieceType;
