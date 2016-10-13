@@ -7,10 +7,9 @@ import com.simplisticjavachess.cli.ChessCLI;
 
 class Main
 {
-    private static final ChessCLI cli = new ChessCLI();
-
     public static void main(String param[]) throws Exception
     {
-        cli.getCLI().start();
+        ChessCLI chessCLI = new ChessCLI();
+        chessCLI.getCLI().start();
     }
 }

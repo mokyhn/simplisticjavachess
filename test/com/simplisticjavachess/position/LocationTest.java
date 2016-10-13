@@ -1,7 +1,5 @@
 package com.simplisticjavachess.position;
 
-import com.simplisticjavachess.position.InvalidLocationException;
-import com.simplisticjavachess.position.Location;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -54,5 +52,26 @@ public class LocationTest {
     public void testInvalidRank() throws InvalidLocationException
     {
         Location location = new Location("a9");
+    }
+    
+    @Test
+    public void testHash1() 
+    {
+        Location location = new Location(0,0);
+        assertEquals(0, location.hashCode());
+    }
+    
+    @Test
+    public void testHash2() 
+    {
+        Location location = new Location(7,0);
+        assertEquals(7, location.hashCode());
+    }
+
+    @Test
+    public void testHash3() 
+    {
+        Location location = new Location(7,7);
+        assertEquals(63, location.hashCode());
     }
 }

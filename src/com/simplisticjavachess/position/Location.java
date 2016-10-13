@@ -62,7 +62,7 @@ public final class Location
     @Override
     public int hashCode() 
     {
-        int hash = 10 * this.x + this.y;
+        int hash = this.x + this.y * 8;
         return hash;
     }
     
