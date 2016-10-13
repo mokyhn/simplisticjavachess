@@ -18,7 +18,7 @@ public class KnightTest
     @Test
     public void knightTest1() throws Exception
     {        
-        assertTrue(search(KNIGHT_TAKE_ROOK_OR_QUEEN, "", MINMAX, 5, "d5e7 d5c3"));
+        assertTrue(search(KNIGHT_TAKE_ROOK_OR_QUEEN, "", MINMAX, 3, "d5c3"));
     }
     
     @Test

@@ -8,27 +8,21 @@ import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.PieceType;
 import com.simplisticchess.position.Location;
 
-public class BitBoard implements IBitBoard
+public class BitBoard
 {
 
     protected static final int NUM_COLORS = 2; // Black and white
 
     protected long bb[][];
 
-    // Create an empty bitboard
     public BitBoard()
     {
         bb = new long[NUM_COLORS][PieceType.values().length];
     }
 
-    /**
-     * Construct a bitBoard from a board
-     *
-     * @param b the input board
-     */
     public BitBoard(Board b)
     {
-        this();    // Call constructor
+        this();
 
         for (Piece p : b.getPieces())
         {
@@ -172,34 +166,27 @@ public class BitBoard implements IBitBoard
     }
 
     @Override
-    public boolean equals(Object obj)
+    public boolean equals(Object object)
     {
-        if (obj == null || !(obj instanceof BitBoard))
+        if (object instanceof BitBoard)
+        {
+            BitBoard bitboard = (BitBoard) object;
+
+            for (PieceType t : PieceType.values())
+            {
+                if (this.bb[0][t.getType()] != bitboard.bb[0][t.getType()]
+                        || this.bb[1][t.getType()] != bitboard.bb[1][t.getType()])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        else
         {
             return false;
         }
-        final BitBoard b2 = (BitBoard) obj;
-
-        for (PieceType t : PieceType.values())
-        {
-            if (this.bb[0][t.getType()] != b2.bb[0][t.getType()]
-                    || this.bb[1][t.getType()] != b2.bb[1][t.getType()])
-            {
-                return false;
-            }
-        }
-        return true;
     }
 
 }
 
-interface IBitBoard
-{
-
-    public void insertPiece(Piece p);
-
-    public boolean hasPiece(Location location, Color color, PieceType type);
-
-    public Piece removePiece(Location location);
-
-}

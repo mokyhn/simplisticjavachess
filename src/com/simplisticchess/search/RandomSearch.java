@@ -15,6 +15,7 @@ import java.util.Iterator;
 
 public class RandomSearch extends AbstractSearch
 {
+    @Override
     public final int search()
     {
         return randomSearch();
@@ -22,8 +23,6 @@ public class RandomSearch extends AbstractSearch
     
     private int randomSearch()
     {
-        strongestMove = null;
-
         Iterator<Move> movesTmp = new MoveGenerator().generateMoves(analyzeBoard);
         ArrayList<Move> moves = new ArrayList<Move>();
         

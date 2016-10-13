@@ -12,9 +12,10 @@ import java.util.Iterator;
 
 public class AlphaBetaSearch extends AbstractSearch
 {
+    @Override
     public final int search()
     {
-        return alphaBetaSearch(_plyDepth, _plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        return alphaBetaSearch(plyDepth, plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
   
     private int alphaBetaSearch(int currentPlyDepth, int totalPlyDepth, int alpha, int beta)

@@ -11,9 +11,9 @@ import com.simplisticchess.move.Move;
 public abstract class AbstractSearch
 {
     protected Board analyzeBoard;
-    protected int _plyDepth;
+    protected int plyDepth;
     protected Move strongestMove;
-    private int _finalEvaluation;
+    private int finalEvaluation;
 
     protected MoveGenerator moveGenerator = new MoveGenerator();
     
@@ -24,11 +24,7 @@ public abstract class AbstractSearch
 
     public AbstractSearch()
     {
-        noPositions = 0;
-        noCutOffs = 0;
-        _finalEvaluation = 0;
-        _plyDepth = 3;
-        strongestMove = null;
+        plyDepth = 3;
     }    
     
     public void setBoard(Board b)
@@ -39,7 +35,7 @@ public abstract class AbstractSearch
     public void setPlyDepth(int pd)
     {
         assert (pd >= 0 && pd <= 20);
-        _plyDepth = pd;
+        plyDepth = pd;
     }
     
     public abstract int search();
@@ -51,7 +47,7 @@ public abstract class AbstractSearch
             throw new Exception("Supply a board to be analyzed first.");
         }
 
-        _finalEvaluation = 0;
+        finalEvaluation = 0;
         noPositions = 0;
         noCutOffs = 0;
         startTime = System.nanoTime();
@@ -63,11 +59,11 @@ public abstract class AbstractSearch
             return 0;
         }
 
-        _finalEvaluation = search();
+        finalEvaluation = search();
 
         endTime = System.nanoTime();
 
-        return _finalEvaluation;
+        return finalEvaluation;
     }
     
     public Move getStrongestMove()
@@ -95,8 +91,8 @@ public abstract class AbstractSearch
         }
 
         return ("move " + strongestMoveStr
-                + " Evaluation " + _finalEvaluation
-                + " at " + _plyDepth
+                + " Evaluation " + finalEvaluation
+                + " at " + plyDepth
                 + " ply in " + noPositions
                 + " positions in " + getTimeUsage()
                 + " mSecs = " + ((float) noPositions / (float) getTimeUsage())

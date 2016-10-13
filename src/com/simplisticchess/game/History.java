@@ -15,10 +15,9 @@ import com.simplisticchess.move.Move;
 import com.simplisticchess.piece.Color;
 import java.util.Stack;
 
-public final class History
+public class History
 {
 
-    /* A stack of previous game states */
     private final Stack<State> stateHistory; 
 
     public History()

@@ -10,7 +10,6 @@ import com.simplisticchess.game.History;
 import com.simplisticchess.game.State;
 import com.simplisticchess.evaluator.Evaluator;
 import com.simplisticchess.move.Move;
-import com.simplisticchess.move.MoveType;
 import com.simplisticchess.piece.Color;
 import com.simplisticchess.piece.Piece;
 import com.simplisticchess.piece.PieceType;
@@ -192,7 +191,8 @@ public class Board
             h = history.get(i);
             if (((BitBoard) position.getBitBoard()).equals((BitBoard) h.bbposition))
             {
-                k++;
+                //TODO make three fold repetition check work
+                //k++;
             }
         }
 
