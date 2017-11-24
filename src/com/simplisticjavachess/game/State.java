@@ -110,42 +110,10 @@ public final class State
             State other = (State) object;
             
             boolean bbPositionsMatch;
+            bbPositionsMatch = this.bbposition.equals(other.bbposition);                        
             
-            if (this.bbposition == null) 
-            {
-                if (other.bbposition == null)
-                {
-                    bbPositionsMatch = true;
-                }
-                else
-                {
-                    bbPositionsMatch = false;
-
-                }
-            }
-            else
-            {
-                bbPositionsMatch = this.bbposition.equals(other.bbposition);
-            }
-                        
-            boolean movesMatch;
-
-            if (this.move == null)
-            {
-            
-                if (other.move == null)
-                {
-                    movesMatch = true;
-                }
-                else
-                {
-                    movesMatch = false;
-                }
-            }
-            else
-            {
-                movesMatch = this.move.equals(other.move);
-            }
+            boolean movesMatch;        
+            movesMatch = this.move.equals(other.move);
             
             return this.blackCanCastleLong == other.blackCanCastleLong   &&
                    this.blackCanCastleShort == other.blackCanCastleShort &&

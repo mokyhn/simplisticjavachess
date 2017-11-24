@@ -6,7 +6,6 @@
 
 package com.simplisticjavachess.game;
 
-import com.simplisticjavachess.game.State;
 import com.simplisticjavachess.GameResult;
 import com.simplisticjavachess.board.BitBoard;
 import com.simplisticjavachess.move.Moves;
@@ -118,16 +117,7 @@ public class StateTest
         assertFalse(state1.equals(state2));
     }
     
-    @Test
-    public void testNotEqualsNullBitboard1()
-    {
-        State state1 = createDummyState();
-        State state2 = createDummyState();
-        
-        state1.bbposition = null;
-        assertFalse(state1.equals(state2));
-    }
-
+    
     @Test
     public void testNotEqualsNullBitboard2()
     {
@@ -137,15 +127,5 @@ public class StateTest
         state2.bbposition = null;
         assertFalse(state1.equals(state2));
     }
-    
-  @Test
-    public void testNotEqualsNullBitboard3()
-    {
-        State state1 = createDummyState();
-        State state2 = createDummyState();
-        
-        state1.bbposition = null;
-        state2.bbposition = null;
-        assertTrue(state1.equals(state2));
-    }    
+     
 }
