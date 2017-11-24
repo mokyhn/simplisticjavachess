@@ -361,7 +361,7 @@ public class Board
 
             case CASTLE_LONG:
                 // Move the king back
-                position.movePiece(new Location(move.getTo()), move.getFrom());
+                position.movePiece(move.getTo(), move.getFrom());
                 // Then the rook
                 position.movePiece(new Location(3, move.getFrom().getY()), new Location(0, move.getFrom().getY()));
                 break;    

@@ -42,7 +42,7 @@ public final class State
     public State(State state)
     {
         moveNumber = state.moveNumber;
-        move = state.move == null ? null : new Move(state.move);
+        move = state.move == null ? null : state.move;
         inMove = state.inMove;
         blackCanCastleLong = state.blackCanCastleLong;
         blackCanCastleShort = state.blackCanCastleShort;

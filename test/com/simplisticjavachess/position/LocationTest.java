@@ -12,14 +12,6 @@ public class LocationTest {
     }
     
     @Test
-    public void testCopyConstructor() 
-    {
-        Location p1 = new Location(3, 5);        
-        Location p2 = new Location(p1);
-        assertEquals(p1, p2);       
-    }
-    
-    @Test
     public void testGetters() 
     {
         Location p = new Location(3, 5);        

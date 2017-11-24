@@ -31,9 +31,8 @@ public class Position
 
         for (Piece piece : position.pieces)
         {
-            Piece newPiece = new Piece(piece);
-            this.pieces.add(newPiece);
-            this.xyPosition[newPiece.getxPos()][newPiece.getyPos()] = newPiece;
+            this.pieces.add(piece);
+            this.xyPosition[piece.getxPos()][piece.getyPos()] = piece;
         }
         
         for (PieceType t : PieceType.values())

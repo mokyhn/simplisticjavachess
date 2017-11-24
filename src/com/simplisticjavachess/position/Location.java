@@ -19,11 +19,6 @@ public final class Location
         this((byte) x, (byte) y);
     }
     
-    public Location(Location p)
-    {
-        this(p.getX(), p.getY());
-    }
-    
     public Location(String position) throws InvalidLocationException
     {
         position = position.toLowerCase();

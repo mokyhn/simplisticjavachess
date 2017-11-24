@@ -18,14 +18,9 @@ public final class Piece {
         this.color = color;
         this.pieceType  = pieceType;
     }
-
-    public Piece(Piece piece) 
-    {
-        this(new Location(piece.getLocation()), piece.color, piece.pieceType);
-    }
-    
+   
     public Piece(Location location, char pieceLetter)  {
-        this.location = new Location(location);
+        this.location = location;
 
         switch (pieceLetter) {
             case 'p': pieceType  = PAWN;

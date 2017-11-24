@@ -41,15 +41,6 @@ public final class Move
         this.capturedPiece = capturedPiece;
         this.whoMoves = whoMoves;        
     }
-    
-    public Move(Move move)
-    {
-        from = new Location(move.getFrom());
-        to = new Location(move.getTo());
-        moveType = move.moveType;
-        whoMoves = move.whoMoves;
-        capturedPiece = move.capturedPiece;
-    }
 
     public boolean aCapture()
     {
