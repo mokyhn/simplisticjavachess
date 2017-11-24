@@ -35,7 +35,7 @@ public class MinMaxSearch extends AbstractSearch
         Color inMove = analyzeBoard.inMove();
 
         if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED
-                || Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)
+         || Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)
         {
             return Evaluator.evaluate(analyzeBoard);
         }

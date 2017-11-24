@@ -43,7 +43,7 @@ public class KnightTest
     @Test
     public void knightTest() throws Exception
     {
-        for (int depth = 2; depth < 7; depth++)
+        for (int depth = 2; depth < 6; depth++)
         {
             //White knight example (mate)
             assertTrue(search("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "", ALPHABETA, depth, "d4e6"));
