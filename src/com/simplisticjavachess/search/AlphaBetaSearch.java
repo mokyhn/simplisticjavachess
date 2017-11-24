@@ -4,7 +4,7 @@
  */
 package com.simplisticjavachess.search;
 
-import com.simplisticjavachess.GameResult;
+import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Color;

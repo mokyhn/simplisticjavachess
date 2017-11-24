@@ -5,7 +5,7 @@
 package com.simplisticjavachess.board;
 
 
-import com.simplisticjavachess.GameResult;
+import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.game.History;
 import com.simplisticjavachess.game.State;
 import com.simplisticjavachess.evaluator.Evaluator;

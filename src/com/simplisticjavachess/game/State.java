@@ -1,6 +1,5 @@
 package com.simplisticjavachess.game;
 
-import com.simplisticjavachess.GameResult;
 import com.simplisticjavachess.board.BitBoard;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Color;

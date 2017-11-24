@@ -3,7 +3,7 @@
  * @author Morten Kühnrich
  */
 
-package com.simplisticjavachess;
+package com.simplisticjavachess.game;
 
 public enum GameResult {
     DRAW, 

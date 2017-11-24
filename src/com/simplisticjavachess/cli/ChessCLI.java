@@ -6,7 +6,7 @@ import com.simplisticjavachess.cli.cecpcommands.CommandUndo;
 import com.simplisticjavachess.cli.cecpcommands.CommandQuit;
 import com.simplisticjavachess.cli.cecpcommands.CommandNew;
 import com.simplisticjavachess.cli.cecpcommands.CommandGo;
-import com.simplisticjavachess.ChessGame;
+import com.simplisticjavachess.game.ChessGame;
 import com.simplisticjavachess.cli.cecpcommands.CommandMove;
 import com.simplisticjavachess.cli.cecpcommands.CommandSd;
 import com.simplisticjavachess.cli.cecpcommands.CommandSetBoard;

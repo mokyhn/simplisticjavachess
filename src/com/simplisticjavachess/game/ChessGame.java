@@ -4,7 +4,7 @@
  */
 
 
-package com.simplisticjavachess;
+package com.simplisticjavachess.game;
 
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.board.Board;
