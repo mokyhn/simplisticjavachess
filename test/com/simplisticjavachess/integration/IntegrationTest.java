@@ -7,6 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import static com.simplisticjavachess.integration.TestSearch.*;
+import org.junit.Ignore;
 
 public class IntegrationTest
 {
@@ -187,11 +188,13 @@ public class IntegrationTest
     }
 
 
+    @Ignore(value = "slow")
     @Test
     public void bratkoKopecTest() throws Exception {
        assertTrue(search("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b", "", ALPHABETA, 7, "d6d1")); //BK.01
     }
     
+    @Ignore(value = "slow")
     @Test
     public void endGameTacticsTest()  throws Exception {
         assert(search("7k/ppp5/8/PPP5/8/8/8/7K w", "", ALPHABETA, 10, "b5b6"));
