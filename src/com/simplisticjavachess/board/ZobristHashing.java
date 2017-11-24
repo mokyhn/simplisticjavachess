@@ -9,11 +9,11 @@ import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 
 public class ZobristHashing 
-{
-    private long hash;
-    
-    public void setBoard(Board board)
+{    
+    public static long setBoard(Board board)
     {
+        long hash = 0L;
+        
         for (Piece p : board.getPieces()) 
         {
             
@@ -27,11 +27,8 @@ public class ZobristHashing
                     0;
             hash = hash ^ ZobristRandomSource.NUMBERS[index] ^ castling;
         }
-    }
-    
-    
-    public long getHash()
-    {
+        
         return hash;
     }
+    
 }
