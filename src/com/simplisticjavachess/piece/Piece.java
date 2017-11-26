@@ -1,7 +1,7 @@
 package com.simplisticjavachess.piece;
 
 import static com.simplisticjavachess.piece.PieceType.*;
-import com.simplisticjavachess.position.Location;
+import com.simplisticjavachess.board.Location;
 
 /**
  *

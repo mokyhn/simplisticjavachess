@@ -11,7 +11,7 @@ import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.InvalidMoveException;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
-import com.simplisticjavachess.position.InvalidLocationException;
+import com.simplisticjavachess.board.InvalidLocationException;
 import com.simplisticjavachess.search.AbstractSearch;
 import com.simplisticjavachess.search.AlphaBetaSearch;
 import java.util.Iterator;

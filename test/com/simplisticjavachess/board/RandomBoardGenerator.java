@@ -12,7 +12,6 @@ import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
 import static com.simplisticjavachess.piece.PieceType.*;
-import com.simplisticjavachess.position.Location;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;

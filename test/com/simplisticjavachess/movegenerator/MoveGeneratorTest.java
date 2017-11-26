@@ -13,7 +13,7 @@ import com.simplisticjavachess.board.PositionInference;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
-import com.simplisticjavachess.position.Location;
+import com.simplisticjavachess.board.Location;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

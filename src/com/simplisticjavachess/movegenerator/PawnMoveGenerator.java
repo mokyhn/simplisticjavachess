@@ -11,7 +11,7 @@ import com.simplisticjavachess.move.MoveType;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
-import com.simplisticjavachess.position.Location;
+import com.simplisticjavachess.board.Location;
 import java.util.ArrayList;
 import java.util.Iterator;
 

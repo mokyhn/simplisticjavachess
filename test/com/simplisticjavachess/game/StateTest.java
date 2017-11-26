@@ -11,8 +11,8 @@ import com.simplisticjavachess.move.Moves;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
-import com.simplisticjavachess.position.InvalidLocationException;
-import com.simplisticjavachess.position.Locations;
+import com.simplisticjavachess.board.InvalidLocationException;
+import com.simplisticjavachess.board.Locations;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

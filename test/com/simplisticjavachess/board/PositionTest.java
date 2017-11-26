@@ -4,7 +4,6 @@ import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
-import com.simplisticjavachess.position.Location;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
 import org.junit.Test;

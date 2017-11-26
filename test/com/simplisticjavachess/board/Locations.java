@@ -4,9 +4,9 @@
  */
 
 
-package com.simplisticjavachess.position;
+package com.simplisticjavachess.board;
 
-import com.simplisticjavachess.position.Location;
+import com.simplisticjavachess.board.Location;
 
 public class Locations
 {

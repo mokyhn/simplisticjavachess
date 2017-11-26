@@ -6,7 +6,6 @@
 package com.simplisticjavachess.board;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
-import com.simplisticjavachess.position.Location;
 import com.simplisticjavachess.misc.Strings;
 
 public class FENUtils

@@ -7,8 +7,6 @@ import com.simplisticjavachess.move.MoveType;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
-import com.simplisticjavachess.position.Location;
-import com.simplisticjavachess.position.Locations;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 

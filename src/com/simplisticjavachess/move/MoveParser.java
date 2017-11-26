@@ -4,8 +4,8 @@ import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.PieceType;
-import com.simplisticjavachess.position.InvalidLocationException;
-import com.simplisticjavachess.position.Location;
+import com.simplisticjavachess.board.InvalidLocationException;
+import com.simplisticjavachess.board.Location;
 
 public final class MoveParser
 {

@@ -10,7 +10,7 @@ package com.simplisticjavachess.move;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
-import com.simplisticjavachess.position.Location;
+import com.simplisticjavachess.board.Location;
 
 public final class Move
 {

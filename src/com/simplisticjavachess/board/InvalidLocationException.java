@@ -1,4 +1,4 @@
-package com.simplisticjavachess.position;
+package com.simplisticjavachess.board;
 
 /**
  *

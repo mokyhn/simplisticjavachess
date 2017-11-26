@@ -3,7 +3,7 @@ package com.simplisticjavachess.cli.cecpcommands;
 import com.simplisticjavachess.game.ChessGame;
 import com.simplisticjavachess.cli.Command;
 import com.simplisticjavachess.move.InvalidMoveException;
-import com.simplisticjavachess.position.InvalidLocationException;
+import com.simplisticjavachess.board.InvalidLocationException;
 
 /**
  *

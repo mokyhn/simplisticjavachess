@@ -3,7 +3,7 @@ package com.simplisticjavachess.piece;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
-import com.simplisticjavachess.position.Location;
+import com.simplisticjavachess.board.Location;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

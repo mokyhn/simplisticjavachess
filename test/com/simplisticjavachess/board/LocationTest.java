@@ -1,5 +1,7 @@
-package com.simplisticjavachess.position;
+package com.simplisticjavachess.board;
 
+import com.simplisticjavachess.board.InvalidLocationException;
+import com.simplisticjavachess.board.Location;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

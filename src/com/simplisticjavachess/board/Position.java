@@ -7,7 +7,6 @@ package com.simplisticjavachess.board;
 
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
-import com.simplisticjavachess.position.Location;
 import java.util.ArrayList;
 import java.util.Collection;
 
