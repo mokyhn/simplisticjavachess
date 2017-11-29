@@ -17,7 +17,7 @@ import java.util.Iterator;
 
 public class PawnMoveGenerator
 {
-    public ArrayList<Move> generateMoves(Board board, Piece piece)
+    private static ArrayList<Move> generateMoves(Board board, Piece piece)
     {
 
         final Color c = board.inMove();
@@ -151,7 +151,7 @@ public class PawnMoveGenerator
 
     
      // TODO: The following can be refined so that not all moves are generated at once
-    public Iterator<Move> iterator(final Board b, final Piece p)
+    public static Iterator<Move> getIterator(final Board b, final Piece p)
     {
         return new Iterator<Move>()
         {

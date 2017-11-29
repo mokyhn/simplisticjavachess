@@ -12,24 +12,6 @@ import java.util.Iterator;
 public class MoveGenerator
 {
     
-    PawnMoveGenerator pawnMoveGenerator;
-    KingMoveGenerator kingMoveGenerator;
-    KnightMoveGenerator knightMoveGenerator;
-    BishopMoveGenerator bishopMoveGenerator;
-    RookMoveGenerator rookMoveGenerator;
-    QueenMoveGenerator queenMoveGenerator;
-
-    public MoveGenerator()
-    {
-        pawnMoveGenerator = new PawnMoveGenerator();
-        kingMoveGenerator = new KingMoveGenerator();
-        knightMoveGenerator = new KnightMoveGenerator();
-        bishopMoveGenerator = new BishopMoveGenerator();
-        rookMoveGenerator = new RookMoveGenerator();
-        queenMoveGenerator = new QueenMoveGenerator();
-    }
-
-  
     // Genereate the possible move iterator for one single piece
     private Iterator<Move> generateMoves(Board b, Piece p)
     {
@@ -43,17 +25,17 @@ public class MoveGenerator
         switch (p.getPieceType())
         {
             case PAWN:
-                return pawnMoveGenerator.iterator(b, p);
+                return PawnMoveGenerator.getIterator(b, p);
             case KING:
-                return kingMoveGenerator.iterator(b, p);
+                return KingMoveGenerator.getIterator(b, p);
             case KNIGHT:
-                return knightMoveGenerator.iterator(b, p);
+                return KnightMoveGenerator.getIterator(b, p);
             case BISHOP:
-                return bishopMoveGenerator.iterator(b, p);
+                return BishopMoveGenerator.getIterator(b, p);
             case ROOK:
-                return rookMoveGenerator.iterator(b, p);
+                return RookMoveGenerator.iterator(b, p);
             case QUEEN:
-               return queenMoveGenerator.iterator(b, p);
+               return QueenMoveGenerator.getIterator(b, p);
             default:
                 return null; // Not reachable
         }        
@@ -81,6 +63,3 @@ public class MoveGenerator
     }
   
 }
-
-// TODO: Eliminatate generation of a number of moves when king is in check...
-// The king is not allowed to be in check while another piece is moved...
