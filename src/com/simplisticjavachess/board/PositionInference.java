@@ -26,6 +26,14 @@ public class PositionInference
         return false;
     }
 
+    /**
+     * 
+     * @param position - the given position
+     * @param location - the location is under attack by the return piece. If
+     * null is returned then the location is not under attack.
+     * @param inMove
+     * @return null if the location is not attacked, and else the piece that attacks the location
+     */
     public static Piece attacks(Position position, Location location, Color inMove)
     {
         for (Piece p : position.getPieces())
@@ -36,9 +44,7 @@ public class PositionInference
                 switch (p.getPieceType())
                 {
                     case PAWN:
-                        if ((location.getY() == p.getyPos() + p.getColor().getColor())
-                                && ((location.getX() == p.getxPos() + 1)
-                                || (location.getX() == p.getxPos() - 1)))
+                        if (pawnAttack(p, location))
                         {
                             return p;
                         }
@@ -56,21 +62,14 @@ public class PositionInference
                         }
                         break;
                     case KNIGHT:
-                        if (((location.getX() == p.getxPos() - 2) && (location.getY() == p.getyPos() + 1))
-                                || ((location.getX() == p.getxPos() - 2) && (location.getY() == p.getyPos() - 1))
-                                || ((location.getX() == p.getxPos() - 1) && (location.getY() == p.getyPos() - 2))
-                                || ((location.getX() == p.getxPos() + 1) && (location.getY() == p.getyPos() + 2))
-                                || ((location.getX() == p.getxPos() - 1) && (location.getY() == p.getyPos() + 2))
-                                || ((location.getX() == p.getxPos() + 1) && (location.getY() == p.getyPos() - 2))
-                                || ((location.getX() == p.getxPos() + 2) && (location.getY() == p.getyPos() + 1))
-                                || ((location.getX() == p.getxPos() + 2) && (location.getY() == p.getyPos() - 1)))
+                        if (knightAttack(p, location))
                         {
                             return p;
                         }
                         break;
                     case QUEEN:
-                        if (rookAttack(position, p.getLocation(), location)
-                                || bishopAttack(position, p.getLocation(), location))
+                        if (rookAttack(position, p.getLocation(), location) ||
+                            bishopAttack(position, p.getLocation(), location))
                         {
                             return p;
                         }
@@ -90,13 +89,33 @@ public class PositionInference
         return null;
     }
 
+    public static boolean pawnAttack(Piece pawn, Location attackedLocation)
+    {
+        return (attackedLocation.getY() == pawn.getyPos() + pawn.getColor().getColor())
+                && ((attackedLocation.getX() == pawn.getxPos() + 1)
+                || (attackedLocation.getX() == pawn.getxPos() - 1));
+    }
+
+    
+    public static boolean knightAttack(Piece p, Location location)
+    {
+        return ((location.getX() == p.getxPos() - 2) && (location.getY() == p.getyPos() + 1))
+                || ((location.getX() == p.getxPos() - 2) && (location.getY() == p.getyPos() - 1))
+                || ((location.getX() == p.getxPos() - 1) && (location.getY() == p.getyPos() - 2))
+                || ((location.getX() == p.getxPos() + 1) && (location.getY() == p.getyPos() + 2))
+                || ((location.getX() == p.getxPos() - 1) && (location.getY() == p.getyPos() + 2))
+                || ((location.getX() == p.getxPos() + 1) && (location.getY() == p.getyPos() - 2))
+                || ((location.getX() == p.getxPos() + 2) && (location.getY() == p.getyPos() + 1))
+                || ((location.getX() == p.getxPos() + 2) && (location.getY() == p.getyPos() - 1));
+    }
+         
  
-    public static boolean bishopAttack(Position position, Location l1, Location l2)
+    public static boolean bishopAttack(Position position, Location bishopLocation, Location attackedLocation)
     {
         boolean allFree = true;
 
-        int dx = l2.getX() - l1.getX();
-        int dy = l2.getY() - l1.getY();
+        int dx = attackedLocation.getX() - bishopLocation.getX();
+        int dy = attackedLocation.getY() - bishopLocation.getY();
         // First condition that allows one to be threatened by a bishop
         if (Math.abs(dx) == Math.abs(dy))
         {
@@ -105,7 +124,7 @@ public class PositionInference
             dy = dy / radius;
             for (int ir = 1; ir < radius; ir++) // Radii
             {
-                if (!position.freeSquare(ir * dx + l1.getX(), ir * dy + l1.getY()))
+                if (!position.freeSquare(ir * dx + bishopLocation.getX(), ir * dy + bishopLocation.getY()))
                 {
                     allFree = false;
                     break;
@@ -120,7 +139,7 @@ public class PositionInference
         return false;
     }
     
-   public static boolean rookAttack(Position position, Location l1, Location l2)
+   public static boolean rookAttack(Position position, Location rookLocation, Location attackedLocation)
     {
         Boolean allFree;
         int lowX, // From x pos
@@ -130,21 +149,21 @@ public class PositionInference
                 ix, // Iterate x
                 iy;    // Iterate y
 
-        if (l1.fileEquals(l2))
+        if (rookLocation.fileEquals(attackedLocation))
         {
             allFree = true;
-            if (l1.getY() < l2.getY())
+            if (rookLocation.getY() < attackedLocation.getY())
             {
-                lowY = l1.getY();
-                highY = l2.getY();
+                lowY = rookLocation.getY();
+                highY = attackedLocation.getY();
             } else
             {
-                lowY = l2.getY();
-                highY = l1.getY();
+                lowY = attackedLocation.getY();
+                highY = rookLocation.getY();
             }
             for (iy = lowY + 1; iy < highY; iy++)
             {
-                if (!position.freeSquare(l1.getX(), iy))
+                if (!position.freeSquare(rookLocation.getX(), iy))
                 {
                     allFree = false;
                     break;
@@ -155,21 +174,21 @@ public class PositionInference
                 return true;
             }
         }
-        if (l1.rankEquals(l2))
+        if (rookLocation.rankEquals(attackedLocation))
         {
             allFree = true;
-            if (l1.getX() < l2.getX())
+            if (rookLocation.getX() < attackedLocation.getX())
             {
-                lowX = l1.getX();
-                highX = l2.getX();
+                lowX = rookLocation.getX();
+                highX = attackedLocation.getX();
             } else
             {
-                lowX = l2.getX();
-                highX = l1.getX();
+                lowX = attackedLocation.getX();
+                highX = rookLocation.getX();
             }
             for (ix = lowX + 1; ix < highX; ix++)
             {
-                if (!position.freeSquare(ix, l1.getY()))
+                if (!position.freeSquare(ix, rookLocation.getY()))
                 {
                     allFree = false;
                     break;

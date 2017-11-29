@@ -30,6 +30,11 @@ public final class Location
         }
     }
     
+    public static Location fromString(String position)
+    {
+        return new Location(position);
+    }
+    
     public byte getX() 
     {
         return x;
