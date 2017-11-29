@@ -3,6 +3,8 @@ package com.simplisticjavachess.integration;
 /**
  * @author Morten Kühnrich
  */
+import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.FENUtils;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -134,6 +136,7 @@ public class IntegrationTest
     @Test
     public void testPawnCaptureMinMax5() throws Exception
     {
+        System.out.println(Board.createFromFEN("k7/8/7P/8/8/1p6/P7/7K w").asASCII());
         assertTrue(search("k7/8/7P/8/8/1p6/P7/7K w", "", MINMAX, 5, "h6h7"));
     }
     
@@ -169,7 +172,6 @@ public class IntegrationTest
        // It is not allowed to castle away from a check...
         //assertTrue(testSearch("4k3/8/8/8/8/PP1PP3/2PPP2q/R3K3 w Q", "", MINMAX, 3,    "e1c1")); // o-o-o
         assertTrue(search("4k3/8/8/8/8/PP1PP3/2PPPP1q/R3K3 w Q", "", ALPHABETA, 3, "e1c1")); // o-o-o: TODO: Add in check rule in movegen of castling...
-        assertTrue(search("4k3/1r5b/8/8/8/8/PPP4N/R3K3 w Q", "", MINMAX, 3, "e1c1"));
     }
 
     @Test

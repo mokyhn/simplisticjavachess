@@ -26,7 +26,7 @@ public class FullDepthSearchTest
 
             i++;
             System.out.println("testing position " + i + " with fen " + fen);
-            Board board = new Board(fen);
+            Board board = Board.createFromFEN(fen);
             testFullDepthSearchHelper(board, 0);
            
         } 

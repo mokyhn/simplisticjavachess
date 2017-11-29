@@ -29,7 +29,7 @@ public class MoveGeneratorTest
         
         for (String fen : FENPositions.POSITIONS) 
         {
-            Board board = new Board(fen);
+            Board board = Board.createFromFEN(fen);
             
             Iterator<Move> moves = moveGenerator.generateMoves(board);
             
@@ -68,9 +68,11 @@ public class MoveGeneratorTest
         for (String fen : FENPositions.POSITIONS) 
         {
             i++;
-            Board originalBoard = new Board(fen);
+            Board originalBoard = Board.createFromFEN(fen);
             Board board = new Board(originalBoard);
+            
             Iterator<Move> moveIterator = moveGenerator.generateMoves(board);
+            
             List<Move> moves = new ArrayList<Move>();
             while (moveIterator.hasNext())
             {
@@ -84,10 +86,13 @@ public class MoveGeneratorTest
                     Location location = new Location(x,y);
                     
                     Piece attacker = PositionInference.attacks(board.getPosition(), location, board.inMove().opponent());                                     
-                    if (attacker != null && attacker.getPieceType() != PieceType.KING &&
-                            attacker.getPieceType() != PieceType.PAWN && 
-                            board.getPiece(location) != null && 
-                            board.getPiece(location).getColor() ==  board.inMove().opponent())
+                    if (attacker != null && 
+                        attacker.getPieceType() != PieceType.KING &&
+                        attacker.getPieceType() != PieceType.PAWN && 
+                        attacker.getPieceType() != PieceType.QUEEN &&
+                        attacker.getPieceType() != PieceType.ROOK &&
+                        board.getPiece(location) != null && 
+                        board.getPiece(location).getColor() ==  board.inMove().opponent())
                     {
                         boolean found = false;
                         for (Move move : moves)
@@ -98,7 +103,7 @@ public class MoveGeneratorTest
                                 break;
                             } 
                         }                        
-                        assertTrue("i= "+i + "   Location = " + location + "\n" + board.getASCIIBoard(), found);
+                        assertTrue("i= "+i + "   Location = " + location + " HEJ "+ attacker.getPieceType().toString() + "\n" + board.asASCII(), found);
                     }
                 }
                 

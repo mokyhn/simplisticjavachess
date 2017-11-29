@@ -1,11 +1,7 @@
 package com.simplisticjavachess.move;
 
-import com.simplisticjavachess.move.MoveType;
-import com.simplisticjavachess.move.MoveParser;
-import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.piece.Color;
-import com.simplisticjavachess.piece.PieceType;
 import com.simplisticjavachess.board.Location;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -21,7 +17,7 @@ public class MoveParserTest
     
     public MoveParserTest()
     {
-        board = new  Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        board = Board.createFromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     }
 
     /**

@@ -26,14 +26,14 @@ public class ChessGame
     
     public ChessGame()
     {
-        board = new Board(INITIAL_POSITION);
+        board = Board.createFromFEN(INITIAL_POSITION);
         engine = new AlphaBetaSearch();
     }
 
     
     public void setBoard(String fen)
     {
-        this.board = new Board(fen);
+        this.board = Board.createFromFEN(fen);
     }
     
     public void setSearchDepth(int searchDepth)
@@ -48,12 +48,12 @@ public class ChessGame
     
     public void newgame()
     {
-        board = new Board(INITIAL_POSITION);
+        board = Board.createFromFEN(INITIAL_POSITION);
     }
 
     public void print()
     {
-        System.out.println(board.getASCIIBoard());
+        System.out.println(board.asASCII());
 
         if (board.getGameResult() == null)
         {

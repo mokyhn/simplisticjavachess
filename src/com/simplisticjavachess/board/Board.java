@@ -30,10 +30,9 @@ public class Board
         history = new History();
     }
 
-    public Board(String fen)
+    public static Board createFromFEN(String fen)
     {
-        this();
-        FENUtils.importPosition(this, fen);
+        return FENUtils.parseFEN(fen);        
     }
 
     public Board(Board board)
@@ -398,7 +397,7 @@ public class Board
      * Returns the board as ASCII art and game other information
      * @return An ASCII representation of the board
      */
-    public String getASCIIBoard()
+    public String asASCII()
     {
     
         String s = position.getPositionString();

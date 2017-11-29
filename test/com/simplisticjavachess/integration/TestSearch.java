@@ -21,7 +21,7 @@ public class TestSearch
     
     public static boolean search(String fen, String moveSequence, int method, int plyDepth, String expectedMoves) throws Exception
     {
-        Board board = new Board(fen);
+        Board board = Board.createFromFEN(fen);
         
         // Do initial set of moves
         performMoves(board, moveSequence);

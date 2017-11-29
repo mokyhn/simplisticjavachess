@@ -9,22 +9,22 @@ import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.misc.Strings;
 
 public class FENUtils
-{
-    // Given a position in the FEN - notation.
-    // Set up the board
-    // TODO: This function is not robust enough. It may throw exceptions. sfen = 11 is an example
-    
+{    
     /**
      * Partial implementation which covers what we need for testing
+     * @param fen - FEN position string to parse
+     * @return A board with the position
      */
-    public static void importPosition(Board board, String sfen)
+    public static Board parseFEN(String fen)
     {
+        Board board = new Board();
+        
         int x = 0;
         int y = 7;
         int i;
         int parsingPartNo;
         char c;
-        final String fen = Strings.trimWhiteSpace(sfen.trim());
+        fen = Strings.trimWhiteSpace(fen.trim());
         
         // Parsing part no. 1
         parsingPartNo = 1;
@@ -101,6 +101,8 @@ public class FENUtils
                 }
             }            
         }
+        
+        return board;
     }
 
     public static String exportPosition(Board board) 
@@ -148,7 +150,5 @@ public class FENUtils
         
         result += " " + board.inMove().getColorString();
         return result;
-        
-        
     }
 }

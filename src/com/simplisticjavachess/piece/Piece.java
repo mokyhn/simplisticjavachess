@@ -1,5 +1,6 @@
 package com.simplisticjavachess.piece;
 
+import com.simplisticjavachess.board.InvalidLocationException;
 import static com.simplisticjavachess.piece.PieceType.*;
 import com.simplisticjavachess.board.Location;
 
@@ -65,6 +66,18 @@ public final class Piece {
             }
      }
 
+    /**
+     * 
+     * @param code - example B d5 means a white bishop at d5, b d5 means a black bishop at d5
+     * @return a piece of the color and the location specified
+     */
+    public static Piece fromPositionCode(String code)
+    {
+        String locationStr = code.substring(2,4);
+        char pieceLetter = code.charAt(0);
+        return new Piece(new Location(locationStr), pieceLetter);
+    }
+    
     @Override
     public boolean equals(Object object) 
     {
