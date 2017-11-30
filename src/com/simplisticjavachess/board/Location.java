@@ -45,6 +45,17 @@ public final class Location
         return y;
     }
     
+    public byte distanceTo(Location other)
+    {
+        return (byte) (Math.max
+                            (
+                                Math.abs((int) this.x - (int) other.x)
+                                   ,
+                                Math.abs((int) this.y - (int) other.y)
+                            )
+                      );
+    }
+    
     @Override
     public boolean equals(Object object)
     {

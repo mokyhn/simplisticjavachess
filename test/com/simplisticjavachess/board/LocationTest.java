@@ -1,7 +1,5 @@
 package com.simplisticjavachess.board;
 
-import com.simplisticjavachess.board.InvalidLocationException;
-import com.simplisticjavachess.board.Location;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -67,5 +65,16 @@ public class LocationTest {
     {
         Location location = new Location(7,7);
         assertEquals(63, location.hashCode());
+    }
+    
+    @Test
+    public void testLocationDistance()
+    {
+        Location l1 = new Location(3,4);
+        Location l2 = new Location(5,7);
+        assertEquals(3, l1.distanceTo(l2));
+        assertEquals(3, l2.distanceTo(l1));
+        assertEquals(0, l1.distanceTo(l1));
+
     }
 }

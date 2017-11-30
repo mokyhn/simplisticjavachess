@@ -5,7 +5,6 @@
 
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.board.FENPositions;
 import com.simplisticjavachess.board.FENUtils;

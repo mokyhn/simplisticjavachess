@@ -75,8 +75,7 @@ public class PositionInference
                         }
                         break;
                     case KING:
-                        if ((location.getX() == p.getxPos() || location.getX() == p.getxPos() - 1 || location.getX() == p.getxPos() + 1)
-                                && (location.getY() == p.getyPos() || location.getY() == p.getyPos() - 1 || location.getY() == p.getyPos() + 1))
+                        if (kingAttack(p, location))
                         {
                             return p;
                         }
@@ -202,4 +201,8 @@ public class PositionInference
         return false;
     }
     
+   public static boolean kingAttack(Piece p, Location location)
+   {
+        return p.getLocation().distanceTo(location) == 1;
+   }
 }
