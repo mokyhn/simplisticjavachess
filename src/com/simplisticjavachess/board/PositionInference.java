@@ -11,6 +11,11 @@ import com.simplisticjavachess.piece.PieceType;
 
 public class PositionInference
 {
+     /**
+     * @param position the position
+     * @param color a color
+     * @return Is player with color color in check?
+     */
     public static boolean isInCheck(Position position, Color color)
     {
         for (Piece p : position.getPieces())
@@ -60,48 +65,48 @@ public class PositionInference
     {
         Color attackerColor = inMove.opponent();
         
-        for (Piece p : position.getPieces())
+        for (Piece attackerPiece : position.getPieces())
         {
             // Chose one of opposite color
-            if (p.getColor() == attackerColor && !(p.getLocation().equals(location)))
+            if (attackerPiece.getColor() == attackerColor && !(attackerPiece.getLocation().equals(location)))
             {
-                switch (p.getPieceType())
+                switch (attackerPiece.getPieceType())
                 {
                     case PAWN:
-                        if (pawnAttack(p, location))
+                        if (pawnAttack(attackerPiece, location))
                         {
-                            return p;
+                            return attackerPiece;
                         }
                         break;
                     case ROOK:
-                        if (rookAttack(position, p.getLocation(), location))
+                        if (rookAttack(position, attackerPiece.getLocation(), location))
                         {
-                            return p;
+                            return attackerPiece;
                         }
                         break;
                     case BISHOP:
-                        if (bishopAttack(position, p.getLocation(), location))
+                        if (bishopAttack(position, attackerPiece.getLocation(), location))
                         {
-                            return p;
+                            return attackerPiece;
                         }
                         break;
                     case KNIGHT:
-                        if (knightAttack(p, location))
+                        if (knightAttack(attackerPiece, location))
                         {
-                            return p;
+                            return attackerPiece;
                         }
                         break;
                     case QUEEN:
-                        if (rookAttack(position, p.getLocation(), location) ||
-                            bishopAttack(position, p.getLocation(), location))
+                        if (rookAttack(position, attackerPiece.getLocation(), location) ||
+                            bishopAttack(position, attackerPiece.getLocation(), location))
                         {
-                            return p;
+                            return attackerPiece;
                         }
                         break;
                     case KING:
-                        if (kingAttack(p, location))
+                        if (kingAttack(attackerPiece, location))
                         {
-                            return p;
+                            return attackerPiece;
                         }
                         break;
                     default:
