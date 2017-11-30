@@ -3,7 +3,9 @@ package com.simplisticjavachess.board;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import org.junit.Assert;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
@@ -43,17 +45,21 @@ public class PositionInferenceTest
     @Test
     public void kingAttackTest()
     {
-        assertFalse(PositionInference.kingAttack(Piece.fromPositionCode("K d5"), Location.fromString("d5")));
-        assertTrue(PositionInference.kingAttack(Piece.fromPositionCode("K d5"), Location.fromString("d6")));
-        assertTrue(PositionInference.kingAttack(Piece.fromPositionCode("K d5"), Location.fromString("d4")));
-        assertTrue(PositionInference.kingAttack(Piece.fromPositionCode("K d5"), Location.fromString("e5")));
-        assertTrue(PositionInference.kingAttack(Piece.fromPositionCode("K d5"), Location.fromString("e6")));
-        assertTrue(PositionInference.kingAttack(Piece.fromPositionCode("K d5"), Location.fromString("e4")));
-        assertTrue(PositionInference.kingAttack(Piece.fromPositionCode("K d5"), Location.fromString("c5")));
-        assertTrue(PositionInference.kingAttack(Piece.fromPositionCode("K d5"), Location.fromString("c4")));
-        assertTrue(PositionInference.kingAttack(Piece.fromPositionCode("K d5"), Location.fromString("c6")));
-        assertFalse(PositionInference.kingAttack(Piece.fromPositionCode("K d5"), Location.fromString("c3")));
-        assertFalse(PositionInference.kingAttack(Piece.fromPositionCode("K d5"), Location.fromString("c7")));
+        Position position = new Position();
+        Piece piece = Piece.fromPositionCode("K d5");
+        position.insertPiece(piece);
+        
+        assertNull(PositionInference.attacks(position, Location.fromString("d5"), Color.BLACK));
+        assertEquals(piece, PositionInference.attacks(position, Location.fromString("d6"), Color.BLACK));
+        assertEquals(piece, PositionInference.attacks(position, Location.fromString("d4"), Color.BLACK));
+        assertEquals(piece, PositionInference.attacks(position, Location.fromString("e5"), Color.BLACK));
+        assertEquals(piece, PositionInference.attacks(position, Location.fromString("e6"), Color.BLACK));
+        assertEquals(piece, PositionInference.attacks(position, Location.fromString("e4"), Color.BLACK));
+        assertEquals(piece, PositionInference.attacks(position, Location.fromString("c5"), Color.BLACK));
+        assertEquals(piece, PositionInference.attacks(position, Location.fromString("c4"), Color.BLACK));
+        assertEquals(piece, PositionInference.attacks(position, Location.fromString("c6"), Color.BLACK));
+        assertNull(PositionInference.attacks(position, Location.fromString("c3"), Color.BLACK));
+        assertNull(PositionInference.attacks(position, Location.fromString("c7"), Color.BLACK));
     }
     //TODO: Add more tests here
     

@@ -88,7 +88,7 @@ public class PositionInference
         return null;
     }
 
-    public static boolean pawnAttack(Piece pawn, Location attackedLocation)
+    private static boolean pawnAttack(Piece pawn, Location attackedLocation)
     {
         return (attackedLocation.getY() == pawn.getyPos() + pawn.getColor().getColor())
                 && ((attackedLocation.getX() == pawn.getxPos() + 1)
@@ -96,7 +96,7 @@ public class PositionInference
     }
 
     
-    public static boolean knightAttack(Piece p, Location location)
+    private static boolean knightAttack(Piece p, Location location)
     {
         return ((location.getX() == p.getxPos() - 2) && (location.getY() == p.getyPos() + 1))
                 || ((location.getX() == p.getxPos() - 2) && (location.getY() == p.getyPos() - 1))
@@ -109,7 +109,7 @@ public class PositionInference
     }
          
  
-    public static boolean bishopAttack(Position position, Location bishopLocation, Location attackedLocation)
+    private static boolean bishopAttack(Position position, Location bishopLocation, Location attackedLocation)
     {
         boolean allFree = true;
 
@@ -138,7 +138,7 @@ public class PositionInference
         return false;
     }
     
-   public static boolean rookAttack(Position position, Location rookLocation, Location attackedLocation)
+   private static boolean rookAttack(Position position, Location rookLocation, Location attackedLocation)
     {
         Boolean allFree;
         int lowX, // From x pos
@@ -201,7 +201,7 @@ public class PositionInference
         return false;
     }
     
-   public static boolean kingAttack(Piece p, Location location)
+   private static boolean kingAttack(Piece p, Location location)
    {
         return p.getLocation().distanceTo(location) == 1;
    }
