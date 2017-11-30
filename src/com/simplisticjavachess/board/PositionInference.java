@@ -53,15 +53,17 @@ public class PositionInference
      * @param position - the given position
      * @param location - the location is under attack by the return piece. If
      * null is returned then the location is not under attack.
-     * @param inMove
+     * @param inMove - color of the player to move
      * @return null if the location is not attacked, and else the piece that attacks the location
      */
     public static Piece attacks(Position position, Location location, Color inMove)
     {
+        Color attackerColor = inMove.opponent();
+        
         for (Piece p : position.getPieces())
         {
             // Chose one of opposite color
-            if (p.getColor() == inMove.opponent() && !(p.getLocation().equals(location)))
+            if (p.getColor() == attackerColor && !(p.getLocation().equals(location)))
             {
                 switch (p.getPieceType())
                 {

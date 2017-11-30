@@ -153,11 +153,14 @@ public class Board
         return position;
     }
     
-    /*
-     * true if the side not in move (i.e. opponent) attacks square (x, y)
-     * and otherwise false
+    
+    /**
+     *
+     * @param x - x position
+     * @param y - y position
+     * @return true, if square is attacked by opponent
      */
-    public boolean attacks(int x, int y)
+    public boolean isAttacked(int x, int y)
     {
         return PositionInference.attacks(position, new Location(x, y), currentState.inMove) != null;
     }
@@ -165,11 +168,19 @@ public class Board
     /**
      *
      * @param color
-     * @return Is player with color color in check by opponent?
+     * @return Is player with color color in check?
      */
     public Boolean isInCheck(Color color)
     {
         return PositionInference.isInCheck(position, color);
+    }
+    
+    /**
+     * @return Is the player to move in check?
+     */
+    public Boolean isInCheck()
+    {
+        return PositionInference.isInCheck(position, currentState.inMove);
     }
     
     public Move getLastMove()

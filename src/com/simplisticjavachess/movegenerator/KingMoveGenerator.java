@@ -28,8 +28,8 @@ public class KingMoveGenerator
                 && b.canCastleShort()
                 && b.freeSquare(5, fy)
                 && b.freeSquare(6, fy)
-                && !b.attacks(5, fy)
-                && !b.attacks(6, fy)
+                && !b.isAttacked(5, fy)
+                && !b.isAttacked(6, fy)
                 && !b.isInCheck(c))
         {
             assert (b.getPiece(7, fy) != null);
@@ -44,8 +44,8 @@ public class KingMoveGenerator
                 && b.freeSquare(3, fy)
                 && b.freeSquare(2, fy)
                 && b.freeSquare(1, fy)
-                && !b.attacks(2, fy)
-                && !b.attacks(3, fy)
+                && !b.isAttacked(2, fy)
+                && !b.isAttacked(3, fy)
                 && !b.isInCheck(c))
         {
             Moves.add(new Move(fx, fy, fx - 2, fy, MoveType.CASTLE_LONG, null, c));
@@ -56,7 +56,7 @@ public class KingMoveGenerator
         // King moves left
         if (fx > 0)
         {
-            if (!b.attacks(fx - 1, fy))
+            if (!b.isAttacked(fx - 1, fy))
             {
                 // Left, and not up/down
                 if (b.freeSquare(fx - 1, fy))
@@ -74,7 +74,7 @@ public class KingMoveGenerator
             }
 
             // Up
-            if (fy < 7 && !b.attacks(fx - 1, fy + 1))
+            if (fy < 7 && !b.isAttacked(fx - 1, fy + 1))
             {
                 if (b.freeSquare(fx - 1, fy + 1))
                 {
@@ -90,7 +90,7 @@ public class KingMoveGenerator
             }
 
             // Down
-            if (fy > 0 && !b.attacks(fx - 1, fy - 1))
+            if (fy > 0 && !b.isAttacked(fx - 1, fy - 1))
             {
                 if (b.freeSquare(fx - 1, fy - 1))
                 {
@@ -109,7 +109,7 @@ public class KingMoveGenerator
         // King moves right
         if (fx < 7)
         {
-            if (!b.attacks(fx + 1, fy))
+            if (!b.isAttacked(fx + 1, fy))
             {
                 // To side
                 if (b.freeSquare(fx + 1, fy))
@@ -128,7 +128,7 @@ public class KingMoveGenerator
             // Up and to the right
             if (fy < 7)
             {
-                if (!b.attacks(fx + 1, fy + 1))
+                if (!b.isAttacked(fx + 1, fy + 1))
                 {
                     if (b.freeSquare(fx + 1, fy + 1))
                     {
@@ -147,7 +147,7 @@ public class KingMoveGenerator
             // Down and to the right
             if (fy > 0)
             {
-                if (!b.attacks(fx + 1, fy - 1))
+                if (!b.isAttacked(fx + 1, fy - 1))
                 {
                     if (b.freeSquare(fx + 1, fy - 1))
                     {
@@ -165,7 +165,7 @@ public class KingMoveGenerator
         } // End of "right" section
 
         // King moves straight up
-        if (fy < 7 && !b.attacks(fx, fy + 1))
+        if (fy < 7 && !b.isAttacked(fx, fy + 1))
         {
             if (b.freeSquare(fx, fy + 1))
             {
@@ -181,7 +181,7 @@ public class KingMoveGenerator
         }
 
         // King moves straight down
-        if (fy > 0 && !b.attacks(fx, fy - 1))
+        if (fy > 0 && !b.isAttacked(fx, fy - 1))
         {
             if (b.freeSquare(fx, fy - 1))
             {
