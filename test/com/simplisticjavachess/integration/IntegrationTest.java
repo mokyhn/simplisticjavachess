@@ -3,8 +3,7 @@ package com.simplisticjavachess.integration;
 /**
  * @author Morten Kühnrich
  */
-import com.simplisticjavachess.board.Board;
-import com.simplisticjavachess.board.FENUtils;
+
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -136,7 +135,6 @@ public class IntegrationTest
     @Test
     public void testPawnCaptureMinMax5() throws Exception
     {
-        System.out.println(Board.createFromFEN("k7/8/7P/8/8/1p6/P7/7K w").asASCII());
         assertTrue(search("k7/8/7P/8/8/1p6/P7/7K w", "", MINMAX, 5, "h6h7"));
     }
     

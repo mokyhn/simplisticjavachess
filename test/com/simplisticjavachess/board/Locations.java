@@ -6,7 +6,6 @@
 
 package com.simplisticjavachess.board;
 
-import com.simplisticjavachess.board.Location;
 
 public class Locations
 {

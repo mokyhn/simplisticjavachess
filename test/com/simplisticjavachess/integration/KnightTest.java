@@ -39,20 +39,46 @@ public class KnightTest
         assertTrue(search(KNIGHT_TAKES_PAWN_RIGHT, "", ALPHABETA, 5, "e7f5"));
     }
     
+       
+    @Test
+    public void knightTestMinMax2() throws Exception
+    {
+        assertTrue(search("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "", MINMAX, 2, "d4e6"));
+    }
     
     @Test
-    public void knightTest() throws Exception
+    public void knightTestMinMax3() throws Exception
     {
-        for (int depth = 2; depth < 6; depth++)
-        {
-            //White knight example (mate)
-            assertTrue(search("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "", ALPHABETA, depth, "d4e6"));
-
-            // Black knight example (something else)
-            assertTrue(search("1kr3b1/1B2P3/PPP3p1/Q3K3/4n1pn/1PP3P1/3Bnn2/8 b", "", ALPHABETA, depth, "h4f3"));
-        }
-
+        assertTrue(search("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "", MINMAX, 3, "d4e6"));
     }
-   
     
+    @Test
+    public void knightTestMinMax4() throws Exception
+    {
+        assertTrue(search("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "", MINMAX, 4, "d4e6"));
+    }
+        
+    @Test
+    public void knightTestAlphaBeta2() throws Exception
+    {
+        assertTrue(search("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "", ALPHABETA, 2, "d4e6"));
+    }
+    
+    @Test
+    public void knightTestAlphaBeta3() throws Exception
+    {
+        assertTrue(search("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "", ALPHABETA, 3, "d4e6"));
+    }
+    
+    @Test
+    public void knightTestAlphaBeta4() throws Exception
+    {
+        assertTrue(search("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "", ALPHABETA, 4, "d4e6"));
+    }
+    
+    @Test
+    public void knightTestAlphaBeta5() throws Exception
+    {
+        assertTrue(search("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "", ALPHABETA, 5, "d4e6"));
+    }
 }
