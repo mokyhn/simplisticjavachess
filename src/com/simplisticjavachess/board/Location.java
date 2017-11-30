@@ -45,13 +45,23 @@ public final class Location
         return y;
     }
     
+    public int horizontalDistance(Location other)
+    {
+        return Math.abs((int) this.x - (int) other.x);
+    }
+    
+    public int verticalDistance(Location other)
+    {
+        return Math.abs((int) this.y - (int) other.y);
+    }
+    
     public byte distanceTo(Location other)
     {
         return (byte) (Math.max
                             (
-                                Math.abs((int) this.x - (int) other.x)
+                                horizontalDistance(other)
                                    ,
-                                Math.abs((int) this.y - (int) other.y)
+                                verticalDistance(other)
                             )
                       );
     }

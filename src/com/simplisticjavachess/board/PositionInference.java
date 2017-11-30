@@ -98,14 +98,16 @@ public class PositionInference
     
     private static boolean knightAttack(Piece p, Location location)
     {
-        return ((location.getX() == p.getxPos() - 2) && (location.getY() == p.getyPos() + 1))
-                || ((location.getX() == p.getxPos() - 2) && (location.getY() == p.getyPos() - 1))
-                || ((location.getX() == p.getxPos() - 1) && (location.getY() == p.getyPos() - 2))
-                || ((location.getX() == p.getxPos() + 1) && (location.getY() == p.getyPos() + 2))
-                || ((location.getX() == p.getxPos() - 1) && (location.getY() == p.getyPos() + 2))
-                || ((location.getX() == p.getxPos() + 1) && (location.getY() == p.getyPos() - 2))
-                || ((location.getX() == p.getxPos() + 2) && (location.getY() == p.getyPos() + 1))
-                || ((location.getX() == p.getxPos() + 2) && (location.getY() == p.getyPos() - 1));
+        
+        return (
+                p.getLocation().verticalDistance(location) == 1 &&
+                p.getLocation().horizontalDistance(location) == 2
+                )
+               ||
+               (
+                p.getLocation().verticalDistance(location) == 2 &&
+                p.getLocation().horizontalDistance(location) == 1
+                );
     }
          
  

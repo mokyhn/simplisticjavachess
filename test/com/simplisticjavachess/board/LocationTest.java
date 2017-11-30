@@ -75,6 +75,8 @@ public class LocationTest {
         assertEquals(3, l1.distanceTo(l2));
         assertEquals(3, l2.distanceTo(l1));
         assertEquals(0, l1.distanceTo(l1));
-
+        
+        assertEquals(2, l1.horizontalDistance(l2));
+        assertEquals(3, l1.verticalDistance(l2));
     }
 }

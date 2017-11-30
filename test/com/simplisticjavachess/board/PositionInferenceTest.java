@@ -4,7 +4,6 @@ import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -61,6 +60,24 @@ public class PositionInferenceTest
         assertNull(PositionInference.attacks(position, Location.fromString("c3"), Color.BLACK));
         assertNull(PositionInference.attacks(position, Location.fromString("c7"), Color.BLACK));
     }
-    //TODO: Add more tests here
+    
+
+    @Test
+    public void knightAttackTest()
+    {
+        Position position = new Position();
+        Piece piece = Piece.fromPositionCode("N d5");
+        position.insertPiece(piece);
+        
+        assertNull(PositionInference.attacks(position, Location.fromString("d5"), Color.BLACK));
+        assertNull(PositionInference.attacks(position, Location.fromString("d6"), Color.BLACK));
+        assertNull(PositionInference.attacks(position, Location.fromString("d7"), Color.BLACK));
+
+        assertEquals(piece, PositionInference.attacks(position, Location.fromString("e3"), Color.BLACK));
+        assertEquals(piece, PositionInference.attacks(position, Location.fromString("f6"), Color.BLACK));
+
+    }
+
+//TODO: Add more tests here
     
 }
