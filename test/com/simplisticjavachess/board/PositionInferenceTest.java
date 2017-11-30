@@ -4,6 +4,7 @@ import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -20,8 +21,8 @@ public class PositionInferenceTest
         Board board = new Board();
         board.insertPiece(Piece.fromPositionCode("B d5"));
         board.insertPiece(Piece.fromPositionCode("k c4"));
-        boolean result = PositionInference.isInCheck(board.getPosition(), Color.BLACK);
-        assertTrue(result);
+        assertTrue(PositionInference.isInCheck(board.getPosition(), Color.BLACK));
+        assertFalse(PositionInference.isInCheck(board.getPosition(), Color.WHITE));
     }
     
     @Test
