@@ -33,8 +33,7 @@ public abstract class AbstractSearch
     }
 
     public void setPlyDepth(int pd)
-    {
-        assert (pd >= 0 && pd <= 20);
+    {        
         plyDepth = pd;
     }
     
@@ -42,11 +41,6 @@ public abstract class AbstractSearch
 
     public int dosearch() throws Exception
     {
-        if (analyzeBoard == null)
-        {
-            throw new Exception("Supply a board to be analyzed first.");
-        }
-
         finalEvaluation = 0;
         noPositions = 0;
         noCutOffs = 0;
