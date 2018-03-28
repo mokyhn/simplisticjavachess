@@ -42,11 +42,6 @@ public class AlphaBetaSearch extends AbstractSearch
 
         if (currentPlyDepth == 0)
         {
-            noPositions++;
-            //System.out.print("<d0 " );
-
-            //System.out.print(" evaluation=\""+ humanReadable(Evaluator.evaluate(analyzeBoard)) + "," + humanReadable(alpha) + "," + humanReadable(beta) + "\">");
-            //System.out.print("</d0>");
             return Evaluator.evaluate(analyzeBoard);
         }
 
@@ -93,7 +88,6 @@ public class AlphaBetaSearch extends AbstractSearch
                 }
                 if (alpha >= beta)
                 {
-                    noCutOffs++;
                     return beta;
                 }
 
@@ -109,7 +103,6 @@ public class AlphaBetaSearch extends AbstractSearch
                 }
                 if (beta <= alpha)
                 {
-                    noCutOffs++;
                     return alpha;
                 }
             }

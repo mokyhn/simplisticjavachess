@@ -16,12 +16,7 @@ public abstract class AbstractSearch
     private int finalEvaluation;
 
     protected MoveGenerator moveGenerator = new MoveGenerator();
-    
-    private long startTime;
-    private long endTime;
-    protected int noPositions;
-    protected int noCutOffs;
-
+   
     public AbstractSearch()
     {
         plyDepth = 3;
@@ -42,10 +37,7 @@ public abstract class AbstractSearch
     public int dosearch() throws Exception
     {
         finalEvaluation = 0;
-        noPositions = 0;
-        noCutOffs = 0;
-        startTime = System.nanoTime();
-
+        
         strongestMove = null;
 
         if (analyzeBoard.isDraw() || analyzeBoard.isMate())
@@ -55,8 +47,6 @@ public abstract class AbstractSearch
 
         finalEvaluation = search();
 
-        endTime = System.nanoTime();
-
         return finalEvaluation;
     }
     
@@ -65,15 +55,6 @@ public abstract class AbstractSearch
         return strongestMove;
     }
 
-    public int getNoPositions()
-    {
-        return noPositions;
-    }
-
-    public long getTimeUsage()
-    {
-        return Math.abs(endTime - startTime) / 1000000;
-    }
   
     public String getStatistics()
     {
@@ -87,10 +68,6 @@ public abstract class AbstractSearch
         return ("move " + strongestMoveStr
                 + " Evaluation " + finalEvaluation
                 + " at " + plyDepth
-                + " ply in " + noPositions
-                + " positions in " + getTimeUsage()
-                + " mSecs = " + ((float) noPositions / (float) getTimeUsage())
-                + " kN/s with " + noCutOffs
-                + " cutoffs ");
+                + " ply" );
     } 
 }

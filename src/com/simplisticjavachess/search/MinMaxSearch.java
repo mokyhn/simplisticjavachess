@@ -26,7 +26,6 @@ public class MinMaxSearch extends AbstractSearch
 
         if (depthToGo == 0)
         {
-            noPositions++;
             return analyzeBoard.isDraw() ? 0 : Evaluator.evaluate(analyzeBoard);
         }
 
