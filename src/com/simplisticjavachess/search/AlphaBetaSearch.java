@@ -4,17 +4,25 @@
  */
 package com.simplisticjavachess.search;
 
+import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.Move;
+import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.piece.Color;
 import java.util.Iterator;
 
-public class AlphaBetaSearch extends AbstractSearch
+public class AlphaBetaSearch implements Search
 {
+    MoveGenerator moveGenerator = new MoveGenerator();
+
+    Board analyzeBoard;
+    Move strongestMove;
+    
     @Override
-    public final int search(int plyDepth)
+    public int search(Board board, int plyDepth)
     {
+        analyzeBoard = new Board(board);
         return alphaBetaSearch(plyDepth, plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
   
@@ -133,5 +141,9 @@ public class AlphaBetaSearch extends AbstractSearch
         return inMove == Color.WHITE ? alpha : beta;
     }
 
+    public Move getStrongestMove()
+    {
+        return strongestMove;
+    }
 }
 

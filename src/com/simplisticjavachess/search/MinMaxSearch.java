@@ -6,17 +6,25 @@
 
 package com.simplisticjavachess.search;
 
+import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.Move;
+import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.piece.Color;
 import java.util.Iterator;
 
-public class MinMaxSearch extends AbstractSearch
+public class MinMaxSearch implements Search
 {
+    MoveGenerator moveGenerator = new MoveGenerator();
+    
+    Board analyzeBoard;
+    Move strongestMove;
+
     @Override
-    public final int search(int plyDepth)
+    public final int search(Board board, int plyDepth)
     {
+        analyzeBoard = new Board(board);
         return minMaxSearch(plyDepth, plyDepth);
     }
    
@@ -124,6 +132,11 @@ public class MinMaxSearch extends AbstractSearch
 
         return bestScore;
 
+    }
+
+    public Move getStrongestMove()
+    {
+        return strongestMove;
     }
 
 }

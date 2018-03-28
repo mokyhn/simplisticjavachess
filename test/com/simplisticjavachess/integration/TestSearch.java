@@ -8,7 +8,7 @@ package com.simplisticjavachess.integration;
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveParser;
-import com.simplisticjavachess.search.AbstractSearch;
+import com.simplisticjavachess.search.Search;
 import com.simplisticjavachess.search.AlphaBetaSearch;
 import com.simplisticjavachess.search.MinMaxSearch;
 import java.util.ArrayList;
@@ -28,7 +28,7 @@ public class TestSearch
 
         Collection<Move> expected = parseExpectedMoves(board, expectedMoves);
 
-        AbstractSearch engine;
+        Search engine;
 
         switch (method)
         {
@@ -42,8 +42,8 @@ public class TestSearch
                 engine = new AlphaBetaSearch();
                 break;
         }
-        engine.setBoard(board);
-        engine.search(plyDepth);
+       
+        engine.search(board, plyDepth);
         Move strongestMove = engine.getStrongestMove();
 
         if (strongestMove == null && expectedMoves.isEmpty())

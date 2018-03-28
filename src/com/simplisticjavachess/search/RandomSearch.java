@@ -5,6 +5,7 @@
 
 package com.simplisticjavachess.search;
 
+import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.Move;
@@ -13,11 +14,17 @@ import com.simplisticjavachess.piece.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class RandomSearch extends AbstractSearch
+public class RandomSearch implements Search
 {
+    MoveGenerator moveGenerator = new MoveGenerator();
+    
+    Board analyzeBoard;
+    Move strongestMove;
+
     @Override
-    public final int search(int plyDepth)
+    public final int search(Board board, int plyDepth)
     {
+        this.analyzeBoard = new Board(board);
         return randomSearch();
     }
     
@@ -90,6 +97,11 @@ public class RandomSearch extends AbstractSearch
         }
 
         return Evaluator.evaluate(analyzeBoard);
+    }
+
+    public Move getStrongestMove()
+    {
+        return strongestMove;
     }
 
 }
