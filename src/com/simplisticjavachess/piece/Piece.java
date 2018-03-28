@@ -124,7 +124,8 @@ public final class Piece {
         return location.getY();
     }
 
-    public Piece updateLocation(Location location) {
+    public Piece updateLocation(Location location)
+    {
         return new Piece(location, this.color, this.pieceType);
     }
     

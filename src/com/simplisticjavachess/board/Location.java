@@ -2,28 +2,23 @@ package com.simplisticjavachess.board;
 
 public final class Location 
 {
-    final byte x;
-    final byte y;
+    final int x;
+    final int y;
     
-    private final static String letters[] = {"a", "b", "c", "d", "e", "f", "g", "h"};
+    private final static String[] LETTERS = {"a", "b", "c", "d", "e", "f", "g", "h"};
     
-    public Location(byte x, byte y) 
+    public Location(int x, int y) 
     {
         assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error: x="+x+" and y="+y;
         this.x = x;
         this.y = y;
     }
     
-    public Location(int x, int y)
-    {
-        this((byte) x, (byte) y);
-    }
-    
     public Location(String position) throws InvalidLocationException
     {
         position = position.toLowerCase();
-        x = (byte) (position.charAt(0) - 'a');
-        y = (byte) (-1 + position.charAt(1) - '0');
+        x = (int) (position.charAt(0) - 'a');
+        y = (int) (-1 + position.charAt(1) - '0');
         if (x < 0 || x > 7 || y < 0 || y > 7)
         {
             throw new InvalidLocationException();
@@ -35,35 +30,35 @@ public final class Location
         return new Location(position);
     }
     
-    public byte getX() 
+    public int getX() 
     {
         return x;
     }
     
-    public byte getY()
+    public int getY()
     {
         return y;
     }
     
     public int horizontalDistance(Location other)
     {
-        return Math.abs((int) this.x - (int) other.x);
+        return Math.abs(this.x - other.x);
     }
     
     public int verticalDistance(Location other)
     {
-        return Math.abs((int) this.y - (int) other.y);
+        return Math.abs(this.y - other.y);
     }
     
-    public byte distanceTo(Location other)
+    public int distanceTo(Location other)
     {
-        return (byte) (Math.max
-                            (
-                                horizontalDistance(other)
-                                   ,
-                                verticalDistance(other)
-                            )
-                      );
+        return (Math.max
+                        (
+                            horizontalDistance(other)
+                                ,
+                            verticalDistance(other)
+                        )
+                );
     }
     
     @Override
@@ -91,7 +86,7 @@ public final class Location
     @Override
     public String toString()
     {
-        return letters[x] + (y + 1);
+        return LETTERS[x] + (y + 1);
     }
     
     /**
