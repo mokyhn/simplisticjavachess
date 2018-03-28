@@ -15,7 +15,7 @@ import java.util.Iterator;
 public class MinMaxSearch extends AbstractSearch
 {
     @Override
-    public final int search()
+    public final int search(int plyDepth)
     {
         return minMaxSearch(plyDepth, plyDepth);
     }

@@ -13,7 +13,7 @@ import java.util.Iterator;
 public class AlphaBetaSearch extends AbstractSearch
 {
     @Override
-    public final int search()
+    public final int search(int plyDepth)
     {
         return alphaBetaSearch(plyDepth, plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }

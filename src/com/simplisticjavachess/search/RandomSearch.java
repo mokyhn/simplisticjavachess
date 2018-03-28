@@ -16,7 +16,7 @@ import java.util.Iterator;
 public class RandomSearch extends AbstractSearch
 {
     @Override
-    public final int search()
+    public final int search(int plyDepth)
     {
         return randomSearch();
     }

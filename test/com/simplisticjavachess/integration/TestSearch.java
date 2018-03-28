@@ -42,9 +42,8 @@ public class TestSearch
                 engine = new AlphaBetaSearch();
                 break;
         }
-        engine.setPlyDepth(plyDepth);
         engine.setBoard(board);
-        engine.dosearch();
+        engine.search(plyDepth);
         Move strongestMove = engine.getStrongestMove();
 
         if (strongestMove == null && expectedMoves.isEmpty())
@@ -65,7 +64,7 @@ public class TestSearch
             System.out.println("Engine found: " + strongestMove + " BUT no move was expected in position " + fen + "\n");
         } else
         {
-            System.out.println("Engine found: " + engine.getStatistics() + "BUT expected " + expectedMoves + " in position " + fen + "\n");
+            System.out.println("Engine found: " + strongestMove + "BUT expected " + expectedMoves + " in position " + fen + "\n");
         }
         
         return false;        

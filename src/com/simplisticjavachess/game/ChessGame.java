@@ -23,6 +23,7 @@ public class ChessGame
     private Board board;
     private final AbstractSearch engine;
     private final MoveGenerator moveGenerator = new MoveGenerator();
+    private int depth;
     
     public ChessGame()
     {
@@ -34,11 +35,6 @@ public class ChessGame
     public void setBoard(String fen)
     {
         this.board = Board.createFromFEN(fen);
-    }
-    
-    public void setSearchDepth(int searchDepth)
-    {
-        engine.setPlyDepth(searchDepth); 
     }
 
     public void black()
@@ -93,16 +89,18 @@ public class ChessGame
 
     public void setSd(int depth)
     {
-        engine.setPlyDepth(depth);
+        this.depth = depth;
     }
 
    public void go() throws Exception
     {
         engine.setBoard(board);
-        engine.dosearch();
-        System.out.println(engine.getStatistics());
+        int evaluation = engine.search(depth);
+
         if (engine.getStrongestMove() != null)
         {
+            System.out.println("Computer move " + engine.getStrongestMove().toString() + " evaluation: " + evaluation);
+            
             board.doMove(engine.getStrongestMove());
             print();
         }
