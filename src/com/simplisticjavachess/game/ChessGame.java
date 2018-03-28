@@ -12,7 +12,6 @@ import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.InvalidMoveException;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.board.InvalidLocationException;
-import com.simplisticjavachess.search.Search;
 import com.simplisticjavachess.search.AlphaBetaSearch;
 import com.simplisticjavachess.search.SearchResult;
 import java.util.Iterator;
@@ -22,14 +21,12 @@ public class ChessGame
     private static final String INITIAL_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
     
     private Board board;
-    private final Search engine;
     private final MoveGenerator moveGenerator = new MoveGenerator();
     private int searchDepth;
     
     public ChessGame()
     {
         board = Board.createFromFEN(INITIAL_POSITION);
-        engine = new AlphaBetaSearch();
         searchDepth = 3;
     }
 
@@ -96,7 +93,7 @@ public class ChessGame
 
    public void go() throws Exception
     {
-        SearchResult searchResult = engine.search(board, searchDepth);
+        SearchResult searchResult = new AlphaBetaSearch().search(board, searchDepth);
 
         if (searchResult.getMove() != null)
         {
