@@ -11,6 +11,7 @@ import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.search.Search;
 import com.simplisticjavachess.search.AlphaBetaSearch;
 import com.simplisticjavachess.search.MinMaxSearch;
+import com.simplisticjavachess.search.SearchResult;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -43,17 +44,16 @@ public class TestSearch
                 break;
         }
        
-        engine.search(board, plyDepth);
-        Move strongestMove = engine.getStrongestMove();
+        SearchResult searchResult = engine.search(board, plyDepth);
 
-        if (strongestMove == null && expectedMoves.isEmpty())
+        if (searchResult.getMove() == null && expectedMoves.isEmpty())
         {
             return true;
         }            
 
         for (Move move : expected)
         {
-            if (move.equals(strongestMove))
+            if (move.equals(searchResult.getMove()))
             {
                 return true;
             }
@@ -61,10 +61,10 @@ public class TestSearch
         
         if (expectedMoves.isEmpty())
         {
-            System.out.println("Engine found: " + strongestMove + " BUT no move was expected in position " + fen + "\n");
+            System.out.println("Engine found: " + searchResult.getMove().toString() + " BUT no move was expected in position " + fen + "\n");
         } else
         {
-            System.out.println("Engine found: " + strongestMove + "BUT expected " + expectedMoves + " in position " + fen + "\n");
+            System.out.println("Engine found: " + searchResult.getMove().toString() + "BUT expected " + expectedMoves + " in position " + fen + "\n");
         }
         
         return false;        

@@ -15,14 +15,23 @@ public class SearchResult {
     /**
      * @return the move
      */
-    public Move getMove() {
+    public Move getMove()
+    {
         return move;
     }
 
     /**
      * @return the evaluation
      */
-    public int getEvaluation() {
+    public int getEvaluation()
+    {
         return evaluation;
+    }
+    
+    @Override
+    public String toString()
+    {
+        return "Move " + move + " with evaluation " + evaluation;
+
     }
 }

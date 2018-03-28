@@ -14,6 +14,7 @@ import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.board.InvalidLocationException;
 import com.simplisticjavachess.search.Search;
 import com.simplisticjavachess.search.AlphaBetaSearch;
+import com.simplisticjavachess.search.SearchResult;
 import java.util.Iterator;
 
 public class ChessGame
@@ -23,12 +24,13 @@ public class ChessGame
     private Board board;
     private final Search engine;
     private final MoveGenerator moveGenerator = new MoveGenerator();
-    private int depth;
+    private int searchDepth;
     
     public ChessGame()
     {
         board = Board.createFromFEN(INITIAL_POSITION);
         engine = new AlphaBetaSearch();
+        searchDepth = 3;
     }
 
     
@@ -89,18 +91,18 @@ public class ChessGame
 
     public void setSd(int depth)
     {
-        this.depth = depth;
+        this.searchDepth = depth;
     }
 
    public void go() throws Exception
     {
-        int evaluation = engine.search(board, depth);
+        SearchResult searchResult = engine.search(board, searchDepth);
 
-        if (engine.getStrongestMove() != null)
+        if (searchResult.getMove() != null)
         {
-            System.out.println("Computer move " + engine.getStrongestMove().toString() + " evaluation: " + evaluation);
+            System.out.println(searchResult.toString());
             
-            board.doMove(engine.getStrongestMove());
+            board.doMove(searchResult.getMove());
             print();
         }
     }

@@ -22,10 +22,11 @@ public class RandomSearch implements Search
     Move strongestMove;
 
     @Override
-    public final int search(Board board, int plyDepth)
+    public final SearchResult search(Board board, int plyDepth)
     {
         this.analyzeBoard = new Board(board);
-        return randomSearch();
+        int evaluation = randomSearch();
+        return new SearchResult(strongestMove, evaluation);
     }
     
     private int randomSearch()

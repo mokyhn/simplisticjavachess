@@ -20,10 +20,11 @@ public class AlphaBetaSearch implements Search
     Move strongestMove;
     
     @Override
-    public int search(Board board, int plyDepth)
+    public SearchResult search(Board board, int plyDepth)
     {
         analyzeBoard = new Board(board);
-        return alphaBetaSearch(plyDepth, plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        int evaluation = alphaBetaSearch(plyDepth, plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
+        return new SearchResult(strongestMove, evaluation);
     }
   
     private int alphaBetaSearch(int currentPlyDepth, int totalPlyDepth, int alpha, int beta)

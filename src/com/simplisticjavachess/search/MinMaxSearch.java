@@ -22,10 +22,11 @@ public class MinMaxSearch implements Search
     Move strongestMove;
 
     @Override
-    public final int search(Board board, int plyDepth)
+    public final SearchResult search(Board board, int plyDepth)
     {
         analyzeBoard = new Board(board);
-        return minMaxSearch(plyDepth, plyDepth);
+        int evaluation = minMaxSearch(plyDepth, plyDepth);
+        return new SearchResult(strongestMove, evaluation);
     }
    
     private int minMaxSearch(int plyDepth, int depthToGo)
