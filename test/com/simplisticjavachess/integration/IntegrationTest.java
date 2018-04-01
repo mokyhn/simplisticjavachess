@@ -133,9 +133,9 @@ public class IntegrationTest
     }
     
     @Test
-    public void testPawnCaptureMinMax5() throws Exception
+    public void testPawnCaptureMinMax6() throws Exception
     {
-        assertTrue(search("k7/8/7P/8/8/1p6/P7/7K w", "", MINMAX, 5, "h6h7"));
+        assertTrue(search("4k3/8/7P/8/p7/8/P7/7K w - -", "", MINMAX, 6, "h6h7"));
     }
     
     @Test

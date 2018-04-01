@@ -6,89 +6,53 @@
 package com.simplisticjavachess.board;
 
 import com.simplisticjavachess.piece.Piece;
-import com.simplisticjavachess.piece.PieceType;
-import java.util.ArrayList;
 import java.util.Collection;
-//import java.util.HashMap;
-//import java.util.Map;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Position
 {
-    private static final int DEFAULT_NUMBER_OF_PIECES_CAPACITY = 32;
-
-    //private final Map<Location, Piece> pieces;    
-    private ArrayList<Piece> pieces;
-    private Piece[][] xyPosition;
+    private Map<Location, Piece> piecesMap;    
     
     private BitBoard bitBoard;
             
     public Position()
     {
-        init(DEFAULT_NUMBER_OF_PIECES_CAPACITY);   
-        //pieces = new HashMap<Location, Piece>();
-        //bitBoard = new BitBoard();  
+        piecesMap = new HashMap<Location, Piece>();
+        bitBoard = new BitBoard(); 
     }
 
     public Position(Position position)
     {
-        init(position.pieces.size());
+        this();
         
-        for (Piece piece : position.pieces)
+        for (Piece piece : position.getPieces())
         {
-            this.pieces.add(piece);
-            this.xyPosition[piece.getxPos()][piece.getyPos()] = piece;
-        }        
-        
-        //pieces = new HashMap<Location, Piece>();
-        //bitBoard = new BitBoard();  
-
-        //for (Piece piece : pieces.values())
-        //{
-        //    this.insertPiece(piece);
-        //}
-        
-        for (PieceType t : PieceType.values())
-        {
-            this.bitBoard.bb[0][t.getType()] = position.bitBoard.bb[0][t.getType()];
-            this.bitBoard.bb[1][t.getType()] = position.bitBoard.bb[1][t.getType()];
+            this.insertPiece(piece);
         }
     }
-
-    private void init(int n)
+ 
+    public final void insertPiece(Piece piece)
     {
-        pieces = new ArrayList<Piece>(n);
-        xyPosition = new Piece[8][8];
-        bitBoard = new BitBoard();
-    
-    }    
-    
-    public void insertPiece(Piece piece)
-    {
-        if (xyPosition[piece.getxPos()][piece.getyPos()] == null)
-        {
-            pieces.add(piece);
-            xyPosition[piece.getxPos()][piece.getyPos()] = piece;
-            bitBoard.insertPiece(piece);
-            //    pieces.put(piece.getLocation(), piece);
-            //    bitBoard.insertPiece(piece);
-        }
-        else
+        if (piecesMap.containsKey(piece.getLocation()))
         {
             throw new IllegalStateException("Tried to insert piece at a location at an occupied location");
         }
+        else
+        {
+            piecesMap.put(piece.getLocation(), piece);
+            bitBoard.insertPiece(piece);
+        }
     }
-    
-    
+       
     public Piece getPiece(Location location)
     {
-        return xyPosition[location.getX()][location.getY()];
-        //return pieces.get(location);
+        return piecesMap.get(location);
     }
   
     public Collection<Piece> getPieces() 
     {
-        return pieces;
-        //return pieces.values();
+        return piecesMap.values();
     }
         
     /**
@@ -98,7 +62,7 @@ public class Position
      */
     public Piece removePiece(Location location)
     {
-        Piece p = xyPosition[location.getX()][location.getY()];
+        Piece p = piecesMap.get(location);
         
         if (p == null)
         {
@@ -106,11 +70,8 @@ public class Position
         }
         else
         {
-            pieces.remove(p);
-            xyPosition[location.getX()][location.getY()] = null;
+            piecesMap.remove(location);
             bitBoard.removePiece(location);
-            //    pieces.remove(location);
-            //    bitBoard.removePiece(location);
             return p;
         }
     }
@@ -129,8 +90,7 @@ public class Position
     
     public boolean freeSquare(int x, int y)
     {
-        return xyPosition[x][y] == null;
-        //return !pieces.containsKey(new Location(x, y));
+        return !piecesMap.containsKey(new Location(x, y));
     }
 
     public String getPositionString()
