@@ -1,5 +1,6 @@
 package com.simplisticjavachess.movegenerator;
 
+import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Color;

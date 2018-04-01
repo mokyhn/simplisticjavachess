@@ -1,6 +1,5 @@
-package com.simplisticjavachess.movegenerator;
+package com.simplisticjavachess.misc;
 
-import com.simplisticjavachess.movegenerator.IteratorUtils;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;

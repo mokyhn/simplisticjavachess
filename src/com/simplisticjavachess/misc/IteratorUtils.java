@@ -2,7 +2,7 @@
  *
  * @author Morten Kühnrich
  */
-package com.simplisticjavachess.movegenerator;
+package com.simplisticjavachess.misc;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -12,16 +12,19 @@ public class IteratorUtils
     public static <T> Iterator<T> compose(final Iterator<T> it1, final Iterator<T> it2) {
         return new Iterator<T>() {
 
+            @Override
             public boolean hasNext()
             {
                 return it1.hasNext() || it2.hasNext();
             }
 
+            @Override
             public T next()
             {
                 return it1.hasNext() ? it1.next() : (it2.hasNext() ? it2.next() : null);                
             }
 
+            @Override
             public void remove()
             {
                 throw new UnsupportedOperationException();
@@ -36,8 +39,13 @@ public class IteratorUtils
             return new Iterator<T>()
             {
 
+                @Override
                 public boolean hasNext() { return false; }
+                
+                @Override
                 public T next() { return null; }
+                
+                @Override
                 public void remove() {}
             };
         }
@@ -48,6 +56,7 @@ public class IteratorUtils
                 Iterator<Iterator<T>> iteratorIterator = iterators.iterator();
                 Iterator<T> currentIterator = iteratorIterator.next();
 
+                @Override
                 public boolean hasNext()
                 {
                     if (currentIterator.hasNext()) 
@@ -81,6 +90,7 @@ public class IteratorUtils
                     }
                 }
 
+                @Override
                 public void remove()
                 {                    
                 }
@@ -92,16 +102,19 @@ public class IteratorUtils
     {
         return new Iterator<T>() 
         {
+            @Override
             public boolean hasNext()
             {
                 return false;
             }
 
+            @Override
             public T next()
             {
                 return null;
             }
 
+            @Override
             public void remove()
             {            
             }
