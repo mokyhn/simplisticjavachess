@@ -1,5 +1,7 @@
 package com.simplisticjavachess.board;
 
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -65,6 +67,24 @@ public class LocationTest {
     {
         Location location = new Location(7,7);
         assertEquals(63, location.hashCode());
+    }
+    
+    @Test
+    public void testAllHashValues()
+    {
+        Set<Integer> result = new HashSet<Integer>();
+        
+        for (int x = 0; x < 8; x++)
+        {
+            for (int y = 0; y < 8; y++)
+            {
+                Location location = new Location(x, y);
+                Integer hashCode = location.hashCode();
+                result.add(hashCode);
+            }
+        }
+        
+        assertEquals(64, result.size());
     }
     
     @Test
