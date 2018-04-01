@@ -14,13 +14,10 @@ import java.util.Objects;
 public class Position
 {
     private Map<Location, Piece> piecesMap;    
-    
-    private BitBoard bitBoard;
-            
+                
     public Position()
     {
         piecesMap = new HashMap<Location, Piece>();
-        bitBoard = new BitBoard(); 
     }
 
     public Position(Position position)
@@ -42,7 +39,6 @@ public class Position
         else
         {
             piecesMap.put(piece.getLocation(), piece);
-            bitBoard.insertPiece(piece);
         }
     }
        
@@ -72,7 +68,6 @@ public class Position
         else
         {
             piecesMap.remove(location);
-            bitBoard.removePiece(location);
             return p;
         }
     }
@@ -127,7 +122,7 @@ public class Position
         if (object instanceof Position)
         {
             Position position = (Position) object;
-            return bitBoard.equals(position.bitBoard);
+            return this.piecesMap.equals(position.piecesMap);
         }
         else
         {
@@ -139,10 +134,5 @@ public class Position
     public int hashCode() {
         return Objects.hash(piecesMap.values());
     }
-    
-    public BitBoard getBitBoard()
-    {
-        return bitBoard;
-    }  
   
 }

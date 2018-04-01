@@ -6,13 +6,9 @@
 
 package com.simplisticjavachess.game;
 
-import com.simplisticjavachess.board.BitBoard;
 import com.simplisticjavachess.move.Moves;
 import com.simplisticjavachess.piece.Color;
-import com.simplisticjavachess.piece.Piece;
-import com.simplisticjavachess.piece.PieceType;
 import com.simplisticjavachess.board.InvalidLocationException;
-import com.simplisticjavachess.board.Locations;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -25,7 +21,6 @@ public class StateTest
         State state = createDummyState();
         
         State stateClone = new State(state);
-        assertTrue(stateClone.bbposition.hasPiece(Locations.D4, Color.BLACK, PieceType.KNIGHT));
         assertTrue(stateClone.gameResult == GameResult.DRAW_BY_50_MOVE_RULE);
         assertTrue(stateClone.halfMoveClock == 42);
         assertTrue(stateClone.halfMovesIndex3PosRepition == 41);
@@ -39,9 +34,6 @@ public class StateTest
     {
         // Setup
         State state = new State();
-        BitBoard bitBoard = new BitBoard();
-        bitBoard.insertPiece(new Piece(Locations.D4, Color.BLACK, PieceType.KNIGHT));
-        state.bbposition = bitBoard;
         state.gameResult = GameResult.DRAW_BY_50_MOVE_RULE;
         state.halfMoveClock = 42;
         state.halfMovesIndex3PosRepition = 41;
@@ -96,15 +88,7 @@ public class StateTest
         assert(state1.equals(state2));
     }
     
-    @Test
-    public void testNotEquals1()
-    {
-        State state1 = createDummyState();
-        State state2 = createDummyState();
-        
-        state2.bbposition.removePiece(Locations.D4);
-        assertFalse(state1.equals(state2));
-    }
+ 
     
     @Test
     public void testNotEquals2()
@@ -116,15 +100,5 @@ public class StateTest
         assertFalse(state1.equals(state2));
     }
     
-    
-    @Test
-    public void testNotEqualsNullBitboard2()
-    {
-        State state1 = createDummyState();
-        State state2 = createDummyState();
-        
-        state2.bbposition = null;
-        assertFalse(state1.equals(state2));
-    }
      
 }

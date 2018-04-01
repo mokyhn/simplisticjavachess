@@ -1,6 +1,5 @@
 package com.simplisticjavachess.game;
 
-import com.simplisticjavachess.board.BitBoard;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Color;
 
@@ -11,9 +10,8 @@ public final class State
     public Move move;
     public Color inMove;
 
-    // Used wrt. check for draw by threefold repetition. 
-    // Could also be used in a hash table for search evaluations.
-    public BitBoard bbposition; 
+    // Used to check for draw by threefold repetition. 
+    public int hash; 
 
     private boolean blackCanCastleShort;
     private boolean blackCanCastleLong;
@@ -40,22 +38,18 @@ public final class State
     
     public State(State state)
     {
-        moveNumber = state.moveNumber;
-        move = state.move == null ? null : state.move;
-        inMove = state.inMove;
-        blackCanCastleLong = state.blackCanCastleLong;
-        blackCanCastleShort = state.blackCanCastleShort;
-        whiteCanCastleLong = state.whiteCanCastleLong;
-        whiteCanCastleShort = state.whiteCanCastleShort;
-        halfMoveClock = state.halfMoveClock;
-        halfMovesIndex3PosRepition = state.halfMovesIndex3PosRepition;
-        gameResult = state.gameResult;
+        this.moveNumber = state.moveNumber;
+        this.move = state.move == null ? null : state.move;
+        this.inMove = state.inMove;
+        this.blackCanCastleLong = state.blackCanCastleLong;
+        this.blackCanCastleShort = state.blackCanCastleShort;
+        this.whiteCanCastleLong = state.whiteCanCastleLong;
+        this.whiteCanCastleShort = state.whiteCanCastleShort;
+        this.halfMoveClock = state.halfMoveClock;
+        this.halfMovesIndex3PosRepition = state.halfMovesIndex3PosRepition;
+        this.gameResult = state.gameResult;
 
-        if (state.bbposition != null)
-        {
-            bbposition = new BitBoard(state.bbposition);
-        }
-   
+        this.hash = state.hash;
     }
 
     public void setCanCastleShort(boolean flag, Color color) 
@@ -108,8 +102,8 @@ public final class State
         {
             State other = (State) object;
             
-            boolean bbPositionsMatch;
-            bbPositionsMatch = this.bbposition.equals(other.bbposition);                        
+            boolean hashMatch;
+            hashMatch = this.hash == other.hash;                        
             
             boolean movesMatch;        
             movesMatch = this.move.equals(other.move);
@@ -118,7 +112,7 @@ public final class State
                    this.blackCanCastleShort == other.blackCanCastleShort &&
                    this.whiteCanCastleLong == other.whiteCanCastleLong &&
                    this.whiteCanCastleShort == other.whiteCanCastleShort && 
-                   bbPositionsMatch &&
+                   hashMatch &&
                    this.gameResult == other.gameResult &&
                    this.halfMoveClock == other.halfMoveClock &&
                    this.halfMovesIndex3PosRepition == other.halfMovesIndex3PosRepition &&

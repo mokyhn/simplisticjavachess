@@ -192,13 +192,13 @@ public class Board
     //and also with castling rights...
     private void checkDrawBy3RepetionsRule()
     {
-        State h;
+        State state;
         int k = 0;
 
         for (int i = currentState.halfMovesIndex3PosRepition; i < history.size(); i++)
         {
-            h = history.get(i);
-            if (((BitBoard) position.getBitBoard()).equals((BitBoard) h.bbposition))
+            state = history.get(i);
+            if (position.hashCode() ==  state.hash)
             {
                 //TODO make three fold repetition check work
                 //k++;
@@ -223,7 +223,7 @@ public class Board
     {        
         Piece piece = position.getPiece(move.getFrom());
  
-        currentState.bbposition = position.getBitBoard();
+        currentState.hash = position.hashCode();
         history.add(currentState);
                 
         State newState = new State(currentState);
