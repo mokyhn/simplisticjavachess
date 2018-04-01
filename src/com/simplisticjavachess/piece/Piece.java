@@ -1,8 +1,8 @@
 package com.simplisticjavachess.piece;
 
-import com.simplisticjavachess.board.InvalidLocationException;
 import static com.simplisticjavachess.piece.PieceType.*;
 import com.simplisticjavachess.board.Location;
+import java.util.Objects;
 
 /**
  *
@@ -98,7 +98,7 @@ public final class Piece {
     @Override
     public int hashCode()
     {
-        return this.getColor().getColor() * 1000 + this.getPieceType().getType() * 100 + this.getyPos() * 10 + this.getxPos();
+        return Objects.hash(this.pieceType, this.color, this.location);
     }
     
     
