@@ -13,11 +13,14 @@ public final class Piece {
     private final Location location;    
     private final PieceType pieceType;
     private final Color color;
+    
+    private final int hashCode;
    
     public Piece(Location location, Color color, PieceType pieceType) {
         this.location = location;        
         this.color = color;
         this.pieceType  = pieceType;
+        this.hashCode = Objects.hash(this.pieceType, this.color, this.location);
     }
    
     public Piece(Location location, char pieceLetter)  {
@@ -64,6 +67,8 @@ public final class Piece {
             default: 
                      throw new IllegalArgumentException("Unexpected error in Piece constructor");
             }
+        
+        this.hashCode = Objects.hash(this.pieceType, this.color, this.location);
      }
 
     /**
@@ -98,7 +103,7 @@ public final class Piece {
     @Override
     public int hashCode()
     {
-        return Objects.hash(this.pieceType, this.color, this.location);
+        return hashCode;
     }
     
     

@@ -4,6 +4,7 @@ public final class Location
 {
     final int x;
     final int y;
+    final int hashCode;
     
     private final static String[] LETTERS = {"a", "b", "c", "d", "e", "f", "g", "h"};
     
@@ -12,6 +13,7 @@ public final class Location
         assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error: x="+x+" and y="+y;
         this.x = x;
         this.y = y;
+        this.hashCode = calculateHash(x, y);
     }
     
     public Location(String position) throws InvalidLocationException
@@ -19,6 +21,7 @@ public final class Location
         position = position.toLowerCase();
         x = (int) (position.charAt(0) - 'a');
         y = (int) (-1 + position.charAt(1) - '0');
+        this.hashCode = calculateHash(x, y);
         if (x < 0 || x > 7 || y < 0 || y > 7)
         {
             throw new InvalidLocationException();
@@ -75,11 +78,15 @@ public final class Location
         }
     }
 
+    private int calculateHash(int x, int y)
+    {
+        return this.x + this.y * 8;
+    }
+    
     @Override
     public int hashCode() 
-    {
-        int hash = this.x + this.y * 8;
-        return hash;
+    {        
+        return hashCode;
     }
     
     
