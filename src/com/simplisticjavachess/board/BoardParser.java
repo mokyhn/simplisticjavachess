@@ -8,7 +8,7 @@ import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.misc.Strings;
 
-public class FENUtils
+public class BoardParser
 {    
     /**
      * Partial implementation which covers what we need for testing
@@ -150,5 +150,34 @@ public class FENUtils
         
         result += " " + board.inMove().getColorString();
         return result;
+    }
+
+    static Board parseFromLetters(String str)
+    {
+        String[] strings = str.split(" ");
+        Board board = new Board();
+        
+        for (String s : strings)
+        {
+            if (s.length() > 1)
+            {
+                Piece piece = Piece.fromPositionCode(s);
+                board.insertPiece(piece);
+            }
+            else
+            {
+                if ("w".equals(s))
+                {
+                    board.setWhiteToMove();
+                } 
+                
+                if ("b".equals(s))
+                {
+                    board.setBlackToMove();
+                }                 
+            }
+        }
+        
+        return board;
     }
 }

@@ -73,12 +73,12 @@ public final class Piece {
 
     /**
      * 
-     * @param code - example B d5 means a white bishop at d5, b d5 means a black bishop at d5
+     * @param code - example Bd5 means a white bishop at d5, bd5 means a black bishop at d5
      * @return a piece of the color and the location specified
      */
     public static Piece fromPositionCode(String code)
     {
-        String locationStr = code.substring(2,4);
+        String locationStr = code.substring(1,3);
         char pieceLetter = code.charAt(0);
         return new Piece(new Location(locationStr), pieceLetter);
     }
@@ -105,9 +105,7 @@ public final class Piece {
     {
         return hashCode;
     }
-    
-    
-    // TODO: This one should have it's own method which is not called toString...
+       
     @Override
     public String toString() {
         return getPieceType().getPieceLetter(getColor());
@@ -142,6 +140,11 @@ public final class Piece {
     public Color getColor()
     {
         return color;
+    }
+
+    public String asString()
+    {
+        return pieceType.getPieceLetter(color) + location.toString();
     }
 
 }

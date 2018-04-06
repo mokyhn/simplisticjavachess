@@ -2,16 +2,25 @@ package com.simplisticjavachess.board;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 
 
-public class FENUtilsTest
+public class BoardParserTest
 {
+    Board board1;
+    
+    @Before
+    public void before()
+    {
+        board1 = Board.createFromLetters("pe4 Bd5 qh1 b");
+    }
+    
     @Test
     public void testImportExportPosition_1()
     {
         String test_position = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w";
         Board board = Board.createFromFEN(test_position);
-        String result = FENUtils.exportPosition(board);
+        String result = BoardParser.exportPosition(board);
         assertEquals(test_position, result);
     }
     
@@ -20,7 +29,7 @@ public class FENUtilsTest
     {
         String test_position = "rnb5/pp4pp/8/8/8/8/PP2P2P/2BQKB2 w";
         Board board = Board.createFromFEN(test_position);
-        String result = FENUtils.exportPosition(board);
+        String result = BoardParser.exportPosition(board);
         assertEquals(test_position, result);
     }
     
@@ -29,7 +38,7 @@ public class FENUtilsTest
     {
         String test_position = "8/pp4pp/8/8/8/8/PP2P2P/8 b";
         Board board = Board.createFromFEN(test_position);
-        String result = FENUtils.exportPosition(board);
+        String result = BoardParser.exportPosition(board);
         assertEquals(test_position, result);
     }
     
@@ -39,8 +48,29 @@ public class FENUtilsTest
         for (String test_position : FENPositions.POSITIONS)
         {
             Board board = Board.createFromFEN(test_position);            
-            String result = FENUtils.exportPosition(board);
+            String result = BoardParser.exportPosition(board);
             assertEquals(test_position, result);
         }
-    }    
+    }
+    
+    @Test
+    public void testImportFromPieceListMoveColor()
+    {
+        assertFalse(board1.isWhiteInMove());
+    }
+    
+    @Test
+    public void testImportFromPieceListNumberOfPieces()
+    {
+        assertEquals(3, board1.getPieces().size());
+    }
+            
+    @Test
+    public void testImportFromPieceListActualPieces()
+    {
+        assertEquals("pe4", board1.getPiece(Location.fromString("e4")).asString());
+        assertEquals("Bd5", board1.getPiece(Location.fromString("d5")).asString());
+        assertEquals("qh1", board1.getPiece(Location.fromString("h1")).asString());
+    }
+
 }

@@ -32,9 +32,14 @@ public class Board
 
     public static Board createFromFEN(String fen)
     {
-        return FENUtils.parseFEN(fen);        
+        return BoardParser.parseFEN(fen);        
     }
 
+    public static Board createFromLetters(String str)
+    {
+        return BoardParser.parseFromLetters(str);
+    }
+    
     public Board(Board board)
     {
         this.currentState = new State(board.currentState);
@@ -459,5 +464,10 @@ public class Board
             return false;
         }
     }
+
+    public boolean isWhiteInMove()
+    {
+        return currentState.inMove == Color.WHITE;
+    } 
 
 }

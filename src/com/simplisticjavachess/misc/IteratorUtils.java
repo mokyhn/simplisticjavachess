@@ -4,8 +4,11 @@
  */
 package com.simplisticjavachess.misc;
 
+import com.simplisticjavachess.move.Move;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 public class IteratorUtils
 {
@@ -119,5 +122,17 @@ public class IteratorUtils
             {            
             }
         };
+    }
+
+    public static List<Move> toList(Iterator<Move> moves)
+    {
+        List<Move> result = new ArrayList<Move>();
+        
+        while (moves.hasNext())
+        {
+            result.add(moves.next());
+        }
+        
+        return result;
     }
 }

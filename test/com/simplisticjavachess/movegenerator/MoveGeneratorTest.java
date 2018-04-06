@@ -7,7 +7,7 @@ package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.board.FENPositions;
-import com.simplisticjavachess.board.FENUtils;
+import com.simplisticjavachess.board.BoardParser;
 import com.simplisticjavachess.board.PositionInference;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
@@ -46,12 +46,12 @@ public class MoveGeneratorTest
                 {
                     if (move.aCapture()) 
                     {
-                        assertTrue(FENUtils.exportPosition(board), PositionInference.attacks(board.getPosition(), move.getTo(), board.inMove().opponent()) != null);
+                        assertTrue(BoardParser.exportPosition(board), PositionInference.attacks(board.getPosition(), move.getTo(), board.inMove().opponent()) != null);
                     }
                 }
                 else
                 {
-                    assertTrue(FENUtils.exportPosition(board), PositionInference.attacks(board.getPosition(), move.getTo(), board.inMove().opponent()) != null);
+                    assertTrue(BoardParser.exportPosition(board), PositionInference.attacks(board.getPosition(), move.getTo(), board.inMove().opponent()) != null);
                 } 
                 
             }
