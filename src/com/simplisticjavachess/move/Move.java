@@ -41,7 +41,7 @@ public final class Move
         this.capturedPiece = capturedPiece;
         this.whoMoves = whoMoves;        
     }
-
+    
     public boolean aCapture()
     {
         return getMoveType().isCapture();

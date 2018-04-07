@@ -33,11 +33,6 @@ public enum MoveType
         this.moveType = moveType;
     }
     
-    public int getVal() 
-    {
-        return moveType;
-    }
-    
     public boolean isCapture()
     {
         return moveType >= 1 && moveType <= 6;
@@ -52,8 +47,6 @@ public enum MoveType
     {
         return moveType >= 7 && moveType <= 10;
     }
-
-  
 
     public PieceType getPromotionPiece()
     {

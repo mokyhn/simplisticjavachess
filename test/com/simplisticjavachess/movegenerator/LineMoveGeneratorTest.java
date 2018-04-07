@@ -19,7 +19,7 @@ public class LineMoveGeneratorTest
     {         
         Board b = new Board();
         
-        Piece p = Piece.fromPositionCode("B d5");
+        Piece p = Piece.fromPositionCode("Bd5");
         b.insertPiece(p);
         b.setWhiteToMove();
         ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, 1, 1);
@@ -34,7 +34,7 @@ public class LineMoveGeneratorTest
     {         
         Board b = new Board();
         
-        Piece p = Piece.fromPositionCode("R d5");
+        Piece p = Piece.fromPositionCode("Rd5");
         b.insertPiece(p);
         b.setWhiteToMove();
         ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, 0, -1);
@@ -51,7 +51,7 @@ public class LineMoveGeneratorTest
     {         
         Board b = new Board();
         
-        Piece p = Piece.fromPositionCode("R d5");        
+        Piece p = Piece.fromPositionCode("Rd5");        
         b.insertPiece(p);              
         
         b.setWhiteToMove();
@@ -67,11 +67,11 @@ public class LineMoveGeneratorTest
     {         
         Board b = new Board();
         
-        Piece p = Piece.fromPositionCode("R d5");        
+        Piece p = Piece.fromPositionCode("Rd5");        
         b.insertPiece(p);
         
         // A blocking piece
-        b.insertPiece(Piece.fromPositionCode("P b5"));
+        b.insertPiece(Piece.fromPositionCode("Pb5"));
         
         b.setWhiteToMove();
         ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, -1, 0);
@@ -84,14 +84,14 @@ public class LineMoveGeneratorTest
     {         
         Board b = new Board();
         
-        Piece p = Piece.fromPositionCode("B c5");        
+        Piece p = Piece.fromPositionCode("Bc5");        
         b.insertPiece(p);              
         
         // A piece that can be captured
-        b.insertPiece(Piece.fromPositionCode("p e3"));
+        b.insertPiece(Piece.fromPositionCode("pe3"));
         
         // Should not be captured
-        b.insertPiece(Piece.fromPositionCode("p f2"));
+        b.insertPiece(Piece.fromPositionCode("pf2"));
         
         b.setWhiteToMove();
         ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, 1, -1);
