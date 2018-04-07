@@ -24,11 +24,8 @@ public enum MoveType
     PROMOTE_TO_QUEEN(10),
 
     CASTLE_SHORT(11),
-    CASTLE_LONG(12),
-
-    RESIGN(13),
-    CALL_FOR_DRAW(14);
-
+    CASTLE_LONG(12);
+  
     final int moveType;
 
     MoveType(int moveType)

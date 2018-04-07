@@ -157,6 +157,7 @@ public class PawnMoveGenerator
         {
             Iterator<Move> generated = null;
             
+            @Override
             public boolean hasNext()
             {
                 if (generated == null) 
@@ -166,6 +167,7 @@ public class PawnMoveGenerator
                 return generated.hasNext();
             }
 
+            @Override
             public Move next()
             {
                 if (hasNext()) 
@@ -178,6 +180,7 @@ public class PawnMoveGenerator
                 }
             }
 
+            @Override
             public void remove()
             {                
             }

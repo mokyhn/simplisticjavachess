@@ -1,6 +1,5 @@
 package com.simplisticjavachess.move;
 
-import com.simplisticjavachess.move.MoveType;
 import com.simplisticjavachess.piece.PieceType;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -22,7 +21,6 @@ public class MoveTypeTest
         assertTrue(MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN.isCapture());
         assertTrue(MoveType.CAPTURE_AND_PROMOTE_TO_ROOK.isCapture());
         
-        assertFalse(MoveType.CALL_FOR_DRAW.isCapture());
         assertFalse(MoveType.CASTLE_LONG.isCapture());
         assertFalse(MoveType.NORMALMOVE.isCapture());
     }
@@ -35,7 +33,6 @@ public class MoveTypeTest
         assertTrue(MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN.isCapturePromotion());
         assertTrue(MoveType.CAPTURE_AND_PROMOTE_TO_ROOK.isCapturePromotion());
         
-        assertFalse(MoveType.CALL_FOR_DRAW.isCapturePromotion());
         assertFalse(MoveType.CASTLE_LONG.isCapturePromotion());
         assertFalse(MoveType.NORMALMOVE.isCapturePromotion());
     }
@@ -46,7 +43,6 @@ public class MoveTypeTest
     {
         assertEquals(PieceType.KNIGHT, MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT.getPromotionPiece());
         assertEquals(PieceType.ROOK, MoveType.CAPTURE_AND_PROMOTE_TO_ROOK.getPromotionPiece());
-        assert(MoveType.CALL_FOR_DRAW.getPromotionPiece() == null);
     }
     
 }
