@@ -6,6 +6,7 @@ package com.simplisticjavachess.misc;
 
 import com.simplisticjavachess.move.Move;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
@@ -124,15 +125,21 @@ public class IteratorUtils
         };
     }
 
-    public static List<Move> toList(Iterator<Move> moves)
+    public static <T> List<T> toList(Iterator<T> elements)
     {
-        List<Move> result = new ArrayList<Move>();
+        List<T> result = new ArrayList<T>();
         
-        while (moves.hasNext())
+        while (elements.hasNext())
         {
-            result.add(moves.next());
+            result.add(elements.next());
         }
         
         return result;
+    }
+    
+    public static <T> String toString(Iterator<T> elements)
+    {
+        List<T> list = toList(elements);
+        return Arrays.toString(list.toArray());
     }
 }
