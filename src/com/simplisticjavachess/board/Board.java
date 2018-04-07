@@ -97,12 +97,12 @@ public class Board
 
     public boolean canCastleShort()
     {
-        return currentState.getCanCastleShort();
+        return currentState.getCanCastleShort() && !isInCheck();
     }
 
     public boolean canCastleLong()
     {
-        return currentState.getCanCastleLong();
+        return currentState.getCanCastleLong() && !isInCheck();
     }
 
     public void setCanCastleShort(boolean flag, Color color)
@@ -169,6 +169,11 @@ public class Board
         return PositionInference.attacks(position, new Location(x, y), currentState.inMove) != null;
     }
 
+    public boolean isFreeAndUnattacked(Location location)
+    {
+        return !isAttacked(location) && isFree(location);
+    }
+    
     /**
      *
      * @param color
@@ -468,5 +473,15 @@ public class Board
     {
         return currentState.inMove == Color.WHITE;
     } 
+
+    public boolean isAttacked(Location location)
+    {
+        return PositionInference.attacks(position, location, currentState.inMove) != null;        
+    }
+
+    private boolean isFree(Location location)
+    {
+        return getPiece(location) == null;
+    }
 
 }
