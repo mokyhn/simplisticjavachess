@@ -32,33 +32,35 @@ public class PawnMoveGenerator
         final ArrayList<Move> Moves = new ArrayList<Move>();
 
         // Normal one step forward pawn move
-        if (((fy < 6) && (c == Color.WHITE))
-                || (fy > 1) && (c == Color.BLACK))
+        if ((c == Color.WHITE && fy < 6) || (c == Color.BLACK && fy > 1))
         {
-            if (board.freeSquare(fx, fy + c.getColor() * 1))
+            Location to = new Location(fx, fy + c.getColor());
+            if (board.freeSquare(to))
             {
-                Moves.add(new Move(fx, fy, fx, fy + c.getColor() * 1, MoveType.NORMALMOVE, null, c));
+                Moves.add(new Move(from, to, MoveType.NORMALMOVE, null, c));
             }
         }
 
         // Normal two step forward pawn move
-        if (((fy == 1) && (c == Color.WHITE))
-                || ((fy == 6) && (c == Color.BLACK)))
+        if ((c == Color.WHITE && fy == 1) || (c == Color.BLACK && fy == 6))
         {
-            if (board.freeSquare(fx, fy + c.getColor() * 1) && board.freeSquare(fx, fy + c.getColor() * 2))
+            Location oneAhead = new Location(fx, fy + c.getColor());
+            Location to = new Location(fx, fy + c.getColor() * 2);
+            if (board.freeSquare(oneAhead) && board.freeSquare(to))
             {
-                Moves.add(new Move(fx, fy, fx, (fy + c.getColor() * 2), MoveType.NORMALMOVE, null, c));
+                Moves.add(new Move(from, to, MoveType.NORMALMOVE, null, c));
             }
         }
 
         // Non capturing PAWN promotion
-        if (((fy == 6) && (c == Color.WHITE) && board.freeSquare(fx, 7))
-                || ((fy == 1) && (c == Color.BLACK) && board.freeSquare(fx, 0)))
+        if ((c == Color.WHITE && fy == 6 && board.freeSquare(fx, 7)) ||
+            (c == Color.BLACK && fy == 1 && board.freeSquare(fx, 0)))
         {
-            Moves.add(new Move(fx, fy, fx, fy + c.getColor(), MoveType.PROMOTE_TO_QUEEN, null, c));
-            Moves.add(new Move(fx, fy, fx, fy + c.getColor(), MoveType.PROMOTE_TO_ROOK, null, c));
-            Moves.add(new Move(fx, fy, fx, fy + c.getColor(), MoveType.PROMOTE_TO_KNIGHT, null, c));
-            Moves.add(new Move(fx, fy, fx, fy + c.getColor(), MoveType.PROMOTE_TO_BISHOP, null, c));
+            Location to = new Location(fx, fy + c.getColor());
+            Moves.add(new Move(from, to, MoveType.PROMOTE_TO_QUEEN,  null, c));
+            Moves.add(new Move(from, to, MoveType.PROMOTE_TO_ROOK,   null, c));
+            Moves.add(new Move(from, to, MoveType.PROMOTE_TO_KNIGHT, null, c));
+            Moves.add(new Move(from, to, MoveType.PROMOTE_TO_BISHOP, null, c));
         }
 
         // Normal diagonal capturing to the left

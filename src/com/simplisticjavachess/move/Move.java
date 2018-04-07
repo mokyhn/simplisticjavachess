@@ -74,7 +74,7 @@ public final class Move
     }
     
     private boolean comparePieces(Piece piece1, Piece piece2)
-    {
+    { 
         if (piece1 == null && piece2 == null)
         {
             return true;
