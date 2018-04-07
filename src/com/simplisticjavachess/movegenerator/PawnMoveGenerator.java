@@ -66,10 +66,10 @@ public class PawnMoveGenerator
         // Normal diagonal capturing to the left
         if ((fx > 0) && (fy != (5 * c.getColor() + 7) / 2))
         {
-            leftPiece = board.getPiece(from);
+            Location to = new Location(fx - 1, fy + c.getColor());
+            leftPiece = board.getPiece(to);
             if (leftPiece != null && leftPiece.getColor() != c)
-            {
-                Location to = new Location(fx - 1, fy + c.getColor());
+            {                
                 Moves.add(new Move(from, to, MoveType.CAPTURE, leftPiece, c));
             }
         }

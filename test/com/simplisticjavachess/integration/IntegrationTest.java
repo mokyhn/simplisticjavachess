@@ -103,7 +103,7 @@ public class IntegrationTest
     @Test
     public void testPawnCaptureAlphaBeta1() throws Exception
     {
-        assertTrue(search("4k3/ppppppp1/8/8/8/7p/PPPPPPPP/4K3 w", "", ALPHABETA, 1, "g2h3"));
+        assertTrue(search("4k3/8/8/8/8/7p/6PP/4K3 w - -", "", ALPHABETA, 1, "g2h3"));
     }
 
     @Test
