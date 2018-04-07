@@ -19,9 +19,8 @@ public class Board
 {
 
     private State currentState;
-    private Position position;
-    private History history;
-
+    private final Position position;
+    private final History history;
     
     public Board()
     {

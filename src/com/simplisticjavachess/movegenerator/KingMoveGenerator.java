@@ -206,6 +206,7 @@ public class KingMoveGenerator
         {
             Iterator<Move> generated = null;
             
+            @Override
             public boolean hasNext()
             {
                 if (generated == null) 
@@ -215,6 +216,7 @@ public class KingMoveGenerator
                 return generated.hasNext();
             }
 
+            @Override
             public Move next()
             {
                 if (hasNext()) 
@@ -227,6 +229,7 @@ public class KingMoveGenerator
                 }
             }
 
+            @Override
             public void remove()
             {                
             }
