@@ -88,28 +88,29 @@ public class PawnMoveGenerator
         // Promotion via diagonal capturing to the left
         if ((fx > 0) && (fy == (5 * c.getColor() + 7) / 2))
         {
-            leftPiece = board.getPiece(fx - 1, fy + c.getColor());
+            Location to = new Location(fx - 1, fy + c.getColor());
+            leftPiece = board.getPiece(to);
             if (leftPiece != null && leftPiece.getColor() != c)
             {
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece, c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece, c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN, leftPiece, c));
-                Moves.add(new Move(fx, fy, fx - 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_ROOK, leftPiece, c));
+                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece, c));
+                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece, c));
+                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN,  leftPiece, c));
+                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_ROOK,   leftPiece, c));
             }
         }
 
         // Promotion via diagonal capturing to the right
         if ((fx < 7) && (fy == (5 * c.getColor() + 7) / 2))
         {
-            rightPiece = board.getPiece(fx + 1, fy + c.getColor());
+            Location to = new Location(fx + 1, fy + c.getColor());
+            rightPiece = board.getPiece(to);
             if (rightPiece != null && rightPiece.getColor() != c)
             {
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece, c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, rightPiece, c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN, rightPiece, c));
-                Moves.add(new Move(fx, fy, fx + 1, fy + c.getColor(), MoveType.CAPTURE_AND_PROMOTE_TO_ROOK, rightPiece, c));
+                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece, c));
+                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, rightPiece, c));
+                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN,  rightPiece, c));
+                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_ROOK,   rightPiece, c));
             }
-
         }
 
         // En passant capture
