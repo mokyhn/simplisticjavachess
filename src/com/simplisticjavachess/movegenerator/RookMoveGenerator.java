@@ -33,6 +33,7 @@ public class RookMoveGenerator
         {
             Iterator<Move> generated = null;
             
+            @Override
             public boolean hasNext()
             {
                 if (generated == null) 
@@ -42,6 +43,7 @@ public class RookMoveGenerator
                 return generated.hasNext();
             }
 
+            @Override
             public Move next()
             {
                 if (hasNext()) 
@@ -54,6 +56,7 @@ public class RookMoveGenerator
                 }
             }
 
+            @Override
             public void remove()
             {                
             }
