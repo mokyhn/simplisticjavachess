@@ -1,6 +1,7 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class LineMoveGeneratorTest
         Piece p = Piece.fromPositionCode("Bd5");
         b.insertPiece(p);
         b.setWhiteToMove();
-        ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, 1, 1);
+        ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, new Vector(1, 1));
         assertEquals(3, result.size()); // e6, f7, g8
         assertTrue(result.toString().contains("d5-e6"));
         assertTrue(result.toString().contains("d5-f7"));
@@ -37,7 +38,7 @@ public class LineMoveGeneratorTest
         Piece p = Piece.fromPositionCode("Rd5");
         b.insertPiece(p);
         b.setWhiteToMove();
-        ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, 0, -1);
+        ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, new Vector(0, -1));
         assertEquals(4, result.size());
         assertTrue(result.toString().contains("d5-d4"));
         assertTrue(result.toString().contains("d5-d3"));
@@ -55,7 +56,7 @@ public class LineMoveGeneratorTest
         b.insertPiece(p);              
         
         b.setWhiteToMove();
-        ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, -1, 0);
+        ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, new Vector(-1, 0));
         assertEquals(3, result.size());
         assertTrue(result.toString().contains("d5-c5"));
         assertTrue(result.toString().contains("d5-b5"));
@@ -74,7 +75,7 @@ public class LineMoveGeneratorTest
         b.insertPiece(Piece.fromPositionCode("Pb5"));
         
         b.setWhiteToMove();
-        ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, -1, 0);
+        ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, new Vector(-1, 0));
         assertEquals(1, result.size());
         assertTrue(result.toString().contains("d5-c5"));
     }
@@ -94,7 +95,7 @@ public class LineMoveGeneratorTest
         b.insertPiece(Piece.fromPositionCode("pf2"));
         
         b.setWhiteToMove();
-        ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, 1, -1);
+        ArrayList<Move> result = LineMoveGenerator.generateMoves(b, p, new Vector(1, -1));
         assertEquals(2, result.size());
         assertTrue(result.toString().contains("c5-d4"));
         assertTrue(result.toString().contains("c5xe3"));        

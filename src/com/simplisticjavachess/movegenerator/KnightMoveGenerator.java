@@ -6,6 +6,7 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
 import java.util.ArrayList;
@@ -17,42 +18,42 @@ public class KnightMoveGenerator
     {
         final ArrayList<Move> Moves = new ArrayList<Move>();
         Move newMove;
-        newMove = MoveGeneratorUtil.genMove(b, p, -2, 1);
+        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(-2, 1));
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = MoveGeneratorUtil.genMove(b, p, -2, -1);
+        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(-2, -1));
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = MoveGeneratorUtil.genMove(b, p, -1, 2);
+        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(-1, 2));
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = MoveGeneratorUtil.genMove(b, p, 1, 2);
+        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(1, 2));
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = MoveGeneratorUtil.genMove(b, p, -1, -2);
+        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(-1, -2));
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = MoveGeneratorUtil.genMove(b, p, 1, -2);
+        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(1, -2));
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = MoveGeneratorUtil.genMove(b, p, 2, 1);
+        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(2, 1));
         if (newMove != null)
         {
             Moves.add(newMove);
         }
-        newMove = MoveGeneratorUtil.genMove(b, p, 2, -1);
+        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(2, -1));
         if (newMove != null)
         {
             Moves.add(newMove);

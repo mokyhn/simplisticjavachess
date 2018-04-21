@@ -7,6 +7,7 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
 import java.util.ArrayList;
@@ -19,10 +20,10 @@ public class BishopMoveGenerator
     {
         final ArrayList<Move> Moves = new ArrayList<Move>();
        
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, 1, 1));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, 1, -1));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, -1, 1));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, -1, -1));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(1, 1)));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(1, -1)));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(-1, 1)));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(-1, -1)));
        
         return Moves;
     }
@@ -34,6 +35,7 @@ public class BishopMoveGenerator
         {
             Iterator<Move> generated = null;
             
+            @Override
             public boolean hasNext()
             {
                 if (generated == null) 
@@ -43,6 +45,7 @@ public class BishopMoveGenerator
                 return generated.hasNext();
             }
 
+            @Override
             public Move next()
             {
                 if (hasNext()) 
@@ -55,6 +58,7 @@ public class BishopMoveGenerator
                 }
             }
 
+            @Override
             public void remove()
             {                
             }

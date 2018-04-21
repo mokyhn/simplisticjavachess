@@ -99,4 +99,14 @@ public class LocationTest {
         assertEquals(2, l1.horizontalDistance(l2));
         assertEquals(3, l1.verticalDistance(l2));
     }
+    
+    public void testIsValid1()
+    {
+        assertTrue(new Location(5,4).isValid());
+    }
+    
+    public void testIsValid2()
+    {
+        assertFalse(new Location(7,8).isValid());
+    }
 }

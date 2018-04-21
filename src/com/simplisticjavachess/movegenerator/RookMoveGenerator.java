@@ -6,6 +6,7 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
 import java.util.ArrayList;
@@ -17,10 +18,10 @@ public class RookMoveGenerator
     {
         final ArrayList<Move> Moves = new ArrayList<Move>();
 
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, 0, 1));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, 0, -1));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, 1, 0));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, 0, 1));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(0, 1)));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(0, -1)));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(1, 0)));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(0, 1)));
 
         return Moves;
     }

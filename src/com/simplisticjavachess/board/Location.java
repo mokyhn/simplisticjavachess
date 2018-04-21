@@ -10,7 +10,6 @@ public final class Location
     
     public Location(int x, int y) 
     {
-        assert x >= 0 && x <= 7 && y >= 0 && y <= 7 : "Piece range error: x="+x+" and y="+y;
         this.x = x;
         this.y = y;
         this.hashCode = calculateHash(x, y);
@@ -80,7 +79,12 @@ public final class Location
 
     private int calculateHash(int x, int y)
     {
-        return this.x + this.y * 8;
+        return x + y * 8;
+    }
+    
+    public boolean isValid()
+    {
+        return this.x >= 0 && this.x <= 7 && this.y >= 0 && this.y <= 7;
     }
     
     @Override
