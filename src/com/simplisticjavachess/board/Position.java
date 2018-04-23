@@ -7,30 +7,114 @@ package com.simplisticjavachess.board;
 
 import com.simplisticjavachess.piece.Piece;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Stack;
 
 public class Position
 {
     private Map<Location, Piece> piecesMap;    
-                
+    private Stack<Command> undoStack;
+    
     public Position()
     {
-        piecesMap = new HashMap<Location, Piece>();
+        piecesMap = new HashMap<>();
+        undoStack = new Stack<>();
     }
 
     public Position(Position position)
     {
         this();
         
-        for (Piece piece : position.getPieces())
-        {
+        position.getPieces().forEach(piece -> {
             this.insertPiece(piece);
-        }
+        });
     }
  
-    public final void insertPiece(Piece piece)
+    public void doCommand(Command command)
+    {
+        undoStack.push(command);
+        doCommandAux(command);
+    }
+    
+    public void doCommandAux(Command command)
+    {
+        if (command instanceof InsertCommand)
+        {
+            insertPiece(((InsertCommand) command).getPiece());
+        }
+        else
+        if (command instanceof RemoveCommand)
+        {
+            Piece piece = ((RemoveCommand) command).getPiece();
+            removePiece(piece);
+        }
+        else
+        if (command instanceof MoveCommand)
+        {
+            movePiece(((MoveCommand) command).getPiece(), ((MoveCommand) command).getNewLocation());
+        }
+        else
+        if (command instanceof ComposedCommand)
+        {
+            ((ComposedCommand) command).getCommands().forEach(c -> {
+                doCommandAux(c);
+            });
+        }
+        else
+        {
+            throw new IllegalStateException();
+        }
+        
+    }
+    
+    public void undo()
+    {
+        Command command = undoStack.pop();    
+        undoAux(command);
+    }
+    
+    
+    private void undoAux(Command command)
+    {
+        if (command instanceof InsertCommand)
+        {
+            removePiece(((InsertCommand) command).getPiece());
+        }
+        else
+        if (command instanceof RemoveCommand)
+        {
+            insertPiece(((RemoveCommand) command).getPiece());
+        }
+        else
+        if (command instanceof MoveCommand)
+        {
+            Piece piece = getPiece(((MoveCommand) command).getNewLocation());
+            Location oldLocation = ((MoveCommand) command).getPiece().getLocation();
+            movePiece(piece, oldLocation);
+        }
+        else
+        if (command instanceof ComposedCommand)
+        {
+            List<Command> commands = ((ComposedCommand) command).getCommands();
+            
+            Collections.reverse(commands);
+            
+            commands.forEach(c -> {
+                undoAux(c);
+            });
+        }
+        else
+        {
+            throw new IllegalStateException();
+        }
+    }
+  
+    
+    private void insertPiece(Piece piece)
     {
         if (piecesMap.containsKey(piece.getLocation()))
         {
@@ -57,26 +141,35 @@ public class Position
      * @param location of piece to remove
      * @return the removed piece
      */
-    public Piece removePiece(Location location)
-    {
-        Piece p = piecesMap.get(location);
-        
-        if (p == null)
+    private Piece removePiece(Piece piece)
+    {    
+        if (piece == null)
         {
              throw new IllegalStateException("Tried to remove a piece which was not there");
         }
+//        if (piecesMap.containsKey(piece.getLocation()))
+//        {
+//             throw new IllegalStateException("Tried to remove a piece which was not there");
+//        }
         else
         {
-            piecesMap.remove(location);
-            return p;
+            piecesMap.remove(piece.getLocation());
+            return piece;
         }
     }
    
-    public void movePiece(Location from, Location to)
+    private void movePiece(Piece piece, Location to)
     {
-        Piece piece = removePiece(from);
-        Piece newPiece = piece.updateLocation(to);
-        insertPiece(newPiece);
+        if (piecesMap.containsKey(to))
+        {
+            throw new IllegalStateException();
+        }
+        else
+        {
+            removePiece(piece);
+            Piece newPiece = piece.updateLocation(to);
+            insertPiece(newPiece);
+        }
     }
 
     public boolean freeSquare(Location location)
@@ -134,5 +227,5 @@ public class Position
     public int hashCode() {
         return Objects.hash(piecesMap.values());
     }
-  
+
 }

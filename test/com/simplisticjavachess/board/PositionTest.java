@@ -5,6 +5,7 @@ import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -29,14 +30,14 @@ public class PositionTest
     { 
         assertTrue(areRepresentationsIsomorphic(new Position()));
         
-        position.insertPiece(new Piece(new Location(2,3),Color.BLACK,PieceType.KING));
+        position.doCommand(new InsertCommand(new Piece(new Location(2,3),Color.BLACK,PieceType.KING)));
         
         assertTrue(areRepresentationsIsomorphic(position));
         
-        position.insertPiece(new Piece(new Location(0,0),Color.WHITE,PieceType.KING));
+        position.doCommand(new InsertCommand(new Piece(new Location(0,0),Color.WHITE,PieceType.KING)));
         assertTrue(areRepresentationsIsomorphic(position));
         
-        position.insertPiece(new Piece(new Location(7,7),Color.BLACK,PieceType.PAWN));
+        position.doCommand(new InsertCommand(new Piece(new Location(7,7),Color.BLACK,PieceType.PAWN)));
         assertTrue(areRepresentationsIsomorphic(position));  
     }
     
@@ -77,29 +78,31 @@ public class PositionTest
     @Test
     public void testInsert()
     {
-        position.insertPiece(piece);
+        position.doCommand(new InsertCommand(piece));
         assertEquals(piece, position.getPiece(new Location(7,7)));
     }
     
     @Test(expected = IllegalStateException.class)
     public void testDoubleInsert()
     {
-        position.insertPiece(piece);
-        position.insertPiece(piece);
+        position.doCommand(new InsertCommand(piece));
+        position.doCommand(new InsertCommand(piece));
     }
     
     @Test
     public void testRemove()
     {
-        position.insertPiece(piece);
-        position.removePiece(piece.getLocation());
+        position.doCommand(new InsertCommand(piece));
+        position.doCommand(new RemoveCommand(piece));
         assertNull(position.getPiece(piece.getLocation()));
     }
     
+    @Ignore
     @Test(expected = IllegalStateException.class)
     public void testDoubleOfPieceNotPresent()
     {
-        position.removePiece(piece.getLocation());
+        position.doCommand(new RemoveCommand(piece));
+        position.doCommand(new RemoveCommand(piece));
     }
     
     @Test
@@ -111,7 +114,7 @@ public class PositionTest
     @Test
     public void testFreeSquareNonEmptySquare()
     {
-        position.insertPiece(piece);
+        position.doCommand(new InsertCommand(piece));
         assertFalse(position.freeSquare(piece.getLocation()));
     }
 }

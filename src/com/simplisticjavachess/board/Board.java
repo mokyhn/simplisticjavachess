@@ -133,12 +133,7 @@ public class Board
     
     public void insertPiece(Piece p)
     {
-        position.insertPiece(p);
-    }
-
-    public Piece removePiece(Location location)
-    {
-        return position.removePiece(location);
+        position.doCommand(new InsertCommand(p));
     }
 
     public boolean freeSquare(Location location)
@@ -272,12 +267,14 @@ public class Board
         switch (move.getMoveType())
         {
             case NORMALMOVE:
-                position.movePiece(move.getFrom(), move.getTo());
+
+                position.doCommand(new MoveCommand(piece, move.getTo()));
                 break;
 
             case CAPTURE:
-                removePiece(move.getTo());
-                position.movePiece(move.getFrom(), move.getTo());
+                Command removeCommand = new RemoveCommand(position.getPiece(move.getTo()));
+                Command moveCommand   = new MoveCommand(piece, move.getTo());
+                position.doCommand(new ComposedCommand(removeCommand, moveCommand));
                 if (move.getCapturedPiece().getPieceType() == PieceType.ROOK)
                 {
                     if (move.getTo().getX() == 0)
@@ -292,39 +289,60 @@ public class Board
                 break;
 
             case CASTLE_SHORT:
-                // Move the king
-                position.movePiece(move.getFrom(), move.getTo());
-                // then the rook
-                position.movePiece(new Location(7, move.getFrom().getY()), new Location(5, move.getFrom().getY()));
+               
+                position.doCommand(new ComposedCommand(
+                    // Move the king
+                    new MoveCommand(position.getPiece(move.getFrom()), move.getTo()),
+
+                    // Then the rook
+                    new MoveCommand(position.getPiece(new Location(7, move.getFrom().getY())), 
+                                    new Location(5, move.getFrom().getY()))
+                ));
                 break;
 
             case CASTLE_LONG:
-                // Move the king
-                position.movePiece(move.getFrom(), move.getTo());
-                // then the rook
-                position.movePiece(new Location(0, move.getFrom().getY()), new Location(3, move.getFrom().getY()));
+                position.doCommand(new ComposedCommand(
+                    // Move the king
+                    new MoveCommand(position.getPiece(move.getFrom()), move.getTo()),
+
+                    // Then the rook
+                    new MoveCommand(position.getPiece(new Location(0, move.getFrom().getY())), 
+                                    new Location(3, move.getFrom().getY()))
+                ));
                 break;
             
             case CAPTURE_ENPASSANT:
-                position.movePiece(move.getFrom(), move.getTo());
-                removePiece(new Location(move.getTo().getX(), move.getFrom().getY()));
+                position.doCommand(
+                        new ComposedCommand(
+                            new MoveCommand(piece, move.getTo()),
+                            new RemoveCommand(position.getPiece(new Location(move.getTo().getX(), move.getFrom().getY())))
+                        )
+                );
                 break;
             
             case PROMOTE_TO_BISHOP:  /* Intended fallthrough */
             case PROMOTE_TO_KNIGHT:  /* Intended fallthrough */
             case PROMOTE_TO_ROOK:    /* Intended fallthrough */
             case PROMOTE_TO_QUEEN:   /* Intended fallthrough */
-                insertPiece(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()));
-                removePiece(move.getFrom());
+                position.doCommand(
+                        new ComposedCommand(
+                            new InsertCommand(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo())),
+                            new RemoveCommand(piece)
+                        )
+                );  
                 break;
              
             case CAPTURE_AND_PROMOTE_TO_BISHOP: /* Intended fallthrough */
             case CAPTURE_AND_PROMOTE_TO_KNIGHT: /* Intended fallthrough */
             case CAPTURE_AND_PROMOTE_TO_ROOK:   /* Intended fallthrough */
             case CAPTURE_AND_PROMOTE_TO_QUEEN:  /* Intended fallthrough */
-                removePiece(move.getTo());
-                removePiece(move.getFrom());
-                insertPiece(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo())); 
+                position.doCommand(
+                        new ComposedCommand(
+                                new RemoveCommand(position.getPiece(move.getTo())),
+                                new RemoveCommand(position.getPiece(move.getFrom())),
+                                new InsertCommand(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()))
+                        )
+                );             
         }
 
         // Swap the move color
@@ -356,60 +374,8 @@ public class Board
 
     public void undo()
     {
-        Move move = currentState.move;      
         currentState = history.getPreviousState();  
-
-        switch (move.getMoveType())
-        {
-            case NORMALMOVE:
-                position.movePiece(move.getTo(), move.getFrom());
-                break;
-
-            case CAPTURE:
-                position.movePiece(move.getTo(), move.getFrom());
-                insertPiece(move.getCapturedPiece());
-                break;
-
-            case CASTLE_SHORT:
-                // Move the king back
-                position.movePiece(move.getTo(), move.getFrom());
-                // Then the rook
-                position.movePiece(new Location(5, move.getFrom().getY()), new Location(7, move.getFrom().getY()));
-                break;
-
-            case CASTLE_LONG:
-                // Move the king back
-                position.movePiece(move.getTo(), move.getFrom());
-                // Then the rook
-                position.movePiece(new Location(3, move.getFrom().getY()), new Location(0, move.getFrom().getY()));
-                break;    
-            
-            case CAPTURE_ENPASSANT:          
-                insertPiece(move.getCapturedPiece());
-                position.movePiece(move.getTo(), move.getFrom());
-                break;
-                
-            case PROMOTE_TO_BISHOP: /* Intended fallthrough */
-            case PROMOTE_TO_KNIGHT: /* Intended fallthrough */
-            case PROMOTE_TO_ROOK:   /* Intended fallthrough */
-            case PROMOTE_TO_QUEEN:  /* Intended fallthrough */
-                insertPiece(new Piece(move.getFrom(), move.getWhoMoves(), PieceType.PAWN));
-                removePiece(move.getTo());
-                break;
-
-            case CAPTURE_AND_PROMOTE_TO_BISHOP: /* Intended fallthrough */
-            case CAPTURE_AND_PROMOTE_TO_KNIGHT: /* Intended fallthrough */
-            case CAPTURE_AND_PROMOTE_TO_ROOK:   /* Intended fallthrough */
-            case CAPTURE_AND_PROMOTE_TO_QUEEN:  /* Intended fallthrough */
-                removePiece(move.getTo());
-                insertPiece(move.getCapturedPiece());
-                insertPiece(new Piece(move.getFrom(), move.getWhoMoves(), PieceType.PAWN));
-                break;
-        }
-        
-        assert(position.getPiece(move.getFrom()) != null);
-        assert(position.getPiece(move.getFrom()).getPieceType() != null);
-                
+        position.undo();
     }
 
 
