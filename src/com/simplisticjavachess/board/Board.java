@@ -267,14 +267,14 @@ public class Board
         switch (move.getMoveType())
         {
             case NORMALMOVE:
-
                 position.doCommand(new MoveCommand(piece, move.getTo()));
                 break;
 
             case CAPTURE:
-                Command removeCommand = new RemoveCommand(position.getPiece(move.getTo()));
-                Command moveCommand   = new MoveCommand(piece, move.getTo());
-                position.doCommand(new ComposedCommand(removeCommand, moveCommand));
+                position.doCommand(new ComposedCommand(
+                        new RemoveCommand(move.getCapturedPiece()), 
+                        new MoveCommand(piece, move.getTo()))
+                );
                 if (move.getCapturedPiece().getPieceType() == PieceType.ROOK)
                 {
                     if (move.getTo().getX() == 0)
@@ -289,7 +289,6 @@ public class Board
                 break;
 
             case CASTLE_SHORT:
-               
                 position.doCommand(new ComposedCommand(
                     // Move the king
                     new MoveCommand(position.getPiece(move.getFrom()), move.getTo()),
@@ -315,7 +314,7 @@ public class Board
                 position.doCommand(
                         new ComposedCommand(
                             new MoveCommand(piece, move.getTo()),
-                            new RemoveCommand(position.getPiece(new Location(move.getTo().getX(), move.getFrom().getY())))
+                            new RemoveCommand(move.getCapturedPiece())
                         )
                 );
                 break;
@@ -364,11 +363,7 @@ public class Board
             checkDrawBy3RepetionsRule();
             wasMoveLegal = true;
         }
-
-
-        assert(position.getPiece(move.getFrom()) == null);
-        assert(position.getPiece(move.getTo()) != null);
-        assert(position.getPiece(move.getTo()).getPieceType() != null);
+        
         return wasMoveLegal;
     }
 

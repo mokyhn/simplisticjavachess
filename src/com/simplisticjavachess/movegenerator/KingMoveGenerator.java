@@ -19,7 +19,7 @@ public class KingMoveGenerator
 {   
     private static ArrayList<Move> generateMoves(Board b, Piece p)
     {
-        final ArrayList<Move> moves = new ArrayList<Move>();
+        final ArrayList<Move> moves = new ArrayList<>();
         final Color color = b.inMove();
         final int fx = p.getxPos();
         final int fy = p.getyPos();

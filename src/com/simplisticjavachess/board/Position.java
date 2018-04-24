@@ -147,15 +147,16 @@ public class Position
         {
              throw new IllegalStateException("Tried to remove a piece which was not there");
         }
-//        if (piecesMap.containsKey(piece.getLocation()))
-//        {
-//             throw new IllegalStateException("Tried to remove a piece which was not there");
-//        }
-        else
+        if (piecesMap.containsKey(piece.getLocation()))
         {
             piecesMap.remove(piece.getLocation());
             return piece;
         }
+        else
+        {
+             throw new IllegalStateException("Tried to remove a piece which was not there");
+        }
+
     }
    
     private void movePiece(Piece piece, Location to)
