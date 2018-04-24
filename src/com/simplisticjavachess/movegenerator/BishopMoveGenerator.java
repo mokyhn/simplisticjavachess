@@ -18,12 +18,12 @@ public class BishopMoveGenerator
     
     private static ArrayList<Move> generateMoves(Board b, Piece p)
     {
-        final ArrayList<Move> Moves = new ArrayList<Move>();
+        final ArrayList<Move> Moves = new ArrayList<>();
        
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(1, 1)));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(1, -1)));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(-1, 1)));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(-1, -1)));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, Vector.UP_AND_RIGHT));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, Vector.DOWN_AND_RIGHT));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, Vector.UP_AND_LEFT));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, Vector.DOWN_AND_LEFT));
        
         return Moves;
     }

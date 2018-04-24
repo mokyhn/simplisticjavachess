@@ -16,12 +16,12 @@ public class RookMoveGenerator
 {
     private static ArrayList<Move> generateMoves(Board b, Piece p)
     {
-        final ArrayList<Move> Moves = new ArrayList<Move>();
+        final ArrayList<Move> Moves = new ArrayList<>();
 
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(0, 1)));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(0, -1)));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(1, 0)));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, new Vector(0, 1)));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, Vector.UP));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, Vector.DOWN));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, Vector.RIGHT));
+        Moves.addAll(LineMoveGenerator.generateMoves(b, p, Vector.LEFT));
 
         return Moves;
     }

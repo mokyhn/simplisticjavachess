@@ -11,56 +11,33 @@ import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class KnightMoveGenerator
 {
     private static ArrayList<Move> generateMoves(Board b, Piece p)
     {
-        final ArrayList<Move> Moves = new ArrayList<Move>();
-        Move newMove;
-        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(-2, 1));
-        if (newMove != null)
-        {
-            Moves.add(newMove);
-        }
-        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(-2, -1));
-        if (newMove != null)
-        {
-            Moves.add(newMove);
-        }
-        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(-1, 2));
-        if (newMove != null)
-        {
-            Moves.add(newMove);
-        }
-        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(1, 2));
-        if (newMove != null)
-        {
-            Moves.add(newMove);
-        }
-        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(-1, -2));
-        if (newMove != null)
-        {
-            Moves.add(newMove);
-        }
-        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(1, -2));
-        if (newMove != null)
-        {
-            Moves.add(newMove);
-        }
-        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(2, 1));
-        if (newMove != null)
-        {
-            Moves.add(newMove);
-        }
-        newMove = MoveGeneratorUtil.genMove(b, p, new Vector(2, -1));
-        if (newMove != null)
-        {
-            Moves.add(newMove);
-        }
+        final ArrayList<Move> Moves = new ArrayList<>();
+
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(-2, 1)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(-2, -1)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(-1, 2)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(1, 2)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(-1, -2)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(1, -2)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(2, 1)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(2, -1)));
+
         return Moves;
     }
 
+    private static void addIfNotNull(List<Move> moves, Move move)
+    {
+        if (move != null)
+        {
+            moves.add(move);
+        }
+    }
 
     // TODO: The following can be refined so that not all moves are generated at once
     public static Iterator<Move> getIterator(final Board b, final Piece p)
@@ -69,6 +46,7 @@ public class KnightMoveGenerator
         {
             Iterator<Move> generated = null;
             
+            @Override
             public boolean hasNext()
             {
                 if (generated == null) 
@@ -78,6 +56,7 @@ public class KnightMoveGenerator
                 return generated.hasNext();
             }
 
+            @Override
             public Move next()
             {
                 if (hasNext()) 
@@ -90,6 +69,7 @@ public class KnightMoveGenerator
                 }
             }
 
+            @Override
             public void remove()
             {                
             }

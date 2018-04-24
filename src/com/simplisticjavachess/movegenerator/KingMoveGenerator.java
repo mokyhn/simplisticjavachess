@@ -54,29 +54,15 @@ public class KingMoveGenerator
         }
         
 
-        // Left
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, new Vector(-1,0)));
+        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, Vector.LEFT));
+        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, Vector.RIGHT));        
+        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, Vector.UP));
+        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, Vector.DOWN));
         
-        // Left and up
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, new Vector(-1,1)));
- 
-        // Left and down
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, new Vector(-1,-1)));
- 
-        //Right
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, new Vector(1,0)));
-        
-        //Right and up
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, new Vector(1,1)));
-        
-        //Right and down
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, new Vector(1,-1)));
-        
-        //Up
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, new Vector(0,1)));
-
-        //Down
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, new Vector(0,-1)));
+        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, Vector.UP_AND_LEFT));
+        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, Vector.DOWN_AND_LEFT));
+        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, Vector.UP_AND_RIGHT));
+        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(b, p, Vector.DOWN_AND_RIGHT));
         
         return moves;
     }    
