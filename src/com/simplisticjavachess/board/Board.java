@@ -245,10 +245,10 @@ public class Board
         }
 
         // Moving the king will disallow castling in the future
-        if (piece.getPieceType() == PieceType.KING && move.getFrom().getX() == 4)
+        if (piece.getPieceType() == PieceType.KING)
         {
-            newState.setCanCastleLong(false, piece.getColor());
-            newState.setCanCastleShort(false, piece.getColor());
+            newState.setCanCastleLong(false, move.getWhoMoves());
+            newState.setCanCastleShort(false, move.getWhoMoves());
         }
         
         // Moving a rook can disallow castling in the future
@@ -279,11 +279,11 @@ public class Board
                 {
                     if (move.getTo().getX() == 0)
                     {
-                         newState.setCanCastleLong(false, piece.getColor());
+                         newState.setCanCastleLong(false, move.getCapturedPiece().getColor());
                     }
                      else if (move.getTo().getX() == 7)
                     {
-                        newState.setCanCastleShort(false, piece.getColor());
+                        newState.setCanCastleShort(false, move.getCapturedPiece().getColor());
                     }
                 }
                 break;
