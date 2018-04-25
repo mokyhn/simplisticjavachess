@@ -13,7 +13,10 @@ public class Vector
     public final static Vector DOWN = new Vector(0, -1);
     public final static Vector LEFT = new Vector(-1, 0);
     public final static Vector RIGHT = new Vector(1, 0);
-
+    
+    public final static Vector LEFT_LEFT = new Vector(-2, 0);
+    public final static Vector RIGHT_RIGHT = new Vector(2, 0);
+    
     public final static Vector UP_AND_RIGHT = UP.add(RIGHT);
     public final static Vector UP_AND_LEFT  = UP.add(LEFT);
     public final static Vector DOWN_AND_RIGHT = DOWN.add(RIGHT);

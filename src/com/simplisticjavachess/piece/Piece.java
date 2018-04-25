@@ -17,10 +17,17 @@ public final class Piece {
     private final int hashCode;
    
     public Piece(Location location, Color color, PieceType pieceType) {
-        this.location = location;        
-        this.color = color;
-        this.pieceType  = pieceType;
-        this.hashCode = Objects.hash(this.pieceType, this.color, this.location);
+        if (location.isValid())
+        {
+            this.location = location;        
+            this.color = color;
+            this.pieceType  = pieceType;
+            this.hashCode = Objects.hash(this.pieceType, this.color, this.location);
+        }
+        else
+        {
+            throw new IllegalArgumentException();
+        }      
     }
    
     public Piece(Location location, char pieceLetter)  {

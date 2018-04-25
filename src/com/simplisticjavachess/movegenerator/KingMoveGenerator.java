@@ -5,6 +5,7 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.Location;
 import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveType;
@@ -37,7 +38,10 @@ public class KingMoveGenerator
             assert (b.getPiece(7, fy) != null);
             assert (b.getPiece(7, fy).getPieceType() == PieceType.ROOK) : "Expected rook, found wirdo piece: " + b.getPiece(7, fy).toString() + "fx, fy=" + fx + ", " + fy + "c = " + color;
             assert (b.getPiece(7, fy).getColor() == color);
-            moves.add(new Move(fx, fy, fx + 2, fy, MoveType.CASTLE_SHORT, null, color));
+            moves.add(new Move(
+                    p.getLocation(), 
+                    Vector.RIGHT_RIGHT.translocate(p.getLocation()),
+                    MoveType.CASTLE_SHORT, null, color));
         }
 
         // Castling long
@@ -50,7 +54,10 @@ public class KingMoveGenerator
                 && !b.isAttacked(3, fy)
                 && !b.isInCheck(color))
         {
-            moves.add(new Move(fx, fy, fx - 2, fy, MoveType.CASTLE_LONG, null, color));
+            moves.add(new Move(
+                    p.getLocation(),
+                    Vector.LEFT_LEFT.translocate(p.getLocation()),
+                    MoveType.CASTLE_LONG, null, color));
         }
         
 

@@ -24,30 +24,26 @@ public final class Move
 
     private final Color whoMoves;
 
-    public Move(int fromX, int fromY, int toX, int toY, MoveType type, Piece capturedPiece, Color whoMoves)
-    {
-        from = new Location(fromX, fromY);
-        to = new Location(toX, toY);
-        this.moveType = type;
-        this.capturedPiece = capturedPiece;
-        this.whoMoves = whoMoves;
-    }
-
     public Move(Location from, Location to, MoveType type, Piece capturedPiece, Color whoMoves)
     {
-        this.from = from;
-        this.to = to;
-        this.moveType = type;
-        this.capturedPiece = capturedPiece;
-        this.whoMoves = whoMoves;        
+        if (from.isValid() && to.isValid())
+        {
+            this.from = from;
+            this.to = to;
+            this.moveType = type;
+            this.capturedPiece = capturedPiece;
+            this.whoMoves = whoMoves;
+        }
+        else
+        {
+            throw new IllegalArgumentException();
+        }
     }
-    
+
     public boolean aCapture()
     {
         return getMoveType().isCapture();
     }
-
-  
 
     public PieceType promotionTo()
     {
