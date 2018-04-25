@@ -148,8 +148,8 @@ public class IntegrationTest
     @Test
     public void fiftyMoveRuleDraw() throws Exception
     {
-        assertTrue(search("k7/nn6/8/8/8/8/N7/K7 w KQkq", "", MINMAX, 3, "a2b4 a2c3 a2c1 a1b1 a1b2"));
-        assertTrue(search("k7/nn6/8/8/8/8/N7/K7 w KQkq", "", ALPHABETA, 3, "a2b4 a2c3 a2c1 a1b1 a1b2"));
+        assertTrue(search("k7/nn6/8/8/8/8/N7/K7 w -", "", MINMAX, 3, "a2b4 a2c3 a2c1 a1b1 a1b2"));
+        assertTrue(search("k7/nn6/8/8/8/8/N7/K7 w -", "", ALPHABETA, 3, "a2b4 a2c3 a2c1 a1b1 a1b2"));
     }
 
     @Test

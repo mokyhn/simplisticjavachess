@@ -97,12 +97,12 @@ public class Board
 
     public boolean canCastleShort()
     {
-        return currentState.getCanCastleShort() && !isInCheck();
+        return currentState.getCanCastleShort();
     }
 
     public boolean canCastleLong()
     {
-        return currentState.getCanCastleLong() && !isInCheck();
+        return currentState.getCanCastleLong();
     }
 
     public void setCanCastleShort(boolean flag, Color color)
