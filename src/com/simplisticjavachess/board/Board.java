@@ -445,4 +445,9 @@ public class Board
         return getPiece(location) == null;
     }
 
+    public Vector getMoveDirection()
+    {
+        return Vector.getMoveDirection(inMove());
+    }
+
 }

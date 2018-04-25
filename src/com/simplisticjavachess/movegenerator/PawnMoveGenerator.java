@@ -32,12 +32,14 @@ public class PawnMoveGenerator
         final ArrayList<Move> Moves = new ArrayList<>();
 
         // Normal one step forward pawn move
-        if ((c == Color.WHITE && fy < 6) || (c == Color.BLACK && fy > 1))
         {
-            Location to = new Location(fx, fy + c.getColor());
-            if (board.freeSquare(to))
+            Location to = board.getMoveDirection().translocate(piece.getLocation());
+            if (to.isValid())
             {
-                Moves.add(new Move(from, to, MoveType.NORMALMOVE, null, c));
+                if (board.freeSquare(to))
+                {
+                    Moves.add(new Move(from, to, MoveType.NORMALMOVE, null, c));
+                }
             }
         }
 
@@ -63,58 +65,62 @@ public class PawnMoveGenerator
             Moves.add(new Move(from, to, MoveType.PROMOTE_TO_BISHOP, null, c));
         }
 
-        // Normal diagonal capturing to the left
-        if ((fx > 0) && (fy != (5 * c.getColor() + 7) / 2))
+        if (fy == (5 * c.getColor() + 7) / 2)
         {
-            Location to = new Location(fx - 1, fy + c.getColor());
-            leftPiece = board.getPiece(to);
-            if (leftPiece != null && leftPiece.getColor() != c)
-            {                
-                Moves.add(new Move(from, to, MoveType.CAPTURE, leftPiece, c));
-            }
-        }
-
-        // Normal diagonal capturing to the right
-        if ((fx < 7) && (fy != (5 * c.getColor() + 7) / 2))
-        {
-            Location to = new Location(fx + 1, fy + c.getColor());
-            rightPiece = board.getPiece(to);
-            if (rightPiece != null && rightPiece.getColor() != c)
+            // Promotion via diagonal capturing to the left
+            if (fx > 0)
             {
-                Moves.add(new Move(from, to, MoveType.CAPTURE, rightPiece, c));
+                Location to = new Location(fx - 1, fy + c.getColor());
+                leftPiece = board.getPiece(to);
+                if (leftPiece != null && leftPiece.getColor() != c)
+                {
+                    Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece, c));
+                    Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece, c));
+                    Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN,  leftPiece, c));
+                    Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_ROOK,   leftPiece, c));
+                }
             }
-        }
 
-        // Promotion via diagonal capturing to the left
-        if ((fx > 0) && (fy == (5 * c.getColor() + 7) / 2))
-        {
-            Location to = new Location(fx - 1, fy + c.getColor());
-            leftPiece = board.getPiece(to);
-            if (leftPiece != null && leftPiece.getColor() != c)
+            // Promotion via diagonal capturing to the right
+            if (fx < 7)
             {
-                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece, c));
-                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, leftPiece, c));
-                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN,  leftPiece, c));
-                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_ROOK,   leftPiece, c));
+                Location to = new Location(fx + 1, fy + c.getColor());
+                rightPiece = board.getPiece(to);
+                if (rightPiece != null && rightPiece.getColor() != c)
+                {
+                    Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece, c));
+                    Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, rightPiece, c));
+                    Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN,  rightPiece, c));
+                    Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_ROOK,   rightPiece, c));
+                }
             }
         }
-
-        // Promotion via diagonal capturing to the right
-        if ((fx < 7) && (fy == (5 * c.getColor() + 7) / 2))
+        else
         {
-            Location to = new Location(fx + 1, fy + c.getColor());
-            rightPiece = board.getPiece(to);
-            if (rightPiece != null && rightPiece.getColor() != c)
+            // Normal diagonal capturing to the left
+            if (fx > 0)
             {
-                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece, c));
-                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_KNIGHT, rightPiece, c));
-                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_QUEEN,  rightPiece, c));
-                Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_ROOK,   rightPiece, c));
+                Location to = new Location(fx - 1, fy + c.getColor());
+                leftPiece = board.getPiece(to);
+                if (leftPiece != null && leftPiece.getColor() != c)
+                {                
+                    Moves.add(new Move(from, to, MoveType.CAPTURE, leftPiece, c));
+                }
+            }
+
+            // Normal diagonal capturing to the right
+            if (fx < 7)
+            {
+                Location to = new Location(fx + 1, fy + c.getColor());
+                rightPiece = board.getPiece(to);
+                if (rightPiece != null && rightPiece.getColor() != c)
+                {
+                    Moves.add(new Move(from, to, MoveType.CAPTURE, rightPiece, c));
+                }
             }
         }
 
-        // En passant capture
-       
+        // En passant capture       
         Move lastMove = board.getLastMove();
         if (lastMove != null)
         {
@@ -145,8 +151,6 @@ public class PawnMoveGenerator
                 }
             }
         }
-
-         
 
         return Moves;
 
