@@ -15,11 +15,11 @@ import java.util.Iterator;
 
 public class QueenMoveGenerator
 {  
-    public static Iterator<Move> getIterator(final Board b, final Piece p)
+    public static Iterator<Move> getIterator(final Board board, final Piece piece)
     {
         return IteratorUtils.compose(
-                BishopMoveGenerator.getIterator(b, p), 
-                RookMoveGenerator.iterator(b, p)
+                BishopMoveGenerator.getIterator(board, piece), 
+                RookMoveGenerator.iterator(board, piece)
         );
     }
    

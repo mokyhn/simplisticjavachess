@@ -16,20 +16,20 @@ import java.util.Iterator;
 public class BishopMoveGenerator
 {
     
-    private static ArrayList<Move> generateMoves(Board b, Piece p)
+    private static ArrayList<Move> generateMoves(Board board, Piece piece)
     {
         final ArrayList<Move> Moves = new ArrayList<>();
        
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, Vector.UP_AND_RIGHT));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, Vector.DOWN_AND_RIGHT));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, Vector.UP_AND_LEFT));
-        Moves.addAll(LineMoveGenerator.generateMoves(b, p, Vector.DOWN_AND_LEFT));
+        Moves.addAll(LineMoveGenerator.generateMoves(board, piece, Vector.UP_AND_RIGHT));
+        Moves.addAll(LineMoveGenerator.generateMoves(board, piece, Vector.DOWN_AND_RIGHT));
+        Moves.addAll(LineMoveGenerator.generateMoves(board, piece, Vector.UP_AND_LEFT));
+        Moves.addAll(LineMoveGenerator.generateMoves(board, piece, Vector.DOWN_AND_LEFT));
        
         return Moves;
     }
     
     // TODO: The following can be refined so that not all moves are generated at once
-    public static Iterator<Move> getIterator(final Board b, final Piece p)
+    public static Iterator<Move> getIterator(final Board board, final Piece piece)
     {
         return new Iterator<Move>()
         {
@@ -40,7 +40,7 @@ public class BishopMoveGenerator
             {
                 if (generated == null) 
                 {
-                    generated = generateMoves(b, p).iterator();
+                    generated = generateMoves(board, piece).iterator();
                 }
                 return generated.hasNext();
             }

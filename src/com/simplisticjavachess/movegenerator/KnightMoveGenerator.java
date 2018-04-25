@@ -15,18 +15,18 @@ import java.util.List;
 
 public class KnightMoveGenerator
 {
-    private static ArrayList<Move> generateMoves(Board b, Piece p)
+    private static ArrayList<Move> generateMoves(Board board, Piece piece)
     {
         final ArrayList<Move> Moves = new ArrayList<>();
 
-        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(-2, 1)));
-        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(-2, -1)));
-        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(-1, 2)));
-        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(1, 2)));
-        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(-1, -2)));
-        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(1, -2)));
-        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(2, 1)));
-        addIfNotNull(Moves, MoveGeneratorUtil.genMove(b, p, new Vector(2, -1)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(board, piece, new Vector(-2, 1)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(board, piece, new Vector(-2, -1)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(board, piece, new Vector(-1, 2)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(board, piece, new Vector(1, 2)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(board, piece, new Vector(-1, -2)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(board, piece, new Vector(1, -2)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(board, piece, new Vector(2, 1)));
+        addIfNotNull(Moves, MoveGeneratorUtil.genMove(board, piece, new Vector(2, -1)));
 
         return Moves;
     }

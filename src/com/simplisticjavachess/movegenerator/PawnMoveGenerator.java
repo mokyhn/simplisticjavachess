@@ -29,7 +29,7 @@ public class PawnMoveGenerator
         Piece leftPiece;
         Piece rightPiece;
 
-        final ArrayList<Move> Moves = new ArrayList<Move>();
+        final ArrayList<Move> Moves = new ArrayList<>();
 
         // Normal one step forward pawn move
         if ((c == Color.WHITE && fy < 6) || (c == Color.BLACK && fy > 1))

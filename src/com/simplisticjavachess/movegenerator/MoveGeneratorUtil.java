@@ -14,22 +14,22 @@ import com.simplisticjavachess.piece.Piece;
 
 public class MoveGeneratorUtil
 {
-    public static Move genKingMove(Board board, Piece fp, Vector v)
+    public static Move genKingMove(Board board, Piece piece, Vector vector)
     {
-        return genMoveAux(board, fp, v, true);
+        return genMoveAux(board, piece, vector, true);
     }
 
 
-    public static Move genMove(Board board, Piece fp, Vector v)
+    public static Move genMove(Board board, Piece piece, Vector vector)
     {
-        return genMoveAux(board, fp, v, false);
+        return genMoveAux(board, piece, vector, false);
     }
 
     // Used for generation of knight, bishop, rook and queen moves
-    private static Move genMoveAux(Board board, Piece fp, Vector v, boolean isKingMove)
+    private static Move genMoveAux(Board board, Piece piece, Vector vector, boolean isKingMove)
     {
-        Location from = fp.getLocation();
-        Location to = v.translocate(from);
+        Location from = piece.getLocation();
+        Location to = vector.translocate(from);
 
         if (to.isValid())
         {

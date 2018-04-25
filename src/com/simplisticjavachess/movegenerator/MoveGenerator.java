@@ -14,29 +14,29 @@ public class MoveGenerator
 {
     
     // Genereate the possible move iterator for one single piece
-    private Iterator<Move> generateMoves(Board b, Piece p)
+    private Iterator<Move> generateMoves(Board board, Piece piece)
     {
-        final Color sideToMove = b.inMove();
+        final Color sideToMove = board.inMove();
 
-        if (p.getColor() != sideToMove)
+        if (piece.getColor() != sideToMove)
         {
             return null;
         }
 
-        switch (p.getPieceType())
+        switch (piece.getPieceType())
         {
             case PAWN:
-                return PawnMoveGenerator.getIterator(b, p);
+                return PawnMoveGenerator.getIterator(board, piece);
             case KING:
-                return KingMoveGenerator.getIterator(b, p);
+                return KingMoveGenerator.getIterator(board, piece);
             case KNIGHT:
-                return KnightMoveGenerator.getIterator(b, p);
+                return KnightMoveGenerator.getIterator(board, piece);
             case BISHOP:
-                return BishopMoveGenerator.getIterator(b, p);
+                return BishopMoveGenerator.getIterator(board, piece);
             case ROOK:
-                return RookMoveGenerator.iterator(b, p);
+                return RookMoveGenerator.iterator(board, piece);
             case QUEEN:
-               return QueenMoveGenerator.getIterator(b, p);
+               return QueenMoveGenerator.getIterator(board, piece);
             default:
                 return null; // Not reachable
         }        
@@ -44,7 +44,7 @@ public class MoveGenerator
     
     public Iterator<Move> generateMoves(Board board)
     {
-        final ArrayList<Iterator<Move>> moveIterators = new ArrayList<Iterator<Move>>();
+        final ArrayList<Iterator<Move>> moveIterators = new ArrayList<>();
 
         if (board.isDraw() || board.isMate())
         {
