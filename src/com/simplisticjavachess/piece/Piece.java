@@ -95,11 +95,10 @@ public final class Piece {
     {
         if (object instanceof Piece) 
         {
-            Piece p = (Piece) object;
-            return  p.getColor() == this.getColor() &&
-                    p.getPieceType()  == this.getPieceType()  &&
-                    p.getxPos()  == this.getxPos()  &&
-                    p.getyPos()  == this.getyPos();
+            Piece piece = (Piece) object;
+            return this.color.equals(piece.color) &&
+                   this.pieceType.equals(piece.pieceType) &&
+                   this.location.equals(piece.location);
         }
         else 
         {
