@@ -72,16 +72,8 @@ public class AlphaBetaSearch implements Search
             }
             thereWasALegalMove = true;
 
-            //String movestr = m.toString(); //m.toString().replace('-', 'z')).replace('=', 'z');
-
-            //String sb = "<" + movestr + ">";
-            //String eb = "</" + movestr + ">";
-
-            //System.out.print(sb + m.toString() );
             int variantEvaluation = alphaBetaSearch(currentPlyDepth - 1, totalPlyDepth, alpha, beta);
 
-             //System.out.print(" is " + humanReadable(variantEvaluation) + "," + humanReadable(alpha) + "," + humanReadable(beta));
-            //System.out.print(eb);
             analyzeBoard.undo();
 
             if (inMove == Color.WHITE)
@@ -116,14 +108,14 @@ public class AlphaBetaSearch implements Search
                 }
             }
         }
-        //System.out.println();
+
         // Mate or draw
         if (!thereWasALegalMove)
         {
             if (analyzeBoard.isInCheck(inMove))
             {
                 analyzeBoard.setGameResult(GameResult.MATE);
-                //System.out.println("Matefound:\n" + analyzeBoard.toString());
+
                 if (inMove == Color.WHITE)
                 {
                     return Evaluator.WHITE_IS_MATED + distanceToRoot;

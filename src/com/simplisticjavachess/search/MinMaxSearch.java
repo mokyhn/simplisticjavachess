@@ -67,12 +67,12 @@ public class MinMaxSearch implements Search
             {
                 analyzeBoard.undo();
                 continue; // The pseudo legal move m turned out to be illegal.
-            }                //Nice verbose trace: System.out.print("(" + (plyDepth-depthToGo) +": "+ m.toString());
+            }
 
             thereWasALegalMove = true;
             score = minMaxSearch(plyDepth, depthToGo - 1);
             analyzeBoard.undo();
-            //Nice verbose trace: System.out.println(")");
+
             if (firstCalculation)
             {
                 bestScore = score;
@@ -92,7 +92,7 @@ public class MinMaxSearch implements Search
                             bestScore = score;
                             if (plyDepth == depthToGo)
                             {
-                                strongestMove = move; // Used to extract strongest move
+                                strongestMove = move;
                             }
                         }
                     break;
@@ -102,7 +102,7 @@ public class MinMaxSearch implements Search
                             bestScore = score;
                             if (plyDepth == depthToGo)
                             {
-                                strongestMove = move; // Used to extract strongest move
+                                strongestMove = move;
                             }
                         }
                 }
@@ -116,7 +116,7 @@ public class MinMaxSearch implements Search
             if (analyzeBoard.isInCheck(inMove))
             {
                 analyzeBoard.setGameResult(GameResult.MATE);               
-                //System.out.println("Matefound:\n" + analyzeBoard.toString());
+
                 if (inMove == Color.WHITE)
                 {
                     return Evaluator.WHITE_IS_MATED + distanceToRoot;
