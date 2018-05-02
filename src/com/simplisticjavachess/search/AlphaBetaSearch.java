@@ -31,22 +31,10 @@ public class AlphaBetaSearch implements Search
     {
         Boolean thereWasALegalMove = false;
         final Color inMove = analyzeBoard.inMove();
-        int distanceToRoot = totalPlyDepth - currentPlyDepth;
 
         if (analyzeBoard.isDraw())
         {
             return 0;
-        }
-
-        if (analyzeBoard.isMate())
-        {
-            if (inMove == Color.WHITE)
-            {
-                return Evaluator.WHITE_IS_MATED + distanceToRoot;
-            } else
-            {
-                return Evaluator.BLACK_IS_MATED - distanceToRoot;
-            }
         }
 
         if (currentPlyDepth == 0)
@@ -118,10 +106,10 @@ public class AlphaBetaSearch implements Search
 
                 if (inMove == Color.WHITE)
                 {
-                    return Evaluator.WHITE_IS_MATED + distanceToRoot;
+                    return Evaluator.WHITE_IS_MATED;
                 } else
                 {
-                    return Evaluator.BLACK_IS_MATED - distanceToRoot;
+                    return Evaluator.BLACK_IS_MATED;
                 }
             } 
             else

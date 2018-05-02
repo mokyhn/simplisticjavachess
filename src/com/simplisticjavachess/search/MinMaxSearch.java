@@ -109,20 +109,20 @@ public class MinMaxSearch implements Search
             }
         }
         
-        int distanceToRoot = plyDepth - depthToGo;
         // Mate or draw
         if (!thereWasALegalMove)
         {
             if (analyzeBoard.isInCheck(inMove))
             {
+                    
                 analyzeBoard.setGameResult(GameResult.MATE);               
 
                 if (inMove == Color.WHITE)
                 {
-                    return Evaluator.WHITE_IS_MATED + distanceToRoot;
+                    return Evaluator.WHITE_IS_MATED;
                 } else
                 {
-                    return Evaluator.BLACK_IS_MATED - distanceToRoot;
+                    return Evaluator.BLACK_IS_MATED;
                 }
             } else
             {

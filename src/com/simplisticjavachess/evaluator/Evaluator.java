@@ -12,13 +12,13 @@ public final class Evaluator
 
     public static final int WHITE_IS_MATED = -2147480000;
     public static final int BLACK_IS_MATED = 2147480000;
-    public static final int DRAW = 0;
+    public static final int EQUAL = 0;
 
-    public static final int PAWNVALUE = 1;
-    public static final int ROOKVALUE = 5;
-    public static final int BISHOPVALUE = 3;
-    public static final int KNIGHTVALUE = 3;
-    public static final int QUEENVALUE = 9;
+    private static final int PAWNVALUE = 1;
+    private static final int ROOKVALUE = 5;
+    private static final int BISHOPVALUE = 3;
+    private static final int KNIGHTVALUE = 3;
+    private static final int QUEENVALUE = 9;
 
     public static int evaluate(Board b)
     {
