@@ -14,6 +14,7 @@ import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.piece.Color;
 import java.util.Iterator;
+import java.util.Optional;
 
 public class MinMaxSearch implements Search
 {
@@ -32,8 +33,6 @@ public class MinMaxSearch implements Search
    
     private int minMaxSearch(int plyDepth, int depthToGo)
     {     
-        boolean firstCalculation = true;
-
         if (depthToGo == 0)
         {
             return analyzeBoard.isDraw() ? 0 : Evaluator.evaluate(analyzeBoard);
@@ -57,7 +56,7 @@ public class MinMaxSearch implements Search
         boolean thereWasALegalMove = false;
 
         int score;
-        int bestScore = 0;
+        Optional<Integer> bestScore = Optional.empty();
            
         while (moves.hasNext())
         {
@@ -74,23 +73,14 @@ public class MinMaxSearch implements Search
             score = minMaxSearch(plyDepth, depthToGo - 1);
             analyzeBoard.undo();
 
-            if (firstCalculation)
-            {
-                bestScore = score;
-                if (plyDepth == depthToGo)
-                {
-                    strongestMove = move;
-                }
-                firstCalculation = false;
-            } 
-            else
+            if (bestScore.isPresent())
             {
                 switch (inMove) 
                 {
                     case WHITE:
-                        if (score > bestScore)
+                        if (score > bestScore.get())
                         {
-                            bestScore = score;
+                            bestScore = Optional.of(score);
                             if (plyDepth == depthToGo)
                             {
                                 strongestMove = move;
@@ -98,14 +88,22 @@ public class MinMaxSearch implements Search
                         }
                     break;
                     case BLACK:
-                        if (score < bestScore)
+                        if (score < bestScore.get())
                         {
-                            bestScore = score;
+                            bestScore = Optional.of(score);
                             if (plyDepth == depthToGo)
                             {
                                 strongestMove = move;
                             }
                         }
+                }
+            }
+            else
+            {
+                bestScore = Optional.of(score);
+                if (plyDepth == depthToGo)
+                {
+                    strongestMove = move;
                 }
             }
         }
@@ -132,7 +130,7 @@ public class MinMaxSearch implements Search
             } // draw
         }
 
-        return bestScore;
+        return bestScore.get();
 
     }
 
