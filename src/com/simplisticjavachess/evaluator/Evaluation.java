@@ -16,6 +16,9 @@ public class Evaluation
     public static final Evaluation NONE = new Evaluation();
     
     public static final Evaluation EQUAL = new Evaluation(0);
+    public static final Evaluation WHITE_IS_MATED = new Evaluation(-2147480000);
+    public static final Evaluation BLACK_IS_MATED = new Evaluation(2147480000);
+
     
     private final Integer value;
     
