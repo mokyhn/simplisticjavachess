@@ -13,7 +13,9 @@ public class Evaluation
      /**
      * The un-evaluated evaluation of something  
      */
-    static final Evaluation NONE = new Evaluation();
+    public static final Evaluation NONE = new Evaluation();
+    
+    public static final Evaluation EQUAL = new Evaluation(0);
     
     private final Integer value;
     
