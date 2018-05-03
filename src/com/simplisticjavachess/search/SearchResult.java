@@ -1,12 +1,13 @@
 package com.simplisticjavachess.search;
 
+import com.simplisticjavachess.evaluator.Evaluation;
 import com.simplisticjavachess.move.Move;
 
 public class SearchResult {
     private final Move move;
-    private final int evaluation;
+    private final Evaluation evaluation;
     
-    public SearchResult(Move move, int evaluation)
+    public SearchResult(Move move, Evaluation evaluation)
     {
         this.move = move;
         this.evaluation = evaluation;
@@ -23,7 +24,7 @@ public class SearchResult {
     /**
      * @return the evaluation
      */
-    public int getEvaluation()
+    public Evaluation getEvaluation()
     {
         return evaluation;
     }
@@ -31,7 +32,7 @@ public class SearchResult {
     @Override
     public String toString()
     {
-        return "Move " + move + " with evaluation " + evaluation;
+        return "Move " + move + " with evaluation " + evaluation.toString();
 
     }
 }

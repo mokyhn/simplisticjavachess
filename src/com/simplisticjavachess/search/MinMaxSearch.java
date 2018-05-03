@@ -7,6 +7,7 @@
 package com.simplisticjavachess.search;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.evaluator.Evaluation;
 import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.Move;
@@ -26,7 +27,7 @@ public class MinMaxSearch implements Search
     {
         analyzeBoard = new Board(board);
         int evaluation = minMaxSearch(plyDepth, plyDepth);
-        return new SearchResult(strongestMove, evaluation);
+        return new SearchResult(strongestMove, new Evaluation(evaluation));
     }
    
     private int minMaxSearch(int plyDepth, int depthToGo)

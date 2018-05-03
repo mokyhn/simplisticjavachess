@@ -5,6 +5,7 @@
 package com.simplisticjavachess.search;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.evaluator.Evaluation;
 import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.Move;
@@ -24,7 +25,7 @@ public class AlphaBetaSearch implements Search
     {
         analyzeBoard = new Board(board);
         int evaluation = alphaBetaSearch(plyDepth, plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
-        return new SearchResult(strongestMove, evaluation);
+        return new SearchResult(strongestMove, new Evaluation(evaluation));
     }
   
     private int alphaBetaSearch(int currentPlyDepth, int totalPlyDepth, int alpha, int beta)

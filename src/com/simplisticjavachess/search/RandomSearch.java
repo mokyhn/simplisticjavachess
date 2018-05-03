@@ -6,6 +6,7 @@
 package com.simplisticjavachess.search;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.evaluator.Evaluation;
 import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.Move;
@@ -26,13 +27,13 @@ public class RandomSearch implements Search
     {
         this.analyzeBoard = new Board(board);
         int evaluation = randomSearch();
-        return new SearchResult(strongestMove, evaluation);
+        return new SearchResult(strongestMove, new Evaluation(evaluation));
     }
     
     private int randomSearch()
     {
         Iterator<Move> movesTmp = new MoveGenerator().generateMoves(analyzeBoard);
-        ArrayList<Move> moves = new ArrayList<Move>();
+        ArrayList<Move> moves = new ArrayList<>();
         
         while (movesTmp.hasNext()) 
         {
