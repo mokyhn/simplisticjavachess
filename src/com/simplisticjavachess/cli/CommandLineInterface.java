@@ -18,7 +18,7 @@ public class CommandLineInterface
     
     public CommandLineInterface()
     {
-        commands = new ArrayList<Command>();
+        commands = new ArrayList<>();
         promptText = "";
     }
     
@@ -71,7 +71,12 @@ public class CommandLineInterface
             if (stringInput.equals("help")) {
                 displayHelp();
             }
-            executeCommand(stringInput.trim().toLowerCase().split("\\s+"));          
+            String strings[] = stringInput.trim().toLowerCase().split("\\s", 2);
+            for (int i = 0; i < strings.length; i++)
+            {
+                strings[i] = strings[i].trim();
+            }
+            executeCommand(strings);          
         }
     }
     

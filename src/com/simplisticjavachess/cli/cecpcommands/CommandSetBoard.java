@@ -17,11 +17,13 @@ public class CommandSetBoard implements Command
         this.chessGame = chessGame;
     }
 
+    @Override
     public boolean isApplicable(String str)
     {
         return str.matches("setboard");
     }
 
+    @Override
     public void execute(String[] arguments)
     {
         if (arguments.length == 2) 
@@ -31,11 +33,13 @@ public class CommandSetBoard implements Command
         
     }
 
+    @Override
     public String helpCommand()
     {
         return "setboard FEN";
     }
 
+    @Override
     public String helpExplanation()
     {
         return "Set position in Forsythe-Edwards notation";

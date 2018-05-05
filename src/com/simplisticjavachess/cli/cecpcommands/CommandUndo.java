@@ -19,21 +19,25 @@ public class CommandUndo implements Command
         this.chessGame = chessGame;
     }
     
+    @Override
     public boolean isApplicable(String str)
     {
         return str.matches("undo");
     }
 
+    @Override
     public void execute(String[] arguments)
     {
         chessGame.undo();
     }
 
+    @Override
     public String helpCommand()
     {
         return "undo";
     }
 
+    @Override
     public String helpExplanation()
     {
         return "Undo the last move";
