@@ -16,11 +16,13 @@ public class CommandPrint implements Command
         this.chessGame = chessGame;
     }
 
+    @Override
     public boolean isApplicable(String str)
     {
         return str.matches("print") || str.matches("p");
     }
 
+    @Override
     public void execute(String[] arguments)
     {
         chessGame.print();
@@ -31,6 +33,7 @@ public class CommandPrint implements Command
         return "print, p";
     }
 
+    @Override
     public String helpExplanation()
     {
         return "Pretty print the current position";

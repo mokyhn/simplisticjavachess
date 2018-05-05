@@ -1,5 +1,8 @@
 package com.simplisticjavachess.board;
 
+import com.simplisticjavachess.piece.Color;
+import com.simplisticjavachess.piece.Piece;
+import com.simplisticjavachess.piece.PieceType;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -51,6 +54,19 @@ public class BoardParserTest
             String result = BoardParser.exportPosition(board);
             assertEquals(test_position, result);
         }
+    }
+    
+    @Test
+    public void testImportPosition()
+    {
+        String test_position = "7k/8/8/8/8/8/8/7K w";
+        Board board = Board.createFromFEN(test_position);
+        Piece piece1 = board.getPiece(7, 0);
+        Piece piece2 = board.getPiece(7, 7);
+        assertEquals(Color.WHITE, piece1.getColor());
+        assertEquals(Color.BLACK, piece2.getColor());
+        assertEquals(PieceType.KING, piece1.getPieceType());
+        assertEquals(PieceType.KING, piece2.getPieceType());
     }
     
     @Test

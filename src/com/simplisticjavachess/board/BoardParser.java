@@ -46,21 +46,16 @@ public class BoardParser
                 if (c >= '1' && c <= '8')
                 {
                     x = x + (int) (c - '0');
-                } else if (c >= 'b' && c <= 'r')
-                {
-                    board.insertPiece(new Piece(new Location(x, y), c));
-                    x++;
-                    continue;
-                } else if (c >= 'B' && c <= 'R')
-                {
-                    board.insertPiece(new Piece(new Location(x, y), c));
-                    x++;
-                    continue;
                 } else if (c == '/')
                 {
                     y--;
                     x = 0;
                     continue;
+                } 
+                else 
+                {                    
+                    board.insertPiece(new Piece(new Location(x, y), c));
+                    x++;
                 }
             }
 

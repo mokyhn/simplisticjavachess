@@ -49,7 +49,8 @@ public enum PieceType
     public String getPieceLetter(Color color) 
     {
         String r = getPieceLetter();
-        return color == Color.BLACK ? r.toLowerCase() : r.toUpperCase();   
+        String result = color == Color.BLACK ? r.toLowerCase() : r.toUpperCase();
+        return result;  
     }
     
 }
