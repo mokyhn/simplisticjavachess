@@ -67,11 +67,11 @@ public class CommandLineInterface
         {
             System.out.print("\n" + promptText);
 
-            String stringInput = reader.readLine().trim().toLowerCase();
+            String stringInput = reader.readLine().trim();
             if (stringInput.equals("help")) {
                 displayHelp();
             }
-            String strings[] = stringInput.trim().toLowerCase().split("\\s", 2);
+            String strings[] = stringInput.trim().split("\\s", 2);
             for (int i = 0; i < strings.length; i++)
             {
                 strings[i] = strings[i].trim();
