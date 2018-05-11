@@ -46,14 +46,14 @@ public class TestSearch
        
         SearchResult searchResult = engine.search(board, plyDepth);
 
-        if (searchResult.getMove() == null && expectedMoves.isEmpty())
+        if (searchResult.getMoveSequence().getFirst() == null && expectedMoves.isEmpty())
         {
             return true;
         }            
 
         for (Move move : expected)
         {
-            if (move.equals(searchResult.getMove()))
+            if (move.equals(searchResult.getMoveSequence().getFirst()))
             {
                 return true;
             }
@@ -61,10 +61,10 @@ public class TestSearch
         
         if (expectedMoves.isEmpty())
         {
-            System.out.println("Engine found: " + searchResult.getMove().toString() + " BUT no move was expected in position " + fen + "\n");
+            System.out.println("Engine found: " + searchResult.getMoveSequence().toString() + " BUT no move was expected in position " + fen + "\n");
         } else
         {
-            System.out.println("Engine found: " + searchResult.getMove().toString() + "BUT expected " + expectedMoves + " in position " + fen + "\n");
+            System.out.println("Engine found: " + searchResult.getMoveSequence().toString() + "BUT expected " + expectedMoves + " in position " + fen + "\n");
         }
         
         return false;        

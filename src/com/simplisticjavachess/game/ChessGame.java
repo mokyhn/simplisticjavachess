@@ -95,11 +95,11 @@ public class ChessGame
     {
         SearchResult searchResult = new AlphaBetaSearch().search(board, searchDepth);
 
-        if (searchResult.getMove() != null)
+        if (searchResult.getMoveSequence() != null)
         {
             System.out.println(searchResult.toString());
             
-            board.doMove(searchResult.getMove());
+            board.doMove(searchResult.getMoveSequence().getFirst());
             print();
         }
     }
