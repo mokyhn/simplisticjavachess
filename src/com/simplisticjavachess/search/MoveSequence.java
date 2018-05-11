@@ -10,5 +10,8 @@ import com.simplisticjavachess.move.Move;
  */
 public class MoveSequence extends ImmutableList<Move>
 {
-    
+    public MoveSequence(Move... moves)
+    {
+        super(moves);
+    }
 }

@@ -25,7 +25,7 @@ public class AlphaBetaSearch implements Search
     {
         analyzeBoard = new Board(board);
         int evaluation = alphaBetaSearch(plyDepth, plyDepth, Integer.MIN_VALUE, Integer.MAX_VALUE);
-        return new SearchResult(strongestMove, new Evaluation(evaluation));
+        return new SearchResult(new MoveSequence(strongestMove), new Evaluation(evaluation));
     }
   
     private int alphaBetaSearch(int currentPlyDepth, int totalPlyDepth, int alpha, int beta)

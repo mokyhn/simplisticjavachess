@@ -28,7 +28,7 @@ public class MinMaxSearch implements Search
     {
         analyzeBoard = new Board(board);
         int evaluation = minMaxSearch(plyDepth, plyDepth);
-        return new SearchResult(strongestMove, new Evaluation(evaluation));
+        return new SearchResult(new MoveSequence(strongestMove), new Evaluation(evaluation));
     }
    
     private int minMaxSearch(int plyDepth, int depthToGo)

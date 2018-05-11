@@ -27,7 +27,7 @@ public class RandomSearch implements Search
     {
         this.analyzeBoard = new Board(board);
         int evaluation = randomSearch();
-        return new SearchResult(strongestMove, new Evaluation(evaluation));
+        return new SearchResult(new MoveSequence(strongestMove), new Evaluation(evaluation));
     }
     
     private int randomSearch()
