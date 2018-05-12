@@ -39,28 +39,39 @@ public class Evaluation
      */
     public Evaluation improveWith(Color color, Evaluation other)
     {
+        return this.isAnImprovement(color, other) ? other : this;
+    }
+
+
+    /**
+     * @param color the perspective the comparison is seen from
+     * @param other the candidate that may improve this
+     * @return true if the other improves this
+     */
+    public boolean isAnImprovement(Color color, Evaluation other)
+    {
         // Something improves nothing
         if (this.equals(NONE))
         {
-            return other;
+            return true;
         }
         
         // Nothing does not improve something
         if (other.equals(NONE))
         {
-            return this;
+            return false;
         }
         
         if (color.equals(WHITE))
         {
-            return other.value > this.value ? other : this;
+            return other.value > this.value;
         }
         else
         {
-            return other.value < this.value ? other : this;
+            return other.value < this.value;
         }
     }
-
+    
     
     /**
      * @param color the perspective the comparison is seen from
