@@ -52,40 +52,6 @@ public class EvaluationTest
         Evaluation result = new Evaluation(17).improveWith(Color.WHITE, new Evaluation(18));        
         assertEquals(new Evaluation(18), result);
     }
-        
-    @Test
-    public void testImproveWith_3args_no_improvement()
-    {
-        final boolean[] wasCalled = new boolean[1];
-        new Evaluation(17).improveWith(Color.WHITE, new Evaluation(17), 
-            (Evaluation evaluation) -> {
-                wasCalled[0] = true;
-            }
-        );
-        
-        if (wasCalled[0])
-        {
-            fail();
-        }
-    }
-
-    @Test
-    public void testImproveWith_3args_an_improvement()
-    {
-        final boolean[] wasCalled = new boolean[1];
-        new Evaluation(17).improveWith(Color.WHITE, new Evaluation(18), 
-            (Evaluation evaluation) -> {
-                wasCalled[0] = true;
-                assertEquals(new Evaluation(18), evaluation);
-            }
-        );
-        
-        if (!wasCalled[0])
-        {
-            fail();
-        }
-    }
-
 
     @Test
     public void testToString()

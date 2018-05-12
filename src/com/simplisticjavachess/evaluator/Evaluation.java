@@ -71,20 +71,15 @@ public class Evaluation
             return other.value < this.value;
         }
     }
-    
-    
+ 
     /**
      * @param color the perspective the comparison is seen from
-     * @param other the other evaluation to try to improve with
-     * @param improver to be invoked, if the other was an improvement
+     * @param other the candidate that may improve this
+     * @return true if the other improves this or this equals other
      */
-    public void improveWith(Color color, Evaluation other, Improver improver)
+    public boolean isAnImprovementOrEqual(Color color, Evaluation other)
     {
-        Evaluation result = improveWith(color, other);
-        if (!this.equals(result))
-        {
-            improver.run(result);
-        }
+        return this.equals(other) || isAnImprovement(color, other);
     }
     
     @Override
