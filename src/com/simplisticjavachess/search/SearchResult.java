@@ -6,6 +6,11 @@ public class SearchResult {
     private final MoveSequence moveSequence;
     private final Evaluation evaluation;
     
+    public SearchResult(Evaluation evaluation)
+    {
+        this(new MoveSequence(), evaluation);
+    }
+    
     public SearchResult(MoveSequence moveSequence, Evaluation evaluation)
     {
         this.moveSequence = moveSequence;
