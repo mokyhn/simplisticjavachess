@@ -9,7 +9,6 @@ import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.search.Search;
-import com.simplisticjavachess.search.AlphaBetaSearch;
 import com.simplisticjavachess.search.MinMaxSearch;
 import com.simplisticjavachess.search.SearchResult;
 import java.util.ArrayList;
@@ -17,10 +16,8 @@ import java.util.Collection;
 
 public class TestSearch
 {
-    public final static int ALPHABETA = 1;
-    public final static int MINMAX = 2;
-    
-    public static boolean search(String fen, String moveSequence, int method, int plyDepth, String expectedMoves) throws Exception
+   
+    public static boolean search(String fen, String moveSequence, int plyDepth, String expectedMoves) throws Exception
     {
         Board board = Board.createFromFEN(fen);
         
@@ -31,19 +28,8 @@ public class TestSearch
 
         Search engine;
 
-        switch (method)
-        {
-            case ALPHABETA:
-                engine = new AlphaBetaSearch();
-                break;
-            case MINMAX:
-                engine = new MinMaxSearch();
-                break;
-            default:
-                engine = new AlphaBetaSearch();
-                break;
-        }
-       
+        engine = new MinMaxSearch();
+        
         SearchResult searchResult = engine.search(board, plyDepth);
 
         if (searchResult.getMoveSequence().getFirst() == null && expectedMoves.isEmpty())
@@ -85,7 +71,7 @@ public class TestSearch
     
     private static Collection<Move> parseExpectedMoves(Board board, String expectedMoves) throws Exception
     {
-        ArrayList<Move> result = new ArrayList<Move>();
+        ArrayList<Move> result = new ArrayList<>();
 
         if (!expectedMoves.isEmpty())
         {
