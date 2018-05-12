@@ -20,7 +20,7 @@ public final class Evaluator
     private static final int KNIGHTVALUE = 3;
     private static final int QUEENVALUE = 9;
 
-    public static int evaluate(Board b)
+    public static Evaluation evaluate(Board b)
     {
         int result = 0;
         
@@ -69,7 +69,7 @@ public final class Evaluator
             result = WHITE_IS_MATED;
         }
 
-        return result;
+        return new Evaluation(result);
     }
 
 }

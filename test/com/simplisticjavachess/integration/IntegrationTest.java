@@ -113,6 +113,7 @@ public class IntegrationTest
         assertTrue(search("4k3/8/7P/8/p7/8/P7/7K w - -", "", 6, "h6h7"));
     }
     
+    @Ignore
     @Test
     public void testThreefoldRepetitionDraw() throws Exception
     {

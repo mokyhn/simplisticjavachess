@@ -14,7 +14,6 @@ import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.piece.Color;
 import java.util.Iterator;
-import java.util.Optional;
 
 public class MinMaxSearch implements Search
 {
@@ -27,37 +26,41 @@ public class MinMaxSearch implements Search
     public final SearchResult search(Board board, int plyDepth)
     {
         analyzeBoard = new Board(board);
-        int evaluation = minMaxSearch(plyDepth, plyDepth);
-        return new SearchResult(new MoveSequence(strongestMove), new Evaluation(evaluation));
+        return minMaxSearch(plyDepth);
     }
    
-    private int minMaxSearch(int plyDepth, int depthToGo)
+    private SearchResult minMaxSearch(int depthToGo)
     {     
         if (depthToGo == 0)
         {
-            return analyzeBoard.isDraw() ? 0 : Evaluator.evaluate(analyzeBoard);
+            return new SearchResult(
+                    analyzeBoard.isDraw() ? 
+                    Evaluation.EQUAL : 
+                    Evaluator.evaluate(analyzeBoard)
+            );
         }
 
         Iterator<Move> moves = moveGenerator.generateMoves(analyzeBoard);
 
         Color inMove = analyzeBoard.inMove();
 
-        if (Evaluator.evaluate(analyzeBoard) == Evaluator.BLACK_IS_MATED
-         || Evaluator.evaluate(analyzeBoard) == Evaluator.WHITE_IS_MATED)
+        if (Evaluator.evaluate(analyzeBoard).equals(Evaluation.BLACK_IS_MATED)
+         || Evaluator.evaluate(analyzeBoard).equals(Evaluation.WHITE_IS_MATED))
         {
-            return Evaluator.evaluate(analyzeBoard);
+            return new SearchResult(Evaluator.evaluate(analyzeBoard));
         }
 
         if (!moves.hasNext())
         {
-            return 0; // A draw
+            return new SearchResult(Evaluation.EQUAL); // A draw
         }
        
         boolean thereWasALegalMove = false;
 
-        int score;
-        Optional<Integer> bestScore = Optional.empty();
-           
+        SearchResult score;
+        Evaluation bestScore = Evaluation.NONE;
+        MoveSequence moveSequence = new MoveSequence();
+        
         while (moves.hasNext())
         {
             Move move = moves.next();
@@ -70,41 +73,14 @@ public class MinMaxSearch implements Search
             }
 
             thereWasALegalMove = true;
-            score = minMaxSearch(plyDepth, depthToGo - 1);
+            score = minMaxSearch(depthToGo - 1);
             analyzeBoard.undo();
 
-            if (bestScore.isPresent())
+            if (bestScore.isAnImprovement(inMove, score.getEvaluation()))
             {
-                switch (inMove) 
-                {
-                    case WHITE:
-                        if (score > bestScore.get())
-                        {
-                            bestScore = Optional.of(score);
-                            if (plyDepth == depthToGo)
-                            {
-                                strongestMove = move;
-                            }
-                        }
-                    break;
-                    case BLACK:
-                        if (score < bestScore.get())
-                        {
-                            bestScore = Optional.of(score);
-                            if (plyDepth == depthToGo)
-                            {
-                                strongestMove = move;
-                            }
-                        }
-                }
-            }
-            else
-            {
-                bestScore = Optional.of(score);
-                if (plyDepth == depthToGo)
-                {
-                    strongestMove = move;
-                }
+                strongestMove = move;
+                bestScore = score.getEvaluation();
+                moveSequence = score.getMoveSequence().add(move);
             }
         }
         
@@ -118,19 +94,19 @@ public class MinMaxSearch implements Search
 
                 if (inMove == Color.WHITE)
                 {
-                    return Evaluator.WHITE_IS_MATED;
+                    return new SearchResult(Evaluation.WHITE_IS_MATED);
                 } else
                 {
-                    return Evaluator.BLACK_IS_MATED;
+                    return new SearchResult(Evaluation.BLACK_IS_MATED);
                 }
             } else
             {
                 analyzeBoard.setGameResult(GameResult.STALE_MATE);
-                return 0;
+                return new SearchResult(Evaluation.EQUAL);
             } // draw
         }
 
-        return bestScore.get();
+        return new SearchResult(moveSequence, bestScore);
 
     }
 

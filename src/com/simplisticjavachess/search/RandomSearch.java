@@ -98,7 +98,7 @@ public class RandomSearch implements Search
             }
         }
 
-        return Evaluator.evaluate(analyzeBoard);
+        return 0;
     }
 
     public Move getStrongestMove()
