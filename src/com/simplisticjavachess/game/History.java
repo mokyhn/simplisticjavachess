@@ -39,7 +39,7 @@ public class History
         stateHistory.push(s);
     }
 
-    public State getPreviousState()
+    public State undo()
     {
         return stateHistory.pop();
     }

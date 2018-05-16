@@ -369,7 +369,7 @@ public class Board
 
     public void undo()
     {
-        currentState = history.getPreviousState();  
+        currentState = history.undo();  
         position.undo();
     }
 
