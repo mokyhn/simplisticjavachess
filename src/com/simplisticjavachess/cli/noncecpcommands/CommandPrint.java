@@ -28,6 +28,7 @@ public class CommandPrint implements Command
         chessGame.print();
     }
 
+    @Override
     public String helpCommand()
     {
         return "print, p";

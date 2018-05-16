@@ -411,6 +411,8 @@ public class Board
         s = s + "Immediate evaluation: " + Evaluator.evaluate(this) + "\n";
 
         s = s + "Move history: " + history.toString();
+        
+        s = s + "FEN: " + BoardParser.exportPosition(this);
 
         return s;
     }

@@ -97,9 +97,8 @@ public class ChessGame
 
         if (searchResult.getMoveSequence() != null)
         {
-            System.out.println(searchResult.toString());
-            
             board.doMove(searchResult.getMoveSequence().getFirst());
+            System.out.println(searchResult.toString());
             print();
         }
     }

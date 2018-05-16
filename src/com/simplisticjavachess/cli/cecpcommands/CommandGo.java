@@ -18,22 +18,26 @@ public class CommandGo implements Command
         this.chessGame = chessGame;
     }
 
+    @Override
     public boolean isApplicable(String str)
     {
         return str.matches("go");
     }
 
+    @Override
     public void execute(String[] arguments) throws Exception
     {
         chessGame.go();
     }
 
 
+    @Override
     public String helpCommand()
     {
         return "go";
     }
 
+    @Override
     public String helpExplanation()
     {
         return "Engine plays the color that is on move";
