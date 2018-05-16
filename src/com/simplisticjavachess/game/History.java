@@ -22,7 +22,7 @@ public class History
 
     public History()
     {
-        stateHistory = new Stack<State>();
+        stateHistory = new Stack<>();
     }
 
     public History(History history)

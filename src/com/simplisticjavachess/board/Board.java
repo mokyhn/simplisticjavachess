@@ -393,24 +393,9 @@ public class Board
 
         s = s + currentState.toString();
 
-        if (!history.isEmpty())
-        {
-            Move lastMove = history.getLastMove();
-            
-            String lastMoveStr = lastMove == null ? "" : lastMove.toString();
-            
-            if (currentState.inMove.opponent() == Color.WHITE)
-            {
-                s = s + "Last move " + (currentState.moveNumber + 1) / 2 + "." + lastMoveStr + "\n";
-            } else
-            {
-                s = s + "Last move " + (currentState.moveNumber + 1) / 2 + "...." + lastMoveStr + "\n";
-            }
-        }
-
         s = s + "Immediate evaluation: " + Evaluator.evaluate(this) + "\n";
 
-        s = s + "Move history: " + history.toString();
+        s = s + "Move history: " + history.toString() + "\n";
         
         s = s + "FEN: " + BoardParser.exportPosition(this);
 
