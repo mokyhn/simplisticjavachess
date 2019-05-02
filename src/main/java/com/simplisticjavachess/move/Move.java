@@ -5,12 +5,12 @@
 
 package com.simplisticjavachess.move;
 
-
-
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
 import com.simplisticjavachess.board.Location;
+
+import java.util.Objects;
 
 public final class Move
 {
@@ -60,7 +60,7 @@ public final class Move
             return this.from.equals(move.from)
                 && this.to.equals(move.to)
                 && this.getMoveType() == move.getMoveType()
-                && comparePieces(this.getCapturedPiece(), move.getCapturedPiece())
+                && Objects.equals(this.getCapturedPiece(), move.getCapturedPiece())
                 && this.getWhoMoves() == move.getWhoMoves();
         }
         else
@@ -68,37 +68,11 @@ public final class Move
             return false;
         }
     }
-    
-    private boolean comparePieces(Piece piece1, Piece piece2)
-    { 
-        if (piece1 == null && piece2 == null)
-        {
-            return true;
-        } 
-        else if (piece1 == null && piece2 != null) 
-        {
-            return false;
-        }
-        else if (piece1 != null && piece2 == null) 
-        {
-            return false;
-        } 
-        else
-        {
-            return piece1.equals(piece2);
-        }
-    }
 
     @Override
     public int hashCode()
     {
-        int hash = 5;
-        hash = 59 * hash + (this.from != null ? this.from.hashCode() : 0);
-        hash = 59 * hash + (this.to != null ? this.to.hashCode() : 0);
-        hash = 59 * hash + (this.moveType != null ? this.moveType.hashCode() : 0);
-        hash = 59 * hash + (this.capturedPiece != null ? this.capturedPiece.hashCode() : 0);
-        hash = 59 * hash + (this.whoMoves != null ? this.whoMoves.hashCode() : 0);
-        return hash;
+        return Objects.hash(this.from, this.to, this.moveType, this.capturedPiece, this.whoMoves);
     }
 
     @Override
@@ -115,7 +89,7 @@ public final class Move
  
                 }
             
-                /* Intented fall through */
+                /* Intended fall through */
             
             case CAPTURE_ENPASSANT:
                 return from.toString() + "x" + to.toString();

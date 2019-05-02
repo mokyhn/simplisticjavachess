@@ -93,6 +93,10 @@ public final class Piece {
     @Override
     public boolean equals(Object object) 
     {
+        if (this == object) {
+            return true;
+        }
+
         if (object instanceof Piece) 
         {
             Piece piece = (Piece) object;
