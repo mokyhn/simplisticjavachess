@@ -16,45 +16,12 @@ public class IntegrationTest
 
 
 
-
-    /*
-     * It is tested that evaluation handles regular pawn moves, one and two steps ahead
-     * This is tested for both black and white
-     */
-    @Test
-    public void testSimplePawnMoves2() throws Exception
-    {
-        for (int depth = 2; depth < 5; depth++)
-        {
-            // One ahead - white
-            assertTrue(search("q7/nbr5/p7/ppp5/pkp5/8/2P5/1N4K1 w", "", depth, "c2c3"));
-            assertTrue(search("q7/nbr5/8/2ppp3/2pkp3/4p3/2P1P3/3N2K1 w", "",  depth, "c2c3"));
-            assertTrue(search("8/8/8/5ppp/5pkp/8/6KP/8 w", "",  depth, "h2h3"));
-
-            // One ahead - black
-            assertTrue(search("8/pk6/8/PKP5/PPP5/8/8/8 b", "",  depth, "a7a6"));
-            assertTrue(search("8/3pk3/8/3PKP2/3PPP2/8/8/8 b", "",  depth, "d7d6"));
-            assertTrue(search("8/QP4kp/8/5PKP/5PPP/8/1N6/8 b", "",  depth, "h7h6"));
-
-            // Two ahead - white
-            assertTrue(search("q7/nbr5/ppp5/pkp5/8/2P5/PN6/7K w", "",  depth, "a2a4"));
-            assertTrue(search("q7/nbr5/2ppp3/2pkp3/4p3/4P3/2PN4/6K1 w", "",  depth, "c2c4"));
-            assertTrue(search("8/8/5ppp/5pkp/8/6K1/7P/8 w", "",  depth, "h2h4"));
-
-            // Two ahead - black
-            assertTrue(search("8/p7/1k6/8/BKP5/NBN5/8/8 b", "",  depth, "a7a5"));
-            assertTrue(search("1Q5Q/3p4/2k2pp1/2p1p1p1/2p1K1p1/4P3/8/Q7 b", "",  depth, "d7d5"));
-            assertTrue(search("8/QP5p/6k1/5N2/5PKP/5PPP/8/8 b", "",  depth, "h7h5"));
-        }
-    }
-
     @Test
     public void testPawnPromotions() throws Exception
     {
-        assertTrue(search("nn3k2/P7/8/8/8/8/8/4K3 w", "",  1, "a7b8Q"));
-        assertTrue(search("nn3k2/P7/8/8/8/8/8/4K3 w", "",  2, "a7b8Q"));
-        assertTrue(search("nn3k2/P7/8/8/8/8/8/4K3 w", "",  3, "a7b8Q"));
-        assertTrue(search("4k3/pppppppP/8/8/8/8/PPPPPPPP/4K3 w", "",  3, "h7h8Q"));
+        assertTrue(search("4k3/P7/4K3/8/8/8/8/8 w", "",  1, "a7a8Q"));
+        assertTrue(search("4k3/P7/4K3/8/8/8/8/8 w", "",  2, "a7a8Q"));
+        assertTrue(search("4k3/P7/4K3/8/8/8/8/8 w", "",  3, "a7a8Q"));
     }
 
     @Test

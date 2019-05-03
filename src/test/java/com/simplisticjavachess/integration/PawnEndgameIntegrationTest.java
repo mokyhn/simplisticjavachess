@@ -130,4 +130,25 @@ public class PawnEndgameIntegrationTest {
 		assertTrue(search("8/8/8/8/3k4/8/3p4/3K4 b", "",  4, "d4e3 d4c3"));
 	}
 
+	/**
+	 *  _______________
+	 *  . . . . . . . .     8
+	 *  . . . . . . . .     7
+	 *  . . . . . . . .     6
+	 *  . . . . . p p p     5
+	 *  . . . . . p k p     4
+	 *  . . . . . . . .     3
+	 *  . . . . . . K P     2
+	 *  . . . . . . . .     1
+	 *  _______________
+	 *  a b c d e f g h
+	 *   White to move
+	 */
+	@Test
+	public void testSimplePawnMoves2()
+	{
+		// Mate in one
+		assertTrue(search("8/8/8/5ppp/5pkp/8/6KP/8 w", "",  5, "h2h3"));
+	}
+
 }
