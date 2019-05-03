@@ -61,7 +61,7 @@ public class History
 
     public Move getLastMove()
     {
-        return stateHistory.peek().move;
+        return stateHistory.peek().getMove();
     }
     
     @Override
@@ -72,7 +72,7 @@ public class History
 
         for (int i = 0; i < stateHistory.size(); i++)
         {
-            Move m = stateHistory.get(i).move;
+            Move m = stateHistory.get(i).getMove();
             
             if (m != null)
             {

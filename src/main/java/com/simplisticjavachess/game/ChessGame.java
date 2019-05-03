@@ -52,7 +52,7 @@ public class ChessGame
 
         if (board.getGameResult() == null)
         {
-            return; // Keep silent;
+            return;
         }
 
         switch (board.getGameResult())

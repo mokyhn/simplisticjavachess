@@ -6,8 +6,6 @@
 
 package com.simplisticjavachess.move;
 
-import com.simplisticjavachess.move.MoveType;
-import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.board.Locations;
 

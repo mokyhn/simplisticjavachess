@@ -7,11 +7,11 @@ public final class State
 {
     public int moveNumber;
 
-    public Move move;
-    public Color inMove;
+	private Move move;
+	private Color inMove;
 
-    // Used to check for draw by threefold repetition. 
-    public int hash; 
+	// Used to check for draw by threefold repetition.
+    public int hash; // TODO
 
     private boolean blackCanCastleShort;
     private boolean blackCanCastleLong;
@@ -24,7 +24,7 @@ public final class State
      * Number of half moves since the last pawn advance or capture.
      * Used to determine if a draw can be claimed under the fifty-move rule.
     */
-    public int halfMoveClock; 
+    public int halfMoveClock;
     
 
     /**
@@ -39,7 +39,7 @@ public final class State
     public State(State state)
     {
         this.moveNumber = state.moveNumber;
-        this.move = state.move == null ? null : state.move;
+        this.move = state.move;
         this.inMove = state.inMove;
         this.blackCanCastleLong = state.blackCanCastleLong;
         this.blackCanCastleShort = state.blackCanCastleShort;
@@ -96,28 +96,44 @@ public final class State
         return getCanCastleLong(inMove);
     }
 
-    public boolean equals(Object object)
+	public Move getMove() {
+		return move;
+	}
+
+	public void setMove(Move move) {
+		if (move == null) {
+			throw new IllegalArgumentException();
+		}
+    	this.move = move;
+	}
+
+	public Color getInMove() {
+		return inMove;
+	}
+
+	public void setInMove(Color inMove) {
+		this.inMove = inMove;
+	}
+
+
+	public boolean equals(Object object)
     {
+        if (this == object) {
+            return true;
+        }
+
         if (object instanceof State)
         {
             State other = (State) object;
-            
-            boolean hashMatch;
-            hashMatch = this.hash == other.hash;                        
-            
-            boolean movesMatch;        
-            movesMatch = this.move.equals(other.move);
-            
             return this.blackCanCastleLong == other.blackCanCastleLong   &&
                    this.blackCanCastleShort == other.blackCanCastleShort &&
                    this.whiteCanCastleLong == other.whiteCanCastleLong &&
-                   this.whiteCanCastleShort == other.whiteCanCastleShort && 
-                   hashMatch &&
+                   this.whiteCanCastleShort == other.whiteCanCastleShort &&
                    this.gameResult == other.gameResult &&
                    this.halfMoveClock == other.halfMoveClock &&
                    this.halfMovesIndex3PosRepition == other.halfMovesIndex3PosRepition &&
                    this.inMove == other.inMove &&
-                   movesMatch &&
+                   this.move.equals(other.move) &&
                    this.moveNumber == other.moveNumber;
         }
         else

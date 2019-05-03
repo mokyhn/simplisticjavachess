@@ -1,6 +1,8 @@
 package com.simplisticjavachess.board;
 
-public final class Location 
+import java.util.*;
+
+public final class Location
 {
     final int x;
     final int y;
@@ -12,7 +14,7 @@ public final class Location
     {
         this.x = x;
         this.y = y;
-        this.hashCode = calculateHash(x, y);
+        this.hashCode = Objects.hash(x, y);
     }
     
     public Location(String position) throws InvalidLocationException
@@ -20,7 +22,7 @@ public final class Location
         position = position.toLowerCase();
         x = (int) (position.charAt(0) - 'a');
         y = (int) (-1 + position.charAt(1) - '0');
-        this.hashCode = calculateHash(x, y);
+        this.hashCode = Objects.hash(x, y);
         if (x < 0 || x > 7 || y < 0 || y > 7)
         {
             throw new InvalidLocationException();
@@ -66,6 +68,10 @@ public final class Location
     @Override
     public boolean equals(Object object)
     {
+        if (this == object) {
+            return true;
+        }
+
         if (object instanceof Location)
         {
             Location location = (Location) object;
@@ -77,11 +83,6 @@ public final class Location
         }
     }
 
-    private int calculateHash(int x, int y)
-    {
-        return x + y * 8;
-    }
-    
     public boolean isValid()
     {
         return this.x >= 0 && this.x <= 7 && this.y >= 0 && this.y <= 7;

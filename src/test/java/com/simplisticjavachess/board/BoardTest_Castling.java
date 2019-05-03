@@ -4,7 +4,6 @@
  */
 package com.simplisticjavachess.board;
 
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.move.Moves;
 import org.junit.Test;
 import static org.junit.Assert.*;

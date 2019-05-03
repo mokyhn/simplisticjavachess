@@ -24,9 +24,9 @@ public class StateTest
         assertTrue(stateClone.gameResult == GameResult.DRAW_BY_50_MOVE_RULE);
         assertTrue(stateClone.halfMoveClock == 42);
         assertTrue(stateClone.halfMovesIndex3PosRepition == 41);
-        assertTrue(stateClone.inMove == Color.BLACK);
+        assertTrue(stateClone.getInMove() == Color.BLACK);
         assertTrue(stateClone.moveNumber == 49);
-        assertTrue(stateClone.move.equals(Moves.BLACK_LONG_CASTLING()));
+        assertTrue(stateClone.getMove().equals(Moves.BLACK_LONG_CASTLING()));
         
     }
 
@@ -37,9 +37,9 @@ public class StateTest
         state.gameResult = GameResult.DRAW_BY_50_MOVE_RULE;
         state.halfMoveClock = 42;
         state.halfMovesIndex3PosRepition = 41;
-        state.inMove = Color.BLACK;
+        state.setInMove(Color.BLACK);
         state.moveNumber = 49;
-        state.move = Moves.BLACK_LONG_CASTLING();
+        state.setMove(Moves.BLACK_LONG_CASTLING());
         return state;
     }
 
@@ -47,11 +47,11 @@ public class StateTest
     public void testSetCanCastleLong()
     {
         State state = new State();
-        state.inMove = Color.WHITE;
+        state.setInMove(Color.WHITE);
         state.setCanCastleLong(true, Color.WHITE);
         assertTrue(state.getCanCastleLong());
 
-        state.inMove = Color.BLACK;
+        state.setInMove(Color.BLACK);
         assertFalse(state.getCanCastleLong());
     }
 

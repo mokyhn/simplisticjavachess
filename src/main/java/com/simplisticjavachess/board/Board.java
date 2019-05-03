@@ -45,19 +45,20 @@ public class Board
         this.position = new Position(board.position);
         this.history = new History(board.history);
     }
+
     public Color inMove()
     {
-        return currentState.inMove;
+        return currentState.getInMove();
     }
 
     public void setBlackToMove()
     {
-        currentState.inMove = Color.BLACK;
+        currentState.setInMove(Color.BLACK);
     }
 
     public void setWhiteToMove()
     {
-        currentState.inMove = Color.WHITE;
+        currentState.setInMove(Color.WHITE);
     }
 
     public void setGameResult(GameResult gameResult)
@@ -122,8 +123,7 @@ public class Board
     
     public Piece getPiece(int x, int y)
     {
-        final Piece p = position.getPiece(new Location(x, y));
-        return p;
+        return position.getPiece(new Location(x, y));
     }
     
     public Piece getPiece(Location location)
@@ -161,7 +161,7 @@ public class Board
      */
     public boolean isAttacked(int x, int y)
     {
-        return PositionInference.attacks(position, new Location(x, y), currentState.inMove) != null;
+        return PositionInference.attacks(position, new Location(x, y), currentState.getInMove()) != null;
     }
 
     public boolean isFreeAndUnattacked(Location location)
@@ -184,12 +184,12 @@ public class Board
      */
     public Boolean isInCheck()
     {
-        return PositionInference.isInCheck(position, currentState.inMove);
+        return PositionInference.isInCheck(position, currentState.getInMove());
     }
     
     public Move getLastMove()
     {
-        return currentState.move;
+        return currentState.getMove();
     }
 
     //TODO: This is not strong enough. Positions differ by en passent capabilities
@@ -231,7 +231,7 @@ public class Board
         history.add(currentState);
                 
         State newState = new State(currentState);
-        newState.move = move;
+        newState.setMove(move);
         newState.moveNumber++;
 
         // Used to determine the 50-move rule, three times repition
@@ -345,7 +345,7 @@ public class Board
         }
 
         // Swap the move color
-        newState.inMove = currentState.inMove.opponent();
+        newState.setInMove(currentState.getInMove().opponent());
 
         currentState = newState;
         
@@ -353,7 +353,7 @@ public class Board
 
         // The player that did the move is in check
         // his or her move is hence not legal
-        if (isInCheck(currentState.inMove.opponent()))
+        if (isInCheck(currentState.getInMove().opponent()))
         {
             wasMoveLegal = false;
         }
@@ -419,12 +419,12 @@ public class Board
 
     public boolean isWhiteInMove()
     {
-        return currentState.inMove == Color.WHITE;
+        return currentState.getInMove() == Color.WHITE;
     } 
 
     public boolean isAttacked(Location location)
     {
-        return PositionInference.attacks(position, location, currentState.inMove) != null;        
+        return PositionInference.attacks(position, location, currentState.getInMove()) != null;
     }
 
     private boolean isFree(Location location)
