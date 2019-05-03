@@ -17,10 +17,16 @@ import java.util.Iterator;
 
 public class MinMaxEngine implements Engine
 {
-    MoveGenerator moveGenerator = new MoveGenerator();
+    MoveGenerator moveGenerator;
     
     private Board analyzeBoard;
     private Move strongestMove;
+
+    public MinMaxEngine(MoveGenerator moveGenerator)
+    {
+        this.moveGenerator = moveGenerator;
+    }
+
 
     @Override
     public final SearchResult search(Board board, int plyDepth)

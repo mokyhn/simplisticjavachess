@@ -93,7 +93,7 @@ public class ChessGame
 
    public void go()
     {
-        SearchResult searchResult = new MinMaxEngine().search(board, searchDepth);
+        SearchResult searchResult = new MinMaxEngine(new MoveGenerator()).search(board, searchDepth);
 
         if (searchResult.getMoveSequence() != null)
         {

@@ -11,6 +11,8 @@ import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.engine.Engine;
 import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.engine.SearchResult;
+import com.simplisticjavachess.movegenerator.MoveGenerator;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -30,8 +32,7 @@ public class TestSearch
         try {
             performMoves(board, moveSequence);
 
-            //TODO: Only min max engine tested here
-            Engine engine = new MinMaxEngine();
+            Engine engine = new MinMaxEngine(new MoveGenerator());
 
             SearchResult searchResult = engine.search(board, plyDepth);
 
