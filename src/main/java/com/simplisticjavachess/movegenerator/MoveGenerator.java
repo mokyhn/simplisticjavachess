@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-
+//TODO: Turn this into an interface
+//Define individual move generators
+//Define the composition of move generators into a move generator
+//This will allow us to test individual move generators also in combination with searching
 public class MoveGenerator
 {
     

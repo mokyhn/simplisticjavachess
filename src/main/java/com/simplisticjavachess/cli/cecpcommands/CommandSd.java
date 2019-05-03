@@ -37,6 +37,6 @@ public class CommandSd implements Command
     
     public String helpExplanation()
     {
-        return "Set search ply depth";
+        return "Set engine ply depth";
     }
 }

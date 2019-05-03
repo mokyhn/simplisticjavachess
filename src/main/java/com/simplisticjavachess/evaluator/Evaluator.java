@@ -7,6 +7,8 @@ import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.piece.Color;
 
+//TODO: Create an interface for this.
+//This will allow us to play around with different evaluators.
 public final class Evaluator
 {
 

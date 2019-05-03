@@ -12,8 +12,8 @@ import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.InvalidMoveException;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.board.InvalidLocationException;
-import com.simplisticjavachess.search.MinMaxSearch;
-import com.simplisticjavachess.search.SearchResult;
+import com.simplisticjavachess.engine.MinMaxEngine;
+import com.simplisticjavachess.engine.SearchResult;
 import java.util.Iterator;
 
 public class ChessGame
@@ -93,7 +93,7 @@ public class ChessGame
 
    public void go() throws Exception
     {
-        SearchResult searchResult = new MinMaxSearch().search(board, searchDepth);
+        SearchResult searchResult = new MinMaxEngine().search(board, searchDepth);
 
         if (searchResult.getMoveSequence() != null)
         {
