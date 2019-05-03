@@ -6,8 +6,10 @@ import com.simplisticjavachess.move.MoveType;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
-import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
  *
@@ -58,10 +60,10 @@ public class BoardTest_Promotions
                 System.out.println("Doing move " + move.toString());
                 board.doMove(move);
                 assertTrue(board.freeSquare(from));
-                assertTrue(board.getPiece(to).getPieceType().equals(pieceType));
-                assertTrue(board.getPiece(to).getColor() == Color.WHITE);
+                assertEquals(board.getPiece(to).getPieceType(), pieceType);
+                assertSame(board.getPiece(to).getColor(), Color.WHITE);
                 board.undo();
-                assertTrue(board.equals(WHITE_READY_TO_PROMOTE()));
+                assertEquals(board, WHITE_READY_TO_PROMOTE());
 
             }
         }
@@ -104,10 +106,10 @@ public class BoardTest_Promotions
                 System.out.println("Doing move " + move.toString());
                 board.doMove(move);
                 assertTrue(board.freeSquare(from));
-                assertTrue(board.getPiece(to).getPieceType().equals(pieceType));
-                assertTrue(board.getPiece(to).getColor() == Color.BLACK);
+                assertEquals(board.getPiece(to).getPieceType(), pieceType);
+                assertSame(board.getPiece(to).getColor(), Color.BLACK);
                 board.undo();
-                assertTrue(board.equals(BLACK_READY_TO_PROMOTE()));
+                assertEquals(board, BLACK_READY_TO_PROMOTE());
 
             }
         }
@@ -165,10 +167,10 @@ public class BoardTest_Promotions
                 System.out.println("Doing move " + move.toString());
                 board.doMove(move);
                 assertTrue(board.freeSquare(move.getFrom()));
-                assertTrue(board.getPiece(move.getTo()).getPieceType().equals(pieceType));
-                assertTrue(board.getPiece(move.getTo()).getColor() == Color.WHITE);
+                assertEquals(board.getPiece(move.getTo()).getPieceType(), pieceType);
+                assertSame(board.getPiece(move.getTo()).getColor(), Color.WHITE);
                 board.undo();
-                assertTrue(board.equals(WHITE_READY_TO_CAPTURE_PROMOTE()));
+                assertEquals(board, WHITE_READY_TO_CAPTURE_PROMOTE());
 
             }
         }
@@ -226,10 +228,10 @@ public class BoardTest_Promotions
                 System.out.println("Doing move " + move.toString());
                 board.doMove(move);
                 assertTrue(board.freeSquare(move.getFrom()));
-                assertTrue(board.getPiece(move.getTo()).getPieceType().equals(pieceType));
-                assertTrue(board.getPiece(move.getTo()).getColor() == Color.BLACK);
+                assertEquals(board.getPiece(move.getTo()).getPieceType(), pieceType);
+                assertSame(board.getPiece(move.getTo()).getColor(), Color.BLACK);
                 board.undo();
-                assertTrue(board.equals(BLACK_READY_TO_CAPTURE_PROMOTE()));
+                assertEquals(board, BLACK_READY_TO_CAPTURE_PROMOTE());
 
             }
         }

@@ -20,8 +20,8 @@ public final class Location
     public Location(String position) throws InvalidLocationException
     {
         position = position.toLowerCase();
-        x = (int) (position.charAt(0) - 'a');
-        y = (int) (-1 + position.charAt(1) - '0');
+        x = (position.charAt(0) - 'a');
+        y = (-1 + position.charAt(1) - '0');
         this.hashCode = Objects.hash(x, y);
         if (x < 0 || x > 7 || y < 0 || y > 7)
         {

@@ -21,7 +21,7 @@ public class PawnEndgamesTest {
 	 *   White to move
 	 */
 	@Test
-	public void avoidLoosingPawn1() throws Exception
+	public void avoidLoosingPawn1()
 	{
 		assertMove("d2d3 d2c3 d2e3", "8/8/8/3k4/3P4/8/3K4/8 w", "", 2);
 	}
@@ -42,7 +42,7 @@ public class PawnEndgamesTest {
 	 *   Black to move
 	 */
 	@Test
-	public void avoidLoosingPawn2() throws Exception
+	public void avoidLoosingPawn2()
 	{
 		assertMove("d7d6 d7c6 d7e6", "8/3k4/8/3p4/3K4/8/8/8 b", "",  2);
 	}
@@ -63,7 +63,7 @@ public class PawnEndgamesTest {
 	 *   White to move
 	 */
 	@Test
-	public void avoidLoosingPawn3() throws Exception
+	public void avoidLoosingPawn3()
 	{
 		assertMove("d6e6 d6c6", "3k4/3P4/3K4/8/8/8/8/8 w", "",  4);
 	}
@@ -83,7 +83,7 @@ public class PawnEndgamesTest {
 	 *   Black to move
 	 */
 	@Test
-	public void simpleTest4() throws Exception
+	public void simpleTest4()
 	{
 		assertMove("d3e3 d3c3", "8/8/8/8/8/3k4/3p4/3K4 b", "",  4);
 	}
@@ -103,7 +103,7 @@ public class PawnEndgamesTest {
 	 *   White to move
 	 */
 	@Test
-	public void avoidStaleMate1() throws Exception
+	public void avoidStaleMate1()
 	{
 		assertMove("d5c6 d5e6", "3k4/3P4/8/3K4/8/8/8/8 w", "",  4);
 	}
@@ -124,7 +124,7 @@ public class PawnEndgamesTest {
 	 *
 	 */
 	@Test
-	public void avoidStaleMate2() throws Exception
+	public void avoidStaleMate2()
 	{
 		assertMove("d4e3 d4c3", "8/8/8/8/3k4/8/3p4/3K4 b", "",  4);
 	}

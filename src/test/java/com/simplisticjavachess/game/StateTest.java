@@ -21,12 +21,12 @@ public class StateTest
         State state = createDummyState();
         
         State stateClone = new State(state);
-        assertTrue(stateClone.gameResult == GameResult.DRAW_BY_50_MOVE_RULE);
-        assertTrue(stateClone.halfMoveClock == 42);
-        assertTrue(stateClone.halfMovesIndex3PosRepition == 41);
-        assertTrue(stateClone.getInMove() == Color.BLACK);
-        assertTrue(stateClone.moveNumber == 49);
-        assertTrue(stateClone.getMove().equals(Moves.BLACK_LONG_CASTLING()));
+        assertSame(stateClone.gameResult, GameResult.DRAW_BY_50_MOVE_RULE);
+        assertEquals(42, stateClone.halfMoveClock);
+        assertEquals(41, stateClone.halfMovesIndex3PosRepition);
+        assertSame(stateClone.getInMove(), Color.BLACK);
+        assertEquals(49, stateClone.moveNumber);
+        assertEquals(stateClone.getMove(), Moves.BLACK_LONG_CASTLING());
         
     }
 
@@ -97,7 +97,7 @@ public class StateTest
         State state2 = createDummyState();
         
         state1.setCanCastleLong(true, Color.BLACK);
-        assertFalse(state1.equals(state2));
+        assertNotEquals(state1, state2);
     }
     
      

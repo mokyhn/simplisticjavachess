@@ -17,8 +17,8 @@ import java.util.Iterator;
 
 public class MinMaxEngine implements Engine
 {
-    MoveGenerator moveGenerator;
-    Evaluator evaluator;
+    private final MoveGenerator moveGenerator;
+    private final Evaluator evaluator;
 
     private Board analysisBoard;
     private Move strongestMove;

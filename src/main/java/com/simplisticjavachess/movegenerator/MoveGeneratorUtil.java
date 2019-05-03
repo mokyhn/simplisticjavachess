@@ -41,23 +41,22 @@ public class MoveGeneratorUtil
                 }
             }
             
-            Piece takenPiece = board.getPiece(to);
+            Piece capturedPiece = board.getPiece(to);
 
             Move move = null;
             MoveType moveType;
 
-            if (takenPiece != null && takenPiece.getColor() == board.inMove().opponent())
+            if (capturedPiece != null && capturedPiece.getColor() == board.inMove().opponent())
             {
                 moveType = MoveType.CAPTURE;
-                move = new Move(from, to, moveType, takenPiece, board.inMove());
+                move = new Move(from, to, moveType, capturedPiece, board.inMove());
             } 
             else
             {
                 if (board.freeSquare(to))
                 {
-                    takenPiece = null;
                     moveType = MoveType.NORMALMOVE;
-                    move = new Move(from, to, moveType, takenPiece, board.inMove());
+                    move = new Move(from, to, moveType, null, board.inMove());
                 }
             }
             

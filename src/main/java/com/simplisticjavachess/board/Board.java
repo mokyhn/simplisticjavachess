@@ -1,6 +1,4 @@
-/**
- * @author Morten Kühnrich
- */
+
 
 package com.simplisticjavachess.board;
 
@@ -15,6 +13,9 @@ import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
 import java.util.Collection;
 
+/**
+ * @author Morten Kühnrich
+ */
 public class Board
 {
 
@@ -405,11 +406,6 @@ public class Board
     public boolean isAttacked(Location location)
     {
         return PositionInference.attacks(position, location, currentState.getInMove()) != null;
-    }
-
-    private boolean isFree(Location location)
-    {
-        return getPiece(location) == null;
     }
 
     public Vector getMoveDirection()

@@ -134,7 +134,7 @@ public class Position
      * @param piece - to remove
      * @return the removed piece
      */
-    private Piece removePiece(Piece piece)
+    private void removePiece(Piece piece)
     {    
         if (piece == null)
         {
@@ -143,7 +143,6 @@ public class Position
         if (piecesMap.containsKey(piece.getLocation()))
         {
             piecesMap.remove(piece.getLocation());
-            return piece;
         }
         else
         {

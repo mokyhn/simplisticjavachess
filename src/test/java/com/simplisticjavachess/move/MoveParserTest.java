@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 public class MoveParserTest
 {
     
-    Board board;
+    private Board board;
     
     public MoveParserTest()
     {
@@ -24,7 +24,7 @@ public class MoveParserTest
      * Test of parseMove method, of class MoveParser.
      */
     @Test
-    public void testParseMove() throws Exception
+    public void testParseMove()
     {
         Move move = MoveParser.parseMove(board, "d2d4");  
         assertEquals(new Move(new Location("d2"), new Location("d4"), MoveType.NORMALMOVE, null, Color.WHITE), move);

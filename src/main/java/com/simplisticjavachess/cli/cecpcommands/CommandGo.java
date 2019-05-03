@@ -25,7 +25,7 @@ public class CommandGo implements Command
     }
 
     @Override
-    public void execute(String[] arguments) throws Exception
+    public void execute(String[] arguments)
     {
         chessGame.go();
     }

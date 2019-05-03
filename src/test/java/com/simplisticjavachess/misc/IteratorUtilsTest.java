@@ -118,7 +118,7 @@ public class IteratorUtilsTest
     @Test
     public void testEmptyAndEmpty_compose_many()
     {
-        Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(emptyIterator(), emptyIterator());
+        Collection<Iterator<Integer>> input = Arrays.asList(emptyIterator(), emptyIterator());
         Iterator result = IteratorUtils.compose(input);
         assertFalse(result.hasNext());
     }
@@ -126,7 +126,7 @@ public class IteratorUtilsTest
     @Test
     public void testEmptyAndOne_compose_many()
     {
-        Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(emptyIterator(), oneElementIterator());
+        Collection<Iterator<Integer>> input = Arrays.asList(emptyIterator(), oneElementIterator());
         Iterator result = IteratorUtils.compose(input);
         assertTrue(result.hasNext());
         assertEquals(1, result.next());
@@ -136,7 +136,7 @@ public class IteratorUtilsTest
     @Test
     public void testOneAndEmpty_compose_many()
     {
-       Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(oneElementIterator(), emptyIterator());
+       Collection<Iterator<Integer>> input = Arrays.asList(oneElementIterator(), emptyIterator());
         Iterator result = IteratorUtils.compose(input);
         assertTrue(result.hasNext());
         assertEquals(1, result.next());
@@ -146,7 +146,7 @@ public class IteratorUtilsTest
     @Test
     public void testOneAndOne_compose_many()
     {
-        Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(oneElementIterator(), oneElementIterator());
+        Collection<Iterator<Integer>> input = Arrays.asList(oneElementIterator(), oneElementIterator());
         Iterator result = IteratorUtils.compose(input);
         assertTrue(result.hasNext());
         assertEquals(1, result.next());
@@ -158,7 +158,7 @@ public class IteratorUtilsTest
     @Test
     public void testThreeAndThree_compose_many() 
     {
-        Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(threeElementIterator(), threeElementIterator());
+        Collection<Iterator<Integer>> input = Arrays.asList(threeElementIterator(), threeElementIterator());
         Iterator result = IteratorUtils.compose(input);
         assertTrue(result.hasNext());
         assertEquals(1, result.next());
@@ -178,7 +178,7 @@ public class IteratorUtilsTest
     @Test
     public void testReversedThreeAndThree_compose_many() 
     {
-        Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(reversedThreeElementIterator(), threeElementIterator());
+        Collection<Iterator<Integer>> input = Arrays.asList(reversedThreeElementIterator(), threeElementIterator());
         Iterator result = IteratorUtils.compose(input);
         assertTrue(result.hasNext());
         assertEquals(3, result.next());
@@ -198,7 +198,7 @@ public class IteratorUtilsTest
     @Test
     public void testReversedThreeEmptyAndThreeAndThree_compose_many() 
     {
-        Collection<Iterator<Integer>> input = (Collection<Iterator<Integer>>) Arrays.asList(reversedThreeElementIterator(), emptyIterator(), threeElementIterator(), threeElementIterator());
+        Collection<Iterator<Integer>> input = Arrays.asList(reversedThreeElementIterator(), emptyIterator(), threeElementIterator(), threeElementIterator());
         Iterator result = IteratorUtils.compose(input);
         assertTrue(result.hasNext());
         assertEquals(3, result.next());

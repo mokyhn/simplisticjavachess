@@ -10,47 +10,41 @@ import static org.junit.Assert.*;
  */
 public class PieceTest
 {
-    Piece p12 = new Piece(new Location(1, 2), Color.BLACK, PieceType.KNIGHT);
-    
-    @Test
-    public void testEquals0()
-    {
-        assertTrue(p12.equals(p12));
-    }
+    private Piece p12 = new Piece(new Location(1, 2), Color.BLACK, PieceType.KNIGHT);
 
     @Test
     public void testEquals1()
     { 
         Piece p2 = new Piece(new Location(1, 2), Color.BLACK, PieceType.KNIGHT);
-        assertTrue(p12.equals(p2));
+        assertEquals(p12, p2);
     }
 
     @Test
     public void testNotEquals1()
     {
         Piece p2 = new Piece(new Location(1, 2), Color.WHITE, PieceType.KNIGHT);
-        assertFalse(p12.equals(p2));
+        assertNotEquals(p12, p2);
     }
 
     @Test
     public void testNotEquals2()
     {
         Piece p2 = new Piece(new Location(1, 2), Color.BLACK, PieceType.KING);
-        assertFalse(p12.equals(p2));
+        assertNotEquals(p12, p2);
     }
    
     @Test
     public void testNotEquals3()
     {
         Piece p2 = new Piece(new Location(1, 4), Color.BLACK, PieceType.KNIGHT);
-        assertFalse(p12.equals(p2));
+        assertNotEquals(p12, p2);
     }
    
     @Test
     public void testNotEquals4()
     {
         Piece p2 = new Piece(new Location(4, 2), Color.BLACK, PieceType.KNIGHT);
-        assertFalse(p12.equals(p2));
+        assertNotEquals(p12, p2);
     }
    
     @Test

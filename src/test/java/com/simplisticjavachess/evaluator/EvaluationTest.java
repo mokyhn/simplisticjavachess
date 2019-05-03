@@ -63,9 +63,8 @@ public class EvaluationTest
     @Test
     public void testEquals()
     {
-        assertTrue(Evaluation.NONE.equals(Evaluation.NONE));
-        assertTrue(new Evaluation(17).equals(new Evaluation(17)));
-        assertFalse(new Evaluation(17).equals(Evaluation.NONE));
+        assertEquals(new Evaluation(17), new Evaluation(17));
+        assertNotEquals(new Evaluation(17), Evaluation.NONE);
     }
 
     /**

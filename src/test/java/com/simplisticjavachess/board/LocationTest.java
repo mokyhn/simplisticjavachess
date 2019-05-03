@@ -3,6 +3,7 @@ package com.simplisticjavachess.board;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class LocationTest {
@@ -39,19 +40,19 @@ public class LocationTest {
     @Test(expected=InvalidLocationException.class)
     public void testInvalidFile() throws InvalidLocationException
     {
-        Location location = new Location("i4");
+        new Location("i4");
     }
     
     @Test(expected=InvalidLocationException.class)
     public void testInvalidRank() throws InvalidLocationException
     {
-        Location location = new Location("a9");
+        new Location("a9");
     }
 
     @Test
     public void testAllHashValues()
     {
-        Set<Integer> result = new HashSet<Integer>();
+        Set<Integer> result = new HashSet<>();
         
         for (int x = 0; x < 8; x++)
         {
@@ -78,12 +79,14 @@ public class LocationTest {
         assertEquals(2, l1.horizontalDistance(l2));
         assertEquals(3, l1.verticalDistance(l2));
     }
-    
+
+    @Test
     public void testIsValid1()
     {
         assertTrue(new Location(5,4).isValid());
     }
-    
+
+    @Test
     public void testIsValid2()
     {
         assertFalse(new Location(7,8).isValid());

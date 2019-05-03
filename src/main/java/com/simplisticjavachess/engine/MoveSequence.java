@@ -10,7 +10,7 @@ import java.util.Iterator;
  */
 public class MoveSequence implements Iterable<Move>
 {
-   ArrayList<Move> list;
+   private ArrayList<Move> list;
 
    public MoveSequence(Move... moves)
    {

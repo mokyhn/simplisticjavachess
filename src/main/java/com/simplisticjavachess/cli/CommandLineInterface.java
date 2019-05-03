@@ -26,12 +26,7 @@ public class CommandLineInterface
         commands.add(command);
     }
     
-    public void setPromtText(String promptText)
-    {
-        this.promptText = promptText;
-    }
-
-    private void displayHelp() 
+    private void displayHelp()
     {
         for (Command command : commands) 
         {
@@ -78,11 +73,5 @@ public class CommandLineInterface
             executeCommand(strings);          
         }
     }
-    
-    public void stop()
-    {
-    }
-    
-   
-    
+
 }

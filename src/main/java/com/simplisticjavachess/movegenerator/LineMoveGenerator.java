@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class LineMoveGenerator implements IMoveGenerator {
-    Vector step;
+    private final Vector step;
 
     public LineMoveGenerator(Vector step)
     {

@@ -42,7 +42,7 @@ public enum PieceType
             case KING:
                 return "K";
             default:
-                return null; // Not reachable
+                throw new IllegalStateException(); // Not reachable
         }    
     }
     

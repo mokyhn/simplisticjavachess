@@ -25,7 +25,7 @@ public class MateTests
     }
 
     @Test
-    public void mate_with_pawn_2_test() throws Exception
+    public void mate_with_pawn_2_test()
     {
         assertMove("b6b7", MATE_WITH_PAWN_0, "",  3);
     }        

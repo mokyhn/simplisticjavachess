@@ -46,12 +46,12 @@ public class MoveGeneratorTest
                 {
                     if (move.aCapture()) 
                     {
-                        assertTrue(BoardParser.exportPosition(board), PositionInference.attacks(board.getPosition(), move.getTo(), board.inMove().opponent()) != null);
+                        assertNotNull(BoardParser.exportPosition(board), PositionInference.attacks(board.getPosition(), move.getTo(), board.inMove().opponent()));
                     }
                 }
                 else
                 {
-                    assertTrue(BoardParser.exportPosition(board), PositionInference.attacks(board.getPosition(), move.getTo(), board.inMove().opponent()) != null);
+                    assertNotNull(BoardParser.exportPosition(board), PositionInference.attacks(board.getPosition(), move.getTo(), board.inMove().opponent()));
                 } 
                 
             }
@@ -72,7 +72,7 @@ public class MoveGeneratorTest
             
             Iterator<Move> moveIterator = moveGenerator.generateMoves(board);
             
-            List<Move> moves = new ArrayList<Move>();
+            List<Move> moves = new ArrayList<>();
             while (moveIterator.hasNext())
             {
                 moves.add(moveIterator.next());

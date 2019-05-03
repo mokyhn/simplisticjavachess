@@ -56,7 +56,7 @@ public class IteratorUtils
         {
             return new Iterator<T>()
             {
-                Iterator<Iterator<T>> iteratorIterator = iterators.iterator();
+                final Iterator<Iterator<T>> iteratorIterator = iterators.iterator();
                 Iterator<T> currentIterator = iteratorIterator.next();
 
                 @Override
@@ -126,7 +126,7 @@ public class IteratorUtils
 
     public static <T> List<T> toList(Iterator<T> elements)
     {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
         
         while (elements.hasNext())
         {

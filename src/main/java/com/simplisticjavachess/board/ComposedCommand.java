@@ -19,6 +19,6 @@ public class ComposedCommand implements Command
     
     public List<Command> getCommands()
     {
-        return new ArrayList<Command>(Arrays.asList(commands));
+        return new ArrayList<>(Arrays.asList(commands));
     }
 }

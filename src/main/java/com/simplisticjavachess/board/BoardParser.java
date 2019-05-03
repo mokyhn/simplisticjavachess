@@ -1,13 +1,12 @@
-/**
- *
- * @author Morten Kühnrich
- */
-
 package com.simplisticjavachess.board;
+
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.misc.Strings;
 
+/**
+ * @author Morten Kühnrich
+ */
 public class BoardParser
 {    
     /**
