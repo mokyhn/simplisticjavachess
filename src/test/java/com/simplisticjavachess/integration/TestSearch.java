@@ -14,11 +14,14 @@ import com.simplisticjavachess.search.SearchResult;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
 public class TestSearch
 {
 
 
-    public static boolean search(String fen, String moveSequence, int plyDepth, String expectedMoves)
+    public static void assertMove(String expectedMoves, String fen, String moveSequence, int plyDepth)
     {
         Board board = Board.createFromFEN(fen);
 
@@ -37,16 +40,22 @@ public class TestSearch
 
             if (searchResult.getMoveSequence().getFirst() == null && expectedMoves.isEmpty())
             {
-                return true;
+                assertTrue(true);
             }
 
             Collection<Move> expected = parseExpectedMoves(board, expectedMoves);
 
-            return expected.contains(searchResult.getMoveSequence().getFirst());
-
+            if (expected.contains(searchResult.getMoveSequence().getFirst()))
+            {
+                assertTrue(true);
+            }
+            else
+            {
+                fail();
+            }
         } catch (Exception e) {
             System.out.println("Failed in setup of pieces");
-            return false;
+            fail();
         }
     }
 

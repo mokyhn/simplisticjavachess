@@ -3,6 +3,8 @@ package com.simplisticjavachess.game;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Color;
 
+import java.util.Objects;
+
 public final class State
 {
     public int moveNumber;
@@ -133,7 +135,7 @@ public final class State
                    this.halfMoveClock == other.halfMoveClock &&
                    this.halfMovesIndex3PosRepition == other.halfMovesIndex3PosRepition &&
                    this.inMove == other.inMove &&
-                   this.move.equals(other.move) &&
+                   Objects.equals(this.move, other.move) &&
                    this.moveNumber == other.moveNumber;
         }
         else

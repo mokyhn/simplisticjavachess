@@ -380,9 +380,7 @@ public class Board
      */
     public String asASCII()
     {
-    
         String s = position.getPositionString();
-
         if (inMove() == Color.WHITE)
         {
             s = s + "  White to move\n";
@@ -390,15 +388,10 @@ public class Board
         {
             s = s + "  Black to move\n";
         }
-
         s = s + currentState.toString();
-
         s = s + "Immediate evaluation: " + Evaluator.evaluate(this) + "\n";
-
         s = s + "Move history: " + history.toString() + "\n";
-        
         s = s + "FEN: " + BoardParser.exportPosition(this);
-
         return s;
     }
     

@@ -6,7 +6,6 @@
 package com.simplisticjavachess.integration;
 
 import static com.simplisticjavachess.integration.TestSearch.*;
-import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 public class KnightTest
@@ -16,46 +15,46 @@ public class KnightTest
     private static final String KNIGHT_TAKE_ROOK_OR_QUEEN = "k7/4R3/8/3n4/8/2Q5/8/K7 b";
     
     @Test
-    public void knightTest1() throws Exception
+    public void knightTest1()
     {        
-        assertTrue(search(KNIGHT_TAKE_ROOK_OR_QUEEN, "",  3, "d5c3"));
+        assertMove("d5c3", KNIGHT_TAKE_ROOK_OR_QUEEN, "",  3);
     }
     
     @Test
-    public void knightTest2() throws Exception
+    public void knightTest2()
     {        
-        assertTrue(search(KNIGHT_TAKE_ROOK_OR_QUEEN, "",  5, "d5e7 d5c3"));
+        assertMove("d5e7 d5c3", KNIGHT_TAKE_ROOK_OR_QUEEN, "",  5);
     }
     
       @Test
-    public void knightTest3() throws Exception
+    public void knightTest3()
     {        
-        assertTrue(search(KNIGHT_TAKES_PAWN_LEFT, "",  5, "e7d5"));
+        assertMove("e7d5", KNIGHT_TAKES_PAWN_LEFT, "",  5);
     }
     
     @Test
-    public void knightTest4() throws Exception
+    public void knightTest4()
     {        
-        assertTrue(search(KNIGHT_TAKES_PAWN_RIGHT, "",  5, "e7f5"));
+        assertMove("e7f5", KNIGHT_TAKES_PAWN_RIGHT, "",  5);
     }
     
        
     @Test
-    public void knightTestMinMax2() throws Exception
+    public void knightTestMinMax2()
     {
-        assertTrue(search("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "",  2, "d4e6"));
+        assertMove("d4e6", "q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "",  2);
     }
     
     @Test
-    public void knightTestMinMax3() throws Exception
+    public void knightTestMinMax3()
     {
-        assertTrue(search("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "",  3, "d4e6"));
+        assertMove("d4e6", "q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "",  3);
     }
     
     @Test
-    public void knightTestMinMax4() throws Exception
+    public void knightTestMinMax4()
     {
-        assertTrue(search("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "",  4, "d4e6"));
+        assertMove("d4e6", "q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "",  4);
     }
         
   

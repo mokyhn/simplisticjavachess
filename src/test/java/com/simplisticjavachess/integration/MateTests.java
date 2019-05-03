@@ -4,7 +4,6 @@ package com.simplisticjavachess.integration;
  * @author Morten Kühnrich
  */
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 import static com.simplisticjavachess.integration.TestSearch.*;
 import org.junit.Ignore;
@@ -20,81 +19,81 @@ public class MateTests
     private static final String SUFFUCATED_MATE_TEST_2 = "r3r2k/6pp/8/6N1/2Q5/1B6/1PPP4/2K5 w";
   
     @Test
-    public void mate_with_pawn_1_test() throws Exception
+    public void mate_with_pawn_1_test()
     {
-        assertTrue(search(MATE_WITH_PAWN_0, "",  3, "b6b7"));
+        assertMove("b6b7", MATE_WITH_PAWN_0, "",  3);
     }
 
     @Test
     public void mate_with_pawn_2_test() throws Exception
     {
-        assertTrue(search(MATE_WITH_PAWN_0, "",  3, "b6b7"));
+        assertMove("b6b7", MATE_WITH_PAWN_0, "",  3);
     }        
     
      @Test
-    public void mate_with_pawn_3_test() throws Exception
+    public void mate_with_pawn_3_test()
     {
-        assertTrue(search(MATE_WITH_PAWN_1, "",  3, "b6b7"));
+        assertMove("b6b7", MATE_WITH_PAWN_1, "",  3);
     }
    
     @Test
-    public void mate_with_pawn_4_test() throws Exception
+    public void mate_with_pawn_4_test()
     {
-        assertTrue(search(MATE_WITH_PAWN_1, "",  3, "b6b7"));
+        assertMove("b6b7", MATE_WITH_PAWN_1, "",  3);
     }
     
     @Test
-    public void mate_with_queen_1_test() throws Exception
+    public void mate_with_queen_1_test()
     {
-        assertTrue(search(WHITE_READY_TO_MATE_WITH_QUEEN_COMPLEX, "",  3, "f6e7"));
+        assertMove("f6e7", WHITE_READY_TO_MATE_WITH_QUEEN_COMPLEX, "",  3);
     }
     
     @Ignore
     @Test
-    public void mate_with_queen_2_test() throws Exception
+    public void mate_with_queen_2_test()
     {
-        assertTrue(search(WHITE_READY_TO_MATE_WITH_QUEEN_SIMPLE, "",  4, "f6e7"));
+        assertMove("f6e7", WHITE_READY_TO_MATE_WITH_QUEEN_SIMPLE, "",  4);
         
     }
     
     @Ignore
     @Test
-    public void mate_with_queen_3_test() throws Exception
+    public void mate_with_queen_3_test()
     {
-        assertTrue(search(WHITE_READY_TO_MATE_WITH_QUEEN_SIMPLE, "",  4, "f6e7"));
+        assertMove("f6e7", WHITE_READY_TO_MATE_WITH_QUEEN_SIMPLE, "",  4);
     }
 
     @Ignore
     @Test
-    public void mate_with_queen_4_test() throws Exception
+    public void mate_with_queen_4_test()
     {
-        assertTrue(search(WHITE_READY_TO_MATE_WITH_QUEEN_COMPLEX, "",  4, "f6e7"));
+        assertMove("f6e7", WHITE_READY_TO_MATE_WITH_QUEEN_COMPLEX, "",  4);
     }
 
     @Ignore
     @Test
-    public void mate_with_queen_5_test() throws Exception
+    public void mate_with_queen_5_test()
     {
-        assertTrue(search("r1b1k3/1p3R2/p2p1Q2/P1pPp1P1/3P4/1P6/4P1P1/RN2KBN1 w Q", "",  4, "f6e7"));
+        assertMove("f6e7", "r1b1k3/1p3R2/p2p1Q2/P1pPp1P1/3P4/1P6/4P1P1/RN2KBN1 w Q", "",  4);
     }
 
     @Ignore
     @Test
-    public void mate_with_queen_6_test() throws Exception
+    public void mate_with_queen_6_test()
     {
-        assertTrue(search("6k1/1Q6/2p2B2/p1P1p3/P7/1P2P1PN/R2P1P1P/1N2KBR1 w", "",  4, "b7g7"));
+        assertMove("b7g7", "6k1/1Q6/2p2B2/p1P1p3/P7/1P2P1PN/R2P1P1P/1N2KBR1 w", "",  4);
     }
 
     @Test
-    public void suffucated_mate_3_test() throws Exception
+    public void suffucated_mate_3_test()
     {
-        assertTrue(search(SUFFUCATED_MATE_TEST_2, "",  4,  "c4g8"));
+        assertMove("c4g8", SUFFUCATED_MATE_TEST_2, "",  4);
     }
     
-     @Test
-    public void suffucated_mate_4_test() throws Exception
+    @Test
+    public void suffucated_mate_4_test()
     {
-        assertTrue(search(SUFFUCATED_MATE_TEST_2, "",  4, "c4g8"));
+        assertMove("c4g8", SUFFUCATED_MATE_TEST_2, "",  4);
     }
     
 }

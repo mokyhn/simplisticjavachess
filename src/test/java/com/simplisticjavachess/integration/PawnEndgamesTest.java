@@ -2,10 +2,9 @@ package com.simplisticjavachess.integration;
 
 import org.junit.*;
 
-import static com.simplisticjavachess.integration.TestSearch.search;
-import static org.junit.Assert.assertTrue;
+import static com.simplisticjavachess.integration.TestSearch.assertMove;
 
-public class PawnEndgameIntegrationTest {
+public class PawnEndgamesTest {
 
 	/**
 	 *  _______________
@@ -24,7 +23,7 @@ public class PawnEndgameIntegrationTest {
 	@Test
 	public void avoidLoosingPawn1() throws Exception
 	{
-		assertTrue(search("8/8/8/3k4/3P4/8/3K4/8 w", "", 2, "d2d3 d2c3 d2e3"));
+		assertMove("d2d3 d2c3 d2e3", "8/8/8/3k4/3P4/8/3K4/8 w", "", 2);
 	}
 
 
@@ -45,7 +44,7 @@ public class PawnEndgameIntegrationTest {
 	@Test
 	public void avoidLoosingPawn2() throws Exception
 	{
-		assertTrue(search("8/3k4/8/3p4/3K4/8/8/8 b", "",  2, "d7d6 d7c6 d7e6"));
+		assertMove("d7d6 d7c6 d7e6", "8/3k4/8/3p4/3K4/8/8/8 b", "",  2);
 	}
 
 
@@ -66,7 +65,7 @@ public class PawnEndgameIntegrationTest {
 	@Test
 	public void avoidLoosingPawn3() throws Exception
 	{
-		assertTrue(search("3k4/3P4/3K4/8/8/8/8/8 w", "",  4, "d6e6 d6c6"));
+		assertMove("d6e6 d6c6", "3k4/3P4/3K4/8/8/8/8/8 w", "",  4);
 	}
 
 	/**
@@ -86,7 +85,7 @@ public class PawnEndgameIntegrationTest {
 	@Test
 	public void simpleTest4() throws Exception
 	{
-		assertTrue(search("8/8/8/8/8/3k4/3p4/3K4 b", "",  4, "d3e3 d3c3"));
+		assertMove("d3e3 d3c3", "8/8/8/8/8/3k4/3p4/3K4 b", "",  4);
 	}
 
 	/**
@@ -106,7 +105,7 @@ public class PawnEndgameIntegrationTest {
 	@Test
 	public void avoidStaleMate1() throws Exception
 	{
-		assertTrue(search("3k4/3P4/8/3K4/8/8/8/8 w", "",  4, "d5c6 d5e6"));
+		assertMove("d5c6 d5e6", "3k4/3P4/8/3K4/8/8/8/8 w", "",  4);
 	}
 
 	/**
@@ -127,7 +126,7 @@ public class PawnEndgameIntegrationTest {
 	@Test
 	public void avoidStaleMate2() throws Exception
 	{
-		assertTrue(search("8/8/8/8/3k4/8/3p4/3K4 b", "",  4, "d4e3 d4c3"));
+		assertMove("d4e3 d4c3", "8/8/8/8/3k4/8/3p4/3K4 b", "",  4);
 	}
 
 	/**
@@ -148,7 +147,29 @@ public class PawnEndgameIntegrationTest {
 	public void testSimplePawnMoves2()
 	{
 		// Mate in one
-		assertTrue(search("8/8/8/5ppp/5pkp/8/6KP/8 w", "",  5, "h2h3"));
+		assertMove("h2h3", "8/8/8/5ppp/5pkp/8/6KP/8 w", "",  5);
 	}
 
+	/**
+	 *  _______________
+	 *  . . . . k . . .     8
+	 *  P . . . . . . .     7
+	 *  . . . . K . . .     6
+	 *  . . . . . . . .     5
+	 *  . . . . . . . .     4
+	 *  . . . . . . . .     3
+	 *  . . . . . . . .     2
+	 *  . . . . . . . .     1
+	 *  _______________
+	 *  a b c d e f g h
+	 *   White to move
+	 *
+	 */
+	@Test
+	public void mateWithPawnPromotion()
+	{
+		assertMove("a7a8Q", "4k3/P7/4K3/8/8/8/8/8 w", "",  1);
+		assertMove("a7a8Q", "4k3/P7/4K3/8/8/8/8/8 w", "",  2);
+		assertMove("a7a8Q", "4k3/P7/4K3/8/8/8/8/8 w", "",  3);
+	}
 }
