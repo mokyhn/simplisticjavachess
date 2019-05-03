@@ -14,9 +14,11 @@ import java.util.Iterator;
 //Define the composition of move generators into a move generator
 //This will allow us to test individual move generators also in combination with searching
 //TODO: Even the internal structure of one move generator could be described via a composed move generator.
+//The compose move-generator could handle the sub-structure of move generators in a clever way
 public class MoveGenerator
 {
     
+    //TODO: This is probably the public interface!
     // Genereate the possible move iterator for one single piece
     private Iterator<Move> generateMoves(Board board, Piece piece)
     {
@@ -45,7 +47,8 @@ public class MoveGenerator
                 return null; // Not reachable
         }        
     }
-    
+
+    //TODO: This is NOT the public interface! It will be slow
     public Iterator<Move> generateMoves(Board board)
     {
         final ArrayList<Iterator<Move>> moveIterators = new ArrayList<>();
