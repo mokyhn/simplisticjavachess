@@ -54,16 +54,6 @@ public class History
         return stateHistory.get(index);
     }
 
-    public boolean isEmpty()
-    {
-        return stateHistory.isEmpty();
-    }
-
-    public Move getLastMove()
-    {
-        return stateHistory.peek().getMove();
-    }
-    
     @Override
     public String toString()
     {

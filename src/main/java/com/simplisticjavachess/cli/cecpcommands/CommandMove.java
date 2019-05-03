@@ -2,7 +2,6 @@ package com.simplisticjavachess.cli.cecpcommands;
 
 import com.simplisticjavachess.game.ChessGame;
 import com.simplisticjavachess.cli.Command;
-import com.simplisticjavachess.move.InvalidMoveException;
 import com.simplisticjavachess.board.InvalidLocationException;
 
 /**
@@ -21,7 +20,7 @@ public class CommandMove implements Command
 
     public boolean isApplicable(String str)
     {
-        String moveRegex = "[a-h][1-8][a-h][1-8][n|k|b|q|r]?";
+        String moveRegex = "[a-h][1-8][a-h][1-8][nkbqr]?";
         return str.matches(moveRegex);
     }
 
@@ -35,9 +34,9 @@ public class CommandMove implements Command
         {
             System.out.println("Invalid location given");
         }
-        catch (InvalidMoveException e) 
+        catch (IllegalArgumentException e)
         {
-            System.out.println("Invalid move");
+            System.out.println(e.getMessage());
         } 
     }
 

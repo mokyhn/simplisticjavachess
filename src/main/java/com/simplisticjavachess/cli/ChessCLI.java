@@ -20,13 +20,13 @@ import com.simplisticjavachess.cli.cecpcommands.CommandXBoard;
 public class ChessCLI
 {
     private final CommandLineInterface cli = new CommandLineInterface();
-    private final ChessGame chessGame = new ChessGame();
-    
+
     public ChessCLI()
     {
         /*
         Chess Engine Communication Protocol commands
         */
+        ChessGame chessGame = new ChessGame();
         cli.registerCommand(new CommandBlack(chessGame));
         cli.registerCommand(new CommandGo(chessGame));
         cli.registerCommand(new CommandMove(chessGame));

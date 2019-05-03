@@ -10,7 +10,6 @@ import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.move.Move;
-import com.simplisticjavachess.move.InvalidMoveException;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.board.InvalidLocationException;
 import com.simplisticjavachess.engine.MinMaxEngine;
@@ -104,13 +103,13 @@ public class ChessGame
         }
     }
    
-    public void move(String str) throws InvalidLocationException, InvalidMoveException
+    public void move(String str) throws InvalidLocationException
     {
         Move move = MoveParser.parseMove(board, str);
 
         if (move == null || board.isDraw() || board.isMate()) 
         {
-            throw new InvalidMoveException();
+            throw new IllegalArgumentException("Invalid move");
         }
         else
         {
@@ -126,7 +125,7 @@ public class ChessGame
                     }
                     else
                     {
-                        throw new InvalidMoveException();
+                        throw new IllegalArgumentException("Invalid move");
                     }
                 }
             }

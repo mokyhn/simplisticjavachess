@@ -21,25 +21,22 @@ public class LineMoveGenerator implements IMoveGenerator {
     {
         final ArrayList<Move> moves = new ArrayList<>();
         Location location = piece.getLocation();
-        Vector d = new Vector(0,0);
+        Vector delta = new Vector(0,0);
         
         while (location.isValid())
         {
-            d = d.add(step);
-            
+            delta = delta.add(step);
             location = step.translocate(location);
             
-            Move newMove;
-            newMove = MoveGeneratorUtil.genMove(board, piece, d);
+            Move newMove = MoveGeneratorUtil.genMove(board, piece, delta);
             if (newMove == null)
             {
                 break; // The square was occupied by my own piece
             }
-
             moves.add(newMove);
             if (newMove.aCapture())
             {
-                break; // The square was occopied by an opponent piece
+                break; // The square was occupied by an opponent piece
             }
             
         }

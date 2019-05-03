@@ -164,11 +164,6 @@ public class Board
         return PositionInference.attacks(position, new Location(x, y), currentState.getInMove()) != null;
     }
 
-    public boolean isFreeAndUnattacked(Location location)
-    {
-        return !isAttacked(location) && isFree(location);
-    }
-    
     /**
      *
      * @param color
@@ -177,14 +172,6 @@ public class Board
     public Boolean isInCheck(Color color)
     {
         return PositionInference.isInCheck(position, color);
-    }
-    
-    /**
-     * @return Is the player to move in check?
-     */
-    public Boolean isInCheck()
-    {
-        return PositionInference.isInCheck(position, currentState.getInMove());
     }
     
     public Move getLastMove()

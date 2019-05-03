@@ -3,7 +3,9 @@ package com.simplisticjavachess.misc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
+
 import static org.junit.Assert.*;
 import org.junit.Test;
 
@@ -24,7 +26,7 @@ public class IteratorUtilsTest
     
     private Iterator<Integer> oneElementIterator() 
     {
-        return Arrays.asList(1).iterator();
+        return Collections.singletonList(1).iterator();
     }
     
     private Iterator<Integer> threeElementIterator() 

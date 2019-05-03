@@ -71,16 +71,6 @@ public class Evaluation
         }
     }
  
-    /**
-     * @param color the perspective the comparison is seen from
-     * @param other the candidate that may improve this
-     * @return true if the other improves this or this equals other
-     */
-    public boolean isAnImprovementOrEqual(Color color, Evaluation other)
-    {
-        return this.equals(other) || isAnImprovement(color, other);
-    }
-    
     @Override
     public String toString()
     {

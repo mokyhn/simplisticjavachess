@@ -10,7 +10,7 @@ import org.junit.Before;
 
 public class BoardParserTest
 {
-    Board board1;
+    private Board board1;
     
     @Before
     public void before()

@@ -1,7 +1,6 @@
 package com.simplisticjavachess.cli;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,7 +70,7 @@ public class CommandLineInterface
             if (stringInput.equals("help")) {
                 displayHelp();
             }
-            String strings[] = stringInput.trim().split("\\s", 2);
+            String[] strings = stringInput.trim().split("\\s", 2);
             for (int i = 0; i < strings.length; i++)
             {
                 strings[i] = strings[i].trim();

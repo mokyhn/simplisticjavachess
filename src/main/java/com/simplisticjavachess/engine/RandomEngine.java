@@ -79,7 +79,7 @@ public class RandomEngine implements Engine
             }
         }
 
-        if (retry == true)
+        if (retry)
         {
             if (analyzeBoard.isInCheck(whoMoves))
             {
