@@ -13,6 +13,7 @@ import java.util.Iterator;
 //Define individual move generators
 //Define the composition of move generators into a move generator
 //This will allow us to test individual move generators also in combination with searching
+//TODO: Even the internal structure of one move generator could be described via a composed move generator.
 public class MoveGenerator
 {
     
