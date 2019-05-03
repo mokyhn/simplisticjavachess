@@ -20,7 +20,7 @@ public class MinMaxEngine implements Engine
     MoveGenerator moveGenerator;
     Evaluator evaluator;
 
-    private Board analyzeBoard;
+    private Board analysisBoard;
     private Move strongestMove;
 
     public MinMaxEngine(MoveGenerator moveGenerator, Evaluator evaluator)
@@ -29,11 +29,10 @@ public class MinMaxEngine implements Engine
         this.evaluator = evaluator;
     }
 
-
     @Override
     public final SearchResult search(Board board, int plyDepth)
     {
-        analyzeBoard = new Board(board);
+        analysisBoard = new Board(board);
         return minMaxSearch(plyDepth);
     }
    
@@ -42,20 +41,20 @@ public class MinMaxEngine implements Engine
         if (depthToGo == 0)
         {
             return new SearchResult(
-                    analyzeBoard.isDraw() ? 
+                    analysisBoard.isDraw() ?
                     Evaluation.EQUAL : 
-                    evaluator.evaluate(analyzeBoard)
+                    evaluator.evaluate(analysisBoard)
             );
         }
 
-        Iterator<Move> moves = moveGenerator.generateMoves(analyzeBoard);
+        Iterator<Move> moves = moveGenerator.generateMoves(analysisBoard);
 
-        Color inMove = analyzeBoard.inMove();
+        Color inMove = analysisBoard.inMove();
 
-        if (evaluator.evaluate(analyzeBoard).equals(Evaluation.BLACK_IS_MATED)
-         || evaluator.evaluate(analyzeBoard).equals(Evaluation.WHITE_IS_MATED))
+        if (evaluator.evaluate(analysisBoard).equals(Evaluation.BLACK_IS_MATED)
+         || evaluator.evaluate(analysisBoard).equals(Evaluation.WHITE_IS_MATED))
         {
-            return new SearchResult(evaluator.evaluate(analyzeBoard));
+            return new SearchResult(evaluator.evaluate(analysisBoard));
         }
 
         if (!moves.hasNext())
@@ -72,17 +71,17 @@ public class MinMaxEngine implements Engine
         while (moves.hasNext())
         {
             Move move = moves.next();
-            boolean legal = analyzeBoard.doMove(move);
+            boolean legal = analysisBoard.doMove(move);
 
             if (!legal)
             {
-                analyzeBoard.undo();
+                analysisBoard.undo();
                 continue; // The pseudo legal move m turned out to be illegal.
             }
 
             thereWasALegalMove = true;
             score = minMaxSearch(depthToGo - 1);
-            analyzeBoard.undo();
+            analysisBoard.undo();
 
             if (bestScore.isAnImprovement(inMove, score.getEvaluation()))
             {
@@ -95,10 +94,10 @@ public class MinMaxEngine implements Engine
         // Mate or draw
         if (!thereWasALegalMove)
         {
-            if (analyzeBoard.isInCheck(inMove))
+            if (analysisBoard.isInCheck(inMove))
             {
                     
-                analyzeBoard.setGameResult(GameResult.MATE);               
+                analysisBoard.setGameResult(GameResult.MATE);
 
                 if (inMove == Color.WHITE)
                 {
@@ -109,7 +108,7 @@ public class MinMaxEngine implements Engine
                 }
             } else
             {
-                analyzeBoard.setGameResult(GameResult.STALE_MATE);
+                analysisBoard.setGameResult(GameResult.STALE_MATE);
                 return new SearchResult(Evaluation.EQUAL);
             } // draw
         }

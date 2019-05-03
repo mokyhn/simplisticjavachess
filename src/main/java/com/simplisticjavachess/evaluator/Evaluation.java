@@ -1,13 +1,12 @@
+/**
+ * @author Morten Kühnrich
+ */
 package com.simplisticjavachess.evaluator;
 
 import com.simplisticjavachess.piece.Color;
 import static com.simplisticjavachess.piece.Color.WHITE;
 import java.util.Objects;
 
-/**
- *
- * @author Morten Kühnrich
- */
 public class Evaluation
 {
      /**

@@ -1,8 +1,9 @@
-package com.simplisticjavachess.evaluator;
-
 /**
  * @author Morten Kühnrich
  */
+package com.simplisticjavachess.evaluator;
+
+
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.piece.Color;
@@ -11,15 +12,14 @@ import com.simplisticjavachess.piece.Color;
 //This will allow us to play around with different evaluators.
 public class Evaluator
 {
-
     public static final int WHITE_IS_MATED = -2147480000;
     public static final int BLACK_IS_MATED = 2147480000;
 
-    private static final int PAWNVALUE = 1;
-    private static final int ROOKVALUE = 5;
-    private static final int BISHOPVALUE = 3;
-    private static final int KNIGHTVALUE = 3;
-    private static final int QUEENVALUE = 9;
+    private static final int PAWN_VALUE = 1;
+    private static final int ROOK_VALUE = 5;
+    private static final int BISHOP_VALUE = 3;
+    private static final int KNIGHT_VALUE = 3;
+    private static final int QUEEN_VALUE = 9;
 
     public Evaluation evaluate(Board b)
     {
@@ -33,19 +33,19 @@ public class Evaluator
             switch (p.getPieceType())
             {
                 case PAWN:
-                    result = PAWNVALUE * p.getColor().getColor() + result;
+                    result = PAWN_VALUE * p.getColor().getColor() + result;
                     break;
                 case ROOK:
-                    result = ROOKVALUE * p.getColor().getColor() + result;
+                    result = ROOK_VALUE * p.getColor().getColor() + result;
                     break;
                 case BISHOP:
-                    result = BISHOPVALUE * p.getColor().getColor() + result;
+                    result = BISHOP_VALUE * p.getColor().getColor() + result;
                     break;
                 case KNIGHT:
-                    result = KNIGHTVALUE * p.getColor().getColor() + result;
+                    result = KNIGHT_VALUE * p.getColor().getColor() + result;
                     break;
                 case QUEEN:
-                    result = QUEENVALUE * p.getColor().getColor() + result;
+                    result = QUEEN_VALUE * p.getColor().getColor() + result;
                     break;
                 case KING:
                     if (p.getColor() == Color.BLACK)
@@ -61,11 +61,11 @@ public class Evaluator
             }
         }
 
-        if (thereIsABlackKing == false)
+        if (!thereIsABlackKing)
         {
             result = BLACK_IS_MATED;
         }
-        if (thereIsAWhiteKing == false)
+        if (!thereIsAWhiteKing)
         {
             result = WHITE_IS_MATED;
         }
