@@ -16,12 +16,17 @@ import java.util.Iterator;
 
 public class BishopMoveGenerator implements IMoveGenerator
 {
+    private static IMoveGenerator UP_AND_RIGHT =  new LineMoveGenerator(Vector.UP_AND_RIGHT);
+    private static IMoveGenerator DOWN_AND_RIGHT = new LineMoveGenerator(Vector.DOWN_AND_RIGHT);
+    private static IMoveGenerator UP_AND_LEFT = new LineMoveGenerator(Vector.UP_AND_LEFT);
+    private static IMoveGenerator DOWN_AND_LEFT = new LineMoveGenerator(Vector.DOWN_AND_LEFT);
+
     public Iterator<Move> generateMoves(Board board, Piece piece)
     {
         return IteratorUtils.compose(Arrays.asList(
-                new LineMoveGenerator(Vector.UP_AND_RIGHT).generateMoves(board, piece),
-                new LineMoveGenerator(Vector.DOWN_AND_RIGHT).generateMoves(board, piece),
-                new LineMoveGenerator(Vector.UP_AND_LEFT).generateMoves(board, piece),
-                new LineMoveGenerator(Vector.DOWN_AND_LEFT).generateMoves(board, piece)));
+                UP_AND_RIGHT.generateMoves(board, piece),
+                DOWN_AND_RIGHT.generateMoves(board, piece),
+                UP_AND_LEFT.generateMoves(board, piece),
+                DOWN_AND_LEFT.generateMoves(board, piece)));
     }
 }

@@ -15,7 +15,7 @@ public class PawnMoveGeneratorTest
     public void testLeftFlank()
     {
         Board board = Board.createFromLetters("pa2 w");
-        Iterator<Move> moves = PawnMoveGenerator.getIterator(board, Piece.fromPositionCode("pa2"));     
+        Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.fromPositionCode("pa2"));
         String movesStr = IteratorUtils.toString(moves);
                 
         assertEquals("[a2-a3, a2-a4]", movesStr);

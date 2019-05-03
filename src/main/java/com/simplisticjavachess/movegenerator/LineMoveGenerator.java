@@ -16,6 +16,7 @@ public class LineMoveGenerator implements IMoveGenerator {
         this.step = step;
     }
 
+    // TODO: The following can be refined so that not all moves are generated at once
     public Iterator<Move> generateMoves(Board board, Piece piece)
     {
         final ArrayList<Move> moves = new ArrayList<>();

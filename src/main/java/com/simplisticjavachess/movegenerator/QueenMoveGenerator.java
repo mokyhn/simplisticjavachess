@@ -13,9 +13,10 @@ import com.simplisticjavachess.piece.Piece;
 import java.util.Iterator;
 
 
-public class QueenMoveGenerator
-{  
-    public static Iterator<Move> getIterator(final Board board, final Piece piece)
+public class QueenMoveGenerator implements IMoveGenerator
+{
+    @Override
+    public Iterator<Move> generateMoves(Board board, Piece piece)
     {
         return IteratorUtils.compose(
                 new BishopMoveGenerator().generateMoves(board, piece),

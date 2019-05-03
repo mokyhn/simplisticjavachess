@@ -91,7 +91,7 @@ public class ChessGame
         this.searchDepth = depth;
     }
 
-   public void go() throws Exception
+   public void go()
     {
         SearchResult searchResult = new MinMaxEngine().search(board, searchDepth);
 

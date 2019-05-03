@@ -9,17 +9,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 
-//TODO: Turn this into an interface
-//Define individual move generators
-//Define the composition of move generators into a move generator
-//This will allow us to test individual move generators also in combination with searching
-//TODO: Even the internal structure of one move generator could be described via a composed move generator.
-//The compose move-generator could handle the sub-structure of move generators in a clever way
 public class MoveGenerator implements IMoveGenerator
 {
-    
-    //TODO: This is probably the public interface!
-    // Genereate the possible move iterator for one single piece
+    private static final IMoveGenerator PAWN_MOVE_GENERATOR = new PawnMoveGenerator();
+    private static final KingMoveGenerator KING_MOVE_GENERATOR = new KingMoveGenerator();
+    private static final KnightMoveGenerator KNIGHT_MOVE_GENERATOR = new KnightMoveGenerator();
+    private static final BishopMoveGenerator BISHOP_MOVE_GENERATOR = new BishopMoveGenerator();
+    private static final RookMoveGenerator ROOK_MOVE_GENERATOR = new RookMoveGenerator();
+    private static final QueenMoveGenerator QUEEN_MOVE_GENERATOR = new QueenMoveGenerator();
+
     public Iterator<Move> generateMoves(Board board, Piece piece)
     {
         final Color sideToMove = board.inMove();
@@ -32,23 +30,22 @@ public class MoveGenerator implements IMoveGenerator
         switch (piece.getPieceType())
         {
             case PAWN:
-                return PawnMoveGenerator.getIterator(board, piece);
+                return PAWN_MOVE_GENERATOR.generateMoves(board, piece);
             case KING:
-                return KingMoveGenerator.getIterator(board, piece);
+                return KING_MOVE_GENERATOR.generateMoves(board, piece);
             case KNIGHT:
-                return KnightMoveGenerator.getIterator(board, piece);
+                return KNIGHT_MOVE_GENERATOR.generateMoves(board, piece);
             case BISHOP:
-                return new BishopMoveGenerator().generateMoves(board, piece);
+                return BISHOP_MOVE_GENERATOR.generateMoves(board, piece);
             case ROOK:
-                return new RookMoveGenerator().generateMoves(board, piece);
+                return ROOK_MOVE_GENERATOR.generateMoves(board, piece);
             case QUEEN:
-               return QueenMoveGenerator.getIterator(board, piece);
+               return QUEEN_MOVE_GENERATOR.generateMoves(board, piece);
             default:
                 return null; // Not reachable
         }        
     }
 
-    //TODO: This is NOT the public interface! It will be slow
     public Iterator<Move> generateMoves(Board board)
     {
         final ArrayList<Iterator<Move>> moveIterators = new ArrayList<>();
@@ -57,11 +54,11 @@ public class MoveGenerator implements IMoveGenerator
         {
             return IteratorUtils.buildEmptyIterator();
         }
-        
+
         for (Piece piece : board.getPieces())
-        {            
+        {
             Iterator<Move> it = generateMoves(board, piece);
-            if (it != null) 
+            if (it != null)
             {
                 moveIterators.add(it);
             }

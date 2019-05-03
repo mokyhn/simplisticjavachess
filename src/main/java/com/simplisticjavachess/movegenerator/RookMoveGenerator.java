@@ -15,13 +15,18 @@ import java.util.Iterator;
 
 public class RookMoveGenerator implements IMoveGenerator
 {
+    private static final LineMoveGenerator LINE_MOVE_GENERATOR_UP = new LineMoveGenerator(Vector.UP);
+    private static final LineMoveGenerator LINE_MOVE_GENERATOR_DOWN = new LineMoveGenerator(Vector.DOWN);
+    private static final LineMoveGenerator LINE_MOVE_GENERATOR_RIGHT = new LineMoveGenerator(Vector.RIGHT);
+    private static final LineMoveGenerator LINE_MOVE_GENERATOR_LEFT = new LineMoveGenerator(Vector.LEFT);
+
     public Iterator<Move> generateMoves(Board board, Piece piece)
     {
         return IteratorUtils.compose(Arrays.asList(
-                new LineMoveGenerator(Vector.UP).generateMoves(board, piece),
-                new LineMoveGenerator(Vector.DOWN).generateMoves(board, piece),
-                new LineMoveGenerator(Vector.RIGHT).generateMoves(board, piece),
-                new LineMoveGenerator(Vector.LEFT).generateMoves(board, piece)
+                LINE_MOVE_GENERATOR_UP.generateMoves(board, piece),
+                LINE_MOVE_GENERATOR_DOWN.generateMoves(board, piece),
+                LINE_MOVE_GENERATOR_RIGHT.generateMoves(board, piece),
+                LINE_MOVE_GENERATOR_LEFT.generateMoves(board, piece)
         ));
     }
 

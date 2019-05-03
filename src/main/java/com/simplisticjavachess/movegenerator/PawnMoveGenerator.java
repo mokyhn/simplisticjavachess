@@ -15,9 +15,11 @@ import com.simplisticjavachess.board.Location;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class PawnMoveGenerator
+public class PawnMoveGenerator implements IMoveGenerator
 {
-    private static ArrayList<Move> generateMoves(Board board, Piece piece)
+    // TODO: The following can be refined so that not all moves are generated at once
+    // Split into different iterators for the blocks inside the method
+    private ArrayList<Move> generateMovesHelper(Board board, Piece piece)
     {
 
         final Color c = board.inMove();
@@ -153,23 +155,22 @@ public class PawnMoveGenerator
         }
 
         return Moves;
-
     }
 
-    
-     // TODO: The following can be refined so that not all moves are generated at once
-    public static Iterator<Move> getIterator(final Board b, final Piece p)
+
+    @Override
+    public Iterator<Move> generateMoves(Board b, Piece p)
     {
         return new Iterator<Move>()
         {
             Iterator<Move> generated = null;
-            
+
             @Override
             public boolean hasNext()
             {
-                if (generated == null) 
+                if (generated == null)
                 {
-                    generated = generateMoves(b, p).iterator();
+                    generated = generateMovesHelper(b, p).iterator();
                 }
                 return generated.hasNext();
             }
@@ -177,7 +178,7 @@ public class PawnMoveGenerator
             @Override
             public Move next()
             {
-                if (hasNext()) 
+                if (hasNext())
                 {
                     return generated.next();
                 }
@@ -189,11 +190,10 @@ public class PawnMoveGenerator
 
             @Override
             public void remove()
-            {                
+            {
             }
         };
     }
 
-    
-    
+
 }

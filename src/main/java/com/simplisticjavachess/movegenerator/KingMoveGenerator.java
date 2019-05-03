@@ -14,9 +14,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class KingMoveGenerator
-{   
-    private static ArrayList<Move> generateMoves(Board board, Piece piece)
+public class KingMoveGenerator implements IMoveGenerator
+{
+    // TODO: The following can be refined so that not all moves are generated at once
+    private static ArrayList<Move> generateMovesHelper(Board board, Piece piece)
     {
         final ArrayList<Move> moves = new ArrayList<>();
         final Color color = board.inMove();
@@ -73,8 +74,7 @@ public class KingMoveGenerator
         }
     }
     
-    // TODO: The following can be refined so that not all moves are generated at once
-    public static Iterator<Move> getIterator(final Board b, final Piece p)
+    public Iterator<Move> generateMoves(Board b, Piece p)
     {
         return new Iterator<Move>()
         {
@@ -85,7 +85,7 @@ public class KingMoveGenerator
             {
                 if (generated == null) 
                 {
-                    generated = generateMoves(b, p).iterator();
+                    generated = generateMovesHelper(b, p).iterator();
                 }
                 return generated.hasNext();
             }
