@@ -28,7 +28,6 @@ public class TestSearch
         try {
             performMoves(board, moveSequence);
 
-            Collection<Move> expected = parseExpectedMoves(board, expectedMoves);
 
             Search engine;
 
@@ -40,6 +39,8 @@ public class TestSearch
             {
                 return true;
             }
+
+            Collection<Move> expected = parseExpectedMoves(board, expectedMoves);
 
             return expected.contains(searchResult.getMoveSequence().getFirst());
 
