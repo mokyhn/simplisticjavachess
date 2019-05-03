@@ -6,14 +6,20 @@ import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
 import java.util.ArrayList;
+import java.util.Iterator;
 
-public class LineMoveGenerator {
-    public static ArrayList<Move> generateMoves(Board board, Piece piece, Vector step)
+public class LineMoveGenerator implements IMoveGenerator {
+    Vector step;
+
+    public LineMoveGenerator(Vector step)
     {
-        final ArrayList<Move> Moves = new ArrayList<>();
-        
+        this.step = step;
+    }
+
+    public Iterator<Move> generateMoves(Board board, Piece piece)
+    {
+        final ArrayList<Move> moves = new ArrayList<>();
         Location location = piece.getLocation();
-        
         Vector d = new Vector(0,0);
         
         while (location.isValid())
@@ -29,14 +35,13 @@ public class LineMoveGenerator {
                 break; // The square was occupied by my own piece
             }
 
-            Moves.add(newMove);
+            moves.add(newMove);
             if (newMove.aCapture())
             {
                 break; // The square was occopied by an opponent piece
             }
             
         }
-        
-        return Moves;
+        return moves.iterator();
     }      
 }

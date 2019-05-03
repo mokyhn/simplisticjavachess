@@ -15,12 +15,12 @@ import java.util.Iterator;
 //This will allow us to test individual move generators also in combination with searching
 //TODO: Even the internal structure of one move generator could be described via a composed move generator.
 //The compose move-generator could handle the sub-structure of move generators in a clever way
-public class MoveGenerator
+public class MoveGenerator implements IMoveGenerator
 {
     
     //TODO: This is probably the public interface!
     // Genereate the possible move iterator for one single piece
-    private Iterator<Move> generateMoves(Board board, Piece piece)
+    public Iterator<Move> generateMoves(Board board, Piece piece)
     {
         final Color sideToMove = board.inMove();
 
@@ -38,9 +38,9 @@ public class MoveGenerator
             case KNIGHT:
                 return KnightMoveGenerator.getIterator(board, piece);
             case BISHOP:
-                return BishopMoveGenerator.getIterator(board, piece);
+                return new BishopMoveGenerator().generateMoves(board, piece);
             case ROOK:
-                return RookMoveGenerator.iterator(board, piece);
+                return new RookMoveGenerator().generateMoves(board, piece);
             case QUEEN:
                return QueenMoveGenerator.getIterator(board, piece);
             default:

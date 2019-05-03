@@ -18,8 +18,8 @@ public class QueenMoveGenerator
     public static Iterator<Move> getIterator(final Board board, final Piece piece)
     {
         return IteratorUtils.compose(
-                BishopMoveGenerator.getIterator(board, piece), 
-                RookMoveGenerator.iterator(board, piece)
+                new BishopMoveGenerator().generateMoves(board, piece),
+                new RookMoveGenerator().generateMoves(board, piece)
         );
     }
    
