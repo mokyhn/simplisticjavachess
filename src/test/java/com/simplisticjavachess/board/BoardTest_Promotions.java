@@ -15,10 +15,16 @@ import org.junit.Test;
  */
 public class BoardTest_Promotions
 {
+    private static Board WHITE_READY_TO_PROMOTE() { return Board.createFromFEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 w"); }
+    private static Board BLACK_READY_TO_PROMOTE() { return Board.createFromFEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 b"); }
+
+    private static Board WHITE_READY_TO_CAPTURE_PROMOTE() { return Board.createFromFEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN w"); }
+    private static Board BLACK_READY_TO_CAPTURE_PROMOTE() { return Board.createFromFEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN b"); }
+
     @Test
     public void testWhiteSimplePromotions()
     {
-        Board board = Boards.WHITE_READY_TO_PROMOTE();
+        Board board = WHITE_READY_TO_PROMOTE();
         
         for (int i = 0; i < 4; i++) 
         {
@@ -55,7 +61,7 @@ public class BoardTest_Promotions
                 assertTrue(board.getPiece(to).getPieceType().equals(pieceType));
                 assertTrue(board.getPiece(to).getColor() == Color.WHITE);
                 board.undo();
-                assertTrue(board.equals(Boards.WHITE_READY_TO_PROMOTE()));
+                assertTrue(board.equals(WHITE_READY_TO_PROMOTE()));
 
             }
         }
@@ -64,7 +70,7 @@ public class BoardTest_Promotions
     @Test
     public void testBlackSimplePromotions()
     {
-        Board board = Boards.BLACK_READY_TO_PROMOTE();
+        Board board = BLACK_READY_TO_PROMOTE();
         
         for (int i = 0; i < 4; i++) 
         {
@@ -101,7 +107,7 @@ public class BoardTest_Promotions
                 assertTrue(board.getPiece(to).getPieceType().equals(pieceType));
                 assertTrue(board.getPiece(to).getColor() == Color.BLACK);
                 board.undo();
-                assertTrue(board.equals(Boards.BLACK_READY_TO_PROMOTE()));
+                assertTrue(board.equals(BLACK_READY_TO_PROMOTE()));
 
             }
         }
@@ -110,7 +116,7 @@ public class BoardTest_Promotions
     @Test
     public void testWhiteCapturePromotions()
     {
-        Board board = Boards.WHITE_READY_TO_CAPTURE_PROMOTE();
+        Board board = WHITE_READY_TO_CAPTURE_PROMOTE();
         
         for (int i = 0; i < 4; i++) 
         {
@@ -162,7 +168,7 @@ public class BoardTest_Promotions
                 assertTrue(board.getPiece(move.getTo()).getPieceType().equals(pieceType));
                 assertTrue(board.getPiece(move.getTo()).getColor() == Color.WHITE);
                 board.undo();
-                assertTrue(board.equals(Boards.WHITE_READY_TO_CAPTURE_PROMOTE()));
+                assertTrue(board.equals(WHITE_READY_TO_CAPTURE_PROMOTE()));
 
             }
         }
@@ -171,7 +177,7 @@ public class BoardTest_Promotions
     @Test
     public void testBlackCapturePromotions()
     {
-        Board board = Boards.BLACK_READY_TO_CAPTURE_PROMOTE();
+        Board board = BLACK_READY_TO_CAPTURE_PROMOTE();
         
         for (int i = 0; i < 4; i++) 
         {
@@ -223,7 +229,7 @@ public class BoardTest_Promotions
                 assertTrue(board.getPiece(move.getTo()).getPieceType().equals(pieceType));
                 assertTrue(board.getPiece(move.getTo()).getColor() == Color.BLACK);
                 board.undo();
-                assertTrue(board.equals(Boards.BLACK_READY_TO_CAPTURE_PROMOTE()));
+                assertTrue(board.equals(BLACK_READY_TO_CAPTURE_PROMOTE()));
 
             }
         }
