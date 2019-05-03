@@ -389,7 +389,7 @@ public class Board
             s = s + "  Black to move\n";
         }
         s = s + currentState.toString();
-        s = s + "Immediate evaluation: " + Evaluator.evaluate(this) + "\n";
+        s = s + "Immediate evaluation: " + new Evaluator().evaluate(this) + "\n";
         s = s + "Move history: " + history.toString() + "\n";
         s = s + "FEN: " + BoardParser.exportPosition(this);
         return s;

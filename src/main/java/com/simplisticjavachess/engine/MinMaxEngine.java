@@ -18,13 +18,15 @@ import java.util.Iterator;
 public class MinMaxEngine implements Engine
 {
     MoveGenerator moveGenerator;
-    
+    Evaluator evaluator;
+
     private Board analyzeBoard;
     private Move strongestMove;
 
-    public MinMaxEngine(MoveGenerator moveGenerator)
+    public MinMaxEngine(MoveGenerator moveGenerator, Evaluator evaluator)
     {
         this.moveGenerator = moveGenerator;
+        this.evaluator = evaluator;
     }
 
 
@@ -42,7 +44,7 @@ public class MinMaxEngine implements Engine
             return new SearchResult(
                     analyzeBoard.isDraw() ? 
                     Evaluation.EQUAL : 
-                    Evaluator.evaluate(analyzeBoard)
+                    evaluator.evaluate(analyzeBoard)
             );
         }
 
@@ -50,10 +52,10 @@ public class MinMaxEngine implements Engine
 
         Color inMove = analyzeBoard.inMove();
 
-        if (Evaluator.evaluate(analyzeBoard).equals(Evaluation.BLACK_IS_MATED)
-         || Evaluator.evaluate(analyzeBoard).equals(Evaluation.WHITE_IS_MATED))
+        if (evaluator.evaluate(analyzeBoard).equals(Evaluation.BLACK_IS_MATED)
+         || evaluator.evaluate(analyzeBoard).equals(Evaluation.WHITE_IS_MATED))
         {
-            return new SearchResult(Evaluator.evaluate(analyzeBoard));
+            return new SearchResult(evaluator.evaluate(analyzeBoard));
         }
 
         if (!moves.hasNext())

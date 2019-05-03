@@ -9,12 +9,11 @@ import com.simplisticjavachess.piece.Color;
 
 //TODO: Create an interface for this.
 //This will allow us to play around with different evaluators.
-public final class Evaluator
+public class Evaluator
 {
 
     public static final int WHITE_IS_MATED = -2147480000;
     public static final int BLACK_IS_MATED = 2147480000;
-    public static final int EQUAL = 0;
 
     private static final int PAWNVALUE = 1;
     private static final int ROOKVALUE = 5;
@@ -22,7 +21,7 @@ public final class Evaluator
     private static final int KNIGHTVALUE = 3;
     private static final int QUEENVALUE = 9;
 
-    public static Evaluation evaluate(Board b)
+    public Evaluation evaluate(Board b)
     {
         int result = 0;
         
