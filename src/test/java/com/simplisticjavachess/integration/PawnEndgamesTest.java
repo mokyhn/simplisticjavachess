@@ -151,6 +151,73 @@ public class PawnEndgamesTest {
 	}
 
 	/**
+	 * _______________
+	 *  . . . . k . . .     8
+	 *  . . . . . . . .     7
+	 *  . . . . . . . .     6
+	 *  . . . . . . . .     5
+	 *  . . . . . . . .     4
+	 *  . . . . . . . p     3
+	 *  . . . . . P P P     2
+	 *  . . . . K . . .     1
+	 *  _______________
+	 *  a b c d e f g h
+	 *   Black to move
+	 */
+	@Test
+	public void testPawnCaptures()
+	{
+		String fen = "4k3/8/8/8/8/7p/5PPP/4K3 b";
+		String expected = "h3g2";
+		assertMove(expected, fen, "", 1);
+		assertMove(expected, fen, "",  2);
+		assertMove(expected, fen, "",  3);
+
+	}
+
+	/**
+	 * _______________
+	 *  . . . . k . . .     8
+	 *  . . . . . . . .     7
+	 *  . . . . . . . P     6
+	 *  . . . . . . . .     5
+	 *  . . . . . . . .     4
+	 *  . . . . . . . .     3
+	 *  . . . . . . . .     2
+	 *  . . . . . . . K     1
+	 *  _______________
+	 *  a b c d e f g h
+	 *   White to move
+	 */
+	@Test
+	public void testPawnPromotion()
+	{
+		assertMove("h6h7", "4k3/8/7P/8/8/8/8/7K w", "", 6);
+	}
+
+	/**
+	 *  _______________
+	 *  . . . . k . . .     8
+	 *  . . . . . . . .     7
+	 *  . . . . . . . .     6
+	 *  . . . . . . . .     5
+	 *  . . . . . . . .     4
+	 *  . . . . . . K .     3
+	 *  . . . . . . . p     2
+	 *  . . . . . . . .     1
+	 *  _______________
+	 *  a b c d e f g h
+	 *   White to move
+	 */
+	@Test
+	public void avoidOpponentPromotion()
+	{
+		//TODO: Some bug exists in the engine. It should not be needed to supply g3g2 as an option.
+		assertMove("g3g2 g3h2", "4k3/8/8/8/8/6K1/7p/8 w", "",  3);
+	}
+
+
+	/**
 	 *  _______________
 	 *  . . . . k . . .     8
 	 *  P . . . . . . .     7

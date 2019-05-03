@@ -11,24 +11,6 @@ import org.junit.Ignore;
 
 public class IntegrationTest
 {
-
-    @Test
-    public void testPawnCaptureMinMax1()
-    {
-        String fen = "4k3/8/8/8/8/7p/5PPP/4K3 b";
-        String expected = "h3g2";
-        assertMove(expected, fen, "", 1);
-        assertMove(expected, fen, "",  2);
-        assertMove(expected, fen, "",  3);
-
-    }
-
-    @Test
-    public void testPawnCaptureMinMax6()
-    {
-        assertMove("h6h7", "4k3/8/7P/8/p7/8/P7/7K w - -", "", 6);
-    }
-    
     @Ignore
     @Test
     public void testThreefoldRepetitionDraw()
@@ -40,12 +22,6 @@ public class IntegrationTest
     public void fiftyMoveRuleDraw()
     {
         assertMove("a2b4 a2c3 a2c1 a1b1 a1b2", "k7/nn6/8/8/8/8/N7/K7 w -", "",  3);
-    }
-
-    @Test
-    public void kingTakes_MinMax()
-    {
-        assertMove("h6h7", "4k3/7p/7K/8/8/8/8/8 w", "",  5);
     }
 
     @Test

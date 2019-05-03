@@ -38,20 +38,22 @@ public class TestSearch
 
             SearchResult searchResult = engine.search(board, plyDepth);
 
-            if (searchResult.getMoveSequence().getFirst() == null && expectedMoves.isEmpty())
+            Move foundMove = searchResult.getMoveSequence().getFirst();
+
+            if (foundMove == null && expectedMoves.isEmpty())
             {
                 assertTrue(true);
             }
 
             Collection<Move> expected = parseExpectedMoves(board, expectedMoves);
 
-            if (expected.contains(searchResult.getMoveSequence().getFirst()))
+            if (expected.contains(foundMove))
             {
                 assertTrue(true);
             }
             else
             {
-                fail();
+                fail("Engine failed by playing: " + foundMove);
             }
         } catch (Exception e) {
             System.out.println("Failed in setup of pieces");
