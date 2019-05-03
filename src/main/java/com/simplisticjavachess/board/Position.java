@@ -16,8 +16,8 @@ import java.util.Stack;
 
 public class Position
 {
-    private Map<Location, Piece> piecesMap;    
-    private Stack<Command> undoStack;
+    private final Map<Location, Piece> piecesMap;
+    private final Stack<Command> undoStack;
     
     public Position()
     {
@@ -27,11 +27,8 @@ public class Position
 
     public Position(Position position)
     {
-        this();
-        
-        position.getPieces().forEach(piece -> {
-            this.insertPiece(piece);
-        });
+        this.piecesMap = new HashMap<>(position.piecesMap);
+        this.undoStack = (Stack<Command>) position.undoStack.clone();
     }
  
     public void doCommand(Command command)
@@ -40,7 +37,7 @@ public class Position
         doCommandAux(command);
     }
     
-    public void doCommandAux(Command command)
+    private void doCommandAux(Command command)
     {
         if (command instanceof InsertCommand)
         {
@@ -60,9 +57,7 @@ public class Position
         else
         if (command instanceof ComposedCommand)
         {
-            ((ComposedCommand) command).getCommands().forEach(c -> {
-                doCommandAux(c);
-            });
+            ((ComposedCommand) command).getCommands().forEach(this::doCommandAux);
         }
         else
         {
@@ -103,9 +98,7 @@ public class Position
             
             Collections.reverse(commands);
             
-            commands.forEach(c -> {
-                undoAux(c);
-            });
+            commands.forEach(this::undoAux);
         }
         else
         {
@@ -137,8 +130,8 @@ public class Position
     }
         
     /**
-     * Remove a piece from location and return the piece.
-     * @param location of piece to remove
+     * Remove a piece
+     * @param piece - to remove
      * @return the removed piece
      */
     private Piece removePiece(Piece piece)

@@ -26,33 +26,12 @@ public class PositionInference
                 {
                     return true;
                 }
-                }
             }
+        }
         return false;
     }
 
-    // TODO: Consider this code
-//    public static boolean isInCheck(Position position, Color color)
-//    {
-//        for (Piece p : position.getPieces())
-//        {
-//            if (p.getPieceType() == PieceType.KING)
-//            {
-//                if (p.getColor() == color)
-//                {
-//                    return  PositionInference.attacks(position, p.getLocation(), color) != null;
-//                }
-//                else
-//                {
-//                    return false;
-//                }
-//            }
-//            
-//        }
-//        return false;
-//    }
-     
-     
+
     /**
      * 
      * @param position - the given position

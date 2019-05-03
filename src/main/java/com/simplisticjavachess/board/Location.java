@@ -56,13 +56,7 @@ public final class Location
     
     public int distanceTo(Location other)
     {
-        return (Math.max
-                        (
-                            horizontalDistance(other)
-                                ,
-                            verticalDistance(other)
-                        )
-                );
+        return (Math.max(horizontalDistance(other),verticalDistance(other)));
     }
     
     @Override
