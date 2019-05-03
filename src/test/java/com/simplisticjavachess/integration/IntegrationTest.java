@@ -12,41 +12,10 @@ import org.junit.Ignore;
 
 public class IntegrationTest
 {
-    @Test
-    public void simpleTest1() throws Exception
-    {
-        assertTrue(search("8/8/8/3k4/3P4/8/3K4/8 w", "", 2, "d2d3 d2c3 d2e3"));
-    }
 
-    @Test
-    public void simpleTest2() throws Exception
-    {
-        assertTrue(search("8/3k4/8/3p4/3K4/8/8/8 b", "",  2, "d7d6 d7c6 d7e6"));
-    }
 
-    @Test
-    public void simpleTest3() throws Exception
-    {
-        assertTrue(search("3k4/3P4/3K4/8/8/8/8/8 w", "",  4, "d6e6 d6c6"));
-    }
 
-    @Test
-    public void simpleTest4() throws Exception
-    {
-        assertTrue(search("8/8/8/8/8/3k4/3p4/3K4 b", "",  4, "d3e3 d3c3"));
-    }
 
-    @Test
-    public void staleMateAndPossiblePawnPromotion() throws Exception
-    {
-        assertTrue(search("3k4/3P4/8/3K4/8/8/8/8 w", "",  4, "d5c5 d5c6 d5d6 d5e6 d5e5 d5e4 d5d4 d5c4"));
-    }
-
-    @Test
-    public void simpleTest6() throws Exception
-    {
-        assertTrue(search("8/8/8/8/3k4/8/3p4/3K4 b", "",  4, "d4e3 d4c3"));
-    }
 
     /*
      * It is tested that evaluation handles regular pawn moves, one and two steps ahead

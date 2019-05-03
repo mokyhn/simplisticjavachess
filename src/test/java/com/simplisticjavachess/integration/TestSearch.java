@@ -16,46 +16,37 @@ import java.util.Collection;
 
 public class TestSearch
 {
-   
-    public static boolean search(String fen, String moveSequence, int plyDepth, String expectedMoves) throws Exception
+
+
+    public static boolean search(String fen, String moveSequence, int plyDepth, String expectedMoves)
     {
         Board board = Board.createFromFEN(fen);
 
-        //System.out.println(board.asASCII());
+        System.out.println(board.asASCII());
         
         // Do initial set of moves
-        performMoves(board, moveSequence);
+        try {
+            performMoves(board, moveSequence);
 
-        Collection<Move> expected = parseExpectedMoves(board, expectedMoves);
+            Collection<Move> expected = parseExpectedMoves(board, expectedMoves);
 
-        Search engine;
+            Search engine;
 
-        engine = new MinMaxSearch();
-        
-        SearchResult searchResult = engine.search(board, plyDepth);
+            engine = new MinMaxSearch();
 
-        if (searchResult.getMoveSequence().getFirst() == null && expectedMoves.isEmpty())
-        {
-            return true;
-        }            
+            SearchResult searchResult = engine.search(board, plyDepth);
 
-        for (Move move : expected)
-        {
-            if (move.equals(searchResult.getMoveSequence().getFirst()))
+            if (searchResult.getMoveSequence().getFirst() == null && expectedMoves.isEmpty())
             {
                 return true;
             }
+
+            return expected.contains(searchResult.getMoveSequence().getFirst());
+
+        } catch (Exception e) {
+            System.out.println("Failed in setup of pieces");
+            return false;
         }
-        
-        if (expectedMoves.isEmpty())
-        {
-            System.out.println("Engine found: " + searchResult.getMoveSequence().toString() + " BUT no move was expected in position " + fen + "\n");
-        } else
-        {
-            System.out.println("Engine found: " + searchResult.getMoveSequence().toString() + "BUT expected " + expectedMoves + " in position " + fen + "\n");
-        }
-        
-        return false;        
     }
 
     private static void performMoves(Board board, String moveSequence) throws Exception
