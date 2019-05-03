@@ -20,6 +20,8 @@ public class TestSearch
     public static boolean search(String fen, String moveSequence, int plyDepth, String expectedMoves) throws Exception
     {
         Board board = Board.createFromFEN(fen);
+
+        //System.out.println(board.asASCII());
         
         // Do initial set of moves
         performMoves(board, moveSequence);

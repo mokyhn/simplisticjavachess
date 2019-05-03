@@ -47,28 +47,7 @@ public class LocationTest {
     {
         Location location = new Location("a9");
     }
-    
-    @Test
-    public void testHash1() 
-    {
-        Location location = new Location(0,0);
-        assertEquals(0, location.hashCode());
-    }
-    
-    @Test
-    public void testHash2() 
-    {
-        Location location = new Location(7,0);
-        assertEquals(7, location.hashCode());
-    }
 
-    @Test
-    public void testHash3() 
-    {
-        Location location = new Location(7,7);
-        assertEquals(63, location.hashCode());
-    }
-    
     @Test
     public void testAllHashValues()
     {

@@ -58,7 +58,7 @@ public class IntegrationTest
         for (int depth = 2; depth < 5; depth++)
         {
             // One ahead - white
-            assertTrue(search("q7/nbr5/p7/ppp5/pkp5/8/P1P5/1N4K1 w", "", depth, "a2a3"));
+            assertTrue(search("q7/nbr5/p7/ppp5/pkp5/8/2P5/1N4K1 w", "", depth, "c2c3"));
             assertTrue(search("q7/nbr5/8/2ppp3/2pkp3/4p3/2P1P3/3N2K1 w", "",  depth, "c2c3"));
             assertTrue(search("8/8/8/5ppp/5pkp/8/6KP/8 w", "",  depth, "h2h3"));
 
