@@ -40,5 +40,25 @@ public class PawnMoveGeneratorTest
     }
 
 
+    @Test
+    public void testCapturingPromotion()
+    {
+        Board board = Board.createFromLetters("Pd7 rd8 rc8 re8 w");
+        System.out.println(board.asASCII());
+        Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.fromPositionCode("Pd7"));
+        String movesStr = IteratorUtils.toString(moves);
+        assertEquals("[d7xc8=B, d7xc8=N, d7xc8=Q, d7xc8=R, d7xe8=B, d7xe8=N, d7xe8=Q, d7xe8=R]", movesStr);
+    }
+
+
+    @Test
+    public void testNormalCapturing()
+    {
+        Board board = Board.createFromLetters("Pd4 Pd5 pc5 pe5 w");
+        System.out.println(board.asASCII());
+        Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.fromPositionCode("Pd4"));
+        String movesStr = IteratorUtils.toString(moves);
+        assertEquals("[d4xc5, d4xe5]", movesStr);
+    }
 
 }
