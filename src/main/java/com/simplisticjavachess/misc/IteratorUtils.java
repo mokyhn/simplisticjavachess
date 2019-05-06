@@ -7,6 +7,7 @@ package com.simplisticjavachess.misc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,18 +40,7 @@ public class IteratorUtils
     {
         if (iterators.isEmpty()) 
         {
-            return new Iterator<T>()
-            {
-
-                @Override
-                public boolean hasNext() { return false; }
-                
-                @Override
-                public T next() { return null; }
-                
-                @Override
-                public void remove() {}
-            };
+            return Collections.emptyIterator();
         }
         else
         {
@@ -62,23 +52,23 @@ public class IteratorUtils
                 @Override
                 public boolean hasNext()
                 {
-                    if (currentIterator.hasNext()) 
-                    {
-                        return true;
-                    }
-                    else 
-                    {
-                        if (iteratorIterator.hasNext())
+                    while (true) {
+                        if (currentIterator.hasNext())
                         {
-                            currentIterator = iteratorIterator.next();
-                            return hasNext();
+                            return true;
                         }
                         else
                         {
-                            return false;
+                            if (iteratorIterator.hasNext())
+                            {
+                                currentIterator = iteratorIterator.next();
+                            }
+                            else
+                            {
+                                return false;
+                            }
                         }
                     }
-
                 }
 
                 public T next()
@@ -100,28 +90,11 @@ public class IteratorUtils
             };
         }
     }
-    
-    public static <T> Iterator<T> buildEmptyIterator()
+
+
+    public static <T> Iterator<T> compose(Iterator<T>... iterators)
     {
-        return new Iterator<T>() 
-        {
-            @Override
-            public boolean hasNext()
-            {
-                return false;
-            }
-
-            @Override
-            public T next()
-            {
-                return null;
-            }
-
-            @Override
-            public void remove()
-            {            
-            }
-        };
+        return compose(Arrays.asList(iterators));
     }
 
     public static <T> List<T> toList(Iterator<T> elements)

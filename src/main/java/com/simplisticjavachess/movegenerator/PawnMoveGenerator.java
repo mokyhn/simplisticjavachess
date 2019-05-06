@@ -6,19 +6,29 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveType;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
 import com.simplisticjavachess.board.Location;
-import java.util.ArrayList;
-import java.util.Iterator;
+
+import java.util.*;
 
 public class PawnMoveGenerator implements IMoveGenerator
 {
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.PAWN;
+    }
+
+
     // TODO: The following can be refined so that not all moves are generated at once
     // Split into different iterators for the blocks inside the method
+    // See move generation for King
+
     private ArrayList<Move> generateMovesHelper(Board board, Piece piece)
     {
 
@@ -33,7 +43,22 @@ public class PawnMoveGenerator implements IMoveGenerator
 
         final ArrayList<Move> Moves = new ArrayList<>();
 
+        if (c != piece.getColor() || piece.getPieceType() != PieceType.PAWN)
+        {
+            throw new IllegalArgumentException("Trying to generate moves for opponent piece which is not in move.");
+        }
+
+        Location oneAhead = board.getMoveDirection().translocate(piece.getLocation());
+        Location twoAhead = board.getMoveDirection().scale(2).translocate(piece.getLocation());
+
+        Location oneAheadLeft = board.getMoveDirection().add(Vector.LEFT).translocate(piece.getLocation());
+        Location oneAheadRight = board.getMoveDirection().add(Vector.RIGHT).translocate(piece.getLocation());
+        Location twoAheadLeft = board.getMoveDirection().scale(2).add(Vector.LEFT).translocate(piece.getLocation());
+        Location twoAheadRight = board.getMoveDirection().scale(2).add(Vector.RIGHT).translocate(piece.getLocation());
+
+
         // Normal one step forward pawn move
+        if (!pawnAtPromotionRank(piece))
         {
             Location to = board.getMoveDirection().translocate(piece.getLocation());
             if (to.isValid())
@@ -46,13 +71,11 @@ public class PawnMoveGenerator implements IMoveGenerator
         }
 
         // Normal two step forward pawn move
-        if ((c == Color.WHITE && fy == 1) || (c == Color.BLACK && fy == 6))
+        if (pawnAtHomeRank(piece))
         {
-            Location oneAhead = new Location(fx, fy + c.getColor());
-            Location to = new Location(fx, fy + c.getColor() * 2);
-            if (board.freeSquare(oneAhead) && board.freeSquare(to))
+            if (board.freeSquare(oneAhead) && board.freeSquare(twoAhead))
             {
-                Moves.add(new Move(from, to, MoveType.NORMALMOVE, null, c));
+                Moves.add(new Move(from, twoAhead, MoveType.NORMALMOVE, null, c));
             }
         }
 
@@ -60,11 +83,10 @@ public class PawnMoveGenerator implements IMoveGenerator
         if ((c == Color.WHITE && fy == 6 && board.freeSquare(fx, 7)) ||
             (c == Color.BLACK && fy == 1 && board.freeSquare(fx, 0)))
         {
-            Location to = new Location(fx, fy + c.getColor());
-            Moves.add(new Move(from, to, MoveType.PROMOTE_TO_QUEEN,  null, c));
-            Moves.add(new Move(from, to, MoveType.PROMOTE_TO_ROOK,   null, c));
-            Moves.add(new Move(from, to, MoveType.PROMOTE_TO_KNIGHT, null, c));
-            Moves.add(new Move(from, to, MoveType.PROMOTE_TO_BISHOP, null, c));
+            Moves.add(new Move(from, oneAhead, MoveType.PROMOTE_TO_QUEEN,  null, c));
+            Moves.add(new Move(from, oneAhead, MoveType.PROMOTE_TO_ROOK,   null, c));
+            Moves.add(new Move(from, oneAhead, MoveType.PROMOTE_TO_KNIGHT, null, c));
+            Moves.add(new Move(from, oneAhead, MoveType.PROMOTE_TO_BISHOP, null, c));
         }
 
         if (fy == (5 * c.getColor() + 7) / 2)
@@ -157,6 +179,18 @@ public class PawnMoveGenerator implements IMoveGenerator
         return Moves;
     }
 
+
+    private boolean pawnAtHomeRank(Piece piece)
+    {
+        return ((piece.getColor() == Color.WHITE && piece.getyPos() == 1) ||
+                (piece.getColor() == Color.BLACK && piece.getyPos() == 6));
+    }
+
+    private boolean pawnAtPromotionRank(Piece piece)
+    {
+        return ((piece.getColor() == Color.WHITE && piece.getyPos() == 6) ||
+                (piece.getColor() == Color.BLACK && piece.getyPos() == 1));
+    }
 
     @Override
     public Iterator<Move> generateMoves(Board b, Piece p)

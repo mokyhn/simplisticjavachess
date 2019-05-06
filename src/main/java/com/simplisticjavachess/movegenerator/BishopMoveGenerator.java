@@ -5,6 +5,8 @@ import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
+import com.simplisticjavachess.piece.PieceType;
+
 import java.util.Arrays;
 import java.util.Iterator;
 
@@ -13,10 +15,15 @@ import java.util.Iterator;
  */
 public class BishopMoveGenerator implements IMoveGenerator
 {
-    private static final IMoveGenerator UP_AND_RIGHT =  new LineMoveGenerator(Vector.UP_AND_RIGHT);
-    private static final IMoveGenerator DOWN_AND_RIGHT = new LineMoveGenerator(Vector.DOWN_AND_RIGHT);
-    private static final IMoveGenerator UP_AND_LEFT = new LineMoveGenerator(Vector.UP_AND_LEFT);
-    private static final IMoveGenerator DOWN_AND_LEFT = new LineMoveGenerator(Vector.DOWN_AND_LEFT);
+    private static final LineMoveGenerator UP_AND_RIGHT =  new LineMoveGenerator(Vector.UP_AND_RIGHT);
+    private static final LineMoveGenerator DOWN_AND_RIGHT = new LineMoveGenerator(Vector.DOWN_AND_RIGHT);
+    private static final LineMoveGenerator UP_AND_LEFT = new LineMoveGenerator(Vector.UP_AND_LEFT);
+    private static final LineMoveGenerator DOWN_AND_LEFT = new LineMoveGenerator(Vector.DOWN_AND_LEFT);
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.BISHOP;
+    }
 
     public Iterator<Move> generateMoves(Board board, Piece piece)
     {

@@ -7,11 +7,13 @@ package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.board.Vector;
-import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
-import java.util.Arrays;
+import com.simplisticjavachess.piece.PieceType;
+
 import java.util.Iterator;
+
+import static com.simplisticjavachess.misc.IteratorUtils.compose;
 
 public class RookMoveGenerator implements IMoveGenerator
 {
@@ -20,14 +22,19 @@ public class RookMoveGenerator implements IMoveGenerator
     private static final LineMoveGenerator LINE_MOVE_GENERATOR_RIGHT = new LineMoveGenerator(Vector.RIGHT);
     private static final LineMoveGenerator LINE_MOVE_GENERATOR_LEFT = new LineMoveGenerator(Vector.LEFT);
 
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.ROOK;
+    }
+
     public Iterator<Move> generateMoves(Board board, Piece piece)
     {
-        return IteratorUtils.compose(Arrays.asList(
+        return compose(
                 LINE_MOVE_GENERATOR_UP.generateMoves(board, piece),
                 LINE_MOVE_GENERATOR_DOWN.generateMoves(board, piece),
                 LINE_MOVE_GENERATOR_RIGHT.generateMoves(board, piece),
                 LINE_MOVE_GENERATOR_LEFT.generateMoves(board, piece)
-        ));
+        );
     }
 
 }

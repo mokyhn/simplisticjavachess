@@ -25,14 +25,6 @@ public class IntegrationTest
     }
 
     @Test
-    public void castlingTest()
-    {
-       // It is not allowed to castle away from a check...
-        //assertTrue(testSearch("4k3/8/8/8/8/PP1PP3/2PPP2q/R3K3 w Q", "",  3,    "e1c1")); // o-o-o
-        assertMove("e1c1", "4k3/8/8/8/8/PP1PP3/2PPPP1q/R3K3 w Q", "",  3); // o-o-o: TODO: Add in check rule in movegen of castling...
-    }
-
-    @Test
     public void staleMateTest()
     {
         //Stalemate

@@ -12,13 +12,33 @@ public class PawnMoveGeneratorTest
 {
     
     @Test
-    public void testLeftFlank()
+    public void testMoveFromHome()
     {
-        Board board = Board.createFromLetters("pa2 w");
-        Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.fromPositionCode("pa2"));
+        Board board = Board.createFromLetters("Pa2 w");
+        Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.fromPositionCode("Pa2"));
         String movesStr = IteratorUtils.toString(moves);
-                
         assertEquals("[a2-a3, a2-a4]", movesStr);
     }
+
+    @Test
+    public void testNormalMove()
+    {
+        Board board = Board.createFromLetters("Pd4 w");
+        Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.fromPositionCode("Pd4"));
+        String movesStr = IteratorUtils.toString(moves);
+        assertEquals("[d4-d5]", movesStr);
+    }
+
+    @Test
+    public void testPromotion()
+    {
+        Board board = Board.createFromLetters("Pd7 w");
+        System.out.println(board.asASCII());
+        Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.fromPositionCode("Pd7"));
+        String movesStr = IteratorUtils.toString(moves);
+        assertEquals("[d7-d8=Q, d7-d8=R, d7-d8=N, d7-d8=B]", movesStr);
+    }
+
+
 
 }

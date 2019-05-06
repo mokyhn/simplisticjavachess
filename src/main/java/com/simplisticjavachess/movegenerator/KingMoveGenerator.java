@@ -5,109 +5,103 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.Location;
 import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveType;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
-import java.util.ArrayList;
+import com.simplisticjavachess.piece.PieceType;
+
 import java.util.Iterator;
-import java.util.List;
+
+import static com.simplisticjavachess.misc.IteratorUtils.compose;
+import static com.simplisticjavachess.movegenerator.MoveGeneratorUtil.*;
 
 public class KingMoveGenerator implements IMoveGenerator
 {
-    // TODO: The following can be refined so that not all moves are generated at once
-    private static ArrayList<Move> generateMovesHelper(Board board, Piece piece)
-    {
-        final ArrayList<Move> moves = new ArrayList<>();
-        final Color color = board.inMove();
-        final int fy = piece.getyPos();
-
-        // Castling short
-        if (board.canCastleShort() &&
-            board.freeSquare(5, fy) &&
-            board.freeSquare(6, fy) &&
-            !board.isAttacked(5, fy) &&
-            !board.isAttacked(6, fy) &&
-            !board.isInCheck(color))
-        {
-            moves.add(new Move(
-                    piece.getLocation(), 
-                    Vector.RIGHT_RIGHT.translocate(piece.getLocation()),
-                    MoveType.CASTLE_SHORT, null, color));
-        }
-
-        // Castling long
-        if (board.canCastleLong() &&
-            board.freeSquare(3, fy) &&
-            board.freeSquare(2, fy) &&
-            board.freeSquare(1, fy) &&
-            !board.isAttacked(2, fy) &&
-            !board.isAttacked(3, fy) &&
-            !board.isInCheck(color))
-        {
-            moves.add(new Move(
-                    piece.getLocation(),
-                    Vector.LEFT_LEFT.translocate(piece.getLocation()),
-                    MoveType.CASTLE_LONG, null, color));
-        }
-        
-
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(board, piece, Vector.LEFT));
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(board, piece, Vector.RIGHT));        
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(board, piece, Vector.UP));
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(board, piece, Vector.DOWN));
-        
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(board, piece, Vector.UP_AND_LEFT));
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(board, piece, Vector.DOWN_AND_LEFT));
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(board, piece, Vector.UP_AND_RIGHT));
-        addIfNotNull(moves, MoveGeneratorUtil.genKingMove(board, piece, Vector.DOWN_AND_RIGHT));
-        
-        return moves;
-    }    
-
-    private static void addIfNotNull(List<Move> moves, Move move)
-    {
-        if (move != null)
-        {
-            moves.add(move);
-        }
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.KING;
     }
-    
+
+    @Override
     public Iterator<Move> generateMoves(Board b, Piece p)
     {
-        return new Iterator<Move>()
-        {
-            Iterator<Move> generated = null;
-            
-            @Override
-            public boolean hasNext()
-            {
-                if (generated == null) 
-                {
-                    generated = generateMovesHelper(b, p).iterator();
-                }
-                return generated.hasNext();
-            }
-
-            @Override
-            public Move next()
-            {
-                if (hasNext()) 
-                {
-                    return generated.next();
-                }
-                else
-                {
-                    return null;
-                }
-            }
-
-            @Override
-            public void remove()
-            {                
-            }
-        };
+        return compose(
+                castlingShort(b, p),
+                castlingLong(b, p),
+                oneMoveIterator(() -> genKingMove(b, p, Vector.LEFT)),
+                oneMoveIterator(() -> genKingMove(b, p, Vector.RIGHT)),
+                oneMoveIterator(() -> genKingMove(b, p, Vector.UP)),
+                oneMoveIterator(() -> genKingMove(b, p, Vector.DOWN)),
+                oneMoveIterator(() -> genKingMove(b, p, Vector.UP_AND_LEFT)),
+                oneMoveIterator(() -> genKingMove(b, p, Vector.DOWN_AND_LEFT)),
+                oneMoveIterator(() -> genKingMove(b, p, Vector.UP_AND_RIGHT)),
+                oneMoveIterator(() -> genKingMove(b, p, Vector.DOWN_AND_RIGHT))
+        );
     }
+
+
+    private Iterator<Move> castlingShort(Board board, Piece piece) {
+        return oneMoveIterator(() -> {
+            final Color color = board.inMove();
+            final int fy = piece.getyPos();
+
+            Piece rook = board.getPiece(new Location(7, fy));
+
+            // Ensure that there is a rook
+            if (rook == null || rook.getPieceType() != PieceType.ROOK || rook.getColor() != color) {
+                return null;
+            }
+
+            // Castling short
+            if (board.canCastleShort() &&
+                    board.freeSquare(5, fy) &&
+                    board.freeSquare(6, fy) &&
+                    !board.isAttacked(5, fy) &&
+                    !board.isAttacked(6, fy) &&
+                    !board.isInCheck(color))
+            {
+                return new Move(
+                        piece.getLocation(),
+                        Vector.RIGHT_RIGHT.translocate(piece.getLocation()),
+                        MoveType.CASTLE_SHORT, null, color);
+            }
+            return null;
+        });
+    }
+
+    private Iterator<Move> castlingLong(Board board, Piece piece)
+    {
+        return oneMoveIterator(() -> {
+            final Color color = board.inMove();
+            final int fy = piece.getyPos();
+
+            Piece rook = board.getPiece(new Location(0, fy));
+
+            // Ensure that there is a rook
+            if (rook == null || rook.getPieceType() != PieceType.ROOK || rook.getColor() != color) {
+                return null;
+            }
+
+            // Castling long
+            if (board.canCastleLong() &&
+                    board.freeSquare(3, fy) &&
+                    board.freeSquare(2, fy) &&
+                    board.freeSquare(1, fy) &&
+                    !board.isAttacked(2, fy) &&
+                    !board.isAttacked(3, fy) &&
+                    !board.isInCheck(color))
+            {
+                return new Move(
+                        piece.getLocation(),
+                        Vector.LEFT_LEFT.translocate(piece.getLocation()),
+                        MoveType.CASTLE_LONG, null, color);
+            }
+            return null;
+        });
+    }
+
 
 }

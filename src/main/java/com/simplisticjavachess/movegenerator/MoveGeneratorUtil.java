@@ -12,6 +12,9 @@ import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveType;
 import com.simplisticjavachess.piece.Piece;
 
+import java.util.Iterator;
+import java.util.concurrent.Callable;
+
 public class MoveGeneratorUtil
 {
     public static Move genKingMove(Board board, Piece piece, Vector vector)
@@ -69,6 +72,46 @@ public class MoveGeneratorUtil
         {
             return null;
         }        
+    }
+
+
+	public static Iterator<Move> oneMoveIterator(Callable<Move> callable)
+    {
+        return new Iterator<Move>() {
+            Move move;
+            boolean isDone;
+
+            @Override
+            public boolean hasNext() {
+                if (isDone)
+                {
+                    return false;
+                } else
+                {
+                    try {
+                        move = callable.call();
+                    } catch (Exception e) {
+                        move = null;
+                    }
+                    return move != null;
+                }
+            }
+
+            @Override
+            public Move next() {
+                if (isDone)
+                {
+                    return null;
+                }
+                else
+                {
+                    isDone = true;
+                    return move;
+                }
+            }
+        };
+
+
     }
 
 }
