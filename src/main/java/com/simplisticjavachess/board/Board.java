@@ -12,6 +12,7 @@ import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * @author Morten Kühnrich
@@ -396,6 +397,12 @@ public class Board
         {
             return false;
         }
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(position.hashCode(), currentState.hashCode());
     }
 
     public boolean isWhiteInMove()

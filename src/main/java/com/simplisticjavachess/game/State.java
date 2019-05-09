@@ -118,6 +118,16 @@ public final class State
 	}
 
 
+	@Override
+	public int hashCode()
+    {
+        return Objects.hash(moveNumber, move, inMove,
+                blackCanCastleShort, blackCanCastleLong, whiteCanCastleShort,whiteCanCastleLong, gameResult,
+                halfMoveClock, halfMovesIndex3PosRepition);
+
+    }
+
+    @Override
 	public boolean equals(Object object)
     {
         if (this == object) {

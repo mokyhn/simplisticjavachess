@@ -80,8 +80,16 @@ public class MinMaxEngine implements Engine
             }
 
             thereWasALegalMove = true;
+
+            //TODO: A bug exists in the undo functionality which does not work
+            //int hashBefore = analysisBoard.hashCode();
+
             score = minMaxSearch(depthToGo - 1);
             analysisBoard.undo();
+
+            //TODO: A bug exists in the undo functionality which does not work
+            //int hashAfter = analysisBoard.hashCode();
+            //assert(hashBefore == hashAfter);
 
             if (bestScore.isAnImprovement(inMove, score.getEvaluation()))
             {
