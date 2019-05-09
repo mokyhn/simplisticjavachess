@@ -27,7 +27,7 @@ public class RandomEngine implements Engine
     {
         this.analyzeBoard = new Board(board);
         int evaluation = randomSearch();
-        return new SearchResult(new MoveSequence(strongestMove), new Evaluation(evaluation));
+        return new SearchResult(new MoveSequence(strongestMove), Evaluation.of(evaluation));
     }
     
     private int randomSearch()

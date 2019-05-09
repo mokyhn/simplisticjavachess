@@ -4,33 +4,40 @@
 package com.simplisticjavachess.evaluator;
 
 import com.simplisticjavachess.piece.Color;
-import static com.simplisticjavachess.piece.Color.WHITE;
 import java.util.Objects;
+
+import static com.simplisticjavachess.piece.Color.WHITE;
 
 public class Evaluation
 {
      /**
-     * The un-evaluated evaluation of something  
+     * The un-evaluated evaluation of something
      */
-    public static final Evaluation NONE = new Evaluation();
-    
+    public static final Evaluation NONE = new Evaluation(); // TODO: Use Optional instead
+
     public static final Evaluation EQUAL = new Evaluation(0);
     public static final Evaluation WHITE_IS_MATED = new Evaluation(-2147480000);
     public static final Evaluation BLACK_IS_MATED = new Evaluation(2147480000);
 
     
-    private final Integer value;
+    private final Integer value;  // TODO: Use Optional instead
     
     private Evaluation()
     {
         this.value = null;
     }
     
-    public Evaluation(int value)
+    private Evaluation(int value)
     {
         this.value = value;
     }
-    
+
+    public static Evaluation of(int value)
+    {
+        return new Evaluation(value);
+    }
+
+
     /**
      * @param color the perspective the comparison is seen from
      * @param other the other evaluation to try to improve with
@@ -40,7 +47,6 @@ public class Evaluation
     {
         return this.isAnImprovement(color, other) ? other : this;
     }
-
 
     /**
      * @param color the perspective the comparison is seen from
@@ -54,13 +60,13 @@ public class Evaluation
         {
             return true;
         }
-        
+
         // Nothing does not improve something
         if (other.equals(NONE))
         {
             return false;
         }
-        
+
         if (color.equals(WHITE))
         {
             return other.value > this.value;
@@ -70,7 +76,7 @@ public class Evaluation
             return other.value < this.value;
         }
     }
- 
+
     @Override
     public String toString()
     {
@@ -98,5 +104,10 @@ public class Evaluation
     @Override
     public int hashCode() {
         return Objects.hashCode(this.value);
+    }
+
+    public boolean isNone()
+    {
+        return NONE.equals(this);
     }
 }

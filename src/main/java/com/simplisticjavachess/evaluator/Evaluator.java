@@ -70,7 +70,7 @@ public class Evaluator
             result = WHITE_IS_MATED;
         }
 
-        return new Evaluation(result);
+        return Evaluation.of(result);
     }
 
 }
