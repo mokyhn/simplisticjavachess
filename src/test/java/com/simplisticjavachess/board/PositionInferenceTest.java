@@ -19,8 +19,8 @@ public class PositionInferenceTest
     public void testIsInCheck()
     {
         Board board = new Board();
-        board.insert(Piece.fromPositionCode("Bd5"));
-        board.insert(Piece.fromPositionCode("kc4"));
+        board = board.insert(Piece.fromPositionCode("Bd5"));
+        board = board.insert(Piece.fromPositionCode("kc4"));
         assertTrue(PositionInference.isInCheck(board.getPosition(), Color.BLACK));
         assertFalse(PositionInference.isInCheck(board.getPosition(), Color.WHITE));
     }
@@ -30,7 +30,7 @@ public class PositionInferenceTest
     {
         Board board = new Board();
         Piece piece = Piece.fromPositionCode("Bd5");
-        board.insert(piece);
+        board = board.insert(piece);
         Piece result = PositionInference.attacks(board.getPosition(), Location.fromString("e6"), Color.BLACK);
         Assert.assertEquals(piece, result);
         

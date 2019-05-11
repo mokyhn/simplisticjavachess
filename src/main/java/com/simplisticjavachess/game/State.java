@@ -52,16 +52,6 @@ public final class State
         this.halfMovesIndex3PosRepetition = halfMovesIndex3PosRepetition;
     }
 
-    public State(State state)
-    {
-        this.move = state.move;
-        this.inMove = state.inMove;
-        this.castlingState = state.castlingState;
-        this.halfMoveClock = state.halfMoveClock;
-        this.halfMovesIndex3PosRepetition = state.halfMovesIndex3PosRepetition;
-        this.gameResult = state.gameResult;
-    }
-
     public State setCanCastleShort(boolean flag, Color color)
     {
         CastlingState newCastlingState;

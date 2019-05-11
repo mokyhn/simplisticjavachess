@@ -27,10 +27,10 @@ public class BoardTest_Castling
     public void testWhiteShortCastling()
     {
         // Test of doMove
-        Board actual = new Board(WHITE_IN_MOVE_CASTLING());
+        Board actual = WHITE_IN_MOVE_CASTLING();
         Board expected = AFTER_WHITE_SHORT_CASTLING();
-        actual.doMove(Moves.WHITE_SHORT_CASTLING());
-        assertEquals(expected.getPosition(), actual.getPosition());
+        MoveResult moveResult = actual.doMove(Moves.WHITE_SHORT_CASTLING());
+        assertEquals(expected.getPosition(), moveResult.getBoard().getPosition());
     }
     
     @Test
@@ -38,9 +38,9 @@ public class BoardTest_Castling
     public void testWhiteShortCastling_cannotCastle()
     {
         // Test of doMove
-        Board actual = new Board(WHITE_IN_MOVE_CANNOT_CASTLE());
-        boolean result = actual.doMove(Moves.WHITE_SHORT_CASTLING());
-        assertFalse(result);
+        Board actual = WHITE_IN_MOVE_CANNOT_CASTLE();
+        MoveResult result = actual.doMove(Moves.WHITE_SHORT_CASTLING());
+        assertFalse(result.isMoveLegal());
         assertEquals(actual, WHITE_IN_MOVE_CANNOT_CASTLE() );
     }
     
@@ -48,10 +48,10 @@ public class BoardTest_Castling
     public void testBlackShortCastling()
     {
         // Test of doMove
-        Board actual = new Board(BLACK_IN_MOVE_CASTLING());
+        Board actual = BLACK_IN_MOVE_CASTLING();
         Board expected = AFTER_BLACK_SHORT_CASTLING();
-        actual.doMove(Moves.BLACK_SHORT_CASTLING());
-        assertEquals(expected.getPosition(), actual.getPosition());
+        MoveResult moveResult = actual.doMove(Moves.BLACK_SHORT_CASTLING());
+        assertEquals(expected.getPosition(), moveResult.getBoard().getPosition());
     }
       
     @Test
@@ -59,9 +59,9 @@ public class BoardTest_Castling
     public void testBlackShortCastling_cannotCastle()
     {
         // Test of doMove
-        Board actual = new Board(BLACK_IN_MOVE_CANNOT_CASTLE());
-        boolean result = actual.doMove(Moves.BLACK_SHORT_CASTLING());
-        assertFalse(result);
+        Board actual = BLACK_IN_MOVE_CANNOT_CASTLE();
+        MoveResult result = actual.doMove(Moves.BLACK_SHORT_CASTLING());
+        assertFalse(result.isMoveLegal());
         assertEquals(actual, BLACK_IN_MOVE_CANNOT_CASTLE() );
     }
 
@@ -69,10 +69,10 @@ public class BoardTest_Castling
     public void testLongShortCastling()
     {
         // Test of doMove
-        Board actual = new Board(WHITE_IN_MOVE_CASTLING());
+        Board actual = WHITE_IN_MOVE_CASTLING();
         Board expected = AFTER_WHITE_LONG_CASTLING();
-        actual.doMove(Moves.WHITE_LONG_CASTLING());
-        assertEquals(expected.getPosition(), actual.getPosition());
+        MoveResult moveResult = actual.doMove(Moves.WHITE_LONG_CASTLING());
+        assertEquals(expected.getPosition(), moveResult.getBoard().getPosition());
     }
     
     @Test
@@ -80,9 +80,9 @@ public class BoardTest_Castling
     public void testWhiteLongCastling_cannotCastle()
     {
         // Test of doMove
-        Board actual = new Board(WHITE_IN_MOVE_CANNOT_CASTLE());
-        boolean result = actual.doMove(Moves.WHITE_LONG_CASTLING());
-        assertFalse(result);
+        Board actual = WHITE_IN_MOVE_CANNOT_CASTLE();
+        MoveResult result = actual.doMove(Moves.WHITE_LONG_CASTLING());
+        assertFalse(result.isMoveLegal());
         assertEquals(actual, WHITE_IN_MOVE_CANNOT_CASTLE() );
     }
     
@@ -90,10 +90,10 @@ public class BoardTest_Castling
     public void testBlackLongCastling()
     {
         // Test of doMove
-        Board actual = new Board(BLACK_IN_MOVE_CASTLING());
+        Board actual = BLACK_IN_MOVE_CASTLING();
         Board expected = AFTER_BLACK_LONG_CASTLING();
-        actual.doMove(Moves.BLACK_LONG_CASTLING());
-        assertEquals(expected.getPosition(), actual.getPosition());
+        MoveResult moveResult = actual.doMove(Moves.BLACK_LONG_CASTLING());
+        assertEquals(expected.getPosition(), moveResult.getBoard().getPosition());
     }
       
     @Test
@@ -101,9 +101,9 @@ public class BoardTest_Castling
     public void testBlackLongCastling_cannotCastle()
     {
         // Test of doMove
-        Board actual = new Board(BLACK_IN_MOVE_CANNOT_CASTLE());
-        boolean result = actual.doMove(Moves.BLACK_LONG_CASTLING());
-        assertFalse(result);
+        Board actual = BLACK_IN_MOVE_CANNOT_CASTLE();
+        MoveResult result = actual.doMove(Moves.BLACK_LONG_CASTLING());
+        assertFalse(result.isMoveLegal());
         assertEquals(actual, BLACK_IN_MOVE_CANNOT_CASTLE() );
     }
     

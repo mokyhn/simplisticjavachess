@@ -19,13 +19,19 @@ import java.util.Objects;
 public class Board
 {
 
-    private State state;
-    private Position position;
+    private final State state;
+    private final Position position;
 
     public Board()
     {
         state = new State();
         position = new Position();
+    }
+
+    private Board(State newState, Position newPosition)
+    {
+        this.state = newState;
+        this.position = newPosition;
     }
 
     public static Board createFromFEN(String fen)
@@ -37,31 +43,20 @@ public class Board
     {
         return BoardParser.parseFromLetters(str);
     }
-    
-    public Board(Board board)
-    {
-        this.state = new State(board.state);
-        this.position = board.position;
-    }
 
     public Color inMove()
     {
         return state.getInMove();
     }
 
-    public void setBlackToMove()
+    public Board setBlackToMove()
     {
-        state = state.setInMove(Color.BLACK);
+        return new Board(state.setInMove(Color.BLACK), position);
     }
 
-    public void setWhiteToMove()
+    public Board setWhiteToMove()
     {
-        state = state.setInMove(Color.WHITE);
-    }
-
-    public void setGameResult(GameResult gameResult)
-    {
-        state = state.setGameResult(gameResult);
+        return new Board(state.setInMove(Color.WHITE), position);
     }
 
     public GameResult getGameResult()
@@ -104,14 +99,14 @@ public class Board
         return state.getCanCastleLong();
     }
 
-    public void setCanCastleShort(boolean flag, Color color)
+    public Board setCanCastleShort(boolean flag, Color color)
     {
-        state = state.setCanCastleShort(flag, color);
+        return new Board(state.setCanCastleShort(flag, color), position);
     }
 
-    public void setCanCastleLong(boolean flag, Color color)
+    public Board setCanCastleLong(boolean flag, Color color)
     {
-        state = state.setCanCastleLong(flag, color);
+        return new Board(state.setCanCastleLong(flag, color), position);
     }
     
     public Collection<Piece> getPieces()
@@ -129,19 +124,9 @@ public class Board
         return position.getPiece(location);
     }
     
-    public void insert(Piece p)
+    public Board insert(Piece p)
     {
-        position = position.insert(p);
-    }
-
-    public void remove(Piece p)
-    {
-        position = position.remove(p);
-    }
-
-    private void move(Piece piece, Location to)
-    {
-        position = position.move(piece, to);
+        return new Board(state, position.insert(p));
     }
 
     public boolean freeSquare(Location location)
@@ -153,14 +138,12 @@ public class Board
     {
         return position.freeSquare(x, y);
     }
-
     
     public Position getPosition()
     {
         return position;
     }
-    
-    
+
     /**
      *
      * @param x - x position
@@ -187,6 +170,7 @@ public class Board
         return state.getMove();
     }
 
+ /*
     //TODO: This is not strong enough. Positions differ by en passent capabilities
     //and also with castling rights...
     private void checkDrawBy3RepetionsRule()
@@ -209,21 +193,22 @@ public class Board
             this.state = this.state.setGameResult(GameResult.DRAW_BY_REPETITION);
         }
     }
-
-    private void checkDrawBy50MoveRule()
+*/
+//    private void checkDrawBy50MoveRule()
+//    {
+//        if (state.getHalfMoveClock() >= 50 && state.getGameResult() == null)
+//        {
+//            state = state.setGameResult(GameResult.DRAW_BY_50_MOVE_RULE);
+//        }
+//    }
+ 
+    public MoveResult doMove(Move move)
     {
-        if (state.getHalfMoveClock() >= 50 && state.getGameResult() == null)
-        {
-            state = state.setGameResult(GameResult.DRAW_BY_50_MOVE_RULE);
-        }
-    }
- 
-    public boolean doMove(Move move)
-    {        
+        Board board;
+        Position newPosition = this.position;
         Piece piece = position.getPiece(move.getFrom());
- 
 
-        State newState = new State(state);
+        State newState = state;
         newState = newState.setMove(move);
 
         // Used to determine the 50-move rule, three times repetition
@@ -233,14 +218,14 @@ public class Board
             //newState.halfMovesIndex3PosRepetition = state.moveNumber;
         } else
         {
-            newState.setHalfMoveClock(newState.getHalfMoveClock()+1);
+            newState = newState.setHalfMoveClock(newState.getHalfMoveClock()+1);
         }
 
         // Moving the king will disallow castling in the future
         if (piece.getPieceType() == PieceType.KING)
         {
-            newState.setCanCastleLong(false, move.getWhoMoves());
-            newState.setCanCastleShort(false, move.getWhoMoves());
+            newState = newState.setCanCastleLong(false, move.getWhoMoves());
+            newState = newState.setCanCastleShort(false, move.getWhoMoves());
         }
         
         // Moving a rook can disallow castling in the future
@@ -248,23 +233,23 @@ public class Board
         {
             if (move.getFrom().getX() == 0)
             {
-                newState.setCanCastleLong(false, piece.getColor());
+                newState = newState.setCanCastleLong(false, piece.getColor());
             }
             else if (move.getFrom().getX() == 7)
             {
-                newState.setCanCastleShort(false, piece.getColor());
+                newState = newState.setCanCastleShort(false, piece.getColor());
             }
         }
                
         switch (move.getMoveType())
         {
             case NORMALMOVE:
-                move(piece, move.getTo());
+                newPosition = newPosition.move(piece, move.getTo());
                 break;
 
             case CAPTURE:
-                remove(move.getCapturedPiece());
-                move(piece, move.getTo());
+                newPosition = newPosition.remove(move.getCapturedPiece());
+                newPosition = newPosition.move(piece, move.getTo());
                 if (move.getCapturedPiece().getPieceType() == PieceType.ROOK)
                 {
                     if (move.getTo().getX() == 0)
@@ -280,44 +265,42 @@ public class Board
 
             case CASTLE_SHORT:
                 // Move the king
-                move(position.getPiece(move.getFrom()), move.getTo());
-                move(position.getPiece(new Location(7, move.getFrom().getY())),
+                newPosition = newPosition.move(position.getPiece(move.getFrom()), move.getTo());
+                newPosition = newPosition.move(position.getPiece(new Location(7, move.getFrom().getY())),
                         new Location(5, move.getFrom().getY()));
                 break;
 
             case CASTLE_LONG:
-                move(position.getPiece(move.getFrom()), move.getTo());
-                move(position.getPiece(new Location(0, move.getFrom().getY())),
+                newPosition = newPosition.move(position.getPiece(move.getFrom()), move.getTo());
+                newPosition = newPosition.move(position.getPiece(new Location(0, move.getFrom().getY())),
                         new Location(3, move.getFrom().getY()));
                 break;
             
             case CAPTURE_ENPASSANT:
-                move(piece, move.getTo());
-                remove(move.getCapturedPiece());
+                newPosition = newPosition.move(piece, move.getTo());
+                newPosition = newPosition.remove(move.getCapturedPiece());
                 break;
             
             case PROMOTE_TO_BISHOP:  /* Intended fallthrough */
             case PROMOTE_TO_KNIGHT:  /* Intended fallthrough */
             case PROMOTE_TO_ROOK:    /* Intended fallthrough */
             case PROMOTE_TO_QUEEN:   /* Intended fallthrough */
-                insert(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()));
-                remove(piece);
+                newPosition = newPosition.insert(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()));
+                newPosition = newPosition.remove(piece);
                 break;
              
             case CAPTURE_AND_PROMOTE_TO_BISHOP: /* Intended fallthrough */
             case CAPTURE_AND_PROMOTE_TO_KNIGHT: /* Intended fallthrough */
             case CAPTURE_AND_PROMOTE_TO_ROOK:   /* Intended fallthrough */
             case CAPTURE_AND_PROMOTE_TO_QUEEN:  /* Intended fallthrough */
-                remove(position.getPiece(move.getTo()));
-                remove(position.getPiece(move.getFrom()));
-                insert(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()));
+                newPosition = newPosition.remove(position.getPiece(move.getTo()));
+                newPosition = newPosition.remove(position.getPiece(move.getFrom()));
+                newPosition = newPosition.insert(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()));
         }
 
         // Swap the move color
         newState = newState.setInMove(state.getInMove().opponent());
 
-        state = newState;
-        
         boolean wasMoveLegal;
 
         // The player that did the move is in check
@@ -328,12 +311,12 @@ public class Board
         }
         else
         {
-            checkDrawBy50MoveRule();
-            checkDrawBy3RepetionsRule();
+            //checkDrawBy50MoveRule();
+            //checkDrawBy3RepetionsRule();
             wasMoveLegal = true;
         }
         
-        return wasMoveLegal;
+        return new MoveResult(wasMoveLegal, new Board(newState, newPosition));
     }
 
     /**

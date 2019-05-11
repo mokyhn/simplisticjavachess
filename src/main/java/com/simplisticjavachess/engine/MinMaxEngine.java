@@ -7,8 +7,8 @@
 package com.simplisticjavachess.engine;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.MoveResult;
 import com.simplisticjavachess.evaluator.Evaluation;
-import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
@@ -20,21 +20,15 @@ public class MinMaxEngine implements Engine
     private final MoveGenerator moveGenerator;
     private final Evaluator evaluator;
 
-    private Move strongestMove;
-
     public MinMaxEngine(MoveGenerator moveGenerator, Evaluator evaluator)
     {
         this.moveGenerator = moveGenerator;
         this.evaluator = evaluator;
     }
 
+
     @Override
-    public final SearchResult search(Board board, int plyDepth)
-    {
-        return minMaxSearch(board, plyDepth);
-    }
-   
-    private SearchResult minMaxSearch(Board board, int depthToGo)
+    public SearchResult search(Board board, int depthToGo)
     {     
         if (depthToGo == 0)
         {
@@ -69,8 +63,9 @@ public class MinMaxEngine implements Engine
         while (moves.hasNext())
         {
             Move move = moves.next();
-            Board next = new Board(board);
-            boolean legal = next.doMove(move);
+            MoveResult moveResult = board.doMove(move);
+            boolean legal = moveResult.isMoveLegal();
+            Board next = moveResult.getBoard();
 
             if (!legal)
             {
@@ -79,11 +74,10 @@ public class MinMaxEngine implements Engine
 
             thereWasALegalMove = true;
 
-            score = minMaxSearch(next, depthToGo - 1);
+            score = search(next, depthToGo - 1);
 
             if (bestScore.isAnImprovement(inMove, score.getEvaluation()))
             {
-                strongestMove = move;
                 bestScore = score.getEvaluation();
                 moveSequence = score.getMoveSequence().add(move);
             }
@@ -94,8 +88,6 @@ public class MinMaxEngine implements Engine
         {
             if (board.isInCheck(inMove))
             {
-                    
-                board.setGameResult(GameResult.MATE);
 
                 if (inMove == Color.WHITE)
                 {
@@ -106,18 +98,12 @@ public class MinMaxEngine implements Engine
                 }
             } else
             {
-                board.setGameResult(GameResult.STALE_MATE);
                 return new SearchResult(Evaluation.EQUAL);
             } // draw
         }
 
         return new SearchResult(moveSequence, bestScore);
 
-    }
-
-    public Move getStrongestMove()
-    {
-        return strongestMove;
     }
 
 }

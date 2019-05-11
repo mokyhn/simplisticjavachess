@@ -38,7 +38,7 @@ public class ChessGame
 
     public void black()
     {
-        board.setBlackToMove();
+        board = board.setBlackToMove();
     }
     
     public void newgame()
@@ -78,7 +78,7 @@ public class ChessGame
 
     public void white()
     {
-        board.setWhiteToMove();
+        board = board.setWhiteToMove();
     }
 
     public void setSd(int depth)
@@ -113,7 +113,7 @@ public class ChessGame
             {
                 if (move.equals(possibleMoves.next()))
                 {
-                    boolean result = board.doMove(move);
+                    boolean result = board.doMove(move).isMoveLegal();
                     if (result)
                     {
                         break;

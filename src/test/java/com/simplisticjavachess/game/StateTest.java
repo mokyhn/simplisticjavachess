@@ -13,21 +13,6 @@ import static org.junit.Assert.*;
 
 public class StateTest
 {
-    
-    @Test
-    public void testCopyConstructor()
-    {
-        State state = createDummyState();
-        
-        State stateClone = new State(state);
-        assertSame(stateClone.getGameResult(), GameResult.DRAW_BY_50_MOVE_RULE);
-        assertEquals(42, stateClone.getHalfMoveClock());
-        assertEquals(41, stateClone.getHalfMovesIndex3PosRepetition());
-        assertSame(stateClone.getInMove(), Color.BLACK);
-        //assertEquals(49, stateClone.moveNumber);
-        assertEquals(stateClone.getMove(), Moves.BLACK_LONG_CASTLING());
-        
-    }
 
     private State createDummyState()
     {
