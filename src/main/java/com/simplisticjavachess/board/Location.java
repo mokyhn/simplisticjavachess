@@ -17,7 +17,7 @@ public final class Location
         this.hashCode = Objects.hash(x, y);
     }
     
-    public Location(String position) throws InvalidLocationException
+    public Location(String position)
     {
         position = position.toLowerCase();
         x = (position.charAt(0) - 'a');
@@ -25,7 +25,7 @@ public final class Location
         this.hashCode = Objects.hash(x, y);
         if (x < 0 || x > 7 || y < 0 || y > 7)
         {
-            throw new InvalidLocationException();
+            throw new IllegalArgumentException("Given a bad position: " + position);
         }
     }
     

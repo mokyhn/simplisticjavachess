@@ -7,51 +7,25 @@ package com.simplisticjavachess.board;
 
 import com.simplisticjavachess.piece.Piece;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Stack;
 
 public class Position
 {
     private final Map<Location, Piece> piecesMap;
 
-    public Position()
+    Position()
     {
         piecesMap = new HashMap<>();
     }
 
-    public Position(Position position)
+    Position(Position position)
     {
         this.piecesMap = new HashMap<>(position.piecesMap);
     }
- 
-    public void doCommand(Command command)
-    {
-        doCommandAux(command);
-    }
-    
-    private void doCommandAux(Command command)
-    {
-        if (command instanceof MoveCommand)
-        {
-            movePiece(((MoveCommand) command).getPiece(), ((MoveCommand) command).getNewLocation());
-        }
-        else
-        if (command instanceof ComposedCommand)
-        {
-            ((ComposedCommand) command).getCommands().forEach(this::doCommandAux);
-        }
-        else
-        {
-            throw new IllegalStateException();
-        }
-        
-    }
-    
-    public void insert(Piece piece)
+
+    void insert(Piece piece)
     {
         if (piecesMap.containsKey(piece.getLocation()))
         {
@@ -68,7 +42,7 @@ public class Position
         return piecesMap.get(location);
     }
   
-    public Collection<Piece> getPieces() 
+    Collection<Piece> getPieces()
     {
         return piecesMap.values();
     }
@@ -78,7 +52,7 @@ public class Position
      * @param piece - to remove
      * @return the removed piece
      */
-    public void remove(Piece piece)
+    void remove(Piece piece)
     {    
         if (piece == null)
         {
@@ -95,7 +69,7 @@ public class Position
 
     }
    
-    private void movePiece(Piece piece, Location to)
+    public void move(Piece piece, Location to)
     {
         if (piecesMap.containsKey(to))
         {
@@ -109,17 +83,17 @@ public class Position
         }
     }
 
-    public boolean freeSquare(Location location)
+    boolean freeSquare(Location location)
     {
         return freeSquare(location.getX(), location.getY());
     }
     
-    public boolean freeSquare(int x, int y)
+    boolean freeSquare(int x, int y)
     {
         return !piecesMap.containsKey(new Location(x, y));
     }
 
-    public String getPositionString()
+    String getPositionString()
     {
         int x, y;
         Piece p;

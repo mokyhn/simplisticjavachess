@@ -37,14 +37,14 @@ public class LocationTest {
         assertEquals(new Location("h8").toString(), "h8");
     }
     
-    @Test(expected=InvalidLocationException.class)
-    public void testInvalidFile() throws InvalidLocationException
+    @Test(expected=IllegalArgumentException.class)
+    public void testInvalidFile()
     {
         new Location("i4");
     }
     
-    @Test(expected=InvalidLocationException.class)
-    public void testInvalidRank() throws InvalidLocationException
+    @Test(expected=IllegalArgumentException.class)
+    public void testInvalidRank()
     {
         new Location("a9");
     }

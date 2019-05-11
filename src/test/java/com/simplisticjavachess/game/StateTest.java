@@ -8,7 +8,6 @@ package com.simplisticjavachess.game;
 
 import com.simplisticjavachess.move.Moves;
 import com.simplisticjavachess.piece.Color;
-import com.simplisticjavachess.board.InvalidLocationException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -16,7 +15,7 @@ public class StateTest
 {
     
     @Test
-    public void testCopyConstructor() throws InvalidLocationException 
+    public void testCopyConstructor()
     {
         State state = createDummyState();
         

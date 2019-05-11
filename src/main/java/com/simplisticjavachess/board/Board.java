@@ -256,14 +256,12 @@ public class Board
         switch (move.getMoveType())
         {
             case NORMALMOVE:
-                position.doCommand(new MoveCommand(piece, move.getTo()));
+                position.move(piece, move.getTo());
                 break;
 
             case CAPTURE:
                 remove(move.getCapturedPiece());
-                position.doCommand(new ComposedCommand(
-                        new MoveCommand(piece, move.getTo()))
-                );
+                position.move(piece, move.getTo());
                 if (move.getCapturedPiece().getPieceType() == PieceType.ROOK)
                 {
                     if (move.getTo().getX() == 0)
@@ -278,33 +276,20 @@ public class Board
                 break;
 
             case CASTLE_SHORT:
-                position.doCommand(new ComposedCommand(
-                    // Move the king
-                    new MoveCommand(position.getPiece(move.getFrom()), move.getTo()),
-
-                    // Then the rook
-                    new MoveCommand(position.getPiece(new Location(7, move.getFrom().getY())), 
-                                    new Location(5, move.getFrom().getY()))
-                ));
+                // Move the king
+                position.move(position.getPiece(move.getFrom()), move.getTo());
+                position.move(position.getPiece(new Location(7, move.getFrom().getY())),
+                        new Location(5, move.getFrom().getY()));
                 break;
 
             case CASTLE_LONG:
-                position.doCommand(new ComposedCommand(
-                    // Move the king
-                    new MoveCommand(position.getPiece(move.getFrom()), move.getTo()),
-
-                    // Then the rook
-                    new MoveCommand(position.getPiece(new Location(0, move.getFrom().getY())), 
-                                    new Location(3, move.getFrom().getY()))
-                ));
+                position.move(position.getPiece(move.getFrom()), move.getTo());
+                position.move(position.getPiece(new Location(0, move.getFrom().getY())),
+                        new Location(3, move.getFrom().getY()));
                 break;
             
             case CAPTURE_ENPASSANT:
-                position.doCommand(
-                        new ComposedCommand(
-                            new MoveCommand(piece, move.getTo())
-                        )
-                );
+                position.move(piece, move.getTo());
                 remove(move.getCapturedPiece());
                 break;
             

@@ -4,13 +4,12 @@ import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.PieceType;
-import com.simplisticjavachess.board.InvalidLocationException;
 import com.simplisticjavachess.board.Location;
 
 public final class MoveParser
 {
 
-    public static Move parseMove(Board b, String str) throws InvalidLocationException
+    public static Move parseMove(Board b, String str)
     {
         str = str.trim().toLowerCase();
 

@@ -2,7 +2,6 @@ package com.simplisticjavachess.cli.cecpcommands;
 
 import com.simplisticjavachess.game.ChessGame;
 import com.simplisticjavachess.cli.Command;
-import com.simplisticjavachess.board.InvalidLocationException;
 
 /**
  *
@@ -29,10 +28,6 @@ public class CommandMove implements Command
         try 
         {
             chessGame.move(arguments[0]);
-        }
-        catch (InvalidLocationException e)
-        {
-            System.out.println("Invalid location given");
         }
         catch (IllegalArgumentException e)
         {
