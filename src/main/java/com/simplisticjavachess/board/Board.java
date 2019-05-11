@@ -61,22 +61,22 @@ public class Board
 
     public void setGameResult(GameResult gameResult)
     {
-        currentState.gameResult = gameResult;
+        currentState = currentState.setGameResult(gameResult);
     }
 
     public GameResult getGameResult()
     {
-        return currentState.gameResult;
+        return currentState.getGameResult();
     }    
     
     public boolean isDraw()
     {
-        if (currentState.gameResult == null)
+        if (currentState.getGameResult() == null)
         {
             return false;
         }
         
-        switch (currentState.gameResult) 
+        switch (currentState.getGameResult())
         {
             case DRAW:
             case DRAW_BY_50_MOVE_RULE:
@@ -90,7 +90,7 @@ public class Board
 
     public boolean isMate()
     {
-        return currentState.gameResult == GameResult.MATE;
+        return currentState.getGameResult() == GameResult.MATE;
     }
 
 
@@ -204,17 +204,17 @@ public class Board
 //            }
 //        }
 
-        if (k >= 3 && currentState.gameResult == null) 
+        if (k >= 3 && currentState.getGameResult() == null)
         {
-            currentState.gameResult = GameResult.DRAW_BY_REPETITION;
+            currentState = currentState.setGameResult(GameResult.DRAW_BY_REPETITION);
         }
     }
 
     private void checkDrawBy50MoveRule()
     {
-        if (currentState.halfMoveClock >= 50 && currentState.gameResult == null)
+        if (currentState.halfMoveClock >= 50 && currentState.getGameResult() == null)
         {
-            currentState.gameResult = GameResult.DRAW_BY_50_MOVE_RULE;
+            currentState = currentState.setGameResult(GameResult.DRAW_BY_50_MOVE_RULE);
         }
     }
  
@@ -377,7 +377,7 @@ public class Board
         return Objects.hash(position.hashCode(), currentState.hashCode());
     }
 
-    public boolean isWhiteInMove()
+    boolean isWhiteInMove()
     {
         return currentState.getInMove() == Color.WHITE;
     } 

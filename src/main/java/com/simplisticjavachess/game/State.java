@@ -15,28 +15,29 @@ public final class State
 
     private final CastlingState castlingState;
 
-    public GameResult gameResult;
-    
+    private final GameResult gameResult;
+
     /**
      * Number of half moves since the last pawn advance or capture.
      * Used to determine if a draw can be claimed under the fifty-move rule.
     */
     public int halfMoveClock;
-    
+
 
     /**
      * Number of half moves since last pawn move (including promotions) or
      * capture move When searching for threefold repetitions search from this
      * index.
      */
-    public int halfMovesIndex3PosRepetition;
+    int halfMovesIndex3PosRepetition;
 
     public State()
     {
         this.castlingState = new CastlingState();
+        this.gameResult = null;
     }
 
-    public State(Move move, Color inMove, CastlingState castlingState, GameResult gameResult,
+    private State(Move move, Color inMove, CastlingState castlingState, GameResult gameResult,
                  int halfMoveClock, int halfMovesIndex3PosRepetition)
     {
         this.move = move;
@@ -79,7 +80,7 @@ public final class State
         if (flag)
         {
             newCastlingState = castlingState.setCanCastleLong(color);
-        } 
+        }
         else
         {
             newCastlingState = castlingState.setCannotCastleLong(color);
@@ -87,18 +88,28 @@ public final class State
         return new State(this.move, this.inMove, newCastlingState,  this.gameResult, this.halfMoveClock,
                 this.halfMovesIndex3PosRepetition);
     }
-    
-    public boolean getCanCastleShort(Color color) 
+
+    public GameResult getGameResult() {
+        return gameResult;
+    }
+
+    public State setGameResult(GameResult gameResult)
+    {
+        return new State(this.move, this.inMove, this.castlingState, gameResult, this.halfMoveClock,
+                this.halfMovesIndex3PosRepetition);
+    }
+
+    boolean getCanCastleShort(Color color)
     {
         return castlingState.canCastleShort(color);
     }
-    
+
     public boolean getCanCastleShort()
     {
         return getCanCastleShort(inMove);
     }
     
-    public boolean getCanCastleLong(Color color) 
+    boolean getCanCastleLong(Color color)
     {
         return castlingState.canCastleLong(color);
     }

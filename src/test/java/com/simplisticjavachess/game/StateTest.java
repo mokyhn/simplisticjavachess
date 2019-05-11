@@ -20,7 +20,7 @@ public class StateTest
         State state = createDummyState();
         
         State stateClone = new State(state);
-        assertSame(stateClone.gameResult, GameResult.DRAW_BY_50_MOVE_RULE);
+        assertSame(stateClone.getGameResult(), GameResult.DRAW_BY_50_MOVE_RULE);
         assertEquals(42, stateClone.halfMoveClock);
         assertEquals(41, stateClone.halfMovesIndex3PosRepetition);
         assertSame(stateClone.getInMove(), Color.BLACK);
@@ -33,7 +33,7 @@ public class StateTest
     {
         // Setup
         State state = new State();
-        state.gameResult = GameResult.DRAW_BY_50_MOVE_RULE;
+        state = state.setGameResult(GameResult.DRAW_BY_50_MOVE_RULE);
         state.halfMoveClock = 42;
         state.halfMovesIndex3PosRepetition = 41;
         state.setInMove(Color.BLACK);
