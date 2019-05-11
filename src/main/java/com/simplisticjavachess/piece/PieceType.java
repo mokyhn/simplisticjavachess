@@ -6,25 +6,13 @@ package com.simplisticjavachess.piece;
  */
 public enum PieceType
 {
-    PAWN(0),
-    BISHOP(1),
-    KNIGHT(2),
-    ROOK(3),
-    QUEEN(4),
-    KING(5);
- 
-    private final int type;
-    
-    PieceType(int type)
-    {
-        this.type = type;
-    }
-    
-    public int getType()
-    {
-        return type;
-    }
-    
+    PAWN,
+    BISHOP,
+    KNIGHT,
+    ROOK,
+    QUEEN,
+    KING;
+
     public String getPieceLetter() 
     {
         switch (this)
