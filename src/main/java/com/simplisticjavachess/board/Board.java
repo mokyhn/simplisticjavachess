@@ -212,7 +212,7 @@ public class Board
 
     private void checkDrawBy50MoveRule()
     {
-        if (state.halfMoveClock >= 50 && state.getGameResult() == null)
+        if (state.getHalfMoveClock() >= 50 && state.getGameResult() == null)
         {
             state = state.setGameResult(GameResult.DRAW_BY_50_MOVE_RULE);
         }
@@ -229,11 +229,11 @@ public class Board
         // Used to determine the 50-move rule, three times repetition
         if (piece.getPieceType() == PieceType.PAWN)
         {
-            newState.halfMoveClock = 0;
+            newState = newState.setHalfMoveClock(0);
             //newState.halfMovesIndex3PosRepetition = state.moveNumber;
         } else
         {
-            newState.halfMoveClock++;
+            newState.setHalfMoveClock(newState.getHalfMoveClock()+1);
         }
 
         // Moving the king will disallow castling in the future

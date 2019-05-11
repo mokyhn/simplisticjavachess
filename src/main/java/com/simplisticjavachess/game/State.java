@@ -21,7 +21,7 @@ public final class State
      * Number of half moves since the last pawn advance or capture.
      * Used to determine if a draw can be claimed under the fifty-move rule.
     */
-    public int halfMoveClock;
+    private final int halfMoveClock;
 
 
     /**
@@ -29,7 +29,7 @@ public final class State
      * capture move When searching for threefold repetitions search from this
      * index.
      */
-    int halfMovesIndex3PosRepetition;
+    private final int halfMovesIndex3PosRepetition;
 
     public State()
     {
@@ -37,6 +37,8 @@ public final class State
         this.inMove = null;
         this.castlingState = new CastlingState();
         this.gameResult = null;
+        this.halfMoveClock = 0;
+        this.halfMovesIndex3PosRepetition = 0;
     }
 
     private State(Move move, Color inMove, CastlingState castlingState, GameResult gameResult,
@@ -110,12 +112,12 @@ public final class State
     {
         return getCanCastleShort(inMove);
     }
-    
+
     boolean getCanCastleLong(Color color)
     {
         return castlingState.canCastleLong(color);
     }
-   
+
     public boolean getCanCastleLong()
     {
         return getCanCastleLong(inMove);
@@ -142,6 +144,16 @@ public final class State
         return inMove;
     }
 
+    public State setHalfMoveClock(int clock)
+    {
+        return new State(this.move, inMove, this.castlingState, this.gameResult, clock,
+                this.halfMovesIndex3PosRepetition);
+    }
+
+    public int getHalfMoveClock()
+    {
+        return halfMoveClock;
+    }
 
 	@Override
 	public int hashCode()
@@ -150,6 +162,15 @@ public final class State
                 castlingState, gameResult,
                 halfMoveClock, halfMovesIndex3PosRepetition);
 
+    }
+
+    public int getHalfMovesIndex3PosRepetition() {
+        return halfMovesIndex3PosRepetition;
+    }
+
+    public State setHalfMovesIndex3PosRepetition(int index) {
+        return  new State(this.move, inMove, this.castlingState, this.gameResult, this.halfMoveClock,
+                index);
     }
 
     @Override
@@ -186,17 +207,17 @@ public final class State
         String whiteCastleLong  = castlingState.canCastleLong(Color.WHITE)  ? "X" : " ";
 
         result = "\n----------------------------State----------------------------\n";
-        
-        if (gameResult != null) 
+
+        if (gameResult != null)
         {
-            switch (gameResult) 
+            switch (gameResult)
             {
                 case DRAW:
                 case DRAW_BY_50_MOVE_RULE:
                 case DRAW_BY_REPETITION:
                 case STALE_MATE:
                     result = result + "It's a draw!\n";
-                break;    
+                break;
                 case MATE:
                     result = result + "Mate!\n";
             }

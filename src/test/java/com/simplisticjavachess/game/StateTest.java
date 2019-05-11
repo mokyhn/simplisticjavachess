@@ -21,8 +21,8 @@ public class StateTest
         
         State stateClone = new State(state);
         assertSame(stateClone.getGameResult(), GameResult.DRAW_BY_50_MOVE_RULE);
-        assertEquals(42, stateClone.halfMoveClock);
-        assertEquals(41, stateClone.halfMovesIndex3PosRepetition);
+        assertEquals(42, stateClone.getHalfMoveClock());
+        assertEquals(41, stateClone.getHalfMovesIndex3PosRepetition());
         assertSame(stateClone.getInMove(), Color.BLACK);
         //assertEquals(49, stateClone.moveNumber);
         assertEquals(stateClone.getMove(), Moves.BLACK_LONG_CASTLING());
@@ -34,8 +34,8 @@ public class StateTest
         // Setup
         State state = new State();
         state = state.setGameResult(GameResult.DRAW_BY_50_MOVE_RULE);
-        state.halfMoveClock = 42;
-        state.halfMovesIndex3PosRepetition = 41;
+        state = state.setHalfMoveClock(42);
+        state = state.setHalfMovesIndex3PosRepetition(41);
         state = state.setInMove(Color.BLACK);
         //state.moveNumber = 49;
         state = state.setMove(Moves.BLACK_LONG_CASTLING());
