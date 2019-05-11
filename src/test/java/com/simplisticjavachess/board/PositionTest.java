@@ -78,23 +78,24 @@ public class PositionTest
     @Test
     public void testInsert()
     {
-        position.insert(piece);
-        assertEquals(piece, position.getPiece(new Location(7,7)));
+        Position tmp = position.insert(piece);
+        assertEquals(piece, tmp.getPiece(new Location(7,7)));
     }
     
     @Test(expected = IllegalStateException.class)
     public void testDoubleInsert()
     {
-        position.insert(piece);
-        position.insert(piece);
+        Position tmp = position.insert(piece);
+        tmp.insert(piece);
     }
     
     @Test
     public void testRemove()
     {
-        position.insert(piece);
-        position.remove(piece);
-        assertNull(position.getPiece(piece.getLocation()));
+        Position tmp;
+        tmp = position.insert(piece);
+        tmp = tmp.remove(piece);
+        assertNull(tmp.getPiece(piece.getLocation()));
     }
     
     @Ignore
@@ -114,7 +115,7 @@ public class PositionTest
     @Test
     public void testFreeSquareNonEmptySquare()
     {
-        position.insert(piece);
+        position = position.insert(piece);
         assertFalse(position.freeSquare(piece.getLocation()));
     }
 }

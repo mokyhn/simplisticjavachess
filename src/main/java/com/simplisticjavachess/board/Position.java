@@ -20,12 +20,17 @@ public class Position
         piecesMap = new HashMap<>();
     }
 
-    Position(Position position)
+    private Position(Position position)
     {
         this.piecesMap = new HashMap<>(position.piecesMap);
     }
 
-    void insert(Piece piece)
+    /**
+     *
+     * @param piece to insert
+     * @return the resulting position
+     */
+    Position insert(Piece piece)
     {
         if (piecesMap.containsKey(piece.getLocation()))
         {
@@ -33,7 +38,9 @@ public class Position
         }
         else
         {
-            piecesMap.put(piece.getLocation(), piece);
+            Position result = new Position(this);
+            result.piecesMap.put(piece.getLocation(), piece);
+            return result;
         }
     }
        
@@ -50,9 +57,9 @@ public class Position
     /**
      * Remove a piece
      * @param piece - to remove
-     * @return the removed piece
+     * @return the resulting position
      */
-    void remove(Piece piece)
+    Position remove(Piece piece)
     {    
         if (piece == null)
         {
@@ -60,7 +67,9 @@ public class Position
         }
         if (piecesMap.containsKey(piece.getLocation()))
         {
-            piecesMap.remove(piece.getLocation());
+            Position result = new Position(this);
+            result.piecesMap.remove(piece.getLocation());
+            return result;
         }
         else
         {
@@ -69,7 +78,7 @@ public class Position
 
     }
    
-    public void move(Piece piece, Location to)
+    public Position move(Piece piece, Location to)
     {
         if (piecesMap.containsKey(to))
         {
@@ -77,9 +86,9 @@ public class Position
         }
         else
         {
-            remove(piece);
+            Position tmp = remove(piece);
             Piece newPiece = piece.updateLocation(to);
-            insert(newPiece);
+            return tmp.insert(newPiece);
         }
     }
 

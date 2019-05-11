@@ -20,7 +20,7 @@ public class Board
 {
 
     private State currentState;
-    private final Position position;
+    private Position position;
 
     public Board()
     {
@@ -41,7 +41,7 @@ public class Board
     public Board(Board board)
     {
         this.currentState = new State(board.currentState);
-        this.position = new Position(board.position);
+        this.position = board.position;
     }
 
     public Color inMove()
@@ -131,12 +131,17 @@ public class Board
     
     public void insert(Piece p)
     {
-        position.insert(p);
+        position = position.insert(p);
     }
 
     public void remove(Piece p)
     {
-        position.remove(p);
+        position = position.remove(p);
+    }
+
+    private void move(Piece piece, Location to)
+    {
+        position = position.move(piece, to);
     }
 
     public boolean freeSquare(Location location)
@@ -256,12 +261,12 @@ public class Board
         switch (move.getMoveType())
         {
             case NORMALMOVE:
-                position.move(piece, move.getTo());
+                move(piece, move.getTo());
                 break;
 
             case CAPTURE:
                 remove(move.getCapturedPiece());
-                position.move(piece, move.getTo());
+                move(piece, move.getTo());
                 if (move.getCapturedPiece().getPieceType() == PieceType.ROOK)
                 {
                     if (move.getTo().getX() == 0)
@@ -277,19 +282,19 @@ public class Board
 
             case CASTLE_SHORT:
                 // Move the king
-                position.move(position.getPiece(move.getFrom()), move.getTo());
-                position.move(position.getPiece(new Location(7, move.getFrom().getY())),
+                move(position.getPiece(move.getFrom()), move.getTo());
+                move(position.getPiece(new Location(7, move.getFrom().getY())),
                         new Location(5, move.getFrom().getY()));
                 break;
 
             case CASTLE_LONG:
-                position.move(position.getPiece(move.getFrom()), move.getTo());
-                position.move(position.getPiece(new Location(0, move.getFrom().getY())),
+                move(position.getPiece(move.getFrom()), move.getTo());
+                move(position.getPiece(new Location(0, move.getFrom().getY())),
                         new Location(3, move.getFrom().getY()));
                 break;
             
             case CAPTURE_ENPASSANT:
-                position.move(piece, move.getTo());
+                move(piece, move.getTo());
                 remove(move.getCapturedPiece());
                 break;
             

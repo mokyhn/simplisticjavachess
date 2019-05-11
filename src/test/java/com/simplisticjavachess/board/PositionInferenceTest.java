@@ -47,7 +47,7 @@ public class PositionInferenceTest
     {
         Position position = new Position();
         Piece piece = Piece.fromPositionCode("Kd5");
-        position.insert(piece);
+        position = position.insert(piece);
         
         assertNull(PositionInference.attacks(position, Location.fromString("d5"), Color.BLACK));
         assertEquals(piece, PositionInference.attacks(position, Location.fromString("d6"), Color.BLACK));
@@ -68,7 +68,7 @@ public class PositionInferenceTest
     {
         Position position = new Position();
         Piece piece = Piece.fromPositionCode("Nd5");
-        position.insert(piece);
+        position = position.insert(piece);
         
         assertNull(PositionInference.attacks(position, Location.fromString("d5"), Color.BLACK));
         assertNull(PositionInference.attacks(position, Location.fromString("d6"), Color.BLACK));
