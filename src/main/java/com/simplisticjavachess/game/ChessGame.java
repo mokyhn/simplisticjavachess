@@ -6,6 +6,7 @@
 
 package com.simplisticjavachess.game;
 
+import com.simplisticjavachess.board.MoveResult;
 import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.board.Board;
@@ -14,7 +15,9 @@ import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.engine.SearchResult;
 
-import java.util.Iterator;
+import java.util.List;
+
+import static com.simplisticjavachess.misc.IteratorUtils.toList;
 
 public class ChessGame
 {
@@ -92,7 +95,8 @@ public class ChessGame
 
         if (searchResult.getMoveSequence() != null)
         {
-            board.doMove(searchResult.getMoveSequence().getFirst());
+            MoveResult moveResult = board.doMove(searchResult.getMoveSequence().getFirst());
+            board = moveResult.getBoard();
             System.out.println(searchResult.toString());
             print();
         }
@@ -108,21 +112,20 @@ public class ChessGame
         }
         else
         {
-            Iterator<Move> possibleMoves = moveGenerator.generateMoves(board);
-            while (possibleMoves.hasNext())
+            List<Move> possibleMoves = toList(moveGenerator.generateMoves(board));
+            if (possibleMoves.contains(move))
             {
-                if (move.equals(possibleMoves.next()))
+                MoveResult result = board.doMove(move);
+                if (result.isMoveLegal())
                 {
-                    boolean result = board.doMove(move).isMoveLegal();
-                    if (result)
-                    {
-                        break;
-                    }
-                    else
-                    {
-                        throw new IllegalArgumentException("Invalid move");
-                    }
+                    board = result.getBoard();
+                } else
+                {
+                    throw new IllegalArgumentException("Invalid move");
                 }
+            } else
+            {
+                throw new IllegalArgumentException("Invalid move");
             }
         } 
 
