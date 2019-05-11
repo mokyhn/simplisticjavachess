@@ -23,7 +23,7 @@ public class LineMoveGeneratorTest
         Board b = new Board();
         
         Piece p = Piece.fromPositionCode("Bd5");
-        b.insertPiece(p);
+        b.insert(p);
         b.setWhiteToMove();
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, 1)).generateMoves(b, p));
         assertEquals(3, result.size()); // e6, f7, g8
@@ -38,7 +38,7 @@ public class LineMoveGeneratorTest
         Board b = new Board();
         
         Piece p = Piece.fromPositionCode("Rd5");
-        b.insertPiece(p);
+        b.insert(p);
         b.setWhiteToMove();
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(0, -1)).generateMoves(b, p));
         assertEquals(4, result.size());
@@ -55,7 +55,7 @@ public class LineMoveGeneratorTest
         Board b = new Board();
         
         Piece p = Piece.fromPositionCode("Rd5");        
-        b.insertPiece(p);              
+        b.insert(p);
         
         b.setWhiteToMove();
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(-1, 0)).generateMoves(b, p));
@@ -71,10 +71,10 @@ public class LineMoveGeneratorTest
         Board b = new Board();
         
         Piece p = Piece.fromPositionCode("Rd5");        
-        b.insertPiece(p);
+        b.insert(p);
         
         // A blocking piece
-        b.insertPiece(Piece.fromPositionCode("Pb5"));
+        b.insert(Piece.fromPositionCode("Pb5"));
         
         b.setWhiteToMove();
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(-1, 0)).generateMoves(b, p));
@@ -88,13 +88,13 @@ public class LineMoveGeneratorTest
         Board b = new Board();
         
         Piece p = Piece.fromPositionCode("Bc5");        
-        b.insertPiece(p);              
+        b.insert(p);
         
         // A piece that can be captured
-        b.insertPiece(Piece.fromPositionCode("pe3"));
+        b.insert(Piece.fromPositionCode("pe3"));
         
         // Should not be captured
-        b.insertPiece(Piece.fromPositionCode("pf2"));
+        b.insert(Piece.fromPositionCode("pf2"));
         
         b.setWhiteToMove();
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, -1)).generateMoves(b, p));

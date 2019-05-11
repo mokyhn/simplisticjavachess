@@ -19,8 +19,8 @@ public class PositionInferenceTest
     public void testIsInCheck()
     {
         Board board = new Board();
-        board.insertPiece(Piece.fromPositionCode("Bd5"));
-        board.insertPiece(Piece.fromPositionCode("kc4"));
+        board.insert(Piece.fromPositionCode("Bd5"));
+        board.insert(Piece.fromPositionCode("kc4"));
         assertTrue(PositionInference.isInCheck(board.getPosition(), Color.BLACK));
         assertFalse(PositionInference.isInCheck(board.getPosition(), Color.WHITE));
     }
@@ -30,7 +30,7 @@ public class PositionInferenceTest
     {
         Board board = new Board();
         Piece piece = Piece.fromPositionCode("Bd5");
-        board.insertPiece(piece);
+        board.insert(piece);
         Piece result = PositionInference.attacks(board.getPosition(), Location.fromString("e6"), Color.BLACK);
         Assert.assertEquals(piece, result);
         
@@ -47,7 +47,7 @@ public class PositionInferenceTest
     {
         Position position = new Position();
         Piece piece = Piece.fromPositionCode("Kd5");
-        position.doCommand(new InsertCommand(piece));
+        position.insert(piece);
         
         assertNull(PositionInference.attacks(position, Location.fromString("d5"), Color.BLACK));
         assertEquals(piece, PositionInference.attacks(position, Location.fromString("d6"), Color.BLACK));
@@ -68,7 +68,7 @@ public class PositionInferenceTest
     {
         Position position = new Position();
         Piece piece = Piece.fromPositionCode("Nd5");
-        position.doCommand(new InsertCommand(piece));
+        position.insert(piece);
         
         assertNull(PositionInference.attacks(position, Location.fromString("d5"), Color.BLACK));
         assertNull(PositionInference.attacks(position, Location.fromString("d6"), Color.BLACK));

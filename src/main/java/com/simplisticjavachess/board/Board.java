@@ -4,7 +4,6 @@ package com.simplisticjavachess.board;
 
 
 import com.simplisticjavachess.game.GameResult;
-import com.simplisticjavachess.game.History;
 import com.simplisticjavachess.game.State;
 import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.Move;
@@ -22,13 +21,11 @@ public class Board
 
     private State currentState;
     private final Position position;
-    private final History history;
-    
+
     public Board()
     {
         currentState = new State();
         position = new Position();
-        history = new History();
     }
 
     public static Board createFromFEN(String fen)
@@ -45,7 +42,6 @@ public class Board
     {
         this.currentState = new State(board.currentState);
         this.position = new Position(board.position);
-        this.history = new History(board.history);
     }
 
     public Color inMove()
@@ -133,9 +129,9 @@ public class Board
         return position.getPiece(location);
     }
     
-    public void insertPiece(Piece p)
+    public void insert(Piece p)
     {
-        position.doCommand(new InsertCommand(p));
+        position.insert(p);
     }
 
     public boolean freeSquare(Location location)
@@ -188,15 +184,15 @@ public class Board
         State state;
         int k = 0;
 
-        for (int i = currentState.halfMovesIndex3PosRepition; i < history.size(); i++)
-        {
-            state = history.get(i);
-            if (position.hashCode() ==  state.hash)
-            {
-                //TODO make three fold repetition check work
-                //k++;
-            }
-        }
+//        for (int i = currentState.halfMovesIndex3PosRepition; i < history.size(); i++)
+//        {
+//            state = history.get(i);
+//            if (position.hashCode() ==  state.hash)
+//            {
+//                //TODO make three fold repetition check work
+//                //k++;
+//            }
+//        }
 
         if (k >= 3 && currentState.gameResult == null) 
         {
@@ -217,8 +213,7 @@ public class Board
         Piece piece = position.getPiece(move.getFrom());
  
         currentState.hash = position.hashCode();
-        history.add(currentState);
-                
+
         State newState = new State(currentState);
         newState.setMove(move);
         newState.moveNumber++;
@@ -312,9 +307,11 @@ public class Board
             case PROMOTE_TO_KNIGHT:  /* Intended fallthrough */
             case PROMOTE_TO_ROOK:    /* Intended fallthrough */
             case PROMOTE_TO_QUEEN:   /* Intended fallthrough */
+                insert(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()));
                 position.doCommand(
+
                         new ComposedCommand(
-                            new InsertCommand(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo())),
+
                             new RemoveCommand(piece)
                         )
                 );  
@@ -327,10 +324,10 @@ public class Board
                 position.doCommand(
                         new ComposedCommand(
                                 new RemoveCommand(position.getPiece(move.getTo())),
-                                new RemoveCommand(position.getPiece(move.getFrom())),
-                                new InsertCommand(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()))
+                                new RemoveCommand(position.getPiece(move.getFrom()))
                         )
-                );             
+                );
+                insert(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()));
         }
 
         // Swap the move color
@@ -372,7 +369,6 @@ public class Board
         }
         s = s + currentState.toString();
         s = s + "Immediate evaluation: " + new Evaluator().evaluate(this) + "\n";
-        s = s + "Move history: " + history.toString() + "\n";
         s = s + "FEN: " + BoardParser.exportPosition(this);
         return s;
     }

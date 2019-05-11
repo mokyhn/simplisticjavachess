@@ -35,11 +35,6 @@ public class Position
     
     private void doCommandAux(Command command)
     {
-        if (command instanceof InsertCommand)
-        {
-            insertPiece(((InsertCommand) command).getPiece());
-        }
-        else
         if (command instanceof RemoveCommand)
         {
             Piece piece = ((RemoveCommand) command).getPiece();
@@ -62,7 +57,7 @@ public class Position
         
     }
     
-    private void insertPiece(Piece piece)
+    public void insert(Piece piece)
     {
         if (piecesMap.containsKey(piece.getLocation()))
         {
@@ -116,7 +111,7 @@ public class Position
         {
             removePiece(piece);
             Piece newPiece = piece.updateLocation(to);
-            insertPiece(newPiece);
+            insert(newPiece);
         }
     }
 

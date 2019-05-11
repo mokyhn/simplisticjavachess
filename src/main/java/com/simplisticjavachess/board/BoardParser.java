@@ -53,7 +53,7 @@ public class BoardParser
                 } 
                 else 
                 {                    
-                    board.insertPiece(new Piece(new Location(x, y), c));
+                    board.insert(new Piece(new Location(x, y), c));
                     x++;
                 }
             }
@@ -156,7 +156,7 @@ public class BoardParser
             if (s.length() > 1)
             {
                 Piece piece = Piece.fromPositionCode(s);
-                board.insertPiece(piece);
+                board.insert(piece);
             }
             else
             {
