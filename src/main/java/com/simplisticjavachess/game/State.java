@@ -7,18 +7,13 @@ import java.util.Objects;
 
 public final class State
 {
-    public int moveNumber;
-
 	private Move move;
 	private Color inMove;
 
 	// Used to check for draw by threefold repetition.
-    public int hash; // TODO
+    //public int hash; // TODO
 
-    private boolean blackCanCastleShort;
-    private boolean blackCanCastleLong;
-    private boolean whiteCanCastleShort;
-    private boolean whiteCanCastleLong;
+    private final CastlingState castlingState;
 
     public GameResult gameResult;
     
@@ -34,53 +29,68 @@ public final class State
      * capture move When searching for threefold repetitions search from this
      * index.
      */
-    public int halfMovesIndex3PosRepition;
+    public int halfMovesIndex3PosRepetition;
 
-    public State() {}
-    
+    public State()
+    {
+        this.castlingState = new CastlingState();
+    }
+
+    public State(Move move, Color inMove, CastlingState castlingState, GameResult gameResult,
+                 int halfMoveClock, int halfMovesIndex3PosRepetition)
+    {
+        this.move = move;
+        this.inMove = inMove;
+        this.castlingState = castlingState;
+        this.gameResult = gameResult;
+        this.halfMoveClock = halfMoveClock;
+        this.halfMovesIndex3PosRepetition = halfMovesIndex3PosRepetition;
+    }
+
     public State(State state)
     {
-        this.moveNumber = state.moveNumber;
         this.move = state.move;
         this.inMove = state.inMove;
-        this.blackCanCastleLong = state.blackCanCastleLong;
-        this.blackCanCastleShort = state.blackCanCastleShort;
-        this.whiteCanCastleLong = state.whiteCanCastleLong;
-        this.whiteCanCastleShort = state.whiteCanCastleShort;
+        this.castlingState = state.castlingState;
         this.halfMoveClock = state.halfMoveClock;
-        this.halfMovesIndex3PosRepition = state.halfMovesIndex3PosRepition;
+        this.halfMovesIndex3PosRepetition = state.halfMovesIndex3PosRepetition;
         this.gameResult = state.gameResult;
-
-        this.hash = state.hash;
     }
 
-    public void setCanCastleShort(boolean flag, Color color) 
+    public State setCanCastleShort(boolean flag, Color color)
     {
-        if (color == Color.WHITE) 
+        CastlingState newCastlingState;
+
+        if (flag)
         {
-            whiteCanCastleShort = flag;
+            newCastlingState = castlingState.setCanCastleShort(color);
+        } else {
+            newCastlingState = castlingState.setCannotCastleShort(color);
+        }
+
+        return new State(this.move, this.inMove, newCastlingState,  this.gameResult, this.halfMoveClock,
+                this.halfMovesIndex3PosRepetition);
+    }
+
+    public State setCanCastleLong(boolean flag, Color color)
+    {
+        CastlingState newCastlingState;
+
+        if (flag)
+        {
+            newCastlingState = castlingState.setCanCastleLong(color);
         } 
         else
         {
-            blackCanCastleShort = flag;
+            newCastlingState = castlingState.setCannotCastleLong(color);
         }
-    }
-
-    public void setCanCastleLong(boolean flag, Color color) 
-    {
-        if (color == Color.WHITE) 
-        {
-            whiteCanCastleLong = flag;
-        } 
-        else
-        {
-            blackCanCastleLong = flag;
-        }
+        return new State(this.move, this.inMove, newCastlingState,  this.gameResult, this.halfMoveClock,
+                this.halfMovesIndex3PosRepetition);
     }
     
     public boolean getCanCastleShort(Color color) 
     {
-        return color == Color.WHITE ? whiteCanCastleShort : blackCanCastleShort;
+        return castlingState.canCastleShort(color);
     }
     
     public boolean getCanCastleShort()
@@ -90,7 +100,7 @@ public final class State
     
     public boolean getCanCastleLong(Color color) 
     {
-        return color == Color.WHITE ? whiteCanCastleLong : blackCanCastleLong;
+        return castlingState.canCastleLong(color);
     }
    
     public boolean getCanCastleLong()
@@ -121,9 +131,9 @@ public final class State
 	@Override
 	public int hashCode()
     {
-        return Objects.hash(moveNumber, move, inMove,
-                blackCanCastleShort, blackCanCastleLong, whiteCanCastleShort,whiteCanCastleLong, gameResult,
-                halfMoveClock, halfMovesIndex3PosRepition);
+        return Objects.hash(move, inMove,
+                castlingState, gameResult,
+                halfMoveClock, halfMovesIndex3PosRepetition);
 
     }
 
@@ -137,32 +147,28 @@ public final class State
         if (object instanceof State)
         {
             State other = (State) object;
-            return this.blackCanCastleLong == other.blackCanCastleLong   &&
-                   this.blackCanCastleShort == other.blackCanCastleShort &&
-                   this.whiteCanCastleLong == other.whiteCanCastleLong &&
-                   this.whiteCanCastleShort == other.whiteCanCastleShort &&
+            return this.castlingState.equals(other.castlingState) &&
                    this.gameResult == other.gameResult &&
                    this.halfMoveClock == other.halfMoveClock &&
-                   this.halfMovesIndex3PosRepition == other.halfMovesIndex3PosRepition &&
+                   this.halfMovesIndex3PosRepetition == other.halfMovesIndex3PosRepetition &&
                    this.inMove == other.inMove &&
-                   Objects.equals(this.move, other.move) &&
-                   this.moveNumber == other.moveNumber;
+                   Objects.equals(this.move, other.move);
         }
         else
         {
             return false;
         }
     }
-    
+
     @Override
     public String toString()
     {
         String result;
 
-        String blackCastleShort = blackCanCastleShort ? "X" : " ";
-        String blackCastleLong  = blackCanCastleLong  ? "X" : " ";
-        String whiteCastleShort = whiteCanCastleShort ? "X" : " ";
-        String whiteCastleLong  = whiteCanCastleLong  ? "X" : " ";
+        String blackCastleShort = castlingState.canCastleShort(Color.BLACK) ? "X" : " ";
+        String blackCastleLong  = castlingState.canCastleLong(Color.BLACK) ? "X" : " ";
+        String whiteCastleShort = castlingState.canCastleShort(Color.WHITE) ? "X" : " ";
+        String whiteCastleLong  = castlingState.canCastleLong(Color.WHITE)  ? "X" : " ";
 
         result = "\n----------------------------State----------------------------\n";
         
@@ -183,7 +189,7 @@ public final class State
         result = result + "Black can castle long: [" + blackCastleLong + "],       Black can castle short: [" + blackCastleShort + "]\n";
         result = result + "White can castle long: [" + whiteCastleLong + "],       White can castle short: [" + whiteCastleShort + "]\n";
         result = result + "Number of half moves since last pawn move: " + halfMoveClock + "\n";
-        result = result + "Index searched from when checking 3 fold repetition: " + halfMovesIndex3PosRepition + "\n";
+        result = result + "Index searched from when checking 3 fold repetition: " + halfMovesIndex3PosRepetition + "\n";
 
         return result;
     }

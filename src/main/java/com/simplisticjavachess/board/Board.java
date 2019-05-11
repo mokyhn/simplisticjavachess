@@ -106,12 +106,12 @@ public class Board
 
     public void setCanCastleShort(boolean flag, Color color)
     {
-        currentState.setCanCastleShort(flag, color);
+        currentState = currentState.setCanCastleShort(flag, color);
     }
 
     public void setCanCastleLong(boolean flag, Color color)
     {
-        currentState.setCanCastleLong(flag, color);
+        currentState = currentState.setCanCastleLong(flag, color);
     }
     
     public Collection<Piece> getPieces()
@@ -194,7 +194,7 @@ public class Board
         State state;
         int k = 0;
 
-//        for (int i = currentState.halfMovesIndex3PosRepition; i < history.size(); i++)
+//        for (int i = currentState.halfMovesIndex3PosRepetition; i < history.size(); i++)
 //        {
 //            state = history.get(i);
 //            if (position.hashCode() ==  state.hash)
@@ -222,17 +222,15 @@ public class Board
     {        
         Piece piece = position.getPiece(move.getFrom());
  
-        currentState.hash = position.hashCode();
 
         State newState = new State(currentState);
         newState.setMove(move);
-        newState.moveNumber++;
 
-        // Used to determine the 50-move rule, three times repition
+        // Used to determine the 50-move rule, three times repetition
         if (piece.getPieceType() == PieceType.PAWN)
         {
             newState.halfMoveClock = 0;
-            newState.halfMovesIndex3PosRepition = currentState.moveNumber;
+            //newState.halfMovesIndex3PosRepetition = currentState.moveNumber;
         } else
         {
             newState.halfMoveClock++;
