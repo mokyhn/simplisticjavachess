@@ -16,9 +16,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class RandomEngine implements Engine
-{
+{ // Old experiment
+    @Override
+    public SearchResult search(Board b, int plyDepth) {
+        return null;
+    }/*
     MoveGenerator moveGenerator = new MoveGenerator();
-    
+
     Board analyzeBoard;
     Move strongestMove;
 
@@ -83,7 +87,7 @@ public class RandomEngine implements Engine
         {
             if (analyzeBoard.isInCheck(whoMoves))
             {
-                analyzeBoard.setGameResult(GameResult.MATE);               
+                analyzeBoard.setGameResult(GameResult.MATE);
                 if (whoMoves == Color.WHITE)
                 {
                     return Evaluator.WHITE_IS_MATED;
@@ -93,7 +97,7 @@ public class RandomEngine implements Engine
                 }
             } else
             {
-                analyzeBoard.setGameResult(GameResult.STALE_MATE);               
+                analyzeBoard.setGameResult(GameResult.STALE_MATE);
                 return 0;
             }
         }
@@ -105,5 +109,5 @@ public class RandomEngine implements Engine
     {
         return strongestMove;
     }
-
+*/
 }

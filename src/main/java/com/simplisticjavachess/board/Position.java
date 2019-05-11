@@ -17,23 +17,19 @@ import java.util.Stack;
 public class Position
 {
     private final Map<Location, Piece> piecesMap;
-    private final Stack<Command> undoStack;
-    
+
     public Position()
     {
         piecesMap = new HashMap<>();
-        undoStack = new Stack<>();
     }
 
     public Position(Position position)
     {
         this.piecesMap = new HashMap<>(position.piecesMap);
-        this.undoStack = (Stack<Command>) position.undoStack.clone();
     }
  
     public void doCommand(Command command)
     {
-        undoStack.push(command);
         doCommandAux(command);
     }
     
@@ -65,47 +61,6 @@ public class Position
         }
         
     }
-    
-    public void undo()
-    {
-        Command command = undoStack.pop();    
-        undoAux(command);
-    }
-    
-    
-    private void undoAux(Command command)
-    {
-        if (command instanceof InsertCommand)
-        {
-            removePiece(((InsertCommand) command).getPiece());
-        }
-        else
-        if (command instanceof RemoveCommand)
-        {
-            insertPiece(((RemoveCommand) command).getPiece());
-        }
-        else
-        if (command instanceof MoveCommand)
-        {
-            Piece piece = getPiece(((MoveCommand) command).getNewLocation());
-            Location oldLocation = ((MoveCommand) command).getPiece().getLocation();
-            movePiece(piece, oldLocation);
-        }
-        else
-        if (command instanceof ComposedCommand)
-        {
-            List<Command> commands = ((ComposedCommand) command).getCommands();
-            
-            Collections.reverse(commands);
-            
-            commands.forEach(this::undoAux);
-        }
-        else
-        {
-            throw new IllegalStateException();
-        }
-    }
-  
     
     private void insertPiece(Piece piece)
     {

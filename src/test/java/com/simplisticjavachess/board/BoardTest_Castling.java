@@ -31,11 +31,6 @@ public class BoardTest_Castling
         Board expected = AFTER_WHITE_SHORT_CASTLING();
         actual.doMove(Moves.WHITE_SHORT_CASTLING());
         assertEquals(expected.getPosition(), actual.getPosition());
-
-        // Test of undo
-        expected = WHITE_IN_MOVE_CASTLING();
-        actual.undo();
-        assertEquals(expected, actual);                
     }
     
     @Test
@@ -57,11 +52,6 @@ public class BoardTest_Castling
         Board expected = AFTER_BLACK_SHORT_CASTLING();
         actual.doMove(Moves.BLACK_SHORT_CASTLING());
         assertEquals(expected.getPosition(), actual.getPosition());
-
-        // Test of undo
-        expected = BLACK_IN_MOVE_CASTLING();
-        actual.undo();
-        assertEquals(expected, actual);                
     }
       
     @Test
@@ -83,11 +73,6 @@ public class BoardTest_Castling
         Board expected = AFTER_WHITE_LONG_CASTLING();
         actual.doMove(Moves.WHITE_LONG_CASTLING());
         assertEquals(expected.getPosition(), actual.getPosition());
-
-        // Test of undo
-        expected = WHITE_IN_MOVE_CASTLING();
-        actual.undo();
-        assertEquals(expected, actual);                
     }
     
     @Test
@@ -109,11 +94,6 @@ public class BoardTest_Castling
         Board expected = AFTER_BLACK_LONG_CASTLING();
         actual.doMove(Moves.BLACK_LONG_CASTLING());
         assertEquals(expected.getPosition(), actual.getPosition());
-
-        // Test of undo
-        expected = BLACK_IN_MOVE_CASTLING();
-        actual.undo();
-        assertEquals(expected, actual);                
     }
       
     @Test

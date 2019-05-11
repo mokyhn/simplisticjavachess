@@ -356,13 +356,6 @@ public class Board
         return wasMoveLegal;
     }
 
-    public void undo()
-    {
-        currentState = history.undo();  
-        position.undo();
-    }
-
-
     /**
      * Returns the board as ASCII art and game other information
      * @return An ASCII representation of the board

@@ -20,7 +20,6 @@ public class MinMaxEngine implements Engine
     private final MoveGenerator moveGenerator;
     private final Evaluator evaluator;
 
-    private Board analysisBoard;
     private Move strongestMove;
 
     public MinMaxEngine(MoveGenerator moveGenerator, Evaluator evaluator)
@@ -32,29 +31,28 @@ public class MinMaxEngine implements Engine
     @Override
     public final SearchResult search(Board board, int plyDepth)
     {
-        analysisBoard = new Board(board);
-        return minMaxSearch(plyDepth);
+        return minMaxSearch(board, plyDepth);
     }
    
-    private SearchResult minMaxSearch(int depthToGo)
+    private SearchResult minMaxSearch(Board board, int depthToGo)
     {     
         if (depthToGo == 0)
         {
             return new SearchResult(
-                    analysisBoard.isDraw() ?
+                    board.isDraw() ?
                     Evaluation.EQUAL : 
-                    evaluator.evaluate(analysisBoard)
+                    evaluator.evaluate(board)
             );
         }
 
-        Iterator<Move> moves = moveGenerator.generateMoves(analysisBoard);
+        Iterator<Move> moves = moveGenerator.generateMoves(board);
 
-        Color inMove = analysisBoard.inMove();
+        Color inMove = board.inMove();
 
-        if (evaluator.evaluate(analysisBoard).equals(Evaluation.BLACK_IS_MATED)
-         || evaluator.evaluate(analysisBoard).equals(Evaluation.WHITE_IS_MATED))
+        if (evaluator.evaluate(board).equals(Evaluation.BLACK_IS_MATED)
+         || evaluator.evaluate(board).equals(Evaluation.WHITE_IS_MATED))
         {
-            return new SearchResult(evaluator.evaluate(analysisBoard));
+            return new SearchResult(evaluator.evaluate(board));
         }
 
         if (!moves.hasNext())
@@ -71,25 +69,17 @@ public class MinMaxEngine implements Engine
         while (moves.hasNext())
         {
             Move move = moves.next();
-            boolean legal = analysisBoard.doMove(move);
+            Board next = new Board(board);
+            boolean legal = next.doMove(move);
 
             if (!legal)
             {
-                analysisBoard.undo();
                 continue; // The pseudo legal move m turned out to be illegal.
             }
 
             thereWasALegalMove = true;
 
-            //TODO: A bug exists in the undo functionality which does not work
-            //int hashBefore = analysisBoard.hashCode();
-
-            score = minMaxSearch(depthToGo - 1);
-            analysisBoard.undo();
-
-            //TODO: A bug exists in the undo functionality which does not work
-            //int hashAfter = analysisBoard.hashCode();
-            //assert(hashBefore == hashAfter);
+            score = minMaxSearch(next, depthToGo - 1);
 
             if (bestScore.isAnImprovement(inMove, score.getEvaluation()))
             {
@@ -102,10 +92,10 @@ public class MinMaxEngine implements Engine
         // Mate or draw
         if (!thereWasALegalMove)
         {
-            if (analysisBoard.isInCheck(inMove))
+            if (board.isInCheck(inMove))
             {
                     
-                analysisBoard.setGameResult(GameResult.MATE);
+                board.setGameResult(GameResult.MATE);
 
                 if (inMove == Color.WHITE)
                 {
@@ -116,7 +106,7 @@ public class MinMaxEngine implements Engine
                 }
             } else
             {
-                analysisBoard.setGameResult(GameResult.STALE_MATE);
+                board.setGameResult(GameResult.STALE_MATE);
                 return new SearchResult(Evaluation.EQUAL);
             } // draw
         }

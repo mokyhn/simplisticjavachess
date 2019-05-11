@@ -14,6 +14,7 @@ import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.board.InvalidLocationException;
 import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.engine.SearchResult;
+
 import java.util.Iterator;
 
 public class ChessGame
@@ -75,11 +76,6 @@ public class ChessGame
         }
 
     }
-      
-    public void undo()
-    {
-        board.undo();
-    }
 
     public void white()
     {
@@ -133,5 +129,8 @@ public class ChessGame
 
        print();   
     }
-    
+
+    public void undo() {
+        throw new IllegalStateException();
+    }
 }
