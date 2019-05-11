@@ -134,6 +134,11 @@ public class Board
         position.insert(p);
     }
 
+    public void remove(Piece p)
+    {
+        position.remove(p);
+    }
+
     public boolean freeSquare(Location location)
     {
         return position.freeSquare(location);
@@ -255,8 +260,8 @@ public class Board
                 break;
 
             case CAPTURE:
+                remove(move.getCapturedPiece());
                 position.doCommand(new ComposedCommand(
-                        new RemoveCommand(move.getCapturedPiece()), 
                         new MoveCommand(piece, move.getTo()))
                 );
                 if (move.getCapturedPiece().getPieceType() == PieceType.ROOK)
@@ -297,10 +302,10 @@ public class Board
             case CAPTURE_ENPASSANT:
                 position.doCommand(
                         new ComposedCommand(
-                            new MoveCommand(piece, move.getTo()),
-                            new RemoveCommand(move.getCapturedPiece())
+                            new MoveCommand(piece, move.getTo())
                         )
                 );
+                remove(move.getCapturedPiece());
                 break;
             
             case PROMOTE_TO_BISHOP:  /* Intended fallthrough */
@@ -308,25 +313,15 @@ public class Board
             case PROMOTE_TO_ROOK:    /* Intended fallthrough */
             case PROMOTE_TO_QUEEN:   /* Intended fallthrough */
                 insert(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()));
-                position.doCommand(
-
-                        new ComposedCommand(
-
-                            new RemoveCommand(piece)
-                        )
-                );  
+                remove(piece);
                 break;
              
             case CAPTURE_AND_PROMOTE_TO_BISHOP: /* Intended fallthrough */
             case CAPTURE_AND_PROMOTE_TO_KNIGHT: /* Intended fallthrough */
             case CAPTURE_AND_PROMOTE_TO_ROOK:   /* Intended fallthrough */
             case CAPTURE_AND_PROMOTE_TO_QUEEN:  /* Intended fallthrough */
-                position.doCommand(
-                        new ComposedCommand(
-                                new RemoveCommand(position.getPiece(move.getTo())),
-                                new RemoveCommand(position.getPiece(move.getFrom()))
-                        )
-                );
+                remove(position.getPiece(move.getTo()));
+                remove(position.getPiece(move.getFrom()));
                 insert(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()));
         }
 

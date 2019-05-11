@@ -35,12 +35,6 @@ public class Position
     
     private void doCommandAux(Command command)
     {
-        if (command instanceof RemoveCommand)
-        {
-            Piece piece = ((RemoveCommand) command).getPiece();
-            removePiece(piece);
-        }
-        else
         if (command instanceof MoveCommand)
         {
             movePiece(((MoveCommand) command).getPiece(), ((MoveCommand) command).getNewLocation());
@@ -84,7 +78,7 @@ public class Position
      * @param piece - to remove
      * @return the removed piece
      */
-    private void removePiece(Piece piece)
+    public void remove(Piece piece)
     {    
         if (piece == null)
         {
@@ -109,7 +103,7 @@ public class Position
         }
         else
         {
-            removePiece(piece);
+            remove(piece);
             Piece newPiece = piece.updateLocation(to);
             insert(newPiece);
         }

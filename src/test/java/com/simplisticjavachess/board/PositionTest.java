@@ -93,7 +93,7 @@ public class PositionTest
     public void testRemove()
     {
         position.insert(piece);
-        position.doCommand(new RemoveCommand(piece));
+        position.remove(piece);
         assertNull(position.getPiece(piece.getLocation()));
     }
     
@@ -101,8 +101,8 @@ public class PositionTest
     @Test(expected = IllegalStateException.class)
     public void testDoubleOfPieceNotPresent()
     {
-        position.doCommand(new RemoveCommand(piece));
-        position.doCommand(new RemoveCommand(piece));
+        position.remove(piece);
+        position.remove(piece);
     }
     
     @Test
