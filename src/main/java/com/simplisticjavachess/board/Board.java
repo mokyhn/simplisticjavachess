@@ -305,7 +305,7 @@ public class Board
 
         // The player that did the move is in check
         // his or her move is hence not legal
-        if (isInCheck(state.getInMove().opponent()))
+        if (isInCheck(state.getInMove()))
         {
             wasMoveLegal = false;
         }
