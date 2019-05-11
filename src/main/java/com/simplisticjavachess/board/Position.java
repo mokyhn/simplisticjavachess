@@ -109,10 +109,18 @@ public class Position
     {
         return freeSquare(location.getX(), location.getY());
     }
-    
+
     boolean freeSquare(int x, int y)
     {
         return !piecesMap.containsKey(new Location(x, y));
+    }
+
+    //TODO: Implement this
+    public boolean freeSquares(Location from, Location to)
+    {
+        //check all squares are free between from and to (not inclusive?)
+        //Should work on diagonals and on straight lines
+        throw new IllegalArgumentException("Not implemented yet");
     }
 
     String getPositionString()
