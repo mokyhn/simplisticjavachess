@@ -7,8 +7,8 @@ import java.util.Objects;
 
 public final class State
 {
-	private Move move;
-	private Color inMove;
+	private final Move move;
+	private final Color inMove;
 
 	// Used to check for draw by threefold repetition.
     //public int hash; // TODO
@@ -33,6 +33,8 @@ public final class State
 
     public State()
     {
+        this.move = null;
+        this.inMove = null;
         this.castlingState = new CastlingState();
         this.gameResult = null;
     }
@@ -119,24 +121,26 @@ public final class State
         return getCanCastleLong(inMove);
     }
 
-	public Move getMove() {
-		return move;
-	}
-
-	public void setMove(Move move) {
+	public State setMove(Move move) {
 		if (move == null) {
 			throw new IllegalArgumentException();
 		}
-    	this.move = move;
+        return new State(move, this.inMove, this.castlingState, gameResult, this.halfMoveClock,
+                this.halfMovesIndex3PosRepetition);
 	}
 
-	public Color getInMove() {
-		return inMove;
+    public Move getMove() {
+        return move;
+    }
+
+	public State setInMove(Color inMove) {
+        return new State(move, inMove, this.castlingState, gameResult, this.halfMoveClock,
+                this.halfMovesIndex3PosRepetition);
 	}
 
-	public void setInMove(Color inMove) {
-		this.inMove = inMove;
-	}
+    public Color getInMove() {
+        return inMove;
+    }
 
 
 	@Override

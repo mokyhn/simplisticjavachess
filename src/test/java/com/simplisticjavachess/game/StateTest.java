@@ -36,9 +36,9 @@ public class StateTest
         state = state.setGameResult(GameResult.DRAW_BY_50_MOVE_RULE);
         state.halfMoveClock = 42;
         state.halfMovesIndex3PosRepetition = 41;
-        state.setInMove(Color.BLACK);
+        state = state.setInMove(Color.BLACK);
         //state.moveNumber = 49;
-        state.setMove(Moves.BLACK_LONG_CASTLING());
+        state = state.setMove(Moves.BLACK_LONG_CASTLING());
         return state;
     }
 
@@ -46,11 +46,11 @@ public class StateTest
     public void testSetCanCastleLong()
     {
         State state = new State();
-        state.setInMove(Color.WHITE);
+        state = state.setInMove(Color.WHITE);
         state = state.setCanCastleLong(true, Color.WHITE);
         assertTrue(state.getCanCastleLong());
 
-        state.setInMove(Color.BLACK);
+        state = state.setInMove(Color.BLACK);
         assertFalse(state.getCanCastleLong());
     }
 
