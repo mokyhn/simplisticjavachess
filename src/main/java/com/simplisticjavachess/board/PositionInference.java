@@ -13,8 +13,8 @@ public class PositionInference
 {
      /**
      * @param position the position
-     * @param color a color
-     * @return Is player with color color in check?
+     * @param color a color to check for check
+     * @return Is player with color in check?
      */
     public static boolean isInCheck(Position position, Color color)
     {
@@ -22,7 +22,7 @@ public class PositionInference
         {
             if (p.getPieceType() == PieceType.KING && p.getColor() == color)
             {
-                if (PositionInference.attacks(position, p.getLocation(), color) != null)
+                if (PositionInference.attacks(position, p.getLocation(), color.opponent()) != null)
                 {
                     return true;
                 }
@@ -37,16 +37,13 @@ public class PositionInference
      * @param position - the given position
      * @param location - the location is under attack by the return piece. If
      * null is returned then the location is not under attack.
-     * @param inMove - color of the player to move
+     * @param attackerColor - color of the attacker
      * @return null if the location is not attacked, and else the piece that attacks the location
      */
-    public static Piece attacks(Position position, Location location, Color inMove)
+    public static Piece attacks(Position position, Location location, Color attackerColor)
     {
-        Color attackerColor = inMove.opponent();
-        
         for (Piece attackerPiece : position.getPieces())
         {
-            // Chose one of opposite color
             if (attackerPiece.getColor() == attackerColor && !(attackerPiece.getLocation().equals(location)))
             {
                 switch (attackerPiece.getPieceType())

@@ -152,7 +152,7 @@ public class Board
      */
     public boolean isAttacked(int x, int y)
     {
-        return PositionInference.attacks(position, new Location(x, y), state.getInMove()) != null;
+        return PositionInference.attacks(position, new Location(x, y), state.getInMove().opponent()) != null;
     }
 
     /**
@@ -367,7 +367,7 @@ public class Board
 
     public boolean isAttacked(Location location)
     {
-        return PositionInference.attacks(position, location, state.getInMove()) != null;
+        return PositionInference.attacks(position, location, state.getInMove().opponent()) != null;
     }
 
     public Vector getMoveDirection()
