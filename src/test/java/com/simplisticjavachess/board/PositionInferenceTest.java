@@ -22,7 +22,6 @@ public class PositionInferenceTest
         board = board.insert(Piece.fromPositionCode("Bd5"));
         board = board.insert(Piece.fromPositionCode("kc4"));
         assertTrue(PositionInference.isInCheck(board.getPosition(), Color.BLACK));
-        assertFalse(PositionInference.isInCheck(board.getPosition(), Color.WHITE));
     }
     
     @Test

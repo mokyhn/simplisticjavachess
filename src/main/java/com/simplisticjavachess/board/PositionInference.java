@@ -6,7 +6,8 @@ package com.simplisticjavachess.board;
 
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
-import com.simplisticjavachess.piece.PieceType;
+
+import java.util.Optional;
 
 
 public class PositionInference
@@ -18,17 +19,14 @@ public class PositionInference
      */
     public static boolean isInCheck(Position position, Color color)
     {
-        for (Piece p : position.getPieces())
-        {
-            if (p.getPieceType() == PieceType.KING && p.getColor() == color)
-            {
-                if (PositionInference.attacks(position, p.getLocation(), color.opponent()) != null)
-                {
-                    return true;
-                }
-            }
+        Optional<Piece> king = position.getKing(color);
+
+        if (king.isPresent()) {
+            return PositionInference.attacks(position, king.get().getLocation(), color.opponent()) != null;
         }
-        return false;
+        else {
+            throw new IllegalStateException();
+        }
     }
 
 
@@ -55,13 +53,13 @@ public class PositionInference
                         }
                         break;
                     case ROOK:
-                        if (rookAttack(position, attackerPiece.getLocation(), location))
+                        if (rookAttack(position, attackerPiece, location))
                         {
                             return attackerPiece;
                         }
                         break;
                     case BISHOP:
-                        if (bishopAttack(position, attackerPiece.getLocation(), location))
+                        if (bishopAttack(position, attackerPiece, location))
                         {
                             return attackerPiece;
                         }
@@ -73,8 +71,8 @@ public class PositionInference
                         }
                         break;
                     case QUEEN:
-                        if (rookAttack(position, attackerPiece.getLocation(), location) ||
-                            bishopAttack(position, attackerPiece.getLocation(), location))
+                        if (rookAttack(position, attackerPiece, location) ||
+                            bishopAttack(position, attackerPiece, location))
                         {
                             return attackerPiece;
                         }
@@ -93,31 +91,33 @@ public class PositionInference
         return null;
     }
 
-    private static boolean pawnAttack(Piece pawn, Location attackedLocation)
+    private static boolean pawnAttack(Piece attacker, Location attackedLocation)
     {
-        return (attackedLocation.getY() == pawn.getyPos() + pawn.getColor().getColor())
-                && ((attackedLocation.getX() == pawn.getxPos() + 1)
-                || (attackedLocation.getX() == pawn.getxPos() - 1));
+        return (attackedLocation.getY() == attacker.getyPos() + attacker.getColor().getColor())
+                && ((attackedLocation.getX() == attacker.getxPos() + 1)
+                || (attackedLocation.getX() == attacker.getxPos() - 1));
     }
 
     
-    private static boolean knightAttack(Piece p, Location location)
+    private static boolean knightAttack(Piece attacker, Location location)
     {
         
         return (
-                p.getLocation().verticalDistance(location) == 1 &&
-                p.getLocation().horizontalDistance(location) == 2
+                attacker.getLocation().verticalDistance(location) == 1 &&
+                attacker.getLocation().horizontalDistance(location) == 2
                 )
                ||
                (
-                p.getLocation().verticalDistance(location) == 2 &&
-                p.getLocation().horizontalDistance(location) == 1
+                attacker.getLocation().verticalDistance(location) == 2 &&
+                attacker.getLocation().horizontalDistance(location) == 1
                 );
     }
          
  
-    private static boolean bishopAttack(Position position, Location bishopLocation, Location attackedLocation)
+    private static boolean bishopAttack(Position position, Piece attacker, Location attackedLocation)
     {
+        Location bishopLocation = attacker.getLocation();
+
         boolean allFree = true;
 
         int dx = attackedLocation.getX() - bishopLocation.getX();
@@ -145,8 +145,10 @@ public class PositionInference
         return false;
     }
     
-   private static boolean rookAttack(Position position, Location rookLocation, Location attackedLocation)
+   private static boolean rookAttack(Position position, Piece attacker, Location attackedLocation)
     {
+        Location rookLocation = attacker.getLocation();
+
         Boolean allFree;
         int lowX, // From x pos
                 highX, // To x pos

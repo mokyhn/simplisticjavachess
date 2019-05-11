@@ -5,11 +5,15 @@
 
 package com.simplisticjavachess.board;
 
+import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
+import com.simplisticjavachess.piece.PieceType;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Position
 {
@@ -90,6 +94,15 @@ public class Position
             Piece newPiece = piece.updateLocation(to);
             return tmp.insert(newPiece);
         }
+    }
+
+    public Optional<Piece> getKing(Color color)
+    {
+        return piecesMap.values().
+                stream().filter(piece ->
+                    PieceType.KING.equals(piece.getPieceType()) &&
+                    color.equals(piece.getColor())).
+                findAny();
     }
 
     boolean freeSquare(Location location)
