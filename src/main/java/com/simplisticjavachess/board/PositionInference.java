@@ -149,29 +149,22 @@ public class PositionInference
     {
         Location rookLocation = attacker.getLocation();
 
-        Boolean allFree;
-        int lowX, // From x pos
-                highX, // To x pos
-                lowY, // From y pos 
-                highY, // To y pos
-                ix, // Iterate x
-                iy;    // Iterate y
+        assert(!rookLocation.equals(attackedLocation));
 
-        if (rookLocation.fileEquals(attackedLocation))
+        int lowY; // From y pos
+        int highY; // To y pos
+        boolean allFree;
+
+        if (rookLocation.onSameFile(attackedLocation))
         {
             allFree = true;
-            if (rookLocation.getY() < attackedLocation.getY())
+
+            lowY = Math.min(rookLocation.getY(), attackedLocation.getY());
+            highY = Math.max(rookLocation.getY(), attackedLocation.getY());
+
+            for (int i = lowY + 1; i < highY; i++)
             {
-                lowY = rookLocation.getY();
-                highY = attackedLocation.getY();
-            } else
-            {
-                lowY = attackedLocation.getY();
-                highY = rookLocation.getY();
-            }
-            for (iy = lowY + 1; iy < highY; iy++)
-            {
-                if (!position.freeSquare(rookLocation.getX(), iy))
+                if (!position.freeSquare(rookLocation.getX(), i))
                 {
                     allFree = false;
                     break;
@@ -182,21 +175,20 @@ public class PositionInference
                 return true;
             }
         }
+
+        int lowX; // From x pos
+        int highX; // To x pos
+
         if (rookLocation.rankEquals(attackedLocation))
         {
             allFree = true;
-            if (rookLocation.getX() < attackedLocation.getX())
+
+            lowX = Math.min(rookLocation.getX(), attackedLocation.getX());
+            highX = Math.max(rookLocation.getX(), attackedLocation.getX());
+
+            for (int i = lowX + 1; i < highX; i++) //TODO: Introduce freeInbetween(Location a, Location b) in Position
             {
-                lowX = rookLocation.getX();
-                highX = attackedLocation.getX();
-            } else
-            {
-                lowX = attackedLocation.getX();
-                highX = rookLocation.getX();
-            }
-            for (ix = lowX + 1; ix < highX; ix++)
-            {
-                if (!position.freeSquare(ix, rookLocation.getY()))
+                if (!position.freeSquare(i, rookLocation.getY()))
                 {
                     allFree = false;
                     break;

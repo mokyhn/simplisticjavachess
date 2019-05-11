@@ -100,7 +100,7 @@ public final class Location
      * @param location
      * @return true if x equals, i.e. the locations specify the same column
      */
-    public boolean fileEquals(Location location) 
+    public boolean onSameFile(Location location)
     {
         return x == location.x;
     }
