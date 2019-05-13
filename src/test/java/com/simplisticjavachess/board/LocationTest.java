@@ -1,9 +1,11 @@
 package com.simplisticjavachess.board;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
+import com.simplisticjavachess.misc.*;
 import org.junit.Test;
 
+import static com.simplisticjavachess.misc.IteratorUtils.toList;
 import static org.junit.Assert.*;
 
 public class LocationTest {
@@ -90,5 +92,54 @@ public class LocationTest {
     public void testIsValid2()
     {
         assertFalse(new Location(7,8).isValid());
+    }
+
+    @Test
+    public void testLocationIterationDiagonalUp()
+    {
+        Location l = Location.fromString("b2");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("h8")));
+        assertEquals("[c3, d4, e5, f6, g7]", result);
+    }
+
+    @Test
+    public void testLocationIterationDiagonalDown()
+    {
+        Location l = Location.fromString("h8");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("b2")));
+        assertEquals("[g7, f6, e5, d4, c3]", result);
+    }
+
+
+    @Test
+    public void testLocationIterationRight()
+    {
+        Location l = Location.fromString("a6");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("f6")));
+        assertEquals("[b6, c6, d6, e6]", result);
+    }
+
+    @Test
+    public void testLocationIterationLeft()
+    {
+        Location l = Location.fromString("f6");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("a6")));
+        assertEquals("[e6, d6, c6, b6]", result);
+    }
+
+    @Test
+    public void testLocationIterationUp()
+    {
+        Location l = Location.fromString("d2");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d8")));
+        assertEquals("[d3, d4, d5, d6, d7]", result);
+    }
+
+    @Test
+    public void testLocationIterationDown()
+    {
+        Location l = Location.fromString("d8");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d2")));
+        assertEquals("[d7, d6, d5, d4, d3]", result);
     }
 }

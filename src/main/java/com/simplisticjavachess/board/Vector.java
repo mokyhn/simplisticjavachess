@@ -34,6 +34,19 @@ public class Vector
         this.hashCode = Objects.hash(dx, dy);
     }
 
+    @Override
+    public String toString() {
+        return "Vector{" +
+                "dx=" + dx +
+                ", dy=" + dy +
+                '}';
+    }
+
+    public static Vector from(Location a, Location b)
+    {
+        return new Vector(a.x - b.x, a.y - b.y);
+    }
+
     public int getDx() {
         return dx;
     }
@@ -68,6 +81,31 @@ public class Vector
             default:
                 throw new IllegalStateException();
         }
+    }
+
+    /**
+     *
+     * @return this normalized vector - i.e. the unit vector for this vector.
+     */
+    public Vector normalize()
+    {
+        int n = this.norm();
+
+        if (dx % n == 0 && dy % n == 0)
+        {
+            return new Vector(dx / n, dy / n);
+        }
+        else
+        {
+            throw new IllegalStateException("You cannot normalize the vector " + this);
+        }
+    }
+
+    /**
+     * @return the maximum of the absolute values dx and dy
+     */
+    public int norm() {
+        return Math.max(Math.abs(dx), Math.abs(dy));
     }
 
     public Location translocate(Location location)

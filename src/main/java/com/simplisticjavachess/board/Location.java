@@ -135,6 +135,66 @@ public final class Location
     {
         return y != location.y;
     }
-    
-    
+
+
+    /**
+     * Add a vector to this location
+     * @param vector to add
+     * @return new location
+     */
+    public Location add(Vector vector)
+    {
+        return vector.translocate(this);
+    }
+
+    /**
+     * Iterate locations from this location to another
+     * @param to another location
+     * @return iteration of locations in between
+     */
+    public Iterator<Location> iterateTO(Location to)
+    {
+        return new LocationIterator(this, to);
+    }
+
+    private class LocationIterator implements Iterator<Location>
+    {
+        private final Vector direction;
+        private final Location from;
+        private final Location to;
+        private Location current;
+
+        public LocationIterator(Location from, Location to)
+        {
+            this.from = from;
+            this.to = to;
+            this.direction = Vector.from(to, from).normalize();
+            this.current = null;
+            assert(direction.norm() > 0);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return (current == null || (!current.equals(to) && !current.add(direction).equals(to)));
+        }
+
+        @Override
+        public Location next()
+        {
+            generate();
+            return current;
+        }
+
+        private void generate() {
+            if (current == null)
+            {
+                current = direction.translocate(from);
+            }
+            else
+            {
+                current = current.add(direction);
+            }
+        }
+    }
+
 }
