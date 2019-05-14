@@ -1,0 +1,17 @@
+[Event "Immutual chess"]
+[Site "?"]
+[Date "2019.05.15"]
+[Round "?"]
+[White "Morten Kühnrich"]
+[Black "simplistic javachess (ply 4)"]
+[Result "*"]
+[EventDate "2019.05.15"]
+
+1.Nf3 f6 2.e4 c6 3.d4 g6 4.c4 f5 5.e5 Bh6 6.Bxh6 Nxh6 7.Qd2 Nf7 8.Nc3 d6 
+9.O-O-O e6 10.exd6 Nxd6 11.Ne5 Nf7 12.f4 O-O 13.Be2 Kh8 14.Rdg1 Bd7 15.Nf3
+g5 16.fxg5 a6 17.h4 a5 18.h5 a4 19.g6 Nd6 20.gxh7 a3 21.b3 Kxh7 22.Ne5 Nf7
+23.Ng6 Rg8 24.g4 Rg7 25.gxf5 Rg8 26.fxe6 Bxe6 27.Qf4 Rg7 28.Ne4 Nd7 29.Bd3
+Kg8 30.Qg3 Nh8 31.Ng5 Bf7 32.Nxf7 Nxf7 33.h6 Nxh6 34.Rxh6 Rxg6 35.Qxg6+ 
+Kf8 36.Rf1+ Nf6 37.Rxf6+ Qxf6 38.Qxf6+ Ke8 39.Rh8+ Kd7 40.Rh7+ Kc8 41.Qf8#
+*
+
