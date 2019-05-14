@@ -144,6 +144,9 @@ public class Board
         return position;
     }
 
+
+    //TODO: Get rid of these methods that simply delegate functionality on to other objects.
+    //The risk is that they mess up state / new state when called from the inside on THIS particular class.
     /**
      *
      * @param x - x position
@@ -155,6 +158,9 @@ public class Board
         return PositionInference.attacks(position, new Location(x, y), state.getInMove().opponent()) != null;
     }
 
+
+    //TODO: Get rid of these methods that simply delegate functionality on to other objects.
+    //The risk is that they mess up state / new state when called from the inside on THIS particular class.
     /**
      *
      * @param color
@@ -305,7 +311,7 @@ public class Board
 
         // The player that did the move is in check
         // his or her move is hence not legal
-        if (isInCheck(state.getInMove()))
+        if (PositionInference.isInCheck(newPosition, state.getInMove()))
         {
             wasMoveLegal = false;
         }
@@ -360,11 +366,15 @@ public class Board
         return Objects.hash(position.hashCode(), state.hashCode());
     }
 
+    //TODO: Get rid of these methods that simply delegate functionality on to other objects.
+    //The risk is that they mess up state / new state when called from the inside on THIS particular class.
     boolean isWhiteInMove()
     {
         return state.getInMove() == Color.WHITE;
-    } 
+    }
 
+    //TODO: Get rid of these methods that simply delegate functionality on to other objects.
+    //The risk is that they mess up state / new state when called from the inside on THIS particular class.
     public boolean isAttacked(Location location)
     {
         return PositionInference.attacks(position, location, state.getInMove().opponent()) != null;
