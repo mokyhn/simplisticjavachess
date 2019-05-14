@@ -1,7 +1,9 @@
 package com.simplisticjavachess.board;
 
 import com.simplisticjavachess.piece.Color;
+
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  *
@@ -85,19 +87,20 @@ public class Vector
 
     /**
      *
-     * @return this normalized vector - i.e. the unit vector for this vector.
+     * @return this normalized vector - i.e. the unit vector for this vector. Empty is returned if there is no
+     * normal vector.
      */
-    public Vector normalize()
+    public Optional<Vector> normalize()
     {
         int n = this.norm();
 
         if (dx % n == 0 && dy % n == 0)
         {
-            return new Vector(dx / n, dy / n);
+            return Optional.of(new Vector(dx / n, dy / n));
         }
         else
         {
-            throw new IllegalStateException("You cannot normalize the vector " + this);
+            return Optional.empty();
         }
     }
 

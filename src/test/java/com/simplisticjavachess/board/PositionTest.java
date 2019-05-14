@@ -97,8 +97,7 @@ public class PositionTest
         tmp = tmp.remove(piece);
         assertNull(tmp.getPiece(piece.getLocation()));
     }
-    
-    @Ignore
+
     @Test(expected = IllegalStateException.class)
     public void testDoubleOfPieceNotPresent()
     {
@@ -117,5 +116,12 @@ public class PositionTest
     {
         position = position.insert(piece);
         assertFalse(position.freeSquare(piece.getLocation()));
+    }
+
+    @Test
+    public void testFreeSquares()
+    {
+        Board b = Board.createFromLetters("Kd4 Rh4");
+        assertTrue(b.getPosition().freeSquares(Location.fromString("d4"), Location.fromString("h4")));
     }
 }

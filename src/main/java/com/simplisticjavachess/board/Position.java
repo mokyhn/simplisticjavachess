@@ -115,12 +115,22 @@ public class Position
         return !piecesMap.containsKey(new Location(x, y));
     }
 
-    //TODO: Implement this
+    /**
+     * Are all locations free between from and to?
+     * @param from location to check from
+     * @param to location to check towards
+     * @return true if all locations in between are free and false otherwise
+     */
     public boolean freeSquares(Location from, Location to)
     {
-        //check all squares are free between from and to (not inclusive?)
-        //Should work on diagonals and on straight lines
-        throw new IllegalArgumentException("Not implemented yet");
+        for (Location location : from.iterateTO(to))
+        {
+            if (!freeSquare(location))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     String getPositionString()

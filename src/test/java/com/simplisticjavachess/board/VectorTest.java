@@ -2,7 +2,8 @@ package com.simplisticjavachess.board;
 
 import com.simplisticjavachess.piece.Color;
 import org.junit.Test;
-import org.junit.rules.*;
+
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -54,16 +55,16 @@ public class VectorTest {
     @Test
     public void normalizeTest()
     {
-        assertEquals(new Vector(1,1), new Vector(4,4).normalize());
-        assertEquals(new Vector(1,0), new Vector(4,0).normalize());
-        assertEquals(new Vector(-1,1), new Vector(-4,4).normalize());
-        assertEquals(new Vector(0,1), new Vector(0,3).normalize());
+        assertEquals(new Vector(1,1), new Vector(4,4).normalize().get());
+        assertEquals(new Vector(1,0), new Vector(4,0).normalize().get());
+        assertEquals(new Vector(-1,1), new Vector(-4,4).normalize().get());
+        assertEquals(new Vector(0,1), new Vector(0,3).normalize().get());
     }
 
-    @Test(expected=IllegalStateException.class)
+    @Test
     public void cannotNormalizeTest()
     {
-        new Vector(1,2).normalize();
+        assertEquals(Optional.empty(), new Vector(1,2).normalize());
 
     }
 

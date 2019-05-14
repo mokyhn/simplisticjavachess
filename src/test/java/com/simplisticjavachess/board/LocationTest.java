@@ -98,7 +98,7 @@ public class LocationTest {
     public void testLocationIterationDiagonalUp()
     {
         Location l = Location.fromString("b2");
-        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("h8")));
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("h8")).iterator());
         assertEquals("[c3, d4, e5, f6, g7]", result);
     }
 
@@ -106,7 +106,7 @@ public class LocationTest {
     public void testLocationIterationDiagonalDown()
     {
         Location l = Location.fromString("h8");
-        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("b2")));
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("b2")).iterator());
         assertEquals("[g7, f6, e5, d4, c3]", result);
     }
 
@@ -115,7 +115,7 @@ public class LocationTest {
     public void testLocationIterationRight()
     {
         Location l = Location.fromString("a6");
-        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("f6")));
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("f6")).iterator());
         assertEquals("[b6, c6, d6, e6]", result);
     }
 
@@ -123,7 +123,7 @@ public class LocationTest {
     public void testLocationIterationLeft()
     {
         Location l = Location.fromString("f6");
-        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("a6")));
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("a6")).iterator());
         assertEquals("[e6, d6, c6, b6]", result);
     }
 
@@ -131,7 +131,7 @@ public class LocationTest {
     public void testLocationIterationUp()
     {
         Location l = Location.fromString("d2");
-        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d8")));
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d8")).iterator());
         assertEquals("[d3, d4, d5, d6, d7]", result);
     }
 
@@ -139,7 +139,15 @@ public class LocationTest {
     public void testLocationIterationDown()
     {
         Location l = Location.fromString("d8");
-        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d2")));
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d2")).iterator());
         assertEquals("[d7, d6, d5, d4, d3]", result);
+    }
+
+    @Test
+    public void testLocationIterationNoFields()
+    {
+        Location l = Location.fromString("d4");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d5")).iterator());
+        assertEquals("[]", result);
     }
 }

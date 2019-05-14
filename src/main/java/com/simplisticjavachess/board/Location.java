@@ -152,30 +152,29 @@ public final class Location
      * @param to another location
      * @return iteration of locations in between
      */
-    public Iterator<Location> iterateTO(Location to)
+    public Iterable<Location> iterateTO(Location to)
     {
-        return new LocationIterator(this, to);
+        return () -> new LocationIterator(Location.this, to);
     }
 
     private class LocationIterator implements Iterator<Location>
     {
-        private final Vector direction;
-        private final Location from;
+        private final Optional<Vector> direction;
         private final Location to;
         private Location current;
 
         public LocationIterator(Location from, Location to)
         {
-            this.from = from;
             this.to = to;
             this.direction = Vector.from(to, from).normalize();
-            this.current = null;
-            assert(direction.norm() > 0);
+            this.current = from;
         }
 
         @Override
-        public boolean hasNext() {
-            return (current == null || (!current.equals(to) && !current.add(direction).equals(to)));
+        public boolean hasNext()
+        {
+            return direction.isPresent() &&
+                   !current.equals(to) && !current.add(direction.get()).equals(to);
         }
 
         @Override
@@ -185,16 +184,43 @@ public final class Location
             return current;
         }
 
-        private void generate() {
-            if (current == null)
-            {
-                current = direction.translocate(from);
-            }
-            else
-            {
-                current = current.add(direction);
-            }
+        private void generate()
+        {
+            current = current.add(direction.get());
         }
     }
+
+//
+//    public Iterable<Location> iterateTO2(final Vector vector)
+//    {
+//        return () -> new LocationIterator2(Location.this, vector);
+//    }
+//
+//    private class LocationIterator2 implements Iterator<Location>
+//    {
+//        private final Vector direction;
+//        private Location current;
+//
+//        public LocationIterator2(Location from, Vector direction)
+//        {
+//            this.current = from;
+//            this.direction = direction;
+//        }
+//
+//        @Override
+//        public boolean hasNext()
+//        {
+//            return current.add(direction).isValid();
+//        }
+//
+//        @Override
+//        public Location next()
+//        {
+//            current = current.add(direction);
+//            return current;
+//        }
+//
+//    }
+
 
 }

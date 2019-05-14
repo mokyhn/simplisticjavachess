@@ -32,7 +32,6 @@ public class IntegrationTest
     }
 
     
-    @Ignore(value="Test is correct, but engine fails. Re-enable later")
     @Test
     public void avoidingMateMinMax()
     {
