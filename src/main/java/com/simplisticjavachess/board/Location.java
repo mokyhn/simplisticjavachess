@@ -138,6 +138,18 @@ public final class Location
 
 
     /**
+     * Check if two locations are on the same diagonal
+     * @param other location
+     * @return true if on same diagonal and false otherwise
+     */
+    public boolean onSameDiagonal(Location other)
+    {
+        int dx = this.x - other.x;
+        int dy = this.y - other.y;
+        return (Math.abs(dx) == Math.abs(dy));
+    }
+
+    /**
      * Add a vector to this location
      * @param vector to add
      * @return new location

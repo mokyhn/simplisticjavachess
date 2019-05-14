@@ -117,89 +117,14 @@ public class PositionInference
     private static boolean bishopAttack(Position position, Piece attacker, Location attackedLocation)
     {
         Location bishopLocation = attacker.getLocation();
-
-        boolean allFree = true;
-
-        int dx = attackedLocation.getX() - bishopLocation.getX();
-        int dy = attackedLocation.getY() - bishopLocation.getY();
-        // First condition that allows one to be threatened by a bishop
-        if (Math.abs(dx) == Math.abs(dy))
-        {
-            int radius = Math.abs(dx);
-            dx = dx / radius;
-            dy = dy / radius;
-            for (int ir = 1; ir < radius; ir++) // Radii
-            {
-                if (!position.freeSquare(ir * dx + bishopLocation.getX(), ir * dy + bishopLocation.getY()))
-                {
-                    allFree = false;
-                    break;
-                }
-            }
-            if (allFree)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return bishopLocation.onSameDiagonal(attackedLocation) && position.freeSquares(bishopLocation, attackedLocation);
     }
     
    private static boolean rookAttack(Position position, Piece attacker, Location attackedLocation)
     {
         Location rookLocation = attacker.getLocation();
-
-        assert(!rookLocation.equals(attackedLocation));
-
-        int lowY; // From y pos
-        int highY; // To y pos
-        boolean allFree;
-
-        if (rookLocation.onSameFile(attackedLocation))
-        {
-            allFree = true;
-
-            lowY = Math.min(rookLocation.getY(), attackedLocation.getY());
-            highY = Math.max(rookLocation.getY(), attackedLocation.getY());
-
-            for (int i = lowY + 1; i < highY; i++)
-            {
-                if (!position.freeSquare(rookLocation.getX(), i))
-                {
-                    allFree = false;
-                    break;
-                }
-            }
-            if (allFree)
-            {
-                return true;
-            }
-        }
-
-        int lowX; // From x pos
-        int highX; // To x pos
-
-        if (rookLocation.rankEquals(attackedLocation))
-        {
-            allFree = true;
-
-            lowX = Math.min(rookLocation.getX(), attackedLocation.getX());
-            highX = Math.max(rookLocation.getX(), attackedLocation.getX());
-
-            for (int i = lowX + 1; i < highX; i++) //TODO: Introduce freeInbetween(Location a, Location b) in Position
-            {
-                if (!position.freeSquare(i, rookLocation.getY()))
-                {
-                    allFree = false;
-                    break;
-                }
-            }
-            if (allFree)
-            {
-                return true;
-            }
-        }
-        return false;
+        return (rookLocation.onSameFile(attackedLocation) || rookLocation.rankEquals(attackedLocation)) &&
+                position.freeSquares(rookLocation, attackedLocation);
     }
     
    private static boolean kingAttack(Piece p, Location location)

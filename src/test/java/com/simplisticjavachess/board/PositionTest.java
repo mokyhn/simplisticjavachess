@@ -124,4 +124,11 @@ public class PositionTest
         Board b = Board.createFromLetters("Kd4 Rh4");
         assertTrue(b.getPosition().freeSquares(Location.fromString("d4"), Location.fromString("h4")));
     }
+
+    @Test
+	public void testFreeSquares2()
+	{
+		Board b = Board.createFromFEN("r3r1Qk/6pp/8/6N1/8/1B6/1PPP4/2K5 b");
+		assertTrue(b.getPosition().freeSquares(Location.fromString("g8"), Location.fromString("e8")));
+	}
 }
