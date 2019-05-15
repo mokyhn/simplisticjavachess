@@ -51,12 +51,6 @@ public class PawnMoveGenerator implements IMoveGenerator
         Location oneAhead = board.getMoveDirection().translocate(piece.getLocation());
         Location twoAhead = board.getMoveDirection().scale(2).translocate(piece.getLocation());
 
-        Location oneAheadLeft = board.getMoveDirection().add(Vector.LEFT).translocate(piece.getLocation());
-        Location oneAheadRight = board.getMoveDirection().add(Vector.RIGHT).translocate(piece.getLocation());
-        Location twoAheadLeft = board.getMoveDirection().scale(2).add(Vector.LEFT).translocate(piece.getLocation());
-        Location twoAheadRight = board.getMoveDirection().scale(2).add(Vector.RIGHT).translocate(piece.getLocation());
-
-
         // Normal one step forward pawn move
         if (!pawnAtPromotionRank(piece))
         {
