@@ -210,7 +210,6 @@ public class Board
  
     public MoveResult doMove(Move move)
     {
-        Board board;
         Position newPosition = this.position;
         Piece piece = position.getPiece(move.getFrom());
 
@@ -233,7 +232,7 @@ public class Board
             newState = newState.setCanCastleLong(false, move.getWhoMoves());
             newState = newState.setCanCastleShort(false, move.getWhoMoves());
         }
-        
+
         // Moving a rook can disallow castling in the future
         if (piece.getPieceType() == PieceType.ROOK)
         {
