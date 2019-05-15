@@ -85,7 +85,7 @@ public final class MoveParser
             MoveType moveType;
 
             // Simple promotions
-            if (from.onSameFile(to) && b.freeSquare(to))
+            if (from.fileEquals(to) && b.freeSquare(to))
             {
                 switch (str.charAt(4))
                 {

@@ -117,13 +117,13 @@ public class PositionInference
     private static boolean bishopAttack(Position position, Piece attacker, Location attackedLocation)
     {
         Location bishopLocation = attacker.getLocation();
-        return bishopLocation.onSameDiagonal(attackedLocation) && position.freeSquares(bishopLocation, attackedLocation);
+        return bishopLocation.diagonalEquals(attackedLocation) && position.freeSquares(bishopLocation, attackedLocation);
     }
     
    private static boolean rookAttack(Position position, Piece attacker, Location attackedLocation)
     {
         Location rookLocation = attacker.getLocation();
-        return (rookLocation.onSameFile(attackedLocation) || rookLocation.rankEquals(attackedLocation)) &&
+        return (rookLocation.fileEquals(attackedLocation) || rookLocation.rankEquals(attackedLocation)) &&
                 position.freeSquares(rookLocation, attackedLocation);
     }
     

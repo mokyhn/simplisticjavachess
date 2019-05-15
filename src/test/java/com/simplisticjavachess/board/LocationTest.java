@@ -2,10 +2,9 @@ package com.simplisticjavachess.board;
 
 import java.util.*;
 
-import com.simplisticjavachess.misc.*;
+import com.simplisticjavachess.misc.IteratorUtils;
 import org.junit.Test;
 
-import static com.simplisticjavachess.misc.IteratorUtils.toList;
 import static org.junit.Assert.*;
 
 public class LocationTest {
@@ -150,4 +149,40 @@ public class LocationTest {
         String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d5")).iterator());
         assertEquals("[]", result);
     }
+
+    @Test
+    public void fileTest()
+    {
+        assertTrue(Location.fromString("f8").fileEquals(Location.fromString("f1")));
+        assertTrue(Location.fromString("f8").fileDifferent(Location.fromString("a1")));
+    }
+
+    @Test
+    public void rankTest()
+    {
+        assertTrue(Location.fromString("f8").rankEquals(Location.fromString("a8")));
+        assertTrue(Location.fromString("f8").rankDifferent(Location.fromString("a1")));
+    }
+
+    @Test
+    public void diagonalTest()
+    {
+        assertTrue(Location.fromString("f8").diagonalEquals(Location.fromString("a3")));
+        assertFalse(Location.fromString("f8").diagonalEquals(Location.fromString("g6")));
+    }
+
+    @Test
+    public void iterateTest()
+    {
+        assertEquals("[e3, e4, e5, e6, e7, e8]",
+                IteratorUtils.toString(new Location("e2").iterate(Vector.UP).iterator()));
+
+    }
+
+    @Test
+    public void iterateTestEmpty()
+    {
+        assertEquals("[]", IteratorUtils.toString(new Location("h8").iterate(Vector.UP).iterator()));
+    }
 }
+

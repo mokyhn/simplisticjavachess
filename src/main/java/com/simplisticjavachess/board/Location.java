@@ -100,7 +100,7 @@ public final class Location
      * @param location
      * @return true if x equals, i.e. the locations specify the same column
      */
-    public boolean onSameFile(Location location)
+    public boolean fileEquals(Location location)
     {
         return x == location.x;
     }
@@ -110,7 +110,7 @@ public final class Location
      * @param location
      * @return true if x not equals, i.e. the locations do not specify the same column
      */
-    public boolean fileDifferent(Location location) 
+    public boolean fileDifferent(Location location)
     {
         return x != location.x;
     }
@@ -142,7 +142,7 @@ public final class Location
      * @param other location
      * @return true if on same diagonal and false otherwise
      */
-    public boolean onSameDiagonal(Location other)
+    public boolean diagonalEquals(Location other)
     {
         int dx = this.x - other.x;
         int dy = this.y - other.y;
@@ -202,37 +202,37 @@ public final class Location
         }
     }
 
-//
-//    public Iterable<Location> iterateTO2(final Vector vector)
-//    {
-//        return () -> new LocationIterator2(Location.this, vector);
-//    }
-//
-//    private class LocationIterator2 implements Iterator<Location>
-//    {
-//        private final Vector direction;
-//        private Location current;
-//
-//        public LocationIterator2(Location from, Vector direction)
-//        {
-//            this.current = from;
-//            this.direction = direction;
-//        }
-//
-//        @Override
-//        public boolean hasNext()
-//        {
-//            return current.add(direction).isValid();
-//        }
-//
-//        @Override
-//        public Location next()
-//        {
-//            current = current.add(direction);
-//            return current;
-//        }
-//
-//    }
+
+    public Iterable<Location> iterate(final Vector vector)
+    {
+        return () -> new LocationVectorIterator(Location.this, vector);
+    }
+
+    private class LocationVectorIterator implements Iterator<Location>
+    {
+        private final Vector direction;
+        private Location current;
+
+        public LocationVectorIterator(Location from, Vector direction)
+        {
+            this.current = from;
+            this.direction = direction;
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            return current.add(direction).isValid();
+        }
+
+        @Override
+        public Location next()
+        {
+            current = current.add(direction);
+            return current;
+        }
+
+    }
 
 
 }
