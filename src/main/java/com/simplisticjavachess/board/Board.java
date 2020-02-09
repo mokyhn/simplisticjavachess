@@ -9,9 +9,12 @@ import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
-import com.simplisticjavachess.piece.PieceType;
 import java.util.Collection;
 import java.util.Objects;
+
+import static com.simplisticjavachess.piece.PieceType.KING;
+import static com.simplisticjavachess.piece.PieceType.PAWN;
+import static com.simplisticjavachess.piece.PieceType.ROOK;
 
 /**
  * @author Morten Kühnrich
@@ -217,7 +220,7 @@ public class Board
         newState = newState.setMove(move);
 
         // Used to determine the 50-move rule, three times repetition
-        if (piece.getPieceType() == PieceType.PAWN)
+        if (PAWN.equals(piece.getPieceType()))
         {
             newState = newState.setHalfMoveClock(0);
             //newState.halfMovesIndex3PosRepetition = state.moveNumber;
@@ -227,14 +230,14 @@ public class Board
         }
 
         // Moving the king will disallow castling in the future
-        if (piece.getPieceType() == PieceType.KING)
+        if (KING.equals(piece.getPieceType()))
         {
             newState = newState.setCanCastleLong(false, move.getWhoMoves());
             newState = newState.setCanCastleShort(false, move.getWhoMoves());
         }
 
         // Moving a rook can disallow castling in the future
-        if (piece.getPieceType() == PieceType.ROOK)
+        if (ROOK.equals(piece.getPieceType()))
         {
             if (move.getFrom().getX() == 0)
             {
@@ -255,7 +258,7 @@ public class Board
             case CAPTURE:
                 newPosition = newPosition.remove(move.getCapturedPiece());
                 newPosition = newPosition.move(piece, move.getTo());
-                if (move.getCapturedPiece().getPieceType() == PieceType.ROOK)
+                if (ROOK.equals(move.getCapturedPiece().getPieceType()))
                 {
                     if (move.getTo().getX() == 0)
                     {

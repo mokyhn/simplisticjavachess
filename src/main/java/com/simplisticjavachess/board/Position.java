@@ -65,10 +65,6 @@ public class Position
      */
     Position remove(Piece piece)
     {    
-        if (piece == null)
-        {
-             throw new IllegalStateException("Tried to remove a piece which was not there");
-        }
         if (piecesMap.containsKey(piece.getLocation()))
         {
             Position result = new Position(this);
@@ -133,31 +129,26 @@ public class Position
         return true;
     }
 
+    /**
+     * @return Ascii representation of the position
+     */
     String getPositionString()
     {
-        int x, y;
-        Piece p;
-        String s = "\n _______________\n";
+        String result = "\n _______________\n";
 
-        for (y = 7; y >= 0; y--)
+        for (int y = 7; y >= 0; y--)
         {
-            for (x = 0; x < 8; x++)
+            for (int x = 0; x < 8; x++)
             {
-                s = s + " ";
-                p = getPiece(new Location(x, y));
-                if (p == null)
-                {
-                    s = s + ".";
-                } else
-                {
-                    s = s + p.toString();
-                }
+                result = result + " ";
+                Piece piece = getPiece(new Location(x, y));
+                result = piece == null ? result + "." : result + piece.toString();
             }
-            s = s + ("     " + (y + 1)) + "\n";
-        } // end last for-loop
-        s = s + " _______________\n";
-        s = s + " a b c d e f g h\n";
-        return s;
+            result = result + ("     " + (y + 1)) + "\n";
+        }
+        result = result + " _______________\n";
+        result = result + " a b c d e f g h\n";
+        return result;
     }
 
     @Override

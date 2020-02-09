@@ -114,9 +114,6 @@ public final class State
     }
 
 	public State setMove(Move move) {
-		if (move == null) {
-			throw new IllegalArgumentException();
-		}
         return new State(move, this.inMove, this.castlingState, gameResult, this.halfMoveClock,
                 this.halfMovesIndex3PosRepetition);
 	}

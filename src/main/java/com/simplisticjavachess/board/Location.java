@@ -1,6 +1,8 @@
 package com.simplisticjavachess.board;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Optional;
 
 public final class Location
 {
@@ -17,15 +19,15 @@ public final class Location
         this.hashCode = Objects.hash(x, y);
     }
     
-    public Location(String position)
+    public Location(String locationString)
     {
-        position = position.toLowerCase();
-        x = (position.charAt(0) - 'a');
-        y = (-1 + position.charAt(1) - '0');
+        locationString = locationString.toLowerCase();
+        x = (locationString.charAt(0) - 'a');
+        y = (-1 + locationString.charAt(1) - '0');
         this.hashCode = Objects.hash(x, y);
         if (x < 0 || x > 7 || y < 0 || y > 7)
         {
-            throw new IllegalArgumentException("Given a bad position: " + position);
+            throw new IllegalArgumentException("Given a bad location: " + locationString);
         }
     }
     
