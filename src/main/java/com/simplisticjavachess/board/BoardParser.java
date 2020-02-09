@@ -155,7 +155,7 @@ public class BoardParser
         {
             if (s.length() > 1)
             {
-                Piece piece = Piece.fromPositionCode(s);
+                Piece piece = Piece.parse(s);
                 board = board.insert(piece);
             }
             else

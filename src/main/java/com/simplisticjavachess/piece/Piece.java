@@ -83,7 +83,7 @@ public final class Piece {
      * @param code - example Bd5 means a white bishop at d5, bd5 means a black bishop at d5
      * @return a piece of the color and the location specified
      */
-    public static Piece fromPositionCode(String code)
+    public static Piece parse(String code)
     {
         String locationStr = code.substring(1,3);
         char pieceLetter = code.charAt(0);
