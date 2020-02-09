@@ -31,6 +31,7 @@ public final class State
      */
     private final int halfMovesIndex3PosRepetition;
 
+    //TODO: Get rid of this constructor
     public State()
     {
         this.move = null;

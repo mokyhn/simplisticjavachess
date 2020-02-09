@@ -25,6 +25,7 @@ public class Board
     private final State state;
     private final Position position;
 
+    //TODO: Get rid of this constructor.
     public Board()
     {
         state = new State();
