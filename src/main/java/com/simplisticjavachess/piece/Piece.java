@@ -87,7 +87,7 @@ public final class Piece {
     {
         String locationStr = code.substring(1,3);
         char pieceLetter = code.charAt(0);
-        return new Piece(new Location(locationStr), pieceLetter);
+        return new Piece(Location.parse(locationStr), pieceLetter);
     }
     
     @Override

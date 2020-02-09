@@ -11,7 +11,7 @@ public class LocationTest {
     @Test 
     public void testStringContructor() 
     {
-        Location p = new Location("F7");
+        Location p = Location.parse("F7");
         assertEquals(new Location(5, 6), p);
     }
     
@@ -33,21 +33,21 @@ public class LocationTest {
     @Test
     public void testFromToStringComposition()
     {
-        assertEquals(new Location("a1").toString(), "a1");
-        assertEquals(new Location("a4").toString(), "a4");
-        assertEquals(new Location("h8").toString(), "h8");
+        assertEquals(Location.parse("a1").toString(), "a1");
+        assertEquals(Location.parse("a4").toString(), "a4");
+        assertEquals(Location.parse("h8").toString(), "h8");
     }
     
     @Test(expected=IllegalArgumentException.class)
     public void testInvalidFile()
     {
-        new Location("i4");
+        Location.parse("i4");
     }
     
     @Test(expected=IllegalArgumentException.class)
     public void testInvalidRank()
     {
-        new Location("a9");
+        Location.parse("a9");
     }
 
     @Test
@@ -96,16 +96,16 @@ public class LocationTest {
     @Test
     public void testLocationIterationDiagonalUp()
     {
-        Location l = Location.fromString("b2");
-        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("h8")).iterator());
+        Location l = Location.parse("b2");
+        String result = IteratorUtils.toString(l.iterateTO(Location.parse("h8")).iterator());
         assertEquals("[c3, d4, e5, f6, g7]", result);
     }
 
     @Test
     public void testLocationIterationDiagonalDown()
     {
-        Location l = Location.fromString("h8");
-        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("b2")).iterator());
+        Location l = Location.parse("h8");
+        String result = IteratorUtils.toString(l.iterateTO(Location.parse("b2")).iterator());
         assertEquals("[g7, f6, e5, d4, c3]", result);
     }
 
@@ -113,76 +113,76 @@ public class LocationTest {
     @Test
     public void testLocationIterationRight()
     {
-        Location l = Location.fromString("a6");
-        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("f6")).iterator());
+        Location l = Location.parse("a6");
+        String result = IteratorUtils.toString(l.iterateTO(Location.parse("f6")).iterator());
         assertEquals("[b6, c6, d6, e6]", result);
     }
 
     @Test
     public void testLocationIterationLeft()
     {
-        Location l = Location.fromString("f6");
-        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("a6")).iterator());
+        Location l = Location.parse("f6");
+        String result = IteratorUtils.toString(l.iterateTO(Location.parse("a6")).iterator());
         assertEquals("[e6, d6, c6, b6]", result);
     }
 
     @Test
     public void testLocationIterationUp()
     {
-        Location l = Location.fromString("d2");
-        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d8")).iterator());
+        Location l = Location.parse("d2");
+        String result = IteratorUtils.toString(l.iterateTO(Location.parse("d8")).iterator());
         assertEquals("[d3, d4, d5, d6, d7]", result);
     }
 
     @Test
     public void testLocationIterationDown()
     {
-        Location l = Location.fromString("d8");
-        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d2")).iterator());
+        Location l = Location.parse("d8");
+        String result = IteratorUtils.toString(l.iterateTO(Location.parse("d2")).iterator());
         assertEquals("[d7, d6, d5, d4, d3]", result);
     }
 
     @Test
     public void testLocationIterationNoFields()
     {
-        Location l = Location.fromString("d4");
-        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d5")).iterator());
+        Location l = Location.parse("d4");
+        String result = IteratorUtils.toString(l.iterateTO(Location.parse("d5")).iterator());
         assertEquals("[]", result);
     }
 
     @Test
     public void fileTest()
     {
-        assertTrue(Location.fromString("f8").fileEquals(Location.fromString("f1")));
-        assertTrue(Location.fromString("f8").fileDifferent(Location.fromString("a1")));
+        assertTrue(Location.parse("f8").fileEquals(Location.parse("f1")));
+        assertTrue(Location.parse("f8").fileDifferent(Location.parse("a1")));
     }
 
     @Test
     public void rankTest()
     {
-        assertTrue(Location.fromString("f8").rankEquals(Location.fromString("a8")));
-        assertTrue(Location.fromString("f8").rankDifferent(Location.fromString("a1")));
+        assertTrue(Location.parse("f8").rankEquals(Location.parse("a8")));
+        assertTrue(Location.parse("f8").rankDifferent(Location.parse("a1")));
     }
 
     @Test
     public void diagonalTest()
     {
-        assertTrue(Location.fromString("f8").diagonalEquals(Location.fromString("a3")));
-        assertFalse(Location.fromString("f8").diagonalEquals(Location.fromString("g6")));
+        assertTrue(Location.parse("f8").diagonalEquals(Location.parse("a3")));
+        assertFalse(Location.parse("f8").diagonalEquals(Location.parse("g6")));
     }
 
     @Test
     public void iterateTest()
     {
         assertEquals("[e3, e4, e5, e6, e7, e8]",
-                IteratorUtils.toString(new Location("e2").iterate(Vector.UP).iterator()));
+                IteratorUtils.toString(Location.parse("e2").iterate(Vector.UP).iterator()));
 
     }
 
     @Test
     public void iterateTestEmpty()
     {
-        assertEquals("[]", IteratorUtils.toString(new Location("h8").iterate(Vector.UP).iterator()));
+        assertEquals("[]", IteratorUtils.toString(Location.parse("h8").iterate(Vector.UP).iterator()));
     }
 }
 

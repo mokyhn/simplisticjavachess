@@ -84,9 +84,9 @@ public class BoardParserTest
     @Test
     public void testImportFromPieceListActualPieces()
     {
-        assertEquals("pe4", board1.getPiece(Location.fromString("e4")).asString());
-        assertEquals("Bd5", board1.getPiece(Location.fromString("d5")).asString());
-        assertEquals("qh1", board1.getPiece(Location.fromString("h1")).asString());
+        assertEquals("pe4", board1.getPiece(Location.parse("e4")).asString());
+        assertEquals("Bd5", board1.getPiece(Location.parse("d5")).asString());
+        assertEquals("qh1", board1.getPiece(Location.parse("h1")).asString());
     }
 
 }

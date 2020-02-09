@@ -5,7 +5,6 @@ import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
 import static org.junit.Assert.*;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -122,13 +121,13 @@ public class PositionTest
     public void testFreeSquares()
     {
         Board b = Board.createFromLetters("Kd4 Rh4");
-        assertTrue(b.getPosition().freeSquares(Location.fromString("d4"), Location.fromString("h4")));
+        assertTrue(b.getPosition().freeSquares(Location.parse("d4"), Location.parse("h4")));
     }
 
     @Test
 	public void testFreeSquares2()
 	{
 		Board b = Board.createFromFEN("r3r1Qk/6pp/8/6N1/8/1B6/1PPP4/2K5 b");
-		assertTrue(b.getPosition().freeSquares(Location.fromString("g8"), Location.fromString("e8")));
+		assertTrue(b.getPosition().freeSquares(Location.parse("g8"), Location.parse("e8")));
 	}
 }

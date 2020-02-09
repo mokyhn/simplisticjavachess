@@ -36,7 +36,7 @@ public class PositionInference
      * @param location - the location is under attack by the return piece. If
      * null is returned then the location is not under attack.
      * @param attackerColor - color of the attacker
-     * @return null if the location is not attacked, and else the piece that attacks the location
+     * @return the piece that attacks the location
      */
     public static Piece attacks(Position position, Location location, Color attackerColor)
     {

@@ -148,10 +148,7 @@ public class Board
     }
 
 
-    //TODO: Get rid of these methods that simply delegate functionality on to other objects.
-    //The risk is that they mess up state / new state when called from the inside on THIS particular class.
     /**
-     *
      * @param x - x position
      * @param y - y position
      * @return true, if square is attacked by opponent
@@ -162,10 +159,7 @@ public class Board
     }
 
 
-    //TODO: Get rid of these methods that simply delegate functionality on to other objects.
-    //The risk is that they mess up state / new state when called from the inside on THIS particular class.
     /**
-     *
      * @param color
      * @return Is player with color color in check?
      */
@@ -213,7 +207,6 @@ public class Board
  
     public MoveResult doMove(Move move)
     {
-        Position newPosition = this.position;
         Piece piece = position.getPiece(move.getFrom());
 
         State newState = state;
@@ -248,7 +241,8 @@ public class Board
                 newState = newState.setCanCastleShort(false, piece.getColor());
             }
         }
-               
+
+        Position newPosition = this.position;
         switch (move.getMoveType())
         {
             case NORMALMOVE:
@@ -333,18 +327,13 @@ public class Board
      */
     public String asASCII()
     {
-        String s = position.getPositionString();
-        if (inMove() == Color.WHITE)
-        {
-            s = s + "  White to move\n";
-        } else
-        {
-            s = s + "  Black to move\n";
-        }
-        s = s + state.toString();
-        s = s + "Immediate evaluation: " + new Evaluator().evaluate(this) + "\n";
-        s = s + "FEN: " + BoardParser.exportPosition(this);
-        return s;
+        StringBuilder sb = new StringBuilder();
+        sb.append(position.getPositionString());
+        sb.append(inMove() == Color.WHITE ? "  White to move\n" : "  Black to move\n");
+        sb.append(state.toString());
+        sb.append("Immediate evaluation: " + new Evaluator().evaluate(this) + "\n");
+        sb.append("FEN: " + BoardParser.exportPosition(this));
+        return sb.toString();
     }
     
     @Override
@@ -368,15 +357,11 @@ public class Board
         return Objects.hash(position.hashCode(), state.hashCode());
     }
 
-    //TODO: Get rid of these methods that simply delegate functionality on to other objects.
-    //The risk is that they mess up state / new state when called from the inside on THIS particular class.
     boolean isWhiteInMove()
     {
-        return state.getInMove() == Color.WHITE;
+        return Color.WHITE.equals(state.getInMove());
     }
 
-    //TODO: Get rid of these methods that simply delegate functionality on to other objects.
-    //The risk is that they mess up state / new state when called from the inside on THIS particular class.
     public boolean isAttacked(Location location)
     {
         return PositionInference.attacks(position, location, state.getInMove().opponent()) != null;

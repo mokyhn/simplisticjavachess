@@ -27,7 +27,7 @@ public class MoveParserTest
     public void testParseMove()
     {
         Move move = MoveParser.parseMove(board, "d2d4");  
-        assertEquals(new Move(new Location("d2"), new Location("d4"), MoveType.NORMALMOVE, null, Color.WHITE), move);
+        assertEquals(new Move(Location.parse("d2"), Location.parse("d4"), MoveType.NORMALMOVE, null, Color.WHITE), move);
     }
     
     //TODO: Add more tests here for the move parser.

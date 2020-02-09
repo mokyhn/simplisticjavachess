@@ -20,8 +20,8 @@ public final class MoveParser
             return null;
         }
 
-        Location from = new Location(str.substring(0, 2));
-        Location to = new Location(str.substring(2, 4));
+        Location from = Location.parse(str.substring(0, 2));
+        Location to = Location.parse(str.substring(2, 4));
 
         Piece p;
         p = b.getPiece(from);

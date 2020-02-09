@@ -18,22 +18,24 @@ public final class Location
         this.y = y;
         this.hashCode = Objects.hash(x, y);
     }
-    
-    public Location(String locationString)
+
+    /**
+     * @param locationString string to parse
+     * @return the parsed location
+     */
+    public static Location parse(String locationString)
     {
         locationString = locationString.toLowerCase();
-        x = (locationString.charAt(0) - 'a');
-        y = (-1 + locationString.charAt(1) - '0');
-        this.hashCode = Objects.hash(x, y);
-        if (x < 0 || x > 7 || y < 0 || y > 7)
+        int x = locationString.charAt(0) - 'a';
+        int y = -1 + locationString.charAt(1) - '0';
+        Location location = new Location(x, y);
+        if (location.isValid())
+        {
+            return location;
+        } else
         {
             throw new IllegalArgumentException("Given a bad location: " + locationString);
         }
-    }
-    
-    public static Location fromString(String position)
-    {
-        return new Location(position);
     }
     
     public int getX() 
