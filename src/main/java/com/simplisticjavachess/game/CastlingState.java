@@ -11,7 +11,7 @@ public class CastlingState
 	private final Set<Color> castleShort;
 	private final Set<Color> castleLong;
 
-
+	//TODO: Get rid of this constructor
 	public CastlingState() {
 		this.castleShort = EnumSet.noneOf(Color.class);
 		this.castleLong = EnumSet.noneOf(Color.class);
