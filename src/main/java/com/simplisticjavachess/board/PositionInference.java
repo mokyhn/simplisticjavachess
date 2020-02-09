@@ -93,9 +93,9 @@ public class PositionInference
 
     private static boolean pawnAttack(Piece attacker, Location attackedLocation)
     {
-        return (attackedLocation.getY() == attacker.getyPos() + attacker.getColor().getColor())
-                && ((attackedLocation.getX() == attacker.getxPos() + 1)
-                || (attackedLocation.getX() == attacker.getxPos() - 1));
+        return (attackedLocation.getY() == attacker.getY() + attacker.getColor().getColor())
+                && ((attackedLocation.getX() == attacker.getX() + 1)
+                || (attackedLocation.getX() == attacker.getX() - 1));
     }
 
     

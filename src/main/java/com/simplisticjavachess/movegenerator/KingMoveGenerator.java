@@ -46,7 +46,7 @@ public class KingMoveGenerator implements IMoveGenerator
     private Iterator<Move> castlingShort(Board board, Piece piece) {
         return oneMoveIterator(() -> {
             final Color color = board.inMove();
-            final int fy = piece.getyPos();
+            final int fy = piece.getY();
 
             Piece rook = board.getPiece(new Location(7, fy));
 
@@ -76,7 +76,7 @@ public class KingMoveGenerator implements IMoveGenerator
     {
         return oneMoveIterator(() -> {
             final Color color = board.inMove();
-            final int fy = piece.getyPos();
+            final int fy = piece.getY();
 
             Piece rook = board.getPiece(new Location(0, fy));
 

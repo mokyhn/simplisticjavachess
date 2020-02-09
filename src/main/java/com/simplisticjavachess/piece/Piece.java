@@ -126,13 +126,13 @@ public final class Piece {
         return location;
     }
     
-    public int getxPos()
+    public int getX()
     {
         return location.getX();
     }
 
 
-    public int getyPos()
+    public int getY()
     {
         return location.getY();
     }

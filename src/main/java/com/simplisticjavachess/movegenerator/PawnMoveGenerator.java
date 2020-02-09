@@ -6,7 +6,6 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.Board;
-import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveType;
 import com.simplisticjavachess.piece.Color;
@@ -33,8 +32,8 @@ public class PawnMoveGenerator implements IMoveGenerator
     {
 
         final Color c = board.inMove();
-        final int fx = piece.getxPos();
-        final int fy = piece.getyPos();
+        final int fx = piece.getX();
+        final int fy = piece.getY();
 
         Location from = piece.getLocation();
         
@@ -176,14 +175,14 @@ public class PawnMoveGenerator implements IMoveGenerator
 
     private boolean pawnAtHomeRank(Piece piece)
     {
-        return ((piece.getColor() == Color.WHITE && piece.getyPos() == 1) ||
-                (piece.getColor() == Color.BLACK && piece.getyPos() == 6));
+        return ((piece.getColor() == Color.WHITE && piece.getY() == 1) ||
+                (piece.getColor() == Color.BLACK && piece.getY() == 6));
     }
 
     private boolean pawnAtPromotionRank(Piece piece)
     {
-        return ((piece.getColor() == Color.WHITE && piece.getyPos() == 6) ||
-                (piece.getColor() == Color.BLACK && piece.getyPos() == 1));
+        return ((piece.getColor() == Color.WHITE && piece.getY() == 6) ||
+                (piece.getColor() == Color.BLACK && piece.getY() == 1));
     }
 
     @Override
