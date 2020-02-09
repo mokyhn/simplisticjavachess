@@ -104,9 +104,9 @@ public class ChessGame
    
     public void move(String str)
     {
-        Move move = MoveParser.parseMove(board, str);
+        Move move = MoveParser.parse(board, str);
 
-        if (move == null || board.isDraw() || board.isMate()) 
+        if (move == null || board.isDraw() || board.isMate())
         {
             throw new IllegalArgumentException("Invalid move");
         }

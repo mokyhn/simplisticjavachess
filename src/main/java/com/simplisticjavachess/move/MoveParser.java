@@ -9,19 +9,19 @@ import com.simplisticjavachess.board.Location;
 public final class MoveParser
 {
 
-    public static Move parseMove(Board b, String str)
+    public static Move parse(Board b, String str)
     {
         str = str.trim().toLowerCase();
+        str = preprocessorCastlingSyntax(str, b.inMove());
 
-        str = preprocessCastlingSyntax(str, b.inMove());
+        Location from = Location.parse(str.substring(0, 2));
+        Location to = Location.parse(str.substring(2, 4));
 
         if (str.length() < 4 || str.length() > 5)
         {
             return null;
         }
 
-        Location from = Location.parse(str.substring(0, 2));
-        Location to = Location.parse(str.substring(2, 4));
 
         Piece p;
         p = b.getPiece(from);
@@ -108,6 +108,8 @@ public final class MoveParser
                 return new Move(from, to, moveType, null, whoToMove);
             }
 
+            //TODO: This code must be simplifiable
+
             // Capture and promote
             if (from.fileDifferent(to)
                     && !b.freeSquare(to)
@@ -139,28 +141,16 @@ public final class MoveParser
         return null;
     }
 
-    private static String preprocessCastlingSyntax(String str, Color color)
+    private static String preprocessorCastlingSyntax(String str, Color color)
     {
         if (str.equals("o-o"))
         {
-            if (color == Color.WHITE)
-            {
-                str = "e1g1";
-            } else
-            {
-                str = "e8g8";
-            }
-        } else if (str.equals("o-o-o"))
-        {
-            if (color == Color.WHITE)
-            {
-                str = "e1c1";
-            } else
-            {
-                str = "e8c8";
-            }
+            return color == Color.WHITE ? "e1g1" : "e8g8";
         }
-
+        else if (str.equals("o-o-o"))
+        {
+            return color == Color.WHITE ? "e1c1" : "e8c8";
+        }
         return str;
     }
 

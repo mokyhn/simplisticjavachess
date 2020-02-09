@@ -66,7 +66,7 @@ public class TestSearch
             String[] moveStrings = moveSequence.split(" ");
             for (String str : moveStrings)
             {
-                Move move = MoveParser.parseMove(board, str);        
+                Move move = MoveParser.parse(board, str);
                 board.doMove(move);             
             }   
         }  
@@ -81,7 +81,7 @@ public class TestSearch
             String[] expectedMoveStrings = expectedMoves.split(" ");
             for (String str : expectedMoveStrings)
             {
-                Move move = MoveParser.parseMove(board, str);
+                Move move = MoveParser.parse(board, str);
                 result.add(move);
             }        
         }
