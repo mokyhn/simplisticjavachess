@@ -4,7 +4,6 @@ package com.simplisticjavachess.board;
 
 
 import com.simplisticjavachess.game.GameResult;
-import com.simplisticjavachess.game.History;
 import com.simplisticjavachess.game.State;
 import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.Move;
@@ -20,15 +19,19 @@ import java.util.Objects;
 public class Board
 {
 
-    private State currentState;
+    private final State state;
     private final Position position;
-    private final History history;
-    
+
     public Board()
     {
-        currentState = new State();
+        state = new State();
         position = new Position();
-        history = new History();
+    }
+
+    private Board(State newState, Position newPosition)
+    {
+        this.state = newState;
+        this.position = newPosition;
     }
 
     public static Board createFromFEN(String fen)
@@ -40,47 +43,35 @@ public class Board
     {
         return BoardParser.parseFromLetters(str);
     }
-    
-    public Board(Board board)
-    {
-        this.currentState = new State(board.currentState);
-        this.position = new Position(board.position);
-        this.history = new History(board.history);
-    }
 
     public Color inMove()
     {
-        return currentState.getInMove();
+        return state.getInMove();
     }
 
-    public void setBlackToMove()
+    public Board setBlackToMove()
     {
-        currentState.setInMove(Color.BLACK);
+        return new Board(state.setInMove(Color.BLACK), position);
     }
 
-    public void setWhiteToMove()
+    public Board setWhiteToMove()
     {
-        currentState.setInMove(Color.WHITE);
-    }
-
-    public void setGameResult(GameResult gameResult)
-    {
-        currentState.gameResult = gameResult;
+        return new Board(state.setInMove(Color.WHITE), position);
     }
 
     public GameResult getGameResult()
     {
-        return currentState.gameResult;
+        return state.getGameResult();
     }    
     
     public boolean isDraw()
     {
-        if (currentState.gameResult == null)
+        if (state.getGameResult() == null)
         {
             return false;
         }
         
-        switch (currentState.gameResult) 
+        switch (state.getGameResult())
         {
             case DRAW:
             case DRAW_BY_50_MOVE_RULE:
@@ -94,28 +85,28 @@ public class Board
 
     public boolean isMate()
     {
-        return currentState.gameResult == GameResult.MATE;
+        return state.getGameResult() == GameResult.MATE;
     }
 
 
     public boolean canCastleShort()
     {
-        return currentState.getCanCastleShort();
+        return state.getCanCastleShort();
     }
 
     public boolean canCastleLong()
     {
-        return currentState.getCanCastleLong();
+        return state.getCanCastleLong();
     }
 
-    public void setCanCastleShort(boolean flag, Color color)
+    public Board setCanCastleShort(boolean flag, Color color)
     {
-        currentState.setCanCastleShort(flag, color);
+        return new Board(state.setCanCastleShort(flag, color), position);
     }
 
-    public void setCanCastleLong(boolean flag, Color color)
+    public Board setCanCastleLong(boolean flag, Color color)
     {
-        currentState.setCanCastleLong(flag, color);
+        return new Board(state.setCanCastleLong(flag, color), position);
     }
     
     public Collection<Piece> getPieces()
@@ -133,9 +124,9 @@ public class Board
         return position.getPiece(location);
     }
     
-    public void insertPiece(Piece p)
+    public Board insert(Piece p)
     {
-        position.doCommand(new InsertCommand(p));
+        return new Board(state, position.insert(p));
     }
 
     public boolean freeSquare(Location location)
@@ -147,14 +138,15 @@ public class Board
     {
         return position.freeSquare(x, y);
     }
-
     
     public Position getPosition()
     {
         return position;
     }
-    
-    
+
+
+    //TODO: Get rid of these methods that simply delegate functionality on to other objects.
+    //The risk is that they mess up state / new state when called from the inside on THIS particular class.
     /**
      *
      * @param x - x position
@@ -163,9 +155,12 @@ public class Board
      */
     public boolean isAttacked(int x, int y)
     {
-        return PositionInference.attacks(position, new Location(x, y), currentState.getInMove()) != null;
+        return PositionInference.attacks(position, new Location(x, y), state.getInMove().opponent()) != null;
     }
 
+
+    //TODO: Get rid of these methods that simply delegate functionality on to other objects.
+    //The risk is that they mess up state / new state when called from the inside on THIS particular class.
     /**
      *
      * @param color
@@ -178,9 +173,10 @@ public class Board
     
     public Move getLastMove()
     {
-        return currentState.getMove();
+        return state.getMove();
     }
 
+ /*
     //TODO: This is not strong enough. Positions differ by en passent capabilities
     //and also with castling rights...
     private void checkDrawBy3RepetionsRule()
@@ -188,82 +184,77 @@ public class Board
         State state;
         int k = 0;
 
-        for (int i = currentState.halfMovesIndex3PosRepition; i < history.size(); i++)
-        {
-            state = history.get(i);
-            if (position.hashCode() ==  state.hash)
-            {
-                //TODO make three fold repetition check work
-                //k++;
-            }
-        }
+//        for (int i = state.halfMovesIndex3PosRepetition; i < history.size(); i++)
+//        {
+//            state = history.get(i);
+//            if (position.hashCode() ==  state.hash)
+//            {
+//                //TODO make three fold repetition check work
+//                //k++;
+//            }
+//        }
 
-        if (k >= 3 && currentState.gameResult == null) 
+        if (k >= 3 && this.state.getGameResult() == null)
         {
-            currentState.gameResult = GameResult.DRAW_BY_REPETITION;
+            this.state = this.state.setGameResult(GameResult.DRAW_BY_REPETITION);
         }
     }
-
-    private void checkDrawBy50MoveRule()
+*/
+//    private void checkDrawBy50MoveRule()
+//    {
+//        if (state.getHalfMoveClock() >= 50 && state.getGameResult() == null)
+//        {
+//            state = state.setGameResult(GameResult.DRAW_BY_50_MOVE_RULE);
+//        }
+//    }
+ 
+    public MoveResult doMove(Move move)
     {
-        if (currentState.halfMoveClock >= 50 && currentState.gameResult == null)
-        {
-            currentState.gameResult = GameResult.DRAW_BY_50_MOVE_RULE;
-        }
-    }
- 
-    public boolean doMove(Move move)
-    {        
+        Position newPosition = this.position;
         Piece piece = position.getPiece(move.getFrom());
- 
-        currentState.hash = position.hashCode();
-        history.add(currentState);
-                
-        State newState = new State(currentState);
-        newState.setMove(move);
-        newState.moveNumber++;
 
-        // Used to determine the 50-move rule, three times repition
+        State newState = state;
+        newState = newState.setMove(move);
+
+        // Used to determine the 50-move rule, three times repetition
         if (piece.getPieceType() == PieceType.PAWN)
         {
-            newState.halfMoveClock = 0;
-            newState.halfMovesIndex3PosRepition = currentState.moveNumber;
+            newState = newState.setHalfMoveClock(0);
+            //newState.halfMovesIndex3PosRepetition = state.moveNumber;
         } else
         {
-            newState.halfMoveClock++;
+            newState = newState.setHalfMoveClock(newState.getHalfMoveClock()+1);
         }
 
         // Moving the king will disallow castling in the future
         if (piece.getPieceType() == PieceType.KING)
         {
-            newState.setCanCastleLong(false, move.getWhoMoves());
-            newState.setCanCastleShort(false, move.getWhoMoves());
+            newState = newState.setCanCastleLong(false, move.getWhoMoves());
+            newState = newState.setCanCastleShort(false, move.getWhoMoves());
         }
-        
+
         // Moving a rook can disallow castling in the future
         if (piece.getPieceType() == PieceType.ROOK)
         {
             if (move.getFrom().getX() == 0)
             {
-                newState.setCanCastleLong(false, piece.getColor());
+                newState = newState.setCanCastleLong(false, piece.getColor());
             }
             else if (move.getFrom().getX() == 7)
             {
-                newState.setCanCastleShort(false, piece.getColor());
+                newState = newState.setCanCastleShort(false, piece.getColor());
             }
         }
                
         switch (move.getMoveType())
         {
             case NORMALMOVE:
-                position.doCommand(new MoveCommand(piece, move.getTo()));
+                newPosition = newPosition.move(piece, move.getTo());
                 break;
 
             case CAPTURE:
-                position.doCommand(new ComposedCommand(
-                        new RemoveCommand(move.getCapturedPiece()), 
-                        new MoveCommand(piece, move.getTo()))
-                );
+                newPosition = newPosition.remove(move.getCapturedPiece());
+                newPosition = newPosition.move(piece, move.getTo());
                 if (move.getCapturedPiece().getPieceType() == PieceType.ROOK)
                 {
                     if (move.getTo().getX() == 0)
@@ -278,90 +269,60 @@ public class Board
                 break;
 
             case CASTLE_SHORT:
-                position.doCommand(new ComposedCommand(
-                    // Move the king
-                    new MoveCommand(position.getPiece(move.getFrom()), move.getTo()),
-
-                    // Then the rook
-                    new MoveCommand(position.getPiece(new Location(7, move.getFrom().getY())), 
-                                    new Location(5, move.getFrom().getY()))
-                ));
+                // Move the king
+                newPosition = newPosition.move(position.getPiece(move.getFrom()), move.getTo());
+                newPosition = newPosition.move(position.getPiece(new Location(7, move.getFrom().getY())),
+                        new Location(5, move.getFrom().getY()));
                 break;
 
             case CASTLE_LONG:
-                position.doCommand(new ComposedCommand(
-                    // Move the king
-                    new MoveCommand(position.getPiece(move.getFrom()), move.getTo()),
-
-                    // Then the rook
-                    new MoveCommand(position.getPiece(new Location(0, move.getFrom().getY())), 
-                                    new Location(3, move.getFrom().getY()))
-                ));
+                newPosition = newPosition.move(position.getPiece(move.getFrom()), move.getTo());
+                newPosition = newPosition.move(position.getPiece(new Location(0, move.getFrom().getY())),
+                        new Location(3, move.getFrom().getY()));
                 break;
             
             case CAPTURE_ENPASSANT:
-                position.doCommand(
-                        new ComposedCommand(
-                            new MoveCommand(piece, move.getTo()),
-                            new RemoveCommand(move.getCapturedPiece())
-                        )
-                );
+                newPosition = newPosition.move(piece, move.getTo());
+                newPosition = newPosition.remove(move.getCapturedPiece());
                 break;
             
             case PROMOTE_TO_BISHOP:  /* Intended fallthrough */
             case PROMOTE_TO_KNIGHT:  /* Intended fallthrough */
             case PROMOTE_TO_ROOK:    /* Intended fallthrough */
             case PROMOTE_TO_QUEEN:   /* Intended fallthrough */
-                position.doCommand(
-                        new ComposedCommand(
-                            new InsertCommand(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo())),
-                            new RemoveCommand(piece)
-                        )
-                );  
+                newPosition = newPosition.insert(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()));
+                newPosition = newPosition.remove(piece);
                 break;
              
             case CAPTURE_AND_PROMOTE_TO_BISHOP: /* Intended fallthrough */
             case CAPTURE_AND_PROMOTE_TO_KNIGHT: /* Intended fallthrough */
             case CAPTURE_AND_PROMOTE_TO_ROOK:   /* Intended fallthrough */
             case CAPTURE_AND_PROMOTE_TO_QUEEN:  /* Intended fallthrough */
-                position.doCommand(
-                        new ComposedCommand(
-                                new RemoveCommand(position.getPiece(move.getTo())),
-                                new RemoveCommand(position.getPiece(move.getFrom())),
-                                new InsertCommand(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()))
-                        )
-                );             
+                newPosition = newPosition.remove(position.getPiece(move.getTo()));
+                newPosition = newPosition.remove(position.getPiece(move.getFrom()));
+                newPosition = newPosition.insert(new Piece(move.getTo(), move.getWhoMoves(), move.promotionTo()));
         }
 
         // Swap the move color
-        newState.setInMove(currentState.getInMove().opponent());
+        newState = newState.setInMove(state.getInMove().opponent());
 
-        currentState = newState;
-        
         boolean wasMoveLegal;
 
         // The player that did the move is in check
         // his or her move is hence not legal
-        if (isInCheck(currentState.getInMove().opponent()))
+        if (PositionInference.isInCheck(newPosition, state.getInMove()))
         {
             wasMoveLegal = false;
         }
         else
         {
-            checkDrawBy50MoveRule();
-            checkDrawBy3RepetionsRule();
+            //checkDrawBy50MoveRule();
+            //checkDrawBy3RepetionsRule();
             wasMoveLegal = true;
         }
         
-        return wasMoveLegal;
+        return new MoveResult(wasMoveLegal, new Board(newState, newPosition));
     }
-
-    public void undo()
-    {
-        currentState = history.undo();  
-        position.undo();
-    }
-
 
     /**
      * Returns the board as ASCII art and game other information
@@ -377,9 +338,8 @@ public class Board
         {
             s = s + "  Black to move\n";
         }
-        s = s + currentState.toString();
+        s = s + state.toString();
         s = s + "Immediate evaluation: " + new Evaluator().evaluate(this) + "\n";
-        s = s + "Move history: " + history.toString() + "\n";
         s = s + "FEN: " + BoardParser.exportPosition(this);
         return s;
     }
@@ -391,7 +351,7 @@ public class Board
         {
             Board other = (Board) object;
             return this.position.equals(other.position) &&
-                   this.currentState.equals(other.currentState);
+                   this.state.equals(other.state);
         }
         else
         {
@@ -402,17 +362,21 @@ public class Board
     @Override
     public int hashCode()
     {
-        return Objects.hash(position.hashCode(), currentState.hashCode());
+        return Objects.hash(position.hashCode(), state.hashCode());
     }
 
-    public boolean isWhiteInMove()
+    //TODO: Get rid of these methods that simply delegate functionality on to other objects.
+    //The risk is that they mess up state / new state when called from the inside on THIS particular class.
+    boolean isWhiteInMove()
     {
-        return currentState.getInMove() == Color.WHITE;
-    } 
+        return state.getInMove() == Color.WHITE;
+    }
 
+    //TODO: Get rid of these methods that simply delegate functionality on to other objects.
+    //The risk is that they mess up state / new state when called from the inside on THIS particular class.
     public boolean isAttacked(Location location)
     {
-        return PositionInference.attacks(position, location, currentState.getInMove()) != null;
+        return PositionInference.attacks(position, location, state.getInMove().opponent()) != null;
     }
 
     public Vector getMoveDirection()

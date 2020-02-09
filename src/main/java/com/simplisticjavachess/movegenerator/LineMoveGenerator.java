@@ -21,7 +21,7 @@ public class LineMoveGenerator {
         final ArrayList<Move> moves = new ArrayList<>();
         Location location = piece.getLocation();
         Vector delta = new Vector(0,0);
-        
+
         while (location.isValid())
         {
             delta = delta.add(step);

@@ -30,14 +30,14 @@ public class PositionTest
     { 
         assertTrue(areRepresentationsIsomorphic(new Position()));
         
-        position.doCommand(new InsertCommand(new Piece(new Location(2,3),Color.BLACK,PieceType.KING)));
+        position.insert(new Piece(new Location(2,3),Color.BLACK,PieceType.KING));
         
         assertTrue(areRepresentationsIsomorphic(position));
         
-        position.doCommand(new InsertCommand(new Piece(new Location(0,0),Color.WHITE,PieceType.KING)));
+        position.insert(new Piece(new Location(0,0),Color.WHITE,PieceType.KING));
         assertTrue(areRepresentationsIsomorphic(position));
         
-        position.doCommand(new InsertCommand(new Piece(new Location(7,7),Color.BLACK,PieceType.PAWN)));
+        position.insert(new Piece(new Location(7,7),Color.BLACK,PieceType.PAWN));
         assertTrue(areRepresentationsIsomorphic(position));  
     }
     
@@ -78,31 +78,31 @@ public class PositionTest
     @Test
     public void testInsert()
     {
-        position.doCommand(new InsertCommand(piece));
-        assertEquals(piece, position.getPiece(new Location(7,7)));
+        Position tmp = position.insert(piece);
+        assertEquals(piece, tmp.getPiece(new Location(7,7)));
     }
     
     @Test(expected = IllegalStateException.class)
     public void testDoubleInsert()
     {
-        position.doCommand(new InsertCommand(piece));
-        position.doCommand(new InsertCommand(piece));
+        Position tmp = position.insert(piece);
+        tmp.insert(piece);
     }
     
     @Test
     public void testRemove()
     {
-        position.doCommand(new InsertCommand(piece));
-        position.doCommand(new RemoveCommand(piece));
-        assertNull(position.getPiece(piece.getLocation()));
+        Position tmp;
+        tmp = position.insert(piece);
+        tmp = tmp.remove(piece);
+        assertNull(tmp.getPiece(piece.getLocation()));
     }
-    
-    @Ignore
+
     @Test(expected = IllegalStateException.class)
     public void testDoubleOfPieceNotPresent()
     {
-        position.doCommand(new RemoveCommand(piece));
-        position.doCommand(new RemoveCommand(piece));
+        position.remove(piece);
+        position.remove(piece);
     }
     
     @Test
@@ -114,7 +114,21 @@ public class PositionTest
     @Test
     public void testFreeSquareNonEmptySquare()
     {
-        position.doCommand(new InsertCommand(piece));
+        position = position.insert(piece);
         assertFalse(position.freeSquare(piece.getLocation()));
     }
+
+    @Test
+    public void testFreeSquares()
+    {
+        Board b = Board.createFromLetters("Kd4 Rh4");
+        assertTrue(b.getPosition().freeSquares(Location.fromString("d4"), Location.fromString("h4")));
+    }
+
+    @Test
+	public void testFreeSquares2()
+	{
+		Board b = Board.createFromFEN("r3r1Qk/6pp/8/6N1/8/1B6/1PPP4/2K5 b");
+		assertTrue(b.getPosition().freeSquares(Location.fromString("g8"), Location.fromString("e8")));
+	}
 }

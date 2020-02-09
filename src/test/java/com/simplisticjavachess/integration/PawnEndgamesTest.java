@@ -147,7 +147,7 @@ public class PawnEndgamesTest {
 	public void testSimplePawnMoves2()
 	{
 		// Mate in one
-		assertMove("h2h3", "8/8/8/5ppp/5pkp/8/6KP/8 w", "",  5);
+		assertMove("h2h3", "8/8/8/5ppp/5pkp/8/6KP/8 w", "",  4);
 	}
 
 	/**

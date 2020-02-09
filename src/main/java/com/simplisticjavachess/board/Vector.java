@@ -1,7 +1,9 @@
 package com.simplisticjavachess.board;
 
 import com.simplisticjavachess.piece.Color;
+
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  *
@@ -32,6 +34,19 @@ public class Vector
         this.dx = dx;
         this.dy = dy;
         this.hashCode = Objects.hash(dx, dy);
+    }
+
+    @Override
+    public String toString() {
+        return "Vector{" +
+                "dx=" + dx +
+                ", dy=" + dy +
+                '}';
+    }
+
+    public static Vector from(Location a, Location b)
+    {
+        return new Vector(a.x - b.x, a.y - b.y);
     }
 
     public int getDx() {
@@ -68,6 +83,32 @@ public class Vector
             default:
                 throw new IllegalStateException();
         }
+    }
+
+    /**
+     *
+     * @return this normalized vector - i.e. the unit vector for this vector. Empty is returned if there is no
+     * normal vector.
+     */
+    public Optional<Vector> normalize()
+    {
+        int n = this.norm();
+
+        if (dx % n == 0 && dy % n == 0)
+        {
+            return Optional.of(new Vector(dx / n, dy / n));
+        }
+        else
+        {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * @return the maximum of the absolute values dx and dy
+     */
+    public int norm() {
+        return Math.max(Math.abs(dx), Math.abs(dy));
     }
 
     public Location translocate(Location location)

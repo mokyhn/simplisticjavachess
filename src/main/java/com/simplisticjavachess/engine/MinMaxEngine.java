@@ -7,8 +7,8 @@
 package com.simplisticjavachess.engine;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.MoveResult;
 import com.simplisticjavachess.evaluator.Evaluation;
-import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
@@ -20,41 +20,33 @@ public class MinMaxEngine implements Engine
     private final MoveGenerator moveGenerator;
     private final Evaluator evaluator;
 
-    private Board analysisBoard;
-    private Move strongestMove;
-
     public MinMaxEngine(MoveGenerator moveGenerator, Evaluator evaluator)
     {
         this.moveGenerator = moveGenerator;
         this.evaluator = evaluator;
     }
 
+
     @Override
-    public final SearchResult search(Board board, int plyDepth)
-    {
-        analysisBoard = new Board(board);
-        return minMaxSearch(plyDepth);
-    }
-   
-    private SearchResult minMaxSearch(int depthToGo)
+    public SearchResult search(Board board, int depthToGo)
     {     
         if (depthToGo == 0)
         {
             return new SearchResult(
-                    analysisBoard.isDraw() ?
+                    board.isDraw() ?
                     Evaluation.EQUAL : 
-                    evaluator.evaluate(analysisBoard)
+                    evaluator.evaluate(board)
             );
         }
 
-        Iterator<Move> moves = moveGenerator.generateMoves(analysisBoard);
+        Iterator<Move> moves = moveGenerator.generateMoves(board);
 
-        Color inMove = analysisBoard.inMove();
+        Color inMove = board.inMove();
 
-        if (evaluator.evaluate(analysisBoard).equals(Evaluation.BLACK_IS_MATED)
-         || evaluator.evaluate(analysisBoard).equals(Evaluation.WHITE_IS_MATED))
+        if (evaluator.evaluate(board).equals(Evaluation.BLACK_IS_MATED)
+         || evaluator.evaluate(board).equals(Evaluation.WHITE_IS_MATED))
         {
-            return new SearchResult(evaluator.evaluate(analysisBoard));
+            return new SearchResult(evaluator.evaluate(board));
         }
 
         if (!moves.hasNext())
@@ -71,29 +63,21 @@ public class MinMaxEngine implements Engine
         while (moves.hasNext())
         {
             Move move = moves.next();
-            boolean legal = analysisBoard.doMove(move);
+            MoveResult moveResult = board.doMove(move);
+            boolean legal = moveResult.isMoveLegal();
+            Board next = moveResult.getBoard();
 
             if (!legal)
             {
-                analysisBoard.undo();
                 continue; // The pseudo legal move m turned out to be illegal.
             }
 
             thereWasALegalMove = true;
 
-            //TODO: A bug exists in the undo functionality which does not work
-            //int hashBefore = analysisBoard.hashCode();
-
-            score = minMaxSearch(depthToGo - 1);
-            analysisBoard.undo();
-
-            //TODO: A bug exists in the undo functionality which does not work
-            //int hashAfter = analysisBoard.hashCode();
-            //assert(hashBefore == hashAfter);
+            score = search(next, depthToGo - 1);
 
             if (bestScore.isAnImprovement(inMove, score.getEvaluation()))
             {
-                strongestMove = move;
                 bestScore = score.getEvaluation();
                 moveSequence = score.getMoveSequence().add(move);
             }
@@ -102,10 +86,8 @@ public class MinMaxEngine implements Engine
         // Mate or draw
         if (!thereWasALegalMove)
         {
-            if (analysisBoard.isInCheck(inMove))
+            if (board.isInCheck(inMove))
             {
-                    
-                analysisBoard.setGameResult(GameResult.MATE);
 
                 if (inMove == Color.WHITE)
                 {
@@ -116,18 +98,12 @@ public class MinMaxEngine implements Engine
                 }
             } else
             {
-                analysisBoard.setGameResult(GameResult.STALE_MATE);
                 return new SearchResult(Evaluation.EQUAL);
             } // draw
         }
 
         return new SearchResult(moveSequence, bestScore);
 
-    }
-
-    public Move getStrongestMove()
-    {
-        return strongestMove;
     }
 
 }

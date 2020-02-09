@@ -53,7 +53,7 @@ public class BoardParser
                 } 
                 else 
                 {                    
-                    board.insertPiece(new Piece(new Location(x, y), c));
+                    board = board.insert(new Piece(new Location(x, y), c));
                     x++;
                 }
             }
@@ -63,10 +63,10 @@ public class BoardParser
                 switch (c)
                 {
                     case 'w':
-                        board.setWhiteToMove();
+                        board = board.setWhiteToMove();
                         break;
                     case 'b':
-                        board.setBlackToMove();
+                        board = board.setBlackToMove();
                         break;
                     case ' ':
                         parsingPartNo = 3;
@@ -79,16 +79,16 @@ public class BoardParser
                 switch (c)
                 {
                     case 'K':                        
-                        board.setCanCastleShort(true, Color.WHITE);
+                        board = board.setCanCastleShort(true, Color.WHITE);
                         break;
                     case 'Q':
-                        board.setCanCastleLong(true, Color.WHITE);
+                        board = board.setCanCastleLong(true, Color.WHITE);
                         break;
                     case 'k':
-                        board.setCanCastleShort(true, Color.BLACK);
+                        board = board.setCanCastleShort(true, Color.BLACK);
                         break;
                     case 'q':
-                        board.setCanCastleLong(true, Color.BLACK);
+                        board = board.setCanCastleLong(true, Color.BLACK);
                         break;
                     case ' ':
                         parsingPartNo = 4;                        
@@ -156,18 +156,18 @@ public class BoardParser
             if (s.length() > 1)
             {
                 Piece piece = Piece.fromPositionCode(s);
-                board.insertPiece(piece);
+                board = board.insert(piece);
             }
             else
             {
                 if ("w".equals(s))
                 {
-                    board.setWhiteToMove();
+                    board = board.setWhiteToMove();
                 } 
                 
                 if ("b".equals(s))
                 {
-                    board.setBlackToMove();
+                    board = board.setBlackToMove();
                 }                 
             }
         }

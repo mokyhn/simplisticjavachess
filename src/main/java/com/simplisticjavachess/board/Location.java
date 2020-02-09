@@ -17,7 +17,7 @@ public final class Location
         this.hashCode = Objects.hash(x, y);
     }
     
-    public Location(String position) throws InvalidLocationException
+    public Location(String position)
     {
         position = position.toLowerCase();
         x = (position.charAt(0) - 'a');
@@ -25,7 +25,7 @@ public final class Location
         this.hashCode = Objects.hash(x, y);
         if (x < 0 || x > 7 || y < 0 || y > 7)
         {
-            throw new InvalidLocationException();
+            throw new IllegalArgumentException("Given a bad position: " + position);
         }
     }
     
@@ -100,7 +100,7 @@ public final class Location
      * @param location
      * @return true if x equals, i.e. the locations specify the same column
      */
-    public boolean fileEquals(Location location) 
+    public boolean fileEquals(Location location)
     {
         return x == location.x;
     }
@@ -110,7 +110,7 @@ public final class Location
      * @param location
      * @return true if x not equals, i.e. the locations do not specify the same column
      */
-    public boolean fileDifferent(Location location) 
+    public boolean fileDifferent(Location location)
     {
         return x != location.x;
     }
@@ -135,6 +135,104 @@ public final class Location
     {
         return y != location.y;
     }
-    
-    
+
+
+    /**
+     * Check if two locations are on the same diagonal
+     * @param other location
+     * @return true if on same diagonal and false otherwise
+     */
+    public boolean diagonalEquals(Location other)
+    {
+        int dx = this.x - other.x;
+        int dy = this.y - other.y;
+        return (Math.abs(dx) == Math.abs(dy));
+    }
+
+    /**
+     * Add a vector to this location
+     * @param vector to add
+     * @return new location
+     */
+    public Location add(Vector vector)
+    {
+        return vector.translocate(this);
+    }
+
+    /**
+     * Iterate locations from this location to another
+     * @param to another location
+     * @return iteration of locations in between
+     */
+    public Iterable<Location> iterateTO(Location to)
+    {
+        return () -> new LocationIterator(Location.this, to);
+    }
+
+    private class LocationIterator implements Iterator<Location>
+    {
+        private final Optional<Vector> direction;
+        private final Location to;
+        private Location current;
+
+        public LocationIterator(Location from, Location to)
+        {
+            this.to = to;
+            this.direction = Vector.from(to, from).normalize();
+            this.current = from;
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            return direction.isPresent() &&
+                   !current.equals(to) && !current.add(direction.get()).equals(to);
+        }
+
+        @Override
+        public Location next()
+        {
+            generate();
+            return current;
+        }
+
+        private void generate()
+        {
+            current = current.add(direction.get());
+        }
+    }
+
+
+    public Iterable<Location> iterate(final Vector vector)
+    {
+        return () -> new LocationVectorIterator(Location.this, vector);
+    }
+
+    private class LocationVectorIterator implements Iterator<Location>
+    {
+        private final Vector direction;
+        private Location current;
+
+        public LocationVectorIterator(Location from, Vector direction)
+        {
+            this.current = from;
+            this.direction = direction;
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            return current.add(direction).isValid();
+        }
+
+        @Override
+        public Location next()
+        {
+            current = current.add(direction);
+            return current;
+        }
+
+    }
+
+
 }

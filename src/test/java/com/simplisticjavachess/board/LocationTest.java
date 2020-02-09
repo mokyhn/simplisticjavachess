@@ -1,7 +1,8 @@
 package com.simplisticjavachess.board;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
+import com.simplisticjavachess.misc.IteratorUtils;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -37,14 +38,14 @@ public class LocationTest {
         assertEquals(new Location("h8").toString(), "h8");
     }
     
-    @Test(expected=InvalidLocationException.class)
-    public void testInvalidFile() throws InvalidLocationException
+    @Test(expected=IllegalArgumentException.class)
+    public void testInvalidFile()
     {
         new Location("i4");
     }
     
-    @Test(expected=InvalidLocationException.class)
-    public void testInvalidRank() throws InvalidLocationException
+    @Test(expected=IllegalArgumentException.class)
+    public void testInvalidRank()
     {
         new Location("a9");
     }
@@ -91,4 +92,97 @@ public class LocationTest {
     {
         assertFalse(new Location(7,8).isValid());
     }
+
+    @Test
+    public void testLocationIterationDiagonalUp()
+    {
+        Location l = Location.fromString("b2");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("h8")).iterator());
+        assertEquals("[c3, d4, e5, f6, g7]", result);
+    }
+
+    @Test
+    public void testLocationIterationDiagonalDown()
+    {
+        Location l = Location.fromString("h8");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("b2")).iterator());
+        assertEquals("[g7, f6, e5, d4, c3]", result);
+    }
+
+
+    @Test
+    public void testLocationIterationRight()
+    {
+        Location l = Location.fromString("a6");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("f6")).iterator());
+        assertEquals("[b6, c6, d6, e6]", result);
+    }
+
+    @Test
+    public void testLocationIterationLeft()
+    {
+        Location l = Location.fromString("f6");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("a6")).iterator());
+        assertEquals("[e6, d6, c6, b6]", result);
+    }
+
+    @Test
+    public void testLocationIterationUp()
+    {
+        Location l = Location.fromString("d2");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d8")).iterator());
+        assertEquals("[d3, d4, d5, d6, d7]", result);
+    }
+
+    @Test
+    public void testLocationIterationDown()
+    {
+        Location l = Location.fromString("d8");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d2")).iterator());
+        assertEquals("[d7, d6, d5, d4, d3]", result);
+    }
+
+    @Test
+    public void testLocationIterationNoFields()
+    {
+        Location l = Location.fromString("d4");
+        String result = IteratorUtils.toString(l.iterateTO(Location.fromString("d5")).iterator());
+        assertEquals("[]", result);
+    }
+
+    @Test
+    public void fileTest()
+    {
+        assertTrue(Location.fromString("f8").fileEquals(Location.fromString("f1")));
+        assertTrue(Location.fromString("f8").fileDifferent(Location.fromString("a1")));
+    }
+
+    @Test
+    public void rankTest()
+    {
+        assertTrue(Location.fromString("f8").rankEquals(Location.fromString("a8")));
+        assertTrue(Location.fromString("f8").rankDifferent(Location.fromString("a1")));
+    }
+
+    @Test
+    public void diagonalTest()
+    {
+        assertTrue(Location.fromString("f8").diagonalEquals(Location.fromString("a3")));
+        assertFalse(Location.fromString("f8").diagonalEquals(Location.fromString("g6")));
+    }
+
+    @Test
+    public void iterateTest()
+    {
+        assertEquals("[e3, e4, e5, e6, e7, e8]",
+                IteratorUtils.toString(new Location("e2").iterate(Vector.UP).iterator()));
+
+    }
+
+    @Test
+    public void iterateTestEmpty()
+    {
+        assertEquals("[]", IteratorUtils.toString(new Location("h8").iterate(Vector.UP).iterator()));
+    }
 }
+

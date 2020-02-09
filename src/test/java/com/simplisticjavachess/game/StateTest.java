@@ -8,38 +8,22 @@ package com.simplisticjavachess.game;
 
 import com.simplisticjavachess.move.Moves;
 import com.simplisticjavachess.piece.Color;
-import com.simplisticjavachess.board.InvalidLocationException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class StateTest
 {
-    
-    @Test
-    public void testCopyConstructor() throws InvalidLocationException 
-    {
-        State state = createDummyState();
-        
-        State stateClone = new State(state);
-        assertSame(stateClone.gameResult, GameResult.DRAW_BY_50_MOVE_RULE);
-        assertEquals(42, stateClone.halfMoveClock);
-        assertEquals(41, stateClone.halfMovesIndex3PosRepition);
-        assertSame(stateClone.getInMove(), Color.BLACK);
-        assertEquals(49, stateClone.moveNumber);
-        assertEquals(stateClone.getMove(), Moves.BLACK_LONG_CASTLING());
-        
-    }
 
     private State createDummyState()
     {
         // Setup
         State state = new State();
-        state.gameResult = GameResult.DRAW_BY_50_MOVE_RULE;
-        state.halfMoveClock = 42;
-        state.halfMovesIndex3PosRepition = 41;
-        state.setInMove(Color.BLACK);
-        state.moveNumber = 49;
-        state.setMove(Moves.BLACK_LONG_CASTLING());
+        state = state.setGameResult(GameResult.DRAW_BY_50_MOVE_RULE);
+        state = state.setHalfMoveClock(42);
+        state = state.setHalfMovesIndex3PosRepetition(41);
+        state = state.setInMove(Color.BLACK);
+        //state.moveNumber = 49;
+        state = state.setMove(Moves.BLACK_LONG_CASTLING());
         return state;
     }
 
@@ -47,11 +31,11 @@ public class StateTest
     public void testSetCanCastleLong()
     {
         State state = new State();
-        state.setInMove(Color.WHITE);
-        state.setCanCastleLong(true, Color.WHITE);
+        state = state.setInMove(Color.WHITE);
+        state = state.setCanCastleLong(true, Color.WHITE);
         assertTrue(state.getCanCastleLong());
 
-        state.setInMove(Color.BLACK);
+        state = state.setInMove(Color.BLACK);
         assertFalse(state.getCanCastleLong());
     }
 
@@ -59,11 +43,11 @@ public class StateTest
     public void testGetCanCastleShort_Color()
     {
         State state = new State();
-        state.setCanCastleShort(true, Color.BLACK);
+		state = state.setCanCastleShort(true, Color.BLACK);
         assertTrue(state.getCanCastleShort(Color.BLACK));
         
         state = new State();
-        state.setCanCastleShort(true, Color.WHITE);
+        state = state.setCanCastleShort(true, Color.WHITE);
         assertTrue(state.getCanCastleShort(Color.WHITE));
     }
 
@@ -72,11 +56,11 @@ public class StateTest
     public void testGetCanCastleLong_Color()
     {
         State state = new State();
-        state.setCanCastleLong(true, Color.BLACK);
+        state = state.setCanCastleLong(true, Color.BLACK);
         assertTrue(state.getCanCastleLong(Color.BLACK));
         
         state = new State();
-        state.setCanCastleLong(true, Color.WHITE);
+        state = state.setCanCastleLong(true, Color.WHITE);
         assertTrue(state.getCanCastleLong(Color.WHITE));
     }
 
@@ -96,7 +80,7 @@ public class StateTest
         State state1 = createDummyState();
         State state2 = createDummyState();
         
-        state1.setCanCastleLong(true, Color.BLACK);
+        state1 = state1.setCanCastleLong(true, Color.BLACK);
         assertNotEquals(state1, state2);
     }
     

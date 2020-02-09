@@ -68,7 +68,7 @@ public class MoveGeneratorTest
         {
             i++;
             Board originalBoard = Board.createFromFEN(fen);
-            Board board = new Board(originalBoard);
+            Board board = originalBoard;
             
             Iterator<Move> moveIterator = moveGenerator.generateMoves(board);
             

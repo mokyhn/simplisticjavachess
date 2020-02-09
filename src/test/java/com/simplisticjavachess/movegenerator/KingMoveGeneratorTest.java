@@ -103,7 +103,7 @@ public class KingMoveGeneratorTest {
 	@Test
 	public void castlingShort() {
 		Board board = Board.createFromLetters("Ke1 Rh1 w");
-		board.setCanCastleShort(true, Color.WHITE);
+		board = board.setCanCastleShort(true, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.fromPositionCode("Ke1");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
@@ -113,7 +113,7 @@ public class KingMoveGeneratorTest {
 	@Test
 	public void cannotCastleShort() {
 		Board board = Board.createFromLetters("Ke1 Rh1 w");
-		board.setCanCastleShort(false, Color.WHITE);
+		board = board.setCanCastleShort(false, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.fromPositionCode("Ke1");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
@@ -123,7 +123,7 @@ public class KingMoveGeneratorTest {
 	@Test
 	public void castlingLong() {
 		Board board = Board.createFromLetters("Ke1 Ra1 w");
-		board.setCanCastleLong(true, Color.WHITE);
+		board = board.setCanCastleLong(true, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.fromPositionCode("Ke1");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
@@ -133,7 +133,7 @@ public class KingMoveGeneratorTest {
 	@Test
 	public void cannotCastleLong() {
 		Board board = Board.createFromLetters("Ke1 Ra1 w");
-		board.setCanCastleLong(false, Color.WHITE);
+		board = board.setCanCastleLong(false, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.fromPositionCode("Ke1");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
