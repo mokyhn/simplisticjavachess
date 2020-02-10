@@ -6,6 +6,8 @@ import com.simplisticjavachess.misc.Strings;
 
 /**
  * @author Morten Kühnrich
+ *
+ * Forsyth–Edwards Notation (FEN) support
  */
 public class BoardParser
 {    
@@ -18,87 +20,89 @@ public class BoardParser
     {
         fen = Strings.trimWhiteSpace(fen);
 
-        // TODO: Do the split here and avoid parsingPartNo variable
+        // The FEN sections are divided by space
+        String[] sections = fen.split(" ");
 
         Board board = new Board();
-        
+
+        // Parse pieces
+        String piecesString = sections[0];
+        board = parseFENPieces(board, piecesString);
+
+        // Parse who to move
+        String inMoveString = sections[1];
+        board = parseFENWhoToMove(board, inMoveString);
+
+        if (sections.length == 2)
+        {
+            return board;
+        }
+
+        // Parse castling options
+        String castlingString = sections[2];
+        board = parseFENCastling(board, castlingString);
+
+        return board;
+    }
+
+    private static Board parseFENPieces(Board board, String piecesString) {
         int x = 0;
         int y = 7;
-        int i;
-        int parsingPartNo;
-        char c;
-
-        // Parsing part no. 1
-        parsingPartNo = 1;
-      
-        // Traverse input string
-        for (i = 0; i < fen.length(); i++)
+        for (char c : piecesString.toCharArray())
         {
-            c = fen.charAt(i);
             assert x <= 8 && y >= 0 : "Error (Not a correct FEN board)";
-
-            if (parsingPartNo == 1)
+            if (c >= '1' && c <= '8')
             {
-                if (c == ' ')
-                {
-                    parsingPartNo = 2;
-                    continue;
-                }
-
-                if (c >= '1' && c <= '8')
-                {
-                    x = x + (int) (c - '0');
-                } else if (c == '/')
-                {
-                    y--;
-                    x = 0;
-                    continue;
-                } 
-                else 
-                {                    
-                    board = board.insert(new Piece(new Location(x, y), c));
-                    x++;
-                }
+                x = x + (int) (c - '0');
+            } else if (c == '/')
+            {
+                y--;
+                x = 0;
+                continue;
             }
-
-            if (parsingPartNo == 2)
+            else
             {
-                switch (c)
-                {
-                    case 'w':
-                        board = board.setWhiteToMove();
-                        break;
-                    case 'b':
-                        board = board.setBlackToMove();
-                        break;
-                    case ' ':
-                        parsingPartNo = 3;
-                        continue;
-                }
+                board = board.insert(new Piece(new Location(x, y), c));
+                x++;
             }
-
-            if (parsingPartNo == 3)
-            {
-                switch (c)
-                {
-                    case 'K':                        
-                        board = board.setCanCastleShort(true, Color.WHITE);
-                        break;
-                    case 'Q':
-                        board = board.setCanCastleLong(true, Color.WHITE);
-                        break;
-                    case 'k':
-                        board = board.setCanCastleShort(true, Color.BLACK);
-                        break;
-                    case 'q':
-                        board = board.setCanCastleLong(true, Color.BLACK);
-                        break;
-                    case ' ':
-                        parsingPartNo = 4;                        
-                }
-            }            
         }
-        
+        return board;
+    }
+
+    private static Board parseFENCastling(Board board, String castlingString) {
+        for (char c : castlingString.toCharArray())
+        {
+            switch (c)
+            {
+                case 'K':
+                    board = board.setCanCastleShort(true, Color.WHITE);
+                    break;
+                case 'Q':
+                    board = board.setCanCastleLong(true, Color.WHITE);
+                    break;
+                case 'k':
+                    board = board.setCanCastleShort(true, Color.BLACK);
+                    break;
+                case 'q':
+                    board = board.setCanCastleLong(true, Color.BLACK);
+                    break;
+            }
+        }
+        return board;
+    }
+
+    private static Board parseFENWhoToMove(Board board, String inMoveString) {
+        inMoveString = inMoveString.toLowerCase();
+        if ("w".equals(inMoveString))
+        {
+            board = board.setWhiteToMove();
+        } else if ("b".equals(inMoveString))
+        {
+            board = board.setBlackToMove();
+        } else
+        {
+            throw new IllegalArgumentException("Who-to-move-color not specified correctly, use either w or b");
+        }
         return board;
     }
 
