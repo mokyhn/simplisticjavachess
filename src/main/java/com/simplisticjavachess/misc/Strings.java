@@ -12,17 +12,16 @@ public class Strings
         String result = "";
         boolean trimming = false;
 
-        for (int i = 0; i < s.length(); i++)
-        {
-            char c = s.charAt(i);
+        //Remove leading and trailing spaces
+        s = s.trim();
 
+        //Remove double spaces inside string
+        for (char c : s.toCharArray())
+        {
             if (c == ' ' && !trimming)
             {
                 trimming = true;
-                if (i != 0) 
-                {
-                    result = result + ' ';
-                }
+                result = result + ' ';
             }
 
             if (c != ' ')

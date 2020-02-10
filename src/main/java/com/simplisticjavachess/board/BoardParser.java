@@ -16,6 +16,10 @@ public class BoardParser
      */
     public static Board parseFEN(String fen)
     {
+        fen = Strings.trimWhiteSpace(fen);
+
+        // TODO: Do the split here and avoid parsingPartNo variable
+
         Board board = new Board();
         
         int x = 0;
@@ -23,8 +27,7 @@ public class BoardParser
         int i;
         int parsingPartNo;
         char c;
-        fen = Strings.trimWhiteSpace(fen.trim());
-        
+
         // Parsing part no. 1
         parsingPartNo = 1;
       
