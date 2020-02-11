@@ -74,6 +74,11 @@ public class BoardParser
         {
             switch (c)
             {
+                case '-':
+                    board = board.setCanCastleLong(false, Color.WHITE);
+                    board = board.setCanCastleShort(false, Color.WHITE);
+                    board = board.setCanCastleLong(false, Color.BLACK);
+                    board = board.setCanCastleShort(false, Color.BLACK);
                 case 'K':
                     board = board.setCanCastleShort(true, Color.WHITE);
                     break;

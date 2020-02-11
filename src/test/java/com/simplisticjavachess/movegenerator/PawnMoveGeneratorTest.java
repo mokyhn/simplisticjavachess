@@ -61,4 +61,6 @@ public class PawnMoveGeneratorTest
         assertEquals("[d4xc5, d4xe5]", movesStr);
     }
 
+
+    //TODO: Add test of enpassant move generation
 }

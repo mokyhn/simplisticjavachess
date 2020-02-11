@@ -21,30 +21,30 @@ public class BoardParserTest
     @Test
     public void testImportExportPosition_1()
     {
-        String test_position = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w";
-        Board board = Board.createFromFEN(test_position);
+        String fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w";
+        Board board = Board.createFromFEN(fen);
         String result = BoardParser.exportPosition(board);
-        assertEquals(test_position, result);
+        assertEquals(fen, result);
     }
     
     @Test
     public void testImportExportPosition_2()
     {
-        String test_position = "rnb5/pp4pp/8/8/8/8/PP2P2P/2BQKB2 w";
-        Board board = Board.createFromFEN(test_position);
+        String fen = "rnb5/pp4pp/8/8/8/8/PP2P2P/2BQKB2 w";
+        Board board = Board.createFromFEN(fen);
         String result = BoardParser.exportPosition(board);
-        assertEquals(test_position, result);
+        assertEquals(fen, result);
     }
     
     @Test
     public void testImportExportPosition_3()
     {
-        String test_position = "8/pp4pp/8/8/8/8/PP2P2P/8 b";
-        Board board = Board.createFromFEN(test_position);
+        String fen = "8/pp4pp/8/8/8/8/PP2P2P/8 b";
+        Board board = Board.createFromFEN(fen);
         String result = BoardParser.exportPosition(board);
-        assertEquals(test_position, result);
+        assertEquals(fen, result);
     }
-    
+
     @Test
     public void testImportExportPosition_Many()
     {
