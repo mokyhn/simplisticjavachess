@@ -8,11 +8,16 @@ import java.util.Objects;
 public final class State
 {
 	private final Move move;
-	private final Color inMove;
+
+    // TODO: This should go to position, since it is a part of the position.
+    // Which conceptually is true (for the but-who-is-to-move sort of questions) and also for draw by three fold repetition
+    private final Color inMove;
 
 	// Used to check for draw by threefold repetition.
     //public int hash; // TODO
 
+    // TODO: This should go to position, since it is a part of the position.
+    // Which conceptually is true (for the but-can-he-castle sort of questions) and also for draw by three fold repetition
     private final CastlingState castlingState;
 
     private final GameResult gameResult;
