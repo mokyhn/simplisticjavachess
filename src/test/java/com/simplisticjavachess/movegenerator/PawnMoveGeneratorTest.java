@@ -1,8 +1,10 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.MoveResult;
 import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
+import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.piece.Piece;
 import java.util.Iterator;
 import static org.junit.Assert.assertEquals;
@@ -61,6 +63,44 @@ public class PawnMoveGeneratorTest
         assertEquals("[d4xc5, d4xe5]", movesStr);
     }
 
+    @Test
+    public void testEnpassantLeft()
+    {
+        Board board = Board.createFromLetters("ka1 Kh8 Pd2 pc4  w");
+        MoveResult moveResult = board.doMove(MoveParser.parse(board,"d2d4"));
+        board = moveResult.getBoard();
+        System.out.println(board.asASCII());
+        Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("pc4"));
+        String movesStr = IteratorUtils.toString(moves);
+        assertEquals("[c4-c3, c4xd3]", movesStr);
+    }
 
-    //TODO: Add test of enpassant move generation
+    @Test
+    public void testEnpassantRight()
+    {
+        Board board = Board.createFromLetters("ka1 Kh8 Pd2 pe4  w");
+        MoveResult moveResult = board.doMove(MoveParser.parse(board,"d2d4"));
+        board = moveResult.getBoard();
+        System.out.println(board.asASCII());
+        Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("pe4"));
+        String movesStr = IteratorUtils.toString(moves);
+        assertEquals("[e4-e3, e4xd3]", movesStr);
+    }
+
+    @Test
+    public void lostEnpassantRight()
+    {
+        Board board = Board.createFromLetters("ka1 Kh8 Pd2 pe4  w");
+        MoveResult moveResult = board.doMove(MoveParser.parse(board,"d2d4"));
+        board = moveResult.getBoard();
+        moveResult = board.doMove(MoveParser.parse(board,"a1b1"));
+        board = moveResult.getBoard();
+        moveResult = board.doMove(MoveParser.parse(board,"h8g8"));
+        board = moveResult.getBoard();
+        System.out.println(board.asASCII());
+        Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("pe4"));
+        String movesStr = IteratorUtils.toString(moves);
+        assertEquals("[e4-e3]", movesStr);
+    }
+
 }
