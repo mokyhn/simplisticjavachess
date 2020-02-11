@@ -12,21 +12,25 @@ import com.simplisticjavachess.piece.PieceType;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
 
 public class Position
 {
     private final Map<Location, Piece> piecesMap;
 
+    private int hashCode;
+
+
     Position()
     {
         piecesMap = new HashMap<>();
+        hashCode = 0;
     }
 
     private Position(Position position)
     {
         this.piecesMap = new HashMap<>(position.piecesMap);
+        this.hashCode = position.hashCode;
     }
 
     /**
@@ -44,6 +48,7 @@ public class Position
         {
             Position result = new Position(this);
             result.piecesMap.put(piece.getLocation(), piece);
+            result.hashCode = result.hashCode ^ piece.hashCode();
             return result;
         }
     }
@@ -69,6 +74,7 @@ public class Position
         {
             Position result = new Position(this);
             result.piecesMap.remove(piece.getLocation());
+            result.hashCode = result.hashCode ^ piece.hashCode();
             return result;
         }
         else
@@ -167,7 +173,7 @@ public class Position
 
     @Override
     public int hashCode() {
-        return Objects.hash(piecesMap.values());
+        return hashCode;
     }
 
 }
