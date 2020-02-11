@@ -19,6 +19,7 @@ import static com.simplisticjavachess.piece.PieceType.ROOK;
 /**
  * @author Morten Kühnrich
  */
+//TODO: Add futher tests of this class
 public class Board
 {
 
@@ -267,6 +268,10 @@ public class Board
                 break;
 
             case CASTLE_SHORT:
+                if (!state.getCanCastleShort())
+                {
+                    return new MoveResult(false, this);
+                }
                 // Move the king
                 newPosition = newPosition.move(position.getPiece(move.getFrom()), move.getTo());
                 newPosition = newPosition.move(position.getPiece(new Location(7, move.getFrom().getY())),
@@ -274,6 +279,10 @@ public class Board
                 break;
 
             case CASTLE_LONG:
+                if (!state.getCanCastleLong())
+                {
+                    return new MoveResult(false, this);
+                }
                 newPosition = newPosition.move(position.getPiece(move.getFrom()), move.getTo());
                 newPosition = newPosition.move(position.getPiece(new Location(0, move.getFrom().getY())),
                         new Location(3, move.getFrom().getY()));

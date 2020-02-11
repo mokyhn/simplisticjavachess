@@ -34,11 +34,10 @@ public class BoardTest_Castling
     }
     
     @Test
-    @Ignore("This functionality that would make this test go through is not implemented")
     public void testWhiteShortCastling_cannotCastle()
     {
-        // Test of doMove
         Board actual = WHITE_IN_MOVE_CANNOT_CASTLE();
+        System.out.println(actual.asASCII());
         MoveResult result = actual.doMove(Moves.WHITE_SHORT_CASTLING());
         assertFalse(result.isMoveLegal());
         assertEquals(actual, WHITE_IN_MOVE_CANNOT_CASTLE() );
@@ -47,7 +46,6 @@ public class BoardTest_Castling
     @Test
     public void testBlackShortCastling()
     {
-        // Test of doMove
         Board actual = BLACK_IN_MOVE_CASTLING();
         Board expected = AFTER_BLACK_SHORT_CASTLING();
         MoveResult moveResult = actual.doMove(Moves.BLACK_SHORT_CASTLING());
@@ -55,10 +53,8 @@ public class BoardTest_Castling
     }
       
     @Test
-    @Ignore("This functionality that would make this test go through is not implemented")
     public void testBlackShortCastling_cannotCastle()
     {
-        // Test of doMove
         Board actual = BLACK_IN_MOVE_CANNOT_CASTLE();
         MoveResult result = actual.doMove(Moves.BLACK_SHORT_CASTLING());
         assertFalse(result.isMoveLegal());
@@ -68,7 +64,6 @@ public class BoardTest_Castling
     @Test
     public void testLongShortCastling()
     {
-        // Test of doMove
         Board actual = WHITE_IN_MOVE_CASTLING();
         Board expected = AFTER_WHITE_LONG_CASTLING();
         MoveResult moveResult = actual.doMove(Moves.WHITE_LONG_CASTLING());
@@ -76,11 +71,10 @@ public class BoardTest_Castling
     }
     
     @Test
-    @Ignore("This functionality that would make this test go through is not implemented")
     public void testWhiteLongCastling_cannotCastle()
     {
-        // Test of doMove
         Board actual = WHITE_IN_MOVE_CANNOT_CASTLE();
+        System.out.println(actual.asASCII());
         MoveResult result = actual.doMove(Moves.WHITE_LONG_CASTLING());
         assertFalse(result.isMoveLegal());
         assertEquals(actual, WHITE_IN_MOVE_CANNOT_CASTLE() );
@@ -89,7 +83,6 @@ public class BoardTest_Castling
     @Test
     public void testBlackLongCastling()
     {
-        // Test of doMove
         Board actual = BLACK_IN_MOVE_CASTLING();
         Board expected = AFTER_BLACK_LONG_CASTLING();
         MoveResult moveResult = actual.doMove(Moves.BLACK_LONG_CASTLING());
@@ -97,10 +90,8 @@ public class BoardTest_Castling
     }
       
     @Test
-    @Ignore("This functionality that would make this test go through is not implemented")
     public void testBlackLongCastling_cannotCastle()
     {
-        // Test of doMove
         Board actual = BLACK_IN_MOVE_CANNOT_CASTLE();
         MoveResult result = actual.doMove(Moves.BLACK_LONG_CASTLING());
         assertFalse(result.isMoveLegal());
