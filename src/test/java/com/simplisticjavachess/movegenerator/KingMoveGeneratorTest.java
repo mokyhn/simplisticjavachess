@@ -101,7 +101,7 @@ public class KingMoveGeneratorTest {
 
 
 	@Test
-	public void castlingShort() {
+	public void castleShort() {
 		Board board = Board.createFromLetters("Ke1 Rh1 w");
 		board = board.setCanCastleShort(true, Color.WHITE);
 		System.out.println(board.asASCII());
@@ -109,6 +109,38 @@ public class KingMoveGeneratorTest {
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
 		assertTrue(IteratorUtils.toString(moves).contains("o-o"));
 	}
+
+	@Test
+	public void cannotCastleShortOverThreat1() {
+		Board board = Board.createFromLetters("Ke1 Rh1 bd3 w");
+		board = board.setCanCastleShort(true, Color.WHITE);
+		System.out.println(board.asASCII());
+		Piece piece = Piece.parse("Ke1");
+		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
+		assertFalse(IteratorUtils.toString(moves).contains("o-o"));
+	}
+
+	@Test
+	public void cannotCastleShortOverThreat2() {
+		Board board = Board.createFromLetters("Ke1 Rh1 bd4 w");
+		board = board.setCanCastleShort(true, Color.WHITE);
+		System.out.println(board.asASCII());
+		Piece piece = Piece.parse("Ke1");
+		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
+		assertFalse(IteratorUtils.toString(moves).contains("o-o"));
+	}
+
+	@Test
+	public void cannotCastleShortOutOfCheck() {
+		Board board = Board.createFromLetters("Ke1 Rh1 re4 w");
+		board = board.setCanCastleShort(true, Color.WHITE);
+		System.out.println(board.asASCII());
+		Piece piece = Piece.parse("Ke1");
+		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
+		assertFalse(IteratorUtils.toString(moves).contains("o-o"));
+	}
+
+
 
 	@Test
 	public void cannotCastleShort() {
@@ -129,6 +161,37 @@ public class KingMoveGeneratorTest {
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
 		assertTrue(IteratorUtils.toString(moves).contains("o-o-o"));
 	}
+
+	@Test
+	public void cannotCastleLongOverThreat1() {
+		Board board = Board.createFromLetters("Ke1 Ra1 rc8 w");
+		board = board.setCanCastleLong(true, Color.WHITE);
+		System.out.println(board.asASCII());
+		Piece piece = Piece.parse("Ke1");
+		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
+		assertFalse(IteratorUtils.toString(moves).contains("o-o-o"));
+	}
+
+	@Test
+	public void cannotCastleLongOverThreat2() {
+		Board board = Board.createFromLetters("Ke1 Ra1 rd8 w");
+		board = board.setCanCastleLong(true, Color.WHITE);
+		System.out.println(board.asASCII());
+		Piece piece = Piece.parse("Ke1");
+		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
+		assertFalse(IteratorUtils.toString(moves).contains("o-o-o"));
+	}
+
+	@Test
+	public void cannotCastleLongOutOfCheck() {
+		Board board = Board.createFromLetters("Ke1 Ra1 re8 w");
+		board = board.setCanCastleLong(true, Color.WHITE);
+		System.out.println(board.asASCII());
+		Piece piece = Piece.parse("Ke1");
+		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
+		assertFalse(IteratorUtils.toString(moves).contains("o-o-o"));
+	}
+
 
 	@Test
 	public void cannotCastleLong() {
