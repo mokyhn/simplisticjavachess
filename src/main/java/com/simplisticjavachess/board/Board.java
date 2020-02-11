@@ -7,8 +7,11 @@ import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.game.State;
 import com.simplisticjavachess.evaluator.Evaluator;
 import com.simplisticjavachess.move.Move;
+import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
+
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
 
@@ -96,7 +99,7 @@ public class Board
 
     public boolean isMate()
     {
-        return state.getGameResult() == GameResult.MATE;
+        return GameResult.MATE.equals(state.getGameResult());
     }
 
 
@@ -212,7 +215,35 @@ public class Board
 //            state = state.setGameResult(GameResult.DRAW_BY_50_MOVE_RULE);
 //        }
 //    }
- 
+
+    public MoveResult doMove(String... moves)
+    {
+        MoveResult moveResult = null;
+
+        Board board = this;
+
+        for (String m : moves)
+        {
+            moveResult = board.doMove(MoveParser.parse(board, m));
+            if (moveResult.isMoveLegal())
+            {
+                board = moveResult.getBoard();
+            }
+            else
+            {
+                throw new IllegalArgumentException("Could not perform the illegal move: " + m +
+                        " in the sequence of moves: " + Arrays.toString(moves));
+            }
+        }
+
+        if (moveResult == null)
+        {
+            throw new IllegalArgumentException("Provide a sequence of moves");
+        }
+
+        return moveResult;
+    }
+
     public MoveResult doMove(Move move)
     {
         Piece piece = position.getPiece(move.getFrom());
