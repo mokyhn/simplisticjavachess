@@ -5,7 +5,9 @@
 
 package com.simplisticjavachess.game;
 
-public enum GameResult {
+public enum GameResult
+{
+    NO_RESULT,
     DRAW, 
     STALE_MATE, 
     MATE, 

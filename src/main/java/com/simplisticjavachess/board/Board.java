@@ -71,18 +71,24 @@ public class Board
     
     public boolean isDraw()
     {
+        //TODO: This null check is not a good idea
         if (state.getGameResult() == null)
         {
             return false;
         }
-        
+
         switch (state.getGameResult())
         {
             case DRAW:
+                /* Intended fall-through */
             case DRAW_BY_50_MOVE_RULE:
+                /* Intended fall-through */
             case DRAW_BY_REPETITION:
+                /* Intended fall-through */
             case STALE_MATE:
                 return true;
+            case NO_RESULT:
+                /* Intended fall-through */
             default:
                 return false;
         }
