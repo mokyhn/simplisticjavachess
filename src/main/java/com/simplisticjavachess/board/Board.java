@@ -106,22 +106,22 @@ public class Board
 
     public boolean canCastleShort()
     {
-        return state.getCanCastleShort(inMove());
+        return position.getCanCastleShort(inMove());
     }
 
     public boolean canCastleLong()
     {
-        return state.getCanCastleLong(inMove());
+        return position.getCanCastleLong(inMove());
     }
 
     public Board setCanCastleShort(boolean flag, Color color)
     {
-        return new Board(state.setCanCastleShort(flag, color), position);
+        return new Board(state, position.setCanCastleShort(flag, color));
     }
 
     public Board setCanCastleLong(boolean flag, Color color)
     {
-        return new Board(state.setCanCastleLong(flag, color), position);
+        return new Board(state, position.setCanCastleLong(flag, color));
     }
     
     public Collection<Piece> getPieces()
@@ -274,11 +274,13 @@ public class Board
             newState = newState.setHalfMoveClock(newState.getHalfMoveClock()+1);
         }
 
+        Position newPosition = this.position;
+
         // Moving the king will disallow castling in the future
         if (KING.equals(piece.getPieceType()))
         {
-            newState = newState.setCanCastleLong(false, move.getWhoMoves());
-            newState = newState.setCanCastleShort(false, move.getWhoMoves());
+            newPosition = newPosition.setCanCastleLong(false, move.getWhoMoves());
+            newPosition = newPosition.setCanCastleShort(false, move.getWhoMoves());
         }
 
         // Moving a rook can disallow castling in the future
@@ -286,15 +288,14 @@ public class Board
         {
             if (move.getFrom().getX() == 0)
             {
-                newState = newState.setCanCastleLong(false, piece.getColor());
+                newPosition = newPosition.setCanCastleLong(false, piece.getColor());
             }
             else if (move.getFrom().getX() == 7)
             {
-                newState = newState.setCanCastleShort(false, piece.getColor());
+                newPosition = newPosition.setCanCastleShort(false, piece.getColor());
             }
         }
 
-        Position newPosition = this.position;
         switch (move.getMoveType())
         {
             case NORMALMOVE:
@@ -308,17 +309,17 @@ public class Board
                 {
                     if (move.getTo().getX() == 0)
                     {
-                         newState.setCanCastleLong(false, move.getCapturedPiece().getColor());
+                        newPosition = newPosition.setCanCastleLong(false, move.getCapturedPiece().getColor());
                     }
                      else if (move.getTo().getX() == 7)
                     {
-                        newState.setCanCastleShort(false, move.getCapturedPiece().getColor());
+                        newPosition = newPosition.setCanCastleShort(false, move.getCapturedPiece().getColor());
                     }
                 }
                 break;
 
             case CASTLE_SHORT:
-                if (!state.getCanCastleShort(inMove()))
+                if (!position.getCanCastleShort(inMove()))
                 {
                     return new MoveResult(false, this);
                 }
@@ -329,7 +330,7 @@ public class Board
                 break;
 
             case CASTLE_LONG:
-                if (!state.getCanCastleLong(inMove()))
+                if (!position.getCanCastleLong(inMove()))
                 {
                     return new MoveResult(false, this);
                 }

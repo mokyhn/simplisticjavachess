@@ -19,8 +19,8 @@ public class BoardTest_Castling
 
     private static Board BLACK_IN_MOVE_CASTLING() { return Board.createFromFEN("r3k2r/8/8/8/8/8/8/R3K2R b KQkq"); }
     private static Board BLACK_IN_MOVE_CANNOT_CASTLE() { return Board.createFromFEN("r3k2r/8/8/8/8/8/8/R3K2R b KQ"); }
-    private static Board AFTER_BLACK_SHORT_CASTLING() {return Board.createFromFEN("r4rk1/8/8/8/8/8/8/R3K2R w kq"); }
-    private static Board AFTER_BLACK_LONG_CASTLING() {return Board.createFromFEN("2kr3r/8/8/8/8/8/8/R3K2R w kq"); }
+    private static Board AFTER_BLACK_SHORT_CASTLING() {return Board.createFromFEN("r4rk1/8/8/8/8/8/8/R3K2R w KQ"); }
+    private static Board AFTER_BLACK_LONG_CASTLING() {return Board.createFromFEN("2kr3r/8/8/8/8/8/8/R3K2R w KQ"); }
 
 
     @Test

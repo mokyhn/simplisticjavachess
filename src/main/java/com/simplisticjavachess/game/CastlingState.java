@@ -72,6 +72,7 @@ public class CastlingState
 				Objects.equals(castleLong, that.castleLong);
 	}
 
+	//TODO: Fix this code, it could be buggy.
 	@Override
 	public int hashCode() {
 		return Objects.hash(castleShort, castleLong);

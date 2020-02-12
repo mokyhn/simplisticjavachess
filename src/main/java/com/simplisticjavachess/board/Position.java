@@ -5,6 +5,7 @@
 
 package com.simplisticjavachess.board;
 
+import com.simplisticjavachess.game.CastlingState;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
@@ -18,6 +19,9 @@ public class Position
 {
     private Color inMove;
 
+    private CastlingState castlingState;
+
+
     private final Map<Location, Piece> piecesMap;
 
     private int hashCode;
@@ -25,6 +29,7 @@ public class Position
     // TODO: Get rid of this dummy - no constructor.
     Position()
     {
+        castlingState = CastlingState.NOBODY_CAN_CASTLE;
         piecesMap = new HashMap<>();
         hashCode = 0;
         inMove = null;
@@ -32,6 +37,7 @@ public class Position
 
     public Position(Color inMove)
     {
+        this.castlingState = CastlingState.NOBODY_CAN_CASTLE;
         piecesMap = new HashMap<>();
         hashCode = inMove.hashCode();
         this.inMove = inMove;
@@ -39,9 +45,18 @@ public class Position
 
     private Position(Position position)
     {
+        this.castlingState = position.castlingState;
         this.piecesMap = new HashMap<>(position.piecesMap);
         this.inMove = position.inMove;
         this.hashCode = position.hashCode;
+    }
+
+    private Position(Color inMove, CastlingState castlingState, Map<Location, Piece> pieces, int hashCode)
+    {
+        this.inMove = inMove;
+        this.castlingState = castlingState;
+        this.piecesMap = new HashMap<>(pieces);
+        this.hashCode = hashCode;
     }
 
     public Color getInMove()
@@ -55,6 +70,46 @@ public class Position
         newPosition.hashCode = hashCode ^ this.inMove.hashCode() ^ inMove.hashCode();
         return newPosition;
     }
+
+    public Position setCanCastleShort(boolean flag, Color color)
+    {
+        CastlingState newCastlingState;
+
+        if (flag)
+        {
+            newCastlingState = castlingState.setCanCastleShort(color);
+        } else {
+            newCastlingState = castlingState.setCannotCastleShort(color);
+        }
+
+        return new Position(inMove, newCastlingState, this.piecesMap, this.hashCode ^ this.castlingState.hashCode() ^ newCastlingState.hashCode());
+    }
+
+    public Position setCanCastleLong(boolean flag, Color color)
+    {
+        CastlingState newCastlingState;
+
+        if (flag)
+        {
+            newCastlingState = castlingState.setCanCastleLong(color);
+        }
+        else
+        {
+            newCastlingState = castlingState.setCannotCastleLong(color);
+        }
+        return new Position(inMove, newCastlingState, this.piecesMap, this.hashCode ^ this.castlingState.hashCode() ^ newCastlingState.hashCode());
+    }
+
+    public boolean getCanCastleShort(Color color)
+    {
+        return castlingState.canCastleShort(color);
+    }
+
+    public boolean getCanCastleLong(Color color)
+    {
+        return castlingState.canCastleLong(color);
+    }
+
 
     /**
      *
@@ -178,16 +233,31 @@ public class Position
         result = result + " _______________\n";
         result = result + " a b c d e f g h\n";
         result = result + (inMove == Color.WHITE ? "  White to move\n" : "  Black to move\n");
+        result = result + castlingState.toString();
         return result;
+    }
+
+    @Override
+    public String toString()
+    {
+        return this.getPositionString();
     }
 
     @Override
     public boolean equals(Object object)
     {
+        if (this == object)
+        {
+            return true;
+        }
+
         if (object instanceof Position)
         {
             Position position = (Position) object;
-            return this.piecesMap.equals(position.piecesMap);
+            //TODO: Add hashCode check later for speed optimization
+            return this.inMove == position.inMove &&
+                    this.castlingState.equals(position.castlingState) &&
+                    this.piecesMap.equals(position.piecesMap);
         }
         else
         {
