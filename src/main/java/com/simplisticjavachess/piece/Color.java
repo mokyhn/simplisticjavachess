@@ -6,12 +6,17 @@ package com.simplisticjavachess.piece;
  */
 public enum Color
 {
-    BLACK(-1), WHITE(1);
-    private final int color;
+    BLACK(-1, -1339633704),
+    WHITE(1, 1760017000);
 
-    Color(int color)
+    private final int color;
+    private final int chessHashCode;
+
+
+    Color(int color, int chessHashCode)
     {
         this.color = color;
+        this.chessHashCode = chessHashCode;
     }
 
     public int getColor()
@@ -35,5 +40,16 @@ public enum Color
             return "w";
         }
     }
-    
+
+    @Override
+    public String toString()
+    {
+        return getColorString();
+    }
+
+    public int getChessHashCode()
+    {
+        return chessHashCode;
+    }
+
 }

@@ -64,7 +64,7 @@ public class LocationTest {
                 result.add(hashCode);
             }
         }
-        
+
         assertEquals(64, result.size());
     }
     

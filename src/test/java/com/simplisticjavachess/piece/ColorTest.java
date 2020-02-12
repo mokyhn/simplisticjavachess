@@ -8,6 +8,6 @@ public class ColorTest {
     @Test
     public void testHashCode()
     {
-        assertNotEquals(Color.BLACK.hashCode(), Color.WHITE.hashCode());
+        assertNotEquals(Color.BLACK.getChessHashCode(), Color.WHITE.getChessHashCode());
     }
 }

@@ -1,7 +1,6 @@
 package com.simplisticjavachess.board;
 
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.Optional;
 
 public final class Location
@@ -11,12 +10,12 @@ public final class Location
     final int hashCode;
     
     private final static String[] LETTERS = {"a", "b", "c", "d", "e", "f", "g", "h"};
-    
-    public Location(int x, int y) 
+
+    public Location(int x, int y)
     {
         this.x = x;
         this.y = y;
-        this.hashCode = Objects.hash(x, y);
+        this.hashCode = 1896071300 * x + y * 1030949295 + 859318006;
     }
 
     /**
@@ -91,7 +90,11 @@ public final class Location
     {        
         return hashCode;
     }
-    
+
+    public int getChessHashCode()
+    {
+        return hashCode;
+    }
     
     @Override
     public String toString()

@@ -13,12 +13,14 @@ public class CastlingState
 
 	public static final CastlingState NOBODY_CAN_CASTLE = new CastlingState();
 
+	//private final int hashValue;
+
 	private CastlingState() {
 		this.castleShort = EnumSet.noneOf(Color.class);
 		this.castleLong = EnumSet.noneOf(Color.class);
 	}
 
-	private CastlingState(Set<Color> castleShort, Set<Color> castleLong)
+	public CastlingState(Set<Color> castleShort, Set<Color> castleLong)
 	{
 		this.castleShort = EnumSet.copyOf(castleShort);
 		this.castleLong = EnumSet.copyOf(castleLong);
@@ -73,9 +75,14 @@ public class CastlingState
 	}
 
 	//TODO: Fix this code, it could be buggy.
-	@Override
-	public int hashCode() {
+	public int getChessHashCode() {
 		return Objects.hash(castleShort, castleLong);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return getChessHashCode();
 	}
 
 	@Override

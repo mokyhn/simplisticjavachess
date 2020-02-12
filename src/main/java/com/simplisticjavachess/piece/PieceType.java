@@ -6,12 +6,19 @@ package com.simplisticjavachess.piece;
  */
 public enum PieceType
 {
-    PAWN,
-    BISHOP,
-    KNIGHT,
-    ROOK,
-    QUEEN,
-    KING;
+    PAWN(-1331833639),
+    BISHOP(-935112331),
+    KNIGHT(1161123721),
+    ROOK(27575945),
+    QUEEN(-905638995),
+    KING(843184298);
+
+    private final int chessHashCode;
+
+    PieceType(int chessHashCode)
+    {
+        this.chessHashCode = chessHashCode;
+    }
 
     public String getPieceLetter() 
     {
@@ -39,5 +46,9 @@ public enum PieceType
         String r = getPieceLetter();
         return color == Color.BLACK ? r.toLowerCase() : r.toUpperCase();
     }
-    
+
+    public int getChessHashCode() {
+        return chessHashCode;
+    }
+
 }

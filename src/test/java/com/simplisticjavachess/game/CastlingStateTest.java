@@ -2,6 +2,8 @@ package com.simplisticjavachess.game;
 
 import org.junit.Test;
 
+import java.util.EnumSet;
+
 import static com.simplisticjavachess.piece.Color.BLACK;
 import static com.simplisticjavachess.piece.Color.WHITE;
 import static org.junit.Assert.*;
@@ -31,6 +33,17 @@ public class CastlingStateTest {
 		state = state.setCannotCastleLong(WHITE);
 		assertFalse(state.canCastleLong(WHITE));
 
+	}
+
+
+	@Test
+	public void testOrderAndHashing() {
+		CastlingState state1 = new CastlingState(EnumSet.of(WHITE, BLACK), EnumSet.of(WHITE));
+		CastlingState state2 = new CastlingState(EnumSet.of(BLACK, WHITE), EnumSet.of(WHITE));
+		CastlingState state3 = new CastlingState(EnumSet.of(WHITE), EnumSet.of(WHITE, BLACK));
+
+		assertEquals(state1.getChessHashCode(), state2.getChessHashCode());
+		assertNotEquals(state1.getChessHashCode(), state3.getChessHashCode());
 	}
 
 }
