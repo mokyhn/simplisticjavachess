@@ -3,8 +3,9 @@ package com.simplisticjavachess.board;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import org.junit.Assert;
+
+import static com.simplisticjavachess.piece.Color.WHITE;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -18,7 +19,7 @@ public class PositionInferenceTest
     @Test
     public void testIsInCheck()
     {
-        Board board = new Board();
+        Board board = new Board(WHITE);
         board = board.insert(Piece.parse("Bd5"));
         board = board.insert(Piece.parse("kc4"));
         assertTrue(PositionInference.isInCheck(board.getPosition(), Color.BLACK));
@@ -27,16 +28,16 @@ public class PositionInferenceTest
     @Test
     public void testAttacks()
     {
-        Board board = new Board();
+        Board board = new Board(WHITE);
         Piece piece = Piece.parse("Bd5");
         board = board.insert(piece);
-        Piece result = PositionInference.attacks(board.getPosition(), Location.parse("e6"), Color.WHITE);
+        Piece result = PositionInference.attacks(board.getPosition(), Location.parse("e6"), WHITE);
         Assert.assertEquals(piece, result);
         
-        result = PositionInference.attacks(board.getPosition(), Location.parse("f7"), Color.WHITE);
+        result = PositionInference.attacks(board.getPosition(), Location.parse("f7"), WHITE);
         Assert.assertEquals(piece, result);
         
-        result = PositionInference.attacks(board.getPosition(), Location.parse("g8"), Color.WHITE);
+        result = PositionInference.attacks(board.getPosition(), Location.parse("g8"), WHITE);
         Assert.assertEquals(piece, result);
     }
 
@@ -48,17 +49,17 @@ public class PositionInferenceTest
         Piece piece = Piece.parse("Kd5");
         position = position.insert(piece);
         
-        assertNull(PositionInference.attacks(position, Location.parse("d5"), Color.WHITE));
-        assertEquals(piece, PositionInference.attacks(position, Location.parse("d6"), Color.WHITE));
-        assertEquals(piece, PositionInference.attacks(position, Location.parse("d4"), Color.WHITE));
-        assertEquals(piece, PositionInference.attacks(position, Location.parse("e5"), Color.WHITE));
-        assertEquals(piece, PositionInference.attacks(position, Location.parse("e6"), Color.WHITE));
-        assertEquals(piece, PositionInference.attacks(position, Location.parse("e4"), Color.WHITE));
-        assertEquals(piece, PositionInference.attacks(position, Location.parse("c5"), Color.WHITE));
-        assertEquals(piece, PositionInference.attacks(position, Location.parse("c4"), Color.WHITE));
-        assertEquals(piece, PositionInference.attacks(position, Location.parse("c6"), Color.WHITE));
-        assertNull(PositionInference.attacks(position, Location.parse("c3"), Color.WHITE));
-        assertNull(PositionInference.attacks(position, Location.parse("c7"), Color.WHITE));
+        assertNull(PositionInference.attacks(position, Location.parse("d5"), WHITE));
+        assertEquals(piece, PositionInference.attacks(position, Location.parse("d6"), WHITE));
+        assertEquals(piece, PositionInference.attacks(position, Location.parse("d4"), WHITE));
+        assertEquals(piece, PositionInference.attacks(position, Location.parse("e5"), WHITE));
+        assertEquals(piece, PositionInference.attacks(position, Location.parse("e6"), WHITE));
+        assertEquals(piece, PositionInference.attacks(position, Location.parse("e4"), WHITE));
+        assertEquals(piece, PositionInference.attacks(position, Location.parse("c5"), WHITE));
+        assertEquals(piece, PositionInference.attacks(position, Location.parse("c4"), WHITE));
+        assertEquals(piece, PositionInference.attacks(position, Location.parse("c6"), WHITE));
+        assertNull(PositionInference.attacks(position, Location.parse("c3"), WHITE));
+        assertNull(PositionInference.attacks(position, Location.parse("c7"), WHITE));
     }
     
 
@@ -69,24 +70,24 @@ public class PositionInferenceTest
         Piece piece = Piece.parse("Nd5");
         position = position.insert(piece);
         
-        assertNull(PositionInference.attacks(position, Location.parse("d5"), Color.WHITE));
-        assertNull(PositionInference.attacks(position, Location.parse("d6"), Color.WHITE));
-        assertNull(PositionInference.attacks(position, Location.parse("d7"), Color.WHITE));
+        assertNull(PositionInference.attacks(position, Location.parse("d5"), WHITE));
+        assertNull(PositionInference.attacks(position, Location.parse("d6"), WHITE));
+        assertNull(PositionInference.attacks(position, Location.parse("d7"), WHITE));
 
-        assertEquals(piece, PositionInference.attacks(position, Location.parse("e3"), Color.WHITE));
-        assertEquals(piece, PositionInference.attacks(position, Location.parse("f6"), Color.WHITE));
+        assertEquals(piece, PositionInference.attacks(position, Location.parse("e3"), WHITE));
+        assertEquals(piece, PositionInference.attacks(position, Location.parse("f6"), WHITE));
 
     }
 
     @Test
     public void pawnAttackTest()
     {
-        Board board = Board.createFromLetters("Pd4");
+        Board board = Board.createFromLetters("Pd4 w");
         Location.parse("d4");
         Piece piece;
 
         piece = PositionInference.attacks(board.getPosition(),
-                Location.parse("e5"), Color.WHITE);
+                Location.parse("e5"), WHITE);
         assertEquals(Piece.parse("Pd4"), piece);
     }
 

@@ -11,7 +11,7 @@ public class CastlingStateTest {
 	@Test
 	public void setCanCastleShort()
 	{
-		CastlingState state = new CastlingState();
+		CastlingState state = CastlingState.NOBODY_CAN_CASTLE;
 		state = state.setCanCastleShort(WHITE, BLACK);
 		assertTrue(state.canCastleShort(WHITE));
 		assertTrue(state.canCastleShort(BLACK));
@@ -23,7 +23,7 @@ public class CastlingStateTest {
 
 	@Test
 	public void setCanCastleLong() {
-		CastlingState state = new CastlingState();
+		CastlingState state = CastlingState.NOBODY_CAN_CASTLE;
 		state = state.setCanCastleLong(WHITE, BLACK);
 		assertTrue(state.canCastleLong(WHITE));
 		assertTrue(state.canCastleLong(BLACK));

@@ -8,6 +8,8 @@ import com.simplisticjavachess.piece.Piece;
 import java.util.List;
 
 import org.junit.Test;
+
+import static com.simplisticjavachess.piece.Color.WHITE;
 import static org.junit.Assert.*;
 
 /**
@@ -20,11 +22,10 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesUpRight()
     {         
-        Board b = new Board();
+        Board b = new Board(WHITE);
         
         Piece p = Piece.parse("Bd5");
         b = b.insert(p);
-        b = b.setWhiteToMove();
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, 1)).generateMoves(b, p));
         assertEquals(3, result.size()); // e6, f7, g8
         assertTrue(result.toString().contains("d5-e6"));
@@ -35,11 +36,10 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesDown()
     {         
-        Board b = new Board();
+        Board b = new Board(WHITE);
         
         Piece p = Piece.parse("Rd5");
         b = b.insert(p);
-        b = b.setWhiteToMove();
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(0, -1)).generateMoves(b, p));
         assertEquals(4, result.size());
         assertTrue(result.toString().contains("d5-d4"));
@@ -52,12 +52,11 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesLeft()
     {         
-        Board b = new Board();
+        Board b = new Board(WHITE);
         
         Piece p = Piece.parse("Rd5");
         b = b.insert(p);
         
-        b = b.setWhiteToMove();
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(-1, 0)).generateMoves(b, p));
         assertEquals(3, result.size());
         assertTrue(result.toString().contains("d5-c5"));
@@ -68,7 +67,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesLeftBlockingPiece()
     {         
-        Board b = new Board();
+        Board b = new Board(WHITE);
         
         Piece p = Piece.parse("Rd5");
         b = b.insert(p);
@@ -76,7 +75,6 @@ public class LineMoveGeneratorTest
         // A blocking piece
         b = b.insert(Piece.parse("Pb5"));
         
-        b = b.setWhiteToMove();
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(-1, 0)).generateMoves(b, p));
         assertEquals(1, result.size());
         assertTrue(result.toString().contains("d5-c5"));
@@ -85,7 +83,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateDownRightAndCapture()
     {         
-        Board b = new Board();
+        Board b = new Board(WHITE);
         
         Piece p = Piece.parse("Bc5");
         b = b.insert(p);
@@ -96,7 +94,6 @@ public class LineMoveGeneratorTest
         // Should not be captured
         b = b.insert(Piece.parse("pf2"));
         
-        b = b.setWhiteToMove();
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, -1)).generateMoves(b, p));
         assertEquals(2, result.size());
         assertTrue(result.toString().contains("c5-d4"));

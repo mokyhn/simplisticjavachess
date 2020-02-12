@@ -4,6 +4,9 @@ import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.misc.Strings;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author Morten Kühnrich
  *
@@ -23,15 +26,16 @@ public class BoardParser
         // The FEN sections are divided by space
         String[] sections = fen.split(" ");
 
-        Board board = new Board();
-
         // Parse pieces
         String piecesString = sections[0];
-        board = parseFENPieces(board, piecesString);
+        List<Piece> pieces = parseFENPieces(piecesString);
 
         // Parse who to move
         String inMoveString = sections[1];
-        board = parseFENWhoToMove(board, inMoveString);
+        Color inMove = parseFENWhoToMove(inMoveString);
+
+        Board board = new Board(inMove);
+        board = board.insert(pieces);
 
         if (sections.length == 2)
         {
@@ -45,7 +49,9 @@ public class BoardParser
         return board;
     }
 
-    private static Board parseFENPieces(Board board, String piecesString) {
+    private static List<Piece> parseFENPieces(String piecesString) {
+        List<Piece> pieces = new ArrayList<>();
+
         int x = 0;
         int y = 7;
         for (char c : piecesString.toCharArray())
@@ -62,11 +68,11 @@ public class BoardParser
             }
             else
             {
-                board = board.insert(new Piece(new Location(x, y), c));
+                pieces.add(new Piece(new Location(x, y), c));
                 x++;
             }
         }
-        return board;
+        return pieces;
     }
 
     private static Board parseFENCastling(Board board, String castlingString) {
@@ -96,19 +102,18 @@ public class BoardParser
         return board;
     }
 
-    private static Board parseFENWhoToMove(Board board, String inMoveString) {
+    private static Color parseFENWhoToMove(String inMoveString) {
         inMoveString = inMoveString.toLowerCase();
         if ("w".equals(inMoveString))
         {
-            board = board.setWhiteToMove();
+            return Color.WHITE;
         } else if ("b".equals(inMoveString))
         {
-            board = board.setBlackToMove();
+            return Color.BLACK;
         } else
         {
             throw new IllegalArgumentException("Who-to-move-color not specified correctly, use either w or b");
         }
-        return board;
     }
 
     public static String exportPosition(Board board) 
@@ -161,29 +166,39 @@ public class BoardParser
     static Board parseFromLetters(String str)
     {
         String[] strings = str.split(" ");
-        Board board = new Board();
-        
+
+        List<Piece> pieces = new ArrayList<>();
+        Color inMove = null;
+
         for (String s : strings)
         {
             if (s.length() > 1)
             {
                 Piece piece = Piece.parse(s);
-                board = board.insert(piece);
+                pieces.add(piece);
             }
             else
             {
                 if ("w".equals(s))
                 {
-                    board = board.setWhiteToMove();
+                    inMove = Color.WHITE;
                 } 
                 
                 if ("b".equals(s))
                 {
-                    board = board.setBlackToMove();
+                    inMove = Color.BLACK;
                 }                 
             }
         }
-        
+
+        if (inMove == null)
+        {
+            throw new IllegalArgumentException("You must supply a color for who is to move, w or b");
+        }
+
+        Board board = new Board(inMove);
+        board = board.insert(pieces);
+
         return board;
     }
 }

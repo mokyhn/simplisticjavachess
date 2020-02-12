@@ -16,21 +16,44 @@ import java.util.Optional;
 
 public class Position
 {
+    private Color inMove;
+
     private final Map<Location, Piece> piecesMap;
 
     private int hashCode;
 
-
+    // TODO: Get rid of this dummy - no constructor.
     Position()
     {
         piecesMap = new HashMap<>();
         hashCode = 0;
+        inMove = null;
+    }
+
+    public Position(Color inMove)
+    {
+        piecesMap = new HashMap<>();
+        hashCode = inMove.hashCode();
+        this.inMove = inMove;
     }
 
     private Position(Position position)
     {
         this.piecesMap = new HashMap<>(position.piecesMap);
+        this.inMove = position.inMove;
         this.hashCode = position.hashCode;
+    }
+
+    public Color getInMove()
+    {
+        return inMove;
+    }
+
+    public Position setInMove(Color inMove) {
+        Position newPosition = new Position(this);
+        newPosition.inMove = inMove;
+        newPosition.hashCode = hashCode ^ this.inMove.hashCode() ^ inMove.hashCode();
+        return newPosition;
     }
 
     /**
@@ -52,24 +75,24 @@ public class Position
             return result;
         }
     }
-       
+
     public Piece getPiece(Location location)
     {
         return piecesMap.get(location);
     }
-  
+
     Collection<Piece> getPieces()
     {
         return piecesMap.values();
     }
-        
+
     /**
      * Remove a piece
      * @param piece - to remove
      * @return the resulting position
      */
     Position remove(Piece piece)
-    {    
+    {
         if (piecesMap.containsKey(piece.getLocation()))
         {
             Position result = new Position(this);
@@ -83,7 +106,7 @@ public class Position
         }
 
     }
-   
+
     public Position move(Piece piece, Location to)
     {
         if (piecesMap.containsKey(to))
@@ -154,6 +177,7 @@ public class Position
         }
         result = result + " _______________\n";
         result = result + " a b c d e f g h\n";
+        result = result + (inMove == Color.WHITE ? "  White to move\n" : "  Black to move\n");
         return result;
     }
 
@@ -171,6 +195,8 @@ public class Position
         }
     }
 
+    //TODO: Add tests that show that hashing lives up to the requirements for chess positions also wrt. definitions
+    //needed for threefold repetition checking
     @Override
     public int hashCode() {
         return hashCode;

@@ -11,8 +11,9 @@ public class CastlingState
 	private final Set<Color> castleShort;
 	private final Set<Color> castleLong;
 
-	//TODO: Get rid of this constructor
-	public CastlingState() {
+	public static final CastlingState NOBODY_CAN_CASTLE = new CastlingState();
+
+	private CastlingState() {
 		this.castleShort = EnumSet.noneOf(Color.class);
 		this.castleLong = EnumSet.noneOf(Color.class);
 	}
@@ -74,6 +75,19 @@ public class CastlingState
 	@Override
 	public int hashCode() {
 		return Objects.hash(castleShort, castleLong);
+	}
+
+	@Override
+	public String toString()
+	{
+		String result = "";
+		String blackCastleShort = canCastleShort(Color.BLACK) ? "X" : " ";
+		String blackCastleLong  = canCastleLong(Color.BLACK) ? "X" : " ";
+		String whiteCastleShort = canCastleShort(Color.WHITE) ? "X" : " ";
+		String whiteCastleLong  = canCastleLong(Color.WHITE)  ? "X" : " ";
+		result = result + "Black can castle long: [" + blackCastleLong + "],       Black can castle short: [" + blackCastleShort + "]\n";
+		result = result + "White can castle long: [" + whiteCastleLong + "],       White can castle short: [" + whiteCastleShort + "]\n";
+		return result;
 	}
 
 	public boolean canCastleShort(Color color)

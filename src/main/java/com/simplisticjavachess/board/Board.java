@@ -13,6 +13,7 @@ import com.simplisticjavachess.piece.Piece;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 import static com.simplisticjavachess.piece.PieceType.KING;
@@ -22,18 +23,18 @@ import static com.simplisticjavachess.piece.PieceType.ROOK;
 /**
  * @author Morten Kühnrich
  */
-//TODO: Add futher tests of this class
+//TODO: Add further tests of this class
 public class Board
 {
 
     private final State state;
     private final Position position;
 
-    //TODO: Get rid of this constructor.
-    public Board()
+    //TODO: Make this constructor less fill-in-dummy-garbage-data as done with State() which assumes values for state.
+    public Board(Color inMove)
     {
         state = new State();
-        position = new Position();
+        position = new Position(inMove);
     }
 
     private Board(State newState, Position newPosition)
@@ -54,17 +55,17 @@ public class Board
 
     public Color inMove()
     {
-        return state.getInMove();
+        return position.getInMove();
     }
 
     public Board setBlackToMove()
     {
-        return new Board(state.setInMove(Color.BLACK), position);
+        return new Board(state, position.setInMove(Color.BLACK));
     }
 
     public Board setWhiteToMove()
     {
-        return new Board(state.setInMove(Color.WHITE), position);
+        return new Board(state, position.setInMove(Color.WHITE));
     }
 
     public GameResult getGameResult()
@@ -105,12 +106,12 @@ public class Board
 
     public boolean canCastleShort()
     {
-        return state.getCanCastleShort();
+        return state.getCanCastleShort(inMove());
     }
 
     public boolean canCastleLong()
     {
-        return state.getCanCastleLong();
+        return state.getCanCastleLong(inMove());
     }
 
     public Board setCanCastleShort(boolean flag, Color color)
@@ -143,6 +144,18 @@ public class Board
         return new Board(state, position.insert(p));
     }
 
+    public Board insert(List<Piece> pieces)
+    {
+        Board board = this;
+
+        for (Piece piece : pieces)
+        {
+            board = board.insert(piece);
+        }
+
+        return board;
+    }
+
     public boolean freeSquare(Location location)
     {
         return position.freeSquare(location);
@@ -166,7 +179,7 @@ public class Board
      */
     public boolean isAttacked(int x, int y)
     {
-        return PositionInference.attacks(position, new Location(x, y), state.getInMove().opponent()) != null;
+        return PositionInference.attacks(position, new Location(x, y), position.getInMove().opponent()) != null;
     }
 
 
@@ -305,7 +318,7 @@ public class Board
                 break;
 
             case CASTLE_SHORT:
-                if (!state.getCanCastleShort())
+                if (!state.getCanCastleShort(inMove()))
                 {
                     return new MoveResult(false, this);
                 }
@@ -316,7 +329,7 @@ public class Board
                 break;
 
             case CASTLE_LONG:
-                if (!state.getCanCastleLong())
+                if (!state.getCanCastleLong(inMove()))
                 {
                     return new MoveResult(false, this);
                 }
@@ -348,13 +361,13 @@ public class Board
         }
 
         // Swap the move color
-        newState = newState.setInMove(state.getInMove().opponent());
+        newPosition = newPosition.setInMove(position.getInMove().opponent());
 
         boolean wasMoveLegal;
 
         // The player that did the move is in check
         // his or her move is hence not legal
-        if (PositionInference.isInCheck(newPosition, state.getInMove()))
+        if (PositionInference.isInCheck(newPosition, position.getInMove()))
         {
             wasMoveLegal = false;
         }
@@ -376,7 +389,6 @@ public class Board
     {
         StringBuilder sb = new StringBuilder();
         sb.append(position.getPositionString());
-        sb.append(inMove() == Color.WHITE ? "  White to move\n" : "  Black to move\n");
         sb.append(state.toString());
         sb.append("Immediate evaluation: " + new Evaluator().evaluate(this) + "\n");
         sb.append("FEN: " + BoardParser.exportPosition(this));
@@ -406,12 +418,12 @@ public class Board
 
     boolean isWhiteInMove()
     {
-        return Color.WHITE.equals(state.getInMove());
+        return Color.WHITE.equals(position.getInMove());
     }
 
     public boolean isAttacked(Location location)
     {
-        return PositionInference.attacks(position, location, state.getInMove().opponent()) != null;
+        return PositionInference.attacks(position, location, position.getInMove().opponent()) != null;
     }
 
     public Vector getMoveDirection()

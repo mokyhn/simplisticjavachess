@@ -120,7 +120,7 @@ public class PositionTest
     @Test
     public void testFreeSquares()
     {
-        Board b = Board.createFromLetters("Kd4 Rh4");
+        Board b = Board.createFromLetters("Kd4 Rh4 w");
         assertTrue(b.getPosition().freeSquares(Location.parse("d4"), Location.parse("h4")));
     }
 
