@@ -2,81 +2,81 @@ package com.simplisticjavachess.game;
 
 import com.simplisticjavachess.piece.Color;
 
-import java.util.EnumSet;
-import java.util.Objects;
-import java.util.Set;
-
 public class CastlingState
 {
-	private final Set<Color> castleShort;
-	private final Set<Color> castleLong;
 
-	public static final CastlingState NOBODY_CAN_CASTLE = new CastlingState();
+	private boolean whiteShort;
+	private boolean whiteLong;
+	private boolean blackShort;
+	private boolean blackLong;
 
-	//private final int hashValue;
+	public static final CastlingState NOBODY_CAN_CASTLE = new CastlingState(false, false, false, false);
 
-	private CastlingState() {
-		this.castleShort = EnumSet.noneOf(Color.class);
-		this.castleLong = EnumSet.noneOf(Color.class);
+	private final static int WHITE_SHORT = -365235027;
+	private final static int WHITE_LONG  =  1561152162;
+	private final static int BLACK_SHORT = -1485870876;
+	private final static int BLACK_LONG  =  145385139;
+
+	private int chessHashCode;
+
+
+	public CastlingState(boolean whiteShort, boolean whiteLong, boolean blackShort, boolean blackLong)
+	{
+		this.whiteShort = whiteShort;
+		this.whiteLong = whiteLong;
+		this.blackShort = blackShort;
+		this.blackLong = blackLong;
+		this.chessHashCode = (whiteShort ? WHITE_SHORT : 0) ^ (whiteLong ? WHITE_LONG : 0) ^
+				             (blackShort ? BLACK_SHORT : 0) ^ (blackLong ? BLACK_LONG : 0) ;
 	}
 
-	public CastlingState(Set<Color> castleShort, Set<Color> castleLong)
+	public CastlingState setCanCastleShort(Color color, boolean state)
 	{
-		this.castleShort = EnumSet.copyOf(castleShort);
-		this.castleLong = EnumSet.copyOf(castleLong);
-	}
-
-	public CastlingState setCanCastleShort(Color... colors)
-	{
-		CastlingState result = myClone();
-		for (Color color : colors)
+		switch (color)
 		{
-			result.castleShort.add(color);
+			case BLACK:
+				return new CastlingState(whiteShort, whiteLong, state, blackLong);
+			case WHITE:
+				return new CastlingState(state, whiteLong, blackShort, blackLong);
+			default:
+				throw new IllegalStateException("Unreachable statement");
 		}
-		return result;
 	}
 
-	public CastlingState setCanCastleLong(Color... colors)
+	public CastlingState setCanCastleLong(Color color, boolean state)
 	{
-		CastlingState result = myClone();
-		for (Color color : colors)
+		switch (color)
 		{
-			result.castleLong.add(color);
+			case BLACK:
+				return new CastlingState(whiteShort, whiteLong, blackShort, state);
+			case WHITE:
+				return new CastlingState(whiteShort, state, blackShort, blackLong);
+			default:
+				throw new IllegalStateException("Unreachable statement");
 		}
-		return result;
-	}
-
-	public CastlingState setCannotCastleShort(Color color)
-	{
-		CastlingState result = myClone();
-		result.castleShort.remove(color);
-		return result;
-	}
-
-	public CastlingState setCannotCastleLong(Color color)
-	{
-		CastlingState result = myClone();
-		result.castleLong.remove(color);
-		return result;
-	}
-
-	private CastlingState myClone()
-	{
-		return new CastlingState(this.castleShort, this.castleLong);
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (!(o instanceof CastlingState)) return false;
-		CastlingState that = (CastlingState) o;
-		return Objects.equals(castleShort, that.castleShort) &&
-				Objects.equals(castleLong, that.castleLong);
+	public boolean equals(Object other) {
+		if (this == other)
+		{
+			return true;
+		}
+		if (other instanceof CastlingState)
+		{
+			CastlingState that = (CastlingState) other;
+			return  this.whiteShort == that.whiteShort &&
+					this.whiteLong  == that.whiteLong  &&
+					this.blackShort == that.blackShort &&
+					this.blackLong  == that.blackLong;
+		} else
+		{
+			return false;
+		}
 	}
 
-	//TODO: Fix this code, it could be buggy.
 	public int getChessHashCode() {
-		return Objects.hash(castleShort, castleLong);
+		return chessHashCode;
 	}
 
 	@Override
@@ -100,12 +100,12 @@ public class CastlingState
 
 	public boolean canCastleShort(Color color)
 	{
-		return castleShort.contains(color);
+		return Color.WHITE.equals(color) ? whiteShort : blackShort;
 	}
 
 	public boolean canCastleLong(Color color)
 	{
-		return castleLong.contains(color);
+		return Color.WHITE.equals(color) ? whiteLong : blackLong;
 	}
 
 }

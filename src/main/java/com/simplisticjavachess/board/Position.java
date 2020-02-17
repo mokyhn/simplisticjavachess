@@ -23,23 +23,23 @@ public class Position
 
     private final Map<Location, Piece> piecesMap;
 
-    private int hashCode;
+    private int piecesHash;
 
     // TODO: Get rid of this dummy - no constructor.
     Position()
     {
         castlingState = CastlingState.NOBODY_CAN_CASTLE;
         piecesMap = new HashMap<>();
-        hashCode = 0;
         inMove = null;
+        piecesHash = 0;
     }
 
     public Position(Color inMove)
     {
         this.castlingState = CastlingState.NOBODY_CAN_CASTLE;
         piecesMap = new HashMap<>();
-        hashCode = inMove.getChessHashCode();
         this.inMove = inMove;
+        this.piecesHash = 0;
     }
 
     private Position(Position position)
@@ -47,15 +47,15 @@ public class Position
         this.castlingState = position.castlingState;
         this.piecesMap = new HashMap<>(position.piecesMap);
         this.inMove = position.inMove;
-        this.hashCode = position.hashCode;
+        this.piecesHash = position.piecesHash;
     }
 
-    private Position(Color inMove, CastlingState castlingState, Map<Location, Piece> pieces, int hashCode)
+    private Position(Color inMove, CastlingState castlingState, Map<Location, Piece> pieces, int piecesHash)
     {
         this.inMove = inMove;
         this.castlingState = castlingState;
         this.piecesMap = new HashMap<>(pieces);
-        this.hashCode = hashCode;
+        this.piecesHash = piecesHash;
     }
 
     public Color getInMove()
@@ -66,7 +66,6 @@ public class Position
     public Position setInMove(Color inMove) {
         Position newPosition = new Position(this);
         newPosition.inMove = inMove;
-        newPosition.hashCode = hashCode ^ this.inMove.getChessHashCode() ^ inMove.getChessHashCode();
         return newPosition;
     }
 
@@ -74,29 +73,15 @@ public class Position
     {
         CastlingState newCastlingState;
 
-        if (flag)
-        {
-            newCastlingState = castlingState.setCanCastleShort(color);
-        } else {
-            newCastlingState = castlingState.setCannotCastleShort(color);
-        }
-
-        return new Position(inMove, newCastlingState, this.piecesMap, this.hashCode ^ this.castlingState.getChessHashCode() ^ newCastlingState.getChessHashCode());
+        newCastlingState = castlingState.setCanCastleShort(color, flag);
+        return new Position(inMove, newCastlingState, this.piecesMap, this.piecesHash);
     }
 
     public Position setCanCastleLong(boolean flag, Color color)
     {
         CastlingState newCastlingState;
-
-        if (flag)
-        {
-            newCastlingState = castlingState.setCanCastleLong(color);
-        }
-        else
-        {
-            newCastlingState = castlingState.setCannotCastleLong(color);
-        }
-        return new Position(inMove, newCastlingState, this.piecesMap, this.hashCode ^ this.castlingState.getChessHashCode() ^ newCastlingState.getChessHashCode());
+        newCastlingState = castlingState.setCanCastleLong(color, flag);
+        return new Position(inMove, newCastlingState, this.piecesMap, this.piecesHash);
     }
 
     public boolean getCanCastleShort(Color color)
@@ -125,7 +110,7 @@ public class Position
         {
             Position result = new Position(this);
             result.piecesMap.put(piece.getLocation(), piece);
-            result.hashCode = result.hashCode ^ piece.getChessHashCode();
+            result.piecesHash ^= piece.getChessHashCode();
             return result;
         }
     }
@@ -151,7 +136,7 @@ public class Position
         {
             Position result = new Position(this);
             result.piecesMap.remove(piece.getLocation());
-            result.hashCode = result.hashCode ^ piece.getChessHashCode();
+            result.piecesHash ^= piece.getChessHashCode();
             return result;
         }
         else
@@ -253,7 +238,8 @@ public class Position
         if (object instanceof Position)
         {
             Position position = (Position) object;
-            return  //this.hashCode == position.hashCode && TODO: A bug prevents this from working
+
+            return  this.getChessHashCode() == position.getChessHashCode() &&
                     this.inMove == position.inMove &&
                     this.castlingState.equals(position.castlingState) &&
                     this.piecesMap.equals(position.piecesMap);
@@ -268,12 +254,13 @@ public class Position
     //needed for threefold repetition checking
     @Override
     public int hashCode() {
-        return hashCode;
+        return getChessHashCode();
     }
 
     public int getChessHashCode()
     {
-        return hashCode;
+        return inMove.getChessHashCode() ^ castlingState.getChessHashCode() ^ piecesHash;
     }
+
 
 }

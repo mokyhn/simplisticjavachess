@@ -49,7 +49,8 @@ public class BoardTest_Castling
         Board actual = BLACK_IN_MOVE_CASTLING();
         Board expected = AFTER_BLACK_SHORT_CASTLING();
         MoveResult moveResult = actual.doMove(Moves.BLACK_SHORT_CASTLING());
-        assertEquals(expected.getPosition(), moveResult.getBoard().getPosition());
+        actual = moveResult.getBoard();
+        assertEquals(expected.getPosition(), actual.getPosition());
     }
       
     @Test

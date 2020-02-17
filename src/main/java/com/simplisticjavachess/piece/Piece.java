@@ -22,10 +22,7 @@ public final class Piece {
             this.location = location;        
             this.color = color;
             this.pieceType  = pieceType;
-            this.hashCode = Objects.hash(
-                    this.pieceType.getChessHashCode(),
-                    this.color.getChessHashCode(),
-                    this.location.getChessHashCode());
+            this.hashCode = this.pieceType.getChessHashCode() ^ this.color.getChessHashCode() ^ this.location.getChessHashCode();
         }
         else
         {
@@ -78,7 +75,7 @@ public final class Piece {
                      throw new IllegalArgumentException("Unexpected error in Piece constructor");
             }
         
-        this.hashCode = Objects.hash(this.pieceType, this.color, this.location);
+        this.hashCode = this.pieceType.getChessHashCode() ^ this.color.getChessHashCode() ^ this.location.getChessHashCode();
      }
 
     /**
