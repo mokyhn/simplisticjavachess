@@ -17,15 +17,11 @@ import java.util.Optional;
 
 public class Position
 {
-    private Color inMove;
-
-    private CastlingState castlingState;
-
+    private final Color inMove;
+    private final CastlingState castlingState;
     private final Map<Location, Piece> piecesMap;
+    private final int piecesHash;
 
-    private int piecesHash;
-
-    // TODO: Get rid of this dummy - no constructor.
     Position()
     {
         castlingState = CastlingState.NOBODY_CAN_CASTLE;
@@ -42,19 +38,11 @@ public class Position
         this.piecesHash = 0;
     }
 
-    private Position(Position position)
-    {
-        this.castlingState = position.castlingState;
-        this.piecesMap = new HashMap<>(position.piecesMap);
-        this.inMove = position.inMove;
-        this.piecesHash = position.piecesHash;
-    }
-
     private Position(Color inMove, CastlingState castlingState, Map<Location, Piece> pieces, int piecesHash)
     {
         this.inMove = inMove;
         this.castlingState = castlingState;
-        this.piecesMap = new HashMap<>(pieces);
+        this.piecesMap = pieces;
         this.piecesHash = piecesHash;
     }
 
@@ -63,9 +51,9 @@ public class Position
         return inMove;
     }
 
-    public Position setInMove(Color inMove) {
-        Position newPosition = new Position(this);
-        newPosition.inMove = inMove;
+    public Position setInMove(Color inMove)
+    {
+        Position newPosition = new Position(inMove, this.castlingState, this.piecesMap, piecesHash);
         return newPosition;
     }
 
@@ -108,9 +96,10 @@ public class Position
         }
         else
         {
-            Position result = new Position(this);
-            result.piecesMap.put(piece.getLocation(), piece);
-            result.piecesHash ^= piece.getChessHashCode();
+            Map<Location, Piece> newPiecesMap = new HashMap<>(this.piecesMap);
+            newPiecesMap.put(piece.getLocation(), piece);
+            int newChessHashCode = this.piecesHash ^ piece.getChessHashCode();
+            Position result = new Position(this.inMove, this.castlingState, newPiecesMap, newChessHashCode);
             return result;
         }
     }
@@ -134,9 +123,10 @@ public class Position
     {
         if (piecesMap.containsKey(piece.getLocation()))
         {
-            Position result = new Position(this);
-            result.piecesMap.remove(piece.getLocation());
-            result.piecesHash ^= piece.getChessHashCode();
+            Map<Location, Piece> newPiecesMap = new HashMap<>(this.piecesMap);
+            newPiecesMap.remove(piece.getLocation());
+            int newChessHashCode = this.piecesHash ^ piece.getChessHashCode();
+            Position result = new Position(this.inMove, this.castlingState, newPiecesMap, newChessHashCode);
             return result;
         }
         else
