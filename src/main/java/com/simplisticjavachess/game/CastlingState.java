@@ -4,13 +4,12 @@ import com.simplisticjavachess.piece.Color;
 
 public class CastlingState
 {
-
-	private boolean whiteShort;
-	private boolean whiteLong;
-	private boolean blackShort;
-	private boolean blackLong;
-
 	public static final CastlingState NOBODY_CAN_CASTLE = new CastlingState(false, false, false, false);
+
+	private final boolean whiteShort;
+	private final boolean whiteLong;
+	private final boolean blackShort;
+	private final boolean blackLong;
 
 	private final static int WHITE_SHORT = -365235027;
 	private final static int WHITE_LONG  =  1561152162;
@@ -18,7 +17,6 @@ public class CastlingState
 	private final static int BLACK_LONG  =  145385139;
 
 	private int chessHashCode;
-
 
 	public CastlingState(boolean whiteShort, boolean whiteLong, boolean blackShort, boolean blackLong)
 	{
@@ -30,27 +28,27 @@ public class CastlingState
 				             (blackShort ? BLACK_SHORT : 0) ^ (blackLong ? BLACK_LONG : 0) ;
 	}
 
-	public CastlingState setCanCastleShort(Color color, boolean state)
+	public CastlingState setCanCastleShort(Color color, boolean newState)
 	{
 		switch (color)
 		{
 			case BLACK:
-				return new CastlingState(whiteShort, whiteLong, state, blackLong);
+				return new CastlingState(whiteShort, whiteLong, newState, blackLong);
 			case WHITE:
-				return new CastlingState(state, whiteLong, blackShort, blackLong);
+				return new CastlingState(newState, whiteLong, blackShort, blackLong);
 			default:
 				throw new IllegalStateException("Unreachable statement");
 		}
 	}
 
-	public CastlingState setCanCastleLong(Color color, boolean state)
+	public CastlingState setCanCastleLong(Color color, boolean newState)
 	{
 		switch (color)
 		{
 			case BLACK:
-				return new CastlingState(whiteShort, whiteLong, blackShort, state);
+				return new CastlingState(whiteShort, whiteLong, blackShort, newState);
 			case WHITE:
-				return new CastlingState(whiteShort, state, blackShort, blackLong);
+				return new CastlingState(whiteShort, newState, blackShort, blackLong);
 			default:
 				throw new IllegalStateException("Unreachable statement");
 		}
