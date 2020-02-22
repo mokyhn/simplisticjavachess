@@ -3,16 +3,16 @@
 package com.simplisticjavachess.board;
 
 
+import com.simplisticjavachess.engine.MoveSequence;
 import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.game.State;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.Move;
-import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -229,29 +229,23 @@ public class Board
 //        }
 //    }
 
-    public MoveResult doMove(String... moves)
+    public MoveResult doMove(String moves)
+    {
+        MoveSequence moveSequence = MoveSequence.parse(this, moves);
+        return this.doMove(moveSequence);
+    }
+
+    private MoveResult doMove(MoveSequence moveSequence)
     {
         MoveResult moveResult = null;
+        Iterator<Move> moves = moveSequence.iterator();
 
-        Board board = this;
+        Board theboard = this;
 
-        for (String m : moves)
+        while (moves.hasNext())
         {
-            moveResult = board.doMove(MoveParser.parse(board, m));
-            if (moveResult.isMoveLegal())
-            {
-                board = moveResult.getBoard();
-            }
-            else
-            {
-                throw new IllegalArgumentException("Could not perform the illegal move: " + m +
-                        " in the sequence of moves: " + Arrays.toString(moves));
-            }
-        }
-
-        if (moveResult == null)
-        {
-            throw new IllegalArgumentException("Provide a sequence of moves");
+            moveResult = theboard.doMove(moves.next());
+            theboard = moveResult.getBoard();
         }
 
         return moveResult;

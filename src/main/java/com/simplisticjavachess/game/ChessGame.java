@@ -15,7 +15,7 @@ import com.simplisticjavachess.movegenerator.MainMoveGenerator;
 import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.engine.SearchResult;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
-import com.simplisticjavachess.movegenerator.OpeningMoves;
+import com.simplisticjavachess.movegenerator.OpeningBook;
 
 import java.util.Iterator;
 import java.util.List;
@@ -97,7 +97,7 @@ public class ChessGame
         MoveResult moveResult;
         Move move = null;
 
-        Iterator<Move> openingMove = OpeningMoves.get().  generateMoves(board);
+        Iterator<Move> openingMove = OpeningBook.get().  generateMoves(board);
         if (openingMove.hasNext())
         {
             move = openingMove.next();
