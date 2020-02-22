@@ -5,7 +5,7 @@ package com.simplisticjavachess.board;
 
 import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.game.State;
-import com.simplisticjavachess.evaluation.Evaluator;
+import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.piece.Color;
@@ -391,7 +391,7 @@ public class Board
         StringBuilder sb = new StringBuilder();
         sb.append(position.getPositionString());
         sb.append(state.toString());
-        sb.append("Immediate evaluation: " + new Evaluator().evaluate(this) + "\n");
+        sb.append("Immediate evaluation: " + new IntegerEvaluator().evaluate(this) + "\n");
         sb.append("FEN: " + BoardParser.exportPosition(this));
         return sb.toString();
     }

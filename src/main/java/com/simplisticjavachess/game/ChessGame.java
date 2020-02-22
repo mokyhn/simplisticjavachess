@@ -7,7 +7,7 @@
 package com.simplisticjavachess.game;
 
 import com.simplisticjavachess.board.MoveResult;
-import com.simplisticjavachess.evaluation.Evaluator;
+import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.move.Move;
@@ -91,7 +91,7 @@ public class ChessGame
 
    public void go()
     {
-        SearchResult searchResult = new MinMaxEngine(new MoveGenerator(), new Evaluator()).search(board, searchDepth);
+        SearchResult searchResult = new MinMaxEngine(new MoveGenerator(), new IntegerEvaluator()).search(board, searchDepth);
 
         if (searchResult.getMoveSequence() != null)
         {

@@ -6,7 +6,7 @@
 package com.simplisticjavachess.integration;
 
 import com.simplisticjavachess.board.Board;
-import com.simplisticjavachess.evaluation.Evaluator;
+import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.engine.Engine;
@@ -33,7 +33,7 @@ public class TestSearch
         try {
             performMoves(board, moveSequence);
 
-            Engine engine = new MinMaxEngine(new MoveGenerator(), new Evaluator());
+            Engine engine = new MinMaxEngine(new MoveGenerator(), new IntegerEvaluator());
 
             SearchResult searchResult = engine.search(board, plyDepth);
 
