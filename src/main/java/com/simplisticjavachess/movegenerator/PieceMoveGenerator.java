@@ -7,7 +7,7 @@ import com.simplisticjavachess.piece.PieceType;
 
 import java.util.Iterator;
 
-public interface IMoveGenerator {
+public interface PieceMoveGenerator {
 
     /**
      * @return the piece type this move generator applies to

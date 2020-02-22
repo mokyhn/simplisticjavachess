@@ -16,14 +16,14 @@ import java.util.Map;
 
 public class MoveGenerator
 {
-    public static final IMoveGenerator PAWN_MOVE_GENERATOR = new PawnMoveGenerator();
+    public static final PieceMoveGenerator PAWN_MOVE_GENERATOR = new PawnMoveGenerator();
     public static final KingMoveGenerator KING_MOVE_GENERATOR = new KingMoveGenerator();
     public static final KnightMoveGenerator KNIGHT_MOVE_GENERATOR = new KnightMoveGenerator();
     public static final BishopMoveGenerator BISHOP_MOVE_GENERATOR = new BishopMoveGenerator();
     public static final RookMoveGenerator ROOK_MOVE_GENERATOR = new RookMoveGenerator();
     public static final QueenMoveGenerator QUEEN_MOVE_GENERATOR = new QueenMoveGenerator();
 
-    private Map<PieceType, IMoveGenerator> moveGeneratorMap;
+    private Map<PieceType, PieceMoveGenerator> moveGeneratorMap;
 
     public MoveGenerator()
     {
@@ -31,10 +31,10 @@ public class MoveGenerator
                 ROOK_MOVE_GENERATOR, QUEEN_MOVE_GENERATOR);
     }
 
-    public MoveGenerator(IMoveGenerator... moveGenerators)
+    public MoveGenerator(PieceMoveGenerator... moveGenerators)
     {
         moveGeneratorMap = new HashMap<>();
-        for (IMoveGenerator moveGenerator : moveGenerators) {
+        for (PieceMoveGenerator moveGenerator : moveGenerators) {
             moveGeneratorMap.put(moveGenerator.getPieceType(), moveGenerator);
         }
     }

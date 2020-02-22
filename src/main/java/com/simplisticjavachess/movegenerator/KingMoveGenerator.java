@@ -18,7 +18,7 @@ import java.util.Iterator;
 import static com.simplisticjavachess.misc.IteratorUtils.compose;
 import static com.simplisticjavachess.movegenerator.MoveGeneratorUtil.*;
 
-public class KingMoveGenerator implements IMoveGenerator
+public class KingMoveGenerator implements PieceMoveGenerator
 {
     @Override
     public PieceType getPieceType() {

@@ -16,7 +16,7 @@ import java.util.Iterator;
 import static com.simplisticjavachess.misc.IteratorUtils.compose;
 import static com.simplisticjavachess.movegenerator.MoveGeneratorUtil.oneMoveIterator;
 
-public class KnightMoveGenerator implements IMoveGenerator
+public class KnightMoveGenerator implements PieceMoveGenerator
 {
 
     @Override

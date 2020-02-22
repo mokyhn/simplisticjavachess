@@ -15,7 +15,7 @@ import java.util.Iterator;
 
 import static com.simplisticjavachess.misc.IteratorUtils.compose;
 
-public class RookMoveGenerator implements IMoveGenerator
+public class RookMoveGenerator implements PieceMoveGenerator
 {
     private static final LineMoveGenerator LINE_MOVE_GENERATOR_UP = new LineMoveGenerator(Vector.UP);
     private static final LineMoveGenerator LINE_MOVE_GENERATOR_DOWN = new LineMoveGenerator(Vector.DOWN);

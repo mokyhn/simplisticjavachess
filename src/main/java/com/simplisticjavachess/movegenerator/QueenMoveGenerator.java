@@ -14,7 +14,7 @@ import com.simplisticjavachess.piece.PieceType;
 import java.util.Iterator;
 
 
-public class QueenMoveGenerator implements IMoveGenerator
+public class QueenMoveGenerator implements PieceMoveGenerator
 {
     @Override
     public PieceType getPieceType() {

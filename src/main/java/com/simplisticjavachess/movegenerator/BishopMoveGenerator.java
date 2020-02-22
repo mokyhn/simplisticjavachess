@@ -13,7 +13,7 @@ import java.util.Iterator;
 /**
  * @author Morten Kühnrich
  */
-public class BishopMoveGenerator implements IMoveGenerator
+public class BishopMoveGenerator implements PieceMoveGenerator
 {
     private static final LineMoveGenerator UP_AND_RIGHT =  new LineMoveGenerator(Vector.UP_AND_RIGHT);
     private static final LineMoveGenerator DOWN_AND_RIGHT = new LineMoveGenerator(Vector.DOWN_AND_RIGHT);

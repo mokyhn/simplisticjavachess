@@ -15,7 +15,7 @@ import com.simplisticjavachess.board.Location;
 
 import java.util.*;
 
-public class PawnMoveGenerator implements IMoveGenerator
+public class PawnMoveGenerator implements PieceMoveGenerator
 {
 
     @Override
