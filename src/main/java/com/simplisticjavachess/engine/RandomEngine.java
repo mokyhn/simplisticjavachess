@@ -6,11 +6,13 @@
 package com.simplisticjavachess.engine;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.evaluation.Evaluator;
+import com.simplisticjavachess.movegenerator.MoveGenerator;
 
 public class RandomEngine implements Engine
 { // Old experiment
     @Override
-    public SearchResult search(Board b, int plyDepth) {
+    public SearchResult search(Board b, MoveGenerator moveGenerator, Evaluator evaluator, int plyDepth) {
         return null;
     }/*
     MoveGenerator moveGenerator = new MoveGenerator();

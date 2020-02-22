@@ -33,9 +33,9 @@ public class TestSearch
         try {
             performMoves(board, moveSequence);
 
-            Engine engine = new MinMaxEngine(new MainMoveGenerator(), new IntegerEvaluator());
+            Engine engine = new MinMaxEngine();
 
-            SearchResult searchResult = engine.search(board, plyDepth);
+            SearchResult searchResult = engine.search(board, new MainMoveGenerator(), new IntegerEvaluator(), plyDepth);
 
             Move foundMove = searchResult.getMoveSequence().getFirst();
 

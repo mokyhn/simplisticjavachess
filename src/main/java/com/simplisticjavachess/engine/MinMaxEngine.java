@@ -18,18 +18,8 @@ import java.util.Iterator;
 
 public class MinMaxEngine implements Engine
 {
-    private final MoveGenerator moveGenerator;
-    private final Evaluator evaluator;
-
-    public MinMaxEngine(MoveGenerator moveGenerator, Evaluator evaluator)
-    {
-        this.moveGenerator = moveGenerator;
-        this.evaluator = evaluator;
-    }
-
-
     @Override
-    public SearchResult search(Board board, int depthToGo)
+    public SearchResult search(Board board, MoveGenerator moveGenerator, Evaluator evaluator, int depthToGo)
     {     
         if (depthToGo == 0)
         {
@@ -75,7 +65,7 @@ public class MinMaxEngine implements Engine
 
             thereWasALegalMove = true;
 
-            score = search(next, depthToGo - 1);
+            score = search(next,  moveGenerator, evaluator, depthToGo - 1);
 
             if (bestScore.isAnImprovement(inMove, score.getEvaluation()))
             {
