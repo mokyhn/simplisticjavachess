@@ -15,7 +15,9 @@ import com.simplisticjavachess.movegenerator.MainMoveGenerator;
 import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.engine.SearchResult;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
+import com.simplisticjavachess.movegenerator.OpeningMoves;
 
+import java.util.Iterator;
 import java.util.List;
 
 import static com.simplisticjavachess.misc.IteratorUtils.toList;
@@ -92,13 +94,34 @@ public class ChessGame
 
    public void go()
     {
-        SearchResult searchResult = new MinMaxEngine().search(board, new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
+        MoveResult moveResult;
+        Move move = null;
 
-        if (searchResult.getMoveSequence() != null)
+        Iterator<Move> openingMove = OpeningMoves.get().  generateMoves(board);
+        if (openingMove.hasNext())
         {
-            MoveResult moveResult = board.doMove(searchResult.getMoveSequence().getFirst());
+            move = openingMove.next();
+            System.out.println("Book move " + move.toString());
+        }
+        else
+        {
+            SearchResult searchResult = new MinMaxEngine().search(board, new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
+
+            if (searchResult.getMoveSequence() != null)
+            {
+                move = searchResult.getMoveSequence().getFirst();
+                System.out.println(searchResult.toString());
+            }
+        }
+
+        if (move == null)
+        {
+            System.out.println("No legal moves for computer.");
+        }
+        else
+        {
+            moveResult = board.doMove(move);
             board = moveResult.getBoard();
-            System.out.println(searchResult.toString());
             print();
         }
     }

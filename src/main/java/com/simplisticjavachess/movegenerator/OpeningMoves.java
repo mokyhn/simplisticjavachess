@@ -2,10 +2,12 @@ package com.simplisticjavachess.movegenerator;
 
 public class OpeningMoves
 {
-    OpeningMoveGenerator openingMoveGenerator = new OpeningMoveGenerator();
+    private static OpeningMoveGenerator openingMoveGenerator;
 
-    public OpeningMoves()
+    static
     {
+        openingMoveGenerator = new OpeningMoveGenerator();
+
         // When computer plays white
         openingMoveGenerator.add("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", "e2e4");  // Start with e4
 
@@ -15,7 +17,8 @@ public class OpeningMoves
     }
 
 
-    public OpeningMoveGenerator get()
+
+    public static OpeningMoveGenerator get()
     {
         return openingMoveGenerator;
     }
