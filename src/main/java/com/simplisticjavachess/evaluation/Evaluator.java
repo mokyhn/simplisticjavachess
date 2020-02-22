@@ -1,7 +1,7 @@
 /**
  * @author Morten Kühnrich
  */
-package com.simplisticjavachess.evaluator;
+package com.simplisticjavachess.evaluation;
 
 
 import com.simplisticjavachess.piece.Piece;
@@ -21,7 +21,7 @@ public class Evaluator
     private static final int KNIGHT_VALUE = 3;
     private static final int QUEEN_VALUE = 9;
 
-    public Evaluation evaluate(Board b)
+    public IntegerEvaluation evaluate(Board b)
     {
         int result = 0;
         
@@ -70,7 +70,7 @@ public class Evaluator
             result = WHITE_IS_MATED;
         }
 
-        return Evaluation.of(result);
+        return IntegerEvaluation.of(result);
     }
 
 }

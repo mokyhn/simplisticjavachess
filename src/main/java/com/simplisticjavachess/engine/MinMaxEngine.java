@@ -8,8 +8,9 @@ package com.simplisticjavachess.engine;
 
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.board.MoveResult;
-import com.simplisticjavachess.evaluator.Evaluation;
-import com.simplisticjavachess.evaluator.Evaluator;
+import com.simplisticjavachess.evaluation.Evaluation;
+import com.simplisticjavachess.evaluation.EvaluationConstantsFactoryImpl;
+import com.simplisticjavachess.evaluation.Evaluator;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.piece.Color;
@@ -34,7 +35,7 @@ public class MinMaxEngine implements Engine
         {
             return new SearchResult(
                     board.isDraw() ?
-                    Evaluation.EQUAL : 
+                            EvaluationConstantsFactoryImpl.instance().getEqual() :
                     evaluator.evaluate(board)
             );
         }
@@ -43,21 +44,21 @@ public class MinMaxEngine implements Engine
 
         Color inMove = board.inMove();
 
-        if (evaluator.evaluate(board).equals(Evaluation.BLACK_IS_MATED)
-         || evaluator.evaluate(board).equals(Evaluation.WHITE_IS_MATED))
+        if (evaluator.evaluate(board).equals(EvaluationConstantsFactoryImpl.instance().getBlackIsMate())
+         || evaluator.evaluate(board).equals(EvaluationConstantsFactoryImpl.instance().getWhiteIsMate()))
         {
             return new SearchResult(evaluator.evaluate(board));
         }
 
         if (!moves.hasNext())
         {
-            return new SearchResult(Evaluation.EQUAL); // A draw
+            return new SearchResult(EvaluationConstantsFactoryImpl.instance().getEqual()); // A draw
         }
        
         boolean thereWasALegalMove = false;
 
         SearchResult score;
-        Evaluation bestScore = Evaluation.NONE;
+        Evaluation bestScore = EvaluationConstantsFactoryImpl.instance().getNone();
         MoveSequence moveSequence = new MoveSequence();
         
         while (moves.hasNext())
@@ -91,14 +92,14 @@ public class MinMaxEngine implements Engine
 
                 if (inMove == Color.WHITE)
                 {
-                    return new SearchResult(Evaluation.WHITE_IS_MATED);
+                    return new SearchResult(EvaluationConstantsFactoryImpl.instance().getWhiteIsMate());
                 } else
                 {
-                    return new SearchResult(Evaluation.BLACK_IS_MATED);
+                    return new SearchResult(EvaluationConstantsFactoryImpl.instance().getBlackIsMate());
                 }
             } else
             {
-                return new SearchResult(Evaluation.EQUAL);
+                return new SearchResult(EvaluationConstantsFactoryImpl.instance().getEqual());
             } // draw
         }
 

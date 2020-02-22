@@ -1,40 +1,31 @@
 /**
  * @author Morten Kühnrich
  */
-package com.simplisticjavachess.evaluator;
+package com.simplisticjavachess.evaluation;
 
 import com.simplisticjavachess.piece.Color;
 import java.util.Objects;
 
 import static com.simplisticjavachess.piece.Color.WHITE;
 
-public class Evaluation
+public class IntegerEvaluation implements Evaluation
 {
-     /**
-     * The un-evaluated evaluation of something
-     */
-    public static final Evaluation NONE = new Evaluation(); // TODO: Use Optional instead
 
-    public static final Evaluation EQUAL = new Evaluation(0);
-    public static final Evaluation WHITE_IS_MATED = new Evaluation(-2147480000);
-    public static final Evaluation BLACK_IS_MATED = new Evaluation(2147480000);
-
-    
     private final Integer value;  // TODO: Use Optional instead
     
-    private Evaluation()
+    public IntegerEvaluation()
     {
         this.value = null;
     }
     
-    private Evaluation(int value)
+    public IntegerEvaluation(int value)
     {
         this.value = value;
     }
 
-    public static Evaluation of(int value)
+    public static IntegerEvaluation of(int value)
     {
-        return new Evaluation(value);
+        return new IntegerEvaluation(value);
     }
 
 
@@ -50,19 +41,21 @@ public class Evaluation
 
     /**
      * @param color the perspective the comparison is seen from
-     * @param other the candidate that may improve this
+     * @param e the candidate that may improve this
      * @return true if the other improves this
      */
-    public boolean isAnImprovement(Color color, Evaluation other)
+    public boolean isAnImprovement(Color color, Evaluation e)
     {
+        IntegerEvaluation other = (IntegerEvaluation) e;
+
         // Something improves nothing
-        if (this.equals(NONE))
+        if (this.equals(EvaluationConstantsFactoryImpl.instance().getNone()))
         {
             return true;
         }
 
         // Nothing does not improve something
-        if (other.equals(NONE))
+        if (other.equals(EvaluationConstantsFactoryImpl.instance().getNone()))
         {
             return false;
         }
@@ -91,9 +84,9 @@ public class Evaluation
             return true;
         }
         
-        if (other instanceof Evaluation)
+        if (other instanceof IntegerEvaluation)
         {
-            return Objects.equals(this.value, ((Evaluation) other).value);
+            return Objects.equals(this.value, ((IntegerEvaluation) other).value);
         }
         else
         {
@@ -106,8 +99,4 @@ public class Evaluation
         return Objects.hashCode(this.value);
     }
 
-    public boolean isNone()
-    {
-        return NONE.equals(this);
-    }
 }

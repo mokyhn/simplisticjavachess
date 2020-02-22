@@ -6,14 +6,6 @@
 package com.simplisticjavachess.engine;
 
 import com.simplisticjavachess.board.Board;
-import com.simplisticjavachess.evaluator.Evaluation;
-import com.simplisticjavachess.game.GameResult;
-import com.simplisticjavachess.evaluator.Evaluator;
-import com.simplisticjavachess.move.Move;
-import com.simplisticjavachess.movegenerator.MoveGenerator;
-import com.simplisticjavachess.piece.Color;
-import java.util.ArrayList;
-import java.util.Iterator;
 
 public class RandomEngine implements Engine
 { // Old experiment

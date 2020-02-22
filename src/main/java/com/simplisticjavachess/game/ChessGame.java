@@ -7,7 +7,7 @@
 package com.simplisticjavachess.game;
 
 import com.simplisticjavachess.board.MoveResult;
-import com.simplisticjavachess.evaluator.Evaluator;
+import com.simplisticjavachess.evaluation.Evaluator;
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.move.Move;

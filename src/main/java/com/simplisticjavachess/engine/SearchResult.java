@@ -1,6 +1,6 @@
 package com.simplisticjavachess.engine;
 
-import com.simplisticjavachess.evaluator.Evaluation;
+import com.simplisticjavachess.evaluation.Evaluation;
 
 public class SearchResult {
     private final MoveSequence moveSequence;
