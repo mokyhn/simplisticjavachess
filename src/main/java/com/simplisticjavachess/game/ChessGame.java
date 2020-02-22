@@ -11,9 +11,10 @@ import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.move.Move;
-import com.simplisticjavachess.movegenerator.MoveGenerator;
+import com.simplisticjavachess.movegenerator.MainMoveGenerator;
 import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.engine.SearchResult;
+import com.simplisticjavachess.movegenerator.MoveGenerator;
 
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class ChessGame
     private static final String INITIAL_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
     
     private Board board;
-    private final MoveGenerator moveGenerator = new MoveGenerator();
+    private final MoveGenerator moveGenerator = new MainMoveGenerator();
     private int searchDepth;
     
     public ChessGame()
@@ -91,7 +92,7 @@ public class ChessGame
 
    public void go()
     {
-        SearchResult searchResult = new MinMaxEngine(new MoveGenerator(), new IntegerEvaluator()).search(board, searchDepth);
+        SearchResult searchResult = new MinMaxEngine(new MainMoveGenerator(), new IntegerEvaluator()).search(board, searchDepth);
 
         if (searchResult.getMoveSequence() != null)
         {

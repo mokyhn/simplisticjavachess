@@ -19,12 +19,12 @@ import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class MoveGeneratorTest
+public class MainMoveGeneratorTest
 {
     @Test
     public void testGeneratedMovesAlsoAttacks()
     {
-        MoveGenerator moveGenerator = new MoveGenerator();
+        MainMoveGenerator moveGenerator = new MainMoveGenerator();
         
         for (String fen : FENPositions.POSITIONS) 
         {
@@ -62,7 +62,7 @@ public class MoveGeneratorTest
     @Test
     public void attackedLocationsAlsoHasMovesThatAttacks()
     {
-        MoveGenerator moveGenerator = new MoveGenerator();
+        MainMoveGenerator moveGenerator = new MainMoveGenerator();
         int i = 0;
         for (String fen : FENPositions.POSITIONS) 
         {

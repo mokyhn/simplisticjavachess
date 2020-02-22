@@ -12,7 +12,7 @@ import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.engine.Engine;
 import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.engine.SearchResult;
-import com.simplisticjavachess.movegenerator.MoveGenerator;
+import com.simplisticjavachess.movegenerator.MainMoveGenerator;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,7 +33,7 @@ public class TestSearch
         try {
             performMoves(board, moveSequence);
 
-            Engine engine = new MinMaxEngine(new MoveGenerator(), new IntegerEvaluator());
+            Engine engine = new MinMaxEngine(new MainMoveGenerator(), new IntegerEvaluator());
 
             SearchResult searchResult = engine.search(board, plyDepth);
 
