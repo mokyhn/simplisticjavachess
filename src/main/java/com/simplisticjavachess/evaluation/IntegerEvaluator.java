@@ -10,8 +10,8 @@ import com.simplisticjavachess.piece.Color;
 
 public class IntegerEvaluator implements Evaluator
 {
-    public static final int WHITE_IS_MATED = -2147480000;
-    public static final int BLACK_IS_MATED = 2147480000;
+    public static final int WHITE_IS_MATED = -10000;
+    public static final int BLACK_IS_MATED = 10000;
 
     private static final int PAWN_VALUE = 1;
     private static final int ROOK_VALUE = 5;
@@ -29,22 +29,23 @@ public class IntegerEvaluator implements Evaluator
 
         for (Piece p : b.getPieces())
         {
+            int color = p.getColor().getColor();
             switch (p.getPieceType())
             {
                 case PAWN:
-                    result = PAWN_VALUE * p.getColor().getColor() + result;
+                    result += PAWN_VALUE * color;
                     break;
                 case ROOK:
-                    result = ROOK_VALUE * p.getColor().getColor() + result;
+                    result += ROOK_VALUE * color;
                     break;
                 case BISHOP:
-                    result = BISHOP_VALUE * p.getColor().getColor() + result;
+                    result += BISHOP_VALUE * color;
                     break;
                 case KNIGHT:
-                    result = KNIGHT_VALUE * p.getColor().getColor() + result;
+                    result += KNIGHT_VALUE * color;
                     break;
                 case QUEEN:
-                    result = QUEEN_VALUE * p.getColor().getColor() + result;
+                    result += QUEEN_VALUE * color;
                     break;
                 case KING:
                     if (p.getColor() == Color.BLACK)
