@@ -62,6 +62,9 @@ public class MinMaxEngine implements Engine
         MoveSequence moveSequence = new MoveSequence();
         boolean thereWasALegalMove = false;
 
+        Color inMove = board.inMove();
+
+
         while (moves.hasNext())
         {
             Move move = moves.next();
@@ -75,7 +78,6 @@ public class MinMaxEngine implements Engine
 
                 SearchResult score = search(next,  moveGenerator, evaluator, plyDepth - 1);
 
-                Color inMove = board.inMove();
 
                 if (bestScore.isAnImprovement(inMove, score.getEvaluation()))
                 {
