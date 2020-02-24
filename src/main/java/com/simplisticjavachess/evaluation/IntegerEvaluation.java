@@ -8,7 +8,7 @@ import java.util.Objects;
 
 import static com.simplisticjavachess.piece.Color.WHITE;
 
-public class IntegerEvaluation implements Evaluation
+public class IntegerEvaluation extends Evaluation
 {
 
     private final Integer value;  // TODO: Use Optional instead
@@ -28,22 +28,6 @@ public class IntegerEvaluation implements Evaluation
         return new IntegerEvaluation(value);
     }
 
-
-    /**
-     * @param color the perspective the comparison is seen from
-     * @param other the other evaluation to try to improve with
-     * @return this if this is better and else return other
-     */
-    public Evaluation improveWith(Color color, Evaluation other)
-    {
-        return this.isAnImprovement(color, other) ? other : this;
-    }
-
-    /**
-     * @param color the perspective the comparison is seen from
-     * @param e the candidate that may improve this
-     * @return true if the other improves this
-     */
     public boolean isAnImprovement(Color color, Evaluation e)
     {
         IntegerEvaluation other = (IntegerEvaluation) e;
