@@ -1,0 +1,12 @@
+[Event "Edited game"]
+[Date "2020.02.24"]
+[Round "-"]
+[White "Morten"]
+[Black "JavaChess Search depth 4"]
+[Result "1-0"]
+
+1. Nf3 f6 2. d4 e6 3. e4 Na6 4. Bxa6 bxa6 5. O-O a5 6. d5 Ba6 7. Re1 Qe7 8.
+e5 Bb7 9. dxe6 dxe6 10. Nc3 fxe5 11. Rxe5 Qf6 12. Qe2 Kf7 13. Ng5+ Ke7 14.
+Rxe6+ Qxe6 15. Qxe6+ Kd8 16. Nf7#
+{White mates} 1-0
+

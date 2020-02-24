@@ -1,0 +1,745 @@
+
+sd 4
+
+g1f3
+
+ _______________
+ r n b q k b n r     8
+ p p p p p p p p     7
+ . . . . . . . .     6
+ . . . . . . . .     5
+ . . . . . . . .     4
+ . . . . . N . .     3
+ P P P P P P P P     2
+ R N B Q K B . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 1
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b
+
+go
+Move [f7-f6, h1-g1, e7-e6, g1-h1] with evaluation 0
+
+ _______________
+ r n b q k b n r     8
+ p p p p p . p p     7
+ . . . . . p . .     6
+ . . . . . . . .     5
+ . . . . . . . .     4
+ . . . . . N . .     3
+ P P P P P P P P     2
+ R N B Q K B . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 0
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: rnbqkbnr/ppppp1pp/5p2/8/8/5N2/PPPPPPPP/RNBQKB1R w
+
+d2d4
+
+ _______________
+ r n b q k b n r     8
+ p p p p p . p p     7
+ . . . . . p . .     6
+ . . . . . . . .     5
+ . . . P . . . .     4
+ . . . . . N . .     3
+ P P P . P P P P     2
+ R N B Q K B . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 0
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: rnbqkbnr/ppppp1pp/5p2/8/3P4/5N2/PPP1PPPP/RNBQKB1R b
+
+go
+Move [e7-e6, h1-g1, b8-a6, g1-h1] with evaluation 0
+
+ _______________
+ r n b q k b n r     8
+ p p p p . . p p     7
+ . . . . p p . .     6
+ . . . . . . . .     5
+ . . . P . . . .     4
+ . . . . . N . .     3
+ P P P . P P P P     2
+ R N B Q K B . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 0
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: rnbqkbnr/pppp2pp/4pp2/8/3P4/5N2/PPP1PPPP/RNBQKB1R w
+
+e2e4
+
+ _______________
+ r n b q k b n r     8
+ p p p p . . p p     7
+ . . . . p p . .     6
+ . . . . . . . .     5
+ . . . P P . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q K B . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 0
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: rnbqkbnr/pppp2pp/4pp2/8/3PP3/5N2/PPP2PPP/RNBQKB1R b
+
+go
+Move [b8-a6, f1-e2, a6-b8, h1-g1] with evaluation 0
+
+ _______________
+ r . b q k b n r     8
+ p p p p . . p p     7
+ n . . . p p . .     6
+ . . . . . . . .     5
+ . . . P P . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q K B . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 1
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r1bqkbnr/pppp2pp/n3pp2/8/3PP3/5N2/PPP2PPP/RNBQKB1R w
+
+f1a6
+
+ _______________
+ r . b q k b n r     8
+ p p p p . . p p     7
+ B . . . p p . .     6
+ . . . . . . . .     5
+ . . . P P . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q K . . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 2
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 3
+FEN: r1bqkbnr/pppp2pp/B3pp2/8/3PP3/5N2/PPP2PPP/RNBQK2R b
+
+go
+Move [b7xa6, h1-g1, a6-a5, g1-h1] with evaluation 0
+
+ _______________
+ r . b q k b n r     8
+ p . p p . . p p     7
+ p . . . p p . .     6
+ . . . . . . . .     5
+ . . . P P . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q K . . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 0
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r1bqkbnr/p1pp2pp/p3pp2/8/3PP3/5N2/PPP2PPP/RNBQK2R w
+
+e1g1
+
+ _______________
+ r . b q k b n r     8
+ p . p p . . p p     7
+ p . . . p p . .     6
+ . . . . . . . .     5
+ . . . P P . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q . R K .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 1
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r1bqkbnr/p1pp2pp/p3pp2/8/3PP3/5N2/PPP2PPP/RNBQ1RK1 b
+
+go
+Move [a6-a5, g1-h1, a8-b8, f1-g1] with evaluation 0
+
+ _______________
+ r . b q k b n r     8
+ p . p p . . p p     7
+ . . . . p p . .     6
+ p . . . . . . .     5
+ . . . P P . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q . R K .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 0
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r1bqkbnr/p1pp2pp/4pp2/p7/3PP3/5N2/PPP2PPP/RNBQ1RK1 w
+
+d4d5
+
+ _______________
+ r . b q k b n r     8
+ p . p p . . p p     7
+ . . . . p p . .     6
+ p . . P . . . .     5
+ . . . . P . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q . R K .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 0
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r1bqkbnr/p1pp2pp/4pp2/p2P4/4P3/5N2/PPP2PPP/RNBQ1RK1 b
+
+go
+Move [c8-a6, f1-e1, e6xd5, d1xd5] with evaluation 0
+
+ _______________
+ r . . q k b n r     8
+ p . p p . . p p     7
+ b . . . p p . .     6
+ p . . P . . . .     5
+ . . . . P . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q . R K .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 1
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r2qkbnr/p1pp2pp/b3pp2/p2P4/4P3/5N2/PPP2PPP/RNBQ1RK1 w
+
+f1e1
+
+ _______________
+ r . . q k b n r     8
+ p . p p . . p p     7
+ b . . . p p . .     6
+ p . . P . . . .     5
+ . . . . P . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q R . K .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 2
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r2qkbnr/p1pp2pp/b3pp2/p2P4/4P3/5N2/PPP2PPP/RNBQR1K1 b
+
+go
+Move [d8-e7, g1-h1, e6xd5, d1xd5] with evaluation 0
+
+ _______________
+ r . . . k b n r     8
+ p . p p q . p p     7
+ b . . . p p . .     6
+ p . . P . . . .     5
+ . . . . P . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q R . K .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 3
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r3kbnr/p1ppq1pp/b3pp2/p2P4/4P3/5N2/PPP2PPP/RNBQR1K1 w
+
+e4e5
+
+ _______________
+ r . . . k b n r     8
+ p . p p q . p p     7
+ b . . . p p . .     6
+ p . . P P . . .     5
+ . . . . . . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q R . K .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 0
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r3kbnr/p1ppq1pp/b3pp2/p2PP3/8/5N2/PPP2PPP/RNBQR1K1 b
+
+go
+Move [a6-b7, e5xf6, e7xf6, e1xe6] with evaluation 1
+
+ _______________
+ r . . . k b n r     8
+ p b p p q . p p     7
+ . . . . p p . .     6
+ p . . P P . . .     5
+ . . . . . . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q R . K .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 1
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r3kbnr/pbppq1pp/4pp2/p2PP3/8/5N2/PPP2PPP/RNBQR1K1 w
+
+d5e6
+
+ _______________
+ r . . . k b n r     8
+ p b p p q . p p     7
+ . . . . P p . .     6
+ p . . . P . . .     5
+ . . . . . . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q R . K .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 0
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 1
+FEN: r3kbnr/pbppq1pp/4Pp2/p3P3/8/5N2/PPP2PPP/RNBQR1K1 b
+
+go
+Move [d7xe6, e5xf6, e7xf6, e1xe6] with evaluation 1
+
+ _______________
+ r . . . k b n r     8
+ p b p . q . p p     7
+ . . . . p p . .     6
+ p . . . P . . .     5
+ . . . . . . . .     4
+ . . . . . N . .     3
+ P P P . . P P P     2
+ R N B Q R . K .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 0
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r3kbnr/pbp1q1pp/4pp2/p3P3/8/5N2/PPP2PPP/RNBQR1K1 w
+
+b1c3
+
+ _______________
+ r . . . k b n r     8
+ p b p . q . p p     7
+ . . . . p p . .     6
+ p . . . P . . .     5
+ . . . . . . . .     4
+ . . N . . N . .     3
+ P P P . . P P P     2
+ R . B Q R . K .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 1
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r3kbnr/pbp1q1pp/4pp2/p3P3/8/2N2N2/PPP2PPP/R1BQR1K1 b
+
+go
+Move [f6xe5, c1-g5, e7-c5, e1xe5] with evaluation 0
+
+ _______________
+ r . . . k b n r     8
+ p b p . q . p p     7
+ . . . . p . . .     6
+ p . . . p . . .     5
+ . . . . . . . .     4
+ . . N . . N . .     3
+ P P P . . P P P     2
+ R . B Q R . K .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 0
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: -1
+FEN: r3kbnr/pbp1q1pp/4p3/p3p3/8/2N2N2/PPP2PPP/R1BQR1K1 w
+
+e1e5
+
+ _______________
+ r . . . k b n r     8
+ p b p . q . p p     7
+ . . . . p . . .     6
+ p . . . R . . .     5
+ . . . . . . . .     4
+ . . N . . N . .     3
+ P P P . . P P P     2
+ R . B Q . . K .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 1
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r3kbnr/pbp1q1pp/4p3/p3R3/8/2N2N2/PPP2PPP/R1BQ2K1 b
+
+go
+Move [e7-f6, c1-g5, f6-f7, e5xe6] with evaluation 1
+
+ _______________
+ r . . . k b n r     8
+ p b p . . . p p     7
+ . . . . p q . .     6
+ p . . . R . . .     5
+ . . . . . . . .     4
+ . . N . . N . .     3
+ P P P . . P P P     2
+ R . B Q . . K .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 2
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r3kbnr/pbp3pp/4pq2/p3R3/8/2N2N2/PPP2PPP/R1BQ2K1 w
+
+d1e2
+
+ _______________
+ r . . . k b n r     8
+ p b p . . . p p     7
+ . . . . p q . .     6
+ p . . . R . . .     5
+ . . . . . . . .     4
+ . . N . . N . .     3
+ P P P . Q P P P     2
+ R . B . . . K .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 3
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r3kbnr/pbp3pp/4pq2/p3R3/8/2N2N2/PPP1QPPP/R1B3K1 b
+
+go
+
+gMove [e8-f7, c1-g5, f6-g6, e5xe6] with evaluation 1
+
+ _______________
+ r . . . . b n r     8
+ p b p . . k p p     7
+ . . . . p q . .     6
+ p . . . R . . .     5
+ . . . . . . . .     4
+ . . N . . N . .     3
+ P P P . Q P P P     2
+ R . B . . . K .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 4
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r4bnr/pbp2kpp/4pq2/p3R3/8/2N2N2/PPP1QPPP/R1B3K1 w
+
+
+f3g5
+
+ _______________
+ r . . . . b n r     8
+ p b p . . k p p     7
+ . . . . p q . .     6
+ p . . . R . N .     5
+ . . . . . . . .     4
+ . . N . . . . .     3
+ P P P . Q P P P     2
+ R . B . . . K .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 5
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r4bnr/pbp2kpp/4pq2/p3R1N1/8/2N5/PPP1QPPP/R1B3K1 b
+
+go
+Move [f7-e7, e5xe6, f6xe6, e2xe6] with evaluation 5
+
+ _______________
+ r . . . . b n r     8
+ p b p . k . p p     7
+ . . . . p q . .     6
+ p . . . R . N .     5
+ . . . . . . . .     4
+ . . N . . . . .     3
+ P P P . Q P P P     2
+ R . B . . . K .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 6
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 0
+FEN: r4bnr/pbp1k1pp/4pq2/p3R1N1/8/2N5/PPP1QPPP/R1B3K1 w
+
+e5e6
+
+ _______________
+ r . . . . b n r     8
+ p b p . k . p p     7
+ . . . . R q . .     6
+ p . . . . . N .     5
+ . . . . . . . .     4
+ . . N . . . . .     3
+ P P P . Q P P P     2
+ R . B . . . K .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 7
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 1
+FEN: r4bnr/pbp1k1pp/4Rq2/p5N1/8/2N5/PPP1QPPP/R1B3K1 b
+
+go
+Move [f6xe6, e2xe6, e7-d8, e6xg8] with evaluation 8
+
+ _______________
+ r . . . . b n r     8
+ p b p . k . p p     7
+ . . . . q . . .     6
+ p . . . . . N .     5
+ . . . . . . . .     4
+ . . N . . . . .     3
+ P P P . Q P P P     2
+ R . B . . . K .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 8
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: -4
+FEN: r4bnr/pbp1k1pp/4q3/p5N1/8/2N5/PPP1QPPP/R1B3K1 w
+
+e2e6
+
+ _______________
+ r . . . . b n r     8
+ p b p . k . p p     7
+ . . . . Q . . .     6
+ p . . . . . N .     5
+ . . . . . . . .     4
+ . . N . . . . .     3
+ P P P . . P P P     2
+ R . B . . . K .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 9
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 5
+FEN: r4bnr/pbp1k1pp/4Q3/p5N1/8/2N5/PPP2PPP/R1B3K1 b
+
+go
+Move [e7-d8, g5-f7] with evaluation 10000
+
+ _______________
+ r . . k . b n r     8
+ p b p . . . p p     7
+ . . . . Q . . .     6
+ p . . . . . N .     5
+ . . . . . . . .     4
+ . . N . . . . .     3
+ P P P . . P P P     2
+ R . B . . . K .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 10
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 5
+FEN: r2k1bnr/pbp3pp/4Q3/p5N1/8/2N5/PPP2PPP/R1B3K1 w
+
+g5f7
+
+ _______________
+ r . . k . b n r     8
+ p b p . . N p p     7
+ . . . . Q . . .     6
+ p . . . . . . .     5
+ . . . . . . . .     4
+ . . N . . . . .     3
+ P P P . . P P P     2
+ R . B . . . K .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last pawn move: 11
+Index searched from when checking 3 fold repetition: 0
+Immediate evaluation: 5
+FEN: r2k1bnr/pbp2Npp/4Q3/p7/8/2N5/PPP2PPP/R1B3K1 b
+
+go
+Exception in thread "main" java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
+	at java.base/java.util.LinkedList.checkElementIndex(LinkedList.java:559)
+	at java.base/java.util.LinkedList.get(LinkedList.java:480)
+	at com.simplisticjavachess.engine.MoveSequence.getFirst(MoveSequence.java:35)
+	at com.simplisticjavachess.game.ChessGame.go(ChessGame.java:112)
+	at com.simplisticjavachess.cli.cecpcommands.CommandGo.execute(CommandGo.java:30)
+	at com.simplisticjavachess.cli.CommandLineInterface.executeCommand(CommandLineInterface.java:49)
+	at com.simplisticjavachess.cli.CommandLineInterface.start(CommandLineInterface.java:73)
+	at com.simplisticjavachess.Main.main(Main.java:13)
+
+Process finished with exit code 1

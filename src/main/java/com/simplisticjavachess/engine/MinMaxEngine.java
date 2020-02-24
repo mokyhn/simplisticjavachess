@@ -14,73 +14,85 @@ import com.simplisticjavachess.evaluation.Evaluator;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.piece.Color;
+
 import java.util.Iterator;
 
 public class MinMaxEngine implements Engine
 {
+    private final static Evaluation EQUAL = EvaluationConstantsFactoryImpl.instance().getEqual();
+    private final static Evaluation BLACK_MATE = EvaluationConstantsFactoryImpl.instance().getBlackIsMate();
+    private final static Evaluation WHITE_MATE = EvaluationConstantsFactoryImpl.instance().getWhiteIsMate();
+
     @Override
-    public SearchResult search(Board board, MoveGenerator moveGenerator, Evaluator evaluator, int depthToGo)
+    public SearchResult search(Board board, MoveGenerator moveGenerator, Evaluator evaluator, int plyDepth)
     {     
-        if (depthToGo == 0)
+        if (plyDepth == 0)
         {
-            return new SearchResult(
-                    board.isDraw() ?
-                            EvaluationConstantsFactoryImpl.instance().getEqual() :
-                    evaluator.evaluate(board)
-            );
+            if (board.isDraw())
+            {
+                return new SearchResult(EQUAL);
+            }
+            else
+            {
+                return new SearchResult(evaluator.evaluate(board));
+            }
+        }
+
+        Evaluation evaluation = evaluator.evaluate(board);
+        if (evaluation.equals(BLACK_MATE) || evaluation.equals(WHITE_MATE))
+        {
+            return new SearchResult(evaluation);
         }
 
         Iterator<Move> moves = moveGenerator.generateMoves(board);
-
-        Color inMove = board.inMove();
-
-        if (evaluator.evaluate(board).equals(EvaluationConstantsFactoryImpl.instance().getBlackIsMate())
-         || evaluator.evaluate(board).equals(EvaluationConstantsFactoryImpl.instance().getWhiteIsMate()))
-        {
-            return new SearchResult(evaluator.evaluate(board));
-        }
-
         if (!moves.hasNext())
         {
-            return new SearchResult(EvaluationConstantsFactoryImpl.instance().getEqual()); // A draw
+            if (board.isInCheck())
+            {
+                return new SearchResult(WHITE_MATE.equals(board.inMove()) ? WHITE_MATE : BLACK_MATE); // Mate
+            }
+            else
+            {
+                return new SearchResult(EQUAL); // A draw
+            }
         }
-       
-        boolean thereWasALegalMove = false;
 
-        SearchResult score;
+
         Evaluation bestScore = EvaluationConstantsFactoryImpl.instance().getNone();
         MoveSequence moveSequence = new MoveSequence();
-        
+        boolean thereWasALegalMove = false;
+
         while (moves.hasNext())
         {
             Move move = moves.next();
             MoveResult moveResult = board.doMove(move);
             boolean legal = moveResult.isMoveLegal();
-            Board next = moveResult.getBoard();
 
-            if (!legal)
+            if (legal)
             {
-                continue; // The pseudo legal move m turned out to be illegal.
-            }
+                Board next = moveResult.getBoard();
+                thereWasALegalMove = true;
 
-            thereWasALegalMove = true;
+                SearchResult score = search(next,  moveGenerator, evaluator, plyDepth - 1);
 
-            score = search(next,  moveGenerator, evaluator, depthToGo - 1);
+                Color inMove = board.inMove();
 
-            if (bestScore.isAnImprovement(inMove, score.getEvaluation()))
-            {
-                bestScore = score.getEvaluation();
-                moveSequence = score.getMoveSequence().add(move);
+                if (bestScore.isAnImprovement(inMove, score.getEvaluation()))
+                {
+                    bestScore = score.getEvaluation();
+                    moveSequence = score.getMoveSequence().add(move);
+                }
             }
         }
-        
+
+
         // Mate or draw
         if (!thereWasALegalMove)
         {
-            if (board.isInCheck(inMove))
+            if (board.isInCheck())
             {
 
-                if (inMove == Color.WHITE)
+                if (board.inMove() == Color.WHITE)
                 {
                     return new SearchResult(EvaluationConstantsFactoryImpl.instance().getWhiteIsMate());
                 } else

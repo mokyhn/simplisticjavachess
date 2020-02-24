@@ -191,7 +191,15 @@ public class Board
     {
         return PositionInference.isInCheck(position, color);
     }
-    
+
+    /**
+     * @return Is player in move color color in check?
+     */
+    public Boolean isInCheck()
+    {
+        return PositionInference.isInCheck(position, inMove());
+    }
+
     public Move getLastMove()
     {
         return state.getMove();
