@@ -4,23 +4,23 @@
 package com.simplisticjavachess.evaluation;
 
 import com.simplisticjavachess.piece.Color;
-import java.util.Objects;
+import java.util.Optional;
 
 import static com.simplisticjavachess.piece.Color.WHITE;
 
 public class IntegerEvaluation extends Evaluation
 {
 
-    private final Integer value;  // TODO: Use Optional instead
+    private final Optional<Integer> value;
     
     public IntegerEvaluation()
     {
-        this.value = null;
+        this.value = Optional.empty();
     }
     
     public IntegerEvaluation(int value)
     {
-        this.value = value;
+        this.value = Optional.of(value);
     }
 
     public static IntegerEvaluation of(int value)
@@ -33,31 +33,31 @@ public class IntegerEvaluation extends Evaluation
         IntegerEvaluation other = (IntegerEvaluation) e;
 
         // Something improves nothing
-        if (this.equals(EvaluationConstantsFactoryImpl.instance().getNone()))
+        if (!this.value.isPresent())
         {
             return true;
         }
 
         // Nothing does not improve something
-        if (other.equals(EvaluationConstantsFactoryImpl.instance().getNone()))
+        if (!other.value.isPresent())
         {
             return false;
         }
 
         if (color.equals(WHITE))
         {
-            return other.value > this.value;
+            return other.value.get() > this.value.get();
         }
         else
         {
-            return other.value < this.value;
+            return other.value.get() < this.value.get();
         }
     }
 
     @Override
     public String toString()
     {
-        return value == null ? "None" : value.toString();
+        return value.isPresent() ? value.get().toString() : "None";
     }
     
     @Override
@@ -70,17 +70,12 @@ public class IntegerEvaluation extends Evaluation
         
         if (other instanceof IntegerEvaluation)
         {
-            return Objects.equals(this.value, ((IntegerEvaluation) other).value);
+            return this.value.equals(((IntegerEvaluation) other).value);
         }
         else
         {
             return false;
         }
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(this.value);
     }
 
 }

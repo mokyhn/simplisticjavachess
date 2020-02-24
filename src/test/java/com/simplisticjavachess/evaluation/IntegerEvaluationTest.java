@@ -69,14 +69,5 @@ public class IntegerEvaluationTest
         assertNotEquals(IntegerEvaluation.of(17), NONE);
     }
 
-    /**
-     * Test of hashCode method, of class Evaluation.
-     */
-    @Test
-    public void testHashCode()
-    {
-        assertEquals(0, NONE.hashCode());
-        assertNotEquals(0, IntegerEvaluation.of(17).hashCode());
-    }
 
 }
