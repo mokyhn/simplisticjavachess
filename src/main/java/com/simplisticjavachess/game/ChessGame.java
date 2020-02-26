@@ -63,10 +63,7 @@ public class ChessGame
 
         switch (board.getGameResult())
         {
-            case DRAW:
-                System.out.println("Draw");
-                break;
-            case STALE_MATE:
+            case DRAW_STALE_MATE:
                 break;
             case MATE:
                 System.out.println("Mate");

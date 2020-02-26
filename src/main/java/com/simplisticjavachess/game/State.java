@@ -114,10 +114,9 @@ public final class State
         {
             switch (gameResult)
             {
-                case DRAW:
                 case DRAW_BY_50_MOVE_RULE:
                 case DRAW_BY_REPETITION:
-                case STALE_MATE:
+                case DRAW_STALE_MATE:
                     result = result + "It's a draw!\n";
                 break;
                 case MATE:
