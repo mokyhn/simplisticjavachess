@@ -29,7 +29,6 @@ public class PositionInference
         }
     }
 
-
     /**
      * 
      * @param position - the given position
