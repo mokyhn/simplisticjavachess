@@ -6,7 +6,6 @@ package com.simplisticjavachess.evaluation;
 
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.board.Board;
-import com.simplisticjavachess.piece.Color;
 
 public class IntegerEvaluator implements Evaluator
 {
@@ -23,9 +22,6 @@ public class IntegerEvaluator implements Evaluator
     public IntegerEvaluation evaluate(Board b)
     {
         int result = 0;
-        
-        boolean thereIsAWhiteKing = false;
-        boolean thereIsABlackKing = false;
 
         for (Piece p : b.getPieces())
         {
@@ -48,26 +44,10 @@ public class IntegerEvaluator implements Evaluator
                     result += QUEEN_VALUE * color;
                     break;
                 case KING:
-                    if (p.getColor() == Color.BLACK)
-                    {
-                        thereIsABlackKing = true;
-                    }
-                    if (p.getColor() == Color.WHITE)
-                    {
-                        thereIsAWhiteKing = true;
-                    }
+                    /* No counting needed */
                     break;
                 default:
             }
-        }
-
-        if (!thereIsABlackKing)
-        {
-            result = BLACK_IS_MATED;
-        }
-        if (!thereIsAWhiteKing)
-        {
-            result = WHITE_IS_MATED;
         }
 
         return IntegerEvaluation.of(result);

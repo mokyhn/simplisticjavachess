@@ -5,9 +5,11 @@ package com.simplisticjavachess.board;
  */
 public class MoveResult
 {
+	//TODO: Use moveResultType instead of boolean moveLegal
+	private final Board board;
 	private final boolean moveLegal;
 
-	private final Board board;
+
 
 	public MoveResult(boolean moveLegal, Board board) {
 		this.moveLegal = moveLegal;

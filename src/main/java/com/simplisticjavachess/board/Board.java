@@ -83,12 +83,7 @@ public class Board
 
         switch (state.getGameResult())
         {
-            case DRAW_BY_50_MOVE_RULE:
-                /* Intended fall-through */
-            case DRAW_BY_REPETITION:
-                /* Intended fall-through */
-            case DRAW_STALE_MATE:
-                return true;
+            case DRAW:
             case NO_RESULT:
                 /* Intended fall-through */
             default:

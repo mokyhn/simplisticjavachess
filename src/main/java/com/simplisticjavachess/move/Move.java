@@ -28,6 +28,12 @@ public final class Move
     {
         if (from.isValid() && to.isValid())
         {
+            // It is not legal to capture the king
+            if (capturedPiece != null && PieceType.KING.equals(capturedPiece.getPieceType()))
+            {
+                throw new IllegalArgumentException();
+            }
+
             this.from = from;
             this.to = to;
             this.moveType = type;
