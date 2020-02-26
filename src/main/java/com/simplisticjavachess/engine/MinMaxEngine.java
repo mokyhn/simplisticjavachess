@@ -38,12 +38,6 @@ public class MinMaxEngine implements Engine
             }
         }
 
-        Evaluation evaluation = evaluator.evaluate(board);
-        if (evaluation.equals(BLACK_MATE) || evaluation.equals(WHITE_MATE))
-        {
-            return new SearchResult(evaluation);
-        }
-
         Iterator<Move> moves = moveGenerator.generateMoves(board);
         if (!moves.hasNext())
         {

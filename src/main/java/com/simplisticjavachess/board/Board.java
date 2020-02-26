@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
+import static com.simplisticjavachess.game.GameResult.DRAW;
 import static com.simplisticjavachess.piece.PieceType.KING;
 import static com.simplisticjavachess.piece.PieceType.PAWN;
 import static com.simplisticjavachess.piece.PieceType.ROOK;
@@ -75,20 +76,7 @@ public class Board
     
     public boolean isDraw()
     {
-        //TODO: This null check is not a good idea
-        if (state.getGameResult() == null)
-        {
-            return false;
-        }
-
-        switch (state.getGameResult())
-        {
-            case DRAW:
-            case NO_RESULT:
-                /* Intended fall-through */
-            default:
-                return false;
-        }
+          return state.getGameResult() == DRAW;
     }
 
     public boolean isMate()
