@@ -2,7 +2,8 @@ package com.simplisticjavachess.board;
 
 public enum MoveResultType
 {
+    THE_MOVER_IN_CHECK,
     NORMAL_MOVE,
-    MOVER_IN_CHECK,
-    DRAW
+    DRAW_MOVE,
+    MATE_MOVE
 }
