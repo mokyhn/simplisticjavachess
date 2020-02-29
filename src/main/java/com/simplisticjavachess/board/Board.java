@@ -12,7 +12,6 @@ import com.simplisticjavachess.piece.Piece;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Objects;
 
 import static com.simplisticjavachess.piece.PieceType.KING;
@@ -106,23 +105,6 @@ public class Board
     public Piece getPiece(Location location)
     {
         return position.getPiece(location);
-    }
-    
-    public Board insert(Piece p)
-    {
-        return new Board(state, position.insert(p));
-    }
-
-    public Board insert(List<Piece> pieces)
-    {
-        Board board = this;
-
-        for (Piece piece : pieces)
-        {
-            board = board.insert(piece);
-        }
-
-        return board;
     }
 
     public boolean freeSquare(Location location)

@@ -19,18 +19,16 @@ public class PositionInferenceTest
     @Test
     public void testIsInCheck()
     {
-        Board board = new Board(WHITE);
-        board = board.insert(Piece.parse("Bd5"));
-        board = board.insert(Piece.parse("kc4"));
+        Board board = BoardParser.parseFromLetters("Bd5 kc4 w");
         assertTrue(PositionInference.isInCheck(board.getPosition(), Color.BLACK));
     }
     
     @Test
     public void testAttacks()
     {
-        Board board = new Board(WHITE);
+        Board board = BoardParser.parseFromLetters("Bd5 w");
         Piece piece = Piece.parse("Bd5");
-        board = board.insert(piece);
+
         Piece result = PositionInference.attacks(board.getPosition(), Location.parse("e6"), WHITE);
         Assert.assertEquals(piece, result);
         

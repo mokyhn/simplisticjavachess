@@ -165,7 +165,7 @@ public class BoardParser
         return result;
     }
 
-    static Board parseFromLetters(String str)
+    public static Board parseFromLetters(String str)
     {
         String[] strings = str.split(" ");
 
@@ -198,9 +198,8 @@ public class BoardParser
             throw new IllegalArgumentException("You must supply a color for who is to move, w or b");
         }
 
-        Board board = new Board(inMove);
-        board = board.insert(pieces);
+        Position position = new Position(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces);
 
-        return board;
+        return new Board(position);
     }
 }
