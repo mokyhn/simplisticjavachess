@@ -46,7 +46,7 @@ public class Position
         this.piecesHash = piecesHash;
     }
 
-    public Color getInMove()
+    public Color inMove()
     {
         return inMove;
     }
@@ -164,10 +164,44 @@ public class Position
         return freeSquare(location.getX(), location.getY());
     }
 
-    boolean freeSquare(int x, int y)
+    public boolean freeSquare(int x, int y)
     {
         return !piecesMap.containsKey(new Location(x, y));
     }
+
+
+    /**
+     * @param x - x position
+     * @param y - y position
+     * @return true, if square is attacked by opponent
+     */
+    public boolean isAttacked(int x, int y)
+    {
+        return PositionInference.attacks(this, new Location(x, y), this.inMove().opponent()) != null;
+    }
+
+    public boolean isAttacked(Location location)
+    {
+        return PositionInference.attacks(this, location, inMove().opponent()) != null;
+    }
+
+    /**
+     * @param color
+     * @return Is player with color color in check?
+     */
+    public Boolean isInCheck(Color color)
+    {
+        return PositionInference.isInCheck(this, color);
+    }
+
+    /**
+     * @return Is player in move color color in check?
+     */
+    public Boolean isInCheck()
+    {
+        return PositionInference.isInCheck(this, this.inMove());
+    }
+
 
     /**
      * Are all locations free between from and to?

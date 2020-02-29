@@ -56,7 +56,7 @@ public class Board
 
     public Color inMove()
     {
-        return position.getInMove();
+        return position.inMove();
     }
 
     public Board setBlackToMove()
@@ -152,33 +152,19 @@ public class Board
         return position;
     }
 
-
-    /**
-     * @param x - x position
-     * @param y - y position
-     * @return true, if square is attacked by opponent
-     */
     public boolean isAttacked(int x, int y)
     {
-        return PositionInference.attacks(position, new Location(x, y), position.getInMove().opponent()) != null;
+        return position.isAttacked(x, y);
     }
 
-
-    /**
-     * @param color
-     * @return Is player with color color in check?
-     */
     public Boolean isInCheck(Color color)
     {
-        return PositionInference.isInCheck(position, color);
+        return position.isInCheck(color);
     }
 
-    /**
-     * @return Is player in move color color in check?
-     */
     public Boolean isInCheck()
     {
-        return PositionInference.isInCheck(position, inMove());
+        return position.isInCheck();
     }
 
     public Move getLastMove()
@@ -345,13 +331,13 @@ public class Board
         }
 
         // Swap the move color
-        newPosition = newPosition.setInMove(position.getInMove().opponent());
+        newPosition = newPosition.setInMove(position.inMove().opponent());
 
         boolean wasMoveLegal;
 
         // The player that did the move is in check
         // his or her move is hence not legal
-        if (PositionInference.isInCheck(newPosition, position.getInMove()))
+        if (newPosition.isInCheck(position.inMove()))
         {
             wasMoveLegal = false;
         }
@@ -402,12 +388,12 @@ public class Board
 
     boolean isWhiteInMove()
     {
-        return Color.WHITE.equals(position.getInMove());
+        return Color.WHITE.equals(position.inMove());
     }
 
     public boolean isAttacked(Location location)
     {
-        return PositionInference.attacks(position, location, position.getInMove().opponent()) != null;
+        return position.isAttacked(location);
     }
 
     public Vector getMoveDirection()
