@@ -44,6 +44,12 @@ public class Board
         this.position = newPosition;
     }
 
+    public Board(Position position)
+    {
+        this.state = new State();
+        this.position = position;
+    }
+
     public static Board createFromFEN(String fen)
     {
         return BoardParser.parseFEN(fen);        

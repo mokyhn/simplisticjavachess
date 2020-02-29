@@ -1,11 +1,15 @@
 package com.simplisticjavachess.board;
 
+import com.simplisticjavachess.game.CastlingState;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.misc.Strings;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.simplisticjavachess.piece.Color.BLACK;
+import static com.simplisticjavachess.piece.Color.WHITE;
 
 /**
  * @author Morten Kühnrich
@@ -34,19 +38,18 @@ public class BoardParser
         String inMoveString = sections[1];
         Color inMove = parseFENWhoToMove(inMoveString);
 
-        Board board = new Board(inMove);
-        board = board.insert(pieces);
-
         if (sections.length == 2)
         {
-            return board;
+            return new Board(new Position(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces));
         }
 
         // Parse castling options
         String castlingString = sections[2];
-        board = parseFENCastling(board, castlingString);
+        CastlingState castlingState = parseFENCastling(castlingString);
 
-        return board;
+        Position position = new Position(inMove, castlingState, pieces);
+
+        return new Board(position);
     }
 
     private static List<Piece> parseFENPieces(String piecesString) {
@@ -75,41 +78,40 @@ public class BoardParser
         return pieces;
     }
 
-    private static Board parseFENCastling(Board board, String castlingString) {
+    private static CastlingState parseFENCastling(String castlingString) {
+        CastlingState castlingState = CastlingState.NOBODY_CAN_CASTLE;
+
         for (char c : castlingString.toCharArray())
         {
             switch (c)
             {
                 case '-':
-                    board = board.setCanCastleLong(false, Color.WHITE);
-                    board = board.setCanCastleShort(false, Color.WHITE);
-                    board = board.setCanCastleLong(false, Color.BLACK);
-                    board = board.setCanCastleShort(false, Color.BLACK);
+                    castlingState = CastlingState.NOBODY_CAN_CASTLE;
                 case 'K':
-                    board = board.setCanCastleShort(true, Color.WHITE);
+                    castlingState = castlingState.setCanCastleShort(WHITE, true);
                     break;
                 case 'Q':
-                    board = board.setCanCastleLong(true, Color.WHITE);
+                    castlingState = castlingState.setCanCastleLong(WHITE, true);
                     break;
                 case 'k':
-                    board = board.setCanCastleShort(true, Color.BLACK);
+                    castlingState = castlingState.setCanCastleShort(BLACK, true);
                     break;
                 case 'q':
-                    board = board.setCanCastleLong(true, Color.BLACK);
+                    castlingState = castlingState.setCanCastleLong(BLACK, true);
                     break;
             }
         }
-        return board;
+        return castlingState;
     }
 
     private static Color parseFENWhoToMove(String inMoveString) {
         inMoveString = inMoveString.toLowerCase();
         if ("w".equals(inMoveString))
         {
-            return Color.WHITE;
+            return WHITE;
         } else if ("b".equals(inMoveString))
         {
-            return Color.BLACK;
+            return BLACK;
         } else
         {
             throw new IllegalArgumentException("Who-to-move-color not specified correctly, use either w or b");
@@ -181,12 +183,12 @@ public class BoardParser
             {
                 if ("w".equals(s))
                 {
-                    inMove = Color.WHITE;
+                    inMove = WHITE;
                 } 
                 
                 if ("b".equals(s))
                 {
-                    inMove = Color.BLACK;
+                    inMove = BLACK;
                 }                 
             }
         }

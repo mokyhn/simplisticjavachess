@@ -46,6 +46,20 @@ public class Position
         this.piecesHash = piecesHash;
     }
 
+    public Position(Color inMove, CastlingState castlingState, Collection<Piece> pieces)
+    {
+        this.inMove = inMove;
+        this.castlingState = castlingState;
+        this.piecesMap = new HashMap<>();
+        int h = 0;
+        for (Piece piece : pieces)
+        {
+            piecesMap.put(piece.getLocation(), piece);
+            h ^= piece.getChessHashCode();
+        }
+        this.piecesHash = h;
+    }
+
     public Color inMove()
     {
         return inMove;
