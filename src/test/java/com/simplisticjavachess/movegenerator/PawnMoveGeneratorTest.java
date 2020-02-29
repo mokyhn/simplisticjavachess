@@ -1,6 +1,7 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.BoardParser;
 import com.simplisticjavachess.board.MoveResult;
 import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
@@ -16,7 +17,7 @@ public class PawnMoveGeneratorTest
     @Test
     public void testMoveFromHome()
     {
-        Board board = Board.createFromLetters("Pa2 w");
+        Board board = BoardParser.algebraic("Pa2 w");
         Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("Pa2"));
         String movesStr = IteratorUtils.toString(moves);
         assertEquals("[a2-a3, a2-a4]", movesStr);
@@ -25,7 +26,7 @@ public class PawnMoveGeneratorTest
     @Test
     public void testNormalMove()
     {
-        Board board = Board.createFromLetters("Pd4 w");
+        Board board = BoardParser.algebraic("Pd4 w");
         Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("Pd4"));
         String movesStr = IteratorUtils.toString(moves);
         assertEquals("[d4-d5]", movesStr);
@@ -34,7 +35,7 @@ public class PawnMoveGeneratorTest
     @Test
     public void testPromotion()
     {
-        Board board = Board.createFromLetters("Pd7 w");
+        Board board = BoardParser.algebraic("Pd7 w");
         System.out.println(board.asASCII());
         Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("Pd7"));
         String movesStr = IteratorUtils.toString(moves);
@@ -45,7 +46,7 @@ public class PawnMoveGeneratorTest
     @Test
     public void testCapturingPromotion()
     {
-        Board board = Board.createFromLetters("Pd7 rd8 rc8 re8 w");
+        Board board = BoardParser.algebraic("Pd7 rd8 rc8 re8 w");
         System.out.println(board.asASCII());
         Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("Pd7"));
         String movesStr = IteratorUtils.toString(moves);
@@ -56,7 +57,7 @@ public class PawnMoveGeneratorTest
     @Test
     public void testNormalCapturing()
     {
-        Board board = Board.createFromLetters("Pd4 Pd5 pc5 pe5 w");
+        Board board = BoardParser.algebraic("Pd4 Pd5 pc5 pe5 w");
         System.out.println(board.asASCII());
         Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("Pd4"));
         String movesStr = IteratorUtils.toString(moves);
@@ -66,7 +67,7 @@ public class PawnMoveGeneratorTest
     @Test
     public void testEnpassantLeft()
     {
-        Board board = Board.createFromLetters("ka1 Kh8 Pd2 pc4  w");
+        Board board = BoardParser.algebraic("ka1 Kh8 Pd2 pc4  w");
         MoveResult moveResult = board.doMove(MoveParser.parse(board,"d2d4"));
         board = moveResult.getBoard();
         System.out.println(board.asASCII());
@@ -78,7 +79,7 @@ public class PawnMoveGeneratorTest
     @Test
     public void testEnpassantRight()
     {
-        Board board = Board.createFromLetters("ka1 Kh8 Pd2 pe4  w");
+        Board board = BoardParser.algebraic("ka1 Kh8 Pd2 pe4  w");
         MoveResult moveResult = board.doMove(MoveParser.parse(board,"d2d4"));
         board = moveResult.getBoard();
         System.out.println(board.asASCII());
@@ -90,7 +91,7 @@ public class PawnMoveGeneratorTest
     @Test
     public void lostEnpassantRight()
     {
-        Board board = Board.createFromLetters("ka1 Kh8 Pd2 pe4  w");
+        Board board = BoardParser.algebraic("ka1 Kh8 Pd2 pe4  w");
         MoveResult moveResult = board.doMove(MoveParser.parse(board,"d2d4"));
         board = moveResult.getBoard();
         moveResult = board.doMove(MoveParser.parse(board,"a1b1"));

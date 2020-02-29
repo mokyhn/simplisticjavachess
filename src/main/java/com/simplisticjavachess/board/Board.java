@@ -47,16 +47,6 @@ public class Board
         this.position = position;
     }
 
-    public static Board createFromFEN(String fen)
-    {
-        return BoardParser.parseFEN(fen);        
-    }
-
-    public static Board createFromLetters(String str)
-    {
-        return BoardParser.parseFromLetters(str);
-    }
-
     public Color inMove()
     {
         return position.inMove();

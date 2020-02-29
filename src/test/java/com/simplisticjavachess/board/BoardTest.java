@@ -10,7 +10,7 @@ public class BoardTest
     @Test
     public void rookMoveRemovesCastlingLongPossibility()
     {
-        Board board = Board.createFromLetters("Ra1 Ke1 kh8 w");
+        Board board = BoardParser.algebraic("Ra1 Ke1 kh8 w");
         board = board.setCanCastleLong(true, Color.WHITE);
         MoveResult moveResult = board.doMove("a1b1 h8g8 b1a1 g8h8");
         board = moveResult.getBoard();
@@ -21,7 +21,7 @@ public class BoardTest
     @Test
     public void rookMoveRemovesCastlingShortPossibility()
     {
-        Board board = Board.createFromLetters("Rh1 Ke1 ka8 w");
+        Board board = BoardParser.algebraic("Rh1 Ke1 ka8 w");
         board = board.setCanCastleShort(true, Color.WHITE);
         System.out.println(board.asASCII());
         MoveResult moveResult = board.doMove("h1g1 a8b8 g1h1 b8a8");

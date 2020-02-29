@@ -6,6 +6,7 @@
 
 package com.simplisticjavachess.game;
 
+import com.simplisticjavachess.board.BoardParser;
 import com.simplisticjavachess.board.MoveResult;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.MoveParser;
@@ -32,14 +33,14 @@ public class ChessGame
     
     public ChessGame()
     {
-        board = Board.createFromFEN(INITIAL_POSITION);
+        board = BoardParser.FEN(INITIAL_POSITION);
         searchDepth = 3;
     }
 
     
     public void setBoard(String fen)
     {
-        this.board = Board.createFromFEN(fen);
+        this.board = BoardParser.FEN(fen);
     }
 
     public void black()
@@ -49,7 +50,7 @@ public class ChessGame
     
     public void newgame()
     {
-        board = Board.createFromFEN(INITIAL_POSITION);
+        board = BoardParser.FEN(INITIAL_POSITION);
     }
 
     public void print()

@@ -120,14 +120,14 @@ public class PositionTest
     @Test
     public void testFreeSquares()
     {
-        Board b = Board.createFromLetters("Kd4 Rh4 w");
+        Board b = BoardParser.algebraic("Kd4 Rh4 w");
         assertTrue(b.getPosition().freeSquares(Location.parse("d4"), Location.parse("h4")));
     }
 
     @Test
 	public void testFreeSquares2()
 	{
-		Board b = Board.createFromFEN("r3r1Qk/6pp/8/6N1/8/1B6/1PPP4/2K5 b");
+		Board b = BoardParser.FEN("r3r1Qk/6pp/8/6N1/8/1B6/1PPP4/2K5 b");
 		assertTrue(b.getPosition().freeSquares(Location.parse("g8"), Location.parse("e8")));
 	}
 }

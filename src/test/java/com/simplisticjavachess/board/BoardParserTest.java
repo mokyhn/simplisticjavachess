@@ -15,14 +15,14 @@ public class BoardParserTest
     @Before
     public void before()
     {
-        board1 = Board.createFromLetters("pe4 Bd5 qh1 b");
+        board1 = BoardParser.algebraic("pe4 Bd5 qh1 b");
     }
     
     @Test
     public void testImportExportPosition_1()
     {
         String fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w";
-        Board board = Board.createFromFEN(fen);
+        Board board = BoardParser.FEN(fen);
         String result = BoardParser.exportPosition(board);
         assertEquals(fen, result);
     }
@@ -31,7 +31,7 @@ public class BoardParserTest
     public void testImportExportPosition_2()
     {
         String fen = "rnb5/pp4pp/8/8/8/8/PP2P2P/2BQKB2 w";
-        Board board = Board.createFromFEN(fen);
+        Board board = BoardParser.FEN(fen);
         String result = BoardParser.exportPosition(board);
         assertEquals(fen, result);
     }
@@ -40,7 +40,7 @@ public class BoardParserTest
     public void testImportExportPosition_3()
     {
         String fen = "8/pp4pp/8/8/8/8/PP2P2P/8 b";
-        Board board = Board.createFromFEN(fen);
+        Board board = BoardParser.FEN(fen);
         String result = BoardParser.exportPosition(board);
         assertEquals(fen, result);
     }
@@ -50,7 +50,7 @@ public class BoardParserTest
     {
         for (String test_position : FENPositions.POSITIONS)
         {
-            Board board = Board.createFromFEN(test_position);            
+            Board board = BoardParser.FEN(test_position);
             String result = BoardParser.exportPosition(board);
             assertEquals(test_position, result);
         }
@@ -60,7 +60,7 @@ public class BoardParserTest
     public void testImportPosition()
     {
         String test_position = "7k/8/7K/2q5/1P6/8/8/5R2 w - -";
-        Board board = Board.createFromFEN(test_position);
+        Board board = BoardParser.FEN(test_position);
         Piece piece1 = board.getPiece(7, 7);
         Piece piece2 = board.getPiece(7, 5);
         assertEquals(Color.BLACK, piece1.getColor());

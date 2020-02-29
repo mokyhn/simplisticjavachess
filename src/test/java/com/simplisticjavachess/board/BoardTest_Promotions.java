@@ -17,11 +17,11 @@ import static org.junit.Assert.*;
  */
 public class BoardTest_Promotions
 {
-    private static Board WHITE_READY_TO_PROMOTE() { return Board.createFromFEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 w"); }
-    private static Board BLACK_READY_TO_PROMOTE() { return Board.createFromFEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 b"); }
+    private static Board WHITE_READY_TO_PROMOTE() { return BoardParser.FEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 w"); }
+    private static Board BLACK_READY_TO_PROMOTE() { return BoardParser.FEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 b"); }
 
-    private static Board WHITE_READY_TO_CAPTURE_PROMOTE() { return Board.createFromFEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN w"); }
-    private static Board BLACK_READY_TO_CAPTURE_PROMOTE() { return Board.createFromFEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN b"); }
+    private static Board WHITE_READY_TO_CAPTURE_PROMOTE() { return BoardParser.FEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN w"); }
+    private static Board BLACK_READY_TO_CAPTURE_PROMOTE() { return BoardParser.FEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN b"); }
 
     @Test
     public void testWhiteSimplePromotions()

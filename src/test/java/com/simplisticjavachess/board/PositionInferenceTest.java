@@ -19,14 +19,14 @@ public class PositionInferenceTest
     @Test
     public void testIsInCheck()
     {
-        Board board = BoardParser.parseFromLetters("Bd5 kc4 w");
+        Board board = BoardParser.algebraic("Bd5 kc4 w");
         assertTrue(PositionInference.isInCheck(board.getPosition(), Color.BLACK));
     }
     
     @Test
     public void testAttacks()
     {
-        Board board = BoardParser.parseFromLetters("Bd5 w");
+        Board board = BoardParser.algebraic("Bd5 w");
         Piece piece = Piece.parse("Bd5");
 
         Piece result = PositionInference.attacks(board.getPosition(), Location.parse("e6"), WHITE);
@@ -80,7 +80,7 @@ public class PositionInferenceTest
     @Test
     public void pawnAttackTest()
     {
-        Board board = Board.createFromLetters("Pd4 w");
+        Board board = BoardParser.algebraic("Pd4 w");
         Location.parse("d4");
         Piece piece;
 

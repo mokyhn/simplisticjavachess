@@ -21,7 +21,7 @@ public class OpeningMoveGenerator implements MoveGenerator
 
     public void add(String FEN, String moveStr)
     {
-        Board board = BoardParser.parseFEN(FEN);
+        Board board = BoardParser.FEN(FEN);
         Move move = MoveParser.parse(board, moveStr);
 
         if (move == null)
@@ -43,7 +43,7 @@ public class OpeningMoveGenerator implements MoveGenerator
 
     public void addFromMoves(String FEN, String moves, Color sideToRecord)
     {
-        Board board = BoardParser.parseFEN(FEN);
+        Board board = BoardParser.FEN(FEN);
         MoveSequence moveSequence = MoveSequence.parse(board, moves);
 
         List<Move> moveList = IteratorUtils.toList(moveSequence.iterator());

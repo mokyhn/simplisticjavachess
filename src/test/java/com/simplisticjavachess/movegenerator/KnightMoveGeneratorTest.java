@@ -14,7 +14,7 @@ public class KnightMoveGeneratorTest {
 
 	@Test
 	public void knightMoves() {
-		Board board = Board.createFromLetters("Nd4 w");
+		Board board = BoardParser.algebraic("Nd4 w");
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Nd4");
 		Iterator<Move> moves = new KnightMoveGenerator().generateMoves(board, piece);
@@ -23,7 +23,7 @@ public class KnightMoveGeneratorTest {
 
 	@Test
 	public void knightMovesNearEdge() {
-		Board board = Board.createFromLetters("Ng2 w");
+		Board board = BoardParser.algebraic("Ng2 w");
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Ng2");
 		Iterator<Move> moves = new KnightMoveGenerator().generateMoves(board, piece);
@@ -32,7 +32,7 @@ public class KnightMoveGeneratorTest {
 
 	@Test
 	public void knightTakes() {
-		Board board = Board.createFromLetters("Nd4 pb5 pb3 pc6 pe6 pc2 pe2 pf5 pf3 w");
+		Board board = BoardParser.algebraic("Nd4 pb5 pb3 pc6 pe6 pc2 pe2 pf5 pf3 w");
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Nd4");
 		Iterator<Move> moves = new KnightMoveGenerator().generateMoves(board, piece);

@@ -28,7 +28,7 @@ public class MainMoveGeneratorTest
         
         for (String fen : FENPositions.POSITIONS) 
         {
-            Board board = Board.createFromFEN(fen);
+            Board board = BoardParser.FEN(fen);
             
             Iterator<Move> moves = moveGenerator.generateMoves(board);
             
@@ -67,7 +67,7 @@ public class MainMoveGeneratorTest
         for (String fen : FENPositions.POSITIONS) 
         {
             i++;
-            Board originalBoard = Board.createFromFEN(fen);
+            Board originalBoard = BoardParser.FEN(fen);
             Board board = originalBoard;
             
             Iterator<Move> moveIterator = moveGenerator.generateMoves(board);

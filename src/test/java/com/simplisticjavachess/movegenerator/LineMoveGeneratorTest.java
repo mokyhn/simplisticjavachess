@@ -22,7 +22,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesUpRight()
     {         
-        Board board = BoardParser.parseFromLetters("Bd5 w");
+        Board board = BoardParser.algebraic("Bd5 w");
         Piece piece = Piece.parse("Bd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, 1)).generateMoves(board, piece));
@@ -35,7 +35,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesDown()
     {
-        Board board = BoardParser.parseFromLetters("Rd5 w");
+        Board board = BoardParser.algebraic("Rd5 w");
         Piece piece = Piece.parse("Rd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(0, -1)).generateMoves(board, piece));
@@ -50,7 +50,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesLeft()
     {         
-        Board board = BoardParser.parseFromLetters("Rd5 w");
+        Board board = BoardParser.algebraic("Rd5 w");
         Piece piece = Piece.parse("Rd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(-1, 0)).generateMoves(board, piece));
@@ -63,7 +63,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesLeftBlockingPiece()
     {
-        Board board = BoardParser.parseFromLetters("Rd5 Pb5 w");
+        Board board = BoardParser.algebraic("Rd5 Pb5 w");
         Piece piece = Piece.parse("Rd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(-1, 0)).generateMoves(board, piece));
@@ -74,7 +74,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateDownRightAndCapture()
     {         
-        Board board = BoardParser.parseFromLetters("Bc5 pe3 pf2 w");
+        Board board = BoardParser.algebraic("Bc5 pe3 pf2 w");
         Piece piece = Piece.parse("Bc5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, -1)).generateMoves(board, piece));

@@ -1,6 +1,7 @@
 package com.simplisticjavachess.move;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.BoardParser;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.board.Location;
 import org.junit.Test;
@@ -17,7 +18,7 @@ public class MoveParserTest
     
     public MoveParserTest()
     {
-        board = Board.createFromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        board = BoardParser.FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     }
 
     /**

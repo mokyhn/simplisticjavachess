@@ -1,6 +1,7 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.BoardParser;
 import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
@@ -21,7 +22,7 @@ public class QueenMoveGeneratorTest
 
     @Test
     public void queenMovesCenterTest() {
-        Board board = Board.createFromLetters("Qd4 w");
+        Board board = BoardParser.algebraic("Qd4 w");
         System.out.println(board.asASCII());
         Piece piece = Piece.parse("Qd4");
         Iterator<Move> moves = new QueenMoveGenerator().generateMoves(board, piece);
@@ -32,7 +33,7 @@ public class QueenMoveGeneratorTest
 
     @Test
     public void queenMovesShadowsTest() {
-        Board board = Board.createFromLetters("Qd4 Pd6 Pb6 Pf6 Pc3 Pd1 pf2 w");
+        Board board = BoardParser.algebraic("Qd4 Pd6 Pb6 Pf6 Pc3 Pd1 pf2 w");
         System.out.println(board.asASCII());
         Piece piece = Piece.parse("Qd4");
         Iterator<Move> moves = new QueenMoveGenerator().generateMoves(board, piece);

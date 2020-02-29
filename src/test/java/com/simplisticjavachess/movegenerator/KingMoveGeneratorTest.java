@@ -1,9 +1,11 @@
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.*;
-import com.simplisticjavachess.misc.*;
-import com.simplisticjavachess.move.*;
-import com.simplisticjavachess.piece.*;
+import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.misc.IteratorUtils;
+import com.simplisticjavachess.move.Move;
+import com.simplisticjavachess.piece.Color;
+import com.simplisticjavachess.piece.Piece;
 import org.junit.*;
 
 import java.util.*;
@@ -16,7 +18,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void kingMovesCenter() {
-		Board board = Board.createFromLetters("Kd4 w");
+		Board board = BoardParser.algebraic("Kd4 w");
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Kd4");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
@@ -26,7 +28,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void kingMovesCorner1() {
-		Board board = Board.createFromLetters("Kh8 w");
+		Board board = BoardParser.algebraic("Kh8 w");
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Kh8");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
@@ -36,7 +38,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void kingMovesCorner2() {
-		Board board = Board.createFromLetters("Kh1 w");
+		Board board = BoardParser.algebraic("Kh1 w");
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Kh1");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
@@ -46,7 +48,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void kingMovesCorner3() {
-		Board board = Board.createFromLetters("Ka1 w");
+		Board board = BoardParser.algebraic("Ka1 w");
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Ka1");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
@@ -55,7 +57,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void kingMovesCorner4() {
-		Board board = Board.createFromLetters("Ka8 w");
+		Board board = BoardParser.algebraic("Ka8 w");
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Ka8");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
@@ -64,7 +66,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void kingMovesCenterButPartiallyBlocked() {
-		Board board = Board.createFromLetters("Kd4 Pd5 w");
+		Board board = BoardParser.algebraic("Kd4 Pd5 w");
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Kd4");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
@@ -73,7 +75,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void kingCannotMoveOverThreatenedFields() {
-		Board board = Board.createFromLetters("Kd4 ra5 ra3 rc1 re1 w");
+		Board board = BoardParser.algebraic("Kd4 ra5 ra3 rc1 re1 w");
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Kd4");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
@@ -83,7 +85,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void kingTakes1() {
-		Board board = Board.createFromLetters("kd4 Nd3 Nd5 Ne4 Nc4 b");
+		Board board = BoardParser.algebraic("kd4 Nd3 Nd5 Ne4 Nc4 b");
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("kd4");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
@@ -92,7 +94,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void kingTakes2() {
-		Board board = Board.createFromLetters("kd4 Nc5 Nc3 Ne5 Ne3 b");
+		Board board = BoardParser.algebraic("kd4 Nc5 Nc3 Ne5 Ne3 b");
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("kd4");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
@@ -102,7 +104,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void castleShort() {
-		Board board = Board.createFromLetters("Ke1 Rh1 w");
+		Board board = BoardParser.algebraic("Ke1 Rh1 w");
 		board = board.setCanCastleShort(true, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Ke1");
@@ -112,7 +114,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void cannotCastleShortOverThreat1() {
-		Board board = Board.createFromLetters("Ke1 Rh1 bd3 w");
+		Board board = BoardParser.algebraic("Ke1 Rh1 bd3 w");
 		board = board.setCanCastleShort(true, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Ke1");
@@ -122,7 +124,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void cannotCastleShortOverThreat2() {
-		Board board = Board.createFromLetters("Ke1 Rh1 bd4 w");
+		Board board = BoardParser.algebraic("Ke1 Rh1 bd4 w");
 		board = board.setCanCastleShort(true, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Ke1");
@@ -132,7 +134,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void cannotCastleShortOutOfCheck() {
-		Board board = Board.createFromLetters("Ke1 Rh1 re4 w");
+		Board board = BoardParser.algebraic("Ke1 Rh1 re4 w");
 		board = board.setCanCastleShort(true, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Ke1");
@@ -144,7 +146,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void cannotCastleShort() {
-		Board board = Board.createFromLetters("Ke1 Rh1 w");
+		Board board = BoardParser.algebraic("Ke1 Rh1 w");
 		board = board.setCanCastleShort(false, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Ke1");
@@ -154,7 +156,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void castlingLong() {
-		Board board = Board.createFromLetters("Ke1 Ra1 w");
+		Board board = BoardParser.algebraic("Ke1 Ra1 w");
 		board = board.setCanCastleLong(true, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Ke1");
@@ -164,7 +166,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void cannotCastleLongOverThreat1() {
-		Board board = Board.createFromLetters("Ke1 Ra1 rc8 w");
+		Board board = BoardParser.algebraic("Ke1 Ra1 rc8 w");
 		board = board.setCanCastleLong(true, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Ke1");
@@ -174,7 +176,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void cannotCastleLongOverThreat2() {
-		Board board = Board.createFromLetters("Ke1 Ra1 rd8 w");
+		Board board = BoardParser.algebraic("Ke1 Ra1 rd8 w");
 		board = board.setCanCastleLong(true, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Ke1");
@@ -184,7 +186,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void cannotCastleLongOutOfCheck() {
-		Board board = Board.createFromLetters("Ke1 Ra1 re8 w");
+		Board board = BoardParser.algebraic("Ke1 Ra1 re8 w");
 		board = board.setCanCastleLong(true, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Ke1");
@@ -195,7 +197,7 @@ public class KingMoveGeneratorTest {
 
 	@Test
 	public void cannotCastleLong() {
-		Board board = Board.createFromLetters("Ke1 Ra1 w");
+		Board board = BoardParser.algebraic("Ke1 Ra1 w");
 		board = board.setCanCastleLong(false, Color.WHITE);
 		System.out.println(board.asASCII());
 		Piece piece = Piece.parse("Ke1");

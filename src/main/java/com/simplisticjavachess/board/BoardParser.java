@@ -23,7 +23,7 @@ public class BoardParser
      * @param fen - FEN position string to parse
      * @return A board with the position
      */
-    public static Board parseFEN(String fen)
+    public static Board FEN(String fen)
     {
         fen = Strings.trimWhiteSpace(fen);
 
@@ -165,7 +165,7 @@ public class BoardParser
         return result;
     }
 
-    public static Board parseFromLetters(String str)
+    public static Board algebraic(String str)
     {
         String[] strings = str.split(" ");
 

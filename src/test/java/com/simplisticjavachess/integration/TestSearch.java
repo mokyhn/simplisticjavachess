@@ -6,6 +6,7 @@
 package com.simplisticjavachess.integration;
 
 import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.BoardParser;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveParser;
@@ -26,7 +27,7 @@ public class TestSearch
 
     public static void assertMove(String expectedMoves, String fen, String moveSequence, int plyDepth)
     {
-        Board board = Board.createFromFEN(fen);
+        Board board = BoardParser.FEN(fen);
         System.out.println(board.asASCII());
 
         // Do initial set of moves
