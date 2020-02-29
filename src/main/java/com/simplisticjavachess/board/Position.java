@@ -19,6 +19,8 @@ public class Position
 {
     private final Color inMove;
     private final CastlingState castlingState;
+
+    //TODO: Introduce PiecesMap class which encapsulates the code around pieces into a class
     private final Map<Location, Piece> piecesMap;
     private final int piecesHash;
 

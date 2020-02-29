@@ -25,7 +25,9 @@ import static com.simplisticjavachess.piece.PieceType.ROOK;
 public class Board
 {
 
+    //TODO: Find a way to incorporate state into Position
     private final State state;
+
     private final Position position;
 
     //TODO: Make this constructor less fill-in-dummy-garbage-data as done with State() which assumes values for state.
@@ -186,6 +188,7 @@ public class Board
         return moveResult;
     }
 
+    //TODO: Copy this into separate Mover class.
     public MoveResult doMove(Move move)
     {
         Piece piece = position.getPiece(move.getFrom());
