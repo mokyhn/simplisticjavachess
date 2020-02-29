@@ -63,11 +63,6 @@ public class MainMoveGenerator implements MoveGenerator
     {
         final ArrayList<Iterator<Move>> moveIterators = new ArrayList<>();
 
-        if (board.isDraw() || board.isMate())
-        {
-            return Collections.emptyIterator();
-        }
-
         for (Piece piece : board.getPieces())
         {
             Iterator<Move> it = generateMoves(board, piece);

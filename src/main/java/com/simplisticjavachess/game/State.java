@@ -11,8 +11,6 @@ public final class State
 	// Used to check for draw by threefold repetition.
     //public int hash; // TODO
 
-    private final GameResult gameResult;
-
     /**
      * Number of half moves since the last pawn advance or capture.
      * Used to determine if a draw can be claimed under the fifty-move rule.
@@ -31,32 +29,23 @@ public final class State
     public State()
     {
         this.move = null;
-        this.gameResult = null;
         this.halfMoveClock = 0;
         this.halfMovesIndex3PosRepetition = 0;
     }
 
-    private State(Move move, GameResult gameResult, int halfMoveClock, int halfMovesIndex3PosRepetition)
+    private State(Move move, int halfMoveClock, int halfMovesIndex3PosRepetition)
     {
         this.move = move;
-        this.gameResult = gameResult;
         this.halfMoveClock = halfMoveClock;
         this.halfMovesIndex3PosRepetition = halfMovesIndex3PosRepetition;
     }
 
 
-    public GameResult getGameResult() {
-        return gameResult;
-    }
 
-    public State setGameResult(GameResult gameResult)
-    {
-        return new State(this.move, gameResult, this.halfMoveClock, this.halfMovesIndex3PosRepetition);
-    }
 
 
 	public State setMove(Move move) {
-        return new State(move, gameResult, this.halfMoveClock, this.halfMovesIndex3PosRepetition);
+        return new State(move, this.halfMoveClock, this.halfMovesIndex3PosRepetition);
 	}
 
     public Move getMove() {
@@ -65,7 +54,7 @@ public final class State
 
     public State setHalfMoveClock(int clock)
     {
-        return new State(this.move, this.gameResult, clock, this.halfMovesIndex3PosRepetition);
+        return new State(this.move, clock, this.halfMovesIndex3PosRepetition);
     }
 
     public int getHalfMoveClock()
@@ -79,7 +68,7 @@ public final class State
 
     public State setHalfMovesIndex3PosRepetition(int index)
     {
-        return  new State(this.move, this.gameResult, this.halfMoveClock, index);
+        return  new State(this.move, this.halfMoveClock, index);
     }
 
     @Override
@@ -92,8 +81,7 @@ public final class State
         if (object instanceof State)
         {
             State other = (State) object;
-            return this.gameResult == other.gameResult &&
-                   this.halfMoveClock == other.halfMoveClock &&
+            return this.halfMoveClock == other.halfMoveClock &&
                    this.halfMovesIndex3PosRepetition == other.halfMovesIndex3PosRepetition &&
                    Objects.equals(this.move, other.move);
         }
@@ -109,18 +97,6 @@ public final class State
         String result;
 
         result = "\n----------------------------State----------------------------\n";
-
-        if (gameResult != null)
-        {
-            switch (gameResult)
-            {
-                case DRAW:
-                    result = result + "It's a draw!\n";
-                break;
-                case MATE:
-                    result = result + "Mate!\n";
-            }
-        }
         result = result + "Number of half moves since last pawn move: " + halfMoveClock + "\n";
         result = result + "Index searched from when checking 3 fold repetition: " + halfMovesIndex3PosRepetition + "\n";
 

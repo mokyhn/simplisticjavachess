@@ -4,7 +4,6 @@ package com.simplisticjavachess.board;
 
 
 import com.simplisticjavachess.engine.MoveSequence;
-import com.simplisticjavachess.game.GameResult;
 import com.simplisticjavachess.game.State;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.Move;
@@ -16,7 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
-import static com.simplisticjavachess.game.GameResult.DRAW;
 import static com.simplisticjavachess.piece.PieceType.KING;
 import static com.simplisticjavachess.piece.PieceType.PAWN;
 import static com.simplisticjavachess.piece.PieceType.ROOK;
@@ -74,22 +72,6 @@ public class Board
     {
         return new Board(state, position.setInMove(Color.WHITE));
     }
-
-    public GameResult getGameResult()
-    {
-        return state.getGameResult();
-    }    
-    
-    public boolean isDraw()
-    {
-          return state.getGameResult() == DRAW;
-    }
-
-    public boolean isMate()
-    {
-        return GameResult.MATE.equals(state.getGameResult());
-    }
-
 
     public boolean canCastleShort()
     {

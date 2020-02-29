@@ -28,14 +28,7 @@ public class MinMaxEngine implements Engine
     {     
         if (plyDepth == 0)
         {
-            if (board.isDraw())
-            {
-                return new SearchResult(EQUAL);
-            }
-            else
-            {
-                return new SearchResult(evaluator.evaluate(board));
-            }
+            return new SearchResult(evaluator.evaluate(board));
         }
 
         Iterator<Move> moves = moveGenerator.generateMoves(board);

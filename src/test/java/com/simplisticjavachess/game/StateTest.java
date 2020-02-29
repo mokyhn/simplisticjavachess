@@ -18,7 +18,6 @@ public class StateTest
     {
         // Setup
         State state = new State();
-        state = state.setGameResult(GameResult.DRAW);
         state = state.setHalfMoveClock(42);
         state = state.setHalfMovesIndex3PosRepetition(41);
         //state.moveNumber = 49;

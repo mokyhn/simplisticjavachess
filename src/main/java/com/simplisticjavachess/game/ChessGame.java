@@ -55,23 +55,6 @@ public class ChessGame
     public void print()
     {
         System.out.println(board.asASCII());
-
-        if (board.getGameResult() == null)
-        {
-            return;
-        }
-
-        switch (board.getGameResult())
-        {
-            case DRAW:
-                System.out.println("Draw");
-                break;
-            case MATE:
-                System.out.println("Mate");
-                break;
-            default:
-        }
-
     }
 
     public void white()
@@ -122,7 +105,7 @@ public class ChessGame
     {
         Move move = MoveParser.parse(board, str);
 
-        if (move == null || board.isDraw() || board.isMate())
+        if (move == null)
         {
             throw new IllegalArgumentException("Invalid move");
         }
