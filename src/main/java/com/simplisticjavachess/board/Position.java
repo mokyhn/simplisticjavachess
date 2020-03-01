@@ -8,58 +8,45 @@ package com.simplisticjavachess.board;
 import com.simplisticjavachess.game.CastlingState;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
-import com.simplisticjavachess.piece.PieceType;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+
 import java.util.Optional;
 
 public class Position
 {
     private final Color inMove;
     private final CastlingState castlingState;
+    private final PieceMap pieceMap;
 
     //TODO: Introduce PiecesMap class which encapsulates the code around pieces into a class
-    private final Map<Location, Piece> piecesMap;
-    private final int piecesHash;
 
     Position()
     {
         castlingState = CastlingState.NOBODY_CAN_CASTLE;
-        piecesMap = new HashMap<>();
+        pieceMap = new PieceMap();
         inMove = null;
-        piecesHash = 0;
     }
 
     public Position(Color inMove)
     {
         this.castlingState = CastlingState.NOBODY_CAN_CASTLE;
-        piecesMap = new HashMap<>();
+        pieceMap = new PieceMap();
         this.inMove = inMove;
-        this.piecesHash = 0;
     }
 
-    private Position(Color inMove, CastlingState castlingState, Map<Location, Piece> pieces, int piecesHash)
+    private Position(Color inMove, CastlingState castlingState, PieceMap pieces)
     {
         this.inMove = inMove;
         this.castlingState = castlingState;
-        this.piecesMap = pieces;
-        this.piecesHash = piecesHash;
+        this.pieceMap = pieces;
     }
 
     public Position(Color inMove, CastlingState castlingState, Collection<Piece> pieces)
     {
         this.inMove = inMove;
         this.castlingState = castlingState;
-        this.piecesMap = new HashMap<>();
-        int h = 0;
-        for (Piece piece : pieces)
-        {
-            piecesMap.put(piece.getLocation(), piece);
-            h ^= piece.getChessHashCode();
-        }
-        this.piecesHash = h;
+        this.pieceMap = new PieceMap(pieces);
     }
 
     public Color inMove()
@@ -69,7 +56,7 @@ public class Position
 
     public Position setInMove(Color inMove)
     {
-        Position newPosition = new Position(inMove, this.castlingState, this.piecesMap, piecesHash);
+        Position newPosition = new Position(inMove, this.castlingState, this.pieceMap);
         return newPosition;
     }
 
@@ -78,14 +65,14 @@ public class Position
         CastlingState newCastlingState;
 
         newCastlingState = castlingState.setCanCastleShort(color, flag);
-        return new Position(inMove, newCastlingState, this.piecesMap, this.piecesHash);
+        return new Position(inMove, newCastlingState, this.pieceMap);
     }
 
     public Position setCanCastleLong(boolean flag, Color color)
     {
         CastlingState newCastlingState;
         newCastlingState = castlingState.setCanCastleLong(color, flag);
-        return new Position(inMove, newCastlingState, this.piecesMap, this.piecesHash);
+        return new Position(inMove, newCastlingState, this.pieceMap);
     }
 
     public boolean getCanCastleShort(Color color)
@@ -106,28 +93,17 @@ public class Position
      */
     Position insert(Piece piece)
     {
-        if (piecesMap.containsKey(piece.getLocation()))
-        {
-            throw new IllegalStateException("Tried to insert piece at a location at an occupied location");
-        }
-        else
-        {
-            Map<Location, Piece> newPiecesMap = new HashMap<>(this.piecesMap);
-            newPiecesMap.put(piece.getLocation(), piece);
-            int newChessHashCode = this.piecesHash ^ piece.getChessHashCode();
-            Position result = new Position(this.inMove, this.castlingState, newPiecesMap, newChessHashCode);
-            return result;
-        }
+        return new Position(this.inMove, this.castlingState, pieceMap.insert(piece));
     }
 
     public Piece getPiece(Location location)
     {
-        return piecesMap.get(location);
+        return pieceMap.get(location);
     }
 
     Collection<Piece> getPieces()
     {
-        return piecesMap.values();
+        return pieceMap.values();
     }
 
     /**
@@ -137,54 +113,28 @@ public class Position
      */
     Position remove(Piece piece)
     {
-        if (piecesMap.containsKey(piece.getLocation()))
-        {
-            Map<Location, Piece> newPiecesMap = new HashMap<>(this.piecesMap);
-            newPiecesMap.remove(piece.getLocation());
-            int newChessHashCode = this.piecesHash ^ piece.getChessHashCode();
-            Position result = new Position(this.inMove, this.castlingState, newPiecesMap, newChessHashCode);
-            return result;
-        }
-        else
-        {
-             throw new IllegalStateException("Tried to remove a piece which was not there");
-        }
-
+        return new Position(this.inMove, this.castlingState, pieceMap.remove(piece));
     }
 
     public Position move(Piece piece, Location to)
     {
-        if (piecesMap.containsKey(to))
-        {
-            throw new IllegalStateException();
-        }
-        else
-        {
-            Position tmp = remove(piece);
-            Piece newPiece = piece.updateLocation(to);
-            return tmp.insert(newPiece);
-        }
+        return new Position(this.inMove, this.castlingState, pieceMap.move(piece, to));
     }
 
     public Optional<Piece> getKing(Color color)
     {
-        return piecesMap.values().
-                stream().filter(piece ->
-                    PieceType.KING.equals(piece.getPieceType()) &&
-                    color.equals(piece.getColor())).
-                findAny();
+        return pieceMap.getKing(color);
     }
 
     boolean freeSquare(Location location)
     {
-        return freeSquare(location.getX(), location.getY());
+        return pieceMap.freeSquare(location);
     }
 
     public boolean freeSquare(int x, int y)
     {
-        return !piecesMap.containsKey(new Location(x, y));
+        return pieceMap.freeSquare(x,y);
     }
-
 
     /**
      * @param x - x position
@@ -242,20 +192,7 @@ public class Position
      */
     String getPositionString()
     {
-        String result = "\n _______________\n";
-
-        for (int y = 7; y >= 0; y--)
-        {
-            for (int x = 0; x < 8; x++)
-            {
-                result = result + " ";
-                Piece piece = getPiece(new Location(x, y));
-                result = piece == null ? result + "." : result + piece.toString();
-            }
-            result = result + ("     " + (y + 1)) + "\n";
-        }
-        result = result + " _______________\n";
-        result = result + " a b c d e f g h\n";
+        String result = pieceMap.getPositionString();
         result = result + (inMove == Color.WHITE ? "  White to move\n" : "  Black to move\n");
         result = result + castlingState.toString();
         return result;
@@ -282,7 +219,7 @@ public class Position
             return  this.getChessHashCode() == position.getChessHashCode() &&
                     this.inMove == position.inMove &&
                     this.castlingState.equals(position.castlingState) &&
-                    this.piecesMap.equals(position.piecesMap);
+                    this.pieceMap.equals(position.pieceMap);
         }
         else
         {
@@ -299,7 +236,7 @@ public class Position
 
     public int getChessHashCode()
     {
-        return inMove.getChessHashCode() ^ castlingState.getChessHashCode() ^ piecesHash;
+        return inMove.getChessHashCode() ^ castlingState.getChessHashCode() ^ pieceMap.getChessHashCode();
     }
 
 
