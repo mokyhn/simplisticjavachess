@@ -19,7 +19,6 @@ public class StateTest
         // Setup
         State state = new State();
         state = state.setHalfMoveClock(42);
-        state = state.setHalfMovesIndex3PosRepetition(41);
         //state.moveNumber = 49;
         state = state.setMove(Moves.BLACK_LONG_CASTLING());
         return state;
