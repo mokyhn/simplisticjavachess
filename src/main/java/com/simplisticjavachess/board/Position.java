@@ -236,7 +236,8 @@ public class Position
             return  this.getChessHashCode() == position.getChessHashCode() &&
                     this.inMove == position.inMove &&
                     this.castlingState.equals(position.castlingState) &&
-                    this.pieceMap.equals(position.pieceMap);
+                    this.pieceMap.equals(position.pieceMap) &&
+                    this.enpassantMove.equals(position.enpassantMove);
         }
         else
         {
@@ -253,7 +254,7 @@ public class Position
 
     public int getChessHashCode()
     {
-        return inMove.getChessHashCode() ^ castlingState.getChessHashCode() ^ pieceMap.getChessHashCode();
+        return inMove.getChessHashCode() ^ castlingState.getChessHashCode() ^ pieceMap.getChessHashCode() ^ this.getEnpassantMove().hashCode();
     }
 
     public Optional<Move> getEnpassantMove()
