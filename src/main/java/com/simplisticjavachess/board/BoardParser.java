@@ -1,12 +1,15 @@
 package com.simplisticjavachess.board;
 
 import com.simplisticjavachess.game.CastlingState;
+import com.simplisticjavachess.move.Move;
+import com.simplisticjavachess.move.MoveType;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.misc.Strings;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.simplisticjavachess.piece.Color.BLACK;
 import static com.simplisticjavachess.piece.Color.WHITE;
@@ -30,24 +33,44 @@ public class BoardParser
         // The FEN sections are divided by space
         String[] sections = fen.split(" ");
 
+        ///////////////// PART 1 /////////////////
         // Parse pieces
         String piecesString = sections[0];
         List<Piece> pieces = parseFENPieces(piecesString);
 
+        ///////////////// PART 2 /////////////////
         // Parse who to move
         String inMoveString = sections[1];
         Color inMove = parseFENWhoToMove(inMoveString);
 
         if (sections.length == 2)
         {
-            return new Board(new Position(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces));
+            return new Board(new Position(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces, Optional.empty(), new HalfMoveClock(), new HalfMoveClock()));
         }
 
+        ///////////////// PART 3 /////////////////
         // Parse castling options
         String castlingString = sections[2];
         CastlingState castlingState = parseFENCastling(castlingString);
 
-        Position position = new Position(inMove, castlingState, pieces);
+        ///////////////// PART 4 /////////////////
+        // Parse en passant field
+        String enpassant = sections[3];
+        Optional<Move> move = parseEnpassant(enpassant);
+
+        ///////////////// PART 5 /////////////////
+        // Parse fifty move draw rule clock
+        // Half moves since last capture or pawn advance
+        String fiftymoveDrawClock = sections[4];
+        HalfMoveClock fiftyMoveDrawClock = HalfMoveClock.fromString(fiftymoveDrawClock);
+
+        ///////////////// PART 6 /////////////////
+        // Parse current move number
+        // Half moves in total of the game
+        String moveClock = sections[5];
+        HalfMoveClock gameClock = HalfMoveClock.fromString(moveClock);
+
+        Position position = new Position(inMove, castlingState, pieces, move, fiftyMoveDrawClock, gameClock);
 
         return new Board(position);
     }
@@ -118,11 +141,35 @@ public class BoardParser
         }
     }
 
-    public static String exportPosition(Board board) 
+    private static Optional<Move> parseEnpassant(String enpassant)
+    {
+        if ("-".equals(enpassant))
+        {
+            return Optional.empty();
+        }
+        else
+        {
+            Location enpassantfield = Location.parse(enpassant);
+            if (enpassantfield.y == 2)
+            {
+                Location from = new Location(enpassantfield.getX(), enpassantfield.getY()-1);
+                Location to = new Location(enpassantfield.getX(), enpassantfield.getY()+1);
+                return Optional.of(new Move(from, to, MoveType.NORMALMOVE, null, WHITE));
+            }
+            else
+            {
+                Location from = new Location(enpassantfield.getX(), enpassantfield.getY()+1);
+                Location to = new Location(enpassantfield.getX(), enpassantfield.getY()-1);
+                return Optional.of(new Move(from, to, MoveType.NORMALMOVE, null, BLACK));
+            }
+        }
+    }
+
+    public static String exportPosition(Board board)
     {
         String result = "";
         int countingFreeSpaces = -1;
-        
+
         for (int y = 7; y >= 0; y--)
         {
             for (int x = 0; x < 8; x++)
@@ -146,21 +193,21 @@ public class BoardParser
                         result += "" + countingFreeSpaces;
                         countingFreeSpaces = -1;
                     }
-                    
+
                     result += piece.getPieceType().getPieceLetter(piece.getColor());
-                }                
+                }
             }
             if (countingFreeSpaces > 0)
             {
                 result += "" + countingFreeSpaces;
                 countingFreeSpaces = -1;
             }
-            if (y > 0) 
+            if (y > 0)
             {
                 result += "/";
             }
         }
-        
+
         result += " " + board.inMove().getColorString();
         return result;
     }
@@ -198,7 +245,7 @@ public class BoardParser
             throw new IllegalArgumentException("You must supply a color for who is to move, w or b");
         }
 
-        Position position = new Position(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces);
+        Position position = new Position(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces, Optional.empty(), new HalfMoveClock(), new HalfMoveClock());
 
         return new Board(position);
     }

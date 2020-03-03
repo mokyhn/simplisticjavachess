@@ -21,21 +21,21 @@ public class IntegrationTest
     @Test
     public void fiftyMoveRuleDraw()
     {
-        assertMove("a2b4 a2c3 a2c1 a1b1 a1b2", "k7/nn6/8/8/8/8/N7/K7 w -", "",  3);
+        assertMove("a2b4 a2c3 a2c1 a1b1 a1b2", "k7/nn6/8/8/8/8/N7/K7 w - - 0 0", "",  3);
     }
 
     @Test
     public void staleMateTest()
     {
         //Stalemate
-        assertMove("e2f1 e2f2", "8/7p/7P/7P/7P/7P/4k2P/7K b", "",  4);
+        assertMove("e2f1 e2f2", "8/7p/7P/7P/7P/7P/4k2P/7K b - - 0 0", "",  4);
     }
 
     
     @Test
     public void avoidingMateMinMax()
     {
-        assertMove("c7b6", "k7/P1p5/KP6/8/8/8/1P6/8 b - -", "",  4);
+        assertMove("c7b6", "k7/P1p5/KP6/8/8/8/1P6/8 b - - 0 0", "",  4);
     }
 
     @Ignore(value = "slow")

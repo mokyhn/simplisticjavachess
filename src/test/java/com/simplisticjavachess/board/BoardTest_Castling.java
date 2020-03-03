@@ -10,16 +10,16 @@ import static org.junit.Assert.*;
 
 public class BoardTest_Castling
 {
-    private static Board WHITE_IN_MOVE_CASTLING() { return BoardParser.FEN("r3k2r/8/8/8/8/8/8/R3K2R w KQkq"); }
-    private static Board WHITE_IN_MOVE_CANNOT_CASTLE() { return BoardParser.FEN("r3k2r/8/8/8/8/8/8/R3K2R w kq"); }
-    private static Board AFTER_WHITE_SHORT_CASTLING() {return BoardParser.FEN("r3k2r/8/8/8/8/8/8/R4RK1 b kq"); }
-    private static Board AFTER_WHITE_LONG_CASTLING() {return BoardParser.FEN("r3k2r/8/8/8/8/8/8/2KR3R b kq"); }
+    private static Board WHITE_IN_MOVE_CASTLING() { return BoardParser.FEN("r3k2r/8/8/8/8/8/8/R3K2R w KQkq - 0 0"); }
+    private static Board WHITE_IN_MOVE_CANNOT_CASTLE() { return BoardParser.FEN("r3k2r/8/8/8/8/8/8/R3K2R w kq - 0 0"); }
+    private static Board AFTER_WHITE_SHORT_CASTLING() {return BoardParser.FEN("r3k2r/8/8/8/8/8/8/R4RK1 b kq - 0 0"); }
+    private static Board AFTER_WHITE_LONG_CASTLING() {return BoardParser.FEN("r3k2r/8/8/8/8/8/8/2KR3R b kq - 0 0"); }
 
 
-    private static Board BLACK_IN_MOVE_CASTLING() { return BoardParser.FEN("r3k2r/8/8/8/8/8/8/R3K2R b KQkq"); }
-    private static Board BLACK_IN_MOVE_CANNOT_CASTLE() { return BoardParser.FEN("r3k2r/8/8/8/8/8/8/R3K2R b KQ"); }
-    private static Board AFTER_BLACK_SHORT_CASTLING() {return BoardParser.FEN("r4rk1/8/8/8/8/8/8/R3K2R w KQ"); }
-    private static Board AFTER_BLACK_LONG_CASTLING() {return BoardParser.FEN("2kr3r/8/8/8/8/8/8/R3K2R w KQ"); }
+    private static Board BLACK_IN_MOVE_CASTLING() { return BoardParser.FEN("r3k2r/8/8/8/8/8/8/R3K2R b KQkq - 0 0"); }
+    private static Board BLACK_IN_MOVE_CANNOT_CASTLE() { return BoardParser.FEN("r3k2r/8/8/8/8/8/8/R3K2R b KQ - 0 0"); }
+    private static Board AFTER_BLACK_SHORT_CASTLING() {return BoardParser.FEN("r4rk1/8/8/8/8/8/8/R3K2R w KQ - 0 0"); }
+    private static Board AFTER_BLACK_LONG_CASTLING() {return BoardParser.FEN("2kr3r/8/8/8/8/8/8/R3K2R w KQ - 0 0"); }
 
 
     @Test

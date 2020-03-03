@@ -6,11 +6,13 @@
 package com.simplisticjavachess.board;
 
 import com.simplisticjavachess.game.CastlingState;
+import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 
 import java.util.Collection;
 
+import java.util.List;
 import java.util.Optional;
 
 public class Position
@@ -19,20 +21,29 @@ public class Position
     private final CastlingState castlingState;
     private final PieceMap pieceMap;
 
-    //TODO: Introduce PiecesMap class which encapsulates the code around pieces into a class
+    private final Optional<Move> enpassantMove;
+    private final HalfMoveClock fiftyMoveDrawClock;
+    private final HalfMoveClock gameClock;
+
 
     Position()
     {
-        castlingState = CastlingState.NOBODY_CAN_CASTLE;
-        pieceMap = new PieceMap();
-        inMove = null;
+        this.castlingState = CastlingState.NOBODY_CAN_CASTLE;
+        this.pieceMap = new PieceMap();
+        this.inMove = null;
+        this.enpassantMove = Optional.empty();
+        this.fiftyMoveDrawClock = new HalfMoveClock();
+        this.gameClock = new HalfMoveClock();
     }
 
     public Position(Color inMove)
     {
         this.castlingState = CastlingState.NOBODY_CAN_CASTLE;
-        pieceMap = new PieceMap();
+        this.pieceMap = new PieceMap();
         this.inMove = inMove;
+        this.enpassantMove = Optional.empty();
+        this.fiftyMoveDrawClock = new HalfMoveClock();
+        this.gameClock = new HalfMoveClock();
     }
 
     private Position(Color inMove, CastlingState castlingState, PieceMap pieces)
@@ -40,13 +51,19 @@ public class Position
         this.inMove = inMove;
         this.castlingState = castlingState;
         this.pieceMap = pieces;
+        this.enpassantMove = Optional.empty();
+        this.fiftyMoveDrawClock = new HalfMoveClock();
+        this.gameClock = new HalfMoveClock();
     }
 
-    public Position(Color inMove, CastlingState castlingState, Collection<Piece> pieces)
+    public Position(Color inMove, CastlingState castlingState, List<Piece> pieces, Optional<Move> enpassantMove, HalfMoveClock fiftyMoveDraw, HalfMoveClock gameClock)
     {
         this.inMove = inMove;
         this.castlingState = castlingState;
         this.pieceMap = new PieceMap(pieces);
+        this.enpassantMove = enpassantMove;
+        this.fiftyMoveDrawClock = fiftyMoveDraw;
+        this.gameClock = gameClock;
     }
 
     public Color inMove()
@@ -239,5 +256,8 @@ public class Position
         return inMove.getChessHashCode() ^ castlingState.getChessHashCode() ^ pieceMap.getChessHashCode();
     }
 
-
+    public Optional<Move> getEnpassantMove()
+    {
+        return enpassantMove;
+    }
 }

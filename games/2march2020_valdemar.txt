@@ -1,0 +1,1404 @@
+
+sd 4
+
+White: Valdemar
+Black: The computer (search depth 4 ply)
+
+g1f3
+
+ _______________
+ r n b q k b n r     8
+ p p p p p p p p     7
+ . . . . . . . .     6
+ . . . . . . . .     5
+ . . . . . . . .     4
+ . . . . . N . .     3
+ P P P P P P P P     2
+ R N B Q K B . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 1
+Immediate evaluation: 0
+FEN: rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b
+
+go
+Move [f7-f6, h1-g1, e7-e6, g1-h1] with evaluation 0
+
+ _______________
+ r n b q k b n r     8
+ p p p p p . p p     7
+ . . . . . p . .     6
+ . . . . . . . .     5
+ . . . . . . . .     4
+ . . . . . N . .     3
+ P P P P P P P P     2
+ R N B Q K B . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: 0
+FEN: rnbqkbnr/ppppp1pp/5p2/8/8/5N2/PPPPPPPP/RNBQKB1R w
+
+e2e4
+
+ _______________
+ r n b q k b n r     8
+ p p p p p . p p     7
+ . . . . . p . .     6
+ . . . . . . . .     5
+ . . . . P . . .     4
+ . . . . . N . .     3
+ P P P P . P P P     2
+ R N B Q K B . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: 0
+FEN: rnbqkbnr/ppppp1pp/5p2/8/4P3/5N2/PPPP1PPP/RNBQKB1R b
+
+go
+Move [c7-c6, f1-e2, c6-c5, h1-g1] with evaluation 0
+
+ _______________
+ r n b q k b n r     8
+ p p . p p . p p     7
+ . . p . . p . .     6
+ . . . . . . . .     5
+ . . . . P . . .     4
+ . . . . . N . .     3
+ P P P P . P P P     2
+ R N B Q K B . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: 0
+FEN: rnbqkbnr/pp1pp1pp/2p2p2/8/4P3/5N2/PPPP1PPP/RNBQKB1R w
+
+b1c3
+
+ _______________
+ r n b q k b n r     8
+ p p . p p . p p     7
+ . . p . . p . .     6
+ . . . . . . . .     5
+ . . . . P . . .     4
+ . . N . . N . .     3
+ P P P P . P P P     2
+ R . B Q K B . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 1
+Immediate evaluation: 0
+FEN: rnbqkbnr/pp1pp1pp/2p2p2/8/4P3/2N2N2/PPPP1PPP/R1BQKB1R b
+
+go
+Move [d8-c7, f1-e2, c6-c5, h1-g1] with evaluation 0
+
+ _______________
+ r n b . k b n r     8
+ p p q p p . p p     7
+ . . p . . p . .     6
+ . . . . . . . .     5
+ . . . . P . . .     4
+ . . N . . N . .     3
+ P P P P . P P P     2
+ R . B Q K B . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 2
+Immediate evaluation: 0
+FEN: rnb1kbnr/ppqpp1pp/2p2p2/8/4P3/2N2N2/PPPP1PPP/R1BQKB1R w
+
+d2d4
+
+ _______________
+ r n b . k b n r     8
+ p p q p p . p p     7
+ . . p . . p . .     6
+ . . . . . . . .     5
+ . . . P P . . .     4
+ . . N . . N . .     3
+ P P P . . P P P     2
+ R . B Q K B . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: 0
+FEN: rnb1kbnr/ppqpp1pp/2p2p2/8/3PP3/2N2N2/PPP2PPP/R1BQKB1R b
+
+go
+Move [c6-c5, f1-c4, e7-e6, d4xc5] with evaluation 1
+
+ _______________
+ r n b . k b n r     8
+ p p q p p . p p     7
+ . . . . . p . .     6
+ . . p . . . . .     5
+ . . . P P . . .     4
+ . . N . . N . .     3
+ P P P . . P P P     2
+ R . B Q K B . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: 0
+FEN: rnb1kbnr/ppqpp1pp/5p2/2p5/3PP3/2N2N2/PPP2PPP/R1BQKB1R w
+
+f1c4
+
+ _______________
+ r n b . k b n r     8
+ p p q p p . p p     7
+ . . . . . p . .     6
+ . . p . . . . .     5
+ . . B P P . . .     4
+ . . N . . N . .     3
+ P P P . . P P P     2
+ R . B Q K . . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 1
+Immediate evaluation: 0
+FEN: rnb1kbnr/ppqpp1pp/5p2/2p5/2BPP3/2N2N2/PPP2PPP/R1BQK2R b
+
+go
+Move [e7-e6, d4xc5, f8xc5, d1xd7] with evaluation 1
+
+ _______________
+ r n b . k b n r     8
+ p p q p . . p p     7
+ . . . . p p . .     6
+ . . p . . . . .     5
+ . . B P P . . .     4
+ . . N . . N . .     3
+ P P P . . P P P     2
+ R . B Q K . . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: 0
+FEN: rnb1kbnr/ppqp2pp/4pp2/2p5/2BPP3/2N2N2/PPP2PPP/R1BQK2R w
+
+g2g3
+
+ _______________
+ r n b . k b n r     8
+ p p q p . . p p     7
+ . . . . p p . .     6
+ . . p . . . . .     5
+ . . B P P . . .     4
+ . . N . . N P .     3
+ P P P . . P . P     2
+ R . B Q K . . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: 0
+FEN: rnb1kbnr/ppqp2pp/4pp2/2p5/2BPP3/2N2NP1/PPP2P1P/R1BQK2R b
+
+go
+Move [b8-c6, c1-f4, d7-d6, d4xc5] with evaluation 1
+
+ _______________
+ r . b . k b n r     8
+ p p q p . . p p     7
+ . . n . p p . .     6
+ . . p . . . . .     5
+ . . B P P . . .     4
+ . . N . . N P .     3
+ P P P . . P . P     2
+ R . B Q K . . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 1
+Immediate evaluation: 0
+FEN: r1b1kbnr/ppqp2pp/2n1pp2/2p5/2BPP3/2N2NP1/PPP2P1P/R1BQK2R w
+
+c1f4
+
+ _______________
+ r . b . k b n r     8
+ p p q p . . p p     7
+ . . n . p p . .     6
+ . . p . . . . .     5
+ . . B P P B . .     4
+ . . N . . N P .     3
+ P P P . . P . P     2
+ R . . Q K . . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 2
+Immediate evaluation: 0
+FEN: r1b1kbnr/ppqp2pp/2n1pp2/2p5/2BPPB2/2N2NP1/PPP2P1P/R2QK2R b
+
+go
+Move [f8-d6, d4xc5, d6xf4, g3xf4] with evaluation 1
+
+ _______________
+ r . b . k . n r     8
+ p p q p . . p p     7
+ . . n b p p . .     6
+ . . p . . . . .     5
+ . . B P P B . .     4
+ . . N . . N P .     3
+ P P P . . P . P     2
+ R . . Q K . . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 3
+Immediate evaluation: 0
+FEN: r1b1k1nr/ppqp2pp/2nbpp2/2p5/2BPPB2/2N2NP1/PPP2P1P/R2QK2R w
+
+d1d2
+
+ _______________
+ r . b . k . n r     8
+ p p q p . . p p     7
+ . . n b p p . .     6
+ . . p . . . . .     5
+ . . B P P B . .     4
+ . . N . . N P .     3
+ P P P Q . P . P     2
+ R . . . K . . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 4
+Immediate evaluation: 0
+FEN: r1b1k1nr/ppqp2pp/2nbpp2/2p5/2BPPB2/2N2NP1/PPPQ1P1P/R3K2R b
+
+go
+Move [d6xf4, d2xf4, c7xf4, g3xf4] with evaluation 0
+
+ _______________
+ r . b . k . n r     8
+ p p q p . . p p     7
+ . . n . p p . .     6
+ . . p . . . . .     5
+ . . B P P b . .     4
+ . . N . . N P .     3
+ P P P Q . P . P     2
+ R . . . K . . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 5
+Immediate evaluation: -3
+FEN: r1b1k1nr/ppqp2pp/2n1pp2/2p5/2BPPb2/2N2NP1/PPPQ1P1P/R3K2R w
+
+g3f4
+
+ _______________
+ r . b . k . n r     8
+ p p q p . . p p     7
+ . . n . p p . .     6
+ . . p . . . . .     5
+ . . B P P P . .     4
+ . . N . . N . .     3
+ P P P Q . P . P     2
+ R . . . K . . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: 0
+FEN: r1b1k1nr/ppqp2pp/2n1pp2/2p5/2BPPP2/2N2N2/PPPQ1P1P/R3K2R b
+
+go
+Move [c6xd4, f3xd4, c5xd4, d2xd4] with evaluation 0
+
+ _______________
+ r . b . k . n r     8
+ p p q p . . p p     7
+ . . . . p p . .     6
+ . . p . . . . .     5
+ . . B n P P . .     4
+ . . N . . N . .     3
+ P P P Q . P . P     2
+ R . . . K . . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 1
+Immediate evaluation: -1
+FEN: r1b1k1nr/ppqp2pp/4pp2/2p5/2BnPP2/2N2N2/PPPQ1P1P/R3K2R w
+
+f3d4
+
+ _______________
+ r . b . k . n r     8
+ p p q p . . p p     7
+ . . . . p p . .     6
+ . . p . . . . .     5
+ . . B N P P . .     4
+ . . N . . . . .     3
+ P P P Q . P . P     2
+ R . . . K . . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 2
+Immediate evaluation: 2
+FEN: r1b1k1nr/ppqp2pp/4pp2/2p5/2BNPP2/2N5/PPPQ1P1P/R3K2R b
+
+go
+Move [c5xd4, d2xd4, c7xf4, c4xe6] with evaluation 0
+
+ _______________
+ r . b . k . n r     8
+ p p q p . . p p     7
+ . . . . p p . .     6
+ . . . . . . . .     5
+ . . B p P P . .     4
+ . . N . . . . .     3
+ P P P Q . P . P     2
+ R . . . K . . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: -1
+FEN: r1b1k1nr/ppqp2pp/4pp2/8/2BpPP2/2N5/PPPQ1P1P/R3K2R w
+
+d2d4
+
+ _______________
+ r . b . k . n r     8
+ p p q p . . p p     7
+ . . . . p p . .     6
+ . . . . . . . .     5
+ . . B Q P P . .     4
+ . . N . . . . .     3
+ P P P . . P . P     2
+ R . . . K . . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 1
+Immediate evaluation: 0
+FEN: r1b1k1nr/ppqp2pp/4pp2/8/2BQPP2/2N5/PPP2P1P/R3K2R b
+
+go
+Move [g8-e7, h1-g1, c7xf4, g1xg7] with evaluation 0
+
+ _______________
+ r . b . k . . r     8
+ p p q p n . p p     7
+ . . . . p p . .     6
+ . . . . . . . .     5
+ . . B Q P P . .     4
+ . . N . . . . .     3
+ P P P . . P . P     2
+ R . . . K . . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [X],       White can castle short: [X]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 2
+Immediate evaluation: 0
+FEN: r1b1k2r/ppqpn1pp/4pp2/8/2BQPP2/2N5/PPP2P1P/R3K2R w
+
+e1c1
+
+ _______________
+ r . b . k . . r     8
+ p p q p n . p p     7
+ . . . . p p . .     6
+ . . . . . . . .     5
+ . . B Q P P . .     4
+ . . N . . . . .     3
+ P P P . . P . P     2
+ . . K R . . . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 3
+Immediate evaluation: 0
+FEN: r1b1k2r/ppqpn1pp/4pp2/8/2BQPP2/2N5/PPP2P1P/2KR3R b
+
+go
+Move [c7xf4, c1-b1, e7-c6, c4xe6] with evaluation 0
+
+ _______________
+ r . b . k . . r     8
+ p p . p n . p p     7
+ . . . . p p . .     6
+ . . . . . . . .     5
+ . . B Q P q . .     4
+ . . N . . . . .     3
+ P P P . . P . P     2
+ . . K R . . . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 4
+Immediate evaluation: -1
+FEN: r1b1k2r/pp1pn1pp/4pp2/8/2BQPq2/2N5/PPP2P1P/2KR3R w
+
+d1d2
+
+ _______________
+ r . b . k . . r     8
+ p p . p n . p p     7
+ . . . . p p . .     6
+ . . . . . . . .     5
+ . . B Q P q . .     4
+ . . N . . . . .     3
+ P P P R . P . P     2
+ . . K . . . . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 5
+Immediate evaluation: -1
+FEN: r1b1k2r/pp1pn1pp/4pp2/8/2BQPq2/2N5/PPPR1P1P/2K4R b
+
+go
+Move [d7-d6, c1-b1, e7-c6, c4xe6] with evaluation 0
+
+ _______________
+ r . b . k . . r     8
+ p p . . n . p p     7
+ . . . p p p . .     6
+ . . . . . . . .     5
+ . . B Q P q . .     4
+ . . N . . . . .     3
+ P P P R . P . P     2
+ . . K . . . . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: -1
+FEN: r1b1k2r/pp2n1pp/3ppp2/8/2BQPq2/2N5/PPPR1P1P/2K4R w
+
+d4d6
+
+ _______________
+ r . b . k . . r     8
+ p p . . n . p p     7
+ . . . Q p p . .     6
+ . . . . . . . .     5
+ . . B . P q . .     4
+ . . N . . . . .     3
+ P P P R . P . P     2
+ . . K . . . . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 1
+Immediate evaluation: 0
+FEN: r1b1k2r/pp2n1pp/3Qpp2/8/2B1Pq2/2N5/PPPR1P1P/2K4R b
+
+go
+Move [f4xd6, d2xd6, a8-b8, d6xe6] with evaluation 1
+
+ _______________
+ r . b . k . . r     8
+ p p . . n . p p     7
+ . . . q p p . .     6
+ . . . . . . . .     5
+ . . B . P . . .     4
+ . . N . . . . .     3
+ P P P R . P . P     2
+ . . K . . . . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 2
+Immediate evaluation: -9
+FEN: r1b1k2r/pp2n1pp/3qpp2/8/2B1P3/2N5/PPPR1P1P/2K4R w
+
+d2d6
+
+ _______________
+ r . b . k . . r     8
+ p p . . n . p p     7
+ . . . R p p . .     6
+ . . . . . . . .     5
+ . . B . P . . .     4
+ . . N . . . . .     3
+ P P P . . P . P     2
+ . . K . . . . R     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [X],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 3
+Immediate evaluation: 0
+FEN: r1b1k2r/pp2n1pp/3Rpp2/8/2B1P3/2N5/PPP2P1P/2K4R b
+
+go
+Move [a8-b8, h1-g1, b8-a8, g1xg7] with evaluation 1
+
+ _______________
+ . r b . k . . r     8
+ p p . . n . p p     7
+ . . . R p p . .     6
+ . . . . . . . .     5
+ . . B . P . . .     4
+ . . N . . . . .     3
+ P P P . . P . P     2
+ . . K . . . . R     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 4
+Immediate evaluation: 0
+FEN: 1rb1k2r/pp2n1pp/3Rpp2/8/2B1P3/2N5/PPP2P1P/2K4R w
+
+h1d1
+
+ _______________
+ . r b . k . . r     8
+ p p . . n . p p     7
+ . . . R p p . .     6
+ . . . . . . . .     5
+ . . B . P . . .     4
+ . . N . . . . .     3
+ P P P . . P . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [X]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 5
+Immediate evaluation: 0
+FEN: 1rb1k2r/pp2n1pp/3Rpp2/8/2B1P3/2N5/PPP2P1P/2KR4 b
+
+go
+Move [o-o, c1-b1, b8-a8, d6xe6] with evaluation 1
+
+ _______________
+ . r b . . r k .     8
+ p p . . n . p p     7
+ . . . R p p . .     6
+ . . . . . . . .     5
+ . . B . P . . .     4
+ . . N . . . . .     3
+ P P P . . P . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 6
+Immediate evaluation: 0
+FEN: 1rb2rk1/pp2n1pp/3Rpp2/8/2B1P3/2N5/PPP2P1P/2KR4 w
+
+c4e2
+
+ _______________
+ . r b . . r k .     8
+ p p . . n . p p     7
+ . . . R p p . .     6
+ . . . . . . . .     5
+ . . . . P . . .     4
+ . . N . . . . .     3
+ P P P . B P . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 7
+Immediate evaluation: 0
+FEN: 1rb2rk1/pp2n1pp/3Rpp2/8/4P3/2N5/PPP1BP1P/2KR4 b
+
+go
+Move [b8-a8, c1-b1, a8-b8, d6xe6] with evaluation 1
+
+ _______________
+ r . b . . r k .     8
+ p p . . n . p p     7
+ . . . R p p . .     6
+ . . . . . . . .     5
+ . . . . P . . .     4
+ . . N . . . . .     3
+ P P P . B P . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 8
+Immediate evaluation: 0
+FEN: r1b2rk1/pp2n1pp/3Rpp2/8/4P3/2N5/PPP1BP1P/2KR4 w
+
+d6d8
+
+ _______________
+ r . b R . r k .     8
+ p p . . n . p p     7
+ . . . . p p . .     6
+ . . . . . . . .     5
+ . . . . P . . .     4
+ . . N . . . . .     3
+ P P P . B P . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 9
+Immediate evaluation: 0
+FEN: r1bR1rk1/pp2n1pp/4pp2/8/4P3/2N5/PPP1BP1P/2KR4 b
+
+go
+Move [a8-b8, d8-d6, b8-a8, d6xe6] with evaluation 1
+
+ _______________
+ . r b R . r k .     8
+ p p . . n . p p     7
+ . . . . p p . .     6
+ . . . . . . . .     5
+ . . . . P . . .     4
+ . . N . . . . .     3
+ P P P . B P . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 10
+Immediate evaluation: 0
+FEN: 1rbR1rk1/pp2n1pp/4pp2/8/4P3/2N5/PPP1BP1P/2KR4 w
+
+e2h5
+
+ _______________
+ . r b R . r k .     8
+ p p . . n . p p     7
+ . . . . p p . .     6
+ . . . . . . . B     5
+ . . . . P . . .     4
+ . . N . . . . .     3
+ P P P . . P . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 11
+Immediate evaluation: 0
+FEN: 1rbR1rk1/pp2n1pp/4pp2/7B/4P3/2N5/PPP2P1P/2KR4 b
+
+go
+Move [g7-g6, d8xf8, g8xf8, h5xg6] with evaluation 1
+
+ _______________
+ . r b R . r k .     8
+ p p . . n . . p     7
+ . . . . p p p .     6
+ . . . . . . . B     5
+ . . . . P . . .     4
+ . . N . . . . .     3
+ P P P . . P . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: 0
+FEN: 1rbR1rk1/pp2n2p/4ppp1/7B/4P3/2N5/PPP2P1P/2KR4 w
+
+h5g4
+
+ _______________
+ . r b R . r k .     8
+ p p . . n . . p     7
+ . . . . p p p .     6
+ . . . . . . . .     5
+ . . . . P . B .     4
+ . . N . . . . .     3
+ P P P . . P . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 1
+Immediate evaluation: 0
+FEN: 1rbR1rk1/pp2n2p/4ppp1/8/4P1B1/2N5/PPP2P1P/2KR4 b
+
+go
+Move [g8-g7, d8-d6, b8-a8, d6xe6] with evaluation 1
+
+ _______________
+ . r b R . r . .     8
+ p p . . n . k p     7
+ . . . . p p p .     6
+ . . . . . . . .     5
+ . . . . P . B .     4
+ . . N . . . . .     3
+ P P P . . P . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 2
+Immediate evaluation: 0
+FEN: 1rbR1r2/pp2n1kp/4ppp1/8/4P1B1/2N5/PPP2P1P/2KR4 w
+
+f2f4
+
+ _______________
+ . r b R . r . .     8
+ p p . . n . k p     7
+ . . . . p p p .     6
+ . . . . . . . .     5
+ . . . . P P B .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: 0
+FEN: 1rbR1r2/pp2n1kp/4ppp1/8/4PPB1/2N5/PPP4P/2KR4 b
+
+go
+Move [b8-a8, d8-d6, a8-b8, d6xe6] with evaluation 1
+
+ _______________
+ r . b R . r . .     8
+ p p . . n . k p     7
+ . . . . p p p .     6
+ . . . . . . . .     5
+ . . . . P P B .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 1
+Immediate evaluation: 0
+FEN: r1bR1r2/pp2n1kp/4ppp1/8/4PPB1/2N5/PPP4P/2KR4 w
+
+f4f5
+
+ _______________
+ r . b R . r . .     8
+ p p . . n . k p     7
+ . . . . p p p .     6
+ . . . . . P . .     5
+ . . . . P . B .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: 0
+FEN: r1bR1r2/pp2n1kp/4ppp1/5P2/4P1B1/2N5/PPP4P/2KR4 b
+
+go
+Move [g6xf5, d8xf8, g7xf8, e4xf5] with evaluation 0
+
+ _______________
+ r . b R . r . .     8
+ p p . . n . k p     7
+ . . . . p p . .     6
+ . . . . . p . .     5
+ . . . . P . B .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: -1
+FEN: r1bR1r2/pp2n1kp/4pp2/5p2/4P1B1/2N5/PPP4P/2KR4 w
+
+e4f5
+
+ _______________
+ r . b R . r . .     8
+ p p . . n . k p     7
+ . . . . p p . .     6
+ . . . . . P . .     5
+ . . . . . . B .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: 0
+FEN: r1bR1r2/pp2n1kp/4pp2/5P2/6B1/2N5/PPP4P/2KR4 b
+
+go
+Move [e6xf5, d8xf8, g7xf8, g4xf5] with evaluation 0
+
+ _______________
+ r . b R . r . .     8
+ p p . . n . k p     7
+ . . . . . p . .     6
+ . . . . . p . .     5
+ . . . . . . B .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 0
+Immediate evaluation: -1
+FEN: r1bR1r2/pp2n1kp/5p2/5p2/6B1/2N5/PPP4P/2KR4 w
+
+g4f3
+
+ _______________
+ r . b R . r . .     8
+ p p . . n . k p     7
+ . . . . . p . .     6
+ . . . . . p . .     5
+ . . . . . . . .     4
+ . . N . . B . .     3
+ P P P . . . . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 1
+Immediate evaluation: -1
+FEN: r1bR1r2/pp2n1kp/5p2/5p2/8/2N2B2/PPP4P/2KR4 b
+
+go
+Move [e7-g6, d8-d6, a8-b8, d6xf6] with evaluation 0
+
+ _______________
+ r . b R . r . .     8
+ p p . . . . k p     7
+ . . . . . p n .     6
+ . . . . . p . .     5
+ . . . . . . . .     4
+ . . N . . B . .     3
+ P P P . . . . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 2
+Immediate evaluation: -1
+FEN: r1bR1r2/pp4kp/5pn1/5p2/8/2N2B2/PPP4P/2KR4 w
+
+d8d7
+
+ _______________
+ r . b . . r . .     8
+ p p . R . . k p     7
+ . . . . . p n .     6
+ . . . . . p . .     5
+ . . . . . . . .     4
+ . . N . . B . .     3
+ P P P . . . . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 3
+Immediate evaluation: -1
+FEN: r1b2r2/pp1R2kp/5pn1/5p2/8/2N2B2/PPP4P/2KR4 b
+
+go
+Move [c8xd7, d1xd7, g7-g8, d7xh7] with evaluation -2
+
+ _______________
+ r . . . . r . .     8
+ p p . b . . k p     7
+ . . . . . p n .     6
+ . . . . . p . .     5
+ . . . . . . . .     4
+ . . N . . B . .     3
+ P P P . . . . P     2
+ . . K R . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 4
+Immediate evaluation: -6
+FEN: r4r2/pp1b2kp/5pn1/5p2/8/2N2B2/PPP4P/2KR4 w
+
+d1d7
+
+ _______________
+ r . . . . r . .     8
+ p p . R . . k p     7
+ . . . . . p n .     6
+ . . . . . p . .     5
+ . . . . . . . .     4
+ . . N . . B . .     3
+ P P P . . . . P     2
+ . . K . . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 5
+Immediate evaluation: -3
+FEN: r4r2/pp1R2kp/5pn1/5p2/8/2N2B2/PPP4P/2K5 b
+
+go
+Move [f8-f7, d7-d6, a8-b8, d6xf6] with evaluation -2
+
+ _______________
+ r . . . . . . .     8
+ p p . R . r k p     7
+ . . . . . p n .     6
+ . . . . . p . .     5
+ . . . . . . . .     4
+ . . N . . B . .     3
+ P P P . . . . P     2
+ . . K . . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 6
+Immediate evaluation: -3
+FEN: r7/pp1R1rkp/5pn1/5p2/8/2N2B2/PPP4P/2K5 w
+
+f3b7
+
+ _______________
+ r . . . . . . .     8
+ p B . R . r k p     7
+ . . . . . p n .     6
+ . . . . . p . .     5
+ . . . . . . . .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K . . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 7
+Immediate evaluation: -2
+FEN: r7/pB1R1rkp/5pn1/5p2/8/2N5/PPP4P/2K5 b
+
+go
+Move [a8-b8, d7xf7, g7xf7, c1-b1] with evaluation -2
+
+ _______________
+ . r . . . . . .     8
+ p B . R . r k p     7
+ . . . . . p n .     6
+ . . . . . p . .     5
+ . . . . . . . .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K . . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 8
+Immediate evaluation: -2
+FEN: 1r6/pB1R1rkp/5pn1/5p2/8/2N5/PPP4P/2K5 w
+
+b7c6
+
+ _______________
+ . r . . . . . .     8
+ p . . R . r k p     7
+ . . B . . p n .     6
+ . . . . . p . .     5
+ . . . . . . . .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K . . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 9
+Immediate evaluation: -2
+FEN: 1r6/p2R1rkp/2B2pn1/5p2/8/2N5/PPP4P/2K5 b
+
+go
+Move [g6-e5, d7-d6, e5xc6, d6xc6] with evaluation -2
+
+ _______________
+ . r . . . . . .     8
+ p . . R . r k p     7
+ . . B . . p . .     6
+ . . . . n p . .     5
+ . . . . . . . .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K . . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 10
+Immediate evaluation: -2
+FEN: 1r6/p2R1rkp/2B2p2/4np2/8/2N5/PPP4P/2K5 w
+
+d7d6
+
+ _______________
+ . r . . . . . .     8
+ p . . . . r k p     7
+ . . B R . p . .     6
+ . . . . n p . .     5
+ . . . . . . . .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K . . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 11
+Immediate evaluation: -2
+FEN: 1r6/p4rkp/2BR1p2/4np2/8/2N5/PPP4P/2K5 b
+
+go
+Move [e5-c4, d6-d7, f7xd7, c6xd7] with evaluation -2
+
+ _______________
+ . r . . . . . .     8
+ p . . . . r k p     7
+ . . B R . p . .     6
+ . . . . . p . .     5
+ . . n . . . . .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K . . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 12
+Immediate evaluation: -2
+FEN: 1r6/p4rkp/2BR1p2/5p2/2n5/2N5/PPP4P/2K5 w
+
+d6d4
+
+ _______________
+ . r . . . . . .     8
+ p . . . . r k p     7
+ . . B . . p . .     6
+ . . . . . p . .     5
+ . . n R . . . .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K . . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 13
+Immediate evaluation: -2
+FEN: 1r6/p4rkp/2B2p2/5p2/2nR4/2N5/PPP4P/2K5 b
+
+go
+Move [c4-e5, d4-d6, e5xc6, d6xc6] with evaluation -2
+
+ _______________
+ . r . . . . . .     8
+ p . . . . r k p     7
+ . . B . . p . .     6
+ . . . . n p . .     5
+ . . . R . . . .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K . . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 14
+Immediate evaluation: -2
+FEN: 1r6/p4rkp/2B2p2/4np2/3R4/2N5/PPP4P/2K5 w
+
+d4d6
+
+ _______________
+ . r . . . . . .     8
+ p . . . . r k p     7
+ . . B R . p . .     6
+ . . . . n p . .     5
+ . . . . . . . .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K . . . . .     1
+ _______________
+ a b c d e f g h
+  Black to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 15
+Immediate evaluation: -2
+FEN: 1r6/p4rkp/2BR1p2/4np2/8/2N5/PPP4P/2K5 b
+
+go
+Move [e5-c4, d6-d7, f7xd7, c6xd7] with evaluation -2
+
+ _______________
+ . r . . . . . .     8
+ p . . . . r k p     7
+ . . B R . p . .     6
+ . . . . . p . .     5
+ . . n . . . . .     4
+ . . N . . . . .     3
+ P P P . . . . P     2
+ . . K . . . . .     1
+ _______________
+ a b c d e f g h
+  White to move
+Black can castle long: [ ],       Black can castle short: [ ]
+White can castle long: [ ],       White can castle short: [ ]
+
+----------------------------State----------------------------
+Number of half moves since last capture or pawn move: 16
+Immediate evaluation: -2
+FEN: 1r6/p4rkp/2BR1p2/5p2/2n5/2N5/PPP4P/2K5 w
+
+
+
+DRAW was agreed

@@ -11,13 +11,13 @@ import org.junit.Before;
 public class BoardParserTest
 {
     private Board board1;
-    
+
     @Before
     public void before()
     {
         board1 = BoardParser.algebraic("pe4 Bd5 qh1 b");
     }
-    
+
     @Test
     public void testImportExportPosition_1()
     {
@@ -26,7 +26,7 @@ public class BoardParserTest
         String result = BoardParser.exportPosition(board);
         assertEquals(fen, result);
     }
-    
+
     @Test
     public void testImportExportPosition_2()
     {
@@ -35,7 +35,7 @@ public class BoardParserTest
         String result = BoardParser.exportPosition(board);
         assertEquals(fen, result);
     }
-    
+
     @Test
     public void testImportExportPosition_3()
     {
@@ -55,11 +55,11 @@ public class BoardParserTest
             assertEquals(test_position, result);
         }
     }
-    
+
     @Test
     public void testImportPosition()
     {
-        String test_position = "7k/8/7K/2q5/1P6/8/8/5R2 w - -";
+        String test_position = "7k/8/7K/2q5/1P6/8/8/5R2 w - - 0 0";
         Board board = BoardParser.FEN(test_position);
         Piece piece1 = board.getPiece(7, 7);
         Piece piece2 = board.getPiece(7, 5);
@@ -68,19 +68,19 @@ public class BoardParserTest
         assertEquals(PieceType.KING, piece1.getPieceType());
         assertEquals(PieceType.KING, piece2.getPieceType());
     }
-    
+
     @Test
     public void testImportFromPieceListMoveColor()
     {
         assertFalse(board1.isWhiteInMove());
     }
-    
+
     @Test
     public void testImportFromPieceListNumberOfPieces()
     {
         assertEquals(3, board1.getPieces().size());
     }
-            
+
     @Test
     public void testImportFromPieceListActualPieces()
     {
@@ -89,4 +89,21 @@ public class BoardParserTest
         assertEquals("qh1", board1.getPiece(Location.parse("h1")).asString());
     }
 
+    @Test
+    public void testImportWithEnpassant1()
+    {
+        Board b = BoardParser.FEN("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+        assertEquals("e2-e4", b.getPosition().getEnpassantMove().get().toString());
+    }
+
+    @Test
+    public void testImportWithEnpassant2()
+    {
+        Board b = BoardParser.FEN("rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2");
+        assertEquals("c7-c5", b.getPosition().getEnpassantMove().get().toString());
+
+    }
 }
+
+
+
