@@ -22,7 +22,6 @@ import static com.simplisticjavachess.piece.Color.WHITE;
 public class BoardParser
 {    
     /**
-     * Partial implementation which covers what we need for testing
      * @param fen - FEN position string to parse
      * @return A board with the position
      */

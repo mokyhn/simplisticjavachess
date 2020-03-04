@@ -43,10 +43,9 @@ public class PositionInferenceTest
     @Test
     public void kingAttackTest()
     {
-        Position position = new Position();
+        Position position = BoardParser.algebraic("Kd5 w");
         Piece piece = Piece.parse("Kd5");
-        position = position.insert(piece);
-        
+
         assertNull(PositionInference.attacks(position, Location.parse("d5"), WHITE));
         assertEquals(piece, PositionInference.attacks(position, Location.parse("d6"), WHITE));
         assertEquals(piece, PositionInference.attacks(position, Location.parse("d4"), WHITE));
@@ -64,9 +63,8 @@ public class PositionInferenceTest
     @Test
     public void knightAttackTest()
     {
-        Position position = new Position();
+        Position position = BoardParser.algebraic("Nd5 w");
         Piece piece = Piece.parse("Nd5");
-        position = position.insert(piece);
         
         assertNull(PositionInference.attacks(position, Location.parse("d5"), WHITE));
         assertNull(PositionInference.attacks(position, Location.parse("d6"), WHITE));

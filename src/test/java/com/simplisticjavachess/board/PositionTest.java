@@ -20,14 +20,14 @@ public class PositionTest
     @Before
     public void before()
     {
-        position = new Position();
+        position = BoardParser.algebraic("w");
         piece    = new Piece(new Location(7,7), Color.WHITE, PieceType.KING);
     }
       
     @Test
     public void testAreRepresentationsIsomorphic()
     { 
-        assertTrue(areRepresentationsIsomorphic(new Position()));
+        assertTrue(areRepresentationsIsomorphic(BoardParser.algebraic("w")));
         
         position.insert(new Piece(new Location(2,3),Color.BLACK,PieceType.KING));
         

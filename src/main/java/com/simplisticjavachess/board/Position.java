@@ -25,27 +25,6 @@ public class Position
     private final HalfMoveClock fiftyMoveDrawClock;
     private final HalfMoveClock gameClock;
 
-
-    Position()
-    {
-        this.castlingState = CastlingState.NOBODY_CAN_CASTLE;
-        this.pieceMap = new PieceMap();
-        this.inMove = null;
-        this.enpassantMove = Optional.empty();
-        this.fiftyMoveDrawClock = new HalfMoveClock();
-        this.gameClock = new HalfMoveClock();
-    }
-
-    public Position(Color inMove)
-    {
-        this.castlingState = CastlingState.NOBODY_CAN_CASTLE;
-        this.pieceMap = new PieceMap();
-        this.inMove = inMove;
-        this.enpassantMove = Optional.empty();
-        this.fiftyMoveDrawClock = new HalfMoveClock();
-        this.gameClock = new HalfMoveClock();
-    }
-
     public Position(Color inMove, CastlingState castlingState, List<Piece> pieces, Optional<Move> enpassantMove, HalfMoveClock fiftyMoveDraw, HalfMoveClock gameClock)
     {
         this.inMove = inMove;
@@ -212,6 +191,7 @@ public class Position
         String result = pieceMap.getPositionString();
         result = result + (inMove == Color.WHITE ? "  White to move\n" : "  Black to move\n");
         result = result + castlingState.toString();
+        result = result + "Half move: " + this.gameClock.toString() + "          fifty move rule draw clock: " + fiftyMoveDrawClock.toString();
         return result;
     }
 
@@ -313,4 +293,18 @@ public class Position
         return !a || b;
     }
 
+    public Position tickGameClock()
+    {
+        return new Position(inMove, castlingState, pieceMap, enpassantMove, fiftyMoveDrawClock, gameClock.tick());
+    }
+
+    public Position tickFiftyMoveDrawClock()
+    {
+        return new Position(inMove, castlingState, pieceMap, enpassantMove, fiftyMoveDrawClock.tick(), gameClock);
+    }
+
+    public Position resetFiftyMoveDrawClock()
+    {
+        return new Position(inMove, castlingState, pieceMap, enpassantMove, fiftyMoveDrawClock.reset(), gameClock);
+    }
 }

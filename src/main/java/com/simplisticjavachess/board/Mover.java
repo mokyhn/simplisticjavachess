@@ -17,6 +17,17 @@ public class Mover
 
         Position newPosition = position.setMove(move);
 
+        newPosition = newPosition.tickGameClock();
+
+        if (move.getMoveType().isCapture() || piece.getPieceType().isPawn())
+        {
+            newPosition = newPosition.resetFiftyMoveDrawClock();
+        }
+        else
+        {
+            newPosition = newPosition.tickFiftyMoveDrawClock();
+        }
+
         Color inMove = position.inMove();
 
         // Moving the king will disallow castling in the future

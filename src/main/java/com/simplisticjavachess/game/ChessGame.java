@@ -27,7 +27,7 @@ import static com.simplisticjavachess.misc.IteratorUtils.toList;
 
 public class ChessGame
 {
-    private static final String INITIAL_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
+    private static final String INITIAL_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0";
     
     private Position position;
     private final MoveGenerator moveGenerator = new MainMoveGenerator();
