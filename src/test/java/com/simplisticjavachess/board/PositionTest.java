@@ -120,14 +120,14 @@ public class PositionTest
     @Test
     public void testFreeSquares()
     {
-        Board b = BoardParser.algebraic("Kd4 Rh4 w");
-        assertTrue(b.getPosition().freeSquares(Location.parse("d4"), Location.parse("h4")));
+        Position position = BoardParser.algebraic("Kd4 Rh4 w");
+        assertTrue(position.freeSquares(Location.parse("d4"), Location.parse("h4")));
     }
 
     @Test
 	public void testFreeSquares2()
 	{
-		Board b = BoardParser.FEN("r3r1Qk/6pp/8/6N1/8/1B6/1PPP4/2K5 b");
-		assertTrue(b.getPosition().freeSquares(Location.parse("g8"), Location.parse("e8")));
+		Position position = BoardParser.FEN("r3r1Qk/6pp/8/6N1/8/1B6/1PPP4/2K5 b");
+		assertTrue(position.freeSquares(Location.parse("g8"), Location.parse("e8")));
 	}
 }

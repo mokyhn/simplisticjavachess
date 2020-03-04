@@ -10,10 +10,10 @@ public class BoardTest
     @Test
     public void rookMoveRemovesCastlingLongPossibility()
     {
-        Board board = BoardParser.algebraic("Ra1 Ke1 kh8 w");
+        Position board = BoardParser.algebraic("Ra1 Ke1 kh8 w");
         board = board.setCanCastleLong(true, Color.WHITE);
-        MoveResult moveResult = board.doMove("a1b1 h8g8 b1a1 g8h8");
-        board = moveResult.getBoard();
+        MoveResult moveResult = Mover.doMove(board, "a1b1 h8g8 b1a1 g8h8");
+        board = moveResult.getPosition();
         assertTrue(board.isWhiteInMove());
         assertFalse(board.canCastleLong());
     }
@@ -21,11 +21,10 @@ public class BoardTest
     @Test
     public void rookMoveRemovesCastlingShortPossibility()
     {
-        Board board = BoardParser.algebraic("Rh1 Ke1 ka8 w");
+        Position board = BoardParser.algebraic("Rh1 Ke1 ka8 w");
         board = board.setCanCastleShort(true, Color.WHITE);
-        System.out.println(board.asASCII());
-        MoveResult moveResult = board.doMove("h1g1 a8b8 g1h1 b8a8");
-        board = moveResult.getBoard();
+        MoveResult moveResult = Mover.doMove(board, "h1g1 a8b8 g1h1 b8a8");
+        board = moveResult.getPosition();
         assertTrue(board.isWhiteInMove());
         assertFalse(board.canCastleShort());
     }

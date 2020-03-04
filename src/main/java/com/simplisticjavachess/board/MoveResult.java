@@ -6,14 +6,14 @@ package com.simplisticjavachess.board;
 public class MoveResult
 {
 	//TODO: Use moveResultType instead of boolean moveLegal
-	private final Board board;
+	private final Position position;
+
 	private final boolean moveLegal;
 
 
-
-	public MoveResult(boolean moveLegal, Board board) {
+	public MoveResult(boolean moveLegal, Position position) {
 		this.moveLegal = moveLegal;
-		this.board = board;
+		this.position = position;
 	}
 
 	/**
@@ -28,7 +28,7 @@ public class MoveResult
 	 * The resulting board
 	 * @return A board with the move performed
 	 */
-	public Board getBoard() {
-		return board;
+	public Position getPosition() {
+		return position;
 	}
 }

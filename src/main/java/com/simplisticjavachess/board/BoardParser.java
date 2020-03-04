@@ -26,7 +26,7 @@ public class BoardParser
      * @param fen - FEN position string to parse
      * @return A board with the position
      */
-    public static Board FEN(String fen)
+    public static Position FEN(String fen)
     {
         fen = Strings.trimWhiteSpace(fen);
 
@@ -45,7 +45,7 @@ public class BoardParser
 
         if (sections.length == 2)
         {
-            return new Board(new Position(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces, Optional.empty(), new HalfMoveClock(), new HalfMoveClock()));
+            return new Position(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces, Optional.empty(), new HalfMoveClock(), new HalfMoveClock());
         }
 
         ///////////////// PART 3 /////////////////
@@ -72,7 +72,7 @@ public class BoardParser
 
         Position position = new Position(inMove, castlingState, pieces, move, fiftyMoveDrawClock, gameClock);
 
-        return new Board(position);
+        return position;
     }
 
     private static List<Piece> parseFENPieces(String piecesString) {
@@ -165,7 +165,7 @@ public class BoardParser
         }
     }
 
-    public static String exportPosition(Board board)
+    public static String exportPosition(Position position)
     {
         String result = "";
         int countingFreeSpaces = -1;
@@ -174,7 +174,7 @@ public class BoardParser
         {
             for (int x = 0; x < 8; x++)
             {
-                Piece piece = board.getPiece(new Location(x, y));
+                Piece piece = position.getPiece(new Location(x, y));
                 if (piece == null)
                 {
                     if (countingFreeSpaces == -1)
@@ -208,11 +208,11 @@ public class BoardParser
             }
         }
 
-        result += " " + board.inMove().getColorString();
+        result += " " + position.inMove().getColorString();
         return result;
     }
 
-    public static Board algebraic(String str)
+    public static Position algebraic(String str)
     {
         String[] strings = str.split(" ");
 
@@ -247,6 +247,6 @@ public class BoardParser
 
         Position position = new Position(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces, Optional.empty(), new HalfMoveClock(), new HalfMoveClock());
 
-        return new Board(position);
+        return position;
     }
 }

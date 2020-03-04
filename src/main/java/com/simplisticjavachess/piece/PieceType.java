@@ -51,4 +51,9 @@ public enum PieceType
         return chessHashCode;
     }
 
+    public boolean isPawn()
+    {
+        return PAWN.equals(this);
+    }
+
 }

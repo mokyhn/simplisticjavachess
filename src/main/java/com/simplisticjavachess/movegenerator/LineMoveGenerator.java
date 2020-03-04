@@ -1,7 +1,7 @@
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.board.Location;
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
@@ -16,7 +16,7 @@ public class LineMoveGenerator {
         this.step = step;
     }
 
-    public Iterator<Move> generateMoves(Board board, Piece piece)
+    public Iterator<Move> generateMoves(Position position, Piece piece)
     {
         final ArrayList<Move> moves = new ArrayList<>();
         Location location = piece.getLocation();
@@ -27,7 +27,7 @@ public class LineMoveGenerator {
             delta = delta.add(step);
             location = step.translocate(location);
             
-            Move newMove = MoveGeneratorUtil.genMove(board, piece, delta);
+            Move newMove = MoveGeneratorUtil.genMove(position, piece, delta);
             if (newMove == null)
             {
                 break; // The square was occupied by my own piece

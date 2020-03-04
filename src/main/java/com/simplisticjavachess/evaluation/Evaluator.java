@@ -1,8 +1,8 @@
 package com.simplisticjavachess.evaluation;
 
-import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.Position;
 
 public interface Evaluator
 {
-    Evaluation evaluate(Board b);
+    Evaluation evaluate(Position position);
 }

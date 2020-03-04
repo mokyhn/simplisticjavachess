@@ -1,7 +1,7 @@
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
@@ -22,10 +22,10 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesUpRight()
     {         
-        Board board = BoardParser.algebraic("Bd5 w");
+        Position position = BoardParser.algebraic("Bd5 w");
         Piece piece = Piece.parse("Bd5");
 
-        List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, 1)).generateMoves(board, piece));
+        List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, 1)).generateMoves(position, piece));
         assertEquals(3, result.size()); // e6, f7, g8
         assertTrue(result.toString().contains("d5-e6"));
         assertTrue(result.toString().contains("d5-f7"));
@@ -35,7 +35,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesDown()
     {
-        Board board = BoardParser.algebraic("Rd5 w");
+        Position board = BoardParser.algebraic("Rd5 w");
         Piece piece = Piece.parse("Rd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(0, -1)).generateMoves(board, piece));
@@ -49,8 +49,8 @@ public class LineMoveGeneratorTest
     
     @Test
     public void testGenerateMovesLeft()
-    {         
-        Board board = BoardParser.algebraic("Rd5 w");
+    {
+        Position board = BoardParser.algebraic("Rd5 w");
         Piece piece = Piece.parse("Rd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(-1, 0)).generateMoves(board, piece));
@@ -63,7 +63,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesLeftBlockingPiece()
     {
-        Board board = BoardParser.algebraic("Rd5 Pb5 w");
+        Position board = BoardParser.algebraic("Rd5 Pb5 w");
         Piece piece = Piece.parse("Rd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(-1, 0)).generateMoves(board, piece));
@@ -73,8 +73,8 @@ public class LineMoveGeneratorTest
     
     @Test
     public void testGenerateDownRightAndCapture()
-    {         
-        Board board = BoardParser.algebraic("Bc5 pe3 pf2 w");
+    {
+        Position board = BoardParser.algebraic("Bc5 pe3 pf2 w");
         Piece piece = Piece.parse("Bc5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, -1)).generateMoves(board, piece));

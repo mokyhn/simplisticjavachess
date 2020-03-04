@@ -1,7 +1,7 @@
 package com.simplisticjavachess.move;
 
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.piece.Piece;
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.PieceType;
 import com.simplisticjavachess.board.Location;
@@ -9,10 +9,10 @@ import com.simplisticjavachess.board.Location;
 public final class MoveParser
 {
 
-    public static Move parse(Board b, String str)
+    public static Move parse(Position position, String str)
     {
         str = str.trim().toLowerCase();
-        str = preprocessorCastlingSyntax(str, b.inMove());
+        str = preprocessorCastlingSyntax(str, position.inMove());
 
         Location from = Location.parse(str.substring(0, 2));
         Location to = Location.parse(str.substring(2, 4));
@@ -24,13 +24,13 @@ public final class MoveParser
 
 
         Piece p;
-        p = b.getPiece(from);
+        p = position.getPiece(from);
         if (p == null)
         {
             return null;
         }
 
-        Color whoToMove = b.inMove();
+        Color whoToMove = position.inMove();
 
         if (p.getColor() != whoToMove)
         {
@@ -54,21 +54,21 @@ public final class MoveParser
             // ENPASSENT Move
             if (p.getPieceType() == PieceType.PAWN)
             {
-                if (from.fileDifferent(to) && (b.freeSquare(to)))
+                if (from.fileDifferent(to) && (position.freeSquare(to)))
                 {
                     return new Move(from, to, MoveType.CAPTURE_ENPASSANT, 
-                            b.getPiece(new Location(to.getX(), from.getY())), whoToMove);
+                            position.getPiece(new Location(to.getX(), from.getY())), whoToMove);
                 }
             }
 
             // Normal move
-            if (b.freeSquare(to))
+            if (position.freeSquare(to))
             {
                 return new Move(from, to, MoveType.NORMALMOVE, null, whoToMove);
             }
 
             // A capturing move
-            Piece pto = b.getPiece(to);
+            Piece pto = position.getPiece(to);
             if (pto != null && pto.getColor() == whoToMove.opponent())
             {
                 return new Move(from, to, MoveType.CAPTURE, pto, whoToMove);
@@ -85,7 +85,7 @@ public final class MoveParser
             MoveType moveType;
 
             // Simple promotions
-            if (from.fileEquals(to) && b.freeSquare(to))
+            if (from.fileEquals(to) && position.freeSquare(to))
             {
                 switch (str.charAt(4))
                 {
@@ -112,8 +112,8 @@ public final class MoveParser
 
             // Capture and promote
             if (from.fileDifferent(to)
-                    && !b.freeSquare(to)
-                    && b.getPiece(to).getColor() == p.getColor().opponent())
+                    && !position.freeSquare(to)
+                    && position.getPiece(to).getColor() == p.getColor().opponent())
             {
                 switch (str.charAt(4))
                 {
@@ -134,7 +134,7 @@ public final class MoveParser
                         return null;
                 }
 
-                return new Move(from, to, moveType, b.getPiece(to), whoToMove);
+                return new Move(from, to, moveType, position.getPiece(to), whoToMove);
             }
         }
 

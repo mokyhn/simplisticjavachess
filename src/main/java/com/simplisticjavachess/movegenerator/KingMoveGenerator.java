@@ -4,8 +4,8 @@
  */
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.board.Location;
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveType;
@@ -26,29 +26,29 @@ public class KingMoveGenerator implements PieceMoveGenerator
     }
 
     @Override
-    public Iterator<Move> generateMoves(Board b, Piece p)
+    public Iterator<Move> generateMoves(Position position, Piece p)
     {
         return compose(
-                castlingShort(b, p),
-                castlingLong(b, p),
-                oneMoveIterator(() -> genKingMove(b, p, Vector.LEFT)),
-                oneMoveIterator(() -> genKingMove(b, p, Vector.RIGHT)),
-                oneMoveIterator(() -> genKingMove(b, p, Vector.UP)),
-                oneMoveIterator(() -> genKingMove(b, p, Vector.DOWN)),
-                oneMoveIterator(() -> genKingMove(b, p, Vector.UP_AND_LEFT)),
-                oneMoveIterator(() -> genKingMove(b, p, Vector.DOWN_AND_LEFT)),
-                oneMoveIterator(() -> genKingMove(b, p, Vector.UP_AND_RIGHT)),
-                oneMoveIterator(() -> genKingMove(b, p, Vector.DOWN_AND_RIGHT))
+                castlingShort(position, p),
+                castlingLong(position, p),
+                oneMoveIterator(() -> genKingMove(position, p, Vector.LEFT)),
+                oneMoveIterator(() -> genKingMove(position, p, Vector.RIGHT)),
+                oneMoveIterator(() -> genKingMove(position, p, Vector.UP)),
+                oneMoveIterator(() -> genKingMove(position, p, Vector.DOWN)),
+                oneMoveIterator(() -> genKingMove(position, p, Vector.UP_AND_LEFT)),
+                oneMoveIterator(() -> genKingMove(position, p, Vector.DOWN_AND_LEFT)),
+                oneMoveIterator(() -> genKingMove(position, p, Vector.UP_AND_RIGHT)),
+                oneMoveIterator(() -> genKingMove(position, p, Vector.DOWN_AND_RIGHT))
         );
     }
 
 
-    private Iterator<Move> castlingShort(Board board, Piece piece) {
+    private Iterator<Move> castlingShort(Position position, Piece piece) {
         return oneMoveIterator(() -> {
-            final Color color = board.inMove();
+            final Color color = position.inMove();
             final int fy = piece.getY();
 
-            Piece rook = board.getPiece(new Location(7, fy));
+            Piece rook = position.getPiece(new Location(7, fy));
 
             // Ensure that there is a rook
             if (rook == null || rook.getPieceType() != PieceType.ROOK || rook.getColor() != color) {
@@ -56,12 +56,12 @@ public class KingMoveGenerator implements PieceMoveGenerator
             }
 
             // Castling short
-            if (board.canCastleShort() &&
-                    board.freeSquare(5, fy) &&
-                    board.freeSquare(6, fy) &&
-                    !board.isAttacked(5, fy) &&
-                    !board.isAttacked(6, fy) &&
-                    !board.isInCheck(color))
+            if (position.canCastleShort() &&
+                    position.freeSquare(5, fy) &&
+                    position.freeSquare(6, fy) &&
+                    !position.isAttacked(5, fy) &&
+                    !position.isAttacked(6, fy) &&
+                    !position.isInCheck(color))
             {
                 return new Move(
                         piece.getLocation(),
@@ -72,13 +72,13 @@ public class KingMoveGenerator implements PieceMoveGenerator
         });
     }
 
-    private Iterator<Move> castlingLong(Board board, Piece piece)
+    private Iterator<Move> castlingLong(Position position, Piece piece)
     {
         return oneMoveIterator(() -> {
-            final Color color = board.inMove();
+            final Color color = position.inMove();
             final int fy = piece.getY();
 
-            Piece rook = board.getPiece(new Location(0, fy));
+            Piece rook = position.getPiece(new Location(0, fy));
 
             // Ensure that there is a rook
             if (rook == null || rook.getPieceType() != PieceType.ROOK || rook.getColor() != color) {
@@ -86,13 +86,13 @@ public class KingMoveGenerator implements PieceMoveGenerator
             }
 
             // Castling long
-            if (board.canCastleLong() &&
-                    board.freeSquare(3, fy) &&
-                    board.freeSquare(2, fy) &&
-                    board.freeSquare(1, fy) &&
-                    !board.isAttacked(2, fy) &&
-                    !board.isAttacked(3, fy) &&
-                    !board.isInCheck(color))
+            if (position.canCastleLong() &&
+                    position.freeSquare(3, fy) &&
+                    position.freeSquare(2, fy) &&
+                    position.freeSquare(1, fy) &&
+                    !position.isAttacked(2, fy) &&
+                    !position.isAttacked(3, fy) &&
+                    !position.isInCheck(color))
             {
                 return new Move(
                         piece.getLocation(),

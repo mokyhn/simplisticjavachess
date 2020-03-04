@@ -5,8 +5,9 @@
 
 package com.simplisticjavachess.integration;
 
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.Mover;
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveParser;
@@ -27,16 +28,16 @@ public class TestSearch
 
     public static void assertMove(String expectedMoves, String fen, String moveSequence, int plyDepth)
     {
-        Board board = BoardParser.FEN(fen);
-        System.out.println(board.asASCII());
+        Position position = BoardParser.FEN(fen);
+        System.out.println(position.toString());
 
         // Do initial set of moves
         try {
-            performMoves(board, moveSequence);
+            position = performMoves(position, moveSequence);
 
             Engine engine = new MinMaxEngine();
 
-            SearchResult searchResult = engine.search(board, new MainMoveGenerator(), new IntegerEvaluator(), plyDepth);
+            SearchResult searchResult = engine.search(position, new MainMoveGenerator(), new IntegerEvaluator(), plyDepth);
 
             Move foundMove = searchResult.getMoveSequence().getFirst();
 
@@ -45,7 +46,7 @@ public class TestSearch
                 assertTrue(true);
             }
 
-            Collection<Move> expected = parseExpectedMoves(board, expectedMoves);
+            Collection<Move> expected = parseExpectedMoves(position, expectedMoves);
             if (expected.contains(foundMove))
             {
                 assertTrue(true);
@@ -60,20 +61,21 @@ public class TestSearch
         }
     }
 
-    private static void performMoves(Board board, String moveSequence)
+    private static Position performMoves(Position position, String moveSequence)
     {
         if (!moveSequence.isEmpty()) 
         {
             String[] moveStrings = moveSequence.split(" ");
             for (String str : moveStrings)
             {
-                Move move = MoveParser.parse(board, str);
-                board.doMove(move);             
+                Move move = MoveParser.parse(position, str);
+                position = Mover.doMove(position, move).getPosition();
             }   
-        }  
+        }
+        return position;
     }
-    
-    private static Collection<Move> parseExpectedMoves(Board board, String expectedMoves)
+
+    private static Collection<Move> parseExpectedMoves(Position position, String expectedMoves)
     {
         ArrayList<Move> result = new ArrayList<>();
 
@@ -82,7 +84,7 @@ public class TestSearch
             String[] expectedMoveStrings = expectedMoves.split(" ");
             for (String str : expectedMoveStrings)
             {
-                Move move = MoveParser.parse(board, str);
+                Move move = MoveParser.parse(position, str);
                 result.add(move);
             }        
         }

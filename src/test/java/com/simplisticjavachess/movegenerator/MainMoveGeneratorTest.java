@@ -5,14 +5,15 @@
 
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.Board;
-import com.simplisticjavachess.board.FENPositions;
 import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.FENPositions;
+import com.simplisticjavachess.board.Location;
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.board.PositionInference;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
-import com.simplisticjavachess.board.Location;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -28,7 +29,7 @@ public class MainMoveGeneratorTest
         
         for (String fen : FENPositions.POSITIONS) 
         {
-            Board board = BoardParser.FEN(fen);
+            Position board = BoardParser.FEN(fen);
             
             Iterator<Move> moves = moveGenerator.generateMoves(board);
             
@@ -46,12 +47,12 @@ public class MainMoveGeneratorTest
                 {
                     if (move.aCapture()) 
                     {
-                        assertNotNull(BoardParser.exportPosition(board), PositionInference.attacks(board.getPosition(), move.getTo(), board.inMove().opponent()));
+                        assertNotNull(BoardParser.exportPosition(board), PositionInference.attacks(board, move.getTo(), board.inMove().opponent()));
                     }
                 }
                 else
                 {
-                    assertNotNull(BoardParser.exportPosition(board), PositionInference.attacks(board.getPosition(), move.getTo(), board.inMove().opponent()));
+                    assertNotNull(BoardParser.exportPosition(board), PositionInference.attacks(board, move.getTo(), board.inMove().opponent()));
                 } 
                 
             }
@@ -67,8 +68,8 @@ public class MainMoveGeneratorTest
         for (String fen : FENPositions.POSITIONS) 
         {
             i++;
-            Board originalBoard = BoardParser.FEN(fen);
-            Board board = originalBoard;
+            Position originalBoard = BoardParser.FEN(fen);
+            Position board = originalBoard;
             
             Iterator<Move> moveIterator = moveGenerator.generateMoves(board);
             
@@ -84,7 +85,7 @@ public class MainMoveGeneratorTest
                 {
                     Location location = new Location(x,y);
                     
-                    Piece attacker = PositionInference.attacks(board.getPosition(), location, board.inMove().opponent());                                     
+                    Piece attacker = PositionInference.attacks(board, location, board.inMove().opponent());
                     if (attacker != null && 
                         attacker.getPieceType() != PieceType.KING &&
                         attacker.getPieceType() != PieceType.PAWN && 
@@ -102,7 +103,7 @@ public class MainMoveGeneratorTest
                                 break;
                             } 
                         }                        
-                        assertTrue("i= "+i + "   Location = " + location + " HEJ "+ attacker.getPieceType().toString() + "\n" + board.asASCII(), found);
+                        assertTrue("i= "+i + "   Location = " + location + " HEJ "+ attacker.getPieceType().toString() + "\n" + board.toString(), found);
                     }
                 }
                 

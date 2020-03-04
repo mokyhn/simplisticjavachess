@@ -46,21 +46,21 @@ public class Position
         this.gameClock = new HalfMoveClock();
     }
 
-    private Position(Color inMove, CastlingState castlingState, PieceMap pieces)
-    {
-        this.inMove = inMove;
-        this.castlingState = castlingState;
-        this.pieceMap = pieces;
-        this.enpassantMove = Optional.empty();
-        this.fiftyMoveDrawClock = new HalfMoveClock();
-        this.gameClock = new HalfMoveClock();
-    }
-
     public Position(Color inMove, CastlingState castlingState, List<Piece> pieces, Optional<Move> enpassantMove, HalfMoveClock fiftyMoveDraw, HalfMoveClock gameClock)
     {
         this.inMove = inMove;
         this.castlingState = castlingState;
         this.pieceMap = new PieceMap(pieces);
+        this.enpassantMove = enpassantMove;
+        this.fiftyMoveDrawClock = fiftyMoveDraw;
+        this.gameClock = gameClock;
+    }
+
+    private Position(Color inMove, CastlingState castlingState, PieceMap pieceMap, Optional<Move> enpassantMove, HalfMoveClock fiftyMoveDraw, HalfMoveClock gameClock)
+    {
+        this.inMove = inMove;
+        this.castlingState = castlingState;
+        this.pieceMap = pieceMap;
         this.enpassantMove = enpassantMove;
         this.fiftyMoveDrawClock = fiftyMoveDraw;
         this.gameClock = gameClock;
@@ -73,7 +73,7 @@ public class Position
 
     public Position setInMove(Color inMove)
     {
-        Position newPosition = new Position(inMove, this.castlingState, this.pieceMap);
+        Position newPosition = new Position(inMove, this.castlingState, this.pieceMap, this.enpassantMove, this.fiftyMoveDrawClock, this.gameClock);
         return newPosition;
     }
 
@@ -82,14 +82,14 @@ public class Position
         CastlingState newCastlingState;
 
         newCastlingState = castlingState.setCanCastleShort(color, flag);
-        return new Position(inMove, newCastlingState, this.pieceMap);
+        return new Position(inMove, newCastlingState, this.pieceMap, this.enpassantMove, this.fiftyMoveDrawClock, this.gameClock);
     }
 
     public Position setCanCastleLong(boolean flag, Color color)
     {
         CastlingState newCastlingState;
         newCastlingState = castlingState.setCanCastleLong(color, flag);
-        return new Position(inMove, newCastlingState, this.pieceMap);
+        return new Position(inMove, newCastlingState, this.pieceMap, this.enpassantMove, this.fiftyMoveDrawClock, this.gameClock);
     }
 
     public boolean getCanCastleShort(Color color)
@@ -110,7 +110,7 @@ public class Position
      */
     Position insert(Piece piece)
     {
-        return new Position(this.inMove, this.castlingState, pieceMap.insert(piece));
+        return new Position(this.inMove, this.castlingState, pieceMap.insert(piece), this.enpassantMove, this.fiftyMoveDrawClock, this.gameClock);
     }
 
     public Piece getPiece(Location location)
@@ -118,7 +118,7 @@ public class Position
         return pieceMap.get(location);
     }
 
-    Collection<Piece> getPieces()
+    public Collection<Piece> getPieces()
     {
         return pieceMap.values();
     }
@@ -130,12 +130,12 @@ public class Position
      */
     Position remove(Piece piece)
     {
-        return new Position(this.inMove, this.castlingState, pieceMap.remove(piece));
+        return new Position(this.inMove, this.castlingState, pieceMap.remove(piece), this.enpassantMove, this.fiftyMoveDrawClock, this.gameClock);
     }
 
     public Position move(Piece piece, Location to)
     {
-        return new Position(this.inMove, this.castlingState, pieceMap.move(piece, to));
+        return new Position(this.inMove, this.castlingState, pieceMap.move(piece, to), this.enpassantMove, this.fiftyMoveDrawClock, this.gameClock);
     }
 
     public Optional<Piece> getKing(Color color)
@@ -143,7 +143,7 @@ public class Position
         return pieceMap.getKing(color);
     }
 
-    boolean freeSquare(Location location)
+    public boolean freeSquare(Location location)
     {
         return pieceMap.freeSquare(location);
     }
@@ -237,7 +237,8 @@ public class Position
                     this.inMove == position.inMove &&
                     this.castlingState.equals(position.castlingState) &&
                     this.pieceMap.equals(position.pieceMap) &&
-                    this.enpassantMove.equals(position.enpassantMove);
+                    this.isenpassant() == position.isenpassant() &&
+                    implies(this.isenpassant(), this.enpassantMove.equals(position.enpassantMove));
         }
         else
         {
@@ -254,11 +255,62 @@ public class Position
 
     public int getChessHashCode()
     {
-        return inMove.getChessHashCode() ^ castlingState.getChessHashCode() ^ pieceMap.getChessHashCode() ^ this.getEnpassantMove().hashCode();
+        return inMove.getChessHashCode() ^ castlingState.getChessHashCode() ^ pieceMap.getChessHashCode() ^ (this.isenpassant() ? this.getEnpassantMove().hashCode() : 0);
     }
 
     public Optional<Move> getEnpassantMove()
     {
         return enpassantMove;
     }
+
+    public boolean canCastleShort()
+    {
+        return getCanCastleShort(inMove);
+    }
+
+    public boolean canCastleLong()
+    {
+        return getCanCastleLong(inMove);
+    }
+
+    public Vector getMoveDirection()
+    {
+        return Vector.getMoveDirection(inMove());
+    }
+
+    public Piece getPiece(int x, int y)
+    {
+        return getPiece(new Location(x, y));
+    }
+
+    public boolean isWhiteInMove()
+    {
+        return Color.WHITE.equals(inMove);
+    }
+
+    public Position setMove(Move move)
+    {
+        return new Position(inMove, castlingState, pieceMap, Optional.of(move), fiftyMoveDrawClock, gameClock);
+    }
+
+    private boolean isenpassant()
+    {
+        if (enpassantMove.isPresent())
+        {
+            Move move = enpassantMove.get();
+            Piece piece = getPiece(move.getTo());
+            return piece.getPieceType().isPawn() && move.distance() == 2;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+
+    private boolean implies(boolean a, boolean b)
+    {
+        return !a || b;
+    }
+
 }

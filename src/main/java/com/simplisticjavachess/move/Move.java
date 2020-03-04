@@ -156,4 +156,8 @@ public final class Move
     }
 
 
+    public int distance()
+    {
+        return from.distanceTo(to);
+    }
 }

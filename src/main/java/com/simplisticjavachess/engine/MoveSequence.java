@@ -1,7 +1,8 @@
 package com.simplisticjavachess.engine;
 
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.board.MoveResult;
+import com.simplisticjavachess.board.Mover;
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.misc.Strings;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveParser;
@@ -47,7 +48,7 @@ public class MoveSequence implements Iterable<Move>
        return Arrays.toString(list.toArray());
    }
 
-   public static MoveSequence parse(Board board, String moveString)
+   public static MoveSequence parse(Position position, String moveString)
    {
       moveString = Strings.trimWhiteSpace(moveString);
       String[] moveStrings = moveString.split(" ");
@@ -55,15 +56,15 @@ public class MoveSequence implements Iterable<Move>
       MoveSequence result = new MoveSequence();
       for (String s : moveStrings)
       {
-         Move move = MoveParser.parse(board, s);
-         MoveResult moveResult = board.doMove(move);
+         Move move = MoveParser.parse(position, s);
+         MoveResult moveResult = Mover.doMove(position, move);
          if (moveResult == null)
          {
             throw new IllegalArgumentException("Provide a sequence of moves");
          }
          if (moveResult.isMoveLegal())
          {
-            board = moveResult.getBoard();
+            position = moveResult.getPosition();
          }
          else
          {

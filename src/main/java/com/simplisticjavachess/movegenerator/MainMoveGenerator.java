@@ -1,7 +1,7 @@
 package com.simplisticjavachess.movegenerator;
 
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.misc.IteratorUtils;
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
@@ -39,9 +39,9 @@ public class MainMoveGenerator implements MoveGenerator
         }
     }
 
-    public Iterator<Move> generateMoves(Board board, Piece piece)
+    public Iterator<Move> generateMoves(Position position, Piece piece)
     {
-        final Color sideToMove = board.inMove();
+        final Color sideToMove = position.inMove();
 
         if (piece.getColor() != sideToMove)
         {
@@ -51,7 +51,7 @@ public class MainMoveGenerator implements MoveGenerator
         PieceType pieceType = piece.getPieceType();
 
         if (moveGeneratorMap.containsKey(pieceType)) {
-            return moveGeneratorMap.get(pieceType).generateMoves(board, piece);
+            return moveGeneratorMap.get(pieceType).generateMoves(position, piece);
         } else {
             return Collections.emptyIterator();
         }
@@ -59,13 +59,13 @@ public class MainMoveGenerator implements MoveGenerator
     }
 
     @Override
-    public Iterator<Move> generateMoves(Board board)
+    public Iterator<Move> generateMoves(Position position)
     {
         final ArrayList<Iterator<Move>> moveIterators = new ArrayList<>();
 
-        for (Piece piece : board.getPieces())
+        for (Piece piece : position.getPieces())
         {
-            Iterator<Move> it = generateMoves(board, piece);
+            Iterator<Move> it = generateMoves(position, piece);
             if (it != null)
             {
                 moveIterators.add(it);

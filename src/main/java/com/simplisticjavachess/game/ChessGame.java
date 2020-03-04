@@ -8,15 +8,17 @@ package com.simplisticjavachess.game;
 
 import com.simplisticjavachess.board.BoardParser;
 import com.simplisticjavachess.board.MoveResult;
+import com.simplisticjavachess.board.Mover;
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.MoveParser;
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.movegenerator.MainMoveGenerator;
 import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.engine.SearchResult;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.movegenerator.OpeningBook;
+import com.simplisticjavachess.piece.Color;
 
 import java.util.Iterator;
 import java.util.List;
@@ -27,40 +29,40 @@ public class ChessGame
 {
     private static final String INITIAL_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq";
     
-    private Board board;
+    private Position position;
     private final MoveGenerator moveGenerator = new MainMoveGenerator();
     private int searchDepth;
     
     public ChessGame()
     {
-        board = BoardParser.FEN(INITIAL_POSITION);
+        position = BoardParser.FEN(INITIAL_POSITION);
         searchDepth = 3;
     }
 
     
-    public void setBoard(String fen)
+    public void setPosition(String fen)
     {
-        this.board = BoardParser.FEN(fen);
+        this.position = BoardParser.FEN(fen);
     }
 
     public void black()
     {
-        board = board.setBlackToMove();
+        position = position.setInMove(Color.BLACK);
     }
     
     public void newgame()
     {
-        board = BoardParser.FEN(INITIAL_POSITION);
+        position = BoardParser.FEN(INITIAL_POSITION);
     }
 
     public void print()
     {
-        System.out.println(board.asASCII());
+        System.out.println(position.toString());
     }
 
     public void white()
     {
-        board = board.setWhiteToMove();
+        position = position.setInMove(Color.WHITE);
     }
 
     public void setSd(int depth)
@@ -73,7 +75,7 @@ public class ChessGame
         MoveResult moveResult;
         Move move = null;
 
-        Iterator<Move> openingMove = OpeningBook.get().  generateMoves(board);
+        Iterator<Move> openingMove = OpeningBook.get().  generateMoves(position);
         if (openingMove.hasNext())
         {
             move = openingMove.next();
@@ -81,7 +83,7 @@ public class ChessGame
         }
         else
         {
-            SearchResult searchResult = new MinMaxEngine().search(board, new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
+            SearchResult searchResult = new MinMaxEngine().search(position, new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
 
             if (searchResult.getMoveSequence() != null)
             {
@@ -96,15 +98,15 @@ public class ChessGame
         }
         else
         {
-            moveResult = board.doMove(move);
-            board = moveResult.getBoard();
+            moveResult = Mover.doMove(position, move);
+            position = moveResult.getPosition();
             print();
         }
     }
    
     public void move(String str)
     {
-        Move move = MoveParser.parse(board, str);
+        Move move = MoveParser.parse(position, str);
 
         if (move == null)
         {
@@ -112,13 +114,13 @@ public class ChessGame
         }
         else
         {
-            List<Move> possibleMoves = toList(moveGenerator.generateMoves(board));
+            List<Move> possibleMoves = toList(moveGenerator.generateMoves(position));
             if (possibleMoves.contains(move))
             {
-                MoveResult result = board.doMove(move);
+                MoveResult result = Mover.doMove(position, move);
                 if (result.isMoveLegal())
                 {
-                    board = result.getBoard();
+                    position = result.getPosition();
                 } else
                 {
                     throw new IllegalArgumentException("Invalid move");

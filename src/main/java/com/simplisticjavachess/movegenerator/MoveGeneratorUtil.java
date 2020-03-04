@@ -5,8 +5,8 @@
 
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.board.Location;
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveType;
@@ -17,19 +17,19 @@ import java.util.concurrent.Callable;
 
 public class MoveGeneratorUtil
 {
-    public static Move genKingMove(Board board, Piece piece, Vector vector)
+    public static Move genKingMove(Position position, Piece piece, Vector vector)
     {
-        return genMoveAux(board, piece, vector, true);
+        return genMoveAux(position, piece, vector, true);
     }
 
 
-    public static Move genMove(Board board, Piece piece, Vector vector)
+    public static Move genMove(Position position, Piece piece, Vector vector)
     {
-        return genMoveAux(board, piece, vector, false);
+        return genMoveAux(position, piece, vector, false);
     }
 
     // Used for generation of knight, bishop, rook and queen moves
-    private static Move genMoveAux(Board board, Piece piece, Vector vector, boolean isKingMove)
+    private static Move genMoveAux(Position position, Piece piece, Vector vector, boolean isKingMove)
     {
         Location from = piece.getLocation();
         Location to = vector.translocate(from);
@@ -38,28 +38,28 @@ public class MoveGeneratorUtil
         {
             if (isKingMove)
             {
-                if (board.isAttacked(to))
+                if (position.isAttacked(to))
                 {
                     return null;
                 }
             }
             
-            Piece capturedPiece = board.getPiece(to);
+            Piece capturedPiece = position.getPiece(to);
 
             Move move = null;
             MoveType moveType;
 
-            if (capturedPiece != null && capturedPiece.getColor() == board.inMove().opponent())
+            if (capturedPiece != null && capturedPiece.getColor() == position.inMove().opponent())
             {
                 moveType = MoveType.CAPTURE;
-                move = new Move(from, to, moveType, capturedPiece, board.inMove());
+                move = new Move(from, to, moveType, capturedPiece, position.inMove());
             } 
             else
             {
-                if (board.freeSquare(to))
+                if (position.freeSquare(to))
                 {
                     moveType = MoveType.NORMALMOVE;
-                    move = new Move(from, to, moveType, null, board.inMove());
+                    move = new Move(from, to, moveType, null, position.inMove());
                 }
             }
             

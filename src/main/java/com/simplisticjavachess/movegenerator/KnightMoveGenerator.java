@@ -5,7 +5,7 @@
 
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
@@ -25,17 +25,17 @@ public class KnightMoveGenerator implements PieceMoveGenerator
     }
 
     @Override
-    public Iterator<Move> generateMoves(Board board, Piece piece)
+    public Iterator<Move> generateMoves(Position position, Piece piece)
     {
         return compose(
-                oneMoveIterator(() -> MoveGeneratorUtil.genMove(board, piece, new Vector(-2, 1))),
-                oneMoveIterator(() -> MoveGeneratorUtil.genMove(board, piece, new Vector(-2, -1))),
-                oneMoveIterator(() -> MoveGeneratorUtil.genMove(board, piece, new Vector(-1, 2))),
-                oneMoveIterator(() -> MoveGeneratorUtil.genMove(board, piece, new Vector(1, 2))),
-                oneMoveIterator(() -> MoveGeneratorUtil.genMove(board, piece, new Vector(-1, -2))),
-                oneMoveIterator(() -> MoveGeneratorUtil.genMove(board, piece, new Vector(1, -2))),
-                oneMoveIterator(() -> MoveGeneratorUtil.genMove(board, piece, new Vector(2, 1))),
-                oneMoveIterator(() -> MoveGeneratorUtil.genMove(board, piece, new Vector(2, -1)))
+                oneMoveIterator(() -> MoveGeneratorUtil.genMove(position, piece, new Vector(-2, 1))),
+                oneMoveIterator(() -> MoveGeneratorUtil.genMove(position, piece, new Vector(-2, -1))),
+                oneMoveIterator(() -> MoveGeneratorUtil.genMove(position, piece, new Vector(-1, 2))),
+                oneMoveIterator(() -> MoveGeneratorUtil.genMove(position, piece, new Vector(1, 2))),
+                oneMoveIterator(() -> MoveGeneratorUtil.genMove(position, piece, new Vector(-1, -2))),
+                oneMoveIterator(() -> MoveGeneratorUtil.genMove(position, piece, new Vector(1, -2))),
+                oneMoveIterator(() -> MoveGeneratorUtil.genMove(position, piece, new Vector(2, 1))),
+                oneMoveIterator(() -> MoveGeneratorUtil.genMove(position, piece, new Vector(2, -1)))
         );
     }
 

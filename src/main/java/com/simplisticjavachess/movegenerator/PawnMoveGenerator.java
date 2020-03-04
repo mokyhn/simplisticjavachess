@@ -5,7 +5,7 @@
 
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveType;
 import com.simplisticjavachess.piece.Color;
@@ -28,10 +28,10 @@ public class PawnMoveGenerator implements PieceMoveGenerator
     // Split into different iterators for the blocks inside the method
     // See move generation for King
 
-    private ArrayList<Move> generateMovesHelper(Board board, Piece piece)
+    private ArrayList<Move> generateMovesHelper(Position position, Piece piece)
     {
 
-        final Color c = board.inMove();
+        final Color c = position.inMove();
         final int fx = piece.getX();
         final int fy = piece.getY();
 
@@ -47,16 +47,16 @@ public class PawnMoveGenerator implements PieceMoveGenerator
             throw new IllegalArgumentException("Trying to generate moves for opponent piece which is not in move.");
         }
 
-        Location oneAhead = board.getMoveDirection().translocate(piece.getLocation());
-        Location twoAhead = board.getMoveDirection().scale(2).translocate(piece.getLocation());
+        Location oneAhead = position.getMoveDirection().translocate(piece.getLocation());
+        Location twoAhead = position.getMoveDirection().scale(2).translocate(piece.getLocation());
 
         // Normal one step forward pawn move
         if (!pawnAtPromotionRank(piece))
         {
-            Location to = board.getMoveDirection().translocate(piece.getLocation());
+            Location to = position.getMoveDirection().translocate(piece.getLocation());
             if (to.isValid())
             {
-                if (board.freeSquare(to))
+                if (position.freeSquare(to))
                 {
                     Moves.add(new Move(from, to, MoveType.NORMALMOVE, null, c));
                 }
@@ -66,15 +66,15 @@ public class PawnMoveGenerator implements PieceMoveGenerator
         // Normal two step forward pawn move
         if (pawnAtHomeRank(piece))
         {
-            if (board.freeSquare(oneAhead) && board.freeSquare(twoAhead))
+            if (position.freeSquare(oneAhead) && position.freeSquare(twoAhead))
             {
                 Moves.add(new Move(from, twoAhead, MoveType.NORMALMOVE, null, c));
             }
         }
 
         // Non capturing PAWN promotion
-        if ((c == Color.WHITE && fy == 6 && board.freeSquare(fx, 7)) ||
-            (c == Color.BLACK && fy == 1 && board.freeSquare(fx, 0)))
+        if ((c == Color.WHITE && fy == 6 && position.freeSquare(fx, 7)) ||
+            (c == Color.BLACK && fy == 1 && position.freeSquare(fx, 0)))
         {
             Moves.add(new Move(from, oneAhead, MoveType.PROMOTE_TO_QUEEN,  null, c));
             Moves.add(new Move(from, oneAhead, MoveType.PROMOTE_TO_ROOK,   null, c));
@@ -88,7 +88,7 @@ public class PawnMoveGenerator implements PieceMoveGenerator
             if (fx > 0)
             {
                 Location to = new Location(fx - 1, fy + c.getColor());
-                leftPiece = board.getPiece(to);
+                leftPiece = position.getPiece(to);
                 if (leftPiece != null && leftPiece.getColor() != c)
                 {
                     Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, leftPiece, c));
@@ -102,7 +102,7 @@ public class PawnMoveGenerator implements PieceMoveGenerator
             if (fx < 7)
             {
                 Location to = new Location(fx + 1, fy + c.getColor());
-                rightPiece = board.getPiece(to);
+                rightPiece = position.getPiece(to);
                 if (rightPiece != null && rightPiece.getColor() != c)
                 {
                     Moves.add(new Move(from, to, MoveType.CAPTURE_AND_PROMOTE_TO_BISHOP, rightPiece, c));
@@ -118,7 +118,7 @@ public class PawnMoveGenerator implements PieceMoveGenerator
             if (fx > 0)
             {
                 Location to = new Location(fx - 1, fy + c.getColor());
-                leftPiece = board.getPiece(to);
+                leftPiece = position.getPiece(to);
                 if (leftPiece != null && leftPiece.getColor() != c)
                 {                
                     Moves.add(new Move(from, to, MoveType.CAPTURE, leftPiece, c));
@@ -129,7 +129,7 @@ public class PawnMoveGenerator implements PieceMoveGenerator
             if (fx < 7)
             {
                 Location to = new Location(fx + 1, fy + c.getColor());
-                rightPiece = board.getPiece(to);
+                rightPiece = position.getPiece(to);
                 if (rightPiece != null && rightPiece.getColor() != c)
                 {
                     Moves.add(new Move(from, to, MoveType.CAPTURE, rightPiece, c));
@@ -138,10 +138,11 @@ public class PawnMoveGenerator implements PieceMoveGenerator
         }
 
         // En passant capture       
-        Move lastMove = board.getLastMove();
-        if (lastMove != null)
+        Optional<Move> lastMoveOptional = position.getEnpassantMove();
+        if (lastMoveOptional.isPresent())
         {
-            Piece lastMovePiece = board.getPiece(lastMove.getTo());
+            Move lastMove = lastMoveOptional.get();
+            Piece lastMovePiece = position.getPiece(lastMove.getTo());
 
             if (lastMovePiece.getPieceType() == PieceType.PAWN && 
                 (Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2)) 
@@ -186,7 +187,7 @@ public class PawnMoveGenerator implements PieceMoveGenerator
     }
 
     @Override
-    public Iterator<Move> generateMoves(Board b, Piece p)
+    public Iterator<Move> generateMoves(Position position, Piece p)
     {
         return new Iterator<Move>()
         {
@@ -197,7 +198,7 @@ public class PawnMoveGenerator implements PieceMoveGenerator
             {
                 if (generated == null)
                 {
-                    generated = generateMovesHelper(b, p).iterator();
+                    generated = generateMovesHelper(position, p).iterator();
                 }
                 return generated.hasNext();
             }

@@ -28,7 +28,7 @@ public class CommandSetBoard implements Command
     {
         if (arguments.length == 2) 
         {
-            chessGame.setBoard(arguments[1]);
+            chessGame.setPosition(arguments[1]);
         }
         
     }

@@ -19,23 +19,23 @@ public class PositionInferenceTest
     @Test
     public void testIsInCheck()
     {
-        Board board = BoardParser.algebraic("Bd5 kc4 w");
-        assertTrue(PositionInference.isInCheck(board.getPosition(), Color.BLACK));
+        Position board = BoardParser.algebraic("Bd5 kc4 w");
+        assertTrue(PositionInference.isInCheck(board, Color.BLACK));
     }
     
     @Test
     public void testAttacks()
     {
-        Board board = BoardParser.algebraic("Bd5 w");
+        Position board = BoardParser.algebraic("Bd5 w");
         Piece piece = Piece.parse("Bd5");
 
-        Piece result = PositionInference.attacks(board.getPosition(), Location.parse("e6"), WHITE);
+        Piece result = PositionInference.attacks(board, Location.parse("e6"), WHITE);
         Assert.assertEquals(piece, result);
         
-        result = PositionInference.attacks(board.getPosition(), Location.parse("f7"), WHITE);
+        result = PositionInference.attacks(board, Location.parse("f7"), WHITE);
         Assert.assertEquals(piece, result);
         
-        result = PositionInference.attacks(board.getPosition(), Location.parse("g8"), WHITE);
+        result = PositionInference.attacks(board, Location.parse("g8"), WHITE);
         Assert.assertEquals(piece, result);
     }
 
@@ -80,11 +80,11 @@ public class PositionInferenceTest
     @Test
     public void pawnAttackTest()
     {
-        Board board = BoardParser.algebraic("Pd4 w");
+        Position board = BoardParser.algebraic("Pd4 w");
         Location.parse("d4");
         Piece piece;
 
-        piece = PositionInference.attacks(board.getPosition(),
+        piece = PositionInference.attacks(board,
                 Location.parse("e5"), WHITE);
         assertEquals(Piece.parse("Pd4"), piece);
     }

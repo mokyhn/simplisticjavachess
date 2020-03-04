@@ -1,6 +1,6 @@
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.Board;
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
@@ -25,12 +25,12 @@ public class BishopMoveGenerator implements PieceMoveGenerator
         return PieceType.BISHOP;
     }
 
-    public Iterator<Move> generateMoves(Board board, Piece piece)
+    public Iterator<Move> generateMoves(Position position, Piece piece)
     {
         return IteratorUtils.compose(Arrays.asList(
-                UP_AND_RIGHT.generateMoves(board, piece),
-                DOWN_AND_RIGHT.generateMoves(board, piece),
-                UP_AND_LEFT.generateMoves(board, piece),
-                DOWN_AND_LEFT.generateMoves(board, piece)));
+                UP_AND_RIGHT.generateMoves(position, piece),
+                DOWN_AND_RIGHT.generateMoves(position, piece),
+                UP_AND_LEFT.generateMoves(position, piece),
+                DOWN_AND_LEFT.generateMoves(position, piece)));
     }
 }

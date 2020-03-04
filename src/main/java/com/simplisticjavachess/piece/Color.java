@@ -52,4 +52,13 @@ public enum Color
         return chessHashCode;
     }
 
+    public boolean isWhite()
+    {
+        return WHITE.equals(this);
+    }
+
+    public boolean isBlack()
+    {
+        return BLACK.equals(this);
+    }
 }

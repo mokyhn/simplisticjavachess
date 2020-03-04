@@ -1,8 +1,8 @@
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.board.BoardParser;
 import com.simplisticjavachess.board.MoveResult;
+import com.simplisticjavachess.board.Mover;
 import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.engine.MoveSequence;
 import com.simplisticjavachess.misc.IteratorUtils;
@@ -21,15 +21,14 @@ public class OpeningMoveGenerator implements MoveGenerator
 
     public void add(String FEN, String moveStr)
     {
-        Board board = BoardParser.FEN(FEN);
-        Move move = MoveParser.parse(board, moveStr);
+        Position position = BoardParser.FEN(FEN);
+        Move move = MoveParser.parse(position, moveStr);
 
         if (move == null)
         {
             throw new IllegalArgumentException("Cannot accept a move of color opponent is to move");
         }
 
-        Position position = board.getPosition();
         add(position, move);
     }
 
@@ -43,21 +42,21 @@ public class OpeningMoveGenerator implements MoveGenerator
 
     public void addFromMoves(String FEN, String moves, Color sideToRecord)
     {
-        Board board = BoardParser.FEN(FEN);
-        MoveSequence moveSequence = MoveSequence.parse(board, moves);
+        Position position = BoardParser.FEN(FEN);
+        MoveSequence moveSequence = MoveSequence.parse(position, moves);
 
         List<Move> moveList = IteratorUtils.toList(moveSequence.iterator());
 
         for (Move move : moveList)
         {
-            MoveResult moveResult = board.doMove(move);
+            MoveResult moveResult = Mover.doMove(position, move);
             if (moveResult.isMoveLegal())
             {
                 if (sideToRecord == move.getWhoMoves())
                 {
-                    add(board.getPosition(), move);
+                    add(position, move);
                 }
-                board = moveResult.getBoard();
+                position = moveResult.getPosition();
             }
             else
             {
@@ -67,8 +66,8 @@ public class OpeningMoveGenerator implements MoveGenerator
     }
 
     @Override
-    public Iterator<Move> generateMoves(Board board) {
-        Move move = moves.get(board.getPosition());
+    public Iterator<Move> generateMoves(Position position) {
+        Move move = moves.get(position);
 
         if (move == null)
         {

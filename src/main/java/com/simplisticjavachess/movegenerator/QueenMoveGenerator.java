@@ -5,8 +5,8 @@
 
 package com.simplisticjavachess.movegenerator;
 
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.misc.IteratorUtils;
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
@@ -22,11 +22,11 @@ public class QueenMoveGenerator implements PieceMoveGenerator
     }
 
     @Override
-    public Iterator<Move> generateMoves(Board board, Piece piece)
+    public Iterator<Move> generateMoves(Position position, Piece piece)
     {
         return IteratorUtils.compose(
-                new BishopMoveGenerator().generateMoves(board, piece),
-                new RookMoveGenerator().generateMoves(board, piece)
+                new BishopMoveGenerator().generateMoves(position, piece),
+                new RookMoveGenerator().generateMoves(position, piece)
         );
     }
    

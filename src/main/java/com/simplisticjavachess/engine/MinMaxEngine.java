@@ -6,8 +6,9 @@
 
 package com.simplisticjavachess.engine;
 
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.board.MoveResult;
+import com.simplisticjavachess.board.Mover;
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.evaluation.Evaluation;
 import com.simplisticjavachess.evaluation.EvaluationConstantsFactoryImpl;
 import com.simplisticjavachess.evaluation.Evaluator;
@@ -24,19 +25,19 @@ public class MinMaxEngine implements Engine
     private final static Evaluation WHITE_MATE = EvaluationConstantsFactoryImpl.instance().getWhiteIsMate();
 
     @Override
-    public SearchResult search(Board board, MoveGenerator moveGenerator, Evaluator evaluator, int plyDepth)
+    public SearchResult search(Position position, MoveGenerator moveGenerator, Evaluator evaluator, int plyDepth)
     {     
         if (plyDepth == 0)
         {
-            return new SearchResult(evaluator.evaluate(board));
+            return new SearchResult(evaluator.evaluate(position));
         }
 
-        Iterator<Move> moves = moveGenerator.generateMoves(board);
+        Iterator<Move> moves = moveGenerator.generateMoves(position);
         if (!moves.hasNext())
         {
-            if (board.isInCheck())
+            if (position.isInCheck())
             {
-                return new SearchResult(WHITE_MATE.equals(board.inMove()) ? WHITE_MATE : BLACK_MATE); // Mate
+                return new SearchResult(WHITE_MATE.equals(position.inMove()) ? WHITE_MATE : BLACK_MATE); // Mate
             }
             else
             {
@@ -49,18 +50,18 @@ public class MinMaxEngine implements Engine
         MoveSequence moveSequence = new MoveSequence();
         boolean thereWasALegalMove = false;
 
-        Color inMove = board.inMove();
+        Color inMove = position.inMove();
 
 
         while (moves.hasNext())
         {
             Move move = moves.next();
-            MoveResult moveResult = board.doMove(move);
+            MoveResult moveResult = Mover.doMove(position, move);
             boolean legal = moveResult.isMoveLegal();
 
             if (legal)
             {
-                Board next = moveResult.getBoard();
+                Position next = moveResult.getPosition();
                 thereWasALegalMove = true;
 
                 SearchResult score = search(next,  moveGenerator, evaluator, plyDepth - 1);
@@ -78,10 +79,10 @@ public class MinMaxEngine implements Engine
         // Mate or draw
         if (!thereWasALegalMove)
         {
-            if (board.isInCheck())
+            if (position.isInCheck())
             {
 
-                if (board.inMove() == Color.WHITE)
+                if (position.inMove() == Color.WHITE)
                 {
                     return new SearchResult(EvaluationConstantsFactoryImpl.instance().getWhiteIsMate());
                 } else

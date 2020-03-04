@@ -17,16 +17,16 @@ import static org.junit.Assert.*;
  */
 public class BoardTest_Promotions
 {
-    private static Board WHITE_READY_TO_PROMOTE() { return BoardParser.FEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 w"); }
-    private static Board BLACK_READY_TO_PROMOTE() { return BoardParser.FEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 b"); }
+    private static Position WHITE_READY_TO_PROMOTE() { return BoardParser.FEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 w"); }
+    private static Position BLACK_READY_TO_PROMOTE() { return BoardParser.FEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 b"); }
 
-    private static Board WHITE_READY_TO_CAPTURE_PROMOTE() { return BoardParser.FEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN w"); }
-    private static Board BLACK_READY_TO_CAPTURE_PROMOTE() { return BoardParser.FEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN b"); }
+    private static Position WHITE_READY_TO_CAPTURE_PROMOTE() { return BoardParser.FEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN w"); }
+    private static Position BLACK_READY_TO_CAPTURE_PROMOTE() { return BoardParser.FEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN b"); }
 
     @Test
     public void testWhiteSimplePromotions()
     {
-        Board board = WHITE_READY_TO_PROMOTE();
+        Position board = WHITE_READY_TO_PROMOTE();
         
         for (int i = 0; i < 4; i++) 
         {
@@ -58,10 +58,10 @@ public class BoardTest_Promotions
                 Location to = new Location(x, 7);
                 Move move = new Move(from, to, moveType, null, Color.WHITE);
                 System.out.println("Doing move " + move.toString());
-                MoveResult moveResult = board.doMove(move);
-                assertTrue(moveResult.getBoard().freeSquare(from));
-                assertEquals(moveResult.getBoard().getPiece(to).getPieceType(), pieceType);
-                assertSame(moveResult.getBoard().getPiece(to).getColor(), Color.WHITE);
+                MoveResult moveResult = Mover.doMove(board, move);
+                assertTrue(moveResult.getPosition().freeSquare(from));
+                assertEquals(moveResult.getPosition().getPiece(to).getPieceType(), pieceType);
+                assertSame(moveResult.getPosition().getPiece(to).getColor(), Color.WHITE);
 
             }
         }
@@ -70,7 +70,7 @@ public class BoardTest_Promotions
     @Test
     public void testBlackSimplePromotions()
     {
-        Board board = BLACK_READY_TO_PROMOTE();
+        Position board = BLACK_READY_TO_PROMOTE();
         
         for (int i = 0; i < 4; i++) 
         {
@@ -102,10 +102,10 @@ public class BoardTest_Promotions
                 Location to = new Location(x, 0);
                 Move move = new Move(from, to, moveType, null, Color.BLACK);
                 System.out.println("Doing move " + move.toString());
-                MoveResult moveResult = board.doMove(move);
-                assertTrue(moveResult.getBoard().freeSquare(from));
-                assertEquals(moveResult.getBoard().getPiece(to).getPieceType(), pieceType);
-                assertSame(moveResult.getBoard().getPiece(to).getColor(), Color.BLACK);
+                MoveResult moveResult = Mover.doMove(board, move);
+                assertTrue(moveResult.getPosition().freeSquare(from));
+                assertEquals(moveResult.getPosition().getPiece(to).getPieceType(), pieceType);
+                assertSame(moveResult.getPosition().getPiece(to).getColor(), Color.BLACK);
             }
         }
     }
@@ -113,7 +113,7 @@ public class BoardTest_Promotions
     @Test
     public void testWhiteCapturePromotions()
     {
-        Board board = WHITE_READY_TO_CAPTURE_PROMOTE();
+        Position board = WHITE_READY_TO_CAPTURE_PROMOTE();
         
         for (int i = 0; i < 4; i++) 
         {
@@ -160,10 +160,10 @@ public class BoardTest_Promotions
             
             for (Move move : moveList) { 
                 System.out.println("Doing move " + move.toString());
-                MoveResult moveResult = board.doMove(move);
-                assertTrue(moveResult.getBoard().freeSquare(move.getFrom()));
-                assertEquals(moveResult.getBoard().getPiece(move.getTo()).getPieceType(), pieceType);
-                assertSame(moveResult.getBoard().getPiece(move.getTo()).getColor(), Color.WHITE);
+                MoveResult moveResult = Mover.doMove(board, move);
+                assertTrue(moveResult.getPosition().freeSquare(move.getFrom()));
+                assertEquals(moveResult.getPosition().getPiece(move.getTo()).getPieceType(), pieceType);
+                assertSame(moveResult.getPosition().getPiece(move.getTo()).getColor(), Color.WHITE);
             }
         }
     }    
@@ -171,7 +171,7 @@ public class BoardTest_Promotions
     @Test
     public void testBlackCapturePromotions()
     {
-        Board board = BLACK_READY_TO_CAPTURE_PROMOTE();
+        Position board = BLACK_READY_TO_CAPTURE_PROMOTE();
         
         for (int i = 0; i < 4; i++) 
         {
@@ -218,10 +218,10 @@ public class BoardTest_Promotions
             
             for (Move move : moveList) { 
                 System.out.println("Doing move " + move.toString());
-                MoveResult moveResult = board.doMove(move);
-                assertTrue(moveResult.getBoard().freeSquare(move.getFrom()));
-                assertEquals(moveResult.getBoard().getPiece(move.getTo()).getPieceType(), pieceType);
-                assertSame(moveResult.getBoard().getPiece(move.getTo()).getColor(), Color.BLACK);
+                MoveResult moveResult = Mover.doMove(board, move);
+                assertTrue(moveResult.getPosition().freeSquare(move.getFrom()));
+                assertEquals(moveResult.getPosition().getPiece(move.getTo()).getPieceType(), pieceType);
+                assertSame(moveResult.getPosition().getPiece(move.getTo()).getColor(), Color.BLACK);
             }
         }
     }    

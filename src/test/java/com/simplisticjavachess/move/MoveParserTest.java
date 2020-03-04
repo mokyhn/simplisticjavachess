@@ -1,7 +1,7 @@
 package com.simplisticjavachess.move;
 
-import com.simplisticjavachess.board.Board;
 import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.board.Location;
 import org.junit.Test;
@@ -14,11 +14,11 @@ import static org.junit.Assert.*;
 public class MoveParserTest
 {
     
-    private Board board;
+    private Position position;
     
     public MoveParserTest()
     {
-        board = BoardParser.FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        position = BoardParser.FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     }
 
     /**
@@ -27,7 +27,7 @@ public class MoveParserTest
     @Test
     public void testParseMove()
     {
-        Move move = MoveParser.parse(board, "d2d4");
+        Move move = MoveParser.parse(position, "d2d4");
         assertEquals(new Move(Location.parse("d2"), Location.parse("d4"), MoveType.NORMALMOVE, null, Color.WHITE), move);
     }
     

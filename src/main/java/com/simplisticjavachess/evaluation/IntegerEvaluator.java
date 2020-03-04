@@ -4,8 +4,8 @@
 package com.simplisticjavachess.evaluation;
 
 
+import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.piece.Piece;
-import com.simplisticjavachess.board.Board;
 
 public class IntegerEvaluator implements Evaluator
 {
@@ -19,11 +19,11 @@ public class IntegerEvaluator implements Evaluator
     private static final int QUEEN_VALUE = 9;
 
     @Override
-    public IntegerEvaluation evaluate(Board b)
+    public IntegerEvaluation evaluate(Position position)
     {
         int result = 0;
 
-        for (Piece p : b.getPieces())
+        for (Piece p : position.getPieces())
         {
             int color = p.getColor().getColor();
             switch (p.getPieceType())
