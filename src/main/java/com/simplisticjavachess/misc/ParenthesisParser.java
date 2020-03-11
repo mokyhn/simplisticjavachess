@@ -1,3 +1,5 @@
+package com.simplisticjavachess.misc;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -176,15 +178,6 @@ class ParenthesisParser
     }
 
 //    public static void main(String []args){
-//        String s = "a 1 2 (b) (c d) (e f) (g (h i) (j k))";
-//        //new Parser().checkSyntax(s);
-//        //new Parser().checkSyntax("(( ) () ((())))");
-//        //new Parser().checkSyntax("( (  )");
-//        //checkSyntax("( ))");
-//        System.out.println(s);
-//        Result r = new ParenthesisParser().parse(s);
-//        System.out.println(r.list);
-//        System.out.println(traverse(r.list));
 //    }
 
 
