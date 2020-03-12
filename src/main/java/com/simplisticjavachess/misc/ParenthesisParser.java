@@ -115,9 +115,22 @@ class ParenthesisParser
 
         List<Object> result = new ArrayList<>();
 
+        String collecting = "";
+
         for (int i = 0; i < s.length(); i++)
         {
             char c = s.charAt(i);
+
+            if (c == ' ' || c == '(' || c == ')')
+            {
+                if (!collecting.isEmpty())
+                {
+                    result.add(collecting);
+                    collecting = "";
+                }
+
+            }
+
             if (c == ' ')
             {
                 continue;
@@ -136,7 +149,7 @@ class ParenthesisParser
                 return new Result(i, result);
             }
 
-            result.add(c);
+            collecting += c;
         }
 
         return new Result(s.length(), result);
@@ -176,9 +189,6 @@ class ParenthesisParser
 
         return result;
     }
-
-//    public static void main(String []args){
-//    }
 
 
 }

@@ -44,7 +44,7 @@ public class ParenthesisParserTest
     @Test
     public void traverse()
     {
-        String s = "a 1 2 (b) (c d) (e f) (g (h i) (j k))";
+        String s = "e4 d5 c5 (b) (c d) (e f) (e2e4 (e2e4Q d7d5) (j k)))";
         ParenthesisParser.Result l = new ParenthesisParser().parse(s);
         List<Object> r = new ParenthesisParser().traverse(l.getList());
         assertEquals(5, r.size());
