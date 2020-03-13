@@ -7,7 +7,7 @@
 package com.simplisticjavachess.game;
 
 import com.simplisticjavachess.board.BoardParser;
-import com.simplisticjavachess.board.MoveResult;
+import com.simplisticjavachess.board.IllegalMoveException;
 import com.simplisticjavachess.board.Mover;
 import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;
@@ -72,7 +72,6 @@ public class ChessGame
 
    public void go()
     {
-        MoveResult moveResult;
         Move move = null;
 
         Iterator<Move> openingMove = OpeningBook.get().  generateMoves(position);
@@ -98,8 +97,14 @@ public class ChessGame
         }
         else
         {
-            moveResult = Mover.doMove(position, move);
-            position = moveResult.getPosition();
+            try
+            {
+                position = Mover.doMove(position, move);
+            }
+            catch (IllegalMoveException e)
+            {
+                e.printStackTrace();
+            }
             print();
         }
     }
@@ -117,11 +122,11 @@ public class ChessGame
             List<Move> possibleMoves = toList(moveGenerator.generateMoves(position));
             if (possibleMoves.contains(move))
             {
-                MoveResult result = Mover.doMove(position, move);
-                if (result.isMoveLegal())
+                try
                 {
-                    position = result.getPosition();
-                } else
+                    position = Mover.doMove(position, move);
+                }
+                catch (IllegalMoveException e)
                 {
                     throw new IllegalArgumentException("Invalid move");
                 }

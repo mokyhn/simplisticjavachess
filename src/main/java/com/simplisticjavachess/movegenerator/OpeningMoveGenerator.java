@@ -1,7 +1,7 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.BoardParser;
-import com.simplisticjavachess.board.MoveResult;
+import com.simplisticjavachess.board.IllegalMoveException;
 import com.simplisticjavachess.board.Mover;
 import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.engine.MoveSequence;
@@ -49,16 +49,17 @@ public class OpeningMoveGenerator implements MoveGenerator
 
         for (Move move : moveList)
         {
-            MoveResult moveResult = Mover.doMove(position, move);
-            if (moveResult.isMoveLegal())
+            try
             {
+                Position moveResult = Mover.doMove(position, move);
                 if (sideToRecord == move.getWhoMoves())
                 {
                     add(position, move);
                 }
-                position = moveResult.getPosition();
+                position = moveResult;
+
             }
-            else
+            catch (IllegalMoveException e)
             {
                 throw new IllegalArgumentException("Can not use illegal moves");
             }

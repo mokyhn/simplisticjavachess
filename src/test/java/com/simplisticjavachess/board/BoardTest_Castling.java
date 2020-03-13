@@ -23,77 +23,68 @@ public class BoardTest_Castling
 
 
     @Test
-    public void testWhiteShortCastling()
+    public void testWhiteShortCastling() throws IllegalMoveException
     {
         // Test of doMove
         Position actual = WHITE_IN_MOVE_CASTLING();
         Position expected = AFTER_WHITE_SHORT_CASTLING();
-        MoveResult moveResult = Mover.doMove(actual, Moves.WHITE_SHORT_CASTLING());
-        assertEquals(expected, moveResult.getPosition());
+        Position moveResult = Mover.doMove(actual, Moves.WHITE_SHORT_CASTLING());
+        assertEquals(expected, moveResult);
     }
     
-    @Test
-    public void testWhiteShortCastling_cannotCastle()
+    @Test(expected = IllegalMoveException.class)
+    public void testWhiteShortCastling_cannotCastle() throws IllegalMoveException
     {
         Position actual = WHITE_IN_MOVE_CANNOT_CASTLE();
-        MoveResult result = Mover.doMove(actual, Moves.WHITE_SHORT_CASTLING());
-        assertFalse(result.isMoveLegal());
-        assertEquals(actual, WHITE_IN_MOVE_CANNOT_CASTLE() );
+        Mover.doMove(actual, Moves.WHITE_SHORT_CASTLING());
     }
     
     @Test
-    public void testBlackShortCastling()
+    public void testBlackShortCastling() throws IllegalMoveException
     {
         Position actual = BLACK_IN_MOVE_CASTLING();
         Position expected = AFTER_BLACK_SHORT_CASTLING();
-        MoveResult moveResult = Mover.doMove(actual, Moves.BLACK_SHORT_CASTLING());
-        actual = moveResult.getPosition();
-        assertEquals(expected, actual);
+        Position moveResult = Mover.doMove(actual, Moves.BLACK_SHORT_CASTLING());
+        assertEquals(expected, moveResult);
     }
       
-    @Test
-    public void testBlackShortCastling_cannotCastle()
+    @Test(expected = IllegalMoveException.class)
+    public void testBlackShortCastling_cannotCastle() throws IllegalMoveException
     {
         Position actual = BLACK_IN_MOVE_CANNOT_CASTLE();
-        MoveResult result = Mover.doMove(actual, Moves.BLACK_SHORT_CASTLING());
-        assertFalse(result.isMoveLegal());
-        assertEquals(actual, BLACK_IN_MOVE_CANNOT_CASTLE() );
+        Mover.doMove(actual, Moves.BLACK_SHORT_CASTLING());
     }
 
     @Test
-    public void testLongShortCastling()
+    public void testLongShortCastling() throws IllegalMoveException
     {
         Position actual = WHITE_IN_MOVE_CASTLING();
         Position expected = AFTER_WHITE_LONG_CASTLING();
-        MoveResult moveResult = Mover.doMove(actual, Moves.WHITE_LONG_CASTLING());
-        assertEquals(expected, moveResult.getPosition());
+        Position moveResult = Mover.doMove(actual, Moves.WHITE_LONG_CASTLING());
+        assertEquals(expected, moveResult);
     }
     
-    @Test
-    public void testWhiteLongCastling_cannotCastle()
+    @Test(expected = IllegalMoveException.class)
+    public void testWhiteLongCastling_cannotCastle() throws IllegalMoveException
     {
         Position actual = WHITE_IN_MOVE_CANNOT_CASTLE();
-        MoveResult result = Mover.doMove(actual, Moves.WHITE_LONG_CASTLING());
-        assertFalse(result.isMoveLegal());
-        assertEquals(actual, WHITE_IN_MOVE_CANNOT_CASTLE() );
+        Mover.doMove(actual, Moves.WHITE_LONG_CASTLING());
     }
     
     @Test
-    public void testBlackLongCastling()
+    public void testBlackLongCastling() throws IllegalMoveException
     {
         Position actual = BLACK_IN_MOVE_CASTLING();
         Position expected = AFTER_BLACK_LONG_CASTLING();
-        MoveResult moveResult = Mover.doMove(actual, Moves.BLACK_LONG_CASTLING());
-        assertEquals(expected, moveResult.getPosition());
+        Position moveResult = Mover.doMove(actual, Moves.BLACK_LONG_CASTLING());
+        assertEquals(expected, moveResult);
     }
-      
-    @Test
-    public void testBlackLongCastling_cannotCastle()
+
+    @Test(expected = IllegalMoveException.class)
+    public void testBlackLongCastling_cannotCastle() throws IllegalMoveException
     {
         Position actual = BLACK_IN_MOVE_CANNOT_CASTLE();
-        MoveResult result = Mover.doMove(actual, Moves.BLACK_LONG_CASTLING());
-        assertFalse(result.isMoveLegal());
-        assertEquals(actual, BLACK_IN_MOVE_CANNOT_CASTLE() );
+        Mover.doMove(actual, Moves.BLACK_LONG_CASTLING());
     }
     
 }

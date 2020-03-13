@@ -19,39 +19,39 @@ public class KnightTest
     @Test
     public void knightTest1()
     {        
-        assertMove("d5c3", KNIGHT_TAKE_ROOK_OR_QUEEN, "",  3);
+        assertMove(KNIGHT_TAKE_ROOK_OR_QUEEN, "", "d5c3", 3);
     }
     
     @Test
     public void knightTest2()
     {        
-        assertMove("d5e7 d5c3", KNIGHT_TAKE_ROOK_OR_QUEEN, "",  5);
+        assertMove(KNIGHT_TAKE_ROOK_OR_QUEEN, "", "d5e7 d5c3", 5);
     }
     
       @Test
     public void knightTest3()
     {        
-        assertMove("e7d5", KNIGHT_TAKES_PAWN_LEFT, "",  5);
+        assertMove(KNIGHT_TAKES_PAWN_LEFT, "", "e7d5", 5);
     }
     
     @Test
     public void knightTest4()
     {        
-        assertMove("e7f5", KNIGHT_TAKES_PAWN_RIGHT, "",  5);
+        assertMove(KNIGHT_TAKES_PAWN_RIGHT, "", "e7f5", 5);
     }
 
     @Ignore("Finds a correct move, but not the strongest")
     @Test
     public void knightTestMinMax3()
     {
-        assertMove("d4e6", "q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "",  3);
+        assertMove("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "", "d4e6", 3);
     }
 
     @Ignore("Finds a correct move, but not the strongest")
     @Test
     public void knightTestMinMax4()
     {
-        assertMove("d4e6", "q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "",  4);
+        assertMove("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "", "d4e6", 4);
     }
         
   

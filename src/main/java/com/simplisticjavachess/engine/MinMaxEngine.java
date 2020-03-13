@@ -6,7 +6,7 @@
 
 package com.simplisticjavachess.engine;
 
-import com.simplisticjavachess.board.MoveResult;
+import com.simplisticjavachess.board.IllegalMoveException;
 import com.simplisticjavachess.board.Mover;
 import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.evaluation.Evaluation;
@@ -56,12 +56,8 @@ public class MinMaxEngine implements Engine
         while (moves.hasNext())
         {
             Move move = moves.next();
-            MoveResult moveResult = Mover.doMove(position, move);
-            boolean legal = moveResult.isMoveLegal();
-
-            if (legal)
-            {
-                Position next = moveResult.getPosition();
+            try {
+                Position next = Mover.doMove(position, move);
                 thereWasALegalMove = true;
 
                 SearchResult score = search(next,  moveGenerator, evaluator, plyDepth - 1);
@@ -72,6 +68,10 @@ public class MinMaxEngine implements Engine
                     bestScore = score.getEvaluation();
                     moveSequence = score.getMoveSequence().add(move);
                 }
+
+            }
+            catch (IllegalMoveException e)
+            {
             }
         }
 

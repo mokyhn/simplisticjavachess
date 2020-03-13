@@ -6,6 +6,7 @@
 package com.simplisticjavachess.integration;
 
 import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.IllegalMoveException;
 import com.simplisticjavachess.board.Mover;
 import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;
@@ -26,14 +27,13 @@ public class TestSearch
 {
 
 
-    public static void assertMove(String expectedMoves, String fen, String moveSequence, int plyDepth)
+    public static void assertMove(String fen, String moveSequence, String expectedMoves, int plyDepth)
     {
         Position position = BoardParser.FEN(fen);
-        System.out.println(position.toString());
 
         // Do initial set of moves
         try {
-            position = performMoves(position, moveSequence);
+            position = Mover.doMove(position, moveSequence);
 
             Engine engine = new MinMaxEngine();
 
@@ -55,25 +55,17 @@ public class TestSearch
             {
                 fail("Engine failed by playing: " + searchResult);
             }
-        } catch (Exception e) {
+        }
+        catch (IllegalMoveException e)
+        {
+            System.out.println("Error in move");
+        }
+        catch (Exception e) {
             System.out.println("Failed in setup of pieces");
             fail();
         }
     }
 
-    private static Position performMoves(Position position, String moveSequence)
-    {
-        if (!moveSequence.isEmpty()) 
-        {
-            String[] moveStrings = moveSequence.split(" ");
-            for (String str : moveStrings)
-            {
-                Move move = MoveParser.parse(position, str);
-                position = Mover.doMove(position, move).getPosition();
-            }   
-        }
-        return position;
-    }
 
     private static Collection<Move> parseExpectedMoves(Position position, String expectedMoves)
     {

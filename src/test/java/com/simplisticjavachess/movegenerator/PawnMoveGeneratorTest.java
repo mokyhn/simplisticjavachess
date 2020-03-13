@@ -1,7 +1,7 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.board.BoardParser;
-import com.simplisticjavachess.board.MoveResult;
+import com.simplisticjavachess.board.IllegalMoveException;
 import com.simplisticjavachess.board.Mover;
 import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.misc.IteratorUtils;
@@ -63,37 +63,32 @@ public class PawnMoveGeneratorTest
     }
 
     @Test
-    public void testEnpassantLeft()
+    public void testEnpassantLeft() throws IllegalMoveException
     {
         Position board = BoardParser.algebraic("ka1 Kh8 Pd2 pc4  w");
-        MoveResult moveResult = Mover.doMove(board,MoveParser.parse(board, "d2d4"));
-        board = moveResult.getPosition();
+        board = Mover.doMove(board,MoveParser.parse(board, "d2d4"));
         Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("pc4"));
         String movesStr = IteratorUtils.toString(moves);
         assertEquals("[c4-c3, c4xd3]", movesStr);
     }
 
     @Test
-    public void testEnpassantRight()
+    public void testEnpassantRight() throws IllegalMoveException
     {
         Position board = BoardParser.algebraic("ka1 Kh8 Pd2 pe4  w");
-        MoveResult moveResult = Mover.doMove(board, MoveParser.parse(board,"d2d4"));
-        board = moveResult.getPosition();
+        board = Mover.doMove(board, MoveParser.parse(board,"d2d4"));
         Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("pe4"));
         String movesStr = IteratorUtils.toString(moves);
         assertEquals("[e4-e3, e4xd3]", movesStr);
     }
 
     @Test
-    public void lostEnpassantRight()
+    public void lostEnpassantRight() throws IllegalMoveException
     {
         Position board = BoardParser.algebraic("ka1 Kh8 Pd2 pe4  w");
-        MoveResult moveResult = Mover.doMove(board, MoveParser.parse(board,"d2d4"));
-        board = moveResult.getPosition();
-        moveResult = Mover.doMove(board, MoveParser.parse(board,"a1b1"));
-        board = moveResult.getPosition();
-        moveResult = Mover.doMove(board, MoveParser.parse(board,"h8g8"));
-        board = moveResult.getPosition();
+        board  = Mover.doMove(board, MoveParser.parse(board,"d2d4"));
+        board = Mover.doMove(board, MoveParser.parse(board,"a1b1"));
+        board = Mover.doMove(board, MoveParser.parse(board,"h8g8"));
         Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("pe4"));
         String movesStr = IteratorUtils.toString(moves);
         assertEquals("[e4-e3]", movesStr);

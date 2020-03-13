@@ -5,7 +5,7 @@ import com.simplisticjavachess.evaluation.Evaluation;
 public class SearchResult {
     private final MoveSequence moveSequence;
     private final Evaluation evaluation;
-    
+
     public SearchResult(Evaluation evaluation)
     {
         this(new MoveSequence(), evaluation);

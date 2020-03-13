@@ -23,7 +23,7 @@ public class PawnEndgamesTest {
 	@Test
 	public void avoidLoosingPawn1()
 	{
-		assertMove("d2d3 d2c3 d2e3", "8/8/8/3k4/3P4/8/3K4/8 w", "", 2);
+		assertMove("8/8/8/3k4/3P4/8/3K4/8 w", "", "d2d3 d2c3 d2e3", 2);
 	}
 
 
@@ -44,7 +44,7 @@ public class PawnEndgamesTest {
 	@Test
 	public void avoidLoosingPawn2()
 	{
-		assertMove("d7d6 d7c6 d7e6", "8/3k4/8/3p4/3K4/8/8/8 b", "",  2);
+		assertMove("8/3k4/8/3p4/3K4/8/8/8 b", "", "d7d6 d7c6 d7e6", 2);
 	}
 
 
@@ -65,7 +65,7 @@ public class PawnEndgamesTest {
 	@Test
 	public void avoidLoosingPawn3()
 	{
-		assertMove("d6e6 d6c6", "3k4/3P4/3K4/8/8/8/8/8 w", "",  4);
+		assertMove("3k4/3P4/3K4/8/8/8/8/8 w", "", "d6e6 d6c6", 4);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class PawnEndgamesTest {
 	@Test
 	public void simpleTest4()
 	{
-		assertMove("d3e3 d3c3", "8/8/8/8/8/3k4/3p4/3K4 b", "",  4);
+		assertMove("8/8/8/8/8/3k4/3p4/3K4 b", "", "d3e3 d3c3", 4);
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class PawnEndgamesTest {
 	@Test
 	public void avoidStaleMate1()
 	{
-		assertMove("d5c6 d5e6", "3k4/3P4/8/3K4/8/8/8/8 w", "",  4);
+		assertMove("3k4/3P4/8/3K4/8/8/8/8 w", "", "d5c6 d5e6", 4);
 	}
 
 	/**
@@ -126,7 +126,7 @@ public class PawnEndgamesTest {
 	@Test
 	public void avoidStaleMate2()
 	{
-		assertMove("d4e3 d4c3", "8/8/8/8/3k4/8/3p4/3K4 b", "",  4);
+		assertMove("8/8/8/8/3k4/8/3p4/3K4 b", "", "d4e3 d4c3", 4);
 	}
 
 	/**
@@ -147,7 +147,7 @@ public class PawnEndgamesTest {
 	public void testSimplePawnMoves2()
 	{
 		// Mate in one
-		assertMove("h2h3", "8/8/8/5ppp/5pkp/8/6KP/8 w", "",  4);
+		assertMove("8/8/8/5ppp/5pkp/8/6KP/8 w", "", "h2h3", 4);
 	}
 
 	/**
@@ -169,9 +169,9 @@ public class PawnEndgamesTest {
 	{
 		String fen = "4k3/8/8/8/8/7p/5PPP/4K3 b";
 		String expected = "h3g2";
-		assertMove(expected, fen, "", 1);
-		assertMove(expected, fen, "",  2);
-		assertMove(expected, fen, "",  3);
+		assertMove(fen, "", expected, 1);
+		assertMove(fen, "", expected, 2);
+		assertMove(fen, "", expected, 3);
 
 	}
 
@@ -192,7 +192,7 @@ public class PawnEndgamesTest {
 	@Test
 	public void testPawnPromotion()
 	{
-		assertMove("h6h7", "4k3/8/7P/8/8/8/8/7K w", "", 6);
+		assertMove("4k3/8/7P/8/8/8/8/7K w", "", "h6h7", 6);
 	}
 
 	/**
@@ -213,7 +213,7 @@ public class PawnEndgamesTest {
 	public void avoidOpponentPromotion()
 	{
 		//TODO: Some bug exists in the engine. It should not be needed to supply g3g2 as an option.
-		assertMove("g3g2 g3h2", "4k3/8/8/8/8/6K1/7p/8 w", "",  3);
+		assertMove("4k3/8/8/8/8/6K1/7p/8 w", "", "g3g2 g3h2", 3);
 	}
 
 
@@ -235,8 +235,8 @@ public class PawnEndgamesTest {
 	@Test
 	public void mateWithPawnPromotion()
 	{
-		assertMove("a7a8Q", "4k3/P7/4K3/8/8/8/8/8 w", "",  1);
-		assertMove("a7a8Q", "4k3/P7/4K3/8/8/8/8/8 w", "",  2);
-		assertMove("a7a8Q", "4k3/P7/4K3/8/8/8/8/8 w", "",  3);
+		assertMove("4k3/P7/4K3/8/8/8/8/8 w", "", "a7a8Q", 1);
+		assertMove("4k3/P7/4K3/8/8/8/8/8 w", "", "a7a8Q", 2);
+		assertMove("4k3/P7/4K3/8/8/8/8/8 w", "", "a7a8Q", 3);
 	}
 }

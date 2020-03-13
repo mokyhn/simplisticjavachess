@@ -11,7 +11,7 @@ import java.util.Iterator;
 public class Mover
 {
 
-    public static MoveResult doMove(Position position, Move move)
+    public static Position doMove(Position position, Move move) throws IllegalMoveException
     {
         Piece piece = position.getPiece(move.getFrom());
 
@@ -75,7 +75,7 @@ public class Mover
             case CASTLE_SHORT:
                 if (!position.getCanCastleShort(inMove))
                 {
-                    return new MoveResult(false, position);
+                    throw new IllegalMoveException();
                 }
                 // Move the king
                 newPosition = newPosition.move(position.getPiece(move.getFrom()), move.getTo());
@@ -86,7 +86,7 @@ public class Mover
             case CASTLE_LONG:
                 if (!position.getCanCastleLong(inMove))
                 {
-                    return new MoveResult(false, position);
+                    throw new IllegalMoveException();
                 }
                 newPosition = newPosition.move(position.getPiece(move.getFrom()), move.getTo());
                 newPosition = newPosition.move(position.getPiece(new Location(0, move.getFrom().getY())),
@@ -118,44 +118,32 @@ public class Mover
         // Swap the move color
         newPosition = newPosition.setInMove(position.inMove().opponent());
 
-        boolean wasMoveLegal;
-
-        // The player that did the move is in check
-        // his or her move is hence not legal
         if (newPosition.isInCheck(position.inMove()))
         {
-            wasMoveLegal = false;
-        }
-        else
-        {
-            //checkDrawBy50MoveRule();
-            //checkDrawBy3RepetionsRule();
-            wasMoveLegal = true;
+            throw new IllegalMoveException("Was in check");
         }
 
-        return new MoveResult(wasMoveLegal, newPosition);
+        return newPosition;
     }
 
-    public static MoveResult doMove(Position position, String moves)
+    public static Position doMove(Position position, String moves) throws IllegalMoveException
     {
         MoveSequence moveSequence = MoveSequence.parse(position, moves);
         return Mover.doMove(position, moveSequence);
     }
 
-    private static MoveResult doMove(Position position, MoveSequence moveSequence)
+    private static Position doMove(Position position, MoveSequence moveSequence) throws IllegalMoveException
     {
-        MoveResult moveResult = null;
         Iterator<Move> moves = moveSequence.iterator();
 
         Position theboard = position;
 
         while (moves.hasNext())
         {
-            moveResult = Mover.doMove(theboard, moves.next());
-            theboard = moveResult.getPosition();
+            theboard = Mover.doMove(theboard, moves.next());
         }
 
-        return moveResult;
+        return theboard;
     }
 
 
