@@ -307,4 +307,9 @@ public class Position
     {
         return new Position(inMove, castlingState, pieceMap, enpassantMove, fiftyMoveDrawClock.reset(), gameClock);
     }
+
+    public boolean isDrawBy50Move()
+    {
+        return fiftyMoveDrawClock.isFifty();
+    }
 }

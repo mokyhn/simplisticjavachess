@@ -24,7 +24,7 @@ public class CommandBlack implements Command
 
     public void execute(String[] arguments)
     {
-        chessGame.black();
+
     }
 
     public String helpCommand()

@@ -4,6 +4,8 @@
  */
 package com.simplisticjavachess.board;
 
+import com.simplisticjavachess.game.GameResult;
+import com.simplisticjavachess.movegenerator.MainMoveGenerator;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 
@@ -130,4 +132,40 @@ public class PositionInference
    {
         return p.getLocation().distanceTo(location) == 1;
    }
+
+
+   private static boolean isStalemate(Position position)
+   {
+       return !position.isInCheck() && !(new MainMoveGenerator().generateMoves(position).hasNext());
+   }
+
+   private static boolean isDraw(History history)
+   {
+       return history.isDrawByRepetition() || history.getCurrent().isDrawBy50Move() || isStalemate(history.getCurrent());
+   }
+
+   private static boolean isMate(Position position)
+   {
+       if (position.isDrawBy50Move())
+       {
+           return false;
+       }
+       return position.isInCheck() && !(new MainMoveGenerator().generateMoves(position).hasNext());
+   }
+
+   public static GameResult getGameResult(History history)
+   {
+       if (isDraw(history))
+       {
+           return GameResult.DRAW;
+       }
+
+       if (isMate(history.getCurrent()))
+       {
+           return GameResult.MATE;
+       }
+
+       return GameResult.NO_RESULT;
+   }
+
 }

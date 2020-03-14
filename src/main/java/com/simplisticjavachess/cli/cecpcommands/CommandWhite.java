@@ -24,7 +24,7 @@ public class CommandWhite implements Command
 
     public void execute(String[] arguments)
     {
-        chessGame.white();
+
     }
 
     public String helpCommand()

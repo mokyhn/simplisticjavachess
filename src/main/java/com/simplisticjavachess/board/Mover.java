@@ -136,14 +136,12 @@ public class Mover
     {
         Iterator<Move> moves = moveSequence.iterator();
 
-        Position theboard = position;
-
         while (moves.hasNext())
         {
-            theboard = Mover.doMove(theboard, moves.next());
+            position = Mover.doMove(position, moves.next());
         }
 
-        return theboard;
+        return position;
     }
 
 

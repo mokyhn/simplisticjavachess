@@ -25,7 +25,7 @@ public class CommandNew implements Command
 
     public void execute(String[] arguments)
     {
-        chessGame.newgame();
+        chessGame.newGame();
     }
 
     public String helpCommand()

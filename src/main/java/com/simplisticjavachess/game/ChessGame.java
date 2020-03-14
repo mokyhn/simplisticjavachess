@@ -6,10 +6,10 @@
 
 package com.simplisticjavachess.game;
 
-import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.History;
 import com.simplisticjavachess.board.IllegalMoveException;
 import com.simplisticjavachess.board.Mover;
-import com.simplisticjavachess.board.Position;
+import com.simplisticjavachess.board.PositionInference;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.move.Move;
@@ -18,7 +18,6 @@ import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.engine.SearchResult;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.movegenerator.OpeningBook;
-import com.simplisticjavachess.piece.Color;
 
 import java.util.Iterator;
 import java.util.List;
@@ -28,41 +27,33 @@ import static com.simplisticjavachess.misc.IteratorUtils.toList;
 public class ChessGame
 {
     private static final String INITIAL_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0";
-    
-    private Position position;
+
+    private History history;
     private final MoveGenerator moveGenerator = new MainMoveGenerator();
     private int searchDepth;
-    
+    private boolean gameOver;
+
     public ChessGame()
     {
-        position = BoardParser.FEN(INITIAL_POSITION);
+        history = new History(INITIAL_POSITION);
         searchDepth = 3;
+        gameOver = false;
     }
 
-    
     public void setPosition(String fen)
     {
-        this.position = BoardParser.FEN(fen);
+        this.history = new History(fen);
     }
 
-    public void black()
+    public void newGame()
     {
-        position = position.setInMove(Color.BLACK);
-    }
-    
-    public void newgame()
-    {
-        position = BoardParser.FEN(INITIAL_POSITION);
+        history = new History(INITIAL_POSITION);
+        gameOver = false;
     }
 
     public void print()
     {
-        System.out.println(position.toString());
-    }
-
-    public void white()
-    {
-        position = position.setInMove(Color.WHITE);
+        System.out.println(history.getCurrent().toString());
     }
 
     public void setSd(int depth)
@@ -74,7 +65,12 @@ public class ChessGame
     {
         Move move = null;
 
-        Iterator<Move> openingMove = OpeningBook.get().  generateMoves(position);
+        if (gameOver)
+        {
+            return;
+        }
+
+        Iterator<Move> openingMove = OpeningBook.get().  generateMoves(history.getCurrent());
         if (openingMove.hasNext())
         {
             move = openingMove.next();
@@ -82,7 +78,7 @@ public class ChessGame
         }
         else
         {
-            SearchResult searchResult = new MinMaxEngine().search(position, new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
+            SearchResult searchResult = new MinMaxEngine().search(history.getCurrent(), new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
 
             if (searchResult.getMoveSequence() != null)
             {
@@ -99,7 +95,7 @@ public class ChessGame
         {
             try
             {
-                position = Mover.doMove(position, move);
+                history = history.add(Mover.doMove(history.getCurrent(), move));
             }
             catch (IllegalMoveException e)
             {
@@ -111,7 +107,12 @@ public class ChessGame
    
     public void move(String str)
     {
-        Move move = MoveParser.parse(position, str);
+        if (gameOver)
+        {
+            return;
+        }
+
+        Move move = MoveParser.parse(history.getCurrent(), str);
 
         if (move == null)
         {
@@ -119,12 +120,25 @@ public class ChessGame
         }
         else
         {
-            List<Move> possibleMoves = toList(moveGenerator.generateMoves(position));
+            List<Move> possibleMoves = toList(moveGenerator.generateMoves(history.getCurrent()));
             if (possibleMoves.contains(move))
             {
                 try
                 {
-                    position = Mover.doMove(position, move);
+                    history = history.add(Mover.doMove(history.getCurrent(), move));
+                    switch (PositionInference.getGameResult(history))
+                    {
+                        case NO_RESULT:
+                            break;
+                        case DRAW:
+                            System.out.println("Draw!");
+                            gameOver = true;
+                            break;
+                        case MATE:
+                            System.out.println("Mate!");
+                            gameOver = true;
+                            break;
+                    }
                 }
                 catch (IllegalMoveException e)
                 {
