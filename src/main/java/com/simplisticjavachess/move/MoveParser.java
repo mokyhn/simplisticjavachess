@@ -20,20 +20,20 @@ public final class MoveParser {
         }
 
 
-        Piece pieve = position.getPiece(from);
-        if (pieve == null) {
+        Piece piece = position.getPiece(from);
+        if (piece == null) {
             throw new IllegalArgumentException("Cannot not move a piece which is not there");
         }
 
         Color whoToMove = position.inMove();
 
-        if (pieve.getColor() != whoToMove) {
+        if (piece.getColor() != whoToMove) {
             throw new IllegalArgumentException("Tried to move an opponent piece");
         }
 
         if (str.length() == 4) {
             // White or black does a short or a long castling
-            if (pieve.getPieceType() == PieceType.KING && from.rankEquals(to) && (from.getY() == 0 || from.getY() == 7)) {
+            if (piece.getPieceType() == PieceType.KING && from.rankEquals(to) && (from.getY() == 0 || from.getY() == 7)) {
                 if (from.getX() == 4 && to.getX() == 6) {
                     return new Move(from, to, MoveType.CASTLE_SHORT, null, whoToMove);
                 } else if (from.getX() == 4 && to.getX() == 2) {
@@ -42,7 +42,7 @@ public final class MoveParser {
             }
 
             // ENPASSENT Move
-            if (pieve.getPieceType() == PieceType.PAWN) {
+            if (piece.getPieceType() == PieceType.PAWN) {
                 if (from.fileDifferent(to) && (position.freeSquare(to))) {
                     return new Move(from, to, MoveType.CAPTURE_ENPASSANT,
                             position.getPiece(new Location(to.getX(), from.getY())), whoToMove);
@@ -63,9 +63,9 @@ public final class MoveParser {
 
         // Promotion moves
         if (str.length() == 5
-                && pieve.getPieceType() == PieceType.PAWN
-                && ((pieve.getColor() == Color.WHITE && from.getY() == 6)
-                || (pieve.getColor() == Color.BLACK && from.getY() == 1))) {
+                && piece.getPieceType() == PieceType.PAWN
+                && ((piece.getColor() == Color.WHITE && from.getY() == 6)
+                || (piece.getColor() == Color.BLACK && from.getY() == 1))) {
 
             MoveType moveType;
 
@@ -96,7 +96,7 @@ public final class MoveParser {
             // Capture and promote
             if (from.fileDifferent(to)
                     && !position.freeSquare(to)
-                    && position.getPiece(to).getColor() == pieve.getColor().opponent()) {
+                    && position.getPiece(to).getColor() == piece.getColor().opponent()) {
                 switch (str.charAt(4)) {
                     case 'n':
                     case 'k':
