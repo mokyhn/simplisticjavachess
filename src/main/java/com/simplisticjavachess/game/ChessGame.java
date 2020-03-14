@@ -1,5 +1,4 @@
 /**
- *
  * @author Morten Kühnrich
  */
 
@@ -24,8 +23,7 @@ import java.util.List;
 
 import static com.simplisticjavachess.misc.IteratorUtils.toList;
 
-public class ChessGame
-{
+public class ChessGame {
     private static final String INITIAL_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0";
 
     private History history;
@@ -33,115 +31,80 @@ public class ChessGame
     private int searchDepth;
     private boolean gameOver;
 
-    public ChessGame()
-    {
+    public ChessGame() {
         history = new History(INITIAL_POSITION);
         searchDepth = 3;
         gameOver = false;
     }
 
-    public void setPosition(String fen)
-    {
+    public void setPosition(String fen) {
         this.history = new History(fen);
         this.gameOver = false;
     }
 
-    public void newGame()
-    {
+    public void newGame() {
         history = new History(INITIAL_POSITION);
         gameOver = false;
     }
 
-    public void print()
-    {
+    public void print() {
         System.out.println(history.getCurrent().toString());
     }
 
-    public void setSd(int depth)
-    {
+    public void setSd(int depth) {
         this.searchDepth = depth;
     }
 
-   public void go()
-    {
-        Move move = null;
+    public void go() {
 
-        if (gameOver)
-        {
+        if (gameOver) {
             return;
         }
 
-        Iterator<Move> openingMove = OpeningBook.get().  generateMoves(history.getCurrent());
-        if (openingMove.hasNext())
-        {
+        Iterator<Move> openingMove = OpeningBook.get().generateMoves(history.getCurrent());
+        Move move;
+
+        if (openingMove.hasNext()) {
             move = openingMove.next();
             System.out.println("Book move " + move.toString());
-        }
-        else
-        {
+        } else {
             SearchResult searchResult = new MinMaxEngine().search(history.getCurrent(), new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
-
-            if (searchResult.getMoveSequence() != null)
-            {
-                move = searchResult.getMoveSequence().getFirst();
-                System.out.println(searchResult.toString());
-            }
+            move = searchResult.getMoveSequence().getFirst();
+            System.out.println(searchResult.toString());
         }
 
-        if (move == null)
-        {
-            System.out.println("No legal moves for computer.");
-        }
-        else
-        {
-            try
-            {
-                history = history.add(Mover.doMove(history.getCurrent(), move));
-                switch (PositionInference.getGameResult(history))
-                {
-                    case NO_RESULT:
-                        break;
-                    case DRAW:
-                        System.out.println("Draw!");
-                        gameOver = true;
-                        break;
-                    case MATE:
-                        System.out.println("Mate!");
-                        gameOver = true;
-                        break;
-                }
+        try {
+            history = history.add(Mover.doMove(history.getCurrent(), move));
+            switch (PositionInference.getGameResult(history)) {
+                case NO_RESULT:
+                    break;
+                case DRAW:
+                    System.out.println("Draw!");
+                    gameOver = true;
+                    break;
+                case MATE:
+                    System.out.println("Mate!");
+                    gameOver = true;
+                    break;
             }
-            catch (IllegalMoveException e)
-            {
-                e.printStackTrace();
-            }
-            print();
+        } catch (IllegalMoveException e) {
+            e.printStackTrace();
         }
+        print();
     }
-   
-    public void move(String str)
-    {
-        if (gameOver)
-        {
+
+    public void move(String str) {
+        if (gameOver) {
             return;
         }
 
-        Move move = MoveParser.parse(history.getCurrent(), str);
-
-        if (move == null)
-        {
-            throw new IllegalArgumentException("Invalid move");
-        }
-        else
-        {
+        try {
+            Move move = MoveParser.parse(history.getCurrent(), str);
             List<Move> possibleMoves = toList(moveGenerator.generateMoves(history.getCurrent()));
-            if (possibleMoves.contains(move))
-            {
-                try
-                {
+            if (possibleMoves.contains(move)) {
+                try {
                     history = history.add(Mover.doMove(history.getCurrent(), move));
-                    switch (PositionInference.getGameResult(history))
-                    {
+                    switch (PositionInference.getGameResult(history)) {
                         case NO_RESULT:
                             break;
                         case DRAW:
@@ -153,18 +116,18 @@ public class ChessGame
                             gameOver = true;
                             break;
                     }
-                }
-                catch (IllegalMoveException e)
-                {
+                } catch (IllegalMoveException e) {
                     throw new IllegalArgumentException("Invalid move");
                 }
-            } else
-            {
+            } else {
                 throw new IllegalArgumentException("Invalid move");
             }
-        } 
 
-       print();   
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid move");
+        }
+
+        print();
     }
 
     public void undo() {
