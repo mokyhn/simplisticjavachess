@@ -43,6 +43,7 @@ public class ChessGame
     public void setPosition(String fen)
     {
         this.history = new History(fen);
+        this.gameOver = false;
     }
 
     public void newGame()
@@ -96,6 +97,19 @@ public class ChessGame
             try
             {
                 history = history.add(Mover.doMove(history.getCurrent(), move));
+                switch (PositionInference.getGameResult(history))
+                {
+                    case NO_RESULT:
+                        break;
+                    case DRAW:
+                        System.out.println("Draw!");
+                        gameOver = true;
+                        break;
+                    case MATE:
+                        System.out.println("Mate!");
+                        gameOver = true;
+                        break;
+                }
             }
             catch (IllegalMoveException e)
             {

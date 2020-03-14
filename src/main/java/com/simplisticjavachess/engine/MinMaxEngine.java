@@ -26,7 +26,12 @@ public class MinMaxEngine implements Engine
 
     @Override
     public SearchResult search(Position position, MoveGenerator moveGenerator, Evaluator evaluator, int plyDepth)
-    {     
+    {
+        if (position.isDrawBy50Move())
+        {
+            return new SearchResult(EQUAL);
+        }
+
         if (plyDepth == 0)
         {
             return new SearchResult(evaluator.evaluate(position));
@@ -41,7 +46,7 @@ public class MinMaxEngine implements Engine
             }
             else
             {
-                return new SearchResult(EQUAL); // A draw
+                return new SearchResult(EQUAL);
             }
         }
 

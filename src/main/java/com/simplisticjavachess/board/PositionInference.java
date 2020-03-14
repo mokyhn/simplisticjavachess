@@ -5,10 +5,12 @@
 package com.simplisticjavachess.board;
 
 import com.simplisticjavachess.game.GameResult;
+import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.movegenerator.MainMoveGenerator;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 
+import java.util.Iterator;
 import java.util.Optional;
 
 
@@ -150,7 +152,39 @@ public class PositionInference
        {
            return false;
        }
-       return position.isInCheck() && !(new MainMoveGenerator().generateMoves(position).hasNext());
+
+
+       Iterator<Move> moves = new MainMoveGenerator().generateMoves(position);
+
+       if (position.isInCheck())
+       {
+           if (moves.hasNext())
+           {
+               boolean legalMoveFound = false;
+               while (moves.hasNext())
+               {
+                   Move move = moves.next();
+                   try
+                   {
+                       Mover.doMove(position, move);
+                       legalMoveFound = true;
+                       break;
+                   }
+                   catch (IllegalMoveException e)
+                   {
+                   }
+               }
+               return !legalMoveFound;
+           }
+           else
+           {
+               return true;
+           }
+       }
+       else
+       {
+           return false;
+       }
    }
 
    public static GameResult getGameResult(History history)
