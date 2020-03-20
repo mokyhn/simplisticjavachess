@@ -15,7 +15,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
-public class OpeningMoveGenerator implements MoveGenerator
+/**
+ * Fixed move generator. For a given position it checks, if it has a move in stock and returns that.
+ */
+public class FixedMoveGenerator implements MoveGenerator
 {
     HashMap<Position, Move> moves = new HashMap<>();
 
