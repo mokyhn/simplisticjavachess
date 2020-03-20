@@ -4,24 +4,27 @@ package com.simplisticjavachess.integration;
  * @author Morten Kühnrich
  */
 
+import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.IllegalMoveException;
+import com.simplisticjavachess.board.Mover;
+import com.simplisticjavachess.board.Position;
 import org.junit.Test;
 
 import static com.simplisticjavachess.integration.TestSearch.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Ignore;
 
 public class IntegrationTest
 {
-    @Ignore
-    @Test
-    public void testThreefoldRepetitionDraw()
-    {
-        assertMove("4k3/pppppppp/8/8/8/8/PPPPPPPP/4K3 w KQkq", "e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 e1d1 e8d8 d1e1 d8e8 ", "", 0);
-    }
 
     @Test
-    public void fiftyMoveRuleDraw()
-    {
-        assertMove("k7/nn6/8/8/8/8/N7/K7 w - - 0 0", "", "a2b4 a2c3 a2c1 a1b1 a1b2", 3);
+    public void fiftyMoveRuleDraw() throws IllegalMoveException {
+        Position position = BoardParser.FEN("k7/8/8/8/8/8/NB6/K7 w - - 49 49");
+        assertFalse(position.isDrawBy50Move());
+        Position drawPosition = Mover.doMove(position, "a1b1");
+        assertTrue(drawPosition.isDrawBy50Move());
     }
 
     @Test
