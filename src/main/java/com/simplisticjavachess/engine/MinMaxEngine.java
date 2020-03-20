@@ -81,23 +81,18 @@ public class MinMaxEngine implements Engine
         }
 
 
-        // Mate or draw
         if (!thereWasALegalMove)
         {
             if (position.isInCheck())
             {
-
-                if (position.inMove() == Color.WHITE)
-                {
-                    return new SearchResult(EvaluationConstantsFactoryImpl.instance().getWhiteIsMate());
-                } else
-                {
-                    return new SearchResult(EvaluationConstantsFactoryImpl.instance().getBlackIsMate());
-                }
+                // mate
+                return position.inMove().isWhite() ? new SearchResult(EvaluationConstantsFactoryImpl.instance().getWhiteIsMate()) :
+                                                     new SearchResult(EvaluationConstantsFactoryImpl.instance().getBlackIsMate());
             } else
             {
+                // draw
                 return new SearchResult(EvaluationConstantsFactoryImpl.instance().getEqual());
-            } // draw
+            }
         }
 
         return new SearchResult(moveSequence, bestScore);
