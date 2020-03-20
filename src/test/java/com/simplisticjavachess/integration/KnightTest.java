@@ -5,9 +5,8 @@
 
 package com.simplisticjavachess.integration;
 
-import static com.simplisticjavachess.integration.TestSearch.*;
+import static com.simplisticjavachess.integration.TestSearch.assertMove;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class KnightTest
@@ -28,7 +27,7 @@ public class KnightTest
         assertMove(KNIGHT_TAKE_ROOK_OR_QUEEN, "", "d5e7 d5c3", 5);
     }
     
-      @Test
+    @Test
     public void knightTest3()
     {        
         assertMove(KNIGHT_TAKES_PAWN_LEFT, "", "e7d5", 5);
@@ -40,14 +39,12 @@ public class KnightTest
         assertMove(KNIGHT_TAKES_PAWN_RIGHT, "", "e7f5", 5);
     }
 
-    @Ignore("Finds a correct move, but not the strongest")
     @Test
     public void knightTestMinMax3()
     {
         assertMove("q7/ppp1N1k1/5pN1/N4PN1/N2N2N1/8/p2PPPPP/4K3 w", "", "d4e6", 3);
     }
 
-    @Ignore("Finds a correct move, but not the strongest")
     @Test
     public void knightTestMinMax4()
     {
