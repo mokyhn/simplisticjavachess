@@ -69,6 +69,14 @@ public class FixedMoveGenerator implements MoveGenerator
         }
     }
 
+    /**
+     * Kathe Spracklen parenthesis variant format
+     */
+    public void addFromVariantTree(String FEN, String variants)
+    {
+        //TODO
+    }
+
     @Override
     public Iterator<Move> generateMoves(Position position) {
         Move move = moves.get(position);

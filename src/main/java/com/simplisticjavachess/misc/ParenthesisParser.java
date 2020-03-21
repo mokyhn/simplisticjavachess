@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-class ParenthesisParser
+public class ParenthesisParser
 {
 
 
@@ -190,5 +190,9 @@ class ParenthesisParser
         return result;
     }
 
+    public List<Object> get(String parenthesis)
+    {
+        return traverse(parse(parenthesis).getList());
+    }
 
 }
