@@ -4,7 +4,7 @@ import com.simplisticjavachess.board.BoardParser;
 import com.simplisticjavachess.board.IllegalMoveException;
 import com.simplisticjavachess.board.Mover;
 import com.simplisticjavachess.board.Position;
-import com.simplisticjavachess.engine.MoveSequence;
+import com.simplisticjavachess.move.MoveSequence;
 import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveParser;

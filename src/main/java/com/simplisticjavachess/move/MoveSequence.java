@@ -1,11 +1,9 @@
-package com.simplisticjavachess.engine;
+package com.simplisticjavachess.move;
 
 import com.simplisticjavachess.board.IllegalMoveException;
 import com.simplisticjavachess.board.Mover;
 import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.misc.Strings;
-import com.simplisticjavachess.move.Move;
-import com.simplisticjavachess.move.MoveParser;
 
 import java.util.Arrays;
 import java.util.Iterator;

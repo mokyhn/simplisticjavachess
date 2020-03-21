@@ -13,6 +13,7 @@ import com.simplisticjavachess.evaluation.Evaluation;
 import com.simplisticjavachess.evaluation.EvaluationConstantsFactoryImpl;
 import com.simplisticjavachess.evaluation.Evaluator;
 import com.simplisticjavachess.move.Move;
+import com.simplisticjavachess.move.MoveSequence;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.piece.Color;
 

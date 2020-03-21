@@ -730,16 +730,3 @@ Number of half moves since last pawn move: 11
 Index searched from when checking 3 fold repetition: 0
 Immediate evaluation: 5
 FEN: r2k1bnr/pbp2Npp/4Q3/p7/8/2N5/PPP2PPP/R1B3K1 b
-
-go
-Exception in thread "main" java.lang.IndexOutOfBoundsException: Index: 0, Size: 0
-	at java.base/java.util.LinkedList.checkElementIndex(LinkedList.java:559)
-	at java.base/java.util.LinkedList.get(LinkedList.java:480)
-	at com.simplisticjavachess.engine.MoveSequence.getFirst(MoveSequence.java:35)
-	at com.simplisticjavachess.game.ChessGame.go(ChessGame.java:112)
-	at com.simplisticjavachess.cli.cecpcommands.CommandGo.execute(CommandGo.java:30)
-	at com.simplisticjavachess.cli.CommandLineInterface.executeCommand(CommandLineInterface.java:49)
-	at com.simplisticjavachess.cli.CommandLineInterface.start(CommandLineInterface.java:73)
-	at com.simplisticjavachess.Main.main(Main.java:13)
-
-Process finished with exit code 1
