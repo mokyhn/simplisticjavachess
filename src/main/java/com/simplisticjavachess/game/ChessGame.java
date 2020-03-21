@@ -131,6 +131,7 @@ public class ChessGame {
     }
 
     public void undo() {
-        throw new IllegalStateException();
+        history = history.undo();
+        print();
     }
 }

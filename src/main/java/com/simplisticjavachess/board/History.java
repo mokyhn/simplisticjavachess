@@ -35,6 +35,19 @@ public class History implements Iterable<Position>
         return positions.getLast();
     }
 
+    public History undo()
+    {
+        if (positions.size() <= 1)
+        {
+            return this;
+        }
+        else {
+            LinkedList<Position> positionsList = new LinkedList<>(this.positions);
+            positionsList.removeLast();
+            return new History(positionsList);
+        }
+    }
+
     @Override
     public Iterator<Position> iterator() {
         return positions.iterator();
