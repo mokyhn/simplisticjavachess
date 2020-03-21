@@ -71,6 +71,7 @@ public class BoardParser
 
         Position position = new Position(inMove, castlingState, pieces, move, fiftyMoveDrawClock, gameClock);
 
+        validate(position);
         return position;
     }
 
@@ -211,6 +212,12 @@ public class BoardParser
         return result;
     }
 
+    /**
+     * Big letters means white
+     * Small letters means black
+     * @param str
+     * @return
+     */
     public static Position algebraic(String str)
     {
         String[] strings = str.split(" ");
@@ -246,6 +253,31 @@ public class BoardParser
 
         Position position = new Position(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces, Optional.empty(), new HalfMoveClock(), new HalfMoveClock());
 
+        validate(position);
         return position;
     }
+
+
+    private static void validate(Position position)
+    {
+        int numberOfWhiteKings = 0;
+        int numberOfBlackKings = 0;
+
+        for (Piece p : position.getPieces())
+        {
+            if (p.getPieceType().isKing() && p.getColor().isWhite())
+            {
+                numberOfWhiteKings++;
+            }
+            if (p.getPieceType().isKing() && p.getColor().isBlack())
+            {
+                numberOfBlackKings++;
+            }
+        }
+        if (numberOfBlackKings != 1 || numberOfWhiteKings != 1)
+        {
+            throw new IllegalStateException("There has to be exactly one black and white king.");
+        }
+    }
+
 }

@@ -79,6 +79,10 @@ public class MinMaxEngine implements Engine
             catch (IllegalMoveException e)
             {
             }
+            catch (IllegalArgumentException e)
+            {
+                throw new IllegalStateException();
+            }
         }
 
 

@@ -56,4 +56,8 @@ public enum PieceType
         return PAWN.equals(this);
     }
 
+    public boolean isKing()
+    {
+        return KING.equals(this);
+    }
 }

@@ -8,10 +8,12 @@ package com.simplisticjavachess.movegenerator;
 import com.simplisticjavachess.board.Location;
 import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.board.Vector;
+import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveType;
 import com.simplisticjavachess.piece.Piece;
 
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 
@@ -111,7 +113,24 @@ public class MoveGeneratorUtil
             }
         };
 
+    }
 
+    public static MoveGenerator compose(final MoveGenerator... moveGenerators)
+    {
+
+        return new MoveGenerator() {
+            @Override
+            public Iterator<Move> generateMoves(Position position) {
+                Iterator<Move> allMoves = Collections.emptyIterator();
+                for (MoveGenerator moveGenerator : moveGenerators)
+                {
+                    Iterator<Move> moves = moveGenerator.generateMoves(position);
+                    allMoves = IteratorUtils.compose(allMoves, moves);
+                }
+                return allMoves;
+            }
+
+        };
     }
 
 }
