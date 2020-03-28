@@ -253,7 +253,6 @@ public class BoardParser
 
         Position position = new Position(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces, Optional.empty(), new HalfMoveClock(), new HalfMoveClock());
 
-        validate(position);
         return position;
     }
 
