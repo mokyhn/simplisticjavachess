@@ -15,7 +15,7 @@ public class History implements Iterable<Position>
     public History(String fen)
     {
         positions = new LinkedList<>();
-        positions.add(BoardParser.FEN(fen));
+        positions.add(PositionIO.FEN(fen));
     }
 
     private History(LinkedList<Position> positions)

@@ -4,7 +4,7 @@ package com.simplisticjavachess.integration;
  * @author Morten Kühnrich
  */
 
-import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.PositionIO;
 import com.simplisticjavachess.board.IllegalMoveException;
 import com.simplisticjavachess.board.Mover;
 import com.simplisticjavachess.board.Position;
@@ -21,7 +21,7 @@ public class IntegrationTest
 
     @Test
     public void fiftyMoveRuleDraw() throws IllegalMoveException {
-        Position position = BoardParser.FEN("k7/8/8/8/8/8/NB6/K7 w - - 49 49");
+        Position position = PositionIO.FEN("k7/8/8/8/8/8/NB6/K7 w - - 49 49");
         assertFalse(position.isDrawBy50Move());
         Position drawPosition = Mover.doMove(position, "a1b1");
         assertTrue(drawPosition.isDrawBy50Move());

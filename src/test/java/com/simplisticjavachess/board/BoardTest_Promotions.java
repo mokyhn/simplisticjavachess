@@ -17,11 +17,11 @@ import static org.junit.Assert.*;
  */
 public class BoardTest_Promotions
 {
-    private static Position WHITE_READY_TO_PROMOTE() { return BoardParser.FEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 w"); }
-    private static Position BLACK_READY_TO_PROMOTE() { return BoardParser.FEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 b"); }
+    private static Position WHITE_READY_TO_PROMOTE() { return PositionIO.FEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 w"); }
+    private static Position BLACK_READY_TO_PROMOTE() { return PositionIO.FEN("8/PPPPPPPP/K/8/8/k/pppppppp/8 b"); }
 
-    private static Position WHITE_READY_TO_CAPTURE_PROMOTE() { return BoardParser.FEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN w"); }
-    private static Position BLACK_READY_TO_CAPTURE_PROMOTE() { return BoardParser.FEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN b"); }
+    private static Position WHITE_READY_TO_CAPTURE_PROMOTE() { return PositionIO.FEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN w"); }
+    private static Position BLACK_READY_TO_CAPTURE_PROMOTE() { return PositionIO.FEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN b"); }
 
     @Test
     public void testWhiteSimplePromotions() throws IllegalMoveException

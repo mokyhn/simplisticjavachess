@@ -1,6 +1,6 @@
 package com.simplisticjavachess.move;
 
-import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.PositionIO;
 import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.board.Location;
@@ -18,7 +18,7 @@ public class MoveParserTest
     
     public MoveParserTest()
     {
-        position = BoardParser.FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+        position = PositionIO.FEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
     }
 
     /**

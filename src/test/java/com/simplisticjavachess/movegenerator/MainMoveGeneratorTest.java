@@ -5,7 +5,7 @@
 
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.PositionIO;
 import com.simplisticjavachess.board.FENPositions;
 import com.simplisticjavachess.board.Location;
 import com.simplisticjavachess.board.Position;
@@ -29,7 +29,7 @@ public class MainMoveGeneratorTest
         
         for (String fen : FENPositions.POSITIONS) 
         {
-            Position board = BoardParser.FEN(fen);
+            Position board = PositionIO.FEN(fen);
             
             Iterator<Move> moves = moveGenerator.generateMoves(board);
             
@@ -47,12 +47,12 @@ public class MainMoveGeneratorTest
                 {
                     if (move.aCapture()) 
                     {
-                        assertNotNull(BoardParser.exportPosition(board), PositionInference.attacks(board, move.getTo(), board.inMove().opponent()));
+                        assertNotNull(PositionIO.exportPosition(board), PositionInference.attacks(board, move.getTo(), board.inMove().opponent()));
                     }
                 }
                 else
                 {
-                    assertNotNull(BoardParser.exportPosition(board), PositionInference.attacks(board, move.getTo(), board.inMove().opponent()));
+                    assertNotNull(PositionIO.exportPosition(board), PositionInference.attacks(board, move.getTo(), board.inMove().opponent()));
                 } 
                 
             }
@@ -68,7 +68,7 @@ public class MainMoveGeneratorTest
         for (String fen : FENPositions.POSITIONS) 
         {
             i++;
-            Position originalBoard = BoardParser.FEN(fen);
+            Position originalBoard = PositionIO.FEN(fen);
             Position board = originalBoard;
             
             Iterator<Move> moveIterator = moveGenerator.generateMoves(board);

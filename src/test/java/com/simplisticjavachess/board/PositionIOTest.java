@@ -8,22 +8,22 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 
 
-public class BoardParserTest
+public class PositionIOTest
 {
     private Position board1;
 
     @Before
     public void before()
     {
-        board1 = BoardParser.algebraic("pe4 Bd5 qh1 b");
+        board1 = PositionIO.algebraic("pe4 Bd5 qh1 b");
     }
 
     @Test
     public void testImportExportPosition_1()
     {
         String fen = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w";
-        Position board = BoardParser.FEN(fen);
-        String result = BoardParser.exportPosition(board);
+        Position board = PositionIO.FEN(fen);
+        String result = PositionIO.exportPosition(board);
         assertEquals(fen, result);
     }
 
@@ -31,8 +31,8 @@ public class BoardParserTest
     public void testImportExportPosition_2()
     {
         String fen = "rnb5/pp4pp/8/8/8/8/PP2P2P/2BQKB2 w";
-        Position board = BoardParser.FEN(fen);
-        String result = BoardParser.exportPosition(board);
+        Position board = PositionIO.FEN(fen);
+        String result = PositionIO.exportPosition(board);
         assertEquals(fen, result);
     }
 
@@ -40,8 +40,8 @@ public class BoardParserTest
     public void testImportExportPosition_3()
     {
         String fen = "8/pp4pp/8/8/8/8/PP2P2P/8 b";
-        Position board = BoardParser.FEN(fen);
-        String result = BoardParser.exportPosition(board);
+        Position board = PositionIO.FEN(fen);
+        String result = PositionIO.exportPosition(board);
         assertEquals(fen, result);
     }
 
@@ -50,8 +50,8 @@ public class BoardParserTest
     {
         for (String test_position : FENPositions.POSITIONS)
         {
-            Position board = BoardParser.FEN(test_position);
-            String result = BoardParser.exportPosition(board);
+            Position board = PositionIO.FEN(test_position);
+            String result = PositionIO.exportPosition(board);
             assertEquals(test_position, result);
         }
     }
@@ -60,7 +60,7 @@ public class BoardParserTest
     public void testImportPosition()
     {
         String test_position = "7k/8/7K/2q5/1P6/8/8/5R2 w - - 0 0";
-        Position board = BoardParser.FEN(test_position);
+        Position board = PositionIO.FEN(test_position);
         Piece piece1 = board.getPiece(7, 7);
         Piece piece2 = board.getPiece(7, 5);
         assertEquals(Color.BLACK, piece1.getColor());
@@ -92,14 +92,14 @@ public class BoardParserTest
     @Test
     public void testImportWithEnpassant1()
     {
-        Position position = BoardParser.FEN("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
+        Position position = PositionIO.FEN("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1");
         assertEquals("e2-e4", position.getEnpassantMove().get().toString());
     }
 
     @Test
     public void testImportWithEnpassant2()
     {
-        Position position = BoardParser.FEN("rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2");
+        Position position = PositionIO.FEN("rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2");
         assertEquals("c7-c5", position.getEnpassantMove().get().toString());
 
     }

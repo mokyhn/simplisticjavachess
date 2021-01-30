@@ -1,6 +1,6 @@
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.PositionIO;
 import com.simplisticjavachess.board.IllegalMoveException;
 import com.simplisticjavachess.board.Mover;
 import com.simplisticjavachess.board.Position;
@@ -24,7 +24,7 @@ public class FixedMoveGenerator implements MoveGenerator
 
     public void add(String FEN, String moveStr)
     {
-        Position position = BoardParser.FEN(FEN);
+        Position position = PositionIO.FEN(FEN);
         Move move = MoveParser.parse(position, moveStr);
 
         if (move == null)
@@ -45,7 +45,7 @@ public class FixedMoveGenerator implements MoveGenerator
 
     public void addFromMoves(String FEN, String moves, Color sideToRecord)
     {
-        Position position = BoardParser.FEN(FEN);
+        Position position = PositionIO.FEN(FEN);
         MoveSequence moveSequence = MoveSequence.parse(position, moves);
 
         List<Move> moveList = IteratorUtils.toList(moveSequence.iterator());

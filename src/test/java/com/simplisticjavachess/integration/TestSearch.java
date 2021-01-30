@@ -5,7 +5,7 @@
 
 package com.simplisticjavachess.integration;
 
-import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.PositionIO;
 import com.simplisticjavachess.board.IllegalMoveException;
 import com.simplisticjavachess.board.Mover;
 import com.simplisticjavachess.board.Position;
@@ -29,7 +29,7 @@ public class TestSearch
 
     public static void assertMove(String fen, String moveSequence, String expectedMoves, int plyDepth)
     {
-        Position position = BoardParser.FEN(fen);
+        Position position = PositionIO.FEN(fen);
 
         // Do initial set of moves
         try {

@@ -1,6 +1,6 @@
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.PositionIO;
 import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.board.Vector;
 import com.simplisticjavachess.misc.IteratorUtils;
@@ -22,7 +22,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesUpRight()
     {         
-        Position position = BoardParser.algebraic("Bd5 w");
+        Position position = PositionIO.algebraic("Bd5 w");
         Piece piece = Piece.parse("Bd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, 1)).generateMoves(position, piece));
@@ -35,7 +35,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesDown()
     {
-        Position board = BoardParser.algebraic("Rd5 w");
+        Position board = PositionIO.algebraic("Rd5 w");
         Piece piece = Piece.parse("Rd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(0, -1)).generateMoves(board, piece));
@@ -50,7 +50,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesLeft()
     {
-        Position board = BoardParser.algebraic("Rd5 w");
+        Position board = PositionIO.algebraic("Rd5 w");
         Piece piece = Piece.parse("Rd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(-1, 0)).generateMoves(board, piece));
@@ -63,7 +63,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateMovesLeftBlockingPiece()
     {
-        Position board = BoardParser.algebraic("Rd5 Pb5 w");
+        Position board = PositionIO.algebraic("Rd5 Pb5 w");
         Piece piece = Piece.parse("Rd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(-1, 0)).generateMoves(board, piece));
@@ -74,7 +74,7 @@ public class LineMoveGeneratorTest
     @Test
     public void testGenerateDownRightAndCapture()
     {
-        Position board = BoardParser.algebraic("Bc5 pe3 pf2 w");
+        Position board = PositionIO.algebraic("Bc5 pe3 pf2 w");
         Piece piece = Piece.parse("Bc5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, -1)).generateMoves(board, piece));

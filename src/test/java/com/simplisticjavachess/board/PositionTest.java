@@ -20,14 +20,14 @@ public class PositionTest
     @Before
     public void before()
     {
-        position = BoardParser.algebraic("w");
+        position = PositionIO.algebraic("w");
         piece    = new Piece(new Location(7,7), Color.WHITE, PieceType.KING);
     }
       
     @Test
     public void testAreRepresentationsIsomorphic()
     { 
-        assertTrue(areRepresentationsIsomorphic(BoardParser.algebraic("w")));
+        assertTrue(areRepresentationsIsomorphic(PositionIO.algebraic("w")));
         
         position.insert(new Piece(new Location(2,3),Color.BLACK,PieceType.KING));
         
@@ -120,14 +120,14 @@ public class PositionTest
     @Test
     public void testFreeSquares()
     {
-        Position position = BoardParser.algebraic("Kd4 Rh4 w");
+        Position position = PositionIO.algebraic("Kd4 Rh4 w");
         assertTrue(position.freeSquares(Location.parse("d4"), Location.parse("h4")));
     }
 
     @Test
 	public void testFreeSquares2()
 	{
-		Position position = BoardParser.FEN("r3r1Qk/6pp/8/6N1/8/1B6/1PPP4/2K5 b");
+		Position position = PositionIO.FEN("r3r1Qk/6pp/8/6N1/8/1B6/1PPP4/2K5 b");
 		assertTrue(position.freeSquares(Location.parse("g8"), Location.parse("e8")));
 	}
 }

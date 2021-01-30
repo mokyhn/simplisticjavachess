@@ -1,6 +1,6 @@
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.BoardParser;
+import com.simplisticjavachess.board.PositionIO;
 import com.simplisticjavachess.board.Position;
 import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
@@ -22,7 +22,7 @@ public class QueenMoveGeneratorTest
 
     @Test
     public void queenMovesCenterTest() {
-        Position board = BoardParser.algebraic("Qd4 w");
+        Position board = PositionIO.algebraic("Qd4 w");
         Piece piece = Piece.parse("Qd4");
         Iterator<Move> moves = new QueenMoveGenerator().generateMoves(board, piece);
         assertEquals("[d4-e5, d4-f6, d4-g7, d4-h8, d4-e3, d4-f2, d4-g1, d4-c5, d4-b6, d4-a7, d4-c3, " +
@@ -32,7 +32,7 @@ public class QueenMoveGeneratorTest
 
     @Test
     public void queenMovesShadowsTest() {
-        Position board = BoardParser.algebraic("Qd4 Pd6 Pb6 Pf6 Pc3 Pd1 pf2 w");
+        Position board = PositionIO.algebraic("Qd4 Pd6 Pb6 Pf6 Pc3 Pd1 pf2 w");
         Piece piece = Piece.parse("Qd4");
         Iterator<Move> moves = new QueenMoveGenerator().generateMoves(board, piece);
         assertEquals("[d4-e5, d4-e3, d4xf2, d4-c5, " +

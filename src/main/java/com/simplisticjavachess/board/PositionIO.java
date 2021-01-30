@@ -17,9 +17,9 @@ import static com.simplisticjavachess.piece.Color.WHITE;
 /**
  * @author Morten Kühnrich
  *
- * Forsyth–Edwards Notation (FEN) support
+ * Import and export functionality for chess positions.
  */
-public class BoardParser
+public class PositionIO
 {    
     /**
      * @param fen - FEN position string to parse

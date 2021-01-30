@@ -19,14 +19,14 @@ public class PositionInferenceTest
     @Test
     public void testIsInCheck()
     {
-        Position board = BoardParser.algebraic("Bd5 kc4 w");
+        Position board = PositionIO.algebraic("Bd5 kc4 w");
         assertTrue(PositionInference.isInCheck(board, Color.BLACK));
     }
     
     @Test
     public void testAttacks()
     {
-        Position board = BoardParser.algebraic("Bd5 w");
+        Position board = PositionIO.algebraic("Bd5 w");
         Piece piece = Piece.parse("Bd5");
 
         Piece result = PositionInference.attacks(board, Location.parse("e6"), WHITE);
@@ -43,7 +43,7 @@ public class PositionInferenceTest
     @Test
     public void kingAttackTest()
     {
-        Position position = BoardParser.algebraic("Kd5 w");
+        Position position = PositionIO.algebraic("Kd5 w");
         Piece piece = Piece.parse("Kd5");
 
         assertNull(PositionInference.attacks(position, Location.parse("d5"), WHITE));
@@ -63,7 +63,7 @@ public class PositionInferenceTest
     @Test
     public void knightAttackTest()
     {
-        Position position = BoardParser.algebraic("Nd5 w");
+        Position position = PositionIO.algebraic("Nd5 w");
         Piece piece = Piece.parse("Nd5");
         
         assertNull(PositionInference.attacks(position, Location.parse("d5"), WHITE));
@@ -78,7 +78,7 @@ public class PositionInferenceTest
     @Test
     public void pawnAttackTest()
     {
-        Position board = BoardParser.algebraic("Pd4 w");
+        Position board = PositionIO.algebraic("Pd4 w");
         Location.parse("d4");
         Piece piece;
 
