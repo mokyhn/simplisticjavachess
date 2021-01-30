@@ -8,7 +8,7 @@ package com.simplisticjavachess.move;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
-import com.simplisticjavachess.board.Location;
+import com.simplisticjavachess.position.Location;
 
 import java.util.Objects;
 

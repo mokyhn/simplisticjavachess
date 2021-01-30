@@ -5,10 +5,10 @@
 
 package com.simplisticjavachess.game;
 
-import com.simplisticjavachess.board.History;
-import com.simplisticjavachess.board.IllegalMoveException;
-import com.simplisticjavachess.board.Mover;
-import com.simplisticjavachess.board.PositionInference;
+import com.simplisticjavachess.position.History;
+import com.simplisticjavachess.position.IllegalMoveException;
+import com.simplisticjavachess.position.Mover;
+import com.simplisticjavachess.position.PositionInference;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.move.Move;

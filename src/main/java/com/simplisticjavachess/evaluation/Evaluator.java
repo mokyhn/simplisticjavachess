@@ -1,6 +1,6 @@
 package com.simplisticjavachess.evaluation;
 
-import com.simplisticjavachess.board.Position;
+import com.simplisticjavachess.position.Position;
 
 public interface Evaluator
 {

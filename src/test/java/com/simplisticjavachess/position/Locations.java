@@ -4,7 +4,7 @@
  */
 
 
-package com.simplisticjavachess.board;
+package com.simplisticjavachess.position;
 
 
 public class Locations

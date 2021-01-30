@@ -7,7 +7,7 @@
 package com.simplisticjavachess.move;
 
 import com.simplisticjavachess.piece.Color;
-import com.simplisticjavachess.board.Locations;
+import com.simplisticjavachess.position.Locations;
 
 public class Moves
 {

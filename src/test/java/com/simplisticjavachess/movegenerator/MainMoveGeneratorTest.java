@@ -5,11 +5,11 @@
 
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.PositionIO;
-import com.simplisticjavachess.board.FENPositions;
-import com.simplisticjavachess.board.Location;
-import com.simplisticjavachess.board.Position;
-import com.simplisticjavachess.board.PositionInference;
+import com.simplisticjavachess.position.PositionIO;
+import com.simplisticjavachess.position.FENPositions;
+import com.simplisticjavachess.position.Location;
+import com.simplisticjavachess.position.Position;
+import com.simplisticjavachess.position.PositionInference;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;

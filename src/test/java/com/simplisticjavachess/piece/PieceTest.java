@@ -1,6 +1,6 @@
 package com.simplisticjavachess.piece;
 
-import com.simplisticjavachess.board.Location;
+import com.simplisticjavachess.position.Location;
 import org.junit.Test;
 import static org.junit.Assert.*;
 

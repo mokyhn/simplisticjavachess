@@ -2,7 +2,7 @@
  *
  * @author Morten Kühnrich
  */
-package com.simplisticjavachess.board;
+package com.simplisticjavachess.position;
 
 import com.simplisticjavachess.move.Moves;
 import org.junit.Test;

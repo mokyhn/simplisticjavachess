@@ -1,4 +1,4 @@
-package com.simplisticjavachess.board;
+package com.simplisticjavachess.position;
 
 public class IllegalMoveException extends Exception
 {

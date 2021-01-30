@@ -4,7 +4,7 @@
 
 package com.simplisticjavachess.engine;
 
-import com.simplisticjavachess.board.Position;
+import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.evaluation.Evaluator;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 

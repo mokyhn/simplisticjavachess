@@ -1,10 +1,10 @@
 package com.simplisticjavachess.move;
 
-import com.simplisticjavachess.board.Position;
+import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.PieceType;
-import com.simplisticjavachess.board.Location;
+import com.simplisticjavachess.position.Location;
 
 public final class MoveParser {
 

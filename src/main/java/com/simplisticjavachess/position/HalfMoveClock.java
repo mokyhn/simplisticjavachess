@@ -1,4 +1,4 @@
-package com.simplisticjavachess.board;
+package com.simplisticjavachess.position;
 
 /**
  * Encapsulates dealing with half move counters

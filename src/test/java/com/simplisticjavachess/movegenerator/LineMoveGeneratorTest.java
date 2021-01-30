@@ -1,8 +1,8 @@
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.PositionIO;
-import com.simplisticjavachess.board.Position;
-import com.simplisticjavachess.board.Vector;
+import com.simplisticjavachess.position.PositionIO;
+import com.simplisticjavachess.position.Position;
+import com.simplisticjavachess.position.Vector;
 import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;

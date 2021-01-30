@@ -6,9 +6,9 @@
 
 package com.simplisticjavachess.engine;
 
-import com.simplisticjavachess.board.IllegalMoveException;
-import com.simplisticjavachess.board.Mover;
-import com.simplisticjavachess.board.Position;
+import com.simplisticjavachess.position.IllegalMoveException;
+import com.simplisticjavachess.position.Mover;
+import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.evaluation.Evaluation;
 import com.simplisticjavachess.evaluation.EvaluationConstantsFactoryImpl;
 import com.simplisticjavachess.evaluation.Evaluator;

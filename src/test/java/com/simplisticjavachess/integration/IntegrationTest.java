@@ -4,10 +4,10 @@ package com.simplisticjavachess.integration;
  * @author Morten Kühnrich
  */
 
-import com.simplisticjavachess.board.PositionIO;
-import com.simplisticjavachess.board.IllegalMoveException;
-import com.simplisticjavachess.board.Mover;
-import com.simplisticjavachess.board.Position;
+import com.simplisticjavachess.position.PositionIO;
+import com.simplisticjavachess.position.IllegalMoveException;
+import com.simplisticjavachess.position.Mover;
+import com.simplisticjavachess.position.Position;
 import org.junit.Test;
 
 import static com.simplisticjavachess.integration.TestSearch.*;

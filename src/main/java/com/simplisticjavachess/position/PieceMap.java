@@ -1,4 +1,4 @@
-package com.simplisticjavachess.board;
+package com.simplisticjavachess.position;
 
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;

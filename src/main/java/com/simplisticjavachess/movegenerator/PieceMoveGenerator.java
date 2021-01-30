@@ -1,6 +1,6 @@
 package com.simplisticjavachess.movegenerator;
 
-import com.simplisticjavachess.board.Position;
+import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;

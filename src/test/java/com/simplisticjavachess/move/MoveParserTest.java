@@ -1,9 +1,9 @@
 package com.simplisticjavachess.move;
 
-import com.simplisticjavachess.board.PositionIO;
-import com.simplisticjavachess.board.Position;
+import com.simplisticjavachess.position.PositionIO;
+import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.piece.Color;
-import com.simplisticjavachess.board.Location;
+import com.simplisticjavachess.position.Location;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
