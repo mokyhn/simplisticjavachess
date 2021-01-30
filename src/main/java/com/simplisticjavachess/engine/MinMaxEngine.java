@@ -26,14 +26,14 @@ public class MinMaxEngine implements Engine
     private final static Evaluation WHITE_MATE = EvaluationConstantsFactoryImpl.instance().getWhiteIsMate();
 
     @Override
-    public SearchResult search(Position position, MoveGenerator moveGenerator, Evaluator evaluator, int plyDepth)
+    public SearchResult search(Position position, MoveGenerator moveGenerator, Evaluator evaluator, int depth)
     {
         if (position.isDrawBy50Move())
         {
             return new SearchResult(EQUAL);
         }
 
-        if (plyDepth == 0)
+        if (depth == 0)
         {
             return new SearchResult(evaluator.evaluate(position));
         }
@@ -66,7 +66,7 @@ public class MinMaxEngine implements Engine
                 Position next = Mover.doMove(position, move);
                 thereWasALegalMove = true;
 
-                SearchResult score = search(next,  moveGenerator, evaluator, plyDepth - 1);
+                SearchResult score = search(next,  moveGenerator, evaluator, depth - 1);
 
 
                 if (bestScore.isAnImprovement(inMove, score.getEvaluation()))
