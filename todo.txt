@@ -1,0 +1,97 @@
+
+We need a general mechanism around this setup to check moves performed 
+by the human user of the program. Something like
+- parse move m
+- try to perform move m
+- was it legal?
+- did it lead to draw by 50 move rule
+- did it lead to draw by repitition
+- generate possible moves for opponent
+- is the opponent mate?
+- is the opponent stale-mate?
+- the check results in a boolean / legal / illegal and GameResult datatype we might call this UserMoveResult
+
+For computer generated moves we have:
+- generate move m
+- perform move m
+- was it legal?
+- did it lead to draw by 50 move rule
+- did it lead to draw by repitition
+
+- if no moves were possible:
+- am I in check?
+- is the position stale-mate?
+- The results in a SearchResult which has a suggested Move, an evaluation and a GameResult
+
+
+
+Evaluation ideers:
+Distance between locations are easy to calculate.
+King safety: How many opponent pieces are on the could reach the king? OR what is the average distance to opponent pieces? How many pieces of my own are close to my king? Is the king near the boorders of the board? How far is the king from the castling positions? (in the opening moves, later it is ok to be closer to the pawns close to promotion) The board evaluator should maybe have access to the current movenumber?
+
+Characterisation on whether this is the opening / middlegame / or endgame 
+(by piece configuration).
+
+Pawns: What is the average distance to the opponent backline? (promotion)
+Is the field free infront of it? Is it supported from the back by other pawns?
+
+Bishops: How many free fields are around it in distance 1? or 2?
+
+Knights:
+How far are the knights from one another?
+Of the eight possible moves how many are my own / free squares / opponent pieces?
+
+Rooks:
+are they doubles? Are they close to the opponents king?
+
+For the opening: Penalty for not moving officers from their original position. (So compare current position to original)
+
+These points will allow for much better debugging of the chess Engines and to play with different sorts of move generation and board evaluations.
+
+This adds OOP to chess. Chess is inherently monolithic and mutable! It is super hard to debug and maintain. With this implementation we have tried to first of all destroy the monolith. The individual parts of a chess program is now seperated and can be tested on it's own. Futhermore we have added the possibility of testing new algorithms and ideas through a safe playground. The immutable datastructures makes it safe to play with the chess program - unwanted behavior from positions that were cashed and updated afterwards are now not possible. That saves the programmer from a lot of pain of inexplainable behaivor. 
+
+setboard 7k/p7/5R1K/8/8/8/8/8 w - - 0 1
+
+
+Classes without test:
+AlphaBetaEngine
+BishopMoveGenerator
+ChessCLI
+ChessEngineCommunicationProtocol
+ChessGame
+Command
+CommandBlack
+CommandGo
+CommandLineInterface
+CommandMove
+CommandNew
+CommandPrint
+CommandQuit
+CommandSd
+CommandSetBoard
+CommandUndo
+CommandWhite
+CommandXBoard
+Engine
+Evaluation
+EvaluationConstantsFactory
+EvaluationConstantsFactoryImpl
+Evaluator
+FENPositions
+FixedMoveGenerator
+GameResult
+IntegerEvaluator
+Locations
+MinMaxEngine
+MinMaxEngineTest
+Move
+MoveGenerator
+MoveGeneratorUtil
+Mover
+MoveResultType
+Moves
+MoveSequence
+PieceMoveGenerator
+RandomEngine
+RookMoveGenerator
+SearchResult
