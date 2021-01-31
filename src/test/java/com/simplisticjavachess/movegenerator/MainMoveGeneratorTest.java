@@ -17,8 +17,9 @@ import com.simplisticjavachess.piece.PieceType;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 public class MainMoveGeneratorTest
 {
@@ -43,16 +44,16 @@ public class MainMoveGeneratorTest
                 Piece piece = board.getPiece(from);
                 
  
-                if (piece.getPieceType() == PieceType.PAWN)
+                if (piece.getType() == PieceType.PAWN)
                 {
                     if (move.aCapture()) 
                     {
-                        assertNotNull(PositionIO.exportPosition(board), PositionInference.attacks(board, move.getTo(), board.inMove().opponent()));
+                        Assert.assertNotNull(PositionIO.exportPosition(board), PositionInference.attacks(board, move.getTo(), board.inMove().opponent()));
                     }
                 }
                 else
                 {
-                    assertNotNull(PositionIO.exportPosition(board), PositionInference.attacks(board, move.getTo(), board.inMove().opponent()));
+                    Assert.assertNotNull(PositionIO.exportPosition(board), PositionInference.attacks(board, move.getTo(), board.inMove().opponent()));
                 } 
                 
             }
@@ -87,10 +88,10 @@ public class MainMoveGeneratorTest
                     
                     Piece attacker = PositionInference.attacks(board, location, board.inMove().opponent());
                     if (attacker != null && 
-                        attacker.getPieceType() != PieceType.KING &&
-                        attacker.getPieceType() != PieceType.PAWN && 
-                        attacker.getPieceType() != PieceType.QUEEN &&
-                        attacker.getPieceType() != PieceType.ROOK &&
+                        attacker.getType() != PieceType.KING &&
+                        attacker.getType() != PieceType.PAWN &&
+                        attacker.getType() != PieceType.QUEEN &&
+                        attacker.getType() != PieceType.ROOK &&
                         board.getPiece(location) != null && 
                         board.getPiece(location).getColor() ==  board.inMove().opponent())
                     {
@@ -103,7 +104,7 @@ public class MainMoveGeneratorTest
                                 break;
                             } 
                         }                        
-                        assertTrue("i= "+i + "   Location = " + location + " HEJ "+ attacker.getPieceType().toString() + "\n" + board.toString(), found);
+                        Assert.assertTrue("i= "+i + "   Location = " + location + " HEJ "+ attacker.getType().toString() + "\n" + board.toString(), found);
                     }
                 }
                 

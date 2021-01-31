@@ -122,7 +122,7 @@ public final class Piece {
 
     @Override
     public String toString() {
-        return getPieceType().getPieceLetter(getColor());
+        return getType().getPieceLetter(getColor());
     }
 
     public Location getLocation()
@@ -146,7 +146,7 @@ public final class Piece {
         return new Piece(location, this.color, this.pieceType);
     }
     
-    public PieceType getPieceType()
+    public PieceType getType()
     {
         return pieceType;
     }

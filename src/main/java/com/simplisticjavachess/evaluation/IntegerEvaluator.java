@@ -26,7 +26,7 @@ public class IntegerEvaluator implements Evaluator
         for (Piece p : position.getPieces())
         {
             int color = p.getColor().getColor();
-            switch (p.getPieceType())
+            switch (p.getType())
             {
                 case PAWN:
                     result += PAWN_VALUE * color;

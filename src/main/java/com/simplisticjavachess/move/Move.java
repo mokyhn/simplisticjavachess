@@ -29,7 +29,7 @@ public final class Move
         if (from.isValid() && to.isValid())
         {
             // It is not legal to capture the king
-            if (capturedPiece != null && PieceType.KING.equals(capturedPiece.getPieceType()))
+            if (capturedPiece != null && PieceType.KING.equals(capturedPiece.getType()))
             {
                 throw new IllegalArgumentException();
             }
@@ -89,7 +89,7 @@ public final class Move
             case NORMALMOVE:
                 return from.toString() + "-" + to.toString();
             case CAPTURE:
-                if (capturedPiece.getPieceType() == PieceType.KING)
+                if (capturedPiece.getType() == PieceType.KING)
                 {
                     return "mate";
  

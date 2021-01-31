@@ -51,7 +51,7 @@ public class KingMoveGenerator implements PieceMoveGenerator
             Piece rook = position.getPiece(new Location(7, fy));
 
             // Ensure that there is a rook
-            if (rook == null || rook.getPieceType() != PieceType.ROOK || rook.getColor() != color) {
+            if (rook == null || rook.getType() != PieceType.ROOK || rook.getColor() != color) {
                 return null;
             }
 
@@ -81,7 +81,7 @@ public class KingMoveGenerator implements PieceMoveGenerator
             Piece rook = position.getPiece(new Location(0, fy));
 
             // Ensure that there is a rook
-            if (rook == null || rook.getPieceType() != PieceType.ROOK || rook.getColor() != color) {
+            if (rook == null || rook.getType() != PieceType.ROOK || rook.getColor() != color) {
                 return null;
             }
 

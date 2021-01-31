@@ -33,7 +33,7 @@ public final class MoveParser {
 
         if (str.length() == 4) {
             // White or black does a short or a long castling
-            if (piece.getPieceType() == PieceType.KING && from.rankEquals(to) && (from.getY() == 0 || from.getY() == 7)) {
+            if (piece.getType() == PieceType.KING && from.rankEquals(to) && (from.getY() == 0 || from.getY() == 7)) {
                 if (from.getX() == 4 && to.getX() == 6) {
                     return new Move(from, to, MoveType.CASTLE_SHORT, null, whoToMove);
                 } else if (from.getX() == 4 && to.getX() == 2) {
@@ -42,7 +42,7 @@ public final class MoveParser {
             }
 
             // ENPASSENT Move
-            if (piece.getPieceType() == PieceType.PAWN) {
+            if (piece.getType() == PieceType.PAWN) {
                 if (from.fileDifferent(to) && (position.freeSquare(to))) {
                     return new Move(from, to, MoveType.CAPTURE_ENPASSANT,
                             position.getPiece(new Location(to.getX(), from.getY())), whoToMove);
@@ -63,7 +63,7 @@ public final class MoveParser {
 
         // Promotion moves
         if (str.length() == 5
-                && piece.getPieceType() == PieceType.PAWN
+                && piece.getType() == PieceType.PAWN
                 && ((piece.getColor() == Color.WHITE && from.getY() == 6)
                 || (piece.getColor() == Color.BLACK && from.getY() == 1))) {
 

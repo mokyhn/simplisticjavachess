@@ -48,7 +48,7 @@ public class MainMoveGenerator implements MoveGenerator
             return null;
         }
 
-        PieceType pieceType = piece.getPieceType();
+        PieceType pieceType = piece.getType();
 
         if (moveGeneratorMap.containsKey(pieceType)) {
             return moveGeneratorMap.get(pieceType).generateMoves(position, piece);

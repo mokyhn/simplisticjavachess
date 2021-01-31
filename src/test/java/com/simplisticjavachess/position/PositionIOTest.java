@@ -65,8 +65,8 @@ public class PositionIOTest
         Piece piece2 = board.getPiece(7, 5);
         assertEquals(Color.BLACK, piece1.getColor());
         assertEquals(Color.WHITE, piece2.getColor());
-        assertEquals(PieceType.KING, piece1.getPieceType());
-        assertEquals(PieceType.KING, piece2.getPieceType());
+        assertEquals(PieceType.KING, piece1.getType());
+        assertEquals(PieceType.KING, piece2.getType());
     }
 
     @Test

@@ -194,7 +194,7 @@ public class PositionIO
                         countingFreeSpaces = -1;
                     }
 
-                    result += piece.getPieceType().getPieceLetter(piece.getColor());
+                    result += piece.getType().getPieceLetter(piece.getColor());
                 }
             }
             if (countingFreeSpaces > 0)
@@ -264,11 +264,11 @@ public class PositionIO
 
         for (Piece p : position.getPieces())
         {
-            if (p.getPieceType().isKing() && p.getColor().isWhite())
+            if (p.getType().isKing() && p.getColor().isWhite())
             {
                 numberOfWhiteKings++;
             }
-            if (p.getPieceType().isKing() && p.getColor().isBlack())
+            if (p.getType().isKing() && p.getColor().isBlack())
             {
                 numberOfBlackKings++;
             }

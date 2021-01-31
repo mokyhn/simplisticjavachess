@@ -9,6 +9,7 @@ import com.simplisticjavachess.game.CastlingState;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
+import com.simplisticjavachess.piece.PieceMap;
 
 import java.util.Collection;
 
@@ -285,7 +286,7 @@ public class Position
         {
             Move move = enpassantMove.get();
             Piece piece = getPiece(move.getTo());
-            return piece.getPieceType().isPawn() && move.distance() == 2;
+            return piece.getType().isPawn() && move.distance() == 2;
         }
         else
         {

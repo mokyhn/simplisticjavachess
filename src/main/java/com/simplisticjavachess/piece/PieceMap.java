@@ -1,8 +1,6 @@
-package com.simplisticjavachess.position;
+package com.simplisticjavachess.piece;
 
-import com.simplisticjavachess.piece.Color;
-import com.simplisticjavachess.piece.Piece;
-import com.simplisticjavachess.piece.PieceType;
+import com.simplisticjavachess.position.Location;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,44 +8,35 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class PieceMap
-{
+public class PieceMap {
     private final Map<Location, Piece> piecesMap;
 
     private final int piecesHash;
 
-    PieceMap()
-    {
+    PieceMap() {
         piecesMap = new HashMap<>();
         piecesHash = 0;
     }
 
-    public PieceMap(Collection<Piece> pieces)
-    {
+    public PieceMap(Collection<Piece> pieces) {
         this.piecesMap = new HashMap<>();
         int h = 0;
-        for (Piece piece : pieces)
-        {
+        for (Piece piece : pieces) {
             piecesMap.put(piece.getLocation(), piece);
             h ^= piece.getChessHashCode();
         }
         this.piecesHash = h;
     }
 
-    private PieceMap(Map<Location, Piece> piecesMap, int piecesHash)
-    {
+    private PieceMap(Map<Location, Piece> piecesMap, int piecesHash) {
         this.piecesMap = piecesMap;
         this.piecesHash = piecesHash;
     }
 
-    PieceMap insert(Piece piece)
-    {
-        if (piecesMap.containsKey(piece.getLocation()))
-        {
+    public PieceMap insert(Piece piece) {
+        if (piecesMap.containsKey(piece.getLocation())) {
             throw new IllegalStateException("Tried to insert piece at a location at an occupied location");
-        }
-        else
-        {
+        } else {
             Map<Location, Piece> newPiecesMap = new HashMap<>(this.piecesMap);
             newPiecesMap.put(piece.getLocation(), piece);
             int newChessHashCode = this.piecesHash ^ piece.getChessHashCode();
@@ -55,50 +44,36 @@ public class PieceMap
         }
     }
 
-    public Piece getPiece(Location location)
-    {
+    public Piece get(Location location) {
         return piecesMap.get(location);
     }
 
-    public Piece get(Location location)
-    {
-        return piecesMap.get(location);
-    }
-
-    Collection<Piece> getPieces()
-    {
+    Collection<Piece> getPieces() {
         return piecesMap.values();
     }
 
     /**
      * Remove a piece
+     *
      * @param piece - to remove
      * @return the resulting position
      */
-    PieceMap remove(Piece piece)
-    {
-        if (piecesMap.containsKey(piece.getLocation()))
-        {
+    public PieceMap remove(Piece piece) {
+        if (piecesMap.containsKey(piece.getLocation())) {
             Map<Location, Piece> newPiecesMap = new HashMap<>(this.piecesMap);
             newPiecesMap.remove(piece.getLocation());
             int newChessHashCode = this.piecesHash ^ piece.getChessHashCode();
             return new PieceMap(newPiecesMap, newChessHashCode);
-        }
-        else
-        {
+        } else {
             throw new IllegalStateException("Tried to remove a piece which was not there");
         }
 
     }
 
-    public PieceMap move(Piece piece, Location to)
-    {
-        if (piecesMap.containsKey(to))
-        {
+    public PieceMap move(Piece piece, Location to) {
+        if (piecesMap.containsKey(to)) {
             throw new IllegalStateException();
-        }
-        else
-        {
+        } else {
             PieceMap tmp = remove(piece);
             Piece newPiece = piece.updateLocation(to);
             return tmp.insert(newPiece);
@@ -106,41 +81,34 @@ public class PieceMap
     }
 
 
-    public Collection<Piece> values()
-    {
+    public Collection<Piece> values() {
         return piecesMap.values();
     }
 
-    public Optional<Piece> getKing(Color color)
-    {
+    public Optional<Piece> getKing(Color color) {
         return piecesMap.values().
                 stream().filter(piece ->
-                PieceType.KING.equals(piece.getPieceType()) &&
+                PieceType.KING.equals(piece.getType()) &&
                         color.equals(piece.getColor())).
                 findAny();
     }
 
 
-    boolean freeSquare(Location location)
-    {
+    public boolean freeSquare(Location location) {
         return freeSquare(location.getX(), location.getY());
     }
 
-    public boolean freeSquare(int x, int y)
-    {
+    public boolean freeSquare(int x, int y) {
         return !piecesMap.containsKey(new Location(x, y));
     }
 
     @Override
-    public boolean equals(Object object)
-    {
-        if (this == object)
-        {
+    public boolean equals(Object object) {
+        if (this == object) {
             return true;
         }
 
-        if (object == null || getClass() != object.getClass())
-        {
+        if (object == null || getClass() != object.getClass()) {
             return false;
         }
 
@@ -157,16 +125,13 @@ public class PieceMap
     /**
      * @return Ascii representation of the position
      */
-    String getPositionString()
-    {
+    public String getPositionString() {
         String result = "\n _______________\n";
 
-        for (int y = 7; y >= 0; y--)
-        {
-            for (int x = 0; x < 8; x++)
-            {
+        for (int y = 7; y >= 0; y--) {
+            for (int x = 0; x < 8; x++) {
                 result = result + " ";
-                Piece piece = getPiece(new Location(x, y));
+                Piece piece = get(new Location(x, y));
                 result = piece == null ? result + "." : result + piece.toString();
             }
             result = result + ("     " + (y + 1)) + "\n";
@@ -176,8 +141,7 @@ public class PieceMap
         return result;
     }
 
-    public String toString()
-    {
+    public String toString() {
         return getPositionString();
     }
 

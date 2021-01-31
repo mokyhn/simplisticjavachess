@@ -42,7 +42,7 @@ public class PawnMoveGenerator implements PieceMoveGenerator
 
         final ArrayList<Move> Moves = new ArrayList<>();
 
-        if (c != piece.getColor() || piece.getPieceType() != PieceType.PAWN)
+        if (c != piece.getColor() || piece.getType() != PieceType.PAWN)
         {
             throw new IllegalArgumentException("Trying to generate moves for opponent piece which is not in move.");
         }
@@ -144,7 +144,7 @@ public class PawnMoveGenerator implements PieceMoveGenerator
             Move lastMove = lastMoveOptional.get();
             Piece lastMovePiece = position.getPiece(lastMove.getTo());
 
-            if (lastMovePiece.getPieceType() == PieceType.PAWN && 
+            if (lastMovePiece.getType() == PieceType.PAWN &&
                 (Math.abs(lastMove.getFrom().getY() - lastMove.getTo().getY()) == 2)) 
             {                                
                 if (fx > 0)

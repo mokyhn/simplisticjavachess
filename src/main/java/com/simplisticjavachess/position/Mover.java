@@ -17,7 +17,7 @@ public class Mover
 
         Position newPosition = position.setMove(move).tickGameClock();
 
-        if (move.getMoveType().isCapture() || piece.getPieceType().isPawn()) {
+        if (move.getMoveType().isCapture() || piece.getType().isPawn()) {
             newPosition = newPosition.resetFiftyMoveDrawClock();
         } else {
             newPosition = newPosition.tickFiftyMoveDrawClock();
@@ -26,14 +26,14 @@ public class Mover
         Color inMove = position.inMove();
 
         // Moving the king will disallow castling in the future
-        if (PieceType.KING.equals(piece.getPieceType()))
+        if (PieceType.KING.equals(piece.getType()))
         {
             newPosition = newPosition.setCanCastleLong(false, move.getWhoMoves());
             newPosition = newPosition.setCanCastleShort(false, move.getWhoMoves());
         }
 
         // Moving a rook can disallow castling in the future
-        if (PieceType.ROOK.equals(piece.getPieceType()))
+        if (PieceType.ROOK.equals(piece.getType()))
         {
             if (move.getFrom().getX() == 0)
             {
@@ -54,7 +54,7 @@ public class Mover
             case CAPTURE:
                 newPosition = newPosition.remove(move.getCapturedPiece());
                 newPosition = newPosition.move(piece, move.getTo());
-                if (PieceType.ROOK.equals(move.getCapturedPiece().getPieceType()))
+                if (PieceType.ROOK.equals(move.getCapturedPiece().getType()))
                 {
                     if (move.getTo().getX() == 0)
                     {

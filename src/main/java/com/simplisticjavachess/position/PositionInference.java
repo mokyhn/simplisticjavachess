@@ -47,7 +47,7 @@ public class PositionInference
         {
             if (attackerPiece.getColor() == attackerColor && !(attackerPiece.getLocation().equals(location)))
             {
-                switch (attackerPiece.getPieceType())
+                switch (attackerPiece.getType())
                 {
                     case PAWN:
                         if (pawnAttack(attackerPiece, location))

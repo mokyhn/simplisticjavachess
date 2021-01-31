@@ -2,7 +2,12 @@ package com.simplisticjavachess.piece;
 
 import com.simplisticjavachess.position.Location;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 /**
  *
@@ -66,5 +71,24 @@ public class PieceTest
     {
         Piece p = new Piece(new Location(1, 2), Color.BLACK, PieceType.KING);
         assertNotEquals(p12.hashCode(), p.hashCode());
+    }
+
+    @Test
+    public void testAllHashs()
+    {
+        Set<Integer> hashSet = new HashSet();
+
+        for (Color color : Color.values()) {
+            for (PieceType pieceType : PieceType.values()) {
+                for (int x = 0; x < 8; x++) {
+                    for (int y = 0; y < 8; y++) {
+                        hashSet.add(new Piece(new Location(x, y), color, pieceType).getChessHashCode());
+                    }
+                }
+            }
+        }
+
+        // All hash's are unique
+        assertEquals(2*6*8*8, hashSet.size());
     }
 }
