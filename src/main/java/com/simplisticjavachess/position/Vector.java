@@ -111,7 +111,7 @@ public class Vector
         return Math.max(Math.abs(dx), Math.abs(dy));
     }
 
-    public Location translocate(Location location)
+    public Location translate(Location location)
     {
         return new Location(location.x + this.dx, location.y + this.dy);
     }

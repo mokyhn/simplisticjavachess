@@ -47,13 +47,13 @@ public class PawnMoveGenerator implements PieceMoveGenerator
             throw new IllegalArgumentException("Trying to generate moves for opponent piece which is not in move.");
         }
 
-        Location oneAhead = position.getMoveDirection().translocate(piece.getLocation());
-        Location twoAhead = position.getMoveDirection().scale(2).translocate(piece.getLocation());
+        Location oneAhead = position.getMoveDirection().translate(piece.getLocation());
+        Location twoAhead = position.getMoveDirection().scale(2).translate(piece.getLocation());
 
         // Normal one step forward pawn move
         if (!pawnAtPromotionRank(piece))
         {
-            Location to = position.getMoveDirection().translocate(piece.getLocation());
+            Location to = position.getMoveDirection().translate(piece.getLocation());
             if (to.isValid())
             {
                 if (position.freeSquare(to))

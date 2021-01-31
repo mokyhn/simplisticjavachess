@@ -34,7 +34,7 @@ public class MoveGeneratorUtil
     private static Move genMoveAux(Position position, Piece piece, Vector vector, boolean isKingMove)
     {
         Location from = piece.getLocation();
-        Location to = vector.translocate(from);
+        Location to = vector.translate(from);
 
         if (to.isValid())
         {

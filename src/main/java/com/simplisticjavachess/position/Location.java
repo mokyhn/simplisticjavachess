@@ -163,7 +163,7 @@ public final class Location
      */
     public Location add(Vector vector)
     {
-        return vector.translocate(this);
+        return vector.translate(this);
     }
 
     /**

@@ -25,7 +25,7 @@ public class LineMoveGenerator {
         while (location.isValid())
         {
             delta = delta.add(step);
-            location = step.translocate(location);
+            location = step.translate(location);
             
             Move newMove = MoveGeneratorUtil.genMove(position, piece, delta);
             if (newMove == null)

@@ -65,7 +65,7 @@ public class KingMoveGenerator implements PieceMoveGenerator
             {
                 return new Move(
                         piece.getLocation(),
-                        Vector.RIGHT_RIGHT.translocate(piece.getLocation()),
+                        Vector.RIGHT_RIGHT.translate(piece.getLocation()),
                         MoveType.CASTLE_SHORT, null, color);
             }
             return null;
@@ -96,7 +96,7 @@ public class KingMoveGenerator implements PieceMoveGenerator
             {
                 return new Move(
                         piece.getLocation(),
-                        Vector.LEFT_LEFT.translocate(piece.getLocation()),
+                        Vector.LEFT_LEFT.translate(piece.getLocation()),
                         MoveType.CASTLE_LONG, null, color);
             }
             return null;

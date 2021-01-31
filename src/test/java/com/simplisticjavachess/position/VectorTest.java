@@ -45,11 +45,11 @@ public class VectorTest {
 
     @Test
     public void testTranslocate() {
-        assertEquals(new Location(5,65), new Vector(1,2).translocate(new Location(4, 63)));
-        assertEquals(new Location(4,62), Vector.DOWN.translocate(new Location(4, 63)));
-        assertEquals(new Location(4,64), Vector.UP.translocate(new Location(4, 63)));
-        assertEquals(new Location(3,63), Vector.LEFT.translocate(new Location(4, 63)));
-        assertEquals(new Location(5,63), Vector.RIGHT.translocate(new Location(4, 63)));
+        assertEquals(new Location(5,65), new Vector(1,2).translate(new Location(4, 63)));
+        assertEquals(new Location(4,62), Vector.DOWN.translate(new Location(4, 63)));
+        assertEquals(new Location(4,64), Vector.UP.translate(new Location(4, 63)));
+        assertEquals(new Location(3,63), Vector.LEFT.translate(new Location(4, 63)));
+        assertEquals(new Location(5,63), Vector.RIGHT.translate(new Location(4, 63)));
     }
 
     @Test
