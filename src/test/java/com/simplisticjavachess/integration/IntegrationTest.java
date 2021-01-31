@@ -21,6 +21,20 @@ public class IntegrationTest
 
     @Test
     public void fiftyMoveRuleDraw() throws IllegalMoveException {
+        /*
+         _______________
+         k . . . . . . .     8
+         . . . . . . . .     7
+         . . . . . . . .     6
+         . . . . . . . .     5
+         . . . . . . . .     4
+         . . . . . . . .     3
+         N B . . . . . .     2
+         K . . . . . . .     1
+         _______________
+         a b c d e f g h
+          White to move
+         */
         Position position = PositionIO.FEN("k7/8/8/8/8/8/NB6/K7 w - - 49 49");
         assertFalse(position.isDrawBy50Move());
         Position drawPosition = Mover.doMove(position, "a1b1");
@@ -30,7 +44,21 @@ public class IntegrationTest
     @Test
     public void staleMateTest()
     {
-        //Stalemate
+        /*
+         _______________
+         . . . . . . . .     8
+         . . . . . . . p     7
+         . . . . . . . P     6
+         . . . . . . . P     5
+         . . . . . . . P     4
+         . . . . . . . P     3
+         . . . . k . . P     2
+         . . . . . . . K     1
+         _______________
+         a b c d e f g h
+           Black to move
+        */
+        // Chose stalemate move
         assertMove("8/7p/7P/7P/7P/7P/4k2P/7K b - - 0 0", "", "e2f1 e2f2", 4);
     }
 
@@ -38,7 +66,21 @@ public class IntegrationTest
     @Test
     public void avoidingMateMinMax()
     {
-        assertMove("k7/P1p5/KP6/8/8/8/1P6/8 b - - 0 0", "", "c7b6", 4);
+        /*
+         _______________
+         k . . . . . . .     8
+         P . p . . . . .     7
+         K P . . . . . .     6
+         . . . . . . . .     5
+         . . . . . . . .     4
+         . . . . . . . .     3
+         . . p . . . . .     2
+         . . . . . . . .     1
+         _______________
+         a b c d e f g h
+          Black to move
+                 */
+        assertMove("k7/P1p5/KP6/8/8/8/2p5/8 b - - 0 1", "", "c7b6", 4);
     }
 
     @Ignore(value = "slow")

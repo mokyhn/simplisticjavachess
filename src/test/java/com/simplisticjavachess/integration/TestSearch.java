@@ -31,6 +31,8 @@ public class TestSearch
     {
         Position position = PositionIO.FEN(fen);
 
+        System.out.println(position);
+
         // Do initial set of moves
         try {
             position = Mover.doMove(position, moveSequence);
@@ -50,6 +52,7 @@ public class TestSearch
             if (expected.contains(foundMove))
             {
                 assertTrue(true);
+                System.out.println(searchResult);
             }
             else
             {
