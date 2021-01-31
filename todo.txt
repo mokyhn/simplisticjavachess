@@ -58,7 +58,7 @@ AlphaBetaEngine
 BishopMoveGenerator
 ChessCLI
 ChessEngineCommunicationProtocol
-ChessGame
+ChessGame (TODO: Make it testable and make an integration test for it)
 
 Command
 CommandBlack
@@ -82,9 +82,9 @@ EvaluationConstantsFactoryImpl
 FENPositions
 FixedMoveGenerator
 GameResult
-IntegerEvaluator
+IntegerEvaluator (todo Create unittest for this)
 Locations
-MinMaxEngine
+MinMaxEngine (TODO: Find a way to UNIT TEST THIS, is mockito? a solution?, alternative: Make a simple integration test)
 MinMaxEngineTest
 Move
 MoveGenerator
@@ -96,4 +96,4 @@ MoveSequence
 PieceMoveGenerator
 RandomEngine
 RookMoveGenerator
-SearchResult
+SearchResult (TODO: Create a unit test for this)
