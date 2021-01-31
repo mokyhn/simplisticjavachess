@@ -59,6 +59,7 @@ BishopMoveGenerator
 ChessCLI
 ChessEngineCommunicationProtocol
 ChessGame
+
 Command
 CommandBlack
 CommandGo
@@ -72,6 +73,7 @@ CommandSetBoard
 CommandUndo
 CommandWhite
 CommandXBoard
+
 Engine
 Evaluation
 EvaluationConstantsFactory
