@@ -4,6 +4,7 @@ package com.simplisticjavachess.integration;
  * @author Morten Kühnrich
  */
 
+import com.simplisticjavachess.End2EndTest;
 import com.simplisticjavachess.position.PositionIO;
 import com.simplisticjavachess.position.IllegalMoveException;
 import com.simplisticjavachess.position.Mover;
@@ -16,7 +17,8 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Ignore;
 
-public class IntegrationTest
+@End2EndTest
+public class LegacyTests
 {
 
     @Test

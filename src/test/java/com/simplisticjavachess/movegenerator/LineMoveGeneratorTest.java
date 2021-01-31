@@ -1,86 +1,82 @@
 package com.simplisticjavachess.movegenerator;
 
+import com.simplisticjavachess.UnitTest;
 import com.simplisticjavachess.position.PositionIO;
 import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.position.Vector;
 import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
+
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 /**
- *
  * @author Morten Kühnrich
  */
-public class LineMoveGeneratorTest
-{
-    
+@UnitTest
+public class LineMoveGeneratorTest {
+
     @Test
-    public void testGenerateMovesUpRight()
-    {         
+    public void testGenerateMovesUpRight() {
         Position position = PositionIO.algebraic("Bd5 w");
         Piece piece = Piece.parse("Bd5");
 
-        List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, 1)).generateMoves(position, piece));
-        assertEquals(3, result.size()); // e6, f7, g8
-        assertTrue(result.toString().contains("d5-e6"));
-        assertTrue(result.toString().contains("d5-f7"));
-        assertTrue(result.toString().contains("d5-g8"));
+        List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, 1)).generateMoves(position,
+                piece));
+        Assert.assertEquals(3, result.size()); // e6, f7, g8
+        Assert.assertTrue(result.toString().contains("d5-e6"));
+        Assert.assertTrue(result.toString().contains("d5-f7"));
+        Assert.assertTrue(result.toString().contains("d5-g8"));
     }
-    
+
     @Test
-    public void testGenerateMovesDown()
-    {
+    public void testGenerateMovesDown() {
         Position board = PositionIO.algebraic("Rd5 w");
         Piece piece = Piece.parse("Rd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(0, -1)).generateMoves(board, piece));
-        assertEquals(4, result.size());
-        assertTrue(result.toString().contains("d5-d4"));
-        assertTrue(result.toString().contains("d5-d3"));
-        assertTrue(result.toString().contains("d5-d2"));
-        assertTrue(result.toString().contains("d5-d1"));
+        Assert.assertEquals(4, result.size());
+        Assert.assertTrue(result.toString().contains("d5-d4"));
+        Assert.assertTrue(result.toString().contains("d5-d3"));
+        Assert.assertTrue(result.toString().contains("d5-d2"));
+        Assert.assertTrue(result.toString().contains("d5-d1"));
     }
-    
-    
+
+
     @Test
-    public void testGenerateMovesLeft()
-    {
+    public void testGenerateMovesLeft() {
         Position board = PositionIO.algebraic("Rd5 w");
         Piece piece = Piece.parse("Rd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(-1, 0)).generateMoves(board, piece));
-        assertEquals(3, result.size());
-        assertTrue(result.toString().contains("d5-c5"));
-        assertTrue(result.toString().contains("d5-b5"));
-        assertTrue(result.toString().contains("d5-a5"));
+        Assert.assertEquals(3, result.size());
+        Assert.assertTrue(result.toString().contains("d5-c5"));
+        Assert.assertTrue(result.toString().contains("d5-b5"));
+        Assert.assertTrue(result.toString().contains("d5-a5"));
     }
 
     @Test
-    public void testGenerateMovesLeftBlockingPiece()
-    {
+    public void testGenerateMovesLeftBlockingPiece() {
         Position board = PositionIO.algebraic("Rd5 Pb5 w");
         Piece piece = Piece.parse("Rd5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(-1, 0)).generateMoves(board, piece));
-        assertEquals(1, result.size());
-        assertTrue(result.toString().contains("d5-c5"));
+        Assert.assertEquals(1, result.size());
+        Assert.assertTrue(result.toString().contains("d5-c5"));
     }
-    
+
     @Test
-    public void testGenerateDownRightAndCapture()
-    {
+    public void testGenerateDownRightAndCapture() {
         Position board = PositionIO.algebraic("Bc5 pe3 pf2 w");
         Piece piece = Piece.parse("Bc5");
 
         List<Move> result = IteratorUtils.toList(new LineMoveGenerator(new Vector(1, -1)).generateMoves(board, piece));
-        assertEquals(2, result.size());
-        assertTrue(result.toString().contains("c5-d4"));
-        assertTrue(result.toString().contains("c5xe3"));        
+        Assert.assertEquals(2, result.size());
+        Assert.assertTrue(result.toString().contains("c5-d4"));
+        Assert.assertTrue(result.toString().contains("c5xe3"));
     }
-    
+
 }

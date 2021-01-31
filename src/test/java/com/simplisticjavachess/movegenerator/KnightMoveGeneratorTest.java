@@ -1,5 +1,6 @@
 package com.simplisticjavachess.movegenerator;
 
+import com.simplisticjavachess.UnitTest;
 import com.simplisticjavachess.position.*;
 import com.simplisticjavachess.misc.*;
 import com.simplisticjavachess.move.*;
@@ -10,6 +11,7 @@ import java.util.*;
 
 import static org.junit.Assert.*;
 
+@UnitTest
 public class KnightMoveGeneratorTest {
 
 	@Test

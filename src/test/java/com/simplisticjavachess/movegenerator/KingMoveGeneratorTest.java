@@ -1,5 +1,6 @@
 package com.simplisticjavachess.movegenerator;
 
+import com.simplisticjavachess.UnitTest;
 import com.simplisticjavachess.position.PositionIO;
 import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.misc.IteratorUtils;
@@ -14,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+@UnitTest
 public class KingMoveGeneratorTest {
 
 	@Test

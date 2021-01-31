@@ -1,11 +1,15 @@
 package com.simplisticjavachess.piece;
 
+import com.simplisticjavachess.UnitTest;
 import com.simplisticjavachess.position.Location;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+@UnitTest
 public class PieceMapTest {
 
     PieceMap pieceMap;
@@ -71,7 +75,7 @@ public class PieceMapTest {
 
     @Test
     public void testFreeSquare() {
-        assertTrue(pieceMap.freeSquare(3,4));
+        assertTrue(pieceMap.freeSquare(3, 4));
     }
 
 }

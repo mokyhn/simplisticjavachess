@@ -1,72 +1,68 @@
 package com.simplisticjavachess.evaluation;
 
+import com.simplisticjavachess.UnitTest;
 import com.simplisticjavachess.piece.Color;
+import org.junit.Assert;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
- *
  * @author Morten Kühnrich
  */
-public class IntegerEvaluationTest
-{
+@UnitTest
+public class IntegerEvaluationTest {
 
     private static Evaluation NONE = EvaluationConstantsFactoryImpl.instance().getNone();
 
     @Test
-    public void testImproveNoneWithSomething()
-    {
+    public void testImproveNoneWithSomething() {
         IntegerEvaluation result = (IntegerEvaluation) NONE.improveWith(Color.BLACK, IntegerEvaluation.of(17));
-        assertEquals(IntegerEvaluation.of(17), result);
+        Assert.assertEquals(IntegerEvaluation.of(17), result);
     }
 
     @Test
-    public void testImproveSomethingWithNone()
-    {
+    public void testImproveSomethingWithNone() {
         IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.BLACK, NONE);
-        assertEquals(IntegerEvaluation.of(17), result);
+        Assert.assertEquals(IntegerEvaluation.of(17), result);
     }
 
     @Test
-    public void testImproveSomethingWithSomething_no_improvement_equals()
-    {
-        IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.BLACK, IntegerEvaluation.of(17));
-        assertEquals(IntegerEvaluation.of(17), result);
+    public void testImproveSomethingWithSomething_no_improvement_equals() {
+        IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.BLACK,
+                IntegerEvaluation.of(17));
+        Assert.assertEquals(IntegerEvaluation.of(17), result);
     }
 
     @Test
-    public void testImproveSomethingWithSomething_no_improvement_larger()
-    {
-        IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.BLACK, IntegerEvaluation.of(18));
-        assertEquals(IntegerEvaluation.of(17), result);
+    public void testImproveSomethingWithSomething_no_improvement_larger() {
+        IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.BLACK,
+                IntegerEvaluation.of(18));
+        Assert.assertEquals(IntegerEvaluation.of(17), result);
     }
 
     @Test
-    public void testBlackImproveSomethingWithSomething()
-    {
-        IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.BLACK, IntegerEvaluation.of(16));
-        assertEquals(IntegerEvaluation.of(16), result);
+    public void testBlackImproveSomethingWithSomething() {
+        IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.BLACK,
+                IntegerEvaluation.of(16));
+        Assert.assertEquals(IntegerEvaluation.of(16), result);
     }
 
     @Test
-    public void testWhiteImproveSomethingWithSomething()
-    {
-        IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.WHITE, IntegerEvaluation.of(18));
-        assertEquals(IntegerEvaluation.of(18), result);
+    public void testWhiteImproveSomethingWithSomething() {
+        IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.WHITE,
+                IntegerEvaluation.of(18));
+        Assert.assertEquals(IntegerEvaluation.of(18), result);
     }
 
     @Test
-    public void testToString()
-    {
-        assertEquals("None", NONE.toString());
-        assertEquals("17", IntegerEvaluation.of(17).toString());
+    public void testToString() {
+        Assert.assertEquals("None", NONE.toString());
+        Assert.assertEquals("17", IntegerEvaluation.of(17).toString());
     }
 
     @Test
-    public void testEquals()
-    {
-        assertEquals(IntegerEvaluation.of(17), IntegerEvaluation.of(17));
-        assertNotEquals(IntegerEvaluation.of(17), NONE);
+    public void testEquals() {
+        Assert.assertEquals(IntegerEvaluation.of(17), IntegerEvaluation.of(17));
+        Assert.assertNotEquals(IntegerEvaluation.of(17), NONE);
     }
 
 

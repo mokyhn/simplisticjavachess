@@ -1,12 +1,12 @@
 package com.simplisticjavachess.movegenerator;
 
+import com.simplisticjavachess.UnitTest;
 import org.junit.Test;
 
-public class OpeningBookTest
-{
+@UnitTest
+public class OpeningBookTest {
     @Test
-    public void test()
-    {
+    public void test() {
         new OpeningBook().get();
     }
 }

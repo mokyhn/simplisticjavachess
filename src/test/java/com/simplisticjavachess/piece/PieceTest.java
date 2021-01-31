@@ -1,5 +1,6 @@
 package com.simplisticjavachess.piece;
 
+import com.simplisticjavachess.UnitTest;
 import com.simplisticjavachess.position.Location;
 import org.junit.Test;
 
@@ -10,72 +11,63 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 /**
- *
  * @author Morten Kühnrich
  */
-public class PieceTest
-{
+
+@UnitTest
+public class PieceTest {
     private Piece p12 = new Piece(new Location(1, 2), Color.BLACK, PieceType.KNIGHT);
 
     @Test
-    public void testEquals1()
-    { 
+    public void testEquals1() {
         Piece p2 = new Piece(new Location(1, 2), Color.BLACK, PieceType.KNIGHT);
         assertEquals(p12, p2);
     }
 
     @Test
-    public void testNotEquals1()
-    {
+    public void testNotEquals1() {
         Piece p2 = new Piece(new Location(1, 2), Color.WHITE, PieceType.KNIGHT);
         assertNotEquals(p12, p2);
     }
 
     @Test
-    public void testNotEquals2()
-    {
+    public void testNotEquals2() {
         Piece p2 = new Piece(new Location(1, 2), Color.BLACK, PieceType.KING);
         assertNotEquals(p12, p2);
     }
-   
+
     @Test
-    public void testNotEquals3()
-    {
+    public void testNotEquals3() {
         Piece p2 = new Piece(new Location(1, 4), Color.BLACK, PieceType.KNIGHT);
         assertNotEquals(p12, p2);
     }
-   
+
     @Test
-    public void testNotEquals4()
-    {
+    public void testNotEquals4() {
         Piece p2 = new Piece(new Location(4, 2), Color.BLACK, PieceType.KNIGHT);
         assertNotEquals(p12, p2);
     }
-   
+
     @Test
-    public void testHash1()
-    {
+    public void testHash1() {
         Piece p = new Piece(new Location(1, 1), Color.BLACK, PieceType.KNIGHT);
         assertNotEquals(p12.hashCode(), p.hashCode());
     }
-    
+
     @Test
-    public void testHash2()
-    {
+    public void testHash2() {
         Piece p = new Piece(new Location(1, 2), Color.WHITE, PieceType.KNIGHT);
         assertNotEquals(p12.hashCode(), p.hashCode());
     }
-    
+
     @Test
-    public void testHash3()
-    {
+    public void testHash3() {
         Piece p = new Piece(new Location(1, 2), Color.BLACK, PieceType.KING);
         assertNotEquals(p12.hashCode(), p.hashCode());
     }
 
     @Test
-    public void testAllHashs()
-    {
+    public void testAllHashs() {
         Set<Integer> hashSet = new HashSet();
 
         for (Color color : Color.values()) {
@@ -89,6 +81,6 @@ public class PieceTest
         }
 
         // All hash's are unique
-        assertEquals(2*6*8*8, hashSet.size());
+        assertEquals(2 * 6 * 8 * 8, hashSet.size());
     }
 }

@@ -78,7 +78,7 @@ Engine
 Evaluation
 EvaluationConstantsFactory
 EvaluationConstantsFactoryImpl
-Evaluator
+
 FENPositions
 FixedMoveGenerator
 GameResult

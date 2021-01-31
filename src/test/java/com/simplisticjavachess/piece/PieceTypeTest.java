@@ -1,13 +1,14 @@
 package com.simplisticjavachess.piece;
 
 import static org.junit.Assert.assertNotEquals;
+
+import com.simplisticjavachess.UnitTest;
 import org.junit.Test;
 
-public class PieceTypeTest
-{
+@UnitTest
+public class PieceTypeTest {
     @Test
-    public void hashCodeTest()
-    {
+    public void hashCodeTest() {
         assertNotEquals(PieceType.BISHOP.hashCode(), PieceType.KNIGHT.hashCode());
     }
 }
