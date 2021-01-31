@@ -15,16 +15,11 @@ public class Mover
     {
         Piece piece = position.getPiece(move.getFrom());
 
-        Position newPosition = position.setMove(move);
+        Position newPosition = position.setMove(move).tickGameClock();
 
-        newPosition = newPosition.tickGameClock();
-
-        if (move.getMoveType().isCapture() || piece.getPieceType().isPawn())
-        {
+        if (move.getMoveType().isCapture() || piece.getPieceType().isPawn()) {
             newPosition = newPosition.resetFiftyMoveDrawClock();
-        }
-        else
-        {
+        } else {
             newPosition = newPosition.tickFiftyMoveDrawClock();
         }
 
@@ -116,7 +111,7 @@ public class Mover
         }
 
         // Swap the move color
-        newPosition = newPosition.setInMove(position.inMove().opponent());
+        newPosition = newPosition.flipInMove();
 
         if (newPosition.isInCheck(position.inMove()))
         {

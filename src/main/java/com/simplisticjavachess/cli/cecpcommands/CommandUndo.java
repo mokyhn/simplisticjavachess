@@ -3,6 +3,8 @@ package com.simplisticjavachess.cli.cecpcommands;
 import com.simplisticjavachess.game.ChessGame;
 import com.simplisticjavachess.cli.Command;
 
+import java.util.NoSuchElementException;
+
 /**
  *
  * @author Morten Kühnrich
@@ -28,7 +30,11 @@ public class CommandUndo implements Command
     @Override
     public void execute(String[] arguments)
     {
-        chessGame.undo();
+        try {
+            chessGame.undo();
+        } catch (NoSuchElementException e) {
+            System.out.println("No possible to undo in this position");
+        }
     }
 
     @Override

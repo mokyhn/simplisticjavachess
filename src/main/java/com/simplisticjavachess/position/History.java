@@ -2,49 +2,41 @@ package com.simplisticjavachess.position;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.NoSuchElementException;
 
-public class History implements Iterable<Position>
-{
+public class History implements Iterable<Position> {
     LinkedList<Position> positions;
 
-    public History()
-    {
+    public History() {
         positions = new LinkedList<>();
     }
 
-    public History(String fen)
-    {
+    public History(String fen) {
         positions = new LinkedList<>();
         positions.add(PositionIO.FEN(fen));
     }
 
-    private History(LinkedList<Position> positions)
-    {
+    private History(LinkedList<Position> positions) {
         this.positions = positions;
     }
 
-    public History add(Position position)
-    {
+    public History add(Position position) {
         LinkedList<Position> positionsList = new LinkedList<>(this.positions);
         positionsList.add(position);
         return new History(positionsList);
     }
 
-    public Position getCurrent()
-    {
+    public Position getCurrent() {
         return positions.getLast();
     }
 
-    public History undo()
-    {
-        if (positions.size() <= 1)
-        {
-            return this;
-        }
-        else {
+    public History undo() {
+        if (positions.size() > 1) {
             LinkedList<Position> positionsList = new LinkedList<>(this.positions);
             positionsList.removeLast();
             return new History(positionsList);
+        } else {
+            throw new NoSuchElementException("No positions to undo");
         }
     }
 
@@ -53,19 +45,28 @@ public class History implements Iterable<Position>
         return positions.iterator();
     }
 
-    public boolean isDrawByRepetition()
-    {
+    /**
+     * Check if the current position have occurred two times before in the history
+     *
+     * @return
+     */
+    public boolean isDrawByRepetition() {
         int count = 0;
 
         Position current = getCurrent();
 
-        for (Position p : positions)
-        {
-            if (p != current && current.equals(p))
-            {
+        for (int i = 0; i < positions.size(); i++) {
+            if (current.equals(positions.get(i))) {
                 count++;
             }
         }
-        return count >= 3;
+        if (count == 3) {
+            return true;
+        } else if (count > 3) {
+            throw new IllegalStateException("The same position cannot have occurred more than three times " +
+                    "- it is already a draw");
+        } else {
+            return false;
+        }
     }
 }

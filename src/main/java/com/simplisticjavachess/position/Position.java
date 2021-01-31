@@ -56,6 +56,12 @@ public class Position
         return newPosition;
     }
 
+    public Position flipInMove()
+    {
+        Position newPosition = new Position(inMove.opponent(), this.castlingState, this.pieceMap, this.enpassantMove, this.fiftyMoveDrawClock, this.gameClock);
+        return newPosition;
+    }
+
     public Position setCanCastleShort(boolean flag, Color color)
     {
         CastlingState newCastlingState;
