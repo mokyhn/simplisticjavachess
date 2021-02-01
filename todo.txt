@@ -96,4 +96,3 @@ MoveSequence
 PieceMoveGenerator
 RandomEngine
 RookMoveGenerator
-SearchResult (TODO: Create a unit test for this)

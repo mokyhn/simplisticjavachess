@@ -37,6 +37,6 @@ public class SearchResult {
     @Override
     public String toString()
     {
-        return "Move " + moveSequence + " with evaluation " + evaluation.toString();
+        return "Move " + moveSequence.toString() + " with evaluation " + evaluation.toString();
     }
 }
