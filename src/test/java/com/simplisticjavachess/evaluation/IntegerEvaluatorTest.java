@@ -1,10 +1,12 @@
 package com.simplisticjavachess.evaluation;
 
+import com.simplisticjavachess.UnitTest;
 import com.simplisticjavachess.position.PositionIO;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+@UnitTest
 public class IntegerEvaluatorTest {
 
     @Test
