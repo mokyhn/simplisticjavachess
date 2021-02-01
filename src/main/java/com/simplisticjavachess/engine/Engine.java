@@ -14,8 +14,8 @@ public interface Engine
      * @param position the board to search for moves in
      * @param moveGenerator the move generator
      * @param evaluator the evaluator that evaluate resulting positions
-     * @param plyDepth the depth to search in
+     * @param depth the ply depth to search in
      * @return
      */
-    SearchResult search(Position position, MoveGenerator moveGenerator, Evaluator evaluator, int plyDepth);
+    SearchResult search(Position position, MoveGenerator moveGenerator, Evaluator evaluator, int depth);
 }
