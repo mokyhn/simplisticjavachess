@@ -11,7 +11,7 @@ import org.junit.Test;
 @UnitTest
 public class IntegerEvaluationTest {
 
-    private static Evaluation NONE = EvaluationConstantsFactoryImpl.instance().getNone();
+    private static Evaluation NONE = new IntegerEvaluator().getNone();
 
     @Test
     public void testImproveNoneWithSomething() {

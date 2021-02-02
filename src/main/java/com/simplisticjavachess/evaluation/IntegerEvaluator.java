@@ -7,8 +7,7 @@ package com.simplisticjavachess.evaluation;
 import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.piece.Piece;
 
-public class IntegerEvaluator implements Evaluator
-{
+public class IntegerEvaluator implements Evaluator {
     public static final int WHITE_IS_MATED = -10000;
     public static final int BLACK_IS_MATED = 10000;
 
@@ -19,15 +18,12 @@ public class IntegerEvaluator implements Evaluator
     private static final int QUEEN_VALUE = 9;
 
     @Override
-    public IntegerEvaluation evaluate(Position position)
-    {
+    public IntegerEvaluation evaluate(Position position) {
         int result = 0;
 
-        for (Piece p : position.getPieces())
-        {
+        for (Piece p : position.getPieces()) {
             int color = p.getColor().getColor();
-            switch (p.getType())
-            {
+            switch (p.getType()) {
                 case PAWN:
                     result += PAWN_VALUE * color;
                     break;
@@ -51,6 +47,26 @@ public class IntegerEvaluator implements Evaluator
         }
 
         return IntegerEvaluation.of(result);
+    }
+
+    @Override
+    public Evaluation getNone() {
+        return new IntegerEvaluation();
+    }
+
+    @Override
+    public Evaluation getEqual() {
+        return new IntegerEvaluation(0);
+    }
+
+    @Override
+    public Evaluation getWhiteIsMate() {
+        return new IntegerEvaluation(WHITE_IS_MATED);
+    }
+
+    @Override
+    public Evaluation getBlackIsMate() {
+        return new IntegerEvaluation(BLACK_IS_MATED);
     }
 
 }

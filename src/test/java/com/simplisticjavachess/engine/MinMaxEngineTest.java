@@ -3,6 +3,8 @@ package com.simplisticjavachess.engine;
 import com.simplisticjavachess.End2EndTest;
 import com.simplisticjavachess.movegenerator.MainMoveGenerator;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
+import com.simplisticjavachess.position.ChessMover;
+import com.simplisticjavachess.position.Mover;
 import com.simplisticjavachess.position.PositionIO;
 import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.evaluation.Evaluator;
@@ -15,6 +17,7 @@ import org.junit.Test;
 public class MinMaxEngineTest {
 
     MinMaxEngine engine;
+    Mover mover;
     MoveGenerator moveGenerator;
     Evaluator evaluator;
 
@@ -22,6 +25,7 @@ public class MinMaxEngineTest {
     public void before() {
         engine = new MinMaxEngine();
         evaluator = new IntegerEvaluator();
+        mover = new ChessMover();
     }
 
     @Test
@@ -29,7 +33,7 @@ public class MinMaxEngineTest {
         Position position = PositionIO.algebraic("Kh1 Pb2 kd8 na5 nc5 w");
         moveGenerator = new MainMoveGenerator(MainMoveGenerator.PAWN_MOVE_GENERATOR,
                 MainMoveGenerator.KNIGHT_MOVE_GENERATOR, MainMoveGenerator.KING_MOVE_GENERATOR);
-        SearchResult result = engine.search(position, moveGenerator, evaluator, 3);
+        SearchResult result = engine.search(position, mover, moveGenerator, evaluator, 3);
         Assert.assertEquals("b2-b4", result.getMoveSequence().getFirst().toString());
     }
 
@@ -37,7 +41,7 @@ public class MinMaxEngineTest {
     public void protoToKnightAndMate() {
         Position position = PositionIO.FEN("8/6Pp/7k/5K1p/7P/8/8/B7 w - - 0 1");
         moveGenerator = new MainMoveGenerator();
-        SearchResult result = engine.search(position, moveGenerator, evaluator, 3);
+        SearchResult result = engine.search(position, mover, moveGenerator, evaluator, 3);
         Assert.assertEquals("g7-g8=N", result.getMoveSequence().getFirst().toString());
     }
 
@@ -45,7 +49,7 @@ public class MinMaxEngineTest {
     public void obtainStaleMate() {
         Position position = PositionIO.FEN("2r4r/7k/7p/8/8/pp6/p7/K5R1 w - - 0 1");
         moveGenerator = new MainMoveGenerator();
-        SearchResult result = engine.search(position, moveGenerator, evaluator, 4);
+        SearchResult result = engine.search(position, mover, moveGenerator, evaluator, 4);
         Assert.assertEquals("g1-g7", result.getMoveSequence().getFirst().toString());
     }
 

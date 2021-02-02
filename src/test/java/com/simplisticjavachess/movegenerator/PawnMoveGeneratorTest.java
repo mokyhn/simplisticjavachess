@@ -1,10 +1,6 @@
 package com.simplisticjavachess.movegenerator;
 
 import com.simplisticjavachess.UnitTest;
-import com.simplisticjavachess.position.PositionIO;
-import com.simplisticjavachess.position.IllegalMoveException;
-import com.simplisticjavachess.position.Mover;
-import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveParser;
@@ -14,10 +10,17 @@ import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
 
+import com.simplisticjavachess.position.ChessMover;
+import com.simplisticjavachess.position.IllegalMoveException;
+import com.simplisticjavachess.position.Mover;
+import com.simplisticjavachess.position.Position;
+import com.simplisticjavachess.position.PositionIO;
 import org.junit.Test;
 
 @UnitTest
 public class PawnMoveGeneratorTest {
+
+    private final static Mover mover = new ChessMover();
 
     @Test
     public void testMoveFromHome() {
@@ -64,7 +67,7 @@ public class PawnMoveGeneratorTest {
     @Test
     public void testEnpassantLeft() throws IllegalMoveException {
         Position board = PositionIO.algebraic("ka1 Kh8 Pd2 pc4  w");
-        board = Mover.doMove(board, MoveParser.parse(board, "d2d4"));
+        board = mover.doMove(board, MoveParser.parse(board, "d2d4"));
         Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("pc4"));
         String movesStr = IteratorUtils.toString(moves);
         assertEquals("[c4-c3, c4xd3]", movesStr);
@@ -73,7 +76,7 @@ public class PawnMoveGeneratorTest {
     @Test
     public void testEnpassantRight() throws IllegalMoveException {
         Position board = PositionIO.algebraic("ka1 Kh8 Pd2 pe4  w");
-        board = Mover.doMove(board, MoveParser.parse(board, "d2d4"));
+        board = mover.doMove(board, MoveParser.parse(board, "d2d4"));
         Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("pe4"));
         String movesStr = IteratorUtils.toString(moves);
         assertEquals("[e4-e3, e4xd3]", movesStr);
@@ -82,9 +85,9 @@ public class PawnMoveGeneratorTest {
     @Test
     public void lostEnpassantRight() throws IllegalMoveException {
         Position board = PositionIO.algebraic("ka1 Kh8 Pd2 pe4  w");
-        board = Mover.doMove(board, MoveParser.parse(board, "d2d4"));
-        board = Mover.doMove(board, MoveParser.parse(board, "a1b1"));
-        board = Mover.doMove(board, MoveParser.parse(board, "h8g8"));
+        board = mover.doMove(board, MoveParser.parse(board, "d2d4"));
+        board = mover.doMove(board, MoveParser.parse(board, "a1b1"));
+        board = mover.doMove(board, MoveParser.parse(board, "h8g8"));
         Iterator<Move> moves = new PawnMoveGenerator().generateMoves(board, Piece.parse("pe4"));
         String movesStr = IteratorUtils.toString(moves);
         assertEquals("[e4-e3]", movesStr);

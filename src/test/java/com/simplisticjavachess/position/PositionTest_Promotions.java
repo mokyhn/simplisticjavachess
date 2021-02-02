@@ -30,6 +30,8 @@ public class PositionTest_Promotions {
         return PositionIO.FEN("nnnnnnnn/PPPPPPPP/8/K7/7k/8/pppppppp/NNNNNNNN b");
     }
 
+    private static final Mover mover = new ChessMover();
+
     @Test
     public void testWhiteSimplePromotions() throws IllegalMoveException {
         Position board = WHITE_READY_TO_PROMOTE();
@@ -61,7 +63,7 @@ public class PositionTest_Promotions {
                 Location to = new Location(x, 7);
                 Move move = new Move(from, to, moveType, null, Color.WHITE);
                 System.out.println("Doing move " + move.toString());
-                Position moveResult = Mover.doMove(board, move);
+                Position moveResult = mover.doMove(board, move);
                 Assert.assertTrue(moveResult.freeSquare(from));
                 Assert.assertEquals(moveResult.getPiece(to).getType(), pieceType);
                 Assert.assertSame(moveResult.getPiece(to).getColor(), Color.WHITE);
@@ -101,7 +103,7 @@ public class PositionTest_Promotions {
                 Location to = new Location(x, 0);
                 Move move = new Move(from, to, moveType, null, Color.BLACK);
                 System.out.println("Doing move " + move.toString());
-                Position moveResult = Mover.doMove(board, move);
+                Position moveResult = mover.doMove(board, move);
                 Assert.assertTrue(moveResult.freeSquare(from));
                 Assert.assertEquals(moveResult.getPiece(to).getType(), pieceType);
                 Assert.assertSame(moveResult.getPiece(to).getColor(), Color.BLACK);
@@ -170,7 +172,7 @@ public class PositionTest_Promotions {
 
             for (Move move : moveList) {
                 System.out.println("Doing move " + move.toString());
-                Position moveResult = Mover.doMove(board, move);
+                Position moveResult = mover.doMove(board, move);
                 Assert.assertTrue(moveResult.freeSquare(move.getFrom()));
                 Assert.assertEquals(moveResult.getPiece(move.getTo()).getType(), pieceType);
                 Assert.assertSame(moveResult.getPiece(move.getTo()).getColor(), Color.WHITE);
@@ -239,7 +241,7 @@ public class PositionTest_Promotions {
 
             for (Move move : moveList) {
                 System.out.println("Doing move " + move.toString());
-                Position moveResult = Mover.doMove(board, move);
+                Position moveResult = mover.doMove(board, move);
                 Assert.assertTrue(moveResult.freeSquare(move.getFrom()));
                 Assert.assertEquals(moveResult.getPiece(move.getTo()).getType(), pieceType);
                 Assert.assertSame(moveResult.getPiece(move.getTo()).getColor(), Color.BLACK);

@@ -5,6 +5,7 @@
 
 package com.simplisticjavachess.engine;
 
+import com.simplisticjavachess.position.Mover;
 import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.evaluation.Evaluator;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
@@ -12,7 +13,7 @@ import com.simplisticjavachess.movegenerator.MoveGenerator;
 public class RandomEngine implements Engine
 { // Old experiment
     @Override
-    public SearchResult search(Position b, MoveGenerator moveGenerator, Evaluator evaluator, int depth) {
+    public SearchResult search(Position b, Mover mover, MoveGenerator moveGenerator, Evaluator evaluator, int depth) {
         return null;
     }/*
     MoveGenerator moveGenerator = new MoveGenerator();

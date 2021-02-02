@@ -5,10 +5,10 @@ package com.simplisticjavachess.integration;
  */
 
 import com.simplisticjavachess.End2EndTest;
-import com.simplisticjavachess.position.PositionIO;
+import com.simplisticjavachess.position.ChessMover;
 import com.simplisticjavachess.position.IllegalMoveException;
-import com.simplisticjavachess.position.Mover;
 import com.simplisticjavachess.position.Position;
+import com.simplisticjavachess.position.PositionIO;
 import org.junit.Test;
 
 import static com.simplisticjavachess.integration.TestSearch.*;
@@ -18,8 +18,7 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Ignore;
 
 @End2EndTest
-public class LegacyTests
-{
+public class LegacyTests {
 
     @Test
     public void fiftyMoveRuleDraw() throws IllegalMoveException {
@@ -39,13 +38,12 @@ public class LegacyTests
          */
         Position position = PositionIO.FEN("k7/8/8/8/8/8/NB6/K7 w - - 49 49");
         assertFalse(position.isDrawBy50Move());
-        Position drawPosition = Mover.doMove(position, "a1b1");
+        Position drawPosition = new ChessMover().doMove(position, "a1b1");
         assertTrue(drawPosition.isDrawBy50Move());
     }
 
     @Test
-    public void staleMateTest()
-    {
+    public void staleMateTest() {
         /*
          _______________
          . . . . . . . .     8
@@ -64,10 +62,9 @@ public class LegacyTests
         assertMove("8/7p/7P/7P/7P/7P/4k2P/7K b - - 0 0", "", "e2f1 e2f2", 4);
     }
 
-    
+
     @Test
-    public void avoidingMateMinMax()
-    {
+    public void avoidingMateMinMax() {
         /*
          _______________
          k . . . . . . .     8
@@ -87,16 +84,14 @@ public class LegacyTests
 
     @Ignore(value = "slow")
     @Test
-    public void bratkoKopecTest()
-    {
-       assertMove("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b", "", "d6d1", 7); //BK.01
+    public void bratkoKopecTest() {
+        assertMove("1k1r4/pp1b1R2/3q2pp/4p3/2B5/4Q3/PPP2B2/2K5 b", "", "d6d1", 7); //BK.01
     }
-    
+
     @Ignore(value = "slow")
     @Test
-    public void endGameTacticsTest()
-    {
+    public void endGameTacticsTest() {
         assertMove("7k/ppp5/8/PPP5/8/8/8/7K w", "", "b5b6", 10);
     }
-  
+
 }

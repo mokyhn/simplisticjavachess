@@ -5,10 +5,6 @@
 
 package com.simplisticjavachess.game;
 
-import com.simplisticjavachess.position.History;
-import com.simplisticjavachess.position.IllegalMoveException;
-import com.simplisticjavachess.position.Mover;
-import com.simplisticjavachess.position.PositionInference;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.move.Move;
@@ -17,6 +13,11 @@ import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.engine.SearchResult;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.movegenerator.OpeningBook;
+import com.simplisticjavachess.position.ChessMover;
+import com.simplisticjavachess.position.History;
+import com.simplisticjavachess.position.IllegalMoveException;
+import com.simplisticjavachess.position.Mover;
+import com.simplisticjavachess.position.PositionInference;
 
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +28,7 @@ public class ChessGame {
     private static final String INITIAL_POSITION = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 0";
 
     private History history;
+    private final Mover mover = new ChessMover();
     private final MoveGenerator moveGenerator = new MainMoveGenerator();
     private int searchDepth;
     private boolean gameOver;
@@ -68,13 +70,13 @@ public class ChessGame {
             move = openingMove.next();
             System.out.println("Book move " + move.toString());
         } else {
-            SearchResult searchResult = new MinMaxEngine().search(history.getCurrent(), new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
+            SearchResult searchResult = new MinMaxEngine().search(history.getCurrent(), mover, new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
             move = searchResult.getMoveSequence().getFirst();
             System.out.println(searchResult.toString());
         }
 
         try {
-            history = history.add(Mover.doMove(history.getCurrent(), move));
+            history = history.add(mover.doMove(history.getCurrent(), move));
             switch (PositionInference.getGameResult(history)) {
                 case NO_RESULT:
                     break;
@@ -103,7 +105,7 @@ public class ChessGame {
             List<Move> possibleMoves = toList(moveGenerator.generateMoves(history.getCurrent()));
             if (possibleMoves.contains(move)) {
                 try {
-                    history = history.add(Mover.doMove(history.getCurrent(), move));
+                    history = history.add(mover.doMove(history.getCurrent(), move));
                     switch (PositionInference.getGameResult(history)) {
                         case NO_RESULT:
                             break;

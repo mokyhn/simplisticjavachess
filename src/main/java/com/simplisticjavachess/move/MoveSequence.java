@@ -1,7 +1,8 @@
 package com.simplisticjavachess.move;
 
-import com.simplisticjavachess.position.IllegalMoveException;
+import com.simplisticjavachess.position.ChessMover;
 import com.simplisticjavachess.position.Mover;
+import com.simplisticjavachess.position.IllegalMoveException;
 import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.misc.Strings;
 
@@ -48,6 +49,8 @@ public class MoveSequence implements Iterable<Move>
 
    public static MoveSequence parse(Position position, String moveString)
    {
+      Mover mover = new ChessMover();
+
       if (moveString.isEmpty())
       {
          return new MoveSequence();
@@ -62,7 +65,7 @@ public class MoveSequence implements Iterable<Move>
          Move move = MoveParser.parse(position, s);
          try
          {
-            position = Mover.doMove(position, move);
+            position = mover.doMove(position, move);
          }
          catch (IllegalMoveException e)
          {
