@@ -1,3 +1,8 @@
+Add cucumber framework to do something for our integration/end2end tests.
+
+Add some smart feature for hardwiring simple game evaluation trees for unit testing across all engines.
+
+
 
 We need a general mechanism around this setup to check moves performed 
 by the human user of the program. Something like
