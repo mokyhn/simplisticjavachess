@@ -55,6 +55,15 @@ public class IntegerEvaluation extends Evaluation
     }
 
     @Override
+    public Evaluation increase() {
+        if (this.value.isPresent()) {
+            return IntegerEvaluation.of(this.value.get()+1);
+        } else {
+            return IntegerEvaluation.of(0);
+        }
+    }
+
+    @Override
     public String toString()
     {
         return value.isPresent() ? value.get().toString() : "None";

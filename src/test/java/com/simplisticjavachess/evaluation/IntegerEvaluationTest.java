@@ -5,6 +5,8 @@ import com.simplisticjavachess.piece.Color;
 import org.junit.Assert;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * @author Morten Kühnrich
  */
@@ -16,52 +18,59 @@ public class IntegerEvaluationTest {
     @Test
     public void testImproveNoneWithSomething() {
         IntegerEvaluation result = (IntegerEvaluation) NONE.improveWith(Color.BLACK, IntegerEvaluation.of(17));
-        Assert.assertEquals(IntegerEvaluation.of(17), result);
+        assertEquals(IntegerEvaluation.of(17), result);
     }
 
     @Test
     public void testImproveSomethingWithNone() {
         IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.BLACK, NONE);
-        Assert.assertEquals(IntegerEvaluation.of(17), result);
+        assertEquals(IntegerEvaluation.of(17), result);
     }
 
     @Test
     public void testImproveSomethingWithSomething_no_improvement_equals() {
         IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.BLACK,
                 IntegerEvaluation.of(17));
-        Assert.assertEquals(IntegerEvaluation.of(17), result);
+        assertEquals(IntegerEvaluation.of(17), result);
     }
 
     @Test
     public void testImproveSomethingWithSomething_no_improvement_larger() {
         IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.BLACK,
                 IntegerEvaluation.of(18));
-        Assert.assertEquals(IntegerEvaluation.of(17), result);
+        assertEquals(IntegerEvaluation.of(17), result);
     }
 
     @Test
     public void testBlackImproveSomethingWithSomething() {
         IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.BLACK,
                 IntegerEvaluation.of(16));
-        Assert.assertEquals(IntegerEvaluation.of(16), result);
+        assertEquals(IntegerEvaluation.of(16), result);
     }
 
     @Test
     public void testWhiteImproveSomethingWithSomething() {
         IntegerEvaluation result = (IntegerEvaluation) IntegerEvaluation.of(17).improveWith(Color.WHITE,
                 IntegerEvaluation.of(18));
-        Assert.assertEquals(IntegerEvaluation.of(18), result);
+        assertEquals(IntegerEvaluation.of(18), result);
+    }
+
+    @Test
+    public void testIntegerIncrease() {
+        IntegerEvaluation integerEvaluation = new IntegerEvaluation();
+        assertEquals(IntegerEvaluation.of(0), integerEvaluation.increase());
+        assertEquals(IntegerEvaluation.of(1), integerEvaluation.increase().increase());
     }
 
     @Test
     public void testToString() {
-        Assert.assertEquals("None", NONE.toString());
-        Assert.assertEquals("17", IntegerEvaluation.of(17).toString());
+        assertEquals("None", NONE.toString());
+        assertEquals("17", IntegerEvaluation.of(17).toString());
     }
 
     @Test
     public void testEquals() {
-        Assert.assertEquals(IntegerEvaluation.of(17), IntegerEvaluation.of(17));
+        assertEquals(IntegerEvaluation.of(17), IntegerEvaluation.of(17));
         Assert.assertNotEquals(IntegerEvaluation.of(17), NONE);
     }
 

@@ -2,9 +2,11 @@ package com.simplisticjavachess.evaluation;
 
 import com.simplisticjavachess.position.Position;
 
-public interface Evaluator {
-    Evaluation evaluate(Position position);
+/**
+ * The evaluation heuristic function interface
+ */
 
+public interface Evaluator {
     /**
      * @return The un-evaluated evaluation of something
      */
@@ -24,4 +26,12 @@ public interface Evaluator {
      * @return The evaluation when black is mate
      */
     Evaluation getBlackIsMate();
+
+    /**
+     * @param position to evaluation
+     * @return evaluation result of the position
+     */
+    Evaluation evaluate(Position position);
+
+
 }

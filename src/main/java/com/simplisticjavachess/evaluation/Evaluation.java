@@ -21,5 +21,10 @@ public abstract class Evaluation
      */
     public abstract boolean isAnImprovement(Color color, Evaluation other);
 
+    /**
+     * For testing purposes
+     * @return a strictly increased evaluation
+     */
+    public abstract Evaluation increase();
 
 }
