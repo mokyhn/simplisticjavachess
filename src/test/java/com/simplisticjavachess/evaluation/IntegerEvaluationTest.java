@@ -56,13 +56,6 @@ public class IntegerEvaluationTest {
     }
 
     @Test
-    public void testIntegerIncrease() {
-        IntegerEvaluation integerEvaluation = new IntegerEvaluation();
-        assertEquals(IntegerEvaluation.of(0), integerEvaluation.increase());
-        assertEquals(IntegerEvaluation.of(1), integerEvaluation.increase().increase());
-    }
-
-    @Test
     public void testToString() {
         assertEquals("None", NONE.toString());
         assertEquals("17", IntegerEvaluation.of(17).toString());
