@@ -3,7 +3,6 @@ package com.simplisticjavachess.engine;
 import com.simplisticjavachess.evaluation.Evaluation;
 import com.simplisticjavachess.evaluation.Evaluator;
 import com.simplisticjavachess.evaluation.IntegerEvaluation;
-import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.position.IllegalMoveException;
@@ -15,13 +14,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -47,70 +41,46 @@ public class EngineTest {
     }
 
 
-    Position position;
     Mover mover;
     MoveGenerator moveGenerator;
     Evaluator evaluator;
     Evaluation evaluation;
 
-    // Mocked positions for non-leaf nodes
-    List<Position> positions;
+    TreeMaker treeMaker;
 
-
-    // Mocked positions for leaf nodes
-    List<Position> leafs;
-
-    // Mocked evaluations for leaf nodes
-    Map<Position, Evaluation> evaluations;
-
-    List<Move> moves;
 
     @Before
     public void before() {
-        position = mock(Position.class);
         mover = mock(Mover.class);
         moveGenerator = mock(MoveGenerator.class);
         evaluator = mock(Evaluator.class);
         when(evaluator.getNone()).thenReturn(new IntegerEvaluation());
 
+
+        treeMaker = new TreeMaker(moveGenerator, mover, evaluator);
+
         evaluation = mock(Evaluation.class);
 
-        evaluations = new HashMap<>();
 
-        positions = new ArrayList<>();
-        leafs = new ArrayList<>();
+    }
 
-        // Mock leafs
-        for (int i = 0; i < 10; i++) {
-            Position thePosition = mock(Position.class);
-            when(thePosition.isDrawBy50Move()).thenReturn(false);
-            positions.add(mock(Position.class));
-            Position leaf = mock(Position.class);
-            when(leaf.isDrawBy50Move()).thenReturn(false);
-            leafs.add(leaf);
-            evaluations.put(leaf, IntegerEvaluation.of(i));
-            when(evaluator.evaluate(leaf)).thenReturn(IntegerEvaluation.of(i));
-        }
-
-        moves = new ArrayList<>();
-
-        for (int i = 0; i < 10; i++) {
-            moves.add(mock(Move.class));
-        }
-
+    private Position mockPosition() {
+        Position position = mock(Position.class);
+        when(position.isDrawBy50Move()).thenReturn(false);
+        return position;
     }
 
     @Test
     public void testDrawBy50MoveRule() {
-        when(position.isDrawBy50Move()).thenReturn(true);
-        when(evaluator.getEqual()).thenReturn(evaluation);
-        SearchResult searchResult = engine.search(position, mover, moveGenerator, evaluator, 0);
+        TreeMaker t = treeMaker.getDrawBy50MoveRule(evaluation);
+        SearchResult searchResult = engine.search(t.getRoot(), t.getMover(), t.getMoveGenerator(), t.getEvaluator(), 0);
         Assert.assertFalse(searchResult.getMoveSequence().iterator().hasNext());
         assertEquals(evaluation, searchResult.getEvaluation());
     }
 
     @Test
     public void testEvaluationDepth0() {
+        Position position = mock(Position.class);
         when(position.isDrawBy50Move()).thenReturn(false);
         when(evaluator.evaluate(position)).thenReturn(evaluation);
         SearchResult searchResult = engine.search(position, mover, moveGenerator, evaluator, 0);
@@ -120,56 +90,58 @@ public class EngineTest {
 
     @Test
     public void testEvaluationMate() {
-        when(position.isDrawBy50Move()).thenReturn(false);
-        when(moveGenerator.generateMoves(position)).thenReturn(Collections.emptyIterator());
-        when(position.isInCheck()).thenReturn(true);
-        when(position.inMove()).thenReturn(Color.WHITE);
-        when(evaluator.getWhiteIsMate()).thenReturn(evaluation);
-        SearchResult searchResult = engine.search(position, mover, moveGenerator, evaluator, 2);
-        verify(evaluator, times(1)).getWhiteIsMate();
+        TreeMaker t = treeMaker.mate(Color.WHITE, evaluation);
+        SearchResult searchResult = engine.search(t.getRoot(), t.getMover(),
+                t.getMoveGenerator(), t.getEvaluator(), 1);
+        verify(t.getEvaluator(), times(1)).getWhiteIsMate();
+        assertEquals(evaluation, searchResult.getEvaluation());
     }
 
     @Test
     public void testEvaluationStaleMate() {
-        when(position.isDrawBy50Move()).thenReturn(false);
-        when(moveGenerator.generateMoves(position)).thenReturn(Collections.emptyIterator());
-        when(position.isInCheck()).thenReturn(false);
-        when(position.inMove()).thenReturn(Color.WHITE);
-        when(evaluator.getWhiteIsMate()).thenReturn(evaluation);
-        SearchResult searchResult = engine.search(position, mover, moveGenerator, evaluator, 2);
-        verify(evaluator, times(1)).getEqual();
+        TreeMaker t = treeMaker.staleMate(Color.WHITE, evaluation);
+        SearchResult searchResult = engine.search(t.getRoot(), t.getMover(),
+                t.getMoveGenerator(), t.getEvaluator(), 2);
+        verify(t.getEvaluator(), times(1)).getEqual();
     }
 
 
     @Test
     public void testSimpleTreeWhite() throws IllegalMoveException {
-        when(position.isDrawBy50Move()).thenReturn(false);
-        when(moveGenerator.generateMoves(position)).thenReturn(Arrays.asList(moves.get(0), moves.get(1), moves.get(2)).iterator());
-        when(position.inMove()).thenReturn(Color.WHITE);
-
-        when(mover.doMove(position, moves.get(0))).thenReturn(leafs.get(0));
-        when(mover.doMove(position, moves.get(1))).thenReturn(leafs.get(1));
-        when(mover.doMove(position, moves.get(2))).thenReturn(leafs.get(2));
-
-        SearchResult searchResult = engine.search(position, mover, moveGenerator, evaluator, 1);
+        TreeMaker t = treeMaker.leafs(Color.WHITE,0, 1, 2);
+        SearchResult searchResult = engine.search(t.getRoot(), t.getMover(),
+                t.getMoveGenerator(), t.getEvaluator(), 1);
         assertEquals("2", searchResult.getEvaluation().toString());
-
     }
 
     @Test
     public void testSimpleTreeBlack() throws IllegalMoveException {
-        when(position.isDrawBy50Move()).thenReturn(false);
-        when(moveGenerator.generateMoves(position)).thenReturn(Arrays.asList(moves.get(0), moves.get(1), moves.get(2)).iterator());
-        when(position.inMove()).thenReturn(Color.BLACK);
-
-        when(mover.doMove(position, moves.get(0))).thenReturn(leafs.get(0));
-        when(mover.doMove(position, moves.get(1))).thenReturn(leafs.get(1));
-        when(mover.doMove(position, moves.get(2))).thenReturn(leafs.get(2));
-
-        SearchResult searchResult = engine.search(position, mover, moveGenerator, evaluator, 1);
+        TreeMaker t = treeMaker.leafs(Color.BLACK, 0, 1, 2);
+        SearchResult searchResult = engine.search(t.getRoot(), t.getMover(),
+                t.getMoveGenerator(), t.getEvaluator(), 1);
         assertEquals("0", searchResult.getEvaluation().toString());
-
     }
-    //TODO: Add tree tests here. a) Depth 1 trees (done), b) simple depth tree (2) and b) Deeper trees with alpha/beta scenarios
-    // Print number of nodes visited in some tests
+
+    @Test
+    public void testDepth2TreeWhite() throws IllegalMoveException {
+        TreeMaker t = treeMaker.compose(Color.WHITE,
+                treeMaker.leafs(Color.BLACK, 0, 1, 2),
+                treeMaker.leafs(Color.BLACK, 4, 3, 5));
+
+        SearchResult searchResult = engine.search(t.getRoot(),
+                t.getMover(), t.getMoveGenerator(), t.getEvaluator(), 2);
+        assertEquals("3", searchResult.getEvaluation().toString());
+    }
+
+    @Test
+    public void testDepth2TreeBlack() throws IllegalMoveException {
+        TreeMaker t = treeMaker.compose(Color.BLACK,
+                treeMaker.leafs(Color.WHITE, 0, 1, 2),
+                treeMaker.leafs(Color.WHITE, 4, 3, 5));
+
+        SearchResult searchResult = engine.search(t.getRoot(),
+                t.getMover(), t.getMoveGenerator(), t.getEvaluator(), 2);
+        assertEquals("2", searchResult.getEvaluation().toString());
+    }
+
 }
