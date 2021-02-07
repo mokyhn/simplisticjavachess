@@ -119,7 +119,7 @@ public final class MoveParser {
             }
         }
 
-        throw new IllegalStateException("Unreachable branch.");
+        throw new IllegalArgumentException("Illegal move.");
     }
 
     private static String preprocessorCastlingSyntax(String str, Color color) {

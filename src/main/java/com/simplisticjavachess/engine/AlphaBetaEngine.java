@@ -45,15 +45,6 @@ public class AlphaBetaEngine implements Engine {
         }
 
         Iterator<Move> moves = moveGenerator.generateMoves(position);
-        if (!moves.hasNext()) {
-            if (position.isInCheck()) {
-                return new SearchResult(position.inMove().isWhite() ?
-                        evaluator.getWhiteIsMate() : evaluator.getBlackIsMate()); // Mate
-            } else {
-                return new SearchResult(evaluator.getEqual());
-            }
-        }
-
 
         MoveSequence moveSequence = new MoveSequence();
         boolean thereWasALegalMove = false;
@@ -66,10 +57,9 @@ public class AlphaBetaEngine implements Engine {
             Move move = moves.next();
             positions++;
             // Do not search capture moves as the last move
-//            if (depth == 1 && move.getMoveType().isCapture() && !move.getMoveType().isCapturePromotion())
-//            {
-//                continue;
-//            }
+            if (depth == 1 && move.getMoveType().isCapture() && !move.getMoveType().isCapturePromotion()) {
+                continue;
+            }
 
             try {
                 Position next = mover.doMove(position, move);

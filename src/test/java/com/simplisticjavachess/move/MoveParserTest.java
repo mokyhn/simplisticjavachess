@@ -30,5 +30,11 @@ public class MoveParserTest {
                 Color.WHITE), move);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testIllegalMove() {
+        Position problem = PositionIO.FEN("r1bk2nr/pppP2pp/4p3/2b3N1/2PQ1P2/P1N1B1P1/1P2BP1P/R4RK1 w Q - 1 7");
+        MoveParser.parse(problem, "g5e3");
+    }
+
     //TODO: Add more tests here for the move parser.
 }

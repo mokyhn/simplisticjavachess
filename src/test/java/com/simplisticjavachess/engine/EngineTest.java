@@ -27,7 +27,7 @@ import static org.mockito.Mockito.when;
 public class EngineTest {
 
     private final static Collection engines =
-            Arrays.asList(new MinMaxEngine(), new AlphaBetaEngine(), new RandomEngine());
+            Arrays.asList(new MinMaxEngine(), new AlphaBetaEngine());
 
     private final Engine engine;
 
@@ -62,12 +62,6 @@ public class EngineTest {
         evaluation = mock(Evaluation.class);
 
 
-    }
-
-    private Position mockPosition() {
-        Position position = mock(Position.class);
-        when(position.isDrawBy50Move()).thenReturn(false);
-        return position;
     }
 
     @Test
@@ -142,6 +136,46 @@ public class EngineTest {
         SearchResult searchResult = engine.search(t.getRoot(),
                 t.getMover(), t.getMoveGenerator(), t.getEvaluator(), 2);
         assertEquals("2", searchResult.getEvaluation().toString());
+    }
+
+    @Test
+    public void testDepth6TreeWhiteWithCutoffs() throws IllegalMoveException {
+        TreeMaker t1l = treeMaker.compose(Color.WHITE, treeMaker.compose(Color.BLACK,
+                treeMaker.leafs(Color.WHITE, 5, 6),
+                treeMaker.leafs(Color.WHITE, 7, 4, 5)));
+
+        TreeMaker t1r = treeMaker.compose(Color.WHITE, treeMaker.compose(Color.BLACK,
+                treeMaker.leafs(Color.WHITE, 3)));
+
+        TreeMaker t1 = treeMaker.compose(Color.BLACK, t1l, t1r);
+
+        TreeMaker t2l = treeMaker.compose(Color.WHITE, treeMaker.compose(Color.BLACK,
+                treeMaker.leafs(Color.WHITE, 6), treeMaker.leafs(Color.WHITE, 6, 9)));
+
+        TreeMaker t2r = treeMaker.compose(Color.WHITE, treeMaker.compose(Color.BLACK,
+                treeMaker.leafs(Color.WHITE, 7)));
+
+        TreeMaker t2 = treeMaker.compose(Color.BLACK, t2l, t2r);
+
+
+
+
+        TreeMaker t3l = treeMaker.compose(Color.WHITE, treeMaker.compose(Color.BLACK,
+                treeMaker.leafs(Color.WHITE, 5)));
+
+        TreeMaker t3r = treeMaker.compose(Color.WHITE, treeMaker.compose(Color.BLACK,
+                treeMaker.leafs(Color.WHITE, 9, 8),
+                treeMaker.leafs(Color.WHITE, 6)));
+
+        TreeMaker t3 = treeMaker.compose(Color.BLACK, t3l, t3r);
+
+        TreeMaker t = treeMaker.compose(Color.WHITE, t1, t2, t3);
+
+
+
+        SearchResult searchResult = engine.search(t.getRoot(),
+                t.getMover(), t.getMoveGenerator(), t.getEvaluator(), 5);
+        assertEquals("6", searchResult.getEvaluation().toString());
     }
 
 }
