@@ -19,6 +19,7 @@ public class CommandMove implements Command
 
     public boolean isApplicable(String str)
     {
+        str = str.toLowerCase();
         String moveRegex = "[a-h][1-8][a-h][1-8][nkbqr]?";
         return str.matches(moveRegex);
     }
@@ -27,7 +28,8 @@ public class CommandMove implements Command
     {
         try 
         {
-            chessGame.move(arguments[0]);
+            String moveStr = arguments[0].toLowerCase();
+            chessGame.move(moveStr);
         }
         catch (IllegalArgumentException e)
         {
@@ -37,12 +39,12 @@ public class CommandMove implements Command
 
     public String helpCommand()
     {
-        return "a8d8";
+        return "a8d8, d7c8Q, d7c8N, d7c8R, d7c8B";
     }
 
     public String helpExplanation()
     {
-        return "Move ";
+        return "Perform a move ";
     }
     
 }
