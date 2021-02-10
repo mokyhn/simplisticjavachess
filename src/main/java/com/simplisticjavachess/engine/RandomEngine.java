@@ -10,10 +10,19 @@ import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.evaluation.Evaluator;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 
+import java.util.logging.Logger;
+
 public class RandomEngine implements Engine
 { // Old experiment
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+
     @Override
     public SearchResult search(Position b, Mover mover, MoveGenerator moveGenerator, Evaluator evaluator, int depth) {
+        if (depth % 2 != 0) {
+            LOGGER.warning("Do not use an uneven search depth as one player will be favored.");
+        }
+
         return null;
     }/*
     MoveGenerator moveGenerator = new MoveGenerator();

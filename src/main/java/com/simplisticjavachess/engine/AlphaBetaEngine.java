@@ -17,14 +17,21 @@ import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.piece.Color;
 
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 public class AlphaBetaEngine implements Engine {
     private static int positions = 0;
     private static int cutOffs = 0;
 
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     @Override
     public SearchResult search(Position position, Mover mover, MoveGenerator moveGenerator, Evaluator evaluator,
                                int depth) {
+        if (depth % 2 != 0) {
+            LOGGER.warning("Warning: Do not use an uneven search depth as one player will be favored.");
+        }
+
         positions = 0;
         cutOffs = 0;
         SearchResult searchResult = alphaBeta(position, mover, moveGenerator, evaluator, evaluator.getNone(),

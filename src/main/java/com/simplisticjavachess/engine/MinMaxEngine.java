@@ -16,11 +16,21 @@ import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.piece.Color;
 
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 public class MinMaxEngine implements Engine {
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     @Override
     public SearchResult search(Position position, Mover mover, MoveGenerator moveGenerator, Evaluator evaluator, int depth) {
+        if (depth % 2 != 0) {
+            LOGGER.warning("Do not use an uneven search depth as one player will be favored.");
+        }
+
+        return minMax(position, mover, moveGenerator, evaluator, depth);
+    }
+
+    private SearchResult minMax(Position position, Mover mover, MoveGenerator moveGenerator, Evaluator evaluator, int depth) {
         if (position.isDrawBy50Move()) {
             return new SearchResult(evaluator.getEqual());
         }
@@ -40,7 +50,7 @@ public class MinMaxEngine implements Engine {
             try {
                 Position next = mover.doMove(position, move);
                 thereWasALegalMove = true;
-                SearchResult score = search(next, mover, moveGenerator, evaluator, depth - 1);
+                SearchResult score = minMax(next, mover, moveGenerator, evaluator, depth - 1);
                 if (bestScore.isWorseThan(inMove, score.getEvaluation())) {
                     bestScore = score.getEvaluation();
                     moveSequence = score.getMoveSequence().add(move);

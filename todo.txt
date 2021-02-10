@@ -1,7 +1,7 @@
 Add cucumber framework to do something for our integration/end2end tests.
 
-Add some smart feature for hardwiring simple game evaluation trees for unit testing across all engines.
-
+Add thread for searching
+Cleanup in tests so that it can be decided which engines are under test
 
 
 We need a general mechanism around this setup to check moves performed 
