@@ -16,7 +16,7 @@ class Main {
     private static void setupLogging() throws IOException {
         Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-        logger.setLevel(Level.FINE);
+        logger.setLevel(Level.ALL);
         FileHandler fileHandler = new FileHandler("Logging.txt");
         fileHandler.setFormatter(new SimpleFormatter());
         logger.addHandler(fileHandler);
