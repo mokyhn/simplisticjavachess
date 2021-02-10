@@ -41,7 +41,7 @@ public class MinMaxEngine implements Engine {
                 Position next = mover.doMove(position, move);
                 thereWasALegalMove = true;
                 SearchResult score = search(next, mover, moveGenerator, evaluator, depth - 1);
-                if (bestScore.isAnImprovement(inMove, score.getEvaluation())) {
+                if (bestScore.isWorseThan(inMove, score.getEvaluation())) {
                     bestScore = score.getEvaluation();
                     moveSequence = score.getMoveSequence().add(move);
                 }

@@ -128,7 +128,7 @@ public class PawnEndgamesTest {
 	@Test
 	public void avoidStaleMate2()
 	{
-		assertMove("8/8/8/8/3k4/8/3p4/3K4 b", "", "d4e3 d4c3", 4);
+		assertMove("8/8/8/8/3k4/8/3p4/3K4 b", "", "d4e3 d4c3", 6);
 	}
 
 	/**

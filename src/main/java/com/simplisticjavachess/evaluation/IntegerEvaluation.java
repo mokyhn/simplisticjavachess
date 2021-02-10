@@ -25,17 +25,22 @@ public class IntegerEvaluation extends Evaluation {
         return new IntegerEvaluation(value);
     }
 
-    public boolean isAnImprovement(Color color, Evaluation e) {
-        IntegerEvaluation other = (IntegerEvaluation) e;
+    @Override
+    public boolean isSomething() {
+        return value.isPresent();
+    }
 
-        // Something improves nothing
-        if (!this.value.isPresent()) {
-            return true;
-        }
+    public boolean isWorseThan(Color color, Evaluation e) {
+        IntegerEvaluation other = (IntegerEvaluation) e;
 
         // Nothing does not improve something
         if (!other.value.isPresent()) {
             return false;
+        }
+
+        // Something improves nothing
+        if (!this.value.isPresent() && other.value.isPresent()) {
+            return true;
         }
 
         if (color.equals(WHITE)) {

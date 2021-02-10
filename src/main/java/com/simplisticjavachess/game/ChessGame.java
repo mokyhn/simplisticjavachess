@@ -5,11 +5,11 @@
 
 package com.simplisticjavachess.game;
 
+import com.simplisticjavachess.engine.AlphaBetaEngine;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.movegenerator.MainMoveGenerator;
-import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.engine.SearchResult;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.movegenerator.OpeningBook;
@@ -70,7 +70,7 @@ public class ChessGame {
             move = openingMove.next();
             System.out.println("Book move " + move.toString());
         } else {
-            SearchResult searchResult = new MinMaxEngine().search(history.getCurrent(), mover, new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
+            SearchResult searchResult = new AlphaBetaEngine().search(history.getCurrent(), mover, new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
             move = searchResult.getMoveSequence().getFirst();
             System.out.println(searchResult.toString());
         }

@@ -6,6 +6,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author Morten Kühnrich
@@ -14,6 +16,31 @@ import static org.junit.Assert.assertEquals;
 public class IntegerEvaluationTest {
 
     private static Evaluation NONE = new IntegerEvaluator().getNone();
+
+    @Test
+    public void testImproveNoneWithNone() {
+        assertFalse(NONE.isWorseThan(Color.BLACK, NONE));
+    }
+
+    @Test
+    public void testIsWorseThanNoneWithSomething() {
+        assertTrue(NONE.isWorseThan(Color.BLACK, IntegerEvaluation.of(0)));
+    }
+
+    @Test
+    public void testIsWorseThanSomethingWithNone() {
+        assertFalse(IntegerEvaluation.of(0).isWorseThan(Color.BLACK, NONE));
+    }
+
+    @Test
+    public void testIsWorseLessThanWhite() {
+        assertTrue(IntegerEvaluation.of(0).isWorseThan(Color.WHITE, IntegerEvaluation.of(5)));
+    }
+
+    @Test
+    public void testIsWorseLessThanBlack() {
+        assertFalse(IntegerEvaluation.of(0).isWorseThan(Color.BLACK, IntegerEvaluation.of(5)));
+    }
 
     @Test
     public void testImproveNoneWithSomething() {

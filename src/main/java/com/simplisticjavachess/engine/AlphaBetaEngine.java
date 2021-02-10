@@ -5,6 +5,7 @@
 
 package com.simplisticjavachess.engine;
 
+import com.simplisticjavachess.evaluation.IntegerEvaluation;
 import com.simplisticjavachess.position.Mover;
 import com.simplisticjavachess.position.IllegalMoveException;
 import com.simplisticjavachess.position.Position;
@@ -52,38 +53,51 @@ public class AlphaBetaEngine implements Engine {
         Color inMove = position.inMove();
 
 
-        Evaluation bestScore = evaluator.getNone();
+        Evaluation best = new IntegerEvaluation();
+        Evaluation evaluation;
+
         while (moves.hasNext()) {
             Move move = moves.next();
             positions++;
-            // Do not search capture moves as the last move
-            if (depth == 1 && move.getMoveType().isCapture() && !move.getMoveType().isCapturePromotion()) {
-                continue;
-            }
 
             try {
                 Position next = mover.doMove(position, move);
                 thereWasALegalMove = true;
 
-                SearchResult score = alphaBeta(next, mover, moveGenerator, evaluator, alpha, beta, depth - 1);
-                if (bestScore.isAnImprovement(inMove, score.getEvaluation())) {
-                    bestScore = score.getEvaluation();
-                    moveSequence = score.getMoveSequence().add(move);
+                SearchResult searchResult;
+                searchResult = alphaBeta(next, mover, moveGenerator, evaluator, alpha, beta, depth-1);
+
+                evaluation = searchResult.getEvaluation();
+
+                if (best.isWorseThan(inMove, evaluation)) {
+                    best = evaluation;
+                    moveSequence = searchResult.getMoveSequence().add(move);
                 }
 
-                // Update alpha / beta
-                if (inMove.isWhite()) {
-                    alpha = bestScore;
-                } else {
-                    beta = bestScore;
-                }
 
-                // Learning: The cut off must not happen from None to a value!!!!! !evaluator.getNone().equals(alpha) &&...
-                if (alpha.equals(beta) || (!evaluator.getNone().equals(alpha) && alpha.isAnImprovement(inMove, beta))) {
+                if (inMove.isWhite() && beta.isSomething() && (alpha.equals(beta) || evaluation.isWorseThan(inMove, beta))) {
                     cutOffs++;
                     // Cut-off
                     break;
                 }
+
+                if (inMove.isBlack() && alpha.isSomething() &&  (alpha.equals(beta) || alpha.isWorseThan(inMove, evaluation))) {
+                    cutOffs++;
+                    // Cut-off
+                    break;
+                }
+
+                // Update alpha or beta
+                if (inMove.isWhite()) {
+                    if (alpha.isWorseThan(inMove, evaluation)) {
+                        alpha = evaluation;
+                    }
+                } else {
+                    if (evaluation.isWorseThan(inMove, beta)) {
+                        beta = evaluation;
+                    }
+                }
+
             } catch (IllegalMoveException e) {
             } catch (IllegalArgumentException e) {
                 throw new IllegalStateException();
@@ -102,7 +116,7 @@ public class AlphaBetaEngine implements Engine {
             }
         }
 
-        return new SearchResult(moveSequence, bestScore);
+        return new SearchResult(moveSequence, best);
 
     }
 

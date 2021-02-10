@@ -1,5 +1,6 @@
 package com.simplisticjavachess.engine;
 
+import com.simplisticjavachess.UnitTest;
 import com.simplisticjavachess.evaluation.Evaluation;
 import com.simplisticjavachess.evaluation.Evaluator;
 import com.simplisticjavachess.evaluation.IntegerEvaluation;
@@ -23,6 +24,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@UnitTest
 @RunWith(Parameterized.class)
 public class EngineTest {
 

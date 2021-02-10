@@ -4,14 +4,17 @@ import com.simplisticjavachess.piece.Color;
 
 public abstract class Evaluation
 {
+
+    public abstract boolean isSomething();
+
     /**
      * @param color the perspective the comparison is seen from
      * @param other the other evaluation to try to improve with
-     * @return this if this is better and else return other
+     * @return other if better and else return this
      */
     public Evaluation improveWith(Color color, Evaluation other)
     {
-        return this.isAnImprovement(color, other) ? other : this;
+        return this.isWorseThan(color, other) ? other : this;
     }
 
     /**
@@ -19,6 +22,6 @@ public abstract class Evaluation
      * @param other the candidate that may improve this
      * @return true if the other improves this
      */
-    public abstract boolean isAnImprovement(Color color, Evaluation other);
+    public abstract boolean isWorseThan(Color color, Evaluation other);
 
 }
