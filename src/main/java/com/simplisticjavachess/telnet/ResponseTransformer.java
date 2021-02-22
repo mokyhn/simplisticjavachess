@@ -1,6 +1,6 @@
 package com.simplisticjavachess.telnet;
 
-public interface ResponseHandler {
+public interface ResponseTransformer {
     boolean isApplicable(String str);
-    void apply(String line);
+    Command apply(String line);
 }

@@ -1,4 +1,4 @@
-package com.simplisticjavachess.telnet.handlers;
+package com.simplisticjavachess.telnet.transformers;
 
 import com.simplisticjavachess.UnitTest;
 import org.junit.Test;
@@ -10,7 +10,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @UnitTest
-public class MoveResponseHandlerTest {
+public class MoveResponseTransformerTest {
     String response0 = "#@#052GuestYPRQ       :uun             *RNBQKBNRPPPPPPPP                                " +
             "pppppppprnbqkbnr001W39390012000120none   (0:00)@#@\n";
 
@@ -19,7 +19,8 @@ public class MoveResponseHandlerTest {
     String response3 = "#@#052GuestYPRQ       :uun             *RNB  RK PPP BPPP    PN     p       p            pp   ppprnbqkbnr006B29380016800158o-o    (0:05)@#@";
     String response4 = "{Game 82 (GuestHRLH vs. GuestWRXX) GuestHRLH resigns} 0-1";
 
-    MoveResponseHandler handler = new MoveResponseHandler();
+
+    MoveResponseTransformer handler = new MoveResponseTransformer();
 
     @Test
     public void isApplicableTest() {

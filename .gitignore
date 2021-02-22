@@ -3,3 +3,5 @@
 /dist/
 *.class
 /target/
+*.xml
+*.iml

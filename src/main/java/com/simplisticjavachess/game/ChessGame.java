@@ -13,6 +13,7 @@ import com.simplisticjavachess.movegenerator.MainMoveGenerator;
 import com.simplisticjavachess.engine.SearchResult;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.movegenerator.OpeningBook;
+import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.position.ChessMover;
 import com.simplisticjavachess.position.History;
 import com.simplisticjavachess.position.IllegalMoveException;
@@ -21,6 +22,7 @@ import com.simplisticjavachess.position.PositionInference;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 import static com.simplisticjavachess.misc.IteratorUtils.toList;
 
@@ -32,10 +34,11 @@ public class ChessGame {
     private final MoveGenerator moveGenerator = new MainMoveGenerator();
     private int searchDepth;
     private boolean gameOver;
+    private Color computerColor;
 
     public ChessGame() {
         history = new History(INITIAL_POSITION);
-        searchDepth = 3;
+        searchDepth = 4;
         gameOver = false;
     }
 
@@ -44,9 +47,18 @@ public class ChessGame {
         this.gameOver = false;
     }
 
+    public void setComputerColor(Color color) {
+        this.computerColor = color;
+    }
+
+    public boolean isTheComputerToMove() {
+        return this.computerColor.equals(history.getCurrent().inMove());
+    }
+
     public void newGame() {
         history = new History(INITIAL_POSITION);
         gameOver = false;
+        computerColor = null;
     }
 
     public void print() {
@@ -57,23 +69,10 @@ public class ChessGame {
         this.searchDepth = depth;
     }
 
-    public void go() {
+    public Optional<String> go() {
+        Optional<Move> optionalMove = search();
 
-        if (gameOver) {
-            return;
-        }
-
-        Iterator<Move> openingMove = OpeningBook.get().generateMoves(history.getCurrent());
-        Move move;
-
-        if (openingMove.hasNext()) {
-            move = openingMove.next();
-            System.out.println("Book move " + move.toString());
-        } else {
-            SearchResult searchResult = new AlphaBetaEngine().search(history.getCurrent(), mover, new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
-            move = searchResult.getMoveSequence().getFirst();
-            System.out.println(searchResult.toString());
-        }
+        Move move = optionalMove.get();
 
         try {
             history = history.add(mover.doMove(history.getCurrent(), move));
@@ -89,10 +88,31 @@ public class ChessGame {
                     gameOver = true;
                     break;
             }
+            return Optional.of(move.toString());
         } catch (IllegalMoveException e) {
             e.printStackTrace();
+            return Optional.empty();
         }
-        print();
+    }
+
+    public Optional<Move> search() {
+        if (gameOver) {
+            return Optional.empty();
+        }
+
+        Iterator<Move> openingMove = OpeningBook.get().generateMoves(history.getCurrent());
+        Move move;
+
+        if (openingMove.hasNext()) {
+            move = openingMove.next();
+            System.out.println("Book move " + move.toString());
+        } else {
+            SearchResult searchResult = new AlphaBetaEngine().search(history.getCurrent(), mover, new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
+            move = searchResult.getMoveSequence().getFirst();
+            System.out.println(searchResult.toString());
+        }
+
+        return Optional.of(move);
     }
 
     public void move(String str) {
@@ -119,14 +139,14 @@ public class ChessGame {
                             break;
                     }
                 } catch (IllegalMoveException e) {
-                    throw new IllegalArgumentException("Invalid move");
+                    throw new IllegalArgumentException("Invalid move " + str);
                 }
             } else {
-                throw new IllegalArgumentException("Invalid move");
+                throw new IllegalArgumentException("Invalid move " + str );
             }
 
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid move");
+            throw new IllegalArgumentException("Invalid move " + str);
         }
 
         print();
