@@ -4,11 +4,11 @@
 
 package com.simplisticjavachess.integration;
 
+import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.engine.Engine;
-import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.engine.SearchResult;
 import com.simplisticjavachess.movegenerator.MainMoveGenerator;
 import com.simplisticjavachess.position.ChessMover;
@@ -56,7 +56,7 @@ public class TestSearch {
         } catch (IllegalMoveException e) {
             System.out.println("Error in move");
         } catch (Exception e) {
-            System.out.println("Failed in setup of pieces");
+            System.out.println("Failure " + e.toString());
             fail();
         }
     }
