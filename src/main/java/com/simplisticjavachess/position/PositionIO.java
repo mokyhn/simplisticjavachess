@@ -165,6 +165,10 @@ public class PositionIO
         }
     }
 
+    /**
+     * @param position to export
+     * @return a FEN code with the position
+     */
     public static String exportPosition(Position position)
     {
         String result = "";

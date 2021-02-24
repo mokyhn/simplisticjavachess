@@ -60,7 +60,6 @@ public class ChessMover implements Mover {
                 if (!position.getCanCastleShort(inMove)) {
                     throw new IllegalMoveException();
                 }
-                // Move the king
                 newPosition = newPosition.move(position.getPiece(move.getFrom()), move.getTo());
                 newPosition = newPosition.move(position.getPiece(new Location(7, move.getFrom().getY())),
                         new Location(5, move.getFrom().getY()));

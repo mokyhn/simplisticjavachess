@@ -7,9 +7,9 @@ import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
-import org.junit.*;
+import org.junit.Test;
 
-import java.util.*;
+import java.util.Iterator;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -186,6 +186,16 @@ public class KingMoveGeneratorTest {
 		Piece piece = Piece.parse("Ke1");
 		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
 		assertFalse(IteratorUtils.toString(moves).contains("o-o-o"));
+	}
+
+	@Test
+	public void testProblems() {
+		Position board = PositionIO.algebraic("kd8 rh8 b");
+		board = board.setCanCastleShort(true, Color.BLACK);
+		Piece piece = Piece.parse("kd8");
+		Iterator<Move> moves = new KingMoveGenerator().generateMoves(board, piece);
+		String smoves = IteratorUtils.toString(moves);
+		assertFalse(smoves.contains("o-o"));
 	}
 
 }

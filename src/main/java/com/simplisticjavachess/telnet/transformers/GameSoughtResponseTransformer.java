@@ -10,8 +10,8 @@ public class GameSoughtResponseTransformer implements ResponseTransformer {
 
     @Override
     public boolean isApplicable(String str) {
-        return str.contains("seeking") && str.contains("rated") &&
-                (str.contains("5 0") || str.contains("10 0") || str.contains("2 12"));
+        return str.contains("seeking") && str.contains(" rated") &&
+                (str.contains("3 5") || str.contains("5 5") || str.contains("5 0") || str.contains("10 0") || str.contains("2 12"));
     }
 
     @Override

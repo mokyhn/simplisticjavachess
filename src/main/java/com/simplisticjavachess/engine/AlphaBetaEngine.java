@@ -66,7 +66,6 @@ public class AlphaBetaEngine implements Engine {
         while (moves.hasNext()) {
             Move move = moves.next();
             positions++;
-
             try {
                 Position next = mover.doMove(position, move);
                 thereWasALegalMove = true;
@@ -106,6 +105,9 @@ public class AlphaBetaEngine implements Engine {
                 }
 
             } catch (IllegalMoveException e) {
+            } catch (IllegalStateException e) {
+                System.out.println("Encountered problem in this position: " + position + " with move " +
+                        move + " with this number of position searched: " + positions + " at a depth of " + depth + "move " + move.getMoveType() + " " + move.getFrom() + " " + move.getTo());
             } catch (IllegalArgumentException e) {
                 throw new IllegalStateException();
             }

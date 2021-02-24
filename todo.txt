@@ -1,33 +1,7 @@
 Add cucumber framework to do something for our integration/end2end tests.
-
-Add thread for searching
 Cleanup in tests so that it can be decided which engines are under test
-
-
-We need a general mechanism around this setup to check moves performed 
-by the human user of the program. Something like
-- parse move m
-- try to perform move m
-- was it legal?
-- did it lead to draw by 50 move rule
-- did it lead to draw by repitition
-- generate possible moves for opponent
-- is the opponent mate?
-- is the opponent stale-mate?
-- the check results in a boolean / legal / illegal and GameResult datatype we might call this UserMoveResult
-
-For computer generated moves we have:
-- generate move m
-- perform move m
-- was it legal?
-- did it lead to draw by 50 move rule
-- did it lead to draw by repitition
-
-- if no moves were possible:
-- am I in check?
-- is the position stale-mate?
-- The results in a SearchResult which has a suggested Move, an evaluation and a GameResult
-
+Introduce bitboards alternative - decouple position with interface
+Control search time/nr of positions in search algorithms (in the for loop over next moves)
 
 
 Evaluation ideers:
@@ -55,48 +29,3 @@ These points will allow for much better debugging of the chess Engines and to pl
 
 This adds OOP to chess. Chess is inherently monolithic and mutable! It is super hard to debug and maintain. With this implementation we have tried to first of all destroy the monolith. The individual parts of a chess program is now seperated and can be tested on it's own. Futhermore we have added the possibility of testing new algorithms and ideas through a safe playground. The immutable datastructures makes it safe to play with the chess program - unwanted behavior from positions that were cashed and updated afterwards are now not possible. That saves the programmer from a lot of pain of inexplainable behaivor. 
 
-setboard 7k/p7/5R1K/8/8/8/8/8 w - - 0 1
-
-
-Classes without test:
-AlphaBetaEngine
-BishopMoveGenerator
-ChessCLI
-ChessEngineCommunicationProtocol
-ChessGame (TODO: Make it testable and make an integration test for it)
-
-Command
-CommandBlack
-CommandGo
-CommandLineInterface
-CommandMove
-CommandNew
-CommandPrint
-CommandQuit
-CommandSd
-CommandSetBoard
-CommandUndo
-CommandWhite
-CommandXBoard
-
-Engine
-Evaluation
-EvaluationConstantsFactory
-EvaluationConstantsFactoryImpl
-
-FENPositions
-FixedMoveGenerator
-GameResult
-Locations
-MinMaxEngine (TODO: Find a way to UNIT TEST THIS, is mockito? a solution?, alternative: Make a simple integration test)
-MinMaxEngineTest
-Move
-MoveGenerator
-MoveGeneratorUtil
-Mover
-MoveResultType
-Moves
-MoveSequence
-PieceMoveGenerator
-RandomEngine
-RookMoveGenerator

@@ -15,11 +15,11 @@ public class MoveResponseTransformer implements ResponseTransformer {
         if (input.contains("none")) {
             return Optional.empty();
         }
-        if (input.toLowerCase().contains("o-o")) {
-            return Optional.of("o-o");
-        }
         if (input.toLowerCase().contains("o-o-o")) {
             return Optional.of("o-o-o");
+        }
+        if (input.toLowerCase().contains("o-o")) {
+            return Optional.of("o-o");
         }
         Matcher matcher = PATTERN.matcher(input);
         if (matcher.find()) {
