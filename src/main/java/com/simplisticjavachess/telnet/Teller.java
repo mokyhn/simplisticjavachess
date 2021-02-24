@@ -25,13 +25,25 @@ public class Teller {
     }
 
     public void commandLogin(String username, String password) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         tell(username);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         tell(password);
     }
 
     public void commandSetupEnvironment() {
         tell("set silence 1"); // Quiet when playing
         tell("set style 11");  // Computer friendly output from server
+        tell("set shout 0");  // No shouts
+
     }
 
 
@@ -47,7 +59,8 @@ public class Teller {
     }
 
     public void commandSeekGame() {
-        tell("seek r 2 30");
+        tell("seek r 2 12");
+        tell("seek r 10 0");
     }
 
     public void commandMoveD2D4() {

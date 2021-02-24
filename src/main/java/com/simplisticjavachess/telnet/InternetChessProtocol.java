@@ -6,6 +6,7 @@ import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.telnet.transformers.GameAbortedResponseTransformer;
 import com.simplisticjavachess.telnet.transformers.GameCreatedResponseTransformer;
 import com.simplisticjavachess.telnet.transformers.GameDoneResponseTransformer;
+import com.simplisticjavachess.telnet.transformers.GameSoughtResponseTransformer;
 import com.simplisticjavachess.telnet.transformers.MoveResponseTransformer;
 
 import java.io.DataInputStream;
@@ -22,8 +23,6 @@ public class InternetChessProtocol {
     private Teller teller;
 
     private ConcurrentLinkedQueue<Command> commands;
-
-    private final static String MY_USER_NAME = "GuestMKTEST";
 
     private String serverUrl;
     private Integer portNumber;
@@ -54,9 +53,10 @@ public class InternetChessProtocol {
                         new Listener(fromServer,
                                 commands,
                                 new MoveResponseTransformer(),
-                                new GameCreatedResponseTransformer(MY_USER_NAME),
+                                new GameCreatedResponseTransformer(username),
                                 new GameAbortedResponseTransformer(),
-                                new GameDoneResponseTransformer());
+                                new GameDoneResponseTransformer(),
+                                new GameSoughtResponseTransformer());
                 new Thread(listener).start();
                 teller.commandLogin(username, password);
             } catch (IOException e) {
@@ -68,13 +68,13 @@ public class InternetChessProtocol {
     }
 
 
-    public void run() throws InterruptedException {
-        connect(MY_USER_NAME + "\n", "\n");
+    public void run(String username, String password) throws InterruptedException {
+        connect(username, password);
         Thread.sleep(4000);
         teller.commandSetupEnvironment();
         Thread.sleep(1000);
         teller.commandSeekGame();
-        int gamesToGo = 1;
+        int gamesToGo = 0;
         while (true) {
             if (commands.isEmpty()) {
                 continue;
@@ -88,6 +88,7 @@ public class InternetChessProtocol {
                         chessGame = new ChessGame();
                         commands.clear();
                         teller.commandSeekGame();
+                        gamesToGo--;
                     } else {
                         listener.doStop();
                         teller.commandDisconnect();
@@ -117,13 +118,18 @@ public class InternetChessProtocol {
                         chessGame.setComputerColor(Color.BLACK);
                     }
                     break;
+                case SOUGHT:
+                    // No reaction so far but we may accept seeks in the future
+                    break;
             }
         }
     }
 
 
     public static void main(String[] args) throws InterruptedException {
+        String username = args[0];
+        String password = args[1];
         InternetChessProtocol protocol = new InternetChessProtocol("freechess.org", 5000);
-        protocol.run();
+        protocol.run(username, password);
     }
 }
