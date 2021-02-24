@@ -26,8 +26,8 @@ public class StepDefinitions {
     @Given("the current position is {string}")
     public void position_is(String fenString) {
         this.position = PositionIO.FEN(fenString);
+        System.out.println(position.toString());
     }
-
 
     @Given("engine is alphabeta")
     public void engine_is_alphabeta() {
