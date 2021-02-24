@@ -1,9 +1,9 @@
-package com.simplisticjavachess.integration;
+package com.simplisticjavachess.end2end;
 
 import com.simplisticjavachess.End2EndTest;
 import org.junit.Test;
 
-import static com.simplisticjavachess.integration.TestSearch.assertMove;
+import static com.simplisticjavachess.end2end.TestSearch.assertMove;
 
 @End2EndTest
 public class PawnEndgamesTest {

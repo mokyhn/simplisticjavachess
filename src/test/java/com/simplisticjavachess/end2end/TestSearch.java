@@ -2,7 +2,7 @@
  * @author Morten Kühnrich
  */
 
-package com.simplisticjavachess.integration;
+package com.simplisticjavachess.end2end;
 
 import com.simplisticjavachess.engine.MinMaxEngine;
 import com.simplisticjavachess.evaluation.IntegerEvaluator;

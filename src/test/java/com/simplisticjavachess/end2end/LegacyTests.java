@@ -1,4 +1,4 @@
-package com.simplisticjavachess.integration;
+package com.simplisticjavachess.end2end;
 
 /**
  * @author Morten Kühnrich
@@ -11,7 +11,7 @@ import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.position.PositionIO;
 import org.junit.Test;
 
-import static com.simplisticjavachess.integration.TestSearch.*;
+import static com.simplisticjavachess.end2end.TestSearch.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
