@@ -73,8 +73,8 @@ public class PawnMoveGenerator implements PieceMoveGenerator
         }
 
         // Non capturing PAWN promotion
-        if ((c == Color.WHITE && fy == 6 && position.freeSquare(fx, 7)) ||
-            (c == Color.BLACK && fy == 1 && position.freeSquare(fx, 0)))
+        if ((c == Color.WHITE && fy == 6 && position.freeSquare(new Location(fx, 7))) ||
+            (c == Color.BLACK && fy == 1 && position.freeSquare(new Location(fx, 0))))
         {
             Moves.add(new Move(from, oneAhead, MoveType.PROMOTE_TO_QUEEN,  null, c));
             Moves.add(new Move(from, oneAhead, MoveType.PROMOTE_TO_ROOK,   null, c));

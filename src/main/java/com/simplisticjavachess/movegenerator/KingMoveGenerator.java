@@ -58,11 +58,13 @@ public class KingMoveGenerator implements PieceMoveGenerator {
                 return null;
             }
 
-            if (position.freeSquare(5, fy) &&
-                    position.freeSquare(6, fy) &&
-                    !position.isAttacked(5, fy) &&
-                    !position.isAttacked(6, fy) &&
-                    !position.isInCheck(toMove)) {
+            Location fSquare = new Location(5, fy);
+            Location gSquare = new Location(6, fy);
+            if (position.freeSquare(fSquare) &&
+               !position.isAttacked(fSquare) &&
+                position.freeSquare(gSquare) &&
+               !position.isAttacked(gSquare) &&
+               !position.isInCheck(toMove)) {
                 return new Move(
                         piece.getLocation(),
                         Vector.RIGHT_RIGHT.translate(piece.getLocation()),
@@ -95,11 +97,14 @@ public class KingMoveGenerator implements PieceMoveGenerator {
                 return null;
             }
 
-            if (position.freeSquare(3, fy) &&
-                position.freeSquare(2, fy) &&
-                position.freeSquare(1, fy) &&
-                !position.isAttacked(2, fy) &&
-                !position.isAttacked(3, fy) &&
+            Location bSquare = new Location(1, fy);
+            Location cSquare = new Location(2, fy);
+            Location dSquare = new Location(3, fy);
+            if (position.freeSquare(dSquare) &&
+               !position.isAttacked(dSquare) &&
+                position.freeSquare(cSquare) &&
+               !position.isAttacked(cSquare) &&
+                position.freeSquare(bSquare) &&
                 !position.isInCheck(toMove)) {
                 return new Move(
                         piece.getLocation(),

@@ -61,8 +61,8 @@ public class PositionIOTest
     {
         String test_position = "7k/8/7K/2q5/1P6/8/8/5R2 w - - 0 0";
         Position board = PositionIO.FEN(test_position);
-        Piece piece1 = board.getPiece(7, 7);
-        Piece piece2 = board.getPiece(7, 5);
+        Piece piece1 = board.getPiece(new Location(7, 7));
+        Piece piece2 = board.getPiece(new Location(7, 5));
         assertEquals(Color.BLACK, piece1.getColor());
         assertEquals(Color.WHITE, piece2.getColor());
         assertEquals(PieceType.KING, piece1.getType());

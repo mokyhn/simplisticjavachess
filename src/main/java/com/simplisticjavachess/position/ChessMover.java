@@ -57,7 +57,7 @@ public class ChessMover implements Mover {
                 break;
 
             case CASTLE_SHORT:
-                if (!position.getCanCastleShort(inMove)) {
+                if (!position.canCastleShort()) {
                     throw new IllegalMoveException();
                 }
                 newPosition = newPosition.move(position.getPiece(move.getFrom()), move.getTo());
@@ -66,7 +66,7 @@ public class ChessMover implements Mover {
                 break;
 
             case CASTLE_LONG:
-                if (!position.getCanCastleLong(inMove)) {
+                if (!position.canCastleLong()) {
                     throw new IllegalMoveException();
                 }
                 newPosition = newPosition.move(position.getPiece(move.getFrom()), move.getTo());

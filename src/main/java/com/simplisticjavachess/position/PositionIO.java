@@ -44,7 +44,7 @@ public class PositionIO
 
         if (sections.length == 2)
         {
-            return new Position(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces, Optional.empty(), new HalfMoveClock(), new HalfMoveClock());
+            return new ImmutablePosition(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces, Optional.empty(), new HalfMoveClock(), new HalfMoveClock());
         }
 
         ///////////////// PART 3 /////////////////
@@ -69,7 +69,7 @@ public class PositionIO
         String moveClock = sections[5];
         HalfMoveClock gameClock = HalfMoveClock.fromString(moveClock);
 
-        Position position = new Position(inMove, castlingState, pieces, move, fiftyMoveDrawClock, gameClock);
+        Position position = new ImmutablePosition(inMove, castlingState, pieces, move, fiftyMoveDrawClock, gameClock);
 
         validate(position);
         return position;
@@ -255,7 +255,7 @@ public class PositionIO
             throw new IllegalArgumentException("You must supply a color for who is to move, w or b");
         }
 
-        Position position = new Position(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces, Optional.empty(), new HalfMoveClock(), new HalfMoveClock());
+        ImmutablePosition position = new ImmutablePosition(inMove, CastlingState.NOBODY_CAN_CASTLE, pieces, Optional.empty(), new HalfMoveClock(), new HalfMoveClock());
 
         return position;
     }
