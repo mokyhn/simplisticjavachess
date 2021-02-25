@@ -30,7 +30,12 @@ public class MinMaxEngineTest {
 
     @Test
     public void tryToGetAdvantage() {
-        Position position = PositionIO.algebraic("Kh1 Pb2 kd8 na5 nc5 w");
+        Position position = PositionIO.algebraic("Kh1 Pb2 kd8 na5 nc5 w"); //TODO rewrite into cucumber like:
+        // with a white pawn on "D2"
+        // with a black king on "A2"
+        // with etc
+        // with black to move
+        // with white to move...
         moveGenerator = new MainMoveGenerator(MainMoveGenerator.PAWN_MOVE_GENERATOR,
                 MainMoveGenerator.KNIGHT_MOVE_GENERATOR, MainMoveGenerator.KING_MOVE_GENERATOR);
         SearchResult result = engine.search(position, mover, moveGenerator, evaluator, 3);

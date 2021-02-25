@@ -25,6 +25,8 @@ public class AlphaBetaEngine implements Engine {
 
     private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
+    private long startTime;
+
     @Override
     public SearchResult search(Position position, Mover mover, MoveGenerator moveGenerator, Evaluator evaluator,
                                int depth) {
@@ -32,11 +34,13 @@ public class AlphaBetaEngine implements Engine {
             LOGGER.warning("Warning: Do not use an uneven search depth as one player will be favored.");
         }
 
+        startTime = System.currentTimeMillis();
         positions = 0;
         cutOffs = 0;
         SearchResult searchResult = alphaBeta(position, mover, moveGenerator, evaluator, evaluator.getNone(),
                 evaluator.getNone(), depth);
-        System.out.println("Cutoffs " + cutOffs + " of " + positions + " positions");
+        double secondsSpent = (System.currentTimeMillis() - startTime) / 1000.0;
+        System.out.println("Cutoffs " + cutOffs + " of " + positions + " positions using " + secondsSpent + " seconds i.e. speed of " + ((double) positions / secondsSpent) + " nodes/s");
         return searchResult;
     }
 

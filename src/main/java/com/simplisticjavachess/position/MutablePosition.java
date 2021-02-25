@@ -11,20 +11,29 @@ import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceMap;
 
 import java.util.Collection;
-
 import java.util.List;
 import java.util.Optional;
 
-public class ImmutablePosition implements Position {
-    private final Color inMove;
-    private final CastlingState castlingState;
-    private final PieceMap pieceMap;
+public class MutablePosition implements Position, Cloneable {
+    private Color inMove;
+    private CastlingState castlingState;
+    private PieceMap pieceMap;
 
-    private final Optional<Move> enpassantMove;
-    private final HalfMoveClock fiftyMoveDrawClock;
-    private final HalfMoveClock gameClock;
+    private Optional<Move> enpassantMove;
+    private HalfMoveClock fiftyMoveDrawClock;
+    private HalfMoveClock gameClock;
 
-    public ImmutablePosition(Color inMove, CastlingState castlingState, List<Piece> pieces,
+    private MutablePosition(MutablePosition other) {
+        this.inMove = other.inMove;
+        this.castlingState = other.castlingState;
+        this.pieceMap = new PieceMap(other.pieceMap.values());
+        this.enpassantMove = other.enpassantMove;
+        this.fiftyMoveDrawClock = other.fiftyMoveDrawClock;
+        this.gameClock = other.gameClock;
+    }
+
+
+    public MutablePosition(Color inMove, CastlingState castlingState, List<Piece> pieces,
                              Optional<Move> enpassantMove, HalfMoveClock fiftyMoveDraw, HalfMoveClock gameClock) {
         this.inMove = inMove;
         this.castlingState = castlingState;
@@ -34,7 +43,7 @@ public class ImmutablePosition implements Position {
         this.gameClock = gameClock;
     }
 
-    private ImmutablePosition(Color inMove, CastlingState castlingState, PieceMap pieceMap,
+    private MutablePosition(Color inMove, CastlingState castlingState, PieceMap pieceMap,
                               Optional<Move> enpassantMove, HalfMoveClock fiftyMoveDraw, HalfMoveClock gameClock) {
         this.inMove = inMove;
         this.castlingState = castlingState;
@@ -44,6 +53,7 @@ public class ImmutablePosition implements Position {
         this.gameClock = gameClock;
     }
 
+
     @Override
     public Color inMove() {
         return inMove;
@@ -51,33 +61,26 @@ public class ImmutablePosition implements Position {
 
     @Override
     public Position setInMove(Color inMove) {
-        Position newPosition = new ImmutablePosition(inMove, this.castlingState, this.pieceMap, this.enpassantMove,
-                this.fiftyMoveDrawClock, this.gameClock);
-        return newPosition;
+        this.inMove = inMove;
+        return this;
     }
 
     @Override
     public Position flipInMove() {
-        Position newPosition = new ImmutablePosition(inMove.opponent(), this.castlingState, this.pieceMap,
-                this.enpassantMove, this.fiftyMoveDrawClock, this.gameClock);
-        return newPosition;
+        this.inMove = this.inMove.opponent();
+        return this;
     }
 
     @Override
     public Position setCanCastleShort(boolean flag, Color color) {
-        CastlingState newCastlingState;
-
-        newCastlingState = castlingState.setCanCastleShort(color, flag);
-        return new ImmutablePosition(inMove, newCastlingState, this.pieceMap, this.enpassantMove,
-                this.fiftyMoveDrawClock, this.gameClock);
+        this.castlingState = castlingState.setCanCastleShort(color, flag);
+        return this;
     }
 
     @Override
     public Position setCanCastleLong(boolean flag, Color color) {
-        CastlingState newCastlingState;
-        newCastlingState = castlingState.setCanCastleLong(color, flag);
-        return new ImmutablePosition(inMove, newCastlingState, this.pieceMap, this.enpassantMove,
-                this.fiftyMoveDrawClock, this.gameClock);
+        this.castlingState = castlingState.setCanCastleLong(color, flag);
+        return this;
     }
 
     /**
@@ -86,8 +89,8 @@ public class ImmutablePosition implements Position {
      * @return the resulting position
      */
     public Position insert(Piece piece) {
-        return new ImmutablePosition(this.inMove, this.castlingState, pieceMap.insert(piece), this.enpassantMove,
-                this.fiftyMoveDrawClock, this.gameClock);
+        this.pieceMap = this.pieceMap.insert(piece);
+        return this;
     }
 
     @Override
@@ -106,14 +109,14 @@ public class ImmutablePosition implements Position {
      * @return the resulting position
      */
     public Position remove(Piece piece) {
-        return new ImmutablePosition(this.inMove, this.castlingState, pieceMap.remove(piece), this.enpassantMove,
-                this.fiftyMoveDrawClock, this.gameClock);
+        this.pieceMap = pieceMap.remove(piece);
+        return this;
     }
 
     @Override
     public Position move(Piece piece, Location to) {
-        return new ImmutablePosition(this.inMove, this.castlingState, pieceMap.move(piece, to), this.enpassantMove,
-                this.fiftyMoveDrawClock, this.gameClock);
+        this.pieceMap = pieceMap.move(piece, to);
+        return this;
     }
 
     @Override
@@ -188,8 +191,8 @@ public class ImmutablePosition implements Position {
             return true;
         }
 
-        if (object instanceof ImmutablePosition) {
-            ImmutablePosition position = (ImmutablePosition) object;
+        if (object instanceof MutablePosition) {
+            MutablePosition position = (MutablePosition) object;
 
             return this.getChessHashCode() == position.getChessHashCode() &&
                     this.inMove == position.inMove &&
@@ -241,7 +244,8 @@ public class ImmutablePosition implements Position {
 
     @Override
     public Position setMove(Move move) {
-        return new ImmutablePosition(inMove, castlingState, pieceMap, Optional.of(move), fiftyMoveDrawClock, gameClock);
+        this.enpassantMove = Optional.of(move);
+        return this;
     }
 
     private boolean isEnpassant() {
@@ -261,24 +265,29 @@ public class ImmutablePosition implements Position {
 
     @Override
     public Position tickGameClock() {
-        return new ImmutablePosition(inMove, castlingState, pieceMap, enpassantMove, fiftyMoveDrawClock,
-                gameClock.tick());
+        this.gameClock = this.gameClock.tick();
+        return this;
     }
 
     @Override
     public Position tickFiftyMoveDrawClock() {
-        return new ImmutablePosition(inMove, castlingState, pieceMap, enpassantMove, fiftyMoveDrawClock.tick(),
-                gameClock);
+        this.fiftyMoveDrawClock = this.fiftyMoveDrawClock.tick();
+        return this;
     }
 
     @Override
     public Position resetFiftyMoveDrawClock() {
-        return new ImmutablePosition(inMove, castlingState, pieceMap, enpassantMove, fiftyMoveDrawClock.reset(),
-                gameClock);
+        this.fiftyMoveDrawClock = fiftyMoveDrawClock.reset();
+        return this;
     }
 
     @Override
     public boolean isDrawBy50Move() {
         return fiftyMoveDrawClock.isFifty();
+    }
+
+    @Override
+    public Object clone() {
+        return new MutablePosition(this);
     }
 }
