@@ -2,7 +2,6 @@ package com.simplisticjavachess.position;
 
 import com.simplisticjavachess.move.MoveSequence;
 import com.simplisticjavachess.move.Move;
-import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
 
@@ -21,8 +20,6 @@ public class ChessMover implements Mover {
         } else {
             newPosition = newPosition.tickFiftyMoveDrawClock();
         }
-
-        Color inMove = position.inMove();
 
         // Moving the king will disallow castling in the future
         if (PieceType.KING.equals(piece.getType())) {

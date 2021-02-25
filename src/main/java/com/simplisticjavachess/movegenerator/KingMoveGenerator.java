@@ -64,7 +64,7 @@ public class KingMoveGenerator implements PieceMoveGenerator {
                !position.isAttacked(fSquare) &&
                 position.freeSquare(gSquare) &&
                !position.isAttacked(gSquare) &&
-               !position.isInCheck(toMove)) {
+               !position.isInCheck()) {
                 return new Move(
                         piece.getLocation(),
                         Vector.RIGHT_RIGHT.translate(piece.getLocation()),
@@ -105,7 +105,7 @@ public class KingMoveGenerator implements PieceMoveGenerator {
                 position.freeSquare(cSquare) &&
                !position.isAttacked(cSquare) &&
                 position.freeSquare(bSquare) &&
-                !position.isInCheck(toMove)) {
+                !position.isInCheck()) {
                 return new Move(
                         piece.getLocation(),
                         Vector.LEFT_LEFT.translate(piece.getLocation()),
