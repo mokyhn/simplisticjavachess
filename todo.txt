@@ -1,5 +1,4 @@
-Add cucumber framework to do something for our integration/end2end tests.
-Cleanup in tests so that it can be decided which engines are under test
+Move more tests to cucumber framework
 Introduce bitboards alternative - decouple position with interface
 Control search time/nr of positions in search algorithms (in the for loop over next moves)
 
