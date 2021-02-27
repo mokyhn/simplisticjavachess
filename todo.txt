@@ -1,7 +1,8 @@
 Move more tests to cucumber framework
-Introduce bitboards alternative - decouple position with interface
-Control search time/nr of positions in search algorithms (in the for loop over next moves)
+Try to make more advanced evaluation function (see ideas below)
 
+TODO: Engine could not find a move in this position:
+https://www.ficsgames.org/cgi-bin/show.cgi?ID=490680942
 
 Evaluation ideers:
 Distance between locations are easy to calculate.

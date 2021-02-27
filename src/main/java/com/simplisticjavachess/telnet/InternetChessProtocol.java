@@ -74,9 +74,11 @@ public class InternetChessProtocol {
         teller.commandSetupEnvironment();
         Thread.sleep(1000);
         teller.commandSeekGame();
-        int gamesToGo = 0;
+        int gamesToGo = 10;
+
         while (true) {
             if (commands.isEmpty()) {
+                Thread.sleep(20);
                 continue;
             }
             Command nextCommand = commands.poll();
@@ -98,7 +100,7 @@ public class InternetChessProtocol {
                     break;
                 case MOVE:
                     try {
-                        chessGame.move(nextCommand.getArgument());
+                        chessGame.telnetMove(nextCommand.getArgument());
                     } catch (IllegalArgumentException e) {}
 
                     if (chessGame.isTheComputerToMove()) {

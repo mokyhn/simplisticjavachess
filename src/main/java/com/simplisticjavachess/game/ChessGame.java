@@ -33,18 +33,15 @@ public class ChessGame {
     private final Mover mover = new ChessMover();
     private final MoveGenerator moveGenerator = new MainMoveGenerator();
     private int searchDepth;
-    private boolean gameOver;
     private Color computerColor;
 
     public ChessGame() {
         history = new History(INITIAL_POSITION);
         searchDepth = 4;
-        gameOver = false;
     }
 
     public void setPosition(String fen) {
         this.history = new History(fen);
-        this.gameOver = false;
     }
 
     public void setComputerColor(Color color) {
@@ -57,7 +54,6 @@ public class ChessGame {
 
     public void newGame() {
         history = new History(INITIAL_POSITION);
-        gameOver = false;
         computerColor = null;
     }
 
@@ -69,37 +65,34 @@ public class ChessGame {
         this.searchDepth = depth;
     }
 
-    public Optional<String> go() {
+    public void go() {
         Optional<Move> optionalMove = search();
 
-        Move move = optionalMove.get();
-
-        try {
-            history = history.add(mover.doMove(history.getCurrent(), move));
-            switch (PositionInference.getGameResult(history)) {
-                case NO_RESULT:
-                    break;
-                case DRAW:
-                    System.out.println("Draw!");
-                    gameOver = true;
-                    break;
-                case MATE:
-                    System.out.println("Mate!");
-                    gameOver = true;
-                    break;
+        if (optionalMove.isPresent()) {
+            Move move = optionalMove.get();
+            try {
+                history = history.add(mover.doMove(history.getCurrent(), move));
+            } catch (IllegalMoveException e) {
+                e.printStackTrace();
             }
-            return Optional.of(move.toString());
-        } catch (IllegalMoveException e) {
-            e.printStackTrace();
-            return Optional.empty();
+        } else {
         }
+
+        switch (PositionInference.getGameResult(history)) {
+            case NO_RESULT:
+                break;
+            case DRAW:
+                System.out.println("Draw!");
+                break;
+            case MATE:
+                System.out.println("Mate!");
+                break;
+        }
+        print();
+
     }
 
     public Optional<Move> search() {
-        if (gameOver) {
-            return Optional.empty();
-        }
-
         Iterator<Move> openingMove = OpeningBook.get().generateMoves(history.getCurrent());
         Move move;
 
@@ -107,8 +100,13 @@ public class ChessGame {
             move = openingMove.next();
             System.out.println("Book move " + move.toString());
         } else {
-            SearchResult searchResult = new AlphaBetaEngine().search(history.getCurrent(), mover, new MainMoveGenerator(), new IntegerEvaluator(), searchDepth);
-            move = searchResult.getMoveSequence().getFirst();
+            SearchResult searchResult = new AlphaBetaEngine().search(history.getCurrent(), mover,
+                    new MainMoveGenerator(), IntegerEvaluator.variant(), searchDepth);
+            if (searchResult.getMoveSequence().iterator().hasNext()) {
+                move = searchResult.getMoveSequence().getFirst();
+            } else {
+                return Optional.empty();
+            }
             System.out.println(searchResult.toString());
         }
 
@@ -116,10 +114,6 @@ public class ChessGame {
     }
 
     public void move(String str) {
-        if (gameOver) {
-            return;
-        }
-
         try {
             Move move = MoveParser.parse(history.getCurrent(), str);
             List<Move> possibleMoves = toList(moveGenerator.generateMoves(history.getCurrent()));
@@ -131,26 +125,35 @@ public class ChessGame {
                             break;
                         case DRAW:
                             System.out.println("Draw!");
-                            gameOver = true;
                             break;
                         case MATE:
                             System.out.println("Mate!");
-                            gameOver = true;
                             break;
                     }
                 } catch (IllegalMoveException e) {
                     throw new IllegalArgumentException("Invalid move " + str);
                 }
             } else {
-                throw new IllegalArgumentException("Invalid move " + str );
+                throw new IllegalArgumentException("Invalid move " + str);
             }
 
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Invalid move " + str);
         }
-
         print();
     }
+
+    public void telnetMove(String str) {
+        try {
+            Move move = MoveParser.parse(history.getCurrent(), str);
+            history = history.add(mover.doMove(history.getCurrent(), move));
+        } catch (IllegalMoveException e) {
+            throw new IllegalArgumentException("Invalid move " + str);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid move " + str);
+        }
+    }
+
 
     public void undo() {
         history = history.undo();
