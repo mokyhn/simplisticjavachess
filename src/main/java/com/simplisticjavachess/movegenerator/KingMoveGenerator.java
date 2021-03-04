@@ -3,6 +3,7 @@
  */
 package com.simplisticjavachess.movegenerator;
 
+import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.position.Location;
 import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.position.Vector;
@@ -17,7 +18,8 @@ import java.util.Iterator;
 import static com.simplisticjavachess.misc.IteratorUtils.compose;
 import static com.simplisticjavachess.movegenerator.MoveGeneratorUtil.*;
 
-public class KingMoveGenerator implements PieceMoveGenerator {
+@Immutable
+public final class KingMoveGenerator implements PieceMoveGenerator {
     @Override
     public PieceType getPieceType() {
         return PieceType.KING;

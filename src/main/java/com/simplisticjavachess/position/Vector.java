@@ -1,5 +1,6 @@
 package com.simplisticjavachess.position;
 
+import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.piece.Color;
 
 import java.util.Objects;
@@ -9,7 +10,8 @@ import java.util.Optional;
  *
  * @author Morten Kühnrich
  */
-public class Vector
+@Immutable
+public final class Vector
 {
     public final static Vector UP   = new Vector(0, 1);
     public final static Vector DOWN = new Vector(0, -1);

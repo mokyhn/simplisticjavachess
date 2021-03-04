@@ -1,5 +1,6 @@
 package com.simplisticjavachess.position;
 
+import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.move.MoveSequence;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Piece;
@@ -7,7 +8,8 @@ import com.simplisticjavachess.piece.PieceType;
 
 import java.util.Iterator;
 
-public class ChessMover implements Mover {
+@Immutable
+public final class ChessMover implements Mover {
 
     @Override
     public Position doMove(Position position, Move move) throws IllegalMoveException {

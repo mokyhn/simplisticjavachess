@@ -5,6 +5,7 @@
 
 package com.simplisticjavachess.movegenerator;
 
+import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.position.Vector;
 import com.simplisticjavachess.move.Move;
@@ -16,7 +17,8 @@ import java.util.Iterator;
 import static com.simplisticjavachess.misc.IteratorUtils.compose;
 import static com.simplisticjavachess.movegenerator.MoveGeneratorUtil.oneMoveIterator;
 
-public class KnightMoveGenerator implements PieceMoveGenerator
+@Immutable
+public final class KnightMoveGenerator implements PieceMoveGenerator
 {
 
     @Override

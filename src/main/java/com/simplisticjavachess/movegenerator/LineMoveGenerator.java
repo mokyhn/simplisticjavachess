@@ -1,5 +1,6 @@
 package com.simplisticjavachess.movegenerator;
 
+import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.position.Location;
 import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.position.Vector;
@@ -8,7 +9,8 @@ import com.simplisticjavachess.piece.Piece;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class LineMoveGenerator {
+@Immutable
+public final class LineMoveGenerator {
     private final Vector step;
 
     public LineMoveGenerator(Vector step)

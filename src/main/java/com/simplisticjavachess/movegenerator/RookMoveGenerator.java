@@ -1,10 +1,10 @@
 /**
- *
  * @author Morten Kühnrich
  */
 
 package com.simplisticjavachess.movegenerator;
 
+import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.position.Vector;
 import com.simplisticjavachess.move.Move;
@@ -15,8 +15,8 @@ import java.util.Iterator;
 
 import static com.simplisticjavachess.misc.IteratorUtils.compose;
 
-public class RookMoveGenerator implements PieceMoveGenerator
-{
+@Immutable
+public final class RookMoveGenerator implements PieceMoveGenerator {
     private static final LineMoveGenerator LINE_MOVE_GENERATOR_UP = new LineMoveGenerator(Vector.UP);
     private static final LineMoveGenerator LINE_MOVE_GENERATOR_DOWN = new LineMoveGenerator(Vector.DOWN);
     private static final LineMoveGenerator LINE_MOVE_GENERATOR_RIGHT = new LineMoveGenerator(Vector.RIGHT);
@@ -27,8 +27,7 @@ public class RookMoveGenerator implements PieceMoveGenerator
         return PieceType.ROOK;
     }
 
-    public Iterator<Move> generateMoves(Position position, Piece piece)
-    {
+    public Iterator<Move> generateMoves(Position position, Piece piece) {
         return compose(
                 LINE_MOVE_GENERATOR_UP.generateMoves(position, piece),
                 LINE_MOVE_GENERATOR_DOWN.generateMoves(position, piece),

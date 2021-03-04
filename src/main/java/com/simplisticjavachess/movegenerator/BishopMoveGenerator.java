@@ -1,5 +1,6 @@
 package com.simplisticjavachess.movegenerator;
 
+import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.position.Vector;
 import com.simplisticjavachess.misc.IteratorUtils;
@@ -13,7 +14,8 @@ import java.util.Iterator;
 /**
  * @author Morten Kühnrich
  */
-public class BishopMoveGenerator implements PieceMoveGenerator
+@Immutable
+public final class BishopMoveGenerator implements PieceMoveGenerator
 {
     private static final LineMoveGenerator UP_AND_RIGHT =  new LineMoveGenerator(Vector.UP_AND_RIGHT);
     private static final LineMoveGenerator DOWN_AND_RIGHT = new LineMoveGenerator(Vector.DOWN_AND_RIGHT);
