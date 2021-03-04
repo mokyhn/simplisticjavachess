@@ -4,6 +4,7 @@
 
 package com.simplisticjavachess.position;
 
+import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.game.CastlingState;
 import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.piece.Color;
@@ -15,7 +16,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
-public class ImmutablePosition implements Position {
+@Immutable
+public final class ImmutablePosition implements Position {
     private final Color inMove;
     private final CastlingState castlingState;
     private final PieceMap pieceMap;

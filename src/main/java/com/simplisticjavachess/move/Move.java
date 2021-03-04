@@ -4,6 +4,7 @@
 
 package com.simplisticjavachess.move;
 
+import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.piece.Piece;
 import com.simplisticjavachess.piece.PieceType;
@@ -11,7 +12,8 @@ import com.simplisticjavachess.position.Location;
 
 import java.util.Objects;
 
-public class Move {
+@Immutable
+public final class Move {
 
     private final Location from;
     private final Location to;
