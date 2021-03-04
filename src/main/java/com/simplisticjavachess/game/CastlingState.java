@@ -1,8 +1,10 @@
 package com.simplisticjavachess.game;
 
+import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.piece.Color;
 
-public class CastlingState
+@Immutable
+public final class CastlingState
 {
 	public static final CastlingState NOBODY_CAN_CASTLE = new CastlingState(false, false, false, false);
 
@@ -16,7 +18,7 @@ public class CastlingState
 	private final static int BLACK_SHORT = -1485870876;
 	private final static int BLACK_LONG  =  145385139;
 
-	private int chessHashCode;
+	private final int chessHashCode;
 
 	public CastlingState(boolean whiteShort, boolean whiteLong, boolean blackShort, boolean blackLong)
 	{

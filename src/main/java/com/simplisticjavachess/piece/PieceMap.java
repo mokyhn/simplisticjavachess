@@ -1,5 +1,7 @@
 package com.simplisticjavachess.piece;
 
+import com.google.common.collect.ImmutableMap;
+import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.position.Location;
 
 import java.util.Collection;
@@ -8,27 +10,29 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-public class PieceMap {
-    private final Map<Location, Piece> piecesMap;
+@Immutable
+public final class PieceMap {
+    private final ImmutableMap<Location, Piece> piecesMap;
 
     private final int piecesHash;
 
     PieceMap() {
-        piecesMap = new HashMap<>();
+        piecesMap = ImmutableMap.of();
         piecesHash = 0;
     }
 
     public PieceMap(Collection<Piece> pieces) {
-        this.piecesMap = new HashMap<>();
+        ImmutableMap.Builder<Location, Piece> builder = ImmutableMap.builder();
         int h = 0;
         for (Piece piece : pieces) {
-            piecesMap.put(piece.getLocation(), piece);
+            builder.put(piece.getLocation(), piece);
             h ^= piece.getChessHashCode();
         }
         this.piecesHash = h;
+        this.piecesMap = builder.build();
     }
 
-    private PieceMap(Map<Location, Piece> piecesMap, int piecesHash) {
+    private PieceMap(ImmutableMap<Location, Piece> piecesMap, int piecesHash) {
         this.piecesMap = piecesMap;
         this.piecesHash = piecesHash;
     }
@@ -37,8 +41,10 @@ public class PieceMap {
         if (piecesMap.containsKey(piece.getLocation())) {
             throw new IllegalStateException("Tried to insert piece at a location at an occupied location");
         } else {
-            Map<Location, Piece> newPiecesMap = new HashMap<>(this.piecesMap);
-            newPiecesMap.put(piece.getLocation(), piece);
+            ImmutableMap newPiecesMap = ImmutableMap.
+                    builder().putAll(this.piecesMap).
+                    put(piece.getLocation(), piece).
+                    build();
             int newChessHashCode = this.piecesHash ^ piece.getChessHashCode();
             return new PieceMap(newPiecesMap, newChessHashCode);
         }
@@ -59,11 +65,16 @@ public class PieceMap {
      * @return the resulting position
      */
     public PieceMap remove(Piece piece) {
+        ImmutableMap.Builder builder = ImmutableMap.builder();
+
         if (piecesMap.containsKey(piece.getLocation())) {
-            Map<Location, Piece> newPiecesMap = new HashMap<>(this.piecesMap);
-            newPiecesMap.remove(piece.getLocation());
+            for (Map.Entry<Location, Piece> e : piecesMap.entrySet()) {
+                if (!piece.equals(e.getValue())) {
+                    builder.put(e);
+                }
+            }
             int newChessHashCode = this.piecesHash ^ piece.getChessHashCode();
-            return new PieceMap(newPiecesMap, newChessHashCode);
+            return new PieceMap(builder.build(), newChessHashCode);
         } else {
             throw new IllegalStateException("Tried to remove a piece which was not there");
         }

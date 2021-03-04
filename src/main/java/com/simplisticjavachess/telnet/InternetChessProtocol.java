@@ -74,7 +74,7 @@ public class InternetChessProtocol {
         teller.commandSetupEnvironment();
         Thread.sleep(1000);
         teller.commandSeekGame();
-        int gamesToGo = 10;
+        int gamesToGo = 0;
 
         while (true) {
             if (commands.isEmpty()) {

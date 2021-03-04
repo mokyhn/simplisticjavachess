@@ -29,3 +29,18 @@ These points will allow for much better debugging of the chess Engines and to pl
 
 This adds OOP to chess. Chess is inherently monolithic and mutable! It is super hard to debug and maintain. With this implementation we have tried to first of all destroy the monolith. The individual parts of a chess program is now seperated and can be tested on it's own. Futhermore we have added the possibility of testing new algorithms and ideas through a safe playground. The immutable datastructures makes it safe to play with the chess program - unwanted behavior from positions that were cashed and updated afterwards are now not possible. That saves the programmer from a lot of pain of inexplainable behaivor. 
 
+f(p) = 20000(K-K')
+       + 900(Q-Q')
+       + 500(R-R')
+       + 300(B-B' + N-N')
+       + 100(P-P')
+       - 50(D-D' + S-S' + I-I')
+       + 10(M-M') + ...
+
+KQRBNP = number of kings, queens, rooks, bishops, knights and pawns
+D,S,I = doubled, blocked and isolated pawns
+M = Mobility (the number of legal moves)
+
+
+Wierd error in this position when engine is to play:
+r1b2k1r/pppp2pp/2n1pp2/2P3q1/1P1PP3/2BB4/P3QPPP/3R1RK1 b kq - 0 14

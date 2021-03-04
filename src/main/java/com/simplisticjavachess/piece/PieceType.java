@@ -1,9 +1,12 @@
 package com.simplisticjavachess.piece;
 
+import com.simplisticjavachess.Immutable;
+
 /**
  *
  * @author Morten Kühnrich
  */
+@Immutable
 public enum PieceType
 {
     PAWN(-1331833639),

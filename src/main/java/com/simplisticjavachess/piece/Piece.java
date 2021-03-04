@@ -1,6 +1,8 @@
 package com.simplisticjavachess.piece;
 
 import static com.simplisticjavachess.piece.PieceType.*;
+
+import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.position.Location;
 
 /**
@@ -8,6 +10,7 @@ import com.simplisticjavachess.position.Location;
  * @author Morten Kühnrich
  */
 
+@Immutable
 public final class Piece {
     private final Location location;    
     private final PieceType pieceType;
