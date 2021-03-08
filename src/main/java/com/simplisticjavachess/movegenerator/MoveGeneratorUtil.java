@@ -17,6 +17,8 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.concurrent.Callable;
 
+import static com.simplisticjavachess.piece.PieceType.KING;
+
 @Immutable
 public final class MoveGeneratorUtil {
     public static Move genKingMove(Position position, Piece piece, Vector vector) {
@@ -45,7 +47,7 @@ public final class MoveGeneratorUtil {
             Move move = null;
             MoveType moveType;
 
-            if (capturedPiece != null && capturedPiece.getColor() == position.inMove().opponent()) {
+            if (capturedPiece != null && capturedPiece.getType() != KING && capturedPiece.getColor() == position.inMove().opponent()) {
                 moveType = MoveType.CAPTURE;
                 move = new Move(from, to, moveType, capturedPiece, position.inMove());
             } else {

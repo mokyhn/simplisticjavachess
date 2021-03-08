@@ -26,11 +26,6 @@ public final class Move {
 
     public Move(Location from, Location to, MoveType type, Piece capturedPiece, Color whoMoves) {
         if (from.isValid() && to.isValid()) {
-            // It is not legal to capture the king
-            if (capturedPiece != null && PieceType.KING.equals(capturedPiece.getType())) {
-                throw new IllegalArgumentException();
-            }
-
             this.from = from;
             this.to = to;
             this.moveType = type;

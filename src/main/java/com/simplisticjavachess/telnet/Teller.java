@@ -59,12 +59,15 @@ public class Teller {
     }
 
     public void commandSeekGame() {
-        tell("seek r 5 0");
-        tell("seek r 4 0");
-        tell("seek r 1 2");
+//        tell("seek r 5 0");
+//        tell("seek r 4 0");
+//        tell("seek r 1 2");
+
+        tell("seek r 2 12");
+        tell("seek r 10 0");
     }
 
-    public void commandMoveD2D4() {
-        tell("d2d4");
+    public void commandMoveE2E4() {
+        tell("e2e4");
     }
 }

@@ -5,7 +5,6 @@ import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.position.Location;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;

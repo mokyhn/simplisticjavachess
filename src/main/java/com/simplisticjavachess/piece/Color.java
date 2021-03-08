@@ -1,11 +1,12 @@
 package com.simplisticjavachess.piece;
 
+import com.simplisticjavachess.Immutable;
+
 /**
- *
  * @author Morten Kühnrich
  */
-public enum Color
-{
+@Immutable
+public enum Color {
     BLACK(-1, -1339633704),
     WHITE(1, 1760017000);
 
@@ -13,52 +14,41 @@ public enum Color
     private final int chessHashCode;
 
 
-    Color(int color, int chessHashCode)
-    {
+    Color(int color, int chessHashCode) {
         this.color = color;
         this.chessHashCode = chessHashCode;
     }
 
-    public int getColor()
-    {
+    public int getColor() {
         return color;
     }
 
-    public Color opponent()
-    {
+    public Color opponent() {
         return this == BLACK ? WHITE : BLACK;
     }
 
-    public String getColorString()
-    {
-        if (this == BLACK) 
-        {
+    public String getColorString() {
+        if (this == BLACK) {
             return "b";
-        }
-        else
-        {
+        } else {
             return "w";
         }
     }
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return getColorString();
     }
 
-    public int getChessHashCode()
-    {
+    public int getChessHashCode() {
         return chessHashCode;
     }
 
-    public boolean isWhite()
-    {
+    public boolean isWhite() {
         return WHITE.equals(this);
     }
 
-    public boolean isBlack()
-    {
+    public boolean isBlack() {
         return BLACK.equals(this);
     }
 }

@@ -15,6 +15,7 @@ import com.simplisticjavachess.move.Move;
 import com.simplisticjavachess.move.MoveSequence;
 import com.simplisticjavachess.movegenerator.MoveGenerator;
 import com.simplisticjavachess.piece.Color;
+import com.simplisticjavachess.position.PositionIO;
 
 import java.util.Iterator;
 import java.util.logging.Logger;
@@ -27,6 +28,8 @@ public class AlphaBetaEngine implements Engine {
 
     private long startTime;
 
+//    private Cache<Integer, SearchResult> cache;
+
     @Override
     public SearchResult search(Position position, Mover mover, MoveGenerator moveGenerator, Evaluator evaluator,
                                int depth) {
@@ -37,6 +40,9 @@ public class AlphaBetaEngine implements Engine {
         startTime = System.currentTimeMillis();
         positions = 0;
         cutOffs = 0;
+
+//        cache = new Cache<>(40000);
+
         SearchResult searchResult = alphaBeta(position, mover, moveGenerator, evaluator, evaluator.getNone(),
                 evaluator.getNone(), depth);
         double secondsSpent = (System.currentTimeMillis() - startTime) / 1000.0;
@@ -48,12 +54,21 @@ public class AlphaBetaEngine implements Engine {
                                   Evaluation alpha,
                                   Evaluation beta,
                                   int depth) {
+
+//        SearchResult sr;
+//        sr = cache.get(position.getChessHashCode());
+//        if (sr != null) {
+//            return sr;
+//        }
+
         if (position.isDrawBy50Move()) {
             return new SearchResult(evaluator.getEqual());
         }
 
         if (depth == 0) {
-            return new SearchResult(evaluator.evaluate(position));
+            SearchResult sr = new SearchResult(evaluator.evaluate(position));
+//            cache.put(position.getChessHashCode(), sr);
+            return sr;
         }
 
         Iterator<Move> moves = moveGenerator.generateMoves(position);
@@ -110,10 +125,17 @@ public class AlphaBetaEngine implements Engine {
 
             } catch (IllegalMoveException e) {
             } catch (IllegalStateException e) {
+                System.out.println(PositionIO.exportPosition(position));
                 System.out.println("Encountered problem in this position: " + position + " with move " +
                         move + " with this number of position searched: " + positions + " at a depth of " + depth + "move " + move.getMoveType() + " " + move.getFrom() + " " + move.getTo());
+                 e.printStackTrace();
+                 System.exit(77);
             } catch (IllegalArgumentException e) {
-                throw new IllegalStateException();
+                System.out.println(PositionIO.exportPosition(position));
+                System.out.println("Encountered another problem in this position: " + position + " with move " +
+                        move + " with this number of position searched: " + positions + " at a depth of " + depth + "move " + move.getMoveType() + " " + move.getFrom() + " " + move.getTo());
+                e.printStackTrace();
+                System.exit(78);
             }
         }
 

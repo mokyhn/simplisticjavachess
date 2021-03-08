@@ -18,6 +18,7 @@ import com.simplisticjavachess.position.ChessMover;
 import com.simplisticjavachess.position.History;
 import com.simplisticjavachess.position.IllegalMoveException;
 import com.simplisticjavachess.position.Mover;
+import com.simplisticjavachess.position.PositionIO;
 import com.simplisticjavachess.position.PositionInference;
 
 import java.util.Iterator;
@@ -59,6 +60,7 @@ public class ChessGame {
 
     public void print() {
         System.out.println(history.getCurrent().toString());
+        System.out.println(PositionIO.exportPosition(history.getCurrent()));
     }
 
     public void setSd(int depth) {

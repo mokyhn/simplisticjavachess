@@ -1,5 +1,7 @@
 package com.simplisticjavachess.movegenerator;
 
+import com.google.common.collect.ImmutableMap;
+import com.simplisticjavachess.Immutable;
 import com.simplisticjavachess.move.MoveSequence;
 import com.simplisticjavachess.misc.IteratorUtils;
 import com.simplisticjavachess.move.Move;
@@ -7,24 +9,29 @@ import com.simplisticjavachess.move.MoveParser;
 import com.simplisticjavachess.piece.Color;
 import com.simplisticjavachess.position.ChessMover;
 import com.simplisticjavachess.position.IllegalMoveException;
-import com.simplisticjavachess.position.Mover;
 import com.simplisticjavachess.position.Position;
 import com.simplisticjavachess.position.PositionIO;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
 /**
  * Fixed move generator. For a given position it checks, if it has a move in stock and returns that.
  */
-public class FixedMoveGenerator implements MoveGenerator {
-    HashMap<Position, Move> moves = new HashMap<>();
+@Immutable
+public final class FixedMoveGenerator implements MoveGenerator {
+    private final ImmutableMap<Position, Move> moveMap;
 
-    private final static Mover mover = new ChessMover();
+    public FixedMoveGenerator() {
+        moveMap = ImmutableMap.of();
+    }
 
-    public void add(String FEN, String moveStr) {
+    private FixedMoveGenerator(ImmutableMap<Position, Move> moveMap) {
+        this.moveMap = moveMap;
+    }
+
+    public FixedMoveGenerator add(String FEN, String moveStr) {
         Position position = PositionIO.FEN(FEN);
         Move move = MoveParser.parse(position, moveStr);
 
@@ -32,26 +39,35 @@ public class FixedMoveGenerator implements MoveGenerator {
             throw new IllegalArgumentException("Cannot accept a move of color opponent is to move");
         }
 
-        add(position, move);
+        return add(position, move);
     }
 
-    private void add(Position position, Move move) {
-        if (!moves.containsKey(position)) {
-            moves.put(position, move);
+    private FixedMoveGenerator add(Position position, Move move) {
+        if (moveMap.containsKey(position)) {
+            return this;
+        } else {
+            ImmutableMap.Builder<Position, Move> builder = ImmutableMap.builder();
+            return new FixedMoveGenerator(
+                    builder.
+                    putAll(moveMap).
+                    put(position, move).
+                    build());
         }
     }
 
-    public void addFromMoves(String FEN, String moves, Color sideToRecord) {
+    public FixedMoveGenerator addFromMoves(String FEN, String moves, Color sideToRecord) {
         Position position = PositionIO.FEN(FEN);
         MoveSequence moveSequence = MoveSequence.parse(position, moves);
 
         List<Move> moveList = IteratorUtils.toList(moveSequence.iterator());
 
+        FixedMoveGenerator result = this;
+
         for (Move move : moveList) {
             try {
-                Position moveResult = mover.doMove(position, move);
+                Position moveResult = new ChessMover().doMove(position, move);
                 if (sideToRecord == move.getWhoMoves()) {
-                    add(position, move);
+                    result = result.add(position, move);
                 }
                 position = moveResult;
 
@@ -59,6 +75,8 @@ public class FixedMoveGenerator implements MoveGenerator {
                 throw new IllegalArgumentException("Can not use illegal moves");
             }
         }
+
+        return result;
     }
 
     /**
@@ -70,7 +88,7 @@ public class FixedMoveGenerator implements MoveGenerator {
 
     @Override
     public Iterator<Move> generateMoves(Position position) {
-        Move move = moves.get(position);
+        Move move = moveMap.get(position);
 
         if (move == null) {
             return Collections.emptyIterator();

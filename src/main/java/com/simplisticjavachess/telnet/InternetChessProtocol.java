@@ -74,7 +74,7 @@ public class InternetChessProtocol {
         teller.commandSetupEnvironment();
         Thread.sleep(1000);
         teller.commandSeekGame();
-        int gamesToGo = 0;
+        int gamesToGo = 5;
 
         while (true) {
             if (commands.isEmpty()) {
@@ -101,6 +101,7 @@ public class InternetChessProtocol {
                 case MOVE:
                     try {
                         chessGame.telnetMove(nextCommand.getArgument());
+                        chessGame.print();
                     } catch (IllegalArgumentException e) {}
 
                     if (chessGame.isTheComputerToMove()) {
@@ -115,7 +116,7 @@ public class InternetChessProtocol {
                     commands.clear();
                     if ("AS_WHITE".equals(nextCommand.getArgument())) {
                         chessGame.setComputerColor(Color.WHITE);
-                        teller.commandMoveD2D4();
+                        teller.commandMoveE2E4();
                     } else {
                         chessGame.setComputerColor(Color.BLACK);
                     }

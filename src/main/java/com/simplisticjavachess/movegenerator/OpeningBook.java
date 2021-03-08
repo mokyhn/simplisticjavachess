@@ -17,6 +17,11 @@ public class OpeningBook
         // Start with e4
         fixedMoveGenerator.add(startPos, "e2e4");
 
+        // Kings gambit
+        fixedMoveGenerator = fixedMoveGenerator.addFromMoves(
+                startPos,
+                "e2e4 e7e5 f2f4 e5f4 g1f3 g7g5 h2h4 g5g4 f3e5 g8f6 d2d4 d7d6 e5d3 f6e4 c1f4 d8e7 f1e2 b8c6 c2c3 c8f5 d4d5 c6b8", Color.WHITE);
+
         // Tarrash variant of French
         fixedMoveGenerator = fixedMoveGenerator.addFromMoves(
                 startPos,
@@ -27,9 +32,14 @@ public class OpeningBook
         fixedMoveGenerator = fixedMoveGenerator.addFromMoves(startPos,
                 "e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 e7e5 d4b5 d7d6 b1c3 g8f6 c1g5 a7a6 b5a3 b7b5 c3d5 f8e7 g5f6 e7f6 d5f6 d8f6", Color.BLACK);
 
+        fixedMoveGenerator = fixedMoveGenerator.addFromMoves(startPos,
+                "e2e4 c7c5 g1f3 b8c6 d2d4 c5d4 f3d4 e7e5 d4b5 d7d6 b1c3 g8f6 c1g5 a7a6 b5a3 b7b5 c3d5 f8e7 g5f6 e7f6 d5f6 d8f6", Color.BLACK);
+
+
         // Answer to d4
         fixedMoveGenerator = fixedMoveGenerator.addFromMoves(startPos,
                 "d2d4 g8f6 c2c4 g7g6 b1c3 f8g7 e2e4 d7d6 f1d3 b8c6 d4d5 c6d4 d3b1 c7c5", Color.BLACK);
+
 
 
     }
