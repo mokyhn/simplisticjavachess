@@ -30,6 +30,7 @@ public class AlphaBetaEngine implements Engine {
 
 //    private Cache<Integer, SearchResult> cache;
 
+    
     @Override
     public SearchResult search(Position position, Mover mover, MoveGenerator moveGenerator, Evaluator evaluator,
                                int depth) {
